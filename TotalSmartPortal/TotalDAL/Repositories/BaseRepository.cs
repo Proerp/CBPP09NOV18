@@ -448,7 +448,7 @@ namespace TotalDAL.Repositories
 
 
 
-            return;
+            //return;
 
             Helpers.SqlProgrammability.Reports.SaleReports saleReports = new Helpers.SqlProgrammability.Reports.SaleReports(totalSmartPortalEntities);
             saleReports.RestoreProcedure();
@@ -461,9 +461,9 @@ namespace TotalDAL.Repositories
 
 
 
-            return;
+            //return;
 
-            return;
+            //return;
 
             Helpers.SqlProgrammability.Accounts.Receipt receipt = new Helpers.SqlProgrammability.Accounts.Receipt(totalSmartPortalEntities);
             receipt.RestoreProcedure();
@@ -473,8 +473,8 @@ namespace TotalDAL.Repositories
 
 
 
-            return;
-            return;
+            //return;
+            //return;
 
             Helpers.SqlProgrammability.Inventories.HandlingUnit handlingUnit = new Helpers.SqlProgrammability.Inventories.HandlingUnit(totalSmartPortalEntities);
             handlingUnit.RestoreProcedure();
