@@ -1,0 +1,12 @@
+﻿@model TotalPortal.Areas.Commons.ViewModels.Helpers.IWarehouseAdjustmentTypeDropDownViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.WarehouseAdjustmentTypeID)
+    <div class="div-input">
+        @Html.Kendo().DropDownListFor(m => m.WarehouseAdjustmentTypeID).BindTo(Model.WarehouseAdjustmentTypeSelectList).HtmlAttributes((ViewData["WarehouseAdjustmentTypeReadonly"] != null && (bool)ViewData["WarehouseAdjustmentTypeReadonly"] == true ? (object)new { @class = "left-panel-input", @readonly = "readonly" } : (object)new { @class = "left-panel-input" }))
+    </div>
+    <div class="div-validation-message">
+        @Html.ValidationMessageFor(model => model.WarehouseAdjustmentTypeID, "", new { @class = "text-danger" })
+    </div>
+</div>
+

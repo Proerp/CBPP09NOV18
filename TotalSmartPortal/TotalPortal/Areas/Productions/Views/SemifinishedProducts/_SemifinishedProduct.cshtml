@@ -1,0 +1,419 @@
+﻿@using TotalBase.Enums;
+@using TotalPortal.Configuration
+
+@model TotalPortal.Areas.Productions.ViewModels.SemifinishedProductViewModel
+
+<div id="popupWindow"></div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MainForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTopB.cshtml")
+
+    @Html.HiddenFor(model => model.SemifinishedProductID)
+
+    @Html.HiddenFor(model => model.MaterialIssueID)
+    @Html.HiddenFor(model => model.MaterialIssueDetailID)
+
+    @Html.HiddenFor(model => model.GoodsReceiptID)
+    @Html.HiddenFor(model => model.GoodsReceiptDetailID)
+
+    @Html.HiddenFor(model => model.ProductionLineID)
+    @Html.HiddenFor(model => model.ProductionLineCode)
+
+    @Html.HiddenFor(model => model.MaterialIssueDetailWorkshiftID)
+    @Html.HiddenFor(model => model.MaterialIssueDetailWorkshiftCode)
+    @Html.HiddenFor(model => model.MaterialIssueDetailWorkshiftEntryDate)
+
+    @Html.HiddenFor(model => model.MaterialCode)
+    @Html.HiddenFor(model => model.MaterialName)
+    @Html.HiddenFor(model => model.MaterialQuantity)
+    @Html.HiddenFor(model => model.MaterialQuantityRemains)
+
+    @Html.HiddenFor(model => model.GoodsReceiptReference)
+    @Html.HiddenFor(model => model.GoodsReceiptEntryDate)
+
+
+    <div class="left-panel">
+
+        @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
+
+        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Shift.cshtml")
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartSequenceNo)
+            <div class="div-input">
+                @Html.Kendo().NumericTextBoxFor(model => model.StartSequenceNo).Format(@Settings.kfmN0).HtmlAttributes(new { @class = "left-panel-input" }).Events(e => e.Change("updateFoilCounts").Spin("updateFoilCounts"))
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.StartSequenceNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StopSequenceNo)
+            <div class="div-input">
+                @Html.Kendo().NumericTextBoxFor(model => model.StopSequenceNo).Format(@Settings.kfmN0).HtmlAttributes(new { @class = "left-panel-input" }).Events(e => e.Change("updateFoilCounts").Spin("updateFoilCounts"))
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.StopSequenceNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FoilCounts)
+            <div class="div-input">
+                @Html.Kendo().NumericTextBoxFor(model => model.FoilCounts).Format(@Settings.kfmN0).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" }).Events(e => e.Change("updateFoilWeights").Spin("updateFoilWeights"))
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.FoilCounts, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FoilUnitCounts)
+            <div class="div-input left-panel-input">
+                <span style="width: 47%;float: left;">@Html.Kendo().NumericTextBoxFor(model => model.FoilUnitWeights).Format(@Settings.kfmQuantity).HtmlAttributes(new { @style = "width: 100%;" }).Events(e => e.Change("updateFoilWeights").Spin("updateFoilWeights")) </span>
+                <label style="width:6%; text-align:center; margin-top: 4px;"> / </label>
+                <span style="width: 47%;float: right;">@Html.Kendo().NumericTextBoxFor(model => model.FoilUnitCounts).Format(@Settings.kfmN0).HtmlAttributes(new { @style = "width: 100%;" }).Events(e => e.Change("updateFoilWeights").Spin("updateFoilWeights")) </span>
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.FoilUnitCounts, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FoilWeights)
+            <div class="div-input">
+                @Html.Kendo().NumericTextBoxFor(model => model.FoilWeights).Format(@Settings.kfmQuantity).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.FoilWeights, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FailureWeights)
+            <div class="div-input">
+                @Html.Kendo().NumericTextBoxFor(model => model.FailureWeights).Format(@Settings.kfmQuantity).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.FailureWeights, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.EditorFor(d => d.CrucialWorker, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.CrucialWorker) })
+        </div>
+
+        @Html.HiddenFor(model => model.PlannedOrderID)
+        @Html.HiddenFor(model => model.FirmOrderID)
+        @if (true)
+        {
+            <div class="form-group">
+                <a style="color: blue; " href="@Url.Action("Edit", "PlannedOrders", new { area = "Productions", id = Model.PlannedOrderID })"> @Html.LabelFor(model => model.FirmOrderReference) </a>
+                
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => model.FirmOrderReference).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.FirmOrderReference, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirmOrderCode)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => model.FirmOrderCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.FirmOrderCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.FirmOrderEntryDate)
+                <div class="div-input">
+                    @Html.Kendo().DateTimePickerFor(model => model.FirmOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.FirmOrderEntryDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+
+    </div>
+
+    <div class="right-panel">
+
+        <div class="right-top-panel right-top-panel-H1">
+
+            @Html.EditorFor(d => d.Customer, new { CustomerDisplayName = @Model.GetDisplayName(m => m.Customer), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Lệnh sản xuất tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
+
+            <div class="form-group">
+                <div class="right-panel-label right-panel-label-whole-width">
+                    @Html.LabelFor(model => model.WorkDescription)
+                </div>
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => model.WorkDescription).HtmlAttributes(new { @class = "right-panel-input", @readonly = "readonly" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.WorkDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="right-panel-label right-panel-label-whole-width">
+                    @Html.LabelFor(model => model.GoodsReceiptDescription)
+                </div>
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => model.GoodsReceiptDescription).HtmlAttributes(new { @class = "right-panel-input-whole-width", @readonly = "readonly" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.GoodsReceiptDescription, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div id="show-current-PriceCategory" style="float: right; margin-top: -170px; text-align: center; width: 110px; height: 110px; " title="Kho hàng">
+                <div style="height: 90px; padding-left: 22px; padding-right: 22px; padding-top: 32px;">
+                    <span style="color:blue;" id=""> </span>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="div-k-grid-detail">
+            @(Html.Kendo().Grid(Model.SemifinishedProductViewDetails)
+                .Name("kendoGridDetails")
+                .Columns(columns =>
+                {
+
+                    columns.Bound(p => p.SemifinishedProductDetailID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= SemifinishedProductDetailID #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].SemifinishedProductDetailID' value='#= SemifinishedProductDetailID #' />");
+                    columns.Bound(p => p.SemifinishedProductID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= SemifinishedProductID #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].SemifinishedProductID' value='#= SemifinishedProductID #' />");
+
+
+                    columns.Bound(p => p.FirmOrderID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (FirmOrderID == null)? '' : FirmOrderID #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].FirmOrderID' value='#= (FirmOrderID == null) ? '' : FirmOrderID #' />");
+                    columns.Bound(p => p.FirmOrderDetailID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (FirmOrderDetailID == null)? '' : FirmOrderDetailID #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].FirmOrderDetailID' value='#= (FirmOrderDetailID == null) ? '' : FirmOrderDetailID #' />");
+
+                    columns.Bound(p => p.PlannedOrderID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (PlannedOrderID == null)? '' : PlannedOrderID #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].PlannedOrderID' value='#= (PlannedOrderID == null) ? '' : PlannedOrderID #' />");
+                    columns.Bound(p => p.PlannedOrderDetailID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (PlannedOrderDetailID == null)? '' : PlannedOrderDetailID #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].PlannedOrderDetailID' value='#= (PlannedOrderDetailID == null) ? '' : PlannedOrderDetailID #' />");
+
+                    columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(120).EditorTemplateName("StringReadonly")
+                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
+                        .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(150).HtmlAttributes(new { style = "" })
+                        .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
+
+                    columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
+                    columns.Bound(p => p.PiecePerPack).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(70)
+                        .ClientTemplate("#= (PiecePerPack == null)? '' : PiecePerPack #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].PiecePerPack' value='#= (PiecePerPack == null) ? '' : PiecePerPack #' />");
+                    
+                    columns.Bound(p => p.MoldQuantity).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmN0)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', MoldQuantity) #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].MoldQuantity' value='#= MoldQuantity #' />");
+
+                    columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmQuantity)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
+
+                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
+
+
+                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(60)
+                        .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='SemifinishedProductViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
+
+
+                    //columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(50).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center" });
+
+                    columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(50).Hidden(!@Model.Voidable && !@Model.UnVoidable)
+                        .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' onclick='callVoidDetail(#= SemifinishedProductDetailID #)'><span class='k-icon k-i-columns'></span></a>");
+                })
+                    .Filterable(f => f.Enabled(false))
+                    .Navigatable()
+
+                    .ToolBar(toolbar =>
+                    {
+                        toolbar.Template(
+                            @<text>
+                                <div>
+                                    @(Html.Kendo().Button()
+                                            .Name("iconButton")
+                                            .HtmlAttributes(new { type = "button" })
+                                            .SpriteCssClass("k-icon k-i-ungroup") //.Content("My button label")
+                                    )
+                                </div>
+                            </text>);
+                    })
+
+                    .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
+                    .Selectable(settings =>
+                    {
+                        settings.Mode(GridSelectionMode.Multiple);
+                        settings.Type(GridSelectionType.Row);
+                    })
+                    .Events(events =>
+                    {
+                        events.DataBound(@<text>
+                            function(e) {
+
+                            var grid = $("#kendoGridDetails").data("kendoGrid");
+                            var data = grid.dataSource.data();
+                            $.each(data, function (i, row) {
+                            var isWarrantyClaim = row.VoidTypeName;
+                            if (isWarrantyClaim != null && isWarrantyClaim != '') {
+                            $('tr[data-uid="' + row.uid + '"]').addClass("isBonus");
+                            }
+                            });
+                            }
+                        </text>);
+                    }).DataSource(dataSource => dataSource
+                    .Ajax()
+                    .Batch(true)
+                    .ServerOperation(false)
+                    .Model(model =>
+                    {
+                        model.Id(x => x.SemifinishedProductDetailID);
+                        model.Field(m => m.SemifinishedProductDetailID).DefaultValue(0);
+                        model.Field(m => m.SemifinishedProductID).DefaultValue(@Model.SemifinishedProductID);
+                    })
+                    .Events(events =>
+                    {
+                        events.Error("kendGrid_ErrorHandler");
+                    })
+                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                )
+            )
+        </div>
+
+        <div class="div-k-panel">
+            @(Html.Kendo().PanelBar()
+                .Name("IntroPanelBar")
+                .Items(items =>
+                {
+                    items.Add()
+                        .Text("Thông tin khác")
+                        .Selected(true)
+                        .Expanded(false)
+                        .Content(@<text>
+                            <div class="right-first-panel">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Description, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => model.Description).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Remarks, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => model.Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="right-second-panel">
+                                @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PreparedPerson.cshtml")
+                                @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Approver.cshtml")
+                            </div>
+
+                        </text>).HtmlAttributes(new { @class = "panel-class" });
+                })
+            )
+        </div>
+
+
+        <div class="right-botton-panel">
+            @if (Model.Editable)
+            {
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedProducts")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-icon.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedProducts")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/save-verify-icon.png" /> Lưu và duyệt </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Create" formaction="@Url.Action("Edit", "SemifinishedProducts")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Slide.png" /> Lưu, duyệt và lập phiếu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedProducts")" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Actions-document-print-icon.png" /> Lưu, duyệt và in </button>
+            }
+            else
+            {
+                if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
+                {
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "SemifinishedProducts", new {id = @Model.SemifinishedProductID })'"> <img src="~/Content/Images/Mains/Cross-icon-cancel32.png" /> Hủy duyệt phiếu nhập BTP </button>
+                }
+            }
+
+            @if (Model.SemifinishedProductID > 0)
+            {
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "SemifinishedProducts", new { id = @Model.SemifinishedProductID })'"> <img src="~/Content/Images/New/Apps-printer-icon.png" /> In </button>
+            }
+        </div>
+
+        @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
+        <div style="height:68px;" ></div>
+        @Html.Partial("~/Views/Helpers/Commons/_PlannedOrderLogs.cshtml")
+
+    </div>
+}
+
+
+<script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
+
+<script type="text/javascript">
+
+    function updateFoilCounts() {
+        var foilCounts = DoRound($("#StopSequenceNo").val() - $("#StartSequenceNo").val() + 1, requireConfig.websiteOptions.rndN0);
+        $("#FoilCounts").data("kendoNumericTextBox").value(foilCounts > 0 ? foilCounts : 0);
+        $("#FoilCounts").data("kendoNumericTextBox").trigger("change");
+
+        updateDetailQuantity();
+    }
+
+    function updateFoilWeights() {
+        $("#FoilWeights").data("kendoNumericTextBox").value(($("#FoilUnitCounts").val() * 1) > 0 ? DoRound($("#FoilCounts").val() * $("#FoilUnitWeights").val()/ $("#FoilUnitCounts").val(), requireConfig.websiteOptions.rndQuantity) : 0);
+        $("#FoilWeights").data("kendoNumericTextBox").trigger("change");
+    }
+
+    function updateDetailQuantity () { //Define function to be called by action some button
+        var kenGrid = $("#kendoGridDetails").data("kendoGrid");
+        kenGrid.bind("dataBinding", function (e) { e.preventDefault(); }); //You can prevent the data bind action at the dataBinding event, when updating multiple model properties
+
+        var foilCounts = $("#FoilCounts").val();
+        var allDataRows = kenGrid.dataSource.data();
+        for (var i = 0; i < allDataRows.length; i++) {
+            var dataItem = allDataRows[i];
+            dataItem.set("Quantity", DoRound(foilCounts * dataItem["MoldQuantity"], requireConfig.websiteOptions.rndQuantity));
+        }
+
+        kenGrid.unbind("dataBinding"); //When finish modifying the data, unbind dataBinding event
+        kenGrid.refresh(); //Then, finally, refresh grid
+    }
+
+
+
+    function callVoidDetail(materialIssueDetailID) {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var voidDetailWindow = new kpopupWindow();
+            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", "SemifinishedProducts")" + "/" + $("#SemifinishedProductID").val() + "/" + materialIssueDetailID, "Hủy/ phục hồi một phần phiếu nhập BTP", @Settings.PopupWidthVoid,  @Settings.PopupHeightVoid);
+        });
+    }
+</script>

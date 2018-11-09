@@ -1,0 +1,112 @@
+﻿@using TotalModel.Models;
+@using TotalPortal.Configuration;
+
+@model TotalPortal.Areas.Inventories.ViewModels.IWarehouseTransferViewModel
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+
+
+@(Html.Kendo().Grid<WarehouseTransferPendingTransferOrderDetail>()
+    .Name("gridWarehouseTransferPendingTransferOrderDetail")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.CodePartA).Title("Mã").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(20).Hidden(@Model.IsItem ? true : false);
+        columns.Bound(p => p.CodePartB).Title("Phân loại").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(11);
+        columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
+        columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsMaterial ? true : false);
+        columns.Bound(p => p.CodePartA).Title("Công thức").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsItem ? false : true);
+        columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
+        columns.Bound(p => p.CodePartF).Title("Chiều rộng").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(!@Model.IsItem ? true : false);
+        columns.Bound(c => c.CommodityName).Title("Tên hàng").Width(45);
+        columns.Bound(c => c.GoodsReceiptReference).Title("Lô").Width(10);
+        columns.Bound(c => c.GoodsReceiptEntryDate).Title("Ngày").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(15).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.QuantityAvailables).Title("Tồn Kho").Format(Settings.kfmQuantity).Width(12).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+
+        columns.Template(t => { }).Title("&nbsp;").ClientTemplate("<input class='IsSelected' #= IsSelected ? checked='checked':'' #  type='checkbox' />").Width(5);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập số lô hoặc mã hay tên hàng</label>
+                <input id="filterText" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="filterText_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeightLarge))
+    .DataSource(ds => ds.Ajax()
+            .Read(read => read.Action("GetTransferOrderDetails", "WarehouseTransferAPIs", new { area = "Inventories" }).Data(@<text>
+            function(e) {
+
+            var materialIssueJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
+
+            return {
+                locationID: window.parent.requireConfig.pageOptions.LocationID,
+                nmvnTaskID: window.parent.requireConfig.pageOptions.NmvnTaskID,
+                warehouseTransferID: window.parent.$("#WarehouseTransferID").val(),
+                transferOrderID: window.parent.$("#TransferOrderID").val(),
+                warehouseID: window.parent.$("#Warehouse_WarehouseID").val(),
+                warehouseReceiptID: window.parent.$("#WarehouseReceipt_WarehouseID").val(),                    
+                goodsReceiptDetailIDs : materialIssueJSON.map(function(elem){return elem.GoodsReceiptDetailID;}).join(","),
+                onlyApproved: true,
+                onlyIssuable: true
+            };}
+            </text>))
+    .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client
+    .Selectable()
+)
+
+
+<div class="background-bar" style="height: 45px;">
+    <div class="popup-button-bar">
+        <button type="button" class="k-button" onclick="okButton_Click(false)"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm</button>
+        <button type="button" class="k-button" onclick="okButton_Click(true)"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm và đóng cửa sổ</button>        
+        <button type="button" class="k-button" onclick="cancelButton_Click()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Thoát </button>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Scripts/Controllers/Inventories/WarehouseTransfers/AddWarehouseTransferDetail.js")"></script>
+
+<script type="text/javascript">
+    function okButton_Click(closeWhenFinished) {        
+        handleOKEvent(window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource, $("#gridWarehouseTransferPendingTransferOrderDetail").data("kendoGrid").dataSource, closeWhenFinished);
+
+        if (!closeWhenFinished) {
+            $("#gridWarehouseTransferPendingTransferOrderDetail").data("kendoGrid").dataSource.read();
+            filterText_KeyUp();
+        }            
+    }
+
+    $('#gridWarehouseTransferPendingTransferOrderDetail').on('click', '.IsSelected', function () {
+        var checked = $(this).is(':checked');
+        var grid = $('#gridWarehouseTransferPendingTransferOrderDetail').data().kendoGrid;
+        var dataItem = grid.dataItem($(this).closest('tr'));
+        dataItem.set('IsSelected', checked);
+    })
+</script>
+
+
+
+<script>
+    function filterText_KeyUp() {
+        var filterText = $("#filterText").val(), gridDetails = $("#gridWarehouseTransferPendingTransferOrderDetail").data("kendoGrid");
+        
+        if (filterText && filterText.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "CommodityCode", operator: "contains", value: filterText },
+                    { field: "OfficialCode", operator: "contains", value: filterText },
+                    { field: "CommodityName", operator: "contains", value: filterText },
+
+                    { field: "GoodsReceiptReference", operator: "contains", value: filterText }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+</script>

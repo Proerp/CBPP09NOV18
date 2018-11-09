@@ -1,0 +1,148 @@
+﻿@using TotalBase.Enums;
+@using TotalPortal.Configuration;
+
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Inventories
+@using TotalPortal.Areas.Inventories.ViewModels
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+
+@model IWarehouseTransferViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+
+    @Html.Hidden("WarehouseTaskID", (int)@ViewBag.WarehouseTaskID);
+    @Html.Hidden("WarehouseTaskIDList", (string)@ViewBag.WarehouseTaskIDList);
+
+    @Html.HiddenFor(model => model.Storekeeper.EmployeeID);
+    @Html.HiddenFor(model => model.Storekeeper.Name);
+
+    @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).HasTransferOrder)
+    
+    @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderID)
+    @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderReference)
+    @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderEntryDate)
+    
+    @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).WarehouseTransferJobs)
+    
+    @(Html.Kendo().TabStrip()
+        .HtmlAttributes(new { @style = "height: 468px; margin-left: 0px; margin-right: 0px;" })
+        .Name("tabStrip")
+        .Items(tabStrip =>
+        {
+            tabStrip.Add().Text("Xuất không có lệnh VCNB")
+                .Selected(true)
+                .Content(@<text>
+                    <div style="margin-top: 39px; margin-right: 18px;">
+                        @Html.EditorFor(d => (d as IWarehouseTransferDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID) })
+
+                        @Html.EditorFor(d => (d as IWarehouseTransferDTO).WarehouseReceipt, new { WarehouseDisplayName = @Model.WarehouseReceipt.GetDisplayName(m => m.WarehouseID) })
+
+                    </div>
+                </text>);
+            tabStrip.Add().Text("Xuất theo lệnh VCNB")
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/WarehouseTransfers/_GetTransferOrder.cshtml")
+                </text>);
+            tabStrip.Add().Text("Xuất tổng hợp của nhiều lệnh")
+                    .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/WarehouseTransfers/_GetWarehouse.cshtml")
+                    </text>);
+        })
+    )
+
+
+
+    <div class="background-bar" style="height: 45px;">
+        <div class="popup-button-bar">
+            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", Model.ControllerName)" formtarget="_top" style="display:none" />  @*<button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Ok-1.png" /> Áp dụng CTKM đang chọn </button>   //At VCP DON'T ALLOW SELECT BY SINGLE PROMOTION *@
+
+            <button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Next </button>
+            <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Exit </button>
+        </div>
+    </div>
+
+}
+
+<link href="@Url.Content("~/Content/CustomCss/GeneralPopup.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+    function okButton_Click() {
+        var selectedGrid;
+        switch ($("#tabStrip").data("kendoTabStrip").select().index()) {
+            case 1:
+                selectedGrid = $("#warehouseTransferPendingTransferOrderGrid").data("kendoGrid");
+                break;
+            case 2:
+                selectedGrid = $("#warehouseTransferPendingWarehouseGrid").data("kendoGrid");
+                break;
+            default:
+                $("#submitCreateWizard").trigger("click");
+                break;
+        }
+
+        if ($("#tabStrip").data("kendoTabStrip").select().index() != 0)
+            handleOKEvent(selectedGrid);
+    }
+
+    function okWOSelectButton_Click() {
+        handleOKEvent();
+    }
+
+    function handleOKEvent(selectedGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
+
+        if ($("#Project_ProjectID").val() === null || $("#Project_ProjectID").val() === "")
+            return false;
+
+        if (selectedGrid === undefined)
+            _setModelInput();
+        else {
+           
+
+            var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
+            if (selectedDataItem === undefined || selectedDataItem === null)
+                return false;
+
+            _setModelInput(selectedDataItem);
+
+
+            var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
+            if (selectedDataItem === undefined)
+                return false;
+
+            _setModelInput(selectedDataItem);
+        }
+        $("#submitCreateWizard").trigger("click");
+
+
+        function _setModelInput(selectedDataItem) {
+            $("#HasTransferOrder").val(selectedDataItem === undefined || selectedDataItem.HasTransferOrder === undefined ? false : selectedDataItem.HasTransferOrder);
+
+            $("#TransferOrderID").val(selectedDataItem === undefined || selectedDataItem.TransferOrderID === undefined ? null : selectedDataItem.TransferOrderID);
+            $("#TransferOrderReference").val(selectedDataItem === undefined || selectedDataItem.TransferOrderReference === undefined ? null : selectedDataItem.TransferOrderReference);
+            $("#TransferOrderEntryDate").val(selectedDataItem === undefined || selectedDataItem.TransferOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.TransferOrderEntryDate, Settings.DateTimeFormat));
+
+            $("#Warehouse_WarehouseID").val(selectedDataItem === undefined || selectedDataItem.WarehouseID === undefined ? null : selectedDataItem.WarehouseID);
+            $("#Warehouse_Code").val(selectedDataItem === undefined || selectedDataItem.WarehouseCode === undefined ? null : selectedDataItem.WarehouseCode);
+            $("#Warehouse_Name").val(selectedDataItem === undefined || selectedDataItem.WarehouseName === undefined ? null : selectedDataItem.WarehouseName);
+            $("#Warehouse_LocationID").val(selectedDataItem === undefined || selectedDataItem.LocationIssuedID === undefined ? null : selectedDataItem.LocationIssuedID);
+            $("#WarehouseReceipt_WarehouseID").val(selectedDataItem === undefined || selectedDataItem.WarehouseReceiptID === undefined ? null : selectedDataItem.WarehouseReceiptID);
+            $("#WarehouseReceipt_Code").val(selectedDataItem === undefined || selectedDataItem.WarehouseReceiptCode === undefined ? null : selectedDataItem.WarehouseReceiptCode);
+            $("#WarehouseReceipt_Name").val(selectedDataItem === undefined || selectedDataItem.WarehouseReceiptName === undefined ? null : selectedDataItem.WarehouseReceiptName);
+            $("#WarehouseReceipt_LocationID").val(selectedDataItem === undefined || selectedDataItem.LocationReceiptID === undefined ? null : selectedDataItem.LocationReceiptID);
+
+            $("#WarehouseTransferJobs").val(selectedDataItem === undefined || selectedDataItem.TransferOrderJobs === undefined ? null : selectedDataItem.TransferOrderJobs);
+        }
+    }
+</script>
+
+
+
+
+

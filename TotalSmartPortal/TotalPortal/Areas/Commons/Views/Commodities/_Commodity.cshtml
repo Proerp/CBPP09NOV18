@@ -1,0 +1,242 @@
+﻿@using TotalBase.Enums;
+@using TotalPortal.Configuration
+
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Commons
+@using TotalPortal.Areas.Commons.ViewModels
+
+@model ICommodityViewModel
+
+<div id="popupWindow"></div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MainForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+
+    @Html.HiddenFor(model => (model as ICommodityPrimitiveDTO).CommodityID)
+    @Html.HiddenFor(model => (model as ICommodityPrimitiveDTO).CommodityCategoryName)
+    @Html.HiddenFor(model => (model as ICommodityPrimitiveDTO).CommodityLineName)
+    @Html.HiddenFor(model => (model as ICommodityPrimitiveDTO).CommodityClassName)
+
+    <div class="left-panel" style="height:30px;"></div>
+
+    <div class="right-first-panel">
+
+        @if (!Model.IsItem)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).CodePartA)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).CodePartA).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).CodePartA, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        
+        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityCategory.cshtml")
+        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityLine.cshtml")
+        <div @{if (Model.IsMaterial) { <text> style="display:none;" </text>     } }>
+            @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityClass.cshtml")
+        </div>
+
+        @if (Model.IsItem)
+        {
+            <div class="form-group">
+                @Html.Label("Số phiên bản công thức")
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).CodePartA).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).CodePartA, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        
+        <div class="form-group" @{if (!Model.IsItem) { <text> style="display:none;" </text>    } }>
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).CodePartE)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).CodePartE).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).CodePartE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" @{if (!Model.IsItem) { <text> style="display:none;" </text>    } }>
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).CodePartF)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).CodePartF).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).CodePartF, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="height: 27px;"></div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Name)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Name).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).OfficialName)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).OfficialName).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).OfficialName, "", new { @class = "text-danger" })
+            </div>
+        </div>       
+
+        <div class="SBT-Hidden">
+            @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityBrand.cshtml")
+        </div>
+
+        <div class="form-group SBT-Hidden">
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).PurchaseUnit)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).PurchaseUnit).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).PurchaseUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).SalesUnit)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).SalesUnit).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).SalesUnit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" @{if (!Model.IsProduct) { <text> style="display:none;" </text>     } }>
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).PiecePerPack)
+            <div class="div-input">
+                @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).PiecePerPack).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).PiecePerPack, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        
+        <div class="form-group SBT-Hidden">
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Packing)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Packing).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Packing, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group SBT-Hidden">
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Origin)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Origin).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Origin, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Weight)
+                <div class="div-input">
+                    @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).Weight).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Weight, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).LeadTime)
+                <div class="div-input">
+                    @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).LeadTime).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).LeadTime, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => (model as IBaseModel).Remarks)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Remarks).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as IBaseModel).Remarks, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group SBT-Hidden">
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).HSCode)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).HSCode).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).HSCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="left-panel-input">
+            @if (Model.Editable)
+            {
+                <button type="submit" id="btnSave" class="@(Model.CommodityID > 0 ? "k-button custom-button SubmitTypeOption-Closed" : "k-button custom-button SubmitTypeOption-Closed")" formaction="@Url.Action("Edit", Model.ControllerName)"> <img src="~/Content/Images/New/save-icon.png" /> Lưu </button>
+            }
+            @if (Model.CommodityID > 0 && Model.IsProduct)
+            {
+                <button type="button" class="k-button custom-button" onclick="ShowMolds()"> <img src="~/Content/Images/New/2017/mold-32.png" /> Danh mục khuôn sx khay </button>
+                <button type="button" class="k-button custom-button" onclick="ShowBoms()"> <img src="~/Content/Images/New/2017/bom-32.png" /> Danh mục màng sx khay </button>
+            }
+        </div>
+
+        @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
+
+    </div>
+    <div class="left-panel" style="height:30px;"></div>
+    <div class="left-panel" style="height:30px;"></div>
+    <div class="right-panel">
+
+
+    </div>
+}
+
+<script type="text/javascript">
+
+    $("#btnSave").click(function (e) {
+        $("#CommodityCategoryName").val($("#CommodityCategoryID").data("kendoDropDownList").text());
+        $("#CommodityLineName").val($("#CommodityLineID").data("kendoDropDownList").text());
+        $("#CommodityClassName").val($("#CommodityClassID").data("kendoDropDownList").text());
+    });
+
+    function ShowBoms() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("Boms", Model.ControllerName, new { area = "Commons", id = Model.CommodityID })", "Danh mục màng sản xuất khay", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+        });
+    }
+
+    function ShowMolds() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("Molds", Model.ControllerName, new { area = "Commons", id = Model.CommodityID })", "Danh mục khuôn sản xuất khay", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+        });
+    }
+</script>

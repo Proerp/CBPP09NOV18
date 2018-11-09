@@ -1,0 +1,39 @@
+﻿@using TotalPortal.Configuration
+
+@model string
+
+@(Html.Kendo().AutoCompleteFor(m => m)
+        .DataTextField("Code")
+        .Filter("contains")
+        .MinLength(Settings.AutoCompleteMinLenght)
+        .Placeholder("Chọn mã máy...")
+        .DataSource(source =>
+        {
+            source.Read(read =>
+            {
+                read.Action("GetProductionLineBases", "ProductionLineAPIs", new { area = "Commons" }).Data(@<text>
+
+                    function(e) {
+                    return {
+                    searchText: e.filter.filters[0].value
+                    };}
+
+                </text>);//Send parameter to controller search action
+            })
+            .ServerFiltering(true);
+        })
+        .Events(e =>
+        {
+            e.Select("gridEditorProductionLineSelect");
+            e.Change("gridEditorProductionLineChange");
+            e.DataBound("gridEditorProductionLineDataBound");
+        })
+        .Value(Model)
+        .HtmlAttributes(new { @class = "ProductionLineBase_AutoComplete " + (ViewData["ProductionLineRightPanelInput"] != null ? ViewData["ProductionLineRightPanelInput"] : "left-panel-input") })
+)
+
+<script type="text/javascript">
+    $("#ProductionLineCode").focus(function (e) {
+        window.productionLineCodeBeforeChange = $("#ProductionLineCode").val();
+    });
+</script>

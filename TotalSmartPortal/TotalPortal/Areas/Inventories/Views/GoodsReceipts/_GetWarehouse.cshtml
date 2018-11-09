@@ -1,0 +1,60 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<GoodsReceiptPendingWarehouse>()
+    .Name("goodsReceiptPendingWarehouseGrid")
+
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.WarehouseIssueCode).Title("Kho xuất").Width(90);
+        columns.Bound(c => c.WarehouseCode).Title("Kho nhập").Width(190);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập mã, tên, MST, địa chỉ, địa bàn khách hàng, hoặc mã kho</label>
+                <input id="goodsReceiptPendingWarehouseFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="goodsReceiptPendingWarehouseFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetWarehouses", "GoodsReceiptAPIs", new { area = "Inventories" }).Data("onAdditionalGetWarehouses"))
+        .ServerOperation(false)
+    )
+    .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetWarehouses(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID,
+            nmvnTaskID: window.parent.requireConfig.pageOptions.NmvnTaskID
+        };
+    }
+
+    function goodsReceiptPendingWarehouseFilter_KeyUp() {
+        var goodsReceiptPendingWarehouseFilter = $("#goodsReceiptPendingWarehouseFilter").val(), gridDetails = $("#goodsReceiptPendingWarehouseGrid").data("kendoGrid");
+
+        if (goodsReceiptPendingWarehouseFilter && goodsReceiptPendingWarehouseFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "WarehouseCode", operator: "contains", value: goodsReceiptPendingWarehouseFilter },
+                    { field: "WarehouseIssueCode", operator: "contains", value: goodsReceiptPendingWarehouseFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+
+    $("#goodsReceiptPendingWarehouseGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>

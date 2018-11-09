@@ -1,0 +1,116 @@
+﻿@using TotalModel.Models;
+@using TotalPortal.Configuration;
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+
+
+@(Html.Kendo().Grid<SalesReturnPendingGoodsIssueDetail>()
+    .Name("gridPendingGoodsIssueDetails")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.GoodsIssueReference).Title("Phiếu XK").Width(30);
+        columns.Bound(c => c.GoodsIssueEntryDate).Title("Ngày XK").Width(55).Format("{0:" + Settings.DateTimeFormat + "}");
+        columns.Bound(c => c.DeliveryAdviceReferences).Title("ĐNGH").Width(80);
+        columns.Bound(c => c.CommodityCode).Title("Mã hàng").Width(130);
+        columns.Bound(c => c.QuantityRemains).Title("SL").Format(Settings.kfmQuantity).Width(25).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.FreeQuantityRemains).Title("QT").Format(Settings.kfmQuantity).Width(25).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+
+        columns.Template(t => { }).Title("&nbsp;").ClientTemplate("<input class='IsSelected' #= IsSelected ? checked='checked':'' #  type='checkbox' />").Width(15);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right; margin-right: 13px;">
+                <label>Nhập số PXK, ĐNGH hoặc mã hay tên hàng hóa</label>
+                <input id="filterText" class="k-textbox" style="text-align: center; " onkeyup="filterText_KeyUp()" />
+
+                <span id="filterExtended" style="display: none;">
+                    @Html.Kendo().DatePicker().Name("FromDate").Value(DateTime.Today).Events(e => e.Change("reReadGetPendingGoodsIssueDetails")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                    @Html.Kendo().DatePicker().Name("ToDate").Value(DateTime.Today).Events(e => e.Change("reReadGetPendingGoodsIssueDetails")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                </span>
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeightLarge))
+    .DataSource(ds => ds.Ajax()
+            .Read(read => read.Action("GetPendingGoodsIssueDetails", "SalesReturnAPIs", new { area = "Sales" }).Data(@<text>
+            function(e) {
+
+            var salesReturnJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
+
+            return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID,
+            salesReturnID: window.parent.$("#SalesReturnID").val(),
+            goodsIssueID: window.parent.$("#GoodsIssue_GoodsIssueID").val(),
+            customerID: window.parent.$("#Customer_CustomerID").val(),
+            receiverID: window.parent.$("#Receiver_CustomerID").val(),
+            tradePromotionID: window.parent.$("#TradePromotionID").val(),            
+            vatPercent: window.parent.$("#VATPercent").val(),
+            fromDate: $("#FromDate").val(),
+            toDate: $("#ToDate").val(),
+            goodsIssueDetailIDs : salesReturnJSON.map(function(elem){return elem.GoodsIssueDetailID;}).join(","),
+            isReadOnly: false
+            };}
+            </text>))
+    .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client
+    .Selectable()
+)
+
+
+<div class="background-bar" style="height: 45px;">
+    <div class="popup-button-bar">
+        <button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm măt hàng đang chọn vào phiếu trả hàng</button>
+        <button type="button" class="k-button" onclick="cancelButton_Click()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Thoát </button>
+    </div>
+</div>
+
+<script src="@Url.Content("~/Scripts/Controllers/Sales/SalesReturns/AddPendingGoodsIssueDetail.js")"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+        if (window.parent.$("#GoodsIssue_GoodsIssueID").val() == undefined || window.parent.$("#GoodsIssue_GoodsIssueID").val() == "") {
+            document.getElementById('filterText').style.margin = '0px';
+            document.getElementById('filterExtended').style.display = 'inline';
+        }
+    });
+
+    function reReadGetPendingGoodsIssueDetails() { $("#gridPendingGoodsIssueDetails").data("kendoGrid").dataSource.read() }
+
+    function okButton_Click() {
+        handleOKEvent(window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource, $("#gridPendingGoodsIssueDetails").data("kendoGrid").dataSource);
+    }
+
+    $('#gridPendingGoodsIssueDetails').on('click', '.IsSelected', function () {
+        var checked = $(this).is(':checked');
+        var grid = $('#gridPendingGoodsIssueDetails').data().kendoGrid;
+        var dataItem = grid.dataItem($(this).closest('tr'));
+        dataItem.set('IsSelected', checked);
+    })
+</script>
+
+
+
+<script>
+    function filterText_KeyUp() {
+        var filterText = $("#filterText").val(), gridDetails = $("#gridPendingGoodsIssueDetails").data("kendoGrid");
+
+        if (filterText && filterText.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [                    
+                    { field: "GoodsIssueReference", operator: "contains", value: filterText },
+                    { field: "DeliveryAdviceReferences", operator: "contains", value: filterText },
+
+                    { field: "CommodityCode", operator: "contains", value: filterText },
+                    { field: "CommodityName", operator: "contains", value: filterText }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+</script>

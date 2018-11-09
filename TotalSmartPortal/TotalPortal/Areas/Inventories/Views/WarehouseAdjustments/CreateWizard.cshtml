@@ -1,0 +1,125 @@
+﻿@using TotalPortal.Configuration;
+
+@using TotalDTO.Inventories
+@using TotalPortal.Areas.Inventories.ViewModels
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+
+@model IWarehouseAdjustmentViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+
+    @Html.Hidden("WarehouseTaskID", (int)@ViewBag.WarehouseTaskID);
+    @Html.Hidden("WarehouseTaskIDList", (string)@ViewBag.WarehouseTaskIDList);
+    
+    @Html.HiddenFor(m => (m as IWarehouseAdjustmentDTO).NegativeOnly)
+    @Html.HiddenFor(m => (m as IWarehouseAdjustmentDTO).PositiveOnly)
+
+    <div style="margin-top: 39px; margin-right: 18px;">
+        
+        @Html.EditorFor(d => (d as IWarehouseAdjustmentDTO).Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+
+        <div @{if (Model.PositiveOnly) { <text> class="SBT-Hidden" </text>     } }>
+            @Html.EditorFor(d => (d as IWarehouseAdjustmentDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID) })
+        </div>
+
+        <div @{if (Model.NegativeOnly) { <text> class="SBT-Hidden" </text>      } }>
+            @Html.EditorFor(d => (d as IWarehouseAdjustmentDTO).WarehouseReceipt, new { WarehouseDisplayName = @Model.WarehouseReceipt.GetDisplayName(m => m.WarehouseID) })
+        </div>       
+
+    </div> <div class="background-bar" style="height: 45px;">
+        <div class="popup-button-bar">
+            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", Model.ControllerName)" formtarget="_top" style="display:none" />  @*<button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Ok-1.png" /> Áp dụng CTKM đang chọn </button>   //At VCP DON'T ALLOW SELECT BY SINGLE PROMOTION *@
+
+            <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Next </button>
+            <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Exit </button>
+        </div>
+    </div>
+
+}
+
+<link href="@Url.Content("~/Content/CustomCss/GeneralPopup.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+    function okButton_Click() {
+        handleOKEvent($($("#tabStrip").data("kendoTabStrip").select().index() === 0 ? "#gridPromotion" : "#gridXXXX_ReserveForLater").data("kendoGrid"));
+    }
+
+    function okWOSelectButton_Click() {
+        handleOKEvent();
+    }
+
+    function handleOKEvent(selectedGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
+
+        if ($("#Project_ProjectID").val() === null || $("#Project_ProjectID").val() === "")
+            return false;
+
+        if (selectedGrid === undefined)
+            _setModelInput();
+        else {
+            var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
+            if (selectedDataItem === undefined)
+                return false;
+
+            _setModelInput(selectedDataItem);
+        }
+        $("#submitCreateWizard").trigger("click");
+
+
+        function _setModelInput(selectedDataItem) {
+        }
+    }
+
+
+
+
+
+
+    $("#Customer_CustomerID").change(function (e) {
+        $("#Warehouse_WarehouseID").val($("#Customer_WarehouseID").val());
+        $("#Warehouse_Code").val($("#Customer_WarehouseCode").val());
+        $("#Warehouse_Name").val($("#Customer_WarehouseName").val());
+
+        $("#WarehouseReceipt_WarehouseID").val($("#Customer_WarehouseID").val());
+        $("#WarehouseReceipt_Code").val($("#Customer_WarehouseCode").val());
+        $("#WarehouseReceipt_Name").val($("#Customer_WarehouseName").val());
+
+        //Also remember last AutoComplete value for Warehouse
+        $("#Warehouse_TempName").val($("#Warehouse_Name").val());
+        //Also remember last AutoComplete value for Warehouse
+        $("#WarehouseReceipt_TempName").val($("#WarehouseReceipt_Name").val());
+    })
+
+
+
+    $("#Warehouse_WarehouseID").change(function (e) {
+        if ($("#NegativeOnly").val() == "True") {
+            $("#WarehouseReceipt_WarehouseID").val($("#Warehouse_WarehouseID").val());
+            $("#WarehouseReceipt_Code").val($("#Warehouse_Code").val());
+            $('#WarehouseReceipt_Name').val($("#Warehouse_Name").val());
+            //Also remember last AutoComplete value for Warehouse
+            $("#WarehouseReceipt_TempName").val($("#WarehouseReceipt_Name").val());
+        }
+    })
+
+    $("#WarehouseReceipt_WarehouseID").change(function (e) {
+        if ($("#PositiveOnly").val() == "True") {
+            $("#Warehouse_WarehouseID").val($("#WarehouseReceipt_WarehouseID").val());
+            $("#Warehouse_Code").val($("#WarehouseReceipt_Code").val());
+            $('#Warehouse_Name').val($("#WarehouseReceipt_Name").val());
+            //Also remember last AutoComplete value for Warehouse
+            $("#Warehouse_TempName").val($("#Warehouse_Name").val());
+        }
+    })
+
+</script>
+
+
+
+
+

@@ -1,0 +1,78 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<SalesReturnPendingGoodsIssue>()
+    .Name("salesReturnPendingGoodsIssueGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.GoodsIssueReference).Title("PXK").Width(25);
+        columns.Bound(c => c.GoodsIssueEntryDate).Title("Ngày XK").Width(35).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.DeliveryAdviceReferences).Title("ĐNGH").Width(45);
+        columns.Bound(c => c.TradePromotionSpecs).Title("CK tổng").Width(55);
+        columns.Bound(c => c.ShippingAddress).Title("Đ/c giao hàng").Width(95);
+        columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(22);
+        columns.Bound(p => p.TotalFreeQuantity).Title("QT").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(18);
+        columns.Bound(c => c.Description).Title("Diễn giải").Width(65);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right; margin-right: 13px;">
+                <label>Nhập PXK, ĐNGH hoặc thông tin giao hàng</label>
+                <input id="salesReturnPendingGoodsIssueFilter" class="k-textbox" style="text-align: center; " onkeyup="salesReturnPendingGoodsIssueFilter_KeyUp()" />
+
+                @Html.Kendo().DatePicker().Name("FromDate").Value(DateTime.Today).Events(e => e.Change("reReadGetGoodsIssues")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                @Html.Kendo().DatePicker().Name("ToDate").Value(DateTime.Today).Events(e => e.Change("reReadGetGoodsIssues")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+            </div>
+        </text>);
+    })
+        .Scrollable(s => s.Height(210))
+        .DataSource(ds => ds.Ajax()
+            .Read(read => read.Action("GetGoodsIssues", "SalesReturnAPIs", new { area = "Sales" }).Data("onAdditionalGetGoodsIssues"))
+            .ServerOperation(false)
+        )
+        .Selectable()
+)
+
+<script type="text/javascript">
+    $("#Customer_CustomerID").change(function (e) { reReadGetGoodsIssues(); })
+
+    function onAdditionalGetGoodsIssues(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID,
+            customerID: $("#Customer_CustomerID").val(),
+            receiverID: $("#Receiver_CustomerID").val(),
+            fromDate: $("#FromDate").val(),
+            toDate: $("#ToDate").val()
+        };
+    }
+
+    function reReadGetGoodsIssues() { $("#salesReturnPendingGoodsIssueGrid").data("kendoGrid").dataSource.read() }
+
+    function salesReturnPendingGoodsIssueFilter_KeyUp() {
+        var salesReturnPendingGoodsIssueFilter = $("#salesReturnPendingGoodsIssueFilter").val(), gridDetails = $("#salesReturnPendingGoodsIssueGrid").data("kendoGrid");
+
+        if (salesReturnPendingGoodsIssueFilter && salesReturnPendingGoodsIssueFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "GoodsIssueReference", operator: "contains", value: salesReturnPendingGoodsIssueFilter },
+                    { field: "DeliveryAdviceReferences", operator: "contains", value: salesReturnPendingGoodsIssueFilter },
+
+                    { field: "ShippingAddress", operator: "contains", value: salesReturnPendingGoodsIssueFilter },
+                    { field: "Description", operator: "contains", value: salesReturnPendingGoodsIssueFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+    $("#salesReturnPendingGoodsIssueGrid").dblclick(function (e) {
+        handleOKEvent(true, true);
+    })
+</script>
+

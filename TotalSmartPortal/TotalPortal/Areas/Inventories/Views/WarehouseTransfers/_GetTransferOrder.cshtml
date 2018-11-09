@@ -1,0 +1,64 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<WarehouseTransferPendingTransferOrder>()
+    .Name("warehouseTransferPendingTransferOrderGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.TransferOrderReference).Title("Số phiếu").Width(30);        
+        columns.Bound(c => c.TransferOrderEntryDate).Title("Ngày ĐH").Width(35).Format("{0:" + Settings.DateFormat + "}");        
+        columns.Bound(c => c.WarehouseCode).Title("Kho xuất").Width(30);
+        columns.Bound(c => c.WarehouseReceiptCode).Title("Kho nhập").Width(30);
+        columns.Bound(c => c.TransferOrderJobs).Title("Mục đích").Width(168);
+    })    
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập số ĐH hoặc kho xuất, kho nhập hay Mã, Tên khách hàng</label>
+                <input id="warehouseTransferPendingTransferOrderFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="warehouseTransferPendingTransferOrderFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+        .Scrollable(s => s.Height(Settings.PopupContentHeight))
+        .DataSource(ds => ds.Ajax()
+            .Read(read => read.Action("GetTransferOrders", "WarehouseTransferAPIs", new { area = "Inventories" }).Data("onAdditionalGetTransferOrders"))
+            .ServerOperation(false)
+        )
+        .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetTransferOrders(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID,
+            nmvnTaskID: window.parent.requireConfig.pageOptions.NmvnTaskID
+        };
+    }
+
+    function warehouseTransferPendingTransferOrderFilter_KeyUp() {
+        var warehouseTransferPendingTransferOrderFilter = $("#warehouseTransferPendingTransferOrderFilter").val(), gridDetails = $("#warehouseTransferPendingTransferOrderGrid").data("kendoGrid");
+
+        if (warehouseTransferPendingTransferOrderFilter && warehouseTransferPendingTransferOrderFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "TransferOrderReference", operator: "contains", value: warehouseTransferPendingTransferOrderFilter },
+                    { field: "WarehouseCode", operator: "contains", value: warehouseTransferPendingTransferOrderFilter },
+                    { field: "WarehouseReceiptCode", operator: "contains", value: warehouseTransferPendingTransferOrderFilter },
+                    { field: "CustomerCode", operator: "contains", value: warehouseTransferPendingTransferOrderFilter },
+                    { field: "CustomerName", operator: "contains", value: warehouseTransferPendingTransferOrderFilter }
+                ]
+            });                                             
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+    $("#warehouseTransferPendingTransferOrderGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>
+

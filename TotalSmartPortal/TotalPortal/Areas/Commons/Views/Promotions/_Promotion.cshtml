@@ -1,0 +1,235 @@
+﻿@using TotalBase.Enums;
+@using TotalPortal.Configuration
+
+@model TotalPortal.Areas.Commons.ViewModels.PromotionViewModel
+
+<div id="popupWindow"></div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MainForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+
+    @Html.HiddenFor(model => model.PromotionID)
+    @Html.HiddenFor(model => model.CommodityBrandID)
+
+    <div class="left-panel" style="height:30px;">
+        <div style="visibility: hidden;" >@Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")</div>
+    </div>
+
+    <div class="right-panel">
+
+        <div class="right-top-panel right-top-panel-H4">
+            <div class="right-first-panel">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Code, new { @class = "right-panel-label" })
+                    <div class="div-input">
+                        @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "right-panel-input" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartDate, new { @class = "right-panel-label" })
+                    <div class="div-input">
+                        @Html.Kendo().DateTimePickerFor(model => model.StartDate).HtmlAttributes(new { @class = "right-panel-input" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })@Html.ValidationMessageFor(model => model.EndDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EndDate, new { @class = "right-panel-label" })
+                    <div class="div-input">
+                        @Html.Kendo().DateTimePickerFor(model => model.EndDate).HtmlAttributes(new { @class = "right-panel-input" })
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="right-second-panel">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CommodityBrandName, new { @class = "right-panel-label" })
+                    <div class="div-input">
+                        @Html.Kendo().MaskedTextBoxFor(model => model.CommodityBrandName).HtmlAttributes(new { @class = "right-panel-input", @readonly = "readonly" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => model.CommodityBrandName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DiscountPercent, new { @class = "right-panel-label" })
+                    <div class="div-input">
+                        @Html.Kendo().NumericTextBoxFor(model => model.DiscountPercent).Format(Settings.kfmDiscountPercent).Decimals(1).HtmlAttributes(new { @class = "right-panel-input" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => model.DiscountPercent, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ControlFreeQuantity, new { @class = "right-panel-label" })
+                    <div class="div-input">
+                        @Html.Kendo().NumericTextBoxFor(model => model.ControlFreeQuantity).Format(Settings.kfmQuantity).Decimals(0).HtmlAttributes(new { @class = "right-panel-input" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => model.ControlFreeQuantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+
+        <div class="div-k-grid-detail">
+            @(Html.Kendo().Grid(Model.ViewDetails)
+                .Name("kendoGridDetails")
+                .Columns(columns =>
+                {
+
+                    columns.Bound(p => p.PromotionCommodityCodePartID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= PromotionCommodityCodePartID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].PromotionCommodityCodePartID' value='#= PromotionCommodityCodePartID #' />");
+                    columns.Bound(p => p.PromotionID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= PromotionID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].PromotionID' value='#= PromotionID #' />");
+
+                    columns.Bound(p => p.CodePartA).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
+                        .ClientTemplate("#= (CodePartA == null)? '' : CodePartA #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CodePartA' value='#= (CodePartA == null) ? '' : CodePartA #' />");
+
+                    columns.Bound(p => p.CodePartB).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
+                        .ClientTemplate("#= (CodePartB == null)? '' : CodePartB #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CodePartB' value='#= (CodePartB == null) ? '' : CodePartB #' />");
+
+                    columns.Bound(p => p.CodePartC).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
+                        .ClientTemplate("#= (CodePartC == null)? '' : CodePartC #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CodePartC' value='#= (CodePartC == null) ? '' : CodePartC #' />");
+
+                    columns.Bound(p => p.Remarks).DisplayNameTitle()
+                        .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='ViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
+
+                    columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(50).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center" });
+
+                })
+                    .Filterable(f => f.Enabled(false))
+                    .Navigatable()
+
+                    .ToolBar(toolbar =>
+                    {
+                        toolbar.Template(@<text>
+                            <button type="button" class="k-button" onclick="@Model.Editable? GetCommodityCodeParts(): ''"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm mặt hàng </button>
+                            
+                            @Html.CheckBoxFor(model => model.ApplyToAllCommodities, Model.Editable ? (object)new { @style = "margin-left: 25px; margin-right: 3px; " } : (object)new { @style = "margin-left: 25px; margin-right: 3px; ", @disabled = "disabled" }) @Html.LabelFor(model => model.ApplyToAllCommodities)            
+                            @Html.CheckBoxFor(model => model.ApplyToTradeDiscount, Model.Editable ? (object)new { @style = "margin-left: 25px; margin-right: 3px; " } : (object)new { @style = "margin-left: 65px; margin-right: 3px; ", @disabled = "disabled" }) @Html.LabelFor(model => model.ApplyToTradeDiscount)                            
+            
+                            @Html.CheckBoxFor(model => model.ApplyToSales, Model.Editable ? (object)new { @style = "margin-left: 25px; margin-right: 3px; " } : (object)new { @style = "margin-left: 65px; margin-right: 3px; ", @disabled = "disabled" }) @Html.LabelFor(model => model.ApplyToSales)
+                            @Html.CheckBoxFor(model => model.ApplyToReturns, Model.Editable ? (object)new { @style = "margin-left: 25px; margin-right: 3px; " } : (object)new { @style = "margin-left: 65px; margin-right: 3px; ", @disabled = "disabled" }) @Html.LabelFor(model => model.ApplyToReturns)            
+                        </text>);
+                    })
+
+                    .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
+                    .Selectable(settings =>
+                    {
+                        settings.Mode(GridSelectionMode.Multiple);
+                        settings.Type(GridSelectionType.Row);
+                    })
+                    .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .Batch(true)
+                        .ServerOperation(false)
+                        .Model(model =>
+                        {
+                            model.Id(x => x.PromotionCommodityCodePartID);
+                            model.Field(m => m.PromotionCommodityCodePartID).DefaultValue(0);
+                            model.Field(m => m.PromotionID).DefaultValue(@Model.PromotionID);
+                        })
+                        .Events(events =>
+                        {
+                            events.Error("kendGrid_ErrorHandler");
+                        })
+                    )
+            )
+        </div>
+
+        <div class="div-k-panel">
+            @(Html.Kendo().PanelBar()
+                .Name("IntroPanelBar")
+                .Items(items =>
+                {
+                    items.Add()
+                        .Text("Thông tin khác")
+                        .Selected(true)
+                        .Expanded(false)
+                        .Content(@<text>
+                            <div class="right-first-panel">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Name, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => model.Name).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="right-second-panel">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Remarks, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => model.Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </text>).HtmlAttributes(new { @class = "panel-class" });
+                })
+            )
+        </div>
+
+
+        <div class="right-botton-panel">
+            @if (Model.Editable)
+            {
+                <button type="submit" class= "@(Model.PromotionID > 0 ? "k-button custom-button SubmitTypeOption-Closed" : "k-button custom-button SubmitTypeOption-Save")" formaction="@Url.Action("Edit", "Promotions")"> <img src="~/Content/Images/New/save-icon.png" /> Lưu </button>
+            }
+            
+            @if (Model.PromotionID > 0)
+            {
+                <button type="button" class="k-button custom-button" onclick="ShowPromotionCustomerCategories()"> <img src="~/Content/Images/New/2017/price-tag-32.png" /> @(Model.Editable? "Cài đặt kênh khách hàng": "Xem kênh khách hàng")  </button>
+            }
+        </div>
+
+        @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
+
+    </div>
+}
+
+
+<script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
+
+<script type="text/javascript">
+    function GetCommodityCodeParts() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetCommodityCodeParts", "Promotions", new { area = "Commons" })", "Chọn mặt hàng được chiết khấu", @Settings.PopupWidthVoid,  @Settings.PopupHeightSmall);
+        });
+    }
+</script>
+
+
+<script type="text/javascript">
+    function ShowPromotionCustomerCategories() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("PromotionCustomerCategories", "Promotions", new { area = "Commons", id = @Model.PromotionID })", "Cài đặt kênh khách hàng", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+        });
+    }
+</script>
+

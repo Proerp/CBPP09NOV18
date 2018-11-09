@@ -1,0 +1,66 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<GoodsReceiptPendingWarehouseTransfer>()
+    .Name("goodsReceiptPendingWarehouseTransferGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.WarehouseTransferReference).Title("Số ĐH").Width(32);
+        columns.Bound(c => c.WarehouseTransferEntryDate).Title("Ngày ĐH").Width(55).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.WarehouseIssueCode).Title("Kho xuất").Width(38);
+        columns.Bound(c => c.WarehouseCode).Title("Kho nhập").Width(38);
+        columns.Bound(c => c.Caption).Title("Mặt hàng").Width(208);
+        columns.Bound(c => c.Description).Title("Diễn giải").Width(80);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập số đơn hàng/ hoặc mã, tên, MST khách hàng hay đơn vị, người nhận hàng, hoặc mã kho</label>
+                <input id="goodsReceiptPendingWarehouseTransferFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="goodsReceiptPendingWarehouseTransferFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+        .Scrollable(s => s.Height(Settings.PopupContentHeight))
+        .DataSource(ds => ds.Ajax()
+            .Read(read => read.Action("GetWarehouseTransfers", "GoodsReceiptAPIs", new { area = "Inventories" }).Data("onAdditionalGetWarehouseTransfers"))
+            .ServerOperation(false)
+        )
+        .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetWarehouseTransfers(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID,
+            nmvnTaskID: window.parent.requireConfig.pageOptions.NmvnTaskID
+        };
+    }
+
+    function goodsReceiptPendingWarehouseTransferFilter_KeyUp() {
+        var goodsReceiptPendingWarehouseTransferFilter = $("#goodsReceiptPendingWarehouseTransferFilter").val(), gridDetails = $("#goodsReceiptPendingWarehouseTransferGrid").data("kendoGrid");
+
+        if (goodsReceiptPendingWarehouseTransferFilter && goodsReceiptPendingWarehouseTransferFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "WarehouseTransferReference", operator: "contains", value: goodsReceiptPendingWarehouseTransferFilter },
+
+                    { field: "WarehouseCode", operator: "contains", value: goodsReceiptPendingWarehouseTransferFilter },
+                    { field: "WarehouseIssueCode", operator: "contains", value: goodsReceiptPendingWarehouseTransferFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+    $("#goodsReceiptPendingWarehouseTransferGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>
+
+

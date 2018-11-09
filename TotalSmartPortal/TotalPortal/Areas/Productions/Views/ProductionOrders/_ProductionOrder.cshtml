@@ -1,0 +1,308 @@
+﻿@using TotalBase.Enums;
+@using TotalPortal.Configuration
+
+@model TotalPortal.Areas.Productions.ViewModels.ProductionOrderViewModel
+
+<div id="popupWindow"></div>
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MainForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTopB.cshtml")
+
+    @Html.HiddenFor(model => model.ProductionOrderID)
+
+    <div class="left-panel">
+
+        @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
+
+
+        @Html.HiddenFor(model => model.PlannedOrderID)
+        @Html.HiddenFor(model => model.PlannedOrderCode)
+        @Html.HiddenFor(model => model.PlannedOrderReference)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PlannedOrderReferenceNote)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.PlannedOrderReferenceNote).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.PlannedOrderReferenceNote, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PlannedOrderCodeNote)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.PlannedOrderCodeNote).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.PlannedOrderCodeNote, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @if (Model.PlannedOrderEntryDate != null)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.PlannedOrderEntryDate)
+                <div class="div-input">
+                    @Html.Kendo().DateTimePickerFor(model => model.PlannedOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.PlannedOrderEntryDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+
+        @if (Model.PlannedOrderDeliveryDate != null)
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.PlannedOrderDeliveryDate)
+                <div class="div-input">
+                    @Html.Kendo().DateTimePickerFor(model => model.PlannedOrderDeliveryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.PlannedOrderDeliveryDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+        
+
+        @if (@Model.Voidable || @Model.UnVoidable || @Model.VoidTypeID > 0)
+        { //Don't render when in Edit Mode, so: do not add VoidType.VoidTypeID [Required] DataAnnotations to the view to submit to controller when edit
+            <div class="form-group">
+                @Html.EditorFor(d => d.VoidType, (@Model.Voidable ? new { VoidTypeClassSpecialEditable = "SpecialEditable" } : null))
+            </div>
+        }
+
+    </div>
+
+    <div class="right-panel">
+
+        <div class="right-top-panel right-top-panel-H2">
+            @Html.EditorFor(d => d.Customer, new { CustomerDisplayName = @Model.GetDisplayName(m => m.Customer), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Lệnh sản xuất tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
+        </div>
+
+        <div class="div-k-grid-detail">
+            @(Html.Kendo().Grid(Model.ProductionOrderViewDetails)
+                .Name("kendoGridDetails")
+                .Columns(columns =>
+                {
+
+                    columns.Bound(p => p.ProductionOrderDetailID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= ProductionOrderDetailID #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].ProductionOrderDetailID' value='#= ProductionOrderDetailID #' />");
+                    columns.Bound(p => p.ProductionOrderID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= ProductionOrderID #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].ProductionOrderID' value='#= ProductionOrderID #' />");
+
+                    columns.Bound(p => p.PlannedOrderID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (PlannedOrderID == null)? '' : PlannedOrderID #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].PlannedOrderID' value='#= (PlannedOrderID == null) ? '' : PlannedOrderID #' />");
+                    columns.Bound(p => p.FirmOrderID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (FirmOrderID == null)? '' : FirmOrderID #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].FirmOrderID' value='#= (FirmOrderID == null) ? '' : FirmOrderID #' />");
+
+
+                    columns.Bound(p => p.FirmOrderReference).DisplayNameTitle().Width(20).Hidden(@Model.PlannedOrderID == null ? false : true)
+                        .ClientTemplate("#= (FirmOrderReference == null)? '' : FirmOrderReference #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].FirmOrderReference' value='#= (FirmOrderReference == null) ? '' : FirmOrderReference #' />");
+                    columns.Bound(p => p.FirmOrderCode).DisplayNameTitle().Width(20).Hidden(@Model.PlannedOrderID == null ? false : true)
+                        .ClientTemplate("#= (FirmOrderCode == null)? '' : FirmOrderCode #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].FirmOrderCode' value='#= (FirmOrderCode == null) ? '' : FirmOrderCode #' />");                    
+                    columns.Bound(p => p.FirmOrderEntryDate).DisplayNameTitle().Width(20).Hidden()
+                        .Format("{0:" + @Settings.DateFormat + "}")
+                        .ClientTemplate("#= (FirmOrderEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FirmOrderEntryDate) #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].FirmOrderEntryDate' value='#= (FirmOrderEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FirmOrderEntryDate) #' />");
+                    columns.Bound(p => p.FirmOrderDeliveryDate).DisplayNameTitle().Width(20).Hidden(@Model.PlannedOrderID == null ? false : true).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
+                        .Format("{0:" + @Settings.DateFormat + "}")
+                        .ClientTemplate("#= (FirmOrderDeliveryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FirmOrderDeliveryDate) #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].FirmOrderDeliveryDate' value='#= (FirmOrderDeliveryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FirmOrderDeliveryDate) #' />");
+
+
+                    columns.Bound(p => p.CustomerID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= CustomerID #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].CustomerID' value='#= CustomerID #' />");
+                    columns.Bound(p => p.CustomerCode).DisplayNameTitle().Width(36)
+                        .ClientTemplate("#= CustomerCode #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].CustomerCode' value='#= CustomerCode #' />");
+                    columns.Bound(p => p.CustomerName).DisplayNameTitle().Width(68)
+                        .ClientTemplate("#= CustomerName #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].CustomerName' value='#= CustomerName #' />");
+
+
+                    columns.Bound(p => p.Specification).DisplayNameTitle().Width(96)
+                        .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)")
+                        .ClientTemplate("#= (Specification == null)? '' : Specification #" +
+                                "<div> #= (VoidTypeName == null)? '' : VoidTypeName #</div>" +
+                                "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].Specification' value='#= (Specification == null) ? '' : Specification #' />");
+                    columns.Bound(p => p.Specs).DisplayNameTitle().Width(96).Hidden(@Model.PlannedOrderID == null ? true : false)
+                        .ClientTemplate("#= Specs #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].Specs' value='#= Specs #' />");                    
+                    
+                    
+                    columns.Bound(p => p.BomID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= BomID #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].BomID' value='#= BomID #' />");
+                    columns.Bound(p => p.BomCode).DisplayNameTitle().Width(138)
+                        .ClientTemplate("#= BomCode #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].BomCode' value='#= BomCode #' />");
+
+                    
+                    columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
+
+                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).Hidden(true)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
+
+                    columns.Bound(p => p.Remarks).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
+
+
+                    columns.Bound(p => p.InActivePartial).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (InActivePartial == null)? '' : InActivePartial #" + "<input type='hidden' name='ProductionOrderViewDetails[#= index(data) #].InActivePartial' value='#= (InActivePartial == null) ? '' : InActivePartial #' />");
+
+                    columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(5).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center", @style = "padding-left:0px; padding-right:0px; min-width:22px; width:22px" });
+
+                    columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(5).Hidden(!@Model.Voidable && !@Model.UnVoidable)
+                        .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' onclick='callVoidDetail(#= ProductionOrderDetailID #)'><span class='k-icon k-i-columns'></span></a>");
+                })
+                    .Filterable(f => f.Enabled(false))
+                    .Navigatable()
+
+                    .ToolBar(toolbar =>
+                    {
+                        if (Model.Editable)
+                        {
+                            //toolbar.Create().HtmlAttributes(new { @class = "fa fa-map-marker" }).Text("Add new aa le ea1");
+                            toolbar.Template(@<text>
+                                <button type="button" class="k-button" onclick="GetPendingFirmOrders()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng từ KHSX </button>                                
+                            </text>);
+                        }
+                        else
+                        {//Add a functionless button for display purpose only
+                            toolbar.Template(
+                                @<text>
+                                    <div>
+                                        @(Html.Kendo().Button()
+                                            .Name("iconButton")
+                                            .HtmlAttributes(new { type = "button" })
+                                            .SpriteCssClass("k-icon k-i-ungroup") //.Content("My button label")
+                                        )
+                                    </div>
+                                </text>);
+                        }
+                    })
+
+                    .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
+                    .Selectable(settings =>
+                    {
+                        settings.Mode(GridSelectionMode.Multiple);
+                        settings.Type(GridSelectionType.Row);
+                    })
+                    .Events(events =>
+                    {
+                        events.DataBound(@<text>
+                            function(e) {
+
+                            var grid = $("#kendoGridDetails").data("kendoGrid");
+                            var data = grid.dataSource.data();
+                            $.each(data, function (i, row) {
+                            var isWarrantyClaim = row.VoidTypeName;
+                            if (isWarrantyClaim != null && isWarrantyClaim != '') {
+                            $('tr[data-uid="' + row.uid + '"]').addClass("isBonus");
+                            }
+                            });
+                            }
+                        </text>);
+                    }).DataSource(dataSource => dataSource
+                        .Ajax()
+                        .Batch(true)
+                        .ServerOperation(false)
+                        .Model(model =>
+                        {
+                            model.Id(x => x.ProductionOrderDetailID);
+                            model.Field(m => m.ProductionOrderDetailID).DefaultValue(0);
+                            model.Field(m => m.ProductionOrderID).DefaultValue(@Model.ProductionOrderID);
+                        })
+                        .Events(events =>
+                        {
+                            events.Error("kendGrid_ErrorHandler");
+                        })
+                        .Aggregates(a => a.Add(x => x.Specification).Count())
+                        .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                        .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                    )
+            )
+        </div>
+
+        <div class="div-k-panel">
+            @(Html.Kendo().PanelBar()
+                .Name("IntroPanelBar")
+                .Items(items =>
+                {
+                    items.Add()
+                        .Text("Thông tin khác")
+                        .Selected(true)
+                        .Expanded(false)
+                        .Content(@<text>
+                            <div class="right-first-panel">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Description, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => model.Description).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="right-second-panel">
+                                @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PreparedPerson.cshtml")
+                                @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Approver.cshtml")
+                            </div>
+
+                        </text>).HtmlAttributes(new { @class = "panel-class" });
+                })
+            )
+        </div>
+
+
+        <div class="right-botton-panel">
+            @if (Model.Editable)
+            {
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "ProductionOrders")"> <img src="~/Content/Images/New/save-icon.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "ProductionOrders")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/save-verify-icon.png" /> Lưu và duyệt </button>
+            }
+            else
+            {
+                if (!Model.Voidable && !Model.UnVoidable)
+                {
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "ProductionOrders", new { id = @Model.ProductionOrderID })'"> <img src="~/Content/Images/New/Apps-printer-icon.png" /> In tổng hợp xuất kho </button>
+                }
+            }
+
+            @if (Model.ProductionOrderID > 0 && !Model.Approvable && !Model.UnApprovable)
+            {
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "ProductionOrders", new {id = @Model.ProductionOrderID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Actions-ok-icon32.png" : "Cross-icon-cancel32.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
+            }
+        </div>
+
+
+        @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
+
+    </div>
+}
+
+
+<script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
+
+<script type="text/javascript">
+    function GetPendingFirmOrders() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingFirmOrders", "ProductionOrders", new { area = "Productions" })", "Chọn mặt hàng từ kế hoạch sản xuất", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+        });
+    }
+
+    function callVoidDetail(productionOrderDetailID) {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var voidDetailWindow = new kpopupWindow();
+            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", "ProductionOrders")" + "/" + $("#ProductionOrderID").val() + "/" + productionOrderDetailID, "Hủy/ phục hồi một phần đề nghị giao hàng", @Settings.PopupWidthVoid,  @Settings.PopupHeightVoid);
+        });
+    }
+
+</script>

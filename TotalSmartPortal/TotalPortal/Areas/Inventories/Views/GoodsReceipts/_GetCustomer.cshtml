@@ -1,0 +1,60 @@
+﻿
+@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<GoodsReceiptPendingCustomer>()
+    .Name("goodsReceiptPendingCustomerGrid")
+
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.CustomerCode).Title("Mã khách hàng").Width(90);
+        columns.Bound(c => c.CustomerName).Title("Tên khách hàng").Width(190);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập mã, tên, MST, địa chỉ, địa bàn khách hàng, hoặc mã kho</label>
+                <input id="goodsReceiptPendingCustomerFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="goodsReceiptPendingCustomerFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetCustomers", "GoodsReceiptAPIs", new { area = "Inventories" }).Data("onAdditionalGetCustomers"))
+        .ServerOperation(false)
+    )
+    .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetCustomers(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID
+        };
+    }
+
+    function goodsReceiptPendingCustomerFilter_KeyUp() {
+        var goodsReceiptPendingCustomerFilter = $("#goodsReceiptPendingCustomerFilter").val(), gridDetails = $("#goodsReceiptPendingCustomerGrid").data("kendoGrid");
+
+        if (goodsReceiptPendingCustomerFilter && goodsReceiptPendingCustomerFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "CustomerCode", operator: "contains", value: goodsReceiptPendingCustomerFilter },
+                    { field: "CustomerName", operator: "contains", value: goodsReceiptPendingCustomerFilter },
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+
+    $("#goodsReceiptPendingCustomerGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>

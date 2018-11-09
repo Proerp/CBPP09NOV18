@@ -1,0 +1,12 @@
+﻿@model TotalPortal.Areas.Commons.ViewModels.Helpers.ICommodityBrandDropDownViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.CommodityBrandID)
+    <div class="div-input">
+        @Html.Kendo().DropDownListFor(m => m.CommodityBrandID).BindTo(Model.CommodityBrandSelectList).HtmlAttributes((ViewData["CommodityBrandReadonly"] != null && (bool)ViewData["CommodityBrandReadonly"] == true ? (object)new { @class = "left-panel-input", @readonly = "readonly" } : (object)new { @class = "left-panel-input" }))
+    </div>
+    <div class="div-validation-message">
+        @Html.ValidationMessageFor(model => model.CommodityBrandID, "", new { @class = "text-danger" })
+    </div>
+</div>
+

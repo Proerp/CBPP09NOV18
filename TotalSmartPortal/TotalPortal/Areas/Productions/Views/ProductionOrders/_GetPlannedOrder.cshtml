@@ -1,0 +1,63 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<ProductionOrderPendingPlannedOrder>()
+    .Name("productionOrderPendingPlannedOrderGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.PlannedOrderReference).Title("Số KHSX").Width(50);
+        columns.Bound(c => c.PlannedOrderCode).Title("Mã CT").Width(50);
+        columns.Bound(c => c.PlannedOrderEntryDate).Title("Ngày KHSX").Width(55).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.CustomerCode).Title("Mã khách hàng").Width(90);
+        columns.Bound(c => c.CustomerName).Title("Tên khách hàng").Width(140);
+        columns.Bound(c => c.Description).Title("Diễn giải").Width(80);              
+    })    
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập số KHSX, diễn giải hoặc mã, MST, tên khách hàng</label>
+                <input id="productionOrderPendingPlannedOrderFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="productionOrderPendingPlannedOrderFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+        .Scrollable(s => s.Height(Settings.PopupContentHeight))
+        .DataSource(ds => ds.Ajax()
+            .Read(read => read.Action("GetPlannedOrders", "ProductionOrderAPIs", new { area = "Productions" }).Data("onAdditionalGetPlannedOrders"))
+            .ServerOperation(false)
+        )
+        .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetPlannedOrders(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID
+        };
+    }
+
+    function productionOrderPendingPlannedOrderFilter_KeyUp() {
+        var productionOrderPendingPlannedOrderFilter = $("#productionOrderPendingPlannedOrderFilter").val(), gridDetails = $("#productionOrderPendingPlannedOrderGrid").data("kendoGrid");
+
+        if (productionOrderPendingPlannedOrderFilter && productionOrderPendingPlannedOrderFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "PlannedOrderCode", operator: "contains", value: productionOrderPendingPlannedOrderFilter },
+                    { field: "CustomerName", operator: "contains", value: productionOrderPendingPlannedOrderFilter },
+                    { field: "Description", operator: "contains", value: productionOrderPendingPlannedOrderFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+    $("#productionOrderPendingPlannedOrderGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>
+

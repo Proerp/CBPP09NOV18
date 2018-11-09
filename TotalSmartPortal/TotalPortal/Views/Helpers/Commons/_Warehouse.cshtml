@@ -1,0 +1,11 @@
+﻿@model TotalDTO.Helpers.Interfaces.IWarehouse
+
+@Html.HiddenFor(model => model.Warehouse.WarehouseID)
+@Html.HiddenFor(model => model.Warehouse.Code)
+
+<div id="show-current-PriceCategory" style="float: right; margin-top: -40px; text-align: center; width: 110px; height: 110px; " title="Bảng giá, chính sách khuyến mãi hiện tại áp dụng cho đơn hàng">    @* margin-top: -150px;    *@
+    <div style="height: 90px; padding-left: 22px; padding-right: 22px; padding-top: 32px;"> <span id="label_PriceCategoryCode"> @Html.DisplayFor(m => m.Warehouse.Name) </span> </div>
+    <div class="div-validation-message">
+        @Html.ValidationMessageFor(model => model.Warehouse.Name, "", new { @class = "text-danger" })
+    </div>
+</div>

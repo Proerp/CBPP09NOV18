@@ -1,0 +1,70 @@
+﻿@using TotalPortal.Configuration;
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+
+@model TotalPortal.Areas.Commons.ViewModels.PromotionViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+
+    @Html.HiddenFor(model => model.PromotionID)
+    @Html.HiddenFor(model => model.CommodityBrandName)
+
+
+
+    <div class="left-panel">
+        <div style="padding: 16px;"> <img src="~/Content/Images/New/2017/red-discount-64.png" /> </div>
+    </div>
+    <div class="right-panel" style="padding-right:17px;">
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Code)@Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+        </div>
+
+        <div class=" form-group">
+            @Html.LabelFor(model => model.CommodityBrandID)@Html.ValidationMessageFor(model => model.CommodityBrandID, "", new { @class = "text-danger" })
+            <div class="div-input">
+                @(Html.Kendo().DropDownList().Name("CommodityBrandID").DataValueField("Value").DataTextField("Text").BindTo((System.Collections.IEnumerable)ViewBag.CommodityBrands).HtmlAttributes(new { @class = "left-panel-input" }))
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DiscountPercent)@Html.ValidationMessageFor(model => model.DiscountPercent, "", new { @class = "text-danger" })
+            <div class="div-input">
+                @Html.Kendo().NumericTextBoxFor(model => model.DiscountPercent).Format(Settings.kfmDiscountPercent).Decimals(1).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ControlFreeQuantity)@Html.ValidationMessageFor(model => model.ControlFreeQuantity, "", new { @class = "text-danger" })
+            <div class="div-input">
+                @Html.Kendo().NumericTextBoxFor(model => model.ControlFreeQuantity).Format(Settings.kfmQuantity).Decimals(0).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+        </div>
+        
+    </div>
+
+    <div class="background-bar" style="height: 45px;">
+        <div class="popup-button-bar">
+            <button type="submit" class="k-button" formaction="@Url.Action("CreateWizard", "Promotions")" onclick="$('#CommodityBrandName').val($('#CommodityBrandID').data('kendoDropDownList').text());" formtarget="_top"> <img src="~/Content/Images/New/2017/red-discount-24.png" /> Tiếp tục </button>
+            <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" alt="" /> Thoát </button>
+        </div>
+    </div>
+
+}
+
+<link href="@Url.Content("~/Content/CustomCss/GeneralPopup.css")" rel="stylesheet" type="text/css" />
+
+
+<style>
+    .left-panel-input {
+        width: 100%;
+    }
+</style>

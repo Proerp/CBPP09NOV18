@@ -1,0 +1,86 @@
+﻿@using TotalModel.Models;
+@using TotalPortal.Configuration;
+
+
+<div style="clear:both"></div>
+
+<div class="div-k-panel">
+    @(Html.Kendo().PanelBar()
+                .Name("PlanedOrderLogPanelBar")
+                .Items(items =>
+                {
+                    items.Add()
+                        .Text("Số liệu sản xuất")
+                        .Selected(true)
+                        .Expanded(true)
+                        .Content(@<text>
+
+                            @kendoGrid()
+
+                        </text>).HtmlAttributes(new { @class = "panel-class" });
+                })
+    )
+</div>
+
+@helper kendoGrid() { 
+    @(Html.Kendo().Grid<PlannedOrderLog>()
+    .Name("gridPlannedOrderLogs")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.ProductionLineCode).Title("Máy").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+        columns.Bound(c => c.MaterialIssueWorkshiftEntryDate).Title("Xuất màng").Width(30).Format("{0:" + Settings.DateTimeFormat + "}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+        columns.Bound(c => c.MaterialIssueWorkshiftCode).Title("Ca").Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+        columns.Bound(c => c.GoodsReceiptReference).Title("Số lô").Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+        columns.Bound(c => c.BatchEntryDate).Title("Lô màng").Width(20).Format("{0:" + Settings.DateFormat + "}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+        columns.Bound(c => c.MaterialIssueDetailQuantity).Title("Số kg").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+
+        columns.Bound(c => c.SemifinishedProductWorkshiftEntryDate).Title("Sx phôi").Width(30).Format("{0:" + Settings.DateTimeFormat + "}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+        columns.Bound(c => c.SemifinishedProductWorkshiftCode).Title("Ca").Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+        columns.Bound(c => c.CommoditiyCode).Title("Mã hàng").Width(126).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+        columns.Bound(c => c.Quantity).Title("SL").Format(Settings.kfmN0).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.Weights).Title("TL").Format(Settings.kfmWeight).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+    })
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetPlannedOrderLogs", "PlannedOrderAPIs", new { area = "Productions" }).Data(@<text>
+        function(e) {
+
+        var semifinishedHandoverJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
+
+        return {
+        plannedOrderID:  window.$("#PlannedOrderID").val(),
+        firmOrderID: window.$("#FirmOrderID").val()
+        };}
+                    </text>))
+    .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client
+    .Selectable()
+    )
+}
+
+
+
+<script>
+    function filterText_KeyUp() {
+        var filterText = $("#filterText").val(), gridDetails = $("#gridPlannedOrderLogs").data("kendoGrid");
+
+        if (filterText && filterText.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "CommodityCode", operator: "contains", value: filterText },
+                    { field: "ProductionLineCode", operator: "contains", value: filterText },
+
+                    { field: "CommodityCode", operator: "contains", value: filterText },
+                    { field: "CommodityName", operator: "contains", value: filterText },
+
+                    { field: "CrucialWorkerName", operator: "contains", value: filterText }
+
+                ]
+            });
+
+    
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+</script>

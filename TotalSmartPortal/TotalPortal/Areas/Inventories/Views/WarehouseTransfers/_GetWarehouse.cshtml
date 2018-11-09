@@ -1,0 +1,60 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<WarehouseTransferPendingWarehouse>()
+    .Name("warehouseTransferPendingWarehouseGrid")
+
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.WarehouseCode).Title("Kho xuất").Width(90);
+        columns.Bound(c => c.WarehouseReceiptCode).Title("Kho nhập").Width(190);        
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập kho xuất hoặc kho nhập</label>
+                <input id="warehouseTransferPendingWarehouseFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="warehouseTransferPendingWarehouseFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetWarehouses", "WarehouseTransferAPIs", new { area = "Inventories" }).Data("onAdditionalGetWarehouses"))
+        .ServerOperation(false)
+    )
+    .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetWarehouses(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID,
+            nmvnTaskID: window.parent.requireConfig.pageOptions.NmvnTaskID
+        };
+    }
+
+    function warehouseTransferPendingWarehouseFilter_KeyUp() {
+        var warehouseTransferPendingWarehouseFilter = $("#warehouseTransferPendingWarehouseFilter").val(), gridDetails = $("#warehouseTransferPendingWarehouseGrid").data("kendoGrid");
+
+        if (warehouseTransferPendingWarehouseFilter && warehouseTransferPendingWarehouseFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "WarehouseCode", operator: "contains", value: warehouseTransferPendingWarehouseFilter },
+                    { field: "WarehouseReceiptCode", operator: "contains", value: warehouseTransferPendingWarehouseFilter }                    
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+
+    $("#warehouseTransferPendingWarehouseGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>

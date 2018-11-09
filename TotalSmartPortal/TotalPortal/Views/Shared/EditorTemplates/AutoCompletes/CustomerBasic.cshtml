@@ -1,0 +1,102 @@
+﻿@*THIS IS DESIGNED FOR USE WITH KENDO GRID*@
+
+@using TotalPortal.Configuration
+
+@model string
+
+@(Html.Kendo().AutoCompleteFor(m => m)
+        .Name("CustomerCode")
+        .DataTextField("CustomerCode")
+        .Filter("contains")
+        .MinLength(Settings.AutoCompleteMinLenght)
+        .Placeholder("Chọn mã khách hàng...")
+        .HeaderTemplate("<div class=\"dropdown-header general-custom-header customer-custom-header\">" +
+                "<span class=\"k-widget k-header\">Mã</span>" +
+                "<span class=\"k-widget k-header\">Tên khách hàng</span>" +
+                "</div>")
+        .Template("<div class=\"dropdown-body general-custom-body customer-custom-body\">" +
+                "<span class=\"k-state-default\"><p>#: data.Code #</p></span>" +
+                    "<span class=\"k-state-default\"><p>#: data.Name #</p></span>" +
+                "</div>")
+
+        .DataSource(source =>
+        {
+            source.Read(read =>
+            {
+                read.Action("GetCustomerBases", "CustomerAPIs", new { area = "Commons" }).Data(@<text>
+
+                    function(e) {
+                    return {
+                    searchText: $("#CustomerCode").data("kendoAutoComplete").value(),
+                    warehouseTaskID: 0
+                    };}
+
+                </text>);//Send parameter to controller search action
+            })
+            .ServerFiltering(true);
+        })
+        .Events(e =>
+        {
+            e.Select("gridEditorCustomerSelect");
+            e.Change("gridEditorCustomerChange");
+            e.DataBound("gridEditorCustomerDataBound");
+        })
+        .Value(Model)
+        .HtmlAttributes(new { @class = "custom-control" })
+)
+
+<script type="text/javascript">
+    $("#CustomerCode").focus(function (e) {
+        window.customerCodeBeforeChange = $("#CustomerCode").val();
+    });
+</script>
+
+
+<style>
+    /*#region styles for calculate span column with*/
+
+    /*Rule to calculate with:
+        1) Define column for each body span column
+        2) Header:
+            2.1) All header span column width = the same body span column width
+            2.2) Except: Last header width = Last body pan width + 10 (padding left 5, padding right 5 of .k-item) + 17 (17px is the scroll bar width)
+            2.3) Total header width = Sum (all header pan width): Using this total value => assign to .k-animation-container .css("width", "Total header span column width") AT the DataBound Events
+    */
+
+
+    .customer-custom-header > span:first-child {
+        width: 85px;
+    }
+
+
+    .customer-custom-header > span:last-child {
+        width: 297px;
+    }
+
+
+
+
+
+
+    .k-item > .customer-custom-body > span:first-child {
+        width: 84px;
+    }
+
+
+    .k-item > .customer-custom-body > span:last-child {
+        width: 270px;
+    }
+
+    /*#endregion */
+
+
+    /*#region styles for each use of the Editor tenplate CustomerAvailable.cshtml*/
+    #CustomerCode-list .k-item {
+        white-space: nowrap;
+    }
+    /*CURRENT: Editor tenplate CustomerAvailable.cshtml bind with model CustomerCode => the autocomplete editor ID will be #CustomerCode */
+    /*LATER: if this Editor tenplate CustomerAvailable.cshtml is used for another model, Ex model: XyzName => the ID will be #XyzName, then new css will be add. for this example #XyzName-list .k-item {padding: 0px; white-space: nowrap;} */
+
+    /*#endregion */
+</style>
+

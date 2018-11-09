@@ -1,0 +1,116 @@
+﻿@using TotalPortal.Configuration
+
+@model TotalPortal.Areas.Commons.ViewModels.ICommodityViewModel
+
+<div>
+    @(Html.Kendo().Grid<TotalModel.Models.CommodityIndex>()
+        .Name("kendoGridIndex")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden();
+
+            columns.Bound(p => p.CommodityCategoryName1).Title("ROOT").Hidden();
+            columns.Bound(p => p.CommodityCategoryName2).Title("CAT").Hidden();
+            columns.Bound(p => p.CodePartA).Title("Mã").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(39).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/" + Model.ControllerName, action = "Edit" }) + "/#= CommodityID #'>#=CodePartA#</a>").Hidden(@Model.IsItem ? true : false);
+            columns.Bound(p => p.CodePartB).Title("Phân loại").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(25).ClientTemplate(@Model.IsItem ? "<a href='" + Url.RouteUrl("Default", new { controller = "Commons/" + Model.ControllerName, action = "Edit" }) + "/#= CommodityID #'>#=CodePartB#</a>" : "");
+            columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
+            columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(@Model.IsMaterial ? true : false);
+            columns.Bound(p => p.CodePartA).Title("Công thức").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(@Model.IsItem ? false : true);
+            columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
+            columns.Bound(p => p.CodePartF).Title("Chiều rộng").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
+
+            columns.Bound(p => p.Name).Title("Tên thường gọi").Width(168);
+            
+            columns.Bound(p => p.BomCode).Title("Mã màng").Width(126).Hidden(!@Model.IsProduct);
+            columns.Bound(p => p.MoldCode).Title("M").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(20).Hidden(!@Model.IsProduct);
+            columns.Bound(p => p.MoldQuantity).Title("P/M").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(10).Hidden(!@Model.IsProduct);
+
+            columns.Bound(p => p.Remarks).Title("Ghi chú").Width(80).Hidden(@Model.IsProduct);
+
+            columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(10)
+                .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Commons/" + Model.ControllerName, action = "Edit" }) + "/#= CommodityID #'><span class='k-icon k-edit'></span></a>"); // <a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Commons/Commodities", action = "Delete" }) + "/#= CommodityID #'><span class='k-icon k-delete'></span></a>
+        })
+        .ToolBar(toolbar =>
+        {
+            toolbar.Template(@<text>
+                <button type="button" class="k-button" onclick="location.href='@Url.Action("Create", Model.ControllerName)'"> <img src="~/Content/Images/Mains/Addnewcommodities24.png" /> Thêm mã mới </button>
+                <div class="toolbar" style="float: right;">
+                    <label>Nhập ít nhất 2 ký tự để tìm</label>
+                    <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                </div>
+            </text>);
+        })
+                    .Pageable()
+            //.Groupable()
+            //.Filterable()
+                    .Selectable()
+                    .Sortable()
+                    .Events(e =>
+                    {
+                        e.DataBound("hightLightSelectedRow");
+                    })
+                    .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .Read(read => read.Action("GetCommodityIndexes", "CommodityAPIs", new { area = "Commons" }).Data("onCommodityIndexes"))
+                        .Group(group => group.Add(p => p.CommodityCategoryName1)).Group(group => group.Add(p => p.CommodityCategoryName2))
+                        .PageSize(20)
+                        .Model(model =>
+                        {
+                            model.Id(x => x.CommodityID);
+                            model.Field(m => m.CommodityID).DefaultValue(0);
+                        })
+                        .ServerOperation(true)
+                    )
+                    .HtmlAttributes(new { @class = "grid-class" }))
+</div>
+
+
+
+<script type="text/javascript">
+    function onCommodityIndexes(e) {
+        return {
+            nmvnTaskID: requireConfig.pageOptions.NmvnTaskID
+        };
+    }
+
+    function hightLightSelectedRow(e) {
+        require(["kindexGrid"], function (kindexGrid) {
+            var kindexGridInstance = new kindexGrid("kendoGridIndex");
+            kindexGridInstance.setSelectedRow("CommodityID", '@ViewBag.SelectedEntityID');
+        });
+    }
+
+
+    function indexFilterText_KeyUp() {
+        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+        if (indexFilterText && indexFilterText.length >= "@Settings.MinLenght2") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "Code", operator: "contains", value: indexFilterText },
+                    { field: "OfficialCode", operator: "contains", value: indexFilterText },
+                    { field: "Name", operator: "contains", value: indexFilterText },
+                    { field: "Remarks", operator: "contains", value: indexFilterText }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+</script>
+
+
+
+<style>
+    .k-grid td {
+        border-width: 0;
+        /*background-color: #f5f5f5;*/
+    }
+    .k-grid {
+        background: #f5f5f5;
+    }
+</style>

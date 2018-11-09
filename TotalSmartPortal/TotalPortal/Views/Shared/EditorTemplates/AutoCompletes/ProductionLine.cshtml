@@ -1,0 +1,48 @@
+﻿@using TotalPortal.Configuration
+
+@model TotalDTO.Commons.IProductionLineBaseDTO
+
+@Html.HiddenFor(model => model.ProductionLineID)
+@Html.HiddenFor(model => model.Name)
+
+@Html.Hidden("TempCode", (@Model != null ? @Model.Code : ""))
+
+
+@Html.Label((ViewData["ProductionLineDisplayName"] != null ? (ViewData["ProductionLineDisplayName"]).ToString() : @Model.GetDisplayName(m => m.Code)))
+<div class="div-input">
+    @Html.EditorFor(d => d.Code, new { ProductionLineBaseLeftPanelInput = ViewData["ProductionLineLeftPanelInput"] != null ? (ViewData["ProductionLineLeftPanelInput"]).ToString() : null })
+</div>
+<div class="div-validation-message">
+    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+</div>
+
+<script type="text/javascript">
+
+    getProductionLineModelID = function (modelID) {
+        return modelID.substring(0, modelID.length - 4); //At first: Pass: modelID = this.element.attr('id') = 'ProductionLine_Name', Then: Return: ('ProductionLine_Name').substring(0, modelID.length - 4) = 'ProductionLine_'
+    }
+
+    gridEditorProductionLineSelect = function (e) {
+        var modelID = getProductionLineModelID(this.element.attr('id'));
+
+        var dataItem = e.sender.dataItem(e.item.index());
+
+        $("#" + modelID + "ProductionLineID").val(dataItem.ProductionLineID);
+        $("#" + modelID + "Name").val(dataItem.Name);
+
+        //Remember last AutoComplete value
+        $("#" + modelID + "TempCode").val(dataItem.Code);
+        //Trigger change event. This event is not used in this editor template. It will be catch out side of this editor template
+        $("#" + modelID + "ProductionLineID").trigger("change");
+    }
+
+    gridEditorProductionLineChange = function (e) { } //Keep old selected value. This function is used in detail mode (In conjuction with grid)
+
+    gridEditorProductionLineDataBound = function (e) { }
+
+    $(".ProductionLineBase_AutoComplete").focusout(function (e) { //Keep old selected value. This is used in master mode
+        var modelID = getProductionLineModelID(this.id);
+        $(this).val($("#" + modelID + "TempCode").val());
+    });
+
+</script>

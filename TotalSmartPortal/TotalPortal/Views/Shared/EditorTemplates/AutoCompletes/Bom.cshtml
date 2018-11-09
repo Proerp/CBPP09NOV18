@@ -1,0 +1,51 @@
+﻿@using TotalPortal.Configuration
+
+@model TotalDTO.Commons.IBomBaseDTO
+
+@Html.HiddenFor(model => model.BomID)
+@Html.HiddenFor(model => model.Name)
+
+@Html.Hidden("TempCode", (@Model != null ? @Model.Code : ""))
+
+
+@Html.Label((ViewData["BomDisplayName"] != null ? (ViewData["BomDisplayName"]).ToString() : @Model.GetDisplayName(m => m.Code)))
+<div class="div-input">
+    @Html.EditorFor(d => d.Code, new { BomBaseLeftPanelInput = ViewData["BomLeftPanelInput"] != null ? (ViewData["BomLeftPanelInput"]).ToString() : null })
+</div>
+<div class="div-validation-message">
+    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+</div>
+
+<script type="text/javascript">
+
+    getBomModelID = function (modelID) {
+        return modelID.substring(0, modelID.length - 4); //At first: Pass: modelID = this.element.attr('id') = 'Bom_Code', Then: Return: ('Bom_Code').substring(0, modelID.length - 4) = 'Bom_'
+    }
+
+    gridEditorBomSelect = function (e) {
+        var modelID = getBomModelID(this.element.attr('id'));
+
+        var dataItem = e.sender.dataItem(e.item.index());
+
+        $("#" + modelID + "BomID").val(dataItem.BomID);
+        $("#" + modelID + "Name").val(dataItem.Name);
+
+        //Remember last AutoComplete value
+        $("#" + modelID + "TempCode").val(dataItem.Code);
+        //Trigger change event. This event is not used in this editor template. It will be catch out side of this editor template
+        $("#" + modelID + "BomID").trigger("change");
+    }
+
+    gridEditorBomChange = function (e) { } //Keep old selected value. This function is used in detail mode (In conjuction with grid)
+
+    gridEditorBomDataBound = function (e) {
+        $(".k-animation-container:has(#Code-list)").css("width", "382");
+        $("#Code-list").css("width", "382");
+    }
+
+    $(".BomBase_AutoComplete").focusout(function (e) { //Keep old selected value. This is used in master mode
+        var modelID = getBomModelID(this.id);
+        $(this).val($("#" + modelID + "TempCode").val());
+    });
+
+</script>

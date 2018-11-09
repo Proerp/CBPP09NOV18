@@ -1,0 +1,66 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<PendingGoodsIssueConsumer>()
+    .Name("pendingGoodsIssueConsumerGrid")
+
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.CustomerCode).Title("Mã khách hàng").Width(70);
+        columns.Bound(c => c.CustomerName).Title("Tên khách hàng").Width(230);
+        columns.Bound(c => c.CustomerVATCode).Title("MST").Width(70);
+        columns.Bound(c => c.TradePromotionSpecs).Title("CK tổng").Width(100);
+        columns.Bound(c => c.CustomerBillingAddress).Title("Địa chỉ").Width(250);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập mã, tên, MST, địa chỉ, hoặc địa bàn khách hàng</label>
+                <input id="pendingGoodsIssueConsumerFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="pendingGoodsIssueConsumerFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetConsumers", "AccountInvoiceAPIs", new { area = "Accounts" }).Data("onAdditionalGetConsumers"))
+        .ServerOperation(false)
+    )
+    .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetConsumers(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID
+        };
+    }
+
+    function pendingGoodsIssueConsumerFilter_KeyUp() {
+        var pendingGoodsIssueConsumerFilter = $("#pendingGoodsIssueConsumerFilter").val(), gridDetails = $("#pendingGoodsIssueConsumerGrid").data("kendoGrid");
+
+        if (pendingGoodsIssueConsumerFilter && pendingGoodsIssueConsumerFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "CustomerCode", operator: "contains", value: pendingGoodsIssueConsumerFilter },
+                    { field: "CustomerName", operator: "contains", value: pendingGoodsIssueConsumerFilter },
+                    { field: "CustomerVATCode", operator: "contains", value: pendingGoodsIssueConsumerFilter },
+                    { field: "CustomerTelephone", operator: "contains", value: pendingGoodsIssueConsumerFilter },
+                    { field: "CustomerBillingAddress", operator: "contains", value: pendingGoodsIssueConsumerFilter },
+                    { field: "CustomerEntireTerritoryEntireName", operator: "contains", value: pendingGoodsIssueConsumerFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+
+    $("#pendingGoodsIssueConsumerGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>

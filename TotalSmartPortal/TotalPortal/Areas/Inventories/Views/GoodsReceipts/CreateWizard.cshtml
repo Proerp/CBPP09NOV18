@@ -1,0 +1,297 @@
+﻿@using TotalBase.Enums;
+@using TotalPortal.Configuration;
+
+@using TotalDTO;
+@using TotalDTO.Inventories
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+
+@model TotalPortal.Areas.Inventories.ViewModels.IGoodsReceiptViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+
+    @Html.Hidden("WarehouseTaskID", (int)@ViewBag.WarehouseTaskID);
+    @Html.Hidden("WarehouseTaskIDList", (string)@ViewBag.WarehouseTaskIDList);
+
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsReceiptTypeID)
+
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).Code);
+
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PurchaseRequisitionID)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PurchaseRequisitionCode)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PurchaseRequisitionReference)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PurchaseRequisitionEntryDate)
+
+
+
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferID)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferReference)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferEntryDate)
+
+    @Html.HiddenFor(model => model.WarehouseIssue.WarehouseID);
+    @Html.HiddenFor(model => model.WarehouseIssue.Code);
+    @Html.HiddenFor(model => model.WarehouseIssue.Name);
+
+    @Html.HiddenFor(model => model.Warehouse.WarehouseID);
+    @Html.HiddenFor(model => model.Warehouse.Code);
+    @Html.HiddenFor(model => model.Warehouse.Name);
+
+
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderID)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderCode)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderReference)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderEntryDate)
+
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseAdjustmentID)
+
+    @Html.HiddenFor(model => model.Customer.CustomerID);
+    @Html.HiddenFor(model => model.Customer.Code);
+    @Html.HiddenFor(model => model.Customer.Name);
+    @Html.HiddenFor(model => model.Customer.VATCode);
+    @Html.HiddenFor(model => model.Customer.Telephone);
+    @Html.HiddenFor(model => model.Customer.BillingAddress);
+    @Html.HiddenFor(model => model.Customer.EntireTerritoryEntireName);
+    @Html.HiddenFor(model => model.Customer.SalespersonID)
+    @Html.HiddenFor(model => model.Customer.SalespersonName)
+
+    @Html.HiddenFor(model => (model as IBaseDTO).Description);
+
+    @(Html.Kendo().TabStrip()
+        .HtmlAttributes(new { @style = "height: 468px; margin-left: 0px; margin-right: 0px;" })
+        .Name("tabStrip")
+        .Items(tabStrip =>
+        {
+            tabStrip.Add().Text("Khách hàng không có đơn hàng")
+                .Visible(false)
+                .Content(@<text>
+                    @*@Html.Partial("~/Views/Helpers/Commons/_SearchCustomer.cshtml")*@
+                </text>);
+
+
+            tabStrip.Add().Text("Phiếu mua hàng")
+                .Visible(false)
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetPurchaseRequisition.cshtml")
+                </text>);
+            tabStrip.Add().Text("Nhà cung cấp")
+                .Visible(false)
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetCustomer.cshtml")
+                </text>);
+
+
+
+            tabStrip.Add().Text("Phiếu VCNB")
+                .Visible(Model.IsItem)
+                .Selected(Model.IsItem)
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetWarehouseTransfer.cshtml")
+                </text>);
+            tabStrip.Add().Text("Tổng hợp VCNB")
+                .Visible(Model.IsItem)
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetWarehouse.cshtml")
+                </text>);
+
+
+
+            tabStrip.Add().Text("Số KHSX")
+                .Visible(Model.IsProduct)
+                .Selected(Model.IsProduct)
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetPlannedOrder.cshtml")
+                </text>);
+            tabStrip.Add().Text("Tổng hợp theo KH")
+                .Visible(Model.IsProduct)
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetPlannedOrderCustomer.cshtml")
+                </text>);
+        })
+    )
+
+
+
+    <div class="background-bar" style="height: 45px;">
+        @*<div style="width:40%;height:10px;float: left; margin-top:-3px"> @Html.EditorFor(model => (model as IGoodsReceiptDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID) })           </div>*@
+
+        @if (Model.IsItem)
+        {
+            <div class="popup-button-bar" style="float: left; clear:none; margin-left: 6px;">
+                <button type="button" class="k-button" onclick="okMaterialIssueButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Thu hồi màng đã cấp </button>
+            </div>
+        }
+
+        <div class="popup-button-bar" style="clear:none">
+
+            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", Model.ControllerName)" formtarget="_top" style="display:none" />
+
+            @*<button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Ok-1.png" /> Áp dụng CTKM đang chọn </button>   //At VCP DON'T ALLOW SELECT BY SINGLE PROMOTION *@
+
+            <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Tiếp tục </button>
+            <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Thoát </button>
+        </div>
+    </div>
+
+}
+
+<link href="@Url.Content("~/Content/CustomCss/GeneralPopup.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    function okButton_Click() {
+        if ($("#tabStrip").data("kendoTabStrip").select().index() === 0)
+            handleOKEvent($("#gridPromotion").data("kendoGrid"));
+        else //BY PurchaseRequisition
+            handleOKEvent();
+    }
+
+    function okWOSelectButton_Click() {
+        handleOKEvent();
+    }
+
+    function okMaterialIssueButton_Click() {
+        $("#GoodsReceiptTypeID").val("@((int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue)");
+
+
+        $("#Warehouse_WarehouseID").val(6);
+        $("#Warehouse_Code").val("KDH");
+        $("#Warehouse_Name").val("KDH");
+
+        $("#submitCreateWizard").trigger("click");
+    }
+
+
+    function handleOKEvent(promotionGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
+        var hasPurchaseRequisition =  true;// $("#tabStrip").data("kendoTabStrip").select().index() === 0 ? false : true;
+
+        if (hasPurchaseRequisition == false) {
+            if ($("#Customer_CustomerID").val() === null || $("#Customer_CustomerID").val() === "")
+                return false;
+
+            if (promotionGrid != undefined) {
+                var selectedPromotionItem = promotionGrid.dataItem(promotionGrid.select());
+                if (selectedPromotionItem === undefined || selectedPromotionItem === null)
+                    return false;
+            }
+
+            _setModelInput();
+        }
+        else {
+            switch ($("#tabStrip").data("kendoTabStrip").select().text()) {
+                case "Phiếu mua hàng":
+                    selectedGrid = $("#goodsReceiptPendingPurchaseRequisitionGrid").data("kendoGrid");
+                    break;
+                case "Nhà cung cấp":
+                    selectedGrid = $("#goodsReceiptPendingCustomerGrid").data("kendoGrid");
+                    break;
+
+
+
+
+                case "Phiếu VCNB":
+                    selectedGrid = $("#goodsReceiptPendingWarehouseTransferGrid").data("kendoGrid");
+                    break;
+                case "Tổng hợp VCNB":
+                    selectedGrid = $("#goodsReceiptPendingWarehouseGrid").data("kendoGrid");
+                    break;
+
+
+
+                case "Số KHSX":
+                    selectedGrid = $("#goodsReceiptPendingPlannedOrderGrid").data("kendoGrid");
+                    break;
+                case "Tổng hợp theo KH":
+                    selectedGrid = $("#goodsReceiptPendingPlannedOrderCustomerGrid").data("kendoGrid");
+                    break;
+                default:
+                    return false;
+            }
+
+            var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
+            if (selectedDataItem === undefined || selectedDataItem === null)
+                return false;
+
+            _setModelInput(selectedDataItem);
+        }
+
+
+        $("#submitCreateWizard").trigger("click");
+
+
+        function _setModelInput(selectedDataItem) {
+
+            if (hasPurchaseRequisition == false) {
+                $("#CustomerID").val(-1); //FOR TEMP ONLY
+
+                //$("#Salesperson_EmployeeID").val($("#Customer_SalespersonID").val()); //INIT DEFAULT Salesperson_EmployeeID, Salesperson_Name FROM Customer_SalespersonID, Customer_SalespersonName
+                //$("#Salesperson_Name").val($("#Customer_SalespersonName").val());
+            }
+            else {
+                $("#GoodsReceiptTypeID").val(selectedDataItem === undefined || selectedDataItem.GoodsReceiptTypeID === undefined ? null : selectedDataItem.GoodsReceiptTypeID);
+
+                //if (selectedDataItem.CustomerID === undefined) {
+                //    $("#Customer_CustomerID").val(selectedDataItem === undefined || selectedDataItem.CustomerID === undefined ? null : selectedDataItem.CustomerID);
+                //    $("#Customer_Code").val(selectedDataItem === undefined || selectedDataItem.CustomerCode === undefined ? null : selectedDataItem.CustomerCode);
+                //    $("#Customer_Name").val(selectedDataItem === undefined || selectedDataItem.CustomerName === undefined ? null : selectedDataItem.CustomerName);
+                //    $("#Customer_VATCode").val(selectedDataItem === undefined || selectedDataItem.CustomerVATCode === undefined ? null : selectedDataItem.CustomerVATCode);
+                //    $("#Customer_Telephone").val(selectedDataItem === undefined || selectedDataItem.CustomerTelephone === undefined ? null : selectedDataItem.CustomerTelephone);
+                //    $("#Customer_BillingAddress").val(selectedDataItem === undefined || selectedDataItem.CustomerBillingAddress === undefined ? null : selectedDataItem.CustomerBillingAddress);
+                //    $("#Customer_EntireTerritoryEntireName").val(selectedDataItem === undefined || selectedDataItem.CustomerEntireTerritoryEntireName === undefined ? null : selectedDataItem.CustomerEntireTerritoryEntireName);
+                //    $("#Customer_SalespersonID").val(selectedDataItem === undefined || selectedDataItem.CustomerSalespersonID === undefined ? null : selectedDataItem.CustomerSalespersonID);
+                //    $("#Customer_SalespersonName").val(selectedDataItem === undefined || selectedDataItem.CustomerSalespersonName === undefined ? null : selectedDataItem.CustomerSalespersonName);
+                //}
+
+                $("#Customer_CustomerID").val(selectedDataItem === undefined || selectedDataItem.CustomerID === undefined ? null : selectedDataItem.CustomerID);
+                $("#Customer_Code").val(selectedDataItem === undefined || selectedDataItem.CustomerCode === undefined ? null : selectedDataItem.CustomerCode);
+                $("#Customer_Name").val(selectedDataItem === undefined || selectedDataItem.CustomerName === undefined ? null : selectedDataItem.CustomerName);
+
+
+
+                $("#Warehouse_WarehouseID").val(selectedDataItem === undefined || selectedDataItem.WarehouseID === undefined ? null : selectedDataItem.WarehouseID);
+                $("#Warehouse_Code").val(selectedDataItem === undefined || selectedDataItem.WarehouseCode === undefined ? null : selectedDataItem.WarehouseCode);
+                $("#Warehouse_Name").val(selectedDataItem === undefined || selectedDataItem.WarehouseName === undefined ? null : selectedDataItem.WarehouseName);
+
+
+                $("#PlannedOrderID").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderID === undefined ? null : selectedDataItem.PlannedOrderID);
+                $("#PlannedOrderCode").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderCode === undefined ? null : selectedDataItem.PlannedOrderCode);
+                $("#PlannedOrderReference").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderReference === undefined ? null : selectedDataItem.PlannedOrderReference);
+                $("#PlannedOrderEntryDate").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.PlannedOrderEntryDate, Settings.DateTimeFormat));
+
+                $("#PurchaseRequisitionID").val(selectedDataItem === undefined || selectedDataItem.PurchaseRequisitionID === undefined ? null : selectedDataItem.PurchaseRequisitionID);
+                $("#PurchaseRequisitionCode").val(selectedDataItem === undefined || selectedDataItem.PurchaseRequisitionCode === undefined ? null : selectedDataItem.PurchaseRequisitionCode);
+                $("#PurchaseRequisitionReference").val(selectedDataItem === undefined || selectedDataItem.PurchaseRequisitionReference === undefined ? null : selectedDataItem.PurchaseRequisitionReference);
+                $("#PurchaseRequisitionEntryDate").val(selectedDataItem === undefined || selectedDataItem.PurchaseRequisitionEntryDate === undefined ? null : kendo.toString(selectedDataItem.PurchaseRequisitionEntryDate, Settings.DateTimeFormat));
+
+
+
+
+                $("#WarehouseTransferID").val(selectedDataItem === undefined || selectedDataItem.WarehouseTransferID === undefined ? null : selectedDataItem.WarehouseTransferID);
+                $("#WarehouseTransferReference").val(selectedDataItem === undefined || selectedDataItem.WarehouseTransferReference === undefined ? null : selectedDataItem.WarehouseTransferReference);
+                $("#WarehouseTransferEntryDate").val(selectedDataItem === undefined || selectedDataItem.WarehouseTransferEntryDate === undefined ? null : kendo.toString(selectedDataItem.WarehouseTransferEntryDate, Settings.DateTimeFormat));
+
+                $("#WarehouseIssue_WarehouseID").val(selectedDataItem === undefined || selectedDataItem.WarehouseIssueID === undefined ? null : selectedDataItem.WarehouseIssueID);
+                $("#WarehouseIssue_Code").val(selectedDataItem === undefined || selectedDataItem.WarehouseIssueCode === undefined ? null : selectedDataItem.WarehouseIssueCode);
+                $("#WarehouseIssue_Name").val(selectedDataItem === undefined || selectedDataItem.WarehouseIssueName === undefined ? null : selectedDataItem.WarehouseIssueName);
+
+
+
+                //$("#Warehouse_WarehouseID").val(selectedDataItem === undefined || selectedDataItem.WarehouseID === undefined ? null : selectedDataItem.WarehouseID);
+                //$("#Warehouse_Code").val(selectedDataItem === undefined || selectedDataItem.WarehouseCode === undefined ? null : selectedDataItem.WarehouseCode);
+                //$("#Warehouse_Name").val(selectedDataItem === undefined || selectedDataItem.WarehouseName === undefined ? null : selectedDataItem.WarehouseName);
+
+                $("#Description").val(selectedDataItem === undefined || selectedDataItem.Description === undefined ? null : selectedDataItem.Description);
+
+            }
+        }
+
+    }
+
+</script>
+
+
+
+
+

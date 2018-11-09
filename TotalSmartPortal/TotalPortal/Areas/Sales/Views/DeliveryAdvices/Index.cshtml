@@ -1,0 +1,169 @@
+﻿@using TotalPortal.Configuration
+
+@model TotalPortal.Areas.Sales.ViewModels.DeliveryAdviceViewModel
+
+<div id="popupWindow"></div>
+
+<div>
+    @(Html.Kendo().Grid<TotalModel.Models.DeliveryAdviceIndex>()
+            .Name("kendoGridIndex")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.DeliveryAdviceID).DisplayNameTitle().Hidden();                
+                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(90).Filterable(false);
+
+                columns.Bound(p => p.Reference).Title("#").Width(10).Filterable(false).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Sales/DeliveryAdvices", action = "Edit" }) + "/#= DeliveryAdviceID #'>#=Reference#</a>");
+                columns.Bound(p => p.Code).Title("Số ĐH").Width(20).Filterable(false);
+                columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(190);
+                columns.Bound(p => p.ReceiverDescription).Title("Giao hàng").Width(160);
+                columns.Bound(p => p.Description).Title("Diễn giải").Width(130);
+                columns.Bound(p => p.VoidTypeName).Title("Hủy đh").Width(60);
+
+                columns.Bound(p => p.GrandTotalQuantity).Title("Đặt hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right"}).Filterable(false).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.GrandTotalQuantityIssue).Title("Xuất kho").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right"}).Filterable(false).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.TotalListedGrossAmount).Title("Thành tiền").Format(Settings.kfmAmount).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right"}).Filterable(false).Width(80).ClientFooterTemplate("#= kendo.format('" + Settings.kfmAmount + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" }).Hidden(@ViewBag.ShowDiscount ? true : false);
+                columns.Bound(p => p.TotalGrossAmount).Title("Thành tiền").Format(Settings.kfmAmount).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right"}).Filterable(false).Width(80).ClientFooterTemplate("#= kendo.format('" + Settings.kfmAmount + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" }).Hidden(@ViewBag.ShowDiscount ? false : true);
+
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(92)
+                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Sales/DeliveryAdvices", action = "Void" }) + "/#= DeliveryAdviceID #'><span class='k-icon k-i-columns'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Sales/DeliveryAdvices", action = "Print" }) + "/#= DeliveryAdviceID #'><span class='k-icon k-i-folder-add'></span></a>");
+            })
+            .ToolBar(toolbar =>
+            {
+                toolbar.Template(@<text> 
+                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập đề nghị giao hàng </button> 
+                    <div class="toolbar" style="float: right;">
+                        <label>Nhập số phiếu, số đơn hàng hoặc tên KH</label>
+                        <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                        
+                        
+                        @*<div style="text-align: right; margin-top: 4px;">*@
+                        
+                            <span id="filterExtended">
+                                @Html.Kendo().DatePicker().Name("ExtendedFromDate").Value(Model.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" }) 
+                                @Html.Kendo().DatePicker().Name("ExtendedToDate").Value(Model.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" }) 
+
+                                @(Html.Kendo().DropDownList()
+                                    .Name("ShowPendingOnly")
+                                    .DataTextField("Text")
+                                    .DataValueField("Value")
+                                    .HtmlAttributes(new { @style = "width: 268px; text-align: center; " })
+                                    .BindTo(new List<SelectListItem>()
+                                      {
+                                            new SelectListItem { Text = "[Tất cả]", Value = "0"},
+                                            new SelectListItem { Text = "Liệt kê danh sách đơn hàng chưa giao", Value = "1"},
+                                      })
+                                    .Events(e => e.Change("indexFilterText_KeyUp"))
+                                    //.HtmlAttributes(new { @style = "padding-right: 13px;" })
+                                )
+                            </span>
+
+
+                        @*</div>*@
+
+
+
+                    </div>
+                </text>);
+            })
+            .Pageable()
+            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))            
+            .Selectable()
+            .Sortable()
+            .Events(e =>
+            {
+                e.DataBound("hightLightSelectedRow");
+            })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Read(read => read.Action("GetDeliveryAdviceIndexes", "DeliveryAdviceAPIs", new { area = "Sales" }).Data("onGetDeliveryAdviceIndexes"))
+                .Sort(sort =>
+                    {
+                        sort.Add(p => p.EntryDate).Descending();
+                        sort.Add(p => p.DeliveryAdviceID).Descending();
+                    })
+                .PageSize(20)
+                .Model(model =>
+                {
+                    model.Id(x => x.DeliveryAdviceID);
+                    model.Field(m => m.DeliveryAdviceID).DefaultValue(0);
+                })
+                .ServerOperation(true)
+                .Aggregates(a => a.Add(x => x.GrandTotalQuantity).Sum())
+                .Aggregates(a => a.Add(x => x.GrandTotalQuantityIssue).Sum())
+                .Aggregates(a => a.Add(x => x.TotalListedGrossAmount).Sum())
+                .Aggregates(a => a.Add(x => x.TotalGrossAmount).Sum())
+                )
+            .HtmlAttributes(new { @class = "grid-class" }))
+</div>
+
+
+
+<script type="text/javascript">
+
+    function onGetDeliveryAdviceIndexes(e) {
+        var indexFilterText = $("#indexFilterText").val();
+        return {
+            withExtendedSearch: indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght"? true: false,
+            extendedFromDate: $("#ExtendedFromDate").val(),
+            extendedToDate: $("#ExtendedToDate").val(),
+            pendingOnly: $("#ShowPendingOnly").val() === "0" ? false : true
+        };
+    }
+
+    function hightLightSelectedRow(e) {
+        require(["kindexGrid"], function (kindexGrid) {
+            var kindexGridInstance = new kindexGrid("kendoGridIndex");
+            kindexGridInstance.setSelectedRow("DeliveryAdviceID", '@ViewBag.SelectedEntityID');
+        });
+    }
+
+    function createWizard() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "DeliveryAdvices")", "Chọn khách hàng, chương trình khuyến mãi áp dụng cho khách hàng", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+        });
+    }
+
+
+    decoratingKindex = function (idx, elem) {
+
+        var isWarrantyClaim = elem.InActive;
+        if (isWarrantyClaim != null && isWarrantyClaim == true) {
+            $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus");
+        }
+
+        isWarrantyClaim = elem.InActivePartial;
+        if (isWarrantyClaim != null && isWarrantyClaim == true) {
+            $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus1");
+        }
+    }
+
+
+
+
+
+
+    function indexFilterText_KeyUp() {
+        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+        if ((indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") || $("#ShowPendingOnly").val() != "0") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "Code", operator: "contains", value: indexFilterText },
+                    { field: "CustomerName", operator: "contains", value: indexFilterText }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+</script>
+
+
+

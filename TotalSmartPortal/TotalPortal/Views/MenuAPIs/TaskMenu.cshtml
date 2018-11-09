@@ -1,0 +1,125 @@
+﻿@model IEnumerable<TotalModel.Models.ModuleDetail>
+
+<ul id="left-menu">
+
+    @(Html.Kendo().Menu()
+    .Name("grouplist")
+    .HtmlAttributes(new { style = "width: 70px;" })
+      .Items(items =>
+      {
+          foreach (var item in Model)
+          {
+              if (item.Actions == "-")
+              {
+                  items.Add()
+                    .Text(item.SoftDescription)
+                    .Content(item.Description)
+                      //.Separator(true)
+                      //.ImageUrl(item.ImageIndex)
+                    .HtmlAttributes(new { @class = "menuSeparation", @itemmenu = "item" });
+              }
+              else
+                  if (item.Actions == "Home")
+                  {
+                      items.Add()
+                        .Text(item.SoftDescription)
+                        .Content(item.Description)
+                          //.Separator(true)
+                        .ImageUrl(item.ImageIndex)
+                        .HtmlAttributes(new { @class = "menuHome", @itemmenu = "item" });
+                  }
+                  else
+                  {
+                      //if (item.ModuleDetailID == ViewBag.ModuleDetailID)
+                      //{
+                      //    items.Add()
+                      //        .Text(item.SoftDescription)
+                      //        .Content(item.Description)
+                      //        .ImageUrl(item.ImageIndex)
+                      //        .HtmlAttributes(new { @class = "menuModuleDetailItems", @ModuleDetailID = item.ModuleDetailID, @taskName = item.Description, @itemmenu = "item", @taskActions = item.Actions, @taskController = item.Controller, @highlight = "highlight" });
+
+                      //}
+                      //else
+                      //{
+                      items.Add()
+                          .Text(item.SoftDescription)
+                          .Content(item.Description)
+                          .ImageUrl(item.ImageIndex)
+                          .HtmlAttributes(new { @class = "menuModuleDetailItems", @ModuleDetailID = item.ModuleDetailID, @taskName = item.Description, @itemmenu = "item", @taskActions = item.Actions, @taskController = item.Controller });
+                      //}
+                  }
+          }
+      })
+        .Events(e => e.Select("selectTask"))
+        .Orientation(MenuOrientation.Vertical)
+    )
+
+</ul>
+
+<script>
+    function selectTask(e) {
+
+        if ($(e.item).attr("taskController") == undefined)
+            return;
+
+        $("#grouplist").find(".k-state-selected").removeClass("k-state-selected");
+        $(e.item).addClass("k-state-selected");
+
+        moduleDetailID = $(e.item).attr("ModuleDetailID");
+        taskName = $(e.item).attr("taskName");
+        taskController = $(e.item).attr("taskController");
+        taskActions = $(e.item).attr("taskActions");
+
+        if (taskController != "") {
+
+            return $.ajax({
+                url: '@Url.Action("SetModuleDetailID", "MenuAPIs")',
+                data: JSON.stringify({ "ModuleDetailID": moduleDetailID }),
+
+                type: 'POST',
+                contentType: 'application/json;',
+                dataType: 'json',
+                success: function (result) {
+                    if (result.SetResult == "Successfully") {
+
+                        var url = '@Url.Action("taskActions", "taskController")';
+                        url = url.replace("taskActions", taskActions);
+                        url = url.replace("taskController", taskController);
+
+                        window.open(url, "_self");
+
+                    }
+                    else
+                        alert(result.SetResult);
+                },
+                error: function (jqXHR, textStatus) {
+                    alert(textStatus);
+                }
+            });
+        }
+    }
+
+    $(document).ready(function () {
+
+        if (requireConfig != undefined && requireConfig.pageOptions.ModuleID != undefined) {
+            $('.menuModuleItems').each(function (i, obj) {
+                if ($(obj).attr("ModuleID") == requireConfig.pageOptions.ModuleID) {
+
+                    if ($(obj).hasClass("k-state-selected_1"))
+                        $(obj).removeClass("k-state-selected_1");
+
+                    $(obj).addClass("k-state-selected");
+                }
+            });
+        }
+
+        if (requireConfig != undefined && requireConfig.pageOptions.ModuleDetailID != undefined) {
+            $('.menuModuleDetailItems').each(function (i, obj) {
+                if ($(obj).attr("ModuleDetailID") == requireConfig.pageOptions.ModuleDetailID) {
+                    $(obj).addClass("k-state-selected");
+                }
+            });
+        }
+    });
+
+</script>

@@ -1,0 +1,61 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<FinishedHandoverPendingPlannedOrder>()
+    .Name("finishedHandoverPendingPlannedOrderGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(80);
+        columns.Bound(c => c.PlannedOrderCode).Title("Mã KHSX").Width(100);
+        columns.Bound(c => c.CustomerCode).Title("Mã KH").Width(100);
+        columns.Bound(c => c.CustomerName).Title("Tên KH").Width(150);
+    })    
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập mã hoặc tên Khách hàng</label>
+                <input id="finishedHandoverPendingWorkshiftFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="finishedHandoverPendingPlannedOrderFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+        .Scrollable(s => s.Height(Settings.PopupContentHeight))
+        .DataSource(ds => ds.Ajax()
+                .Read(read => read.Action("GetPlannedOrders", "FinishedHandoverAPIs", new { area = "Productions" }).Data("onAdditionalGetPlannedOrders"))
+            .ServerOperation(false)
+        )
+        .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetPlannedOrders(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID
+        };
+    }
+
+    function finishedHandoverPendingPlannedOrderFilter_KeyUp() {
+        var finishedHandoverPendingPlannedOrderFilter = $("#finishedHandoverPendingWorkshiftFilter").val(), gridDetails = $("#finishedHandoverPendingPlannedOrderGrid").data("kendoGrid");
+
+        if (finishedHandoverPendingPlannedOrderFilter && finishedHandoverPendingPlannedOrderFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "PlannedOrderCode", operator: "contains", value: finishedHandoverPendingPlannedOrderFilter },
+                    { field: "CustomerCode", operator: "contains", value: finishedHandoverPendingPlannedOrderFilter },
+                    { field: "CustomerName", operator: "contains", value: finishedHandoverPendingPlannedOrderFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+    $("#finishedHandoverPendingPlannedOrderGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>
+

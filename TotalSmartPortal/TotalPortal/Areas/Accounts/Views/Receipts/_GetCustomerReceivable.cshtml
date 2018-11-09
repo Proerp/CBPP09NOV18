@@ -1,0 +1,70 @@
+﻿
+@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<CustomerReceivable>()
+    .Name("customerReceivableGrid")
+
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.CustomerCode).Title("Mã KH").Width(30);
+        columns.Bound(c => c.CustomerName).Title("Tên khách hàng").Width(80);
+        columns.Bound(c => c.CustomerAttentionName).Title("Người liên hệ").Width(30);
+        columns.Bound(c => c.CustomerBillingAddress).Title("Địa chỉ").Width(100);
+        columns.Bound(c => c.AmountDue).Title("Công nợ").Width(30).Format(Settings.kfmAmount).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });  
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập tên, MST, số điện thoại, người liên hệ, địa chỉ khách hàng:</label>
+                <input id="customerReceivableFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="customerReceivableFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetCustomerReceivables", "ReceiptAPIs", new { area = "Accounts" }).Data("onGetCustomerReceivables"))
+        .ServerOperation(false)
+    )
+    .Selectable()
+)
+
+<script type="text/javascript">
+    function onGetCustomerReceivables(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID,
+            receiptID: $("#ReceiptID").val(),
+            customerName: $("#customerReceivableFilter").val()
+        };
+    }
+
+
+    function customerReceivableFilter_KeyUp() {
+        var customerReceivableFilter = $("#customerReceivableFilter").val(), gridDetails = $("#customerReceivableGrid").data("kendoGrid");
+
+        if (customerReceivableFilter && customerReceivableFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "CustomerCode", operator: "contains", value: customerReceivableFilter },
+                    { field: "CustomerName", operator: "contains", value: customerReceivableFilter },
+                    { field: "CustomerVATCode", operator: "contains", value: customerReceivableFilter },
+                    { field: "CustomerBillingAddress", operator: "contains", value: customerReceivableFilter },
+                    { field: "CustomerTelephone", operator: "contains", value: customerReceivableFilter },
+                    { field: "CustomerAttentionName", operator: "contains", value: customerReceivableFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+
+    $("#customerReceivableGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>

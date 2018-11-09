@@ -1,0 +1,138 @@
+﻿@using TotalBase.Enums
+@using TotalPortal.Configuration
+
+@model TotalPortal.Areas.Inventories.ViewModels.ITransferOrderViewModel
+
+<div id="popupWindow"></div>
+
+<div>
+    @(Html.Kendo().Grid<TotalModel.Models.TransferOrderIndex>()
+            .Name("kendoGridIndex")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.TransferOrderID).DisplayNameTitle().Hidden();                
+                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
+
+                columns.Bound(p => p.Reference).Title("Phiếu").Width(1).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= TransferOrderID #'>#=Reference#</a>");
+                columns.Bound(p => p.TransferOrderTypeName).Title("PL").Width(10);
+                columns.Bound(p => p.Caption).Title("Mặt hàng").Width(338);
+                
+                columns.Bound(p => p.TransferOrderJobs).Title("Mục đích").Width(107);
+                columns.Bound(p => p.VoidTypeName).Title("Hủy lệnh").Width(20);
+                
+                columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);                
+                
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(50)
+                    .ClientTemplate("<a class='k-button' title='Hủy phiếu' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Void" }) + "/#= TransferOrderID #'><span class='k-icon k-i-columns'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= TransferOrderID #'><span class='k-icon k-delete'></span></a>");
+            })
+            .ToolBar(toolbar =>
+            {
+                toolbar.Template(@<text>
+                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu mới </button>
+                    <div class="toolbar" style="float: right;">
+                        <label>Nhập số phiếu hoặc phân loại để tìm</label>
+                        <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                    </div>
+                </text>);
+            })
+            .Filterable(f => f.Enabled(false))            
+            .Pageable()
+            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))                        
+            .Selectable()
+            .Sortable()
+            .Events(e =>
+            {
+                e.DataBound("hightLightSelectedRow");
+            })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Group(group => group.AddDescending(p => p.EntryDate))
+                .Read(read => read.Action("GetTransferOrderIndexes", "TransferOrderAPIs", new { area = "Inventories" }).Data("onTransferOrderIndexes"))
+                .Sort(sort =>
+                    {
+                        sort.Add(p => p.EntryDate).Descending();
+                        sort.Add(p => p.TransferOrderID).Descending();
+                    })
+                .PageSize(20)
+                .Model(model =>
+                {
+                    model.Id(x => x.TransferOrderID);
+                    model.Field(m => m.TransferOrderID).DefaultValue(0);
+                })
+                .ServerOperation(true)
+                )
+            .HtmlAttributes(new { @class = "grid-class" }))
+</div>
+
+
+
+<script type="text/javascript">
+    function onTransferOrderIndexes(e) {
+        return {
+            nmvnTaskID: requireConfig.pageOptions.NmvnTaskID
+        };
+    }
+
+    function hightLightSelectedRow(e) {
+        require(["kindexGrid"], function (kindexGrid) {
+            var kindexGridInstance = new kindexGrid("kendoGridIndex");
+            kindexGridInstance.setSelectedRow("TransferOrderID", '@ViewBag.SelectedEntityID');
+        });
+    }
+
+    function createWizard() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", Model.ControllerName)", "Chọn kho, lập phiếu mới", "@Settings.PopupWidth", "@Settings.PopupHeightSmall");
+        });
+    }
+
+
+    decoratingKindex = function (idx, elem) {
+
+        if (elem.Approved == null || elem.Approved == false) {
+            $('tr[data-uid="' + elem.uid + '"]').addClass("NotApproved");
+        }
+        else
+        {
+            if (elem.InActive != null && elem.InActive == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus");
+            }
+
+            if (elem.InActivePartial != null && elem.InActivePartial == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus1");
+            }
+        }
+
+    }
+
+
+
+
+
+
+    function indexFilterText_KeyUp() {
+        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+        if (indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "TransferOrderTypeName", operator: "contains", value: indexFilterText },
+                    { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "Description", operator: "contains", value: indexFilterText }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+</script>
+
+
+

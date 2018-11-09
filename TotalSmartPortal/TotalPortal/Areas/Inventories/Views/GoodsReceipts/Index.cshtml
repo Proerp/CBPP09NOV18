@@ -1,0 +1,123 @@
+﻿@using TotalPortal.Configuration
+
+@model TotalPortal.Areas.Inventories.ViewModels.IGoodsReceiptViewModel
+
+<div id="popupWindow"></div>
+
+<div>
+    @(Html.Kendo().Grid<TotalModel.Models.GoodsReceiptIndex>()
+        .Name("kendoGridIndex")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.GoodsReceiptID).DisplayNameTitle().Hidden();            
+            columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
+
+            columns.Bound(p => p.Reference).Title("PNK").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= GoodsReceiptID #'>#=Reference#</a>");
+            columns.Bound(p => p.CustomerName).Title("K/H").Width(108);
+            columns.Bound(p => p.GoodsReceiptTypeCaption).Title("Nguồn hàng").Width(168);
+            columns.Bound(p => p.Caption).Title("Mặt hàng").Width(196);
+            columns.Bound(p => p.Description).Title("Diễn giải").Width(207);
+            columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+
+            columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
+                .ClientTemplate("<a class='k-button' title='In' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Print" }) + "/#= GoodsReceiptID #'><span class='k-icon k-i-folder-add'></span></a></a> <a class='k-button' title='Xóa chứng từ' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= GoodsReceiptID #'><span class='k-icon k-delete'></span></a>");
+        })
+        .ToolBar(toolbar =>
+        {
+            toolbar.Template(@<text>
+                <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu nhập kho </button>
+                <div class="toolbar" style="float: right;">
+                    <label>Nhập số phiếu, tên KH hoặc diễn giải</label>
+                    <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                </div>
+            </text>);
+        })
+        .Filterable(f => f.Enabled(false))    
+        .Pageable()
+            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))            
+            .Selectable()
+            .Sortable()
+            .Events(e =>
+            {
+                e.DataBound("hightLightSelectedRow");
+            })
+            .DataSource(dataSource => dataSource
+            .Ajax()
+                .Group(group => group.AddDescending(p => p.EntryDate))
+                .Read(read => read.Action("GetGoodsReceiptIndexes", "GoodsReceiptAPIs", new { area = "Inventories" }).Data("onGoodsReceiptIndexes"))
+            .Sort(sort =>
+                {
+                    sort.Add(p => p.EntryDate).Descending();
+                    sort.Add(p => p.GoodsReceiptID).Descending();
+                })
+            .PageSize(20)
+            .Model(model =>
+            {
+                model.Id(x => x.GoodsReceiptID);
+                model.Field(m => m.GoodsReceiptID).DefaultValue(0);
+            })
+            .ServerOperation(true)
+            .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
+            )
+            .HtmlAttributes(new { @class = "grid-class" })
+    )
+</div>
+
+
+
+<script type="text/javascript">
+    function onGoodsReceiptIndexes(e) {
+        return {
+            nmvnTaskID: requireConfig.pageOptions.NmvnTaskID
+        };
+    }
+
+    function hightLightSelectedRow(e) {
+        require(["kindexGrid"], function (kindexGrid) {
+            var kindexGridInstance = new kindexGrid("kendoGridIndex");
+            kindexGridInstance.setSelectedRow("GoodsReceiptID", '@ViewBag.SelectedEntityID');
+        });
+    }
+
+    function createWizard() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", Model.ControllerName)", "Vui lòng chọn", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+        });
+    }
+
+
+    decoratingKindex = function (idx, elem) {
+        if (elem.Approved == null || elem.Approved == false) {
+            $('tr[data-uid="' + elem.uid + '"]').addClass("NotApproved");
+        }
+    }
+
+
+
+
+
+
+    function indexFilterText_KeyUp() {
+        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+        if ((indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") || $("#ShowPendingOnly").val() != "0") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "Description", operator: "contains", value: indexFilterText }                    
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+</script>
+
+

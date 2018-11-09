@@ -1,0 +1,93 @@
+﻿@using TotalPortal.Configuration
+
+@*@model TotalPortal.Areas.Commons.ViewModels.MoldViewModel*@
+
+<div>
+    @(Html.Kendo().Grid<TotalModel.Models.MoldIndex>()
+        .Name("kendoGridIndex")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.MoldID).DisplayNameTitle().Hidden();
+
+            columns.Bound(p => p.Code).Title("Mã").Width(80).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/Molds", action = "Edit" }) + "/#= MoldID #'>#=Code#</a>");
+            columns.Bound(p => p.Name).Title("Tên khuôn").Width(296);
+            columns.Bound(p => p.Quantity).Title("SP/Khuôn").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
+            columns.Bound(p => p.MoldWidth).Title("Rộng").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
+            columns.Bound(p => p.MoldLength).Title("Dài").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
+            columns.Bound(p => p.ItemWidth).Title("Rộng (SP)").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
+            columns.Bound(p => p.ItemLength).Title("Dài (SP)").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
+            columns.Bound(p => p.ItemHigh).Title("Cao (SP)").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
+            columns.Bound(p => p.Remarks).Title("Ghi chú").Width(168);
+        })
+        .ToolBar(toolbar =>
+        {
+            toolbar.Template(@<text>
+                <button type="button" class="k-button" onclick="location.href='@Url.Action("Create", "Molds")'"> <img src="~/Content/Images/Mains/Customer Orange 24.png" /> Thêm khuôn mới </button>
+                <div class="toolbar" style="float: right;">
+                    <label>Nhập mã, tên hoặc ghi chú để tìm</label>
+                    <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                </div>
+            </text>);
+        })
+        .Filterable(e => e.Enabled(false))
+        .Pageable()
+        .Groupable()
+        //.Filterable()
+        .Selectable()
+        .Sortable()
+        .Events(e =>
+        {
+            e.DataBound("hightLightSelectedRow");
+        })
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            //.Group(group => group.AddDescending(p => p.Category))
+            .Read(read => read.Action("GetMoldIndexes", "MoldAPIs", new { area = "Commons" }))
+            //.Sort(sort =>
+            //    {
+            //        sort.Add(p => p.Name).Descending();
+            //    })
+            .PageSize(20)
+            .Model(model =>
+            {
+                model.Id(x => x.MoldID);
+                model.Field(m => m.MoldID).DefaultValue(0);
+            })
+            .ServerOperation(true)
+        )
+        .HtmlAttributes(new { @class = "grid-class" }))
+</div>
+
+
+
+<script type="text/javascript">
+    function hightLightSelectedRow(e) {
+        require(["kindexGrid"], function (kindexGrid) {
+            var kindexGridInstance = new kindexGrid("kendoGridIndex");
+            kindexGridInstance.setSelectedRow("MoldID", '@ViewBag.SelectedEntityID');
+        });
+    }
+
+    function indexFilterText_KeyUp() {
+        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+        if (indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "Code", operator: "contains", value: indexFilterText },
+                    { field: "Name", operator: "contains", value: indexFilterText },
+                    { field: "Remarks", operator: "contains", value: indexFilterText }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+</script>
+
+
+

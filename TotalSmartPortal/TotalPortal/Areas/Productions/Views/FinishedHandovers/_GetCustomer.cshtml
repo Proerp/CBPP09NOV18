@@ -1,0 +1,59 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<FinishedHandoverPendingCustomer>()
+     .Name("finishedHandoverPendingCustomerGrid")
+
+    .Columns(columns =>
+    {        
+        columns.Bound(c => c.CustomerCode).Title("Mã khách hàng").Width(90);
+        columns.Bound(c => c.CustomerName).Title("Tên khách hàng").Width(190);        
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập mã hoặc tên khách hàng </label>
+                <input id="finishedHandoverPendingCustomerFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="finishedHandoverPendingCustomerFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetCustomers", "FinishedHandoverAPIs", new { area = "Productions" }).Data("onAdditionalGetCustomers"))
+        .ServerOperation(false)
+    )
+    .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetCustomers(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID
+        };
+    }
+
+    function finishedHandoverPendingCustomerFilter_KeyUp() {
+        var finishedHandoverPendingCustomerFilter = $("#finishedHandoverPendingCustomerFilter").val(), gridDetails = $("#finishedHandoverPendingCustomerGrid").data("kendoGrid");
+
+        if (finishedHandoverPendingCustomerFilter && finishedHandoverPendingCustomerFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "CustomerCode", operator: "contains", value: finishedHandoverPendingCustomerFilter },
+                    { field: "CustomerName", operator: "contains", value: finishedHandoverPendingCustomerFilter }                    
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+
+    $("#finishedHandoverPendingCustomerGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>

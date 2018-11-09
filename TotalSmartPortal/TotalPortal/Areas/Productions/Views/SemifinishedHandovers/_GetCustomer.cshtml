@@ -1,0 +1,62 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<SemifinishedHandoverPendingCustomer>()
+     .Name("semifinishedHandoverPendingCustomerGrid")
+
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(80);
+        columns.Bound(c => c.WorkshiftCode).Title("Ca sx").Width(90);
+        columns.Bound(c => c.CustomerCode).Title("Mã khách hàng").Width(90);
+        columns.Bound(c => c.CustomerName).Title("Tên khách hàng").Width(190);        
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập mã, tên khách hàng hoặc ca sx</label>
+                <input id="semifinishedHandoverPendingCustomerFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="semifinishedHandoverPendingCustomerFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetCustomers", "SemifinishedHandoverAPIs", new { area = "Productions" }).Data("onAdditionalGetCustomers"))
+        .ServerOperation(false)
+    )
+    .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetCustomers(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID
+        };
+    }
+
+    function semifinishedHandoverPendingCustomerFilter_KeyUp() {
+        var semifinishedHandoverPendingCustomerFilter = $("#semifinishedHandoverPendingCustomerFilter").val(), gridDetails = $("#semifinishedHandoverPendingCustomerGrid").data("kendoGrid");
+
+        if (semifinishedHandoverPendingCustomerFilter && semifinishedHandoverPendingCustomerFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "CustomerCode", operator: "contains", value: semifinishedHandoverPendingCustomerFilter },
+                    { field: "CustomerName", operator: "contains", value: semifinishedHandoverPendingCustomerFilter },
+                    { field: "WorkshiftCode", operator: "contains", value: semifinishedHandoverPendingCustomerFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+
+    $("#semifinishedHandoverPendingCustomerGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>

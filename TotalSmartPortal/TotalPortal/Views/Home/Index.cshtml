@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+@Html.Hidden("userName", "")
+@Html.Hidden("access_token", "")
+
+<div style="visibility:hidden">
+    <button type="button" class="k-button" onclick="apiLogOn()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Log on </button>
+    <button type="button" class="k-button" onclick="apiGetData()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Call API </button>
+</div>
+
+<script>
+
+    function apiLogOn() {
+
+        var loginData = {
+            grant_type: 'password',
+            username: 'dhck1@tandatviet.com',
+            password: 'Dhck@123'
+        };
+
+        
+
+        return $.ajax({
+
+            url: '/Token',
+            data: loginData,
+
+            type: 'POST',
+            contentType: 'application/json;',
+            dataType: 'json',
+
+            success: function (result) {
+                $('#userName').val(result.userName);
+                $('#access_token').val(result.access_token);
+
+                alert("Log on successfully for " + result.userName);
+            },
+            error: function (jqXHR, textStatus) {
+                alert(textStatus + ': ' + jqXHR.statusText + ' ' + jqXHR.responseText);
+            }
+        });
+    }
+
+    function apiGetData() {
+
+        var token = $('#access_token').val();
+        var headers = {};
+        
+        if (token) {
+            headers.Authorization = 'Bearer ' + token;
+        }
+
+        return $.ajax({
+            url: '/Test/HelloWorld',
+            headers: headers,
+
+            type: 'GET',
+            contentType: 'application/json;',
+            dataType: 'json',
+            success: function (result) {
+                alert(result);
+            },
+            error: function (jqXHR, textStatus) {
+                alert(textStatus + ': ' + jqXHR.statusText + ' ' + jqXHR.responseText);
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,138 @@
+﻿@using TotalBase.Enums
+@using TotalPortal.Configuration
+
+@model TotalPortal.Areas.Inventories.ViewModels.IWarehouseTransferViewModel
+
+<div id="popupWindow"></div>
+
+
+<div>
+    @(Html.Kendo().Grid<TotalModel.Models.WarehouseTransferIndex>()
+            .Name("kendoGridIndex")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.WarehouseTransferID).DisplayNameTitle().Hidden();                
+                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
+
+                columns.Bound(p => p.Reference).Title("Số phiếu").Width(50).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= WarehouseTransferID #'>#=Reference#</a>");                
+                columns.Bound(p => p.WarehouseCode).Title("Kho xuất").Width(30);
+                columns.Bound(p => p.WarehouseReceiptCode).Title("Kho nhập").Width(30);
+                columns.Bound(p => p.Caption).Title("Mặt hàng").Width(396);
+                columns.Bound(p => p.WarehouseTransferJobs).Title("Mục đích").Width(168);
+                
+                columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(68)
+                    .ClientTemplate("<a class='k-button' title='In' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Print" }) + "/#= WarehouseTransferID #' target='_blank'><span class='k-icon k-i-folder-up'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= WarehouseTransferID #'><span class='k-icon k-delete'></span></a>");
+            })
+            .ToolBar(toolbar =>
+            {
+                toolbar.Template(@<text>
+                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu mới </button>
+                    <div class="toolbar" style="float: right;">
+                        <label>Nhập số phiếu hoặc kho nhập, kho xuất để tìm</label>
+                        <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                    </div>
+                </text>);
+            })
+            .Filterable(f => f.Enabled(false))            
+            .Pageable()
+            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))                        
+            .Selectable()
+            .Sortable()
+            .Events(e =>
+            {
+                e.DataBound("hightLightSelectedRow");
+            })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Group(group => group.AddDescending(p => p.EntryDate))
+                .Read(read => read.Action("GetWarehouseTransferIndexes", "WarehouseTransferAPIs", new { area = "Inventories" }).Data("onWarehouseTransferIndexes"))
+                .Sort(sort =>
+                    {
+                        sort.Add(p => p.EntryDate).Descending();
+                        sort.Add(p => p.WarehouseTransferID).Descending();
+                    })
+                .PageSize(20)
+                .Model(model =>
+                {
+                    model.Id(x => x.WarehouseTransferID);
+                    model.Field(m => m.WarehouseTransferID).DefaultValue(0);
+                })
+                .ServerOperation(true)
+                .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
+                )
+            .HtmlAttributes(new { @class = "grid-class" }))
+</div>
+
+
+
+<script type="text/javascript">
+    function onWarehouseTransferIndexes(e) {
+        return {
+            nmvnTaskID: requireConfig.pageOptions.NmvnTaskID
+        };
+    }
+
+    function hightLightSelectedRow(e) {
+        require(["kindexGrid"], function (kindexGrid) {
+            var kindexGridInstance = new kindexGrid("kendoGridIndex");
+            kindexGridInstance.setSelectedRow("WarehouseTransferID", '@ViewBag.SelectedEntityID');
+        });
+    }
+
+    function createWizard() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", Model.ControllerName)", "Chọn kho, lập phiếu mới", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+        });
+    }
+
+
+    decoratingKindex = function (idx, elem) {
+
+        if (elem.Approved == null || elem.Approved == false) {
+            $('tr[data-uid="' + elem.uid + '"]').addClass("NotApproved");
+        }
+        else {
+            if (elem.InActive != null && elem.InActive == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus");
+            }
+
+            if (elem.InActivePartial != null && elem.InActivePartial == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus1");
+            }
+        }
+
+    }
+
+
+
+
+
+
+    function indexFilterText_KeyUp() {
+        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+        if (indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "WarehouseCode", operator: "contains", value: indexFilterText },
+                    { field: "WorkshiftName", operator: "contains", value: indexFilterText },
+                    { field: "WarehouseReceiptCode", operator: "contains", value: indexFilterText },
+                    { field: "Description", operator: "contains", value: indexFilterText }
+                ]
+            });
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+</script>
+
+
+

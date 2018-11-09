@@ -1,0 +1,176 @@
+﻿@using TotalBase.Enums;
+@using TotalModel.Models;
+@using TotalPortal.Configuration;
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+
+@model TotalPortal.Areas.Commons.ViewModels.CustomerViewModel
+
+
+
+@Html.HiddenFor(model => model.CustomerID)
+@Html.HiddenFor(model => model.ShowDiscount)
+@Html.HiddenFor(model => model.Editable)
+
+<div class="left-panel">
+    <div style="padding-left: 48px; padding-top: 16px; "> <img src="~/Content/Images/New/2017/sale-off-icon-64.png" /> </div>
+</div>
+<div class="right-panel">
+    <div class="right-first-panel">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Code)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.Name).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-group" style="padding-top: 16px;">
+            @Html.Label("Vui lòng chọn CTKM, sau đó nhấn 'Thêm CTKM vào KH'")
+            <div class="div-input">
+                @(Html.Kendo().DropDownList().Name("PromotionID").DataValueField("Value").DataTextField("Text").BindTo((System.Collections.IEnumerable)ViewBag.Promotions).HtmlAttributes((@Model.Editable ? (object)new { @class = "left-panel-input" } : (object)new { @class = "left-panel-input", @readonly = "readonly" })))
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="right-second-panel">
+        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CustomerCategory.cshtml", @Model, new ViewDataDictionary { { "CustomerCategoryReadonly", true } })
+        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PriceCategory.cshtml", @Model, new ViewDataDictionary { { "PriceCategoryReadonly", true } })
+
+        <div class="form-group" style="padding-top: 16px;">
+            @Html.Label(" ")
+            <div class="div-input">
+                <button type="button" class="k-button left-panel-input" onclick="AddPromotionCustomers()"> <img src="~/Content/Images/New/2017/sale-off-icon-24.png" /> Thêm CTKM vào KH: @Model.Code </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<div class="form-group">
+    @(Html.Kendo().Grid<Promotion>()
+    .Name("gridPromotion")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.Code).Title("Mã KM").Width(17);
+
+        columns.Bound(c => c.DiscountPercent).Title("% CK").Width(5).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Format(Settings.kfmDiscountPercent);
+        columns.Bound(c => c.ControlFreeQuantity).Title("SL/1 QT").Width(6).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Format(Settings.kfmQuantity);
+        columns.Bound(c => c.StartDate).Title("Ngày bắt đầu").Width(12).Format("{0:" + Settings.DateTimeFormat + "}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+        columns.Bound(c => c.EndDate).Title("Ngày kết thúc").Width(12).Format("{0:" + Settings.DateTimeFormat + "}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+        columns.Template(t => { }).Title("CK 1 dòng").ClientTemplate("<input class='IsSelected' #= ApplyToTradeDiscount ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center", @readonly = "readonly" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(7);
+
+        columns.Template(t => { }).Title("Bán Hàng").ClientTemplate("<input class='IsSelected' #= ApplyToSales ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center", @readonly = "readonly" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(7);
+        columns.Template(t => { }).Title("Trả hàng").ClientTemplate("<input class='IsSelected' #= ApplyToReturns ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center", @readonly = "readonly" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(6);
+        
+        columns.Bound(c => c.Name).Title("Diễn giải").Width(13);
+        columns.Template(model => null).Width(4)
+            .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' onclick='RemovePromotionCustomers(#=PromotionID#)'><span class='k-icon k-delete'></span></a>");
+    })
+
+    .Scrollable(s => s.Height(219))
+    .DataSource(ds => ds.Ajax()
+    .Read(read => read.Action("GetPromotionByCustomers", "PromotionAPIs", new { area = "Commons" }).Data("onGetPromotionByCustomers"))
+    .ServerOperation(true))
+    .Selectable()            
+    )
+
+</div>
+
+
+<div class="background-bar" style="height: 45px;">
+    <div class="popup-button-bar">
+        <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Đóng </button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function onGetPromotionByCustomers(e) {
+        return {
+            applyToSalesVersusReturns: "@GlobalEnums.ApplyToSalesVersusReturns_ApplyToAll",
+            customerID: ($("#ShowDiscount").val() == 'True' ? $("#CustomerID").val() : 0)
+        };
+    }
+
+    function AddPromotionCustomers(e) {
+        if ($("#Editable").val() != 'True' || $("#ShowDiscount").val() != 'True')
+            return;
+        return $.ajax({
+            url: '@Url.Action("AddPromotionCustomers", "PromotionAPIs", new { area = "Commons" })',
+            data: JSON.stringify({ "promotionID": $("#PromotionID").val(), "customerID": $("#CustomerID").val() }),
+
+            type: 'POST',
+            contentType: 'application/json;',
+            dataType: 'json',
+            success: function (result) {
+                if (result.AddResult == "Successfully") {
+                    $("#gridPromotion").data("kendoGrid").dataSource.read();
+                }
+                else
+                    alert(result.AddResult);
+            },
+            error: function (jqXHR, textStatus) {
+                alert(textStatus);
+            }
+        });
+    }
+
+    function RemovePromotionCustomers(promotionID) {
+        if ($("#Editable").val() != 'True' || $("#ShowDiscount").val() != 'True')
+            return;
+        return $.ajax({
+            url: '@Url.Action("RemovePromotionCustomers", "PromotionAPIs", new { area = "Commons" })',
+            data: JSON.stringify({ "promotionID": promotionID, "customerID": $("#CustomerID").val() }),
+
+            type: 'POST',
+            contentType: 'application/json;',
+            dataType: 'json',
+            success: function (result) {
+                if (result.RemoveResult == "Successfully") {
+                    $("#gridPromotion").data("kendoGrid").dataSource.read();
+                }
+                else
+                    alert(result.RemoveResult);
+            },
+            error: function (jqXHR, textStatus) {
+                alert(textStatus);
+            }
+        });
+
+    }
+
+</script>
+
+<style>
+    .right-first-panel {
+        padding-right: 30px;
+    }
+
+    .right-second-panel {
+        padding-top: 1px;
+        padding-right: 13px;
+    }
+
+    .left-panel-input {
+        width: 100%;
+    }
+</style>

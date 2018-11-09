@@ -1,0 +1,12 @@
+﻿@model TotalPortal.Areas.Commons.ViewModels.Helpers.ITransferOrderTypeDropDownViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.TransferOrderTypeID)
+    <div class="div-input">
+        @Html.Kendo().DropDownListFor(m => m.TransferOrderTypeID).BindTo(Model.TransferOrderTypeSelectList).HtmlAttributes((ViewData["TransferOrderTypeReadonly"] != null && (bool)ViewData["TransferOrderTypeReadonly"] == true ? (object)new { @class = "left-panel-input", @readonly = "readonly" } : (object)new { @class = "left-panel-input" }))
+    </div>
+    <div class="div-validation-message">
+        @Html.ValidationMessageFor(model => model.TransferOrderTypeID, "", new { @class = "text-danger" })
+    </div>
+</div>
+
