@@ -28,6 +28,13 @@
 
 
 
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalID)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalCode)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalReference)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalEntryDate)
+
+    
+    
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferID)
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferReference)
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferEntryDate)
@@ -85,6 +92,14 @@
 
 
 
+            tabStrip.Add().Text("Mua hàng")
+            .Visible(false)
+            .Content(@<text>
+                @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetGoodsArrival.cshtml")
+            </text>);
+        
+        
+        
             tabStrip.Add().Text("Phiếu VCNB")
                 .Visible(Model.IsItem)
                 .Selected(Model.IsItem)
@@ -190,6 +205,11 @@
 
 
 
+                case "Mua hàng":
+                    selectedGrid = $("#goodsReceiptPendingGoodsArrivalGrid").data("kendoGrid");
+                    break;
+
+
 
                 case "Phiếu VCNB":
                     selectedGrid = $("#goodsReceiptPendingWarehouseTransferGrid").data("kendoGrid");
@@ -265,6 +285,12 @@
                 $("#PurchaseRequisitionReference").val(selectedDataItem === undefined || selectedDataItem.PurchaseRequisitionReference === undefined ? null : selectedDataItem.PurchaseRequisitionReference);
                 $("#PurchaseRequisitionEntryDate").val(selectedDataItem === undefined || selectedDataItem.PurchaseRequisitionEntryDate === undefined ? null : kendo.toString(selectedDataItem.PurchaseRequisitionEntryDate, Settings.DateTimeFormat));
 
+
+
+                $("#GoodsArrivalID").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalID === undefined ? null : selectedDataItem.GoodsArrivalID);
+                $("#GoodsArrivalCode").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalCode === undefined ? null : selectedDataItem.GoodsArrivalCode);
+                $("#GoodsArrivalReference").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalReference === undefined ? null : selectedDataItem.GoodsArrivalReference);
+                $("#GoodsArrivalEntryDate").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalEntryDate === undefined ? null : kendo.toString(selectedDataItem.GoodsArrivalEntryDate, Settings.DateTimeFormat));
 
 
 
