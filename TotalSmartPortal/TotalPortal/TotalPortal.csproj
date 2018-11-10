@@ -1510,6 +1510,7 @@
     <Content Include="Areas\Commons\Views\Molds\Index.cshtml" />
     <Content Include="Areas\Commons\Views\Molds\_Mold.cshtml" />
     <Content Include="Areas\Inventories\Views\GoodsReceipts\GetPendingGoodsArrivalDetails.cshtml" />
+    <Content Include="Areas\Inventories\Views\GoodsReceipts\_GetGoodsArrival.cshtml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
       <SubType>Designer</SubType>

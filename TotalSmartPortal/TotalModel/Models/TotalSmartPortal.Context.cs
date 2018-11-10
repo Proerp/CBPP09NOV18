@@ -112,8 +112,8 @@ namespace TotalModel.Models
         public virtual DbSet<TransferOrder> TransferOrders { get; set; }
         public virtual DbSet<WarehouseTransfer> WarehouseTransfers { get; set; }
         public virtual DbSet<FirmOrderDetail> FirmOrderDetails { get; set; }
-        public virtual DbSet<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
         public virtual DbSet<GoodsArrival> GoodsArrivals { get; set; }
+        public virtual DbSet<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {

@@ -32,8 +32,8 @@ namespace TotalModel.Models
             this.ProductionOrders = new HashSet<ProductionOrder>();
             this.TransferOrders = new HashSet<TransferOrder>();
             this.FirmOrderDetails = new HashSet<FirmOrderDetail>();
-            this.GoodsArrivalDetails = new HashSet<GoodsArrivalDetail>();
             this.GoodsArrivals = new HashSet<GoodsArrival>();
+            this.GoodsArrivalDetails = new HashSet<GoodsArrivalDetail>();
         }
     
         public int VoidTypeID { get; set; }
@@ -75,8 +75,8 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FirmOrderDetail> FirmOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrival> GoodsArrivals { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
     }
 }

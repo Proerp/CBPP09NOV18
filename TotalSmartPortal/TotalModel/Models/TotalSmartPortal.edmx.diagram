@@ -353,19 +353,19 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderDetails_Molds" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderDetails_VoidTypes" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedProductDetails_FirmOrderDetails" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.GoodsArrivalDetail" Width="1.5" PointX="47" PointY="33.25" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.GoodsArrival" Width="1.5" PointX="42.75" PointY="35.5" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivals_Customers" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivals_Customers1" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivals_Employees" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_GoodsArrivals" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_VoidTypes" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivals_Locations" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivals_VoidTypes" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivals_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceipts_GoodsArrivals" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.GoodsArrivalDetail" Width="1.5" PointX="47" PointY="33.375" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_GoodsArrivals" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_VoidTypes" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalDetails" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
