@@ -112,6 +112,8 @@ namespace TotalModel.Models
         public virtual DbSet<TransferOrder> TransferOrders { get; set; }
         public virtual DbSet<WarehouseTransfer> WarehouseTransfers { get; set; }
         public virtual DbSet<FirmOrderDetail> FirmOrderDetails { get; set; }
+        public virtual DbSet<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
+        public virtual DbSet<GoodsArrival> GoodsArrivals { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {
@@ -4044,6 +4046,40 @@ namespace TotalModel.Models
                 new ObjectParameter("EntityID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("MoldDeletable", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<GoodsReceiptPendingGoodsArrivalDetail> GetGoodsReceiptPendingGoodsArrivalDetails(Nullable<int> locationID, Nullable<int> goodsReceiptID, Nullable<int> goodsArrivalID, string goodsArrivalDetailIDs, Nullable<bool> isReadonly)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var goodsReceiptIDParameter = goodsReceiptID.HasValue ?
+                new ObjectParameter("GoodsReceiptID", goodsReceiptID) :
+                new ObjectParameter("GoodsReceiptID", typeof(int));
+    
+            var goodsArrivalIDParameter = goodsArrivalID.HasValue ?
+                new ObjectParameter("GoodsArrivalID", goodsArrivalID) :
+                new ObjectParameter("GoodsArrivalID", typeof(int));
+    
+            var goodsArrivalDetailIDsParameter = goodsArrivalDetailIDs != null ?
+                new ObjectParameter("GoodsArrivalDetailIDs", goodsArrivalDetailIDs) :
+                new ObjectParameter("GoodsArrivalDetailIDs", typeof(string));
+    
+            var isReadonlyParameter = isReadonly.HasValue ?
+                new ObjectParameter("IsReadonly", isReadonly) :
+                new ObjectParameter("IsReadonly", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrivalDetail>("GetGoodsReceiptPendingGoodsArrivalDetails", locationIDParameter, goodsReceiptIDParameter, goodsArrivalIDParameter, goodsArrivalDetailIDsParameter, isReadonlyParameter);
+        }
+    
+        public virtual ObjectResult<GoodsReceiptPendingGoodsArrival> GetGoodsReceiptPendingGoodsArrivals(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrival>("GetGoodsReceiptPendingGoodsArrivals", locationIDParameter);
         }
     }
 }
