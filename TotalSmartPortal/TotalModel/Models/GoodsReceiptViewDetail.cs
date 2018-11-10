@@ -51,6 +51,11 @@ namespace TotalModel.Models
         public string FirmOrderSpecs { get; set; }
         public string GoodsReceiptReference { get; set; }
         public Nullable<System.DateTime> GoodsReceiptEntryDate { get; set; }
-        public Nullable<System.DateTime> BatchEntryDate { get; set; }
+        public System.DateTime BatchEntryDate { get; set; }
+        public Nullable<int> GoodsArrivalID { get; set; }
+        public Nullable<int> GoodsArrivalDetailID { get; set; }
+        public string GoodsArrivalReference { get; set; }
+        public string GoodsArrivalCode { get; set; }
+        public Nullable<System.DateTime> GoodsArrivalEntryDate { get; set; }
     }
 }
