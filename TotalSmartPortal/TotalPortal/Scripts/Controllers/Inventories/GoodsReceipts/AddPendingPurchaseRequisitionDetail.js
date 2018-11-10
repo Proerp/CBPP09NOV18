@@ -72,6 +72,13 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPurchaseRequisitionDet
         dataRow.PurchaseRequisitionEntryDate = purchaseRequisitionGridDataItem.PurchaseRequisitionEntryDate;
 
 
+        dataRow.GoodsArrivalID = null;
+        dataRow.GoodsArrivalDetailID = null;
+        dataRow.GoodsArrivalCode = null;
+        dataRow.GoodsArrivalReference = null;
+        dataRow.GoodsArrivalEntryDate = null;
+
+
         dataRow.WarehouseTransferID = null;
         dataRow.WarehouseTransferDetailID = null;
         dataRow.WarehouseTransferReference = null;

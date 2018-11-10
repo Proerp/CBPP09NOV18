@@ -72,6 +72,13 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetai
         dataRow.PurchaseRequisitionEntryDate = null;
 
 
+        dataRow.GoodsArrivalID = null;
+        dataRow.GoodsArrivalDetailID = null;
+        dataRow.GoodsArrivalCode = null;
+        dataRow.GoodsArrivalReference = null;
+        dataRow.GoodsArrivalEntryDate = null;
+
+
         dataRow.WarehouseTransferID = warehouseTransferGridDataItem.WarehouseTransferID;
         dataRow.WarehouseTransferDetailID = warehouseTransferGridDataItem.WarehouseTransferDetailID;
         dataRow.WarehouseTransferReference = warehouseTransferGridDataItem.WarehouseTransferReference;

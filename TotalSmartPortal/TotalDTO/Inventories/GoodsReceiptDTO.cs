@@ -44,6 +44,20 @@ namespace TotalDTO.Inventories
 
 
 
+        Nullable<int> GoodsArrivalID { get; set; }
+        string GoodsArrivalReference { get; set; }
+        string GoodsArrivalReferences { get; set; }
+        string GoodsArrivalCode { get; set; }
+        string GoodsArrivalCodes { get; set; }
+        [Display(Name = "Phiếu đặt hàng")]
+        string GoodsArrivalReferenceNote { get; }
+        [Display(Name = "Số đơn hàng")]
+        string GoodsArrivalCodeNote { get; }
+        [Display(Name = "Ngày đặt hàng")]
+        Nullable<System.DateTime> GoodsArrivalEntryDate { get; set; }
+
+
+
         Nullable<int> WarehouseTransferID { get; set; }
         string WarehouseTransferReference { get; set; }
         string WarehouseTransferReferences { get; set; }
@@ -106,6 +120,21 @@ namespace TotalDTO.Inventories
 
 
 
+
+        public Nullable<int> GoodsArrivalID { get; set; }
+        public string GoodsArrivalReference { get; set; }
+        public string GoodsArrivalReferences { get; set; }
+        public string GoodsArrivalCode { get; set; }
+        public string GoodsArrivalCodes { get; set; }
+        [Display(Name = "Phiếu đặt hàng")]
+        public string GoodsArrivalReferenceNote { get { return this.GoodsArrivalID != null ? this.GoodsArrivalReference : (this.GoodsArrivalReferences != "" ? this.GoodsArrivalReferences : "Giao hàng tổng hợp của nhiều ĐH"); } }
+        [Display(Name = "Số đơn hàng")]
+        public string GoodsArrivalCodeNote { get { return this.GoodsArrivalID != null ? this.GoodsArrivalCode : (this.GoodsArrivalCodes != "" ? this.GoodsArrivalCodes : ""); } }
+        [Display(Name = "Ngày đặt hàng")]
+        public Nullable<System.DateTime> GoodsArrivalEntryDate { get; set; }
+
+
+
         public Nullable<int> WarehouseTransferID { get; set; }
         public string WarehouseTransferReference { get; set; }
         public string WarehouseTransferReferences { get; set; }
@@ -138,9 +167,9 @@ namespace TotalDTO.Inventories
         {
             base.PerformPresaveRule();
 
-            string purchaseRequisitionReferences = ""; string purchaseRequisitionCodes = ""; string warehouseTransferReferences = ""; string caption = "";
-            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.GoodsReceiptTypeID = this.GoodsReceiptTypeID; e.CustomerID = this.CustomerID; e.WarehouseID = this.WarehouseID; e.WarehouseIssueID = this.WarehouseIssueID; e.Code = Code; if (this.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition && purchaseRequisitionReferences.IndexOf(e.PurchaseRequisitionReference) < 0) purchaseRequisitionReferences = purchaseRequisitionReferences + (purchaseRequisitionReferences != "" ? ", " : "") + e.PurchaseRequisitionReference; if (this.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition && e.PurchaseRequisitionCode != null && purchaseRequisitionCodes.IndexOf(e.PurchaseRequisitionCode) < 0) purchaseRequisitionCodes = purchaseRequisitionCodes + (purchaseRequisitionCodes != "" ? ", " : "") + e.PurchaseRequisitionCode; if (this.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer && warehouseTransferReferences.IndexOf(e.WarehouseTransferReference) < 0) warehouseTransferReferences = warehouseTransferReferences + (warehouseTransferReferences != "" ? ", " : "") + e.WarehouseTransferReference; if (caption.IndexOf((this.NMVNTaskID == GlobalEnums.NmvnTaskID.ProductReceipt ? e.CommodityName : e.CommodityCode)) < 0) caption = caption + (caption != "" ? ", " : "") + (this.NMVNTaskID == GlobalEnums.NmvnTaskID.ProductReceipt ? e.CommodityName : e.CommodityCode); });
-            this.PurchaseRequisitionReferences = purchaseRequisitionReferences; this.PurchaseRequisitionCodes = purchaseRequisitionCodes != "" ? purchaseRequisitionCodes : null; this.WarehouseTransferReferences = warehouseTransferReferences; if (this.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition) this.Code = this.PurchaseRequisitionCodes;
+            string purchaseRequisitionReferences = ""; string purchaseRequisitionCodes = ""; string goodsArrivalReferences = ""; string goodsArrivalCodes = ""; string warehouseTransferReferences = ""; string caption = "";
+            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.GoodsReceiptTypeID = this.GoodsReceiptTypeID; e.CustomerID = this.CustomerID; e.WarehouseID = this.WarehouseID; e.WarehouseIssueID = this.WarehouseIssueID; e.Code = Code; if (this.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition && purchaseRequisitionReferences.IndexOf(e.PurchaseRequisitionReference) < 0) purchaseRequisitionReferences = purchaseRequisitionReferences + (purchaseRequisitionReferences != "" ? ", " : "") + e.PurchaseRequisitionReference; if (this.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition && e.PurchaseRequisitionCode != null && purchaseRequisitionCodes.IndexOf(e.PurchaseRequisitionCode) < 0) purchaseRequisitionCodes = purchaseRequisitionCodes + (purchaseRequisitionCodes != "" ? ", " : "") + e.PurchaseRequisitionCode; if (this.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && goodsArrivalReferences.IndexOf(e.GoodsArrivalReference) < 0) goodsArrivalReferences = goodsArrivalReferences + (goodsArrivalReferences != "" ? ", " : "") + e.GoodsArrivalReference; if (this.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && e.GoodsArrivalCode != null && goodsArrivalCodes.IndexOf(e.GoodsArrivalCode) < 0) goodsArrivalCodes = goodsArrivalCodes + (goodsArrivalCodes != "" ? ", " : "") + e.GoodsArrivalCode;  if (this.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer && warehouseTransferReferences.IndexOf(e.WarehouseTransferReference) < 0) warehouseTransferReferences = warehouseTransferReferences + (warehouseTransferReferences != "" ? ", " : "") + e.WarehouseTransferReference; if (caption.IndexOf((this.NMVNTaskID == GlobalEnums.NmvnTaskID.ProductReceipt ? e.CommodityName : e.CommodityCode)) < 0) caption = caption + (caption != "" ? ", " : "") + (this.NMVNTaskID == GlobalEnums.NmvnTaskID.ProductReceipt ? e.CommodityName : e.CommodityCode); });
+            this.PurchaseRequisitionReferences = purchaseRequisitionReferences; this.PurchaseRequisitionCodes = purchaseRequisitionCodes != "" ? purchaseRequisitionCodes : null; this.GoodsArrivalReferences = goodsArrivalReferences; this.GoodsArrivalCodes = goodsArrivalCodes != "" ? goodsArrivalCodes : null; this.WarehouseTransferReferences = warehouseTransferReferences; if (this.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival) this.Code = this.GoodsArrivalCodes;
             this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
     }

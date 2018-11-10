@@ -1509,6 +1509,7 @@
     <Content Include="Areas\Commons\Views\Molds\Edit.cshtml" />
     <Content Include="Areas\Commons\Views\Molds\Index.cshtml" />
     <Content Include="Areas\Commons\Views\Molds\_Mold.cshtml" />
+    <Content Include="Areas\Inventories\Views\GoodsReceipts\GetPendingGoodsArrivalDetails.cshtml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
       <SubType>Designer</SubType>
@@ -1589,6 +1590,7 @@
     <Content Include="Scripts\Controllers\Inventories\GoodsIssues\Index.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsIssues\Open.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsIssues\Print.js" />
+    <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingGoodsArrivalDetail.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingMaterialIssueDetail.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingPlannedOrderDetail.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingPurchaseRequisitionDetail.js" />

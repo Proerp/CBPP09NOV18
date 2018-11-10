@@ -2,13 +2,13 @@
     window.parent.$("#myWindow").data("kendoWindow").close();
 }
 
-function handleOKEvent(goodsReceiptGridDataSource, pendingPlannedOrderDetailGridDataSource) {
-    if (goodsReceiptGridDataSource != undefined && pendingPlannedOrderDetailGridDataSource != undefined) {
-        var pendingPurchaseRequisitionDetailGridDataItems = pendingPlannedOrderDetailGridDataSource.view();
+function handleOKEvent(goodsReceiptGridDataSource, pendingGoodsArrivalDetailGridDataSource) {
+    if (goodsReceiptGridDataSource != undefined && pendingGoodsArrivalDetailGridDataSource != undefined) {
+        var pendingGoodsArrivalDetailGridDataItems = pendingGoodsArrivalDetailGridDataSource.view();
         var goodsReceiptJSON = goodsReceiptGridDataSource.data().toJSON();
-        for (var i = 0; i < pendingPurchaseRequisitionDetailGridDataItems.length; i++) {
-            if (pendingPurchaseRequisitionDetailGridDataItems[i].IsSelected === true)
-                _setParentInput(goodsReceiptJSON, pendingPurchaseRequisitionDetailGridDataItems[i]);
+        for (var i = 0; i < pendingGoodsArrivalDetailGridDataItems.length; i++) {
+            if (pendingGoodsArrivalDetailGridDataItems[i].IsSelected === true)
+                _setParentInput(goodsReceiptJSON, pendingGoodsArrivalDetailGridDataItems[i]);
         }
 
         goodsReceiptJSON.push(new Object()); //Add a temporary empty row
@@ -34,7 +34,7 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPlannedOrderDetailGrid
     //grid.dataSource.data(data); //set changed data as data of the Grid
 
 
-    function _setParentInput(goodsReceiptJSON, plannedOrderGridDataItem) {
+    function _setParentInput(goodsReceiptJSON, goodsArrivalGridDataItem) {
 
         //var dataRow = goodsReceiptJSON.add({});
 
@@ -54,15 +54,15 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPlannedOrderDetailGrid
 
         dataRow.WorkshiftName = null;
         dataRow.WorkshiftEntryDate = null;
-        
 
-        dataRow.FinishedProductID = plannedOrderGridDataItem.FinishedProductID;
-        dataRow.FinishedProductPackageID = plannedOrderGridDataItem.FinishedProductPackageID;
-        dataRow.FinishedProductEntryDate = plannedOrderGridDataItem.FinishedProductEntryDate;
-        dataRow.FirmOrderReference = plannedOrderGridDataItem.FirmOrderReference;
-        dataRow.FirmOrderCode = plannedOrderGridDataItem.FirmOrderCode;
+
+        dataRow.FinishedProductID = null;
+        dataRow.FinishedProductPackageID = null;
+        dataRow.FinishedProductEntryDate = null;
+        dataRow.FirmOrderReference = null;
+        dataRow.FirmOrderCode = null;
         dataRow.FirmOrderSpecs = null;
-        dataRow.SemifinishedProductReferences = plannedOrderGridDataItem.SemifinishedProductReferences;
+        dataRow.SemifinishedProductReferences = null;
 
 
         dataRow.PurchaseRequisitionID = null;
@@ -72,11 +72,11 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPlannedOrderDetailGrid
         dataRow.PurchaseRequisitionEntryDate = null;
 
 
-        dataRow.GoodsArrivalID = null;
-        dataRow.GoodsArrivalDetailID = null;
-        dataRow.GoodsArrivalCode = null;
-        dataRow.GoodsArrivalReference = null;
-        dataRow.GoodsArrivalEntryDate = null;
+        dataRow.GoodsArrivalID = goodsArrivalGridDataItem.GoodsArrivalID;
+        dataRow.GoodsArrivalDetailID = goodsArrivalGridDataItem.GoodsArrivalDetailID;
+        dataRow.GoodsArrivalCode = goodsArrivalGridDataItem.GoodsArrivalCode;
+        dataRow.GoodsArrivalReference = goodsArrivalGridDataItem.GoodsArrivalReference;
+        dataRow.GoodsArrivalEntryDate = goodsArrivalGridDataItem.GoodsArrivalEntryDate;
 
 
         dataRow.WarehouseTransferID = null;
@@ -85,17 +85,17 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPlannedOrderDetailGrid
         dataRow.WarehouseTransferEntryDate = null;
         dataRow.GoodsReceiptReference = null;
         dataRow.GoodsReceiptEntryDate = null;
-        dataRow.BatchEntryDate = plannedOrderGridDataItem.FinishedProductEntryDate;
+        dataRow.BatchEntryDate = goodsArrivalGridDataItem.BatchEntryDate;
 
 
-        dataRow.CommodityID = plannedOrderGridDataItem.CommodityID;
-        dataRow.CommodityName = plannedOrderGridDataItem.CommodityName;
-        dataRow.CommodityCode = plannedOrderGridDataItem.CommodityCode;
-        dataRow.CommodityTypeID = plannedOrderGridDataItem.CommodityTypeID;
+        dataRow.CommodityID = goodsArrivalGridDataItem.CommodityID;
+        dataRow.CommodityName = goodsArrivalGridDataItem.CommodityName;
+        dataRow.CommodityCode = goodsArrivalGridDataItem.CommodityCode;
+        dataRow.CommodityTypeID = goodsArrivalGridDataItem.CommodityTypeID;
 
 
-        dataRow.QuantityRemains = plannedOrderGridDataItem.QuantityRemains;
-        dataRow.Quantity = plannedOrderGridDataItem.Quantity;
+        dataRow.QuantityRemains = goodsArrivalGridDataItem.QuantityRemains;
+        dataRow.Quantity = goodsArrivalGridDataItem.Quantity;
 
         dataRow.Remarks = null;
 

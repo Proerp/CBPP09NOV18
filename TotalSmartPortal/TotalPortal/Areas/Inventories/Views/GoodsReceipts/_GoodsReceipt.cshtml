@@ -33,6 +33,11 @@
         @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PurchaseRequisitionReference)
 
 
+        @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalID)
+        @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalCode)
+        @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalReference)
+
+
         @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferID)
         @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferReference)
 
@@ -77,6 +82,43 @@
 
 
 
+            case (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival:
+            <div class="form-group">
+                @Html.LabelFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalReferenceNote)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalReferenceNote).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalReferenceNote, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalCodeNote)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalCodeNote).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalCodeNote, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+                if (Model.GoodsArrivalEntryDate != null)
+                {
+                    <div class="form-group">
+                        @Html.LabelFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalEntryDate)
+                        <div class="div-input">
+                            @Html.Kendo().DateTimePickerFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                        </div>
+                        <div class="div-validation-message">
+                            @Html.ValidationMessageFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalEntryDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                }
+                break;
+
+                
+                
             case (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer:
                 <div class="form-group">
                     @Html.LabelFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferReferenceNote)
@@ -215,6 +257,22 @@
 
 
 
+                    columns.Bound(p => p.GoodsArrivalID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (GoodsArrivalID == null)? '' : GoodsArrivalID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalID' value='#= (GoodsArrivalID == null) ? '' : GoodsArrivalID #' />");
+                    columns.Bound(p => p.GoodsArrivalDetailID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (GoodsArrivalDetailID == null)? '' : GoodsArrivalDetailID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalDetailID' value='#= (GoodsArrivalDetailID == null) ? '' : GoodsArrivalDetailID #' />");
+
+                    columns.Bound(p => p.GoodsArrivalCode).DisplayNameTitle().Width(60).Hidden()
+                        .ClientTemplate("#= (GoodsArrivalCode == null)? '' : GoodsArrivalCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalCode' value='#= (GoodsArrivalCode == null) ? '' : GoodsArrivalCode #' />");
+                    columns.Bound(p => p.GoodsArrivalReference).DisplayNameTitle().Width(60).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null ? false : true)
+                        .ClientTemplate("#= (GoodsArrivalReference == null)? '' : GoodsArrivalReference #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalReference' value='#= (GoodsArrivalReference == null) ? '' : GoodsArrivalReference #' />");
+                    columns.Bound(p => p.GoodsArrivalEntryDate).DisplayNameTitle().Width(80).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null ? false : true)
+                        .Format("{0:" + @Settings.DateFormat + "}")
+                        .ClientTemplate("#= (GoodsArrivalEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsArrivalEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalEntryDate' value='#= (GoodsArrivalEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsArrivalEntryDate) #' />");
+
+                    
+                    
+                    
                     columns.Bound(p => p.WarehouseTransferID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (WarehouseTransferID == null)? '' : WarehouseTransferID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].WarehouseTransferID' value='#= (WarehouseTransferID == null) ? '' : WarehouseTransferID #' />");
                     columns.Bound(p => p.WarehouseTransferDetailID).DisplayNameTitle().Hidden()
@@ -273,7 +331,7 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(160).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? "StringReadonly" : "AutoCompletes/CommodityAvailable")
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(160).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? "StringReadonly" : "AutoCompletes/CommodityAvailable")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)")
                         .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
 
@@ -314,6 +372,15 @@
                                 case (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition:
                                     toolbar.Template(@<text>
                                         <button type="button" class="k-button" onclick="GetPendingPurchaseRequisitionDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng </button>
+                                        <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Nhập kho toàn bộ </button>
+                                    </text>);
+                                    break;
+
+
+
+                                case (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival:
+                                    toolbar.Template(@<text>
+                                        <button type="button" class="k-button" onclick="GetPendingGoodsArrivalDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng </button>
                                         <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Nhập kho toàn bộ </button>
                                     </text>);
                                     break;
@@ -465,6 +532,15 @@
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
             createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingPurchaseRequisitionDetails", Model.ControllerName, new { area = "Inventories" })", "Chọn mặt hàng ", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+        });
+    }
+
+
+
+    function GetPendingGoodsArrivalDetails() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingGoodsArrivalDetails", Model.ControllerName, new { area = "Inventories" })", "Chọn mặt hàng ", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
     }
 

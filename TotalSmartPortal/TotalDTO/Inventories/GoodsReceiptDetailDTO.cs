@@ -34,6 +34,21 @@ namespace TotalDTO.Inventories
 
 
 
+        public Nullable<int> GoodsArrivalID { get; set; }
+        public Nullable<int> GoodsArrivalDetailID { get; set; }
+
+        [Display(Name = "Phiếu ĐH")]
+        [UIHint("StringReadonly")]
+        public string GoodsArrivalReference { get; set; }
+        [Display(Name = "Số ĐH")]
+        [UIHint("StringReadonly")]
+        public string GoodsArrivalCode { get; set; }
+        [Display(Name = "Ngày ĐH")]
+        [UIHint("DateTimeReadonly")]
+        public Nullable<System.DateTime> GoodsArrivalEntryDate { get; set; }
+
+
+
         public Nullable<int> WarehouseTransferID { get; set; }
         public Nullable<int> WarehouseTransferDetailID { get; set; }
 
