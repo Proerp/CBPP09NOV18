@@ -12,6 +12,7 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
 {
     //[RoutePrefix("Api/Inventories/GR")]
     [RoutePrefix("Api/Inventories/GoodsReceipts")]
+    [Authorize]
     public class GRController : ApiController
     {
         private readonly IGoodsReceiptAPIRepository goodsReceiptAPIRepository;
@@ -22,7 +23,7 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         }
 
         //[Route("HelloWorldArea")]
-        [Route("GetPendingGoodsArrivals/{locationID}")]
+        [Route("GetGoodsArrivals/{locationID}")]
         //[Authorize]
         [HttpGet]
         public IEnumerable<GoodsReceiptPendingGoodsArrival> GetGoodsArrivals(int? locationID)
@@ -33,14 +34,14 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             return this.goodsReceiptAPIRepository.GetGoodsArrivals(locationID);
         }
 
-        [Route("GetPendingGoodsArrivalDetails/{goodsArrivalID}")]
+        [Route("GetPendingGoodsArrivalDetails/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{goodsArrivalDetailIDs}/{isReadonly}")]
         //[Authorize]
         [HttpGet]
-        //public IEnumerable<GoodsReceiptPendingGoodsArrivalDetail> GetPendingGoodsArrivalDetails(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string goodsArrivalDetailIDs, bool isReadonly)
-        public IEnumerable<GoodsReceiptPendingGoodsArrivalDetail> GetPendingGoodsArrivalDetails(int? goodsArrivalID)
+        public IEnumerable<GoodsReceiptPendingGoodsArrivalDetail> GetPendingGoodsArrivalDetails(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string goodsArrivalDetailIDs, bool isReadonly)
+        //public IEnumerable<GoodsReceiptPendingGoodsArrivalDetail> GetPendingGoodsArrivalDetails(int? goodsArrivalID)
         {
-            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalDetails(1, 0, goodsArrivalID, null, false);
-            //return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalDetails(locationID, goodsReceiptID, goodsArrivalID, goodsArrivalDetailIDs, false);
+            //return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalDetails(1, 0, goodsArrivalID, null, false);
+            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalDetails(locationID, goodsReceiptID, goodsArrivalID, goodsArrivalDetailIDs, false);
         }
     }
 }

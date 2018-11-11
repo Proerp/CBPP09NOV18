@@ -157,7 +157,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "   BEGIN " + "\r\n";
 
-            queryString = queryString + "       IF  (@GoodsArrivalDetailIDs <> '') " + "\r\n";
+            queryString = queryString + "       IF  (@GoodsArrivalDetailIDs <> '' AND @GoodsArrivalDetailIDs <> '0') " + "\r\n";
             queryString = queryString + "           " + this.BuildSQLGoodsArrival(true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           " + this.BuildSQLGoodsArrival(false) + "\r\n";
