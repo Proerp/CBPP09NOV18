@@ -391,6 +391,10 @@
     <Compile Include="Configuration\RequireOptionFilter.cs" />
     <Compile Include="Configuration\SettingsManager.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\Apis\BaseApiController.cs" />
+    <Compile Include="Controllers\Apis\CoreApiController.cs" />
+    <Compile Include="Controllers\Apis\GenericSimpleApiController.cs" />
+    <Compile Include="Controllers\Apis\GenericViewDetailApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ControllersExtensions.cs" />
     <Compile Include="Controllers\CoreController.cs" />
