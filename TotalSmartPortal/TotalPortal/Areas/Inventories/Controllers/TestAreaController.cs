@@ -11,10 +11,11 @@ namespace TotalPortal.Areas.Inventories.Controllers
     [RoutePrefix("API/Inventories/TestArea")]
     public class TestAreaController : ApiController
     {
-        [Route("HelloWorldArea")]
+        //[Route("HelloWorldArea")]
+        [Route("HelloWorldArea/{i}")]
         [Authorize]
         [HttpGet]
-        public HttpResponseMessage HelloWorldArea()
+        public HttpResponseMessage HelloWorldArea(int i)
         {
             return Request.CreateResponse(HttpStatusCode.OK, "Hello, SAY FROM AREA [API OK] INVENTORY [LOCAL], AREA CONTROLLER, " + this.User.Identity.Name + " (" + this.RequestContext.Principal.Identity.GetUserId() + ")");
         }
