@@ -24,7 +24,7 @@ using System.Collections.Generic;
 
 namespace TotalPortal.Areas.Inventories.Controllers.Apis
 {
-    [RoutePrefix("Api/Inventories/GoodsReceipts")]
+    //[RoutePrefix("Api/Inventories/GoodsReceipts")]
     public class GoodsReceiptsController<TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel> : GenericViewDetailApiController<GoodsReceipt, GoodsReceiptDetail, GoodsReceiptViewDetail, TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel>
         where TDto : TPrimitiveDto, IBaseDetailEntity<TDtoDetail>
         where TPrimitiveDto : BaseDTO, IPrimitiveEntity, IPrimitiveDTO, new()
