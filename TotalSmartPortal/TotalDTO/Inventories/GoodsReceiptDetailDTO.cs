@@ -136,6 +136,12 @@ namespace TotalDTO.Inventories
         [UIHint("AutoCompletes/CommodityAvailable")]
         public override string CommodityCode { get; set; }
 
+        [Display(Name = "Mã vạch")]
+        [UIHint("StringReadonly")]
+        public string Barcode { get; set; }
+        [Display(Name = "Vị trí")]
+        public string BinLocationCode { get; set; } //*******
+
         [Display(Name = "SL Tồn")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }

@@ -93,7 +93,8 @@
 
 
             tabStrip.Add().Text("Mua hàng")
-            .Visible(true)
+            .Visible(Model.IsMaterial)
+            .Selected(Model.IsMaterial)
             .Content(@<text>
                 @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetGoodsArrival.cshtml")
             </text>);

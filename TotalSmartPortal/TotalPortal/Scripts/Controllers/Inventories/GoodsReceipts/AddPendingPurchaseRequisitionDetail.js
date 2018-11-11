@@ -92,7 +92,9 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPurchaseRequisitionDet
         dataRow.CommodityName = purchaseRequisitionGridDataItem.CommodityName;
         dataRow.CommodityCode = purchaseRequisitionGridDataItem.CommodityCode;
         dataRow.CommodityTypeID = purchaseRequisitionGridDataItem.CommodityTypeID;
+        dataRow.Barcode = null;
 
+        dataRow.BinLocationCode = null;
 
         dataRow.QuantityRemains = purchaseRequisitionGridDataItem.QuantityRemains;
         dataRow.Quantity = purchaseRequisitionGridDataItem.Quantity;

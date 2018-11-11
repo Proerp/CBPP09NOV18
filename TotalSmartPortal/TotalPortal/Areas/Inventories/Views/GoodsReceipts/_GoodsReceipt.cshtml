@@ -341,6 +341,11 @@
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
+                    columns.Bound(p => p.Barcode).DisplayNameTitle().Width(20).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival ? false : true)
+                        .ClientTemplate("#= (Barcode == null)? '' : Barcode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].Barcode' value='#= (Barcode == null) ? '' : Barcode #' />");
+                    columns.Bound(p => p.BinLocationCode).DisplayNameTitle().Width(68).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival ? false : true)
+                        .ClientTemplate("#= (BinLocationCode == null)? '' : BinLocationCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BinLocationCode' value='#= (BinLocationCode == null) ? '' : BinLocationCode #' />");
+                    
 
                     columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(25).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)

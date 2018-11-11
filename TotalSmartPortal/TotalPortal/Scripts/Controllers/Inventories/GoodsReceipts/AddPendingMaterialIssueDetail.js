@@ -92,7 +92,9 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingMaterialIssueDetailGri
         dataRow.CommodityName = materialIssueGridDataItem.CommodityName;
         dataRow.CommodityCode = materialIssueGridDataItem.CommodityCode;
         dataRow.CommodityTypeID = materialIssueGridDataItem.CommodityTypeID;
+        dataRow.Barcode = null;
 
+        dataRow.BinLocationCode = null;
 
         dataRow.QuantityRemains = materialIssueGridDataItem.QuantityRemains;
         dataRow.Quantity = materialIssueGridDataItem.Quantity;

@@ -776,8 +776,8 @@
           <Property Name="Code" Type="nvarchar" MaxLength="60" />
           <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
           <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
-          <Property Name="BarCode" Type="nvarchar" MaxLength="60" />
           <Property Name="LabCode" Type="nvarchar" MaxLength="60" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="60" />
           <Property Name="ProductionDate" Type="datetime" />
           <Property Name="ExpiryDate" Type="datetime" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -17432,6 +17432,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="GoodsArrivalReference" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="GoodsArrivalCode" Nullable="true" MaxLength="60" />
           <Property Type="DateTime" Name="GoodsArrivalEntryDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
         </ComplexType>
         <EntityType Name="ModuleDetail">
           <Key>
@@ -18505,6 +18506,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingGoodsArrival">
           <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
@@ -18540,8 +18542,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="Code" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="SealCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="BatchCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="BarCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="LabCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Barcode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ProductionDate" Type="DateTime" Precision="3" />
           <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
           <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
@@ -23293,6 +23295,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="GoodsArrivalReference" ColumnName="GoodsArrivalReference" />
                 <ScalarProperty Name="GoodsArrivalCode" ColumnName="GoodsArrivalCode" />
                 <ScalarProperty Name="GoodsArrivalEntryDate" ColumnName="GoodsArrivalEntryDate" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -23638,6 +23641,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -23674,8 +23678,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
-                <ScalarProperty Name="BarCode" ColumnName="BarCode" />
                 <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
                 <ScalarProperty Name="SealCode" ColumnName="SealCode" />
                 <ScalarProperty Name="Code" ColumnName="Code" />

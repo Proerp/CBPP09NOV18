@@ -92,7 +92,9 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetai
         dataRow.CommodityName = warehouseTransferGridDataItem.CommodityName;
         dataRow.CommodityCode = warehouseTransferGridDataItem.CommodityCode;
         dataRow.CommodityTypeID = warehouseTransferGridDataItem.CommodityTypeID;
+        dataRow.Barcode = null;
 
+        dataRow.BinLocationCode = null;
 
         dataRow.QuantityRemains = warehouseTransferGridDataItem.QuantityRemains;
         dataRow.Quantity = warehouseTransferGridDataItem.Quantity;

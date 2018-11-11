@@ -34,8 +34,8 @@ namespace TotalModel.Models
         public string Code { get; set; }
         public string SealCode { get; set; }
         public string BatchCode { get; set; }
-        public string BarCode { get; set; }
         public string LabCode { get; set; }
+        public string Barcode { get; set; }
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public decimal Quantity { get; set; }

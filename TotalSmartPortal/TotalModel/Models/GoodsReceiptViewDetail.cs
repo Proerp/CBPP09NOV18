@@ -57,5 +57,6 @@ namespace TotalModel.Models
         public string GoodsArrivalReference { get; set; }
         public string GoodsArrivalCode { get; set; }
         public Nullable<System.DateTime> GoodsArrivalEntryDate { get; set; }
+        public string Barcode { get; set; }
     }
 }
