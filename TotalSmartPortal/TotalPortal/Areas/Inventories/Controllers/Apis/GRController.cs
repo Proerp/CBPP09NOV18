@@ -14,11 +14,11 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
     public class GRController : ApiController
     {
         private readonly IGoodsReceiptAPIRepository goodsReceiptAPIRepository;
-        public GRController() { }
-        //public GRController(IGoodsReceiptAPIRepository goodsReceiptAPIRepository)
-        //{
-        //    this.goodsReceiptAPIRepository = goodsReceiptAPIRepository;
-        //}
+        //public GRController() { }
+        public GRController(IGoodsReceiptAPIRepository goodsReceiptAPIRepository)
+        {
+            this.goodsReceiptAPIRepository = goodsReceiptAPIRepository;
+        }
 
         //[Route("HelloWorldArea")]
         [Route("GetGoodsArrivals/{locationID}")]
@@ -26,8 +26,10 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         [HttpGet]
         public IEnumerable<GoodsReceiptPendingGoodsArrival> GetGoodsArrivals(int? locationID)
         {
-            List < GoodsReceiptPendingGoodsArrival > x = new List<GoodsReceiptPendingGoodsArrival>();
-            return x;// Request.CreateResponse(HttpStatusCode.OK, "Hello, SAY FROM AREA [API OK] INVENTORY [LOCAL], AREA CONTROLLER, " + this.User.Identity.Name + " (" + this.RequestContext.Principal.Identity.GetUserId() + ")");
+            //List < GoodsReceiptPendingGoodsArrival > x = new List<GoodsReceiptPendingGoodsArrival>();
+            //return x;// Request.CreateResponse(HttpStatusCode.OK, "Hello, SAY FROM AREA [API OK] INVENTORY [LOCAL], AREA CONTROLLER, " + this.User.Identity.Name + " (" + this.RequestContext.Principal.Identity.GetUserId() + ")");
+
+            return this.goodsReceiptAPIRepository.GetGoodsArrivals(locationID);
         }
     }
 }

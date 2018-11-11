@@ -59,6 +59,7 @@ namespace TotalPortal.App_Start
     using TotalPortal.Areas.Inventories.Builders;
     using TotalPortal.Areas.Commons.Builders;
     using TotalPortal.Areas.Accounts.Builders;
+    using Ninject.Web.Common.WebHost;
     
         
         
