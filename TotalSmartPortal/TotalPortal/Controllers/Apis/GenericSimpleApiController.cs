@@ -59,8 +59,10 @@ namespace TotalPortal.Controllers.Apis
 
 
 
-        //[AccessLevelAuthorize(GlobalEnums.AccessLevel.Readable)]
-        [OnResultExecutingFilterAttribute]
+        [HttpGet]
+        [Route("Index/{id}")]
+        [AccessLevelApiAuthorize(GlobalEnums.AccessLevel.Readable)]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult Index(int? id)
         {
             //MVC: ViewBag.SelectedEntityID = id == null ? -1 : (int)id;
@@ -78,8 +80,8 @@ namespace TotalPortal.Controllers.Apis
 
         [HttpGet]
         [Route("Open/{id}")]
-        [AccessLevelAuthorize(GlobalEnums.AccessLevel.Readable)]
-        [OnResultExecutingFilterAttribute]
+        [AccessLevelApiAuthorize(GlobalEnums.AccessLevel.Readable)]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult Open(int? id)
         {
             TSimpleViewModel simpleViewModel = this.GetViewModel(id, GlobalEnums.AccessLevel.Readable, false, false, true);
@@ -96,8 +98,9 @@ namespace TotalPortal.Controllers.Apis
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [AccessLevelAuthorize]
-        [OnResultExecutingFilterAttribute]
+        [Route("Create")]
+        [AccessLevelApiAuthorize]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult Create()
         {
             if (!this.isSimpleCreate) return BadRequest();
@@ -107,7 +110,8 @@ namespace TotalPortal.Controllers.Apis
         }
 
         [HttpPost]
-        [OnResultExecutingFilterAttribute]
+        [Route("Create")]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult Create(TSimpleViewModel simpleViewModel)
         {
             if (!this.isSimpleCreate) return BadRequest();
@@ -131,8 +135,9 @@ namespace TotalPortal.Controllers.Apis
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [AccessLevelAuthorize]
-        [OnResultExecutingFilterAttribute]
+        [Route("CreateWizard")]
+        [AccessLevelApiAuthorize]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult CreateWizard()
         {
             if (!this.isCreateWizard) return BadRequest();
@@ -146,7 +151,8 @@ namespace TotalPortal.Controllers.Apis
         /// <param name="simpleViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        [OnResultExecutingFilterAttribute]
+        [Route("CreateWizard")]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult CreateWizard(TSimpleViewModel simpleViewModel)
         {
             if (!this.isCreateWizard) return BadRequest();
@@ -164,8 +170,8 @@ namespace TotalPortal.Controllers.Apis
 
         [HttpGet]
         [Route("Edit/{id}")]
-        [AccessLevelAuthorize(GlobalEnums.AccessLevel.Readable)]
-        [OnResultExecutingFilterAttribute]
+        [AccessLevelApiAuthorize(GlobalEnums.AccessLevel.Readable)]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult Edit(int? id)
         {
             TSimpleViewModel simpleViewModel = this.GetViewModel(id, GlobalEnums.AccessLevel.Readable);
@@ -183,7 +189,8 @@ namespace TotalPortal.Controllers.Apis
         /// <param name="simpleViewModel"></param>
         /// <returns></returns>
         [HttpPost]
-        [OnResultExecutingFilterAttribute]
+        [Route("Edit")]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult Edit(TSimpleViewModel simpleViewModel)
         {
             if ((simpleViewModel.SubmitTypeOption == GlobalEnums.SubmitTypeOption.Save || simpleViewModel.SubmitTypeOption == GlobalEnums.SubmitTypeOption.Closed || simpleViewModel.SubmitTypeOption == GlobalEnums.SubmitTypeOption.Create) && this.Save(simpleViewModel))
@@ -201,6 +208,12 @@ namespace TotalPortal.Controllers.Apis
 
         public virtual IHttpActionResult RedirectAfterSave(TSimpleViewModel simpleViewModel)
         {
+            return Ok(simpleViewModel); //WEB API: RETURN OK FOR ALL USE CASE
+
+
+
+
+
             if (simpleViewModel.SubmitTypeOption == GlobalEnums.SubmitTypeOption.Create)
                 if (this.isSimpleCreate)
                     return SBTRedirect("Create");
@@ -229,8 +242,10 @@ namespace TotalPortal.Controllers.Apis
 
         #region Approve/ UnApprove
 
-        [AccessLevelAuthorize(GlobalEnums.AccessLevel.Readable), ImportModelStateFromTempData]
-        [OnResultExecutingFilterAttribute]
+        [HttpGet]
+        [Route("Approve/{id}")]
+        [AccessLevelApiAuthorize(GlobalEnums.AccessLevel.Readable)]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult Approve(int? id)
         {
             TSimpleViewModel simpleViewModel = this.GetViewModel(id, GlobalEnums.AccessLevel.Readable, true);
@@ -251,8 +266,8 @@ namespace TotalPortal.Controllers.Apis
             return Ok(simpleViewModel);
         }
 
-        [HttpPost, ActionName("Approve")]
-        [ExportModelStateToTempData]
+        [HttpPost]
+        [Route("Approve")]
         public virtual IHttpActionResult ApproveConfirmed(TSimpleViewModel simpleViewModel)
         {
             try
@@ -275,9 +290,10 @@ namespace TotalPortal.Controllers.Apis
 
 
 
-
-        [AccessLevelAuthorize, ImportModelStateFromTempData]
-        [OnResultExecutingFilterAttribute]
+        [HttpGet]
+        [Route("Delete/{id}")]
+        [AccessLevelApiAuthorize]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult Delete(int? id)
         {
             TSimpleViewModel simpleViewModel = this.GetViewModel(id, GlobalEnums.AccessLevel.Editable, true);
@@ -287,8 +303,8 @@ namespace TotalPortal.Controllers.Apis
         }
 
 
-        [HttpPost, ActionName("Delete")]
-        [ExportModelStateToTempData]
+        [HttpPost]
+        [Route("Delete")]
         public virtual IHttpActionResult DeleteConfirmed(int id)
         {
             try
@@ -311,9 +327,10 @@ namespace TotalPortal.Controllers.Apis
 
 
 
-
-        [AccessLevelAuthorize, ImportModelStateFromTempData]
-        [OnResultExecutingFilterAttribute]
+        [HttpGet]
+        [Route("Alter/{id}")]
+        [AccessLevelApiAuthorize]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult Alter(int? id)
         {
             TSimpleViewModel simpleViewModel = this.GetViewModel(id, GlobalEnums.AccessLevel.Editable, false, true);
@@ -323,8 +340,8 @@ namespace TotalPortal.Controllers.Apis
         }
 
 
-        [HttpPost, ActionName("Alter")]
-        [ExportModelStateToTempData]
+        [HttpPost]
+        [Route("Alter")]
         public virtual IHttpActionResult AlterConfirmed(TSimpleViewModel simpleViewModel)
         {
             try
@@ -355,8 +372,10 @@ namespace TotalPortal.Controllers.Apis
 
         #region Void/ UnVoid
 
-        [AccessLevelAuthorize(GlobalEnums.AccessLevel.Readable), ImportModelStateFromTempData]
-        [OnResultExecutingFilterAttribute]
+        [HttpGet]
+        [Route("Void/{id}")]
+        [AccessLevelApiAuthorize(GlobalEnums.AccessLevel.Readable)]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult Void(int? id)
         {
             TSimpleViewModel simpleViewModel = this.GetViewModel(id, GlobalEnums.AccessLevel.Readable, true);
@@ -380,8 +399,8 @@ namespace TotalPortal.Controllers.Apis
             return Ok(simpleViewModel);
         }
 
-        [HttpPost, ActionName("Void")]
-        [ExportModelStateToTempData]
+        [HttpPost]
+        [Route("Void")]
         public virtual IHttpActionResult VoidConfirmed(TSimpleViewModel simpleViewModel)
         {
             try
@@ -406,8 +425,10 @@ namespace TotalPortal.Controllers.Apis
 
         #region VoidDetail/ UnVoidDetail
 
-        [AccessLevelAuthorize(GlobalEnums.AccessLevel.Readable), ImportModelStateFromTempData]
-        [OnResultExecutingFilterAttribute]
+        [HttpGet]
+        [Route("VoidDetail/{id}/{detailID}")]
+        [AccessLevelApiAuthorize(GlobalEnums.AccessLevel.Readable)]
+        [OnResultExecutingApiFilterAttribute]
         public virtual IHttpActionResult VoidDetail(int? id, int? detailID)
         {
             TSimpleViewModel simpleViewModel = this.GetViewModel(id, GlobalEnums.AccessLevel.Readable, true);
@@ -416,8 +437,8 @@ namespace TotalPortal.Controllers.Apis
             return Ok(this.PrepareVoidDetail(simpleViewModel, detailID));
         }
 
-        [HttpPost, ActionName("VoidDetail")]
-        [ExportModelStateToTempData]
+        [HttpPost]
+        [Route("VoidDetail")]
         public virtual IHttpActionResult VoidDetailConfirmed(TotalPortal.ViewModels.Helpers.VoidDetailViewModel voidDetailViewModel)
         {
             try
@@ -672,8 +693,9 @@ namespace TotalPortal.Controllers.Apis
 
 
 
-
-        [OnResultExecutingFilterAttribute]
+        [HttpGet]
+        [Route("Print/{id}/{detailID}")]
+        [OnResultExecutingApiFilterAttribute]
         public IHttpActionResult Print(int? id, int? detailID)
         {
             return Ok(InitPrintViewModel(id, detailID));
