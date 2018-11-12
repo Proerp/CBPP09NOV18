@@ -1005,6 +1005,10 @@
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="WarehouseIssueID" Type="int" />
+          <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
+          <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
+          <Property Name="LabCode" Type="nvarchar" MaxLength="60" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="60" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityIssued" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
@@ -17242,6 +17246,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="GoodsArrivalID" Type="Int32" />
           <Property Name="GoodsArrivalDetailID" Type="Int32" />
           <NavigationProperty Name="GoodsArrivalDetail" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalDetails" FromRole="GoodsReceiptDetail" ToRole="GoodsArrivalDetail" />
+          <Property Name="SealCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="BatchCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="LabCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Barcode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_FinishedHandoverDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -17433,6 +17441,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="GoodsArrivalCode" Nullable="true" MaxLength="60" />
           <Property Type="DateTime" Name="GoodsArrivalEntryDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
         </ComplexType>
         <EntityType Name="ModuleDetail">
           <Key>
@@ -18507,6 +18518,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
           <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingGoodsArrival">
           <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
@@ -23212,6 +23226,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="GoodsReceiptDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptDetail">
               <MappingFragment StoreEntitySet="GoodsReceiptDetails">
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
                 <ScalarProperty Name="GoodsArrivalDetailID" ColumnName="GoodsArrivalDetailID" />
                 <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
@@ -23296,6 +23314,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="GoodsArrivalCode" ColumnName="GoodsArrivalCode" />
                 <ScalarProperty Name="GoodsArrivalEntryDate" ColumnName="GoodsArrivalEntryDate" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -23642,6 +23663,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

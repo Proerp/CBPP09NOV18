@@ -56,6 +56,10 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public Nullable<int> GoodsArrivalID { get; set; }
         public Nullable<int> GoodsArrivalDetailID { get; set; }
+        public string SealCode { get; set; }
+        public string BatchCode { get; set; }
+        public string LabCode { get; set; }
+        public string Barcode { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual GoodsReceipt GoodsReceipt { get; set; }

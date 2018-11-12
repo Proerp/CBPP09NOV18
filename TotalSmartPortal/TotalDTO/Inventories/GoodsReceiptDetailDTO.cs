@@ -139,8 +139,20 @@ namespace TotalDTO.Inventories
         [Display(Name = "Mã vạch")]
         [UIHint("StringReadonly")]
         public string Barcode { get; set; }
+        [Display(Name = "Số cont")]
+        [UIHint("StringReadonly")]
+        public string SealCode { get; set; }
+        [Display(Name = "Số lô")]
+        [UIHint("StringReadonly")]
+        public string BatchCode { get; set; }
+        [Display(Name = "Mã Lab")]
+        [UIHint("StringReadonly")]
+        public string LabCode { get; set; }
+
+        public int BinLocationID { get; set; }
         [Display(Name = "Vị trí")]
-        public string BinLocationCode { get; set; } //*******
+        [UIHint("StringReadonly")]
+        public string BinLocationCode { get; set; }
 
         [Display(Name = "SL Tồn")]
         [UIHint("QuantityReadonly")]

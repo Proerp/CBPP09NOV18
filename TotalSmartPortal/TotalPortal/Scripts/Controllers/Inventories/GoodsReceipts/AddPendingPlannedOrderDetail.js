@@ -93,7 +93,11 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPlannedOrderDetailGrid
         dataRow.CommodityCode = plannedOrderGridDataItem.CommodityCode;
         dataRow.CommodityTypeID = plannedOrderGridDataItem.CommodityTypeID;
         dataRow.Barcode = null;
+        dataRow.BatchCode = null;
+        dataRow.SealCode = null;
+        dataRow.LabCode = null;
 
+        dataRow.BinLocationID = null;
         dataRow.BinLocationCode = null;
 
         dataRow.QuantityRemains = plannedOrderGridDataItem.QuantityRemains;
