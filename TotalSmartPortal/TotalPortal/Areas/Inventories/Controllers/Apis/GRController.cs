@@ -11,7 +11,7 @@ using TotalCore.Repositories.Inventories;
 namespace TotalPortal.Areas.Inventories.Controllers.Apis
 {
     //[RoutePrefix("Api/Inventories/GR")]
-    [RoutePrefix("Api/Inventories/GoodsReceipts")]
+    //[RoutePrefix("Api/Inventories/GoodsReceipts")]
     [Authorize]
     public class GRController : ApiController
     {
@@ -23,7 +23,7 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         }
 
         //[Route("HelloWorldArea")]
-        [Route("GetGoodsArrivals/{locationID}")]
+        //[Route("GetGoodsArrivals/{locationID}")]
         //[Authorize]
         [HttpGet]
         public IEnumerable<GoodsReceiptPendingGoodsArrival> GetGoodsArrivals(int? locationID)

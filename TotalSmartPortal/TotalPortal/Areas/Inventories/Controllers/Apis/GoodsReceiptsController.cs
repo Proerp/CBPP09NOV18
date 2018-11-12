@@ -1,5 +1,11 @@
-﻿using System.Net;
-using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using Microsoft.AspNet.Identity;
+
+using System.Net;
+//using System.Web.Mvc;
+using System.Net.Http;
+using System.Web.Http;
 using System.Text;
 
 using AutoMapper;
@@ -24,6 +30,7 @@ using System.Collections.Generic;
 
 namespace TotalPortal.Areas.Inventories.Controllers.Apis
 {
+    [Authorize]
     //[RoutePrefix("Api/Inventories/GoodsReceipts")]
     public class GoodsReceiptsController<TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel> : GenericViewDetailApiController<GoodsReceipt, GoodsReceiptDetail, GoodsReceiptViewDetail, TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel>
         where TDto : TPrimitiveDto, IBaseDetailEntity<TDtoDetail>
@@ -31,7 +38,7 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         where TDtoDetail : class, IPrimitiveEntity
         where TViewDetailViewModel : TDto, IViewDetailViewModel<TDtoDetail>, IGoodsReceiptViewModel, new()
     {
-        private readonly IGoodsReceiptAPIRepository goodsReceiptAPIRepository;
+        protected readonly IGoodsReceiptAPIRepository goodsReceiptAPIRepository;
 
         public GoodsReceiptsController(IGoodsReceiptService<TDto, TPrimitiveDto, TDtoDetail> goodsReceiptService, IGoodsReceiptViewModelSelectListBuilder<TViewDetailViewModel> goodsReceiptViewModelSelectListBuilder, IGoodsReceiptAPIRepository goodsReceiptAPIRepository)
             : base(goodsReceiptService, goodsReceiptViewModelSelectListBuilder, true)
@@ -57,9 +64,8 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             //MVC: ViewBag.WarehouseTaskIDList = warehouseTaskIDList.ToString();
         }
 
-        [Route("GetGoodsArrivals/{locationID}")]
-        //[Authorize]
         [HttpGet]
+        [Route("GetGoodsArrivals/{locationID}")]
         public IEnumerable<GoodsReceiptPendingGoodsArrival> GetGoodsArrivals(int? locationID)
         {
             return this.goodsReceiptAPIRepository.GetGoodsArrivals(locationID);
@@ -75,13 +81,21 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
 
 
 
-
+    //[Authorize]
+    [RoutePrefix("Api/Inventories/GoodsReceipts")]
     public class MaterialReceiptsApiController : GoodsReceiptsController<GoodsReceiptDTO<GROptionMaterial>, GoodsReceiptPrimitiveDTO<GROptionMaterial>, GoodsReceiptDetailDTO, MaterialReceiptViewModel>
     {
         public MaterialReceiptsApiController(IMaterialReceiptService materialReceiptService, IMaterialReceiptViewModelSelectListBuilder materialReceiptViewModelSelectListBuilder, IGoodsReceiptAPIRepository goodsReceiptAPIRepository)
             : base(materialReceiptService, materialReceiptViewModelSelectListBuilder, goodsReceiptAPIRepository)
         {
         }
+
+        //////[HttpGet]
+        //////[Route("GetGoodsArrivals/{locationID}")]
+        //////public IEnumerable<GoodsReceiptPendingGoodsArrival> GetGoodsArrivals(int? locationID)
+        //////{
+        //////    return base.goodsReceiptAPIRepository.GetGoodsArrivals(locationID);
+        //////}
     }
 
     public class ItemReceiptsApiController : GoodsReceiptsController<GoodsReceiptDTO<GROptionItem>, GoodsReceiptPrimitiveDTO<GROptionItem>, GoodsReceiptDetailDTO, ItemReceiptViewModel>

@@ -20,6 +20,7 @@ using TotalPortal.APIs.Sessions;
 
 namespace TotalPortal.Controllers.Apis
 {
+    [GenericSimpleApiAuthorizeAttribute]
     public class GenericSimpleApiController<TEntity, TDto, TPrimitiveDto, TSimpleViewModel> : BaseApiController
 
         where TEntity : class, IPrimitiveEntity, IBaseEntity, new()
@@ -75,7 +76,8 @@ namespace TotalPortal.Controllers.Apis
 
 
 
-
+        [HttpGet]
+        [Route("Open/{id}")]
         [AccessLevelAuthorize(GlobalEnums.AccessLevel.Readable)]
         [OnResultExecutingFilterAttribute]
         public virtual IHttpActionResult Open(int? id)
@@ -160,7 +162,8 @@ namespace TotalPortal.Controllers.Apis
 
 
 
-
+        [HttpGet]
+        [Route("Edit/{id}")]
         [AccessLevelAuthorize(GlobalEnums.AccessLevel.Readable)]
         [OnResultExecutingFilterAttribute]
         public virtual IHttpActionResult Edit(int? id)

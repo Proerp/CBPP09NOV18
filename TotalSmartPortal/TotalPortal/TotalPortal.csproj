@@ -407,6 +407,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\Apis\BaseApiController.cs" />
     <Compile Include="Controllers\Apis\CoreApiController.cs" />
+    <Compile Include="Controllers\Apis\CustomApiControllerAttribute.cs" />
     <Compile Include="Controllers\Apis\GenericSimpleApiController.cs" />
     <Compile Include="Controllers\Apis\GenericViewDetailApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
