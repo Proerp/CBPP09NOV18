@@ -97,8 +97,8 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPurchaseRequisitionDet
         dataRow.SealCode = null;
         dataRow.LabCode = null;
 
-        dataRow.BinLocationID = null;
-        dataRow.BinLocationCode = null;
+        dataRow.BinLocationID = 1;
+        dataRow.BinLocationCode = "DEFAULT";
 
         dataRow.QuantityRemains = purchaseRequisitionGridDataItem.QuantityRemains;
         dataRow.Quantity = purchaseRequisitionGridDataItem.Quantity;

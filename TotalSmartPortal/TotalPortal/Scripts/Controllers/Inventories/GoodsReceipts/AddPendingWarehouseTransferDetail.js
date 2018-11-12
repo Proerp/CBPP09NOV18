@@ -97,8 +97,8 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetai
         dataRow.SealCode = null;
         dataRow.LabCode = null;
 
-        dataRow.BinLocationID = null;
-        dataRow.BinLocationCode = null;
+        dataRow.BinLocationID = 1;
+        dataRow.BinLocationCode = "DEFAULT";
 
         dataRow.QuantityRemains = warehouseTransferGridDataItem.QuantityRemains;
         dataRow.Quantity = warehouseTransferGridDataItem.Quantity;

@@ -60,6 +60,7 @@ namespace TotalModel.Models
         public string BatchCode { get; set; }
         public string LabCode { get; set; }
         public string Barcode { get; set; }
+        public int BinLocationID { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual GoodsReceipt GoodsReceipt { get; set; }

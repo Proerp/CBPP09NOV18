@@ -97,8 +97,8 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPlannedOrderDetailGrid
         dataRow.SealCode = null;
         dataRow.LabCode = null;
 
-        dataRow.BinLocationID = null;
-        dataRow.BinLocationCode = null;
+        dataRow.BinLocationID = 1;
+        dataRow.BinLocationCode = "DEFAULT";
 
         dataRow.QuantityRemains = plannedOrderGridDataItem.QuantityRemains;
         dataRow.Quantity = plannedOrderGridDataItem.Quantity;
