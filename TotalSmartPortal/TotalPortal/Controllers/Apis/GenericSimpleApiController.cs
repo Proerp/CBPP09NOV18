@@ -20,6 +20,7 @@ using TotalPortal.APIs.Sessions;
 
 namespace TotalPortal.Controllers.Apis
 {
+    [Authorize]
     [GenericSimpleApiAuthorizeAttribute]
     public class GenericSimpleApiController<TEntity, TDto, TPrimitiveDto, TSimpleViewModel> : BaseApiController
 
