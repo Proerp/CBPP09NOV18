@@ -23,7 +23,7 @@ namespace TotalPortal.Controllers.Apis
 
             string aspUserID = actionContext.RequestContext.Principal.Identity.GetUserId();
 
-            baseController.BaseService.UserID = Db.Users.Where(w => w.Id == aspUserID).FirstOrDefault().UserID;
+            if (aspUserID != null) baseController.BaseService.UserID = Db.Users.Where(w => w.Id == aspUserID).FirstOrDefault().UserID;
 
             base.OnAuthorization(actionContext);
         }

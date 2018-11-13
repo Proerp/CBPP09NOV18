@@ -79,5 +79,6 @@ namespace TotalModel.Models
         public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
         public virtual FinishedProductPackage FinishedProductPackage { get; set; }
         public virtual GoodsArrivalDetail GoodsArrivalDetail { get; set; }
+        public virtual BinLocation BinLocation { get; set; }
     }
 }

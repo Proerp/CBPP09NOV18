@@ -306,6 +306,7 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<Warehouse, WarehouseBaseDTO>();
                 cfg.CreateMap<VoidType, VoidTypeBaseDTO>();
                 cfg.CreateMap<ProductionLine, ProductionLineBaseDTO>();
+                cfg.CreateMap<BinLocation, BinLocationBaseDTO>();
 
                 //cfg.CreateMap<Module, ModuleViewModel>();
                 //cfg.CreateMap<ModuleDetail, ModuleDetailViewModel>();

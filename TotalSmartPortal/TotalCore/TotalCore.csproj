@@ -53,6 +53,7 @@
     <Compile Include="Helpers\SystemInfos.cs" />
     <Compile Include="Repositories\Accounts\ICreditNoteRepository.cs" />
     <Compile Include="Repositories\Analysis\IReportRepository.cs" />
+    <Compile Include="Repositories\Commons\IBinLocationRepository.cs" />
     <Compile Include="Repositories\Commons\ICommodityBrandRepository.cs" />
     <Compile Include="Repositories\Commons\ICommodityCategoryRepository.cs" />
     <Compile Include="Repositories\Commons\IBomRepository.cs" />

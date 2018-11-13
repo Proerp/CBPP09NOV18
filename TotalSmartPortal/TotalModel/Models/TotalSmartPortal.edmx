@@ -135,6 +135,21 @@
           <Property Name="AccessFailedCount" Type="int" Nullable="false" />
           <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
         </EntityType>
+        <EntityType Name="BinLocations">
+          <Key>
+            <PropertyRef Name="BinLocationID" />
+          </Key>
+          <Property Name="BinLocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="PreparedPersonID" Type="int" Nullable="false" />
+          <Property Name="OrganizationalUnitID" Type="int" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="InActive" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="BomDetails">
           <Key>
             <PropertyRef Name="BomDetailID" />
@@ -2326,6 +2341,18 @@ warning 6035: The relationship 'FK_AccountInvoices_AspNetUsers2' has columns tha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BinLocations_Warehouses">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1" />
+          <End Role="BinLocations" Type="Self.BinLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="WarehouseID" />
+            </Principal>
+            <Dependent Role="BinLocations">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_BomDetails_Boms">
           <End Role="Boms" Type="Self.Boms" Multiplicity="1" />
           <End Role="BomDetails" Type="Self.BomDetails" Multiplicity="*" />
@@ -3526,6 +3553,18 @@ warning 6035: The relationship 'FK_GoodsDeliveries_AspNetUsers2' has columns tha
             </Principal>
             <Dependent Role="GoodsIssues">
               <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsReceiptDetails_BinLocations">
+          <End Role="BinLocations" Type="Self.BinLocations" Multiplicity="1" />
+          <End Role="GoodsReceiptDetails" Type="Self.GoodsReceiptDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BinLocations">
+              <PropertyRef Name="BinLocationID" />
+            </Principal>
+            <Dependent Role="GoodsReceiptDetails">
+              <PropertyRef Name="BinLocationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5795,6 +5834,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="OrganizationalUnitID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetBinLocationBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WarehouseID" Type="int" Mode="In" />
+          <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetBomBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
           <Parameter Name="CommodityID" Type="int" Mode="In" />
@@ -6852,6 +6895,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySet Name="AccountInvoiceDetails" EntityType="Self.AccountInvoiceDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccountInvoices" EntityType="Self.AccountInvoices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BinLocations" EntityType="Self.BinLocations" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BomDetails" EntityType="Self.BomDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Boms" EntityType="Self.Boms" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Commodities" EntityType="Self.Commodities" Schema="dbo" store:Type="Tables" />
@@ -6978,6 +7022,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <AssociationSet Name="FK_AccountInvoices_TradePromotions" Association="Self.FK_AccountInvoices_TradePromotions">
             <End Role="Promotions" EntitySet="Promotions" />
             <End Role="AccountInvoices" EntitySet="AccountInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BinLocations_Warehouses" Association="Self.FK_BinLocations_Warehouses">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="BinLocations" EntitySet="BinLocations" />
           </AssociationSet>
           <AssociationSet Name="FK_BomDetails_Boms" Association="Self.FK_BomDetails_Boms">
             <End Role="Boms" EntitySet="Boms" />
@@ -7358,6 +7406,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <AssociationSet Name="FK_GoodsIssues_Warehouses" Association="Self.FK_GoodsIssues_Warehouses">
             <End Role="Warehouses" EntitySet="Warehouses" />
             <End Role="GoodsIssues" EntitySet="GoodsIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsReceiptDetails_BinLocations" Association="Self.FK_GoodsReceiptDetails_BinLocations">
+            <End Role="BinLocations" EntitySet="BinLocations" />
+            <End Role="GoodsReceiptDetails" EntitySet="GoodsReceiptDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_GoodsReceiptDetails_Commodities" Association="Self.FK_GoodsReceiptDetails_Commodities">
             <End Role="Commodities" EntitySet="Commodities" />
@@ -12820,6 +12872,19 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="GoodsArrivalDetail" EntitySet="GoodsArrivalDetails" />
             <End Role="GoodsReceiptDetail" EntitySet="GoodsReceiptDetails" />
           </AssociationSet>
+          <FunctionImport Name="GetBinLocationBases" ReturnType="Collection(TotalSmartPortalModel.BinLocationBase)">
+            <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
+            <Parameter Name="SearchText" Mode="In" Type="String" />
+          </FunctionImport>
+          <EntitySet Name="BinLocations" EntityType="TotalSmartPortalModel.BinLocation" />
+          <AssociationSet Name="FK_BinLocations_Warehouses" Association="TotalSmartPortalModel.FK_BinLocations_Warehouses">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="BinLocation" EntitySet="BinLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsReceiptDetails_BinLocations" Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations">
+            <End Role="BinLocation" EntitySet="BinLocations" />
+            <End Role="GoodsReceiptDetail" EntitySet="GoodsReceiptDetails" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -14445,6 +14510,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="WarehouseTransfers" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Warehouses" FromRole="Warehouse" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="WarehouseTransfers1" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Warehouses1" FromRole="Warehouse" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="GoodsArrivals" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_Warehouses" FromRole="Warehouse" ToRole="GoodsArrival" />
+          <NavigationProperty Name="BinLocations" Relationship="TotalSmartPortalModel.FK_BinLocations_Warehouses" FromRole="Warehouse" ToRole="BinLocation" />
           </EntityType>
         <Association Name="FK_DeliveryAdvices_Warehouses">
           <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
@@ -17252,6 +17318,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="LabCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="Barcode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="BinLocationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BinLocation" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations" FromRole="GoodsReceiptDetail" ToRole="BinLocation" />
         </EntityType>
         <Association Name="FK_FinishedHandoverDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -18622,6 +18689,52 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Principal>
             <Dependent Role="GoodsReceiptDetail">
               <PropertyRef Name="GoodsArrivalDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="BinLocationBase">
+          <Property Type="Int32" Name="BinLocationID" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+        </ComplexType>
+        <EntityType Name="BinLocation">
+          <Key>
+            <PropertyRef Name="BinLocationID" />
+          </Key>
+          <Property Name="BinLocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="PreparedPersonID" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationalUnitID" Type="Int32" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="InActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_BinLocations_Warehouses" FromRole="BinLocation" ToRole="Warehouse" />
+          <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations" FromRole="BinLocation" ToRole="GoodsReceiptDetail" />
+        </EntityType>
+        <Association Name="FK_BinLocations_Warehouses">
+          <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.BinLocation" Role="BinLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseID" />
+            </Principal>
+            <Dependent Role="BinLocation">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsReceiptDetails_BinLocations">
+          <End Type="TotalSmartPortalModel.BinLocation" Role="BinLocation" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.GoodsReceiptDetail" Role="GoodsReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BinLocation">
+              <PropertyRef Name="BinLocationID" />
+            </Principal>
+            <Dependent Role="GoodsReceiptDetail">
+              <PropertyRef Name="BinLocationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -23725,6 +23838,31 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
                 <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
                 <ScalarProperty Name="GoodsArrivalDetailID" ColumnName="GoodsArrivalDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetBinLocationBases" FunctionName="TotalSmartPortalModel.Store.GetBinLocationBases">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BinLocationBase">
+                <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="BinLocations">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.BinLocation">
+              <MappingFragment StoreEntitySet="BinLocations">
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="OrganizationalUnitID" ColumnName="OrganizationalUnitID" />
+                <ScalarProperty Name="PreparedPersonID" ColumnName="PreparedPersonID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -75,6 +75,12 @@
     <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BinLocation.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BinLocationBase.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Bom.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

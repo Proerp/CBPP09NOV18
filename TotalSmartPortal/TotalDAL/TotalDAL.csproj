@@ -51,6 +51,7 @@
     <Compile Include="EntityFrameworkExtension.cs" />
     <Compile Include="Helpers\SqlProgrammability\Accounts\CreditNote.cs" />
     <Compile Include="Helpers\SqlProgrammability\Analysis\Report.cs" />
+    <Compile Include="Helpers\SqlProgrammability\Commons\BinLocation.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\Bom.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\Commodity.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\Mold.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Helpers\SqlProgrammability\Sales\SalesReturn.cs" />
     <Compile Include="Repositories\Accounts\CreditNoteRepository.cs" />
     <Compile Include="Repositories\Analysis\ReportRepository.cs" />
+    <Compile Include="Repositories\Commons\BinLocationRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityBrandRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityCategoryRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityClassRepository.cs" />

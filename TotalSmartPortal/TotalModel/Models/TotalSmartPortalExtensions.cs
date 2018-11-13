@@ -708,5 +708,13 @@ namespace TotalModel.Models
     }
 
 
+    public partial class BinLocation : IPrimitiveEntity, IBaseEntity
+    {
+        public int GetID() { return this.BinLocationID; }
+
+        public System.DateTime CreatedDate { get; set; }
+        public System.DateTime EditedDate { get; set; }
+    }
+
 
 }

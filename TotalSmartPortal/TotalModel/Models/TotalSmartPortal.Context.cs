@@ -114,6 +114,7 @@ namespace TotalModel.Models
         public virtual DbSet<FirmOrderDetail> FirmOrderDetails { get; set; }
         public virtual DbSet<GoodsArrival> GoodsArrivals { get; set; }
         public virtual DbSet<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
+        public virtual DbSet<BinLocation> BinLocations { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {
@@ -4080,6 +4081,19 @@ namespace TotalModel.Models
                 new ObjectParameter("LocationID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrival>("GetGoodsReceiptPendingGoodsArrivals", locationIDParameter);
+        }
+    
+        public virtual ObjectResult<BinLocationBase> GetBinLocationBases(Nullable<int> warehouseID, string searchText)
+        {
+            var warehouseIDParameter = warehouseID.HasValue ?
+                new ObjectParameter("WarehouseID", warehouseID) :
+                new ObjectParameter("WarehouseID", typeof(int));
+    
+            var searchTextParameter = searchText != null ?
+                new ObjectParameter("SearchText", searchText) :
+                new ObjectParameter("SearchText", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BinLocationBase>("GetBinLocationBases", warehouseIDParameter, searchTextParameter);
         }
     }
 }

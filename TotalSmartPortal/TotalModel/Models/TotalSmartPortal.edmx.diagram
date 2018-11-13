@@ -366,6 +366,9 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_GoodsArrivals" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_VoidTypes" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalDetails" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.BinLocation" Width="1.5" PointX="36.625" PointY="44.25" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_BinLocations_Warehouses" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

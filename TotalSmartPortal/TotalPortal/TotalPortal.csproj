@@ -257,6 +257,7 @@
     <Compile Include="Areas\Accounts\ViewModels\AccountInvoiceViewModel.cs" />
     <Compile Include="Areas\Accounts\ViewModels\CreditNoteViewModel.cs" />
     <Compile Include="Areas\Accounts\ViewModels\ReceiptViewModel.cs" />
+    <Compile Include="Areas\Commons\APIs\BinLocationAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\CommodityAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\BomAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\CommodityPriceAPIsController.cs" />
@@ -290,6 +291,7 @@
     <Compile Include="Areas\Commons\Builders\IVehicleSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\IWarehouseAdjustmentTypeSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\CommonsAreaRegistration.cs" />
+    <Compile Include="Areas\Commons\Controllers\Apis\BinLocationsApiController.cs" />
     <Compile Include="Areas\Commons\Controllers\CommoditiesController.cs" />
     <Compile Include="Areas\Commons\Controllers\CommodityPricesController.cs" />
     <Compile Include="Areas\Commons\Controllers\CustomersController.cs" />

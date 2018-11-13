@@ -385,6 +385,12 @@ namespace TotalDAL.Repositories
 
             //return;
 
+            Helpers.SqlProgrammability.Commons.BinLocation binLocation = new Helpers.SqlProgrammability.Commons.BinLocation(totalSmartPortalEntities);
+            binLocation.RestoreProcedure();
+
+
+            //return;
+
             Helpers.SqlProgrammability.Commons.Mold mold = new Helpers.SqlProgrammability.Commons.Mold(totalSmartPortalEntities);
             mold.RestoreProcedure();
 
