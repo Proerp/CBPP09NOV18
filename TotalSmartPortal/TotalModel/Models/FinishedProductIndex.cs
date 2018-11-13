@@ -21,7 +21,7 @@ namespace TotalModel.Models
         public string CustomerName { get; set; }
         public string Description { get; set; }
         public bool Approved { get; set; }
-        public decimal TotalQuantity { get; set; }
+        public Nullable<decimal> TotalQuantity { get; set; }
         public decimal TotalQuantityFailure { get; set; }
         public decimal TotalSwarfs { get; set; }
         public string FirmOrderReference { get; set; }
@@ -29,5 +29,7 @@ namespace TotalModel.Models
         public string FirmOrderSpecs { get; set; }
         public decimal TotalQuantityExcess { get; set; }
         public decimal TotalQuantityShortage { get; set; }
+        public string WorkshiftName { get; set; }
+        public System.DateTime WorkshiftEntryDate { get; set; }
     }
 }

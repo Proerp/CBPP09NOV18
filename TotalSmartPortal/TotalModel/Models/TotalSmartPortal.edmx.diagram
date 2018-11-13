@@ -369,6 +369,12 @@
         <EntityTypeShape EntityType="TotalSmartPortalModel.BinLocation" Width="1.5" PointX="36.625" PointY="44.25" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BinLocations_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProductDetails_Shifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProductDetails_Workshifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProductPackages_Shifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProductPackages_Workshifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProducts_Shifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProducts_Workshifts" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -43,6 +43,8 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public decimal TotalQuantityExcess { get; set; }
         public decimal TotalQuantityShortage { get; set; }
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
@@ -52,5 +54,7 @@ namespace TotalModel.Models
         public virtual Location Location { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedProductDetail> FinishedProductDetails { get; set; }
+        public virtual Shift Shift { get; set; }
+        public virtual Workshift Workshift { get; set; }
     }
 }

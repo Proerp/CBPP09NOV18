@@ -18,6 +18,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         public void RestoreProcedure()
         {
+            return;
+
             this.GetFinishedHandoverIndexes();
 
             this.GetFinishedHandoverViewDetails();
@@ -126,7 +128,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @FinishedHandoverID Int, @PlannedOrderID Int, @CustomerID Int, @FinishedProductPackageIDs varchar(3999), @IsReadonly bit " + "\r\n";
+            queryString = " @FinishedHandoverID Int, @WorkshiftID Int, @PlannedOrderID Int, @CustomerID Int, @FinishedProductPackageIDs varchar(3999), @IsReadonly bit " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -206,7 +208,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                   FinishedProductPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, FinishedProductPackages.Quantity, FinishedProductPackages.SemifinishedProductReferences, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        FinishedProductPackages " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Customers ON FinishedProductPackages.Approved = 1 " + (isCustomerID ? " AND FinishedProductPackages.CustomerID = @CustomerID " : "") + (isPlannedOrderID ? " AND FinishedProductPackages.PlannedOrderID = @PlannedOrderID " : "") + " AND FinishedProductPackages.FinishedHandoverID IS NULL AND FinishedProductPackages.CustomerID = Customers.CustomerID " + (isFinishedProductPackageIDs ? " AND FinishedProductPackages.FinishedProductPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@FinishedProductPackageIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN Customers ON FinishedProductPackages.Approved = 1 AND FinishedProductPackages.WorkshiftID = @WorkshiftID " + (isCustomerID ? " AND FinishedProductPackages.CustomerID = @CustomerID " : "") + (isPlannedOrderID ? " AND FinishedProductPackages.PlannedOrderID = @PlannedOrderID " : "") + " AND FinishedProductPackages.FinishedHandoverID IS NULL AND FinishedProductPackages.CustomerID = Customers.CustomerID " + (isFinishedProductPackageIDs ? " AND FinishedProductPackages.FinishedProductPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@FinishedProductPackageIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON FinishedProductPackages.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
 

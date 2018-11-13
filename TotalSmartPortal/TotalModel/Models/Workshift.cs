@@ -21,6 +21,9 @@ namespace TotalModel.Models
             this.MaterialIssues = new HashSet<MaterialIssue>();
             this.SemifinishedProducts = new HashSet<SemifinishedProduct>();
             this.SemifinishedHandovers = new HashSet<SemifinishedHandover>();
+            this.FinishedProductDetails = new HashSet<FinishedProductDetail>();
+            this.FinishedProductPackages = new HashSet<FinishedProductPackage>();
+            this.FinishedProducts = new HashSet<FinishedProduct>();
         }
     
         public int WorkshiftID { get; set; }
@@ -40,5 +43,11 @@ namespace TotalModel.Models
         public virtual ICollection<SemifinishedProduct> SemifinishedProducts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedHandover> SemifinishedHandovers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinishedProductDetail> FinishedProductDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinishedProductPackage> FinishedProductPackages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinishedProduct> FinishedProducts { get; set; }
     }
 }
