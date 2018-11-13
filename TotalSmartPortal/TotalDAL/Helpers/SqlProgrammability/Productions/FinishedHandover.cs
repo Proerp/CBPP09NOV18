@@ -49,9 +49,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      FinishedHandovers.FinishedHandoverID, CAST(FinishedHandovers.EntryDate AS DATE) AS EntryDate, FinishedHandovers.Reference, Locations.Code AS LocationCode, ISNULL(Customers.Name, N'Phiếu tổng hợp') AS CustomerDescription, FinishedHandovers.Caption, FinishedHandovers.Description, FinishedHandovers.TotalQuantity, FinishedHandovers.Approved " + "\r\n";
+            queryString = queryString + "       SELECT      FinishedHandovers.FinishedHandoverID, CAST(FinishedHandovers.EntryDate AS DATE) AS EntryDate, FinishedHandovers.Reference, Locations.Code AS LocationCode, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, ISNULL(Customers.Name, N'Phiếu tổng hợp') AS CustomerDescription, FinishedHandovers.Caption, FinishedHandovers.Description, FinishedHandovers.TotalQuantity, FinishedHandovers.Approved " + "\r\n";
             queryString = queryString + "       FROM        FinishedHandovers " + "\r\n";
             queryString = queryString + "                   INNER JOIN Locations ON FinishedHandovers.EntryDate >= @FromDate AND FinishedHandovers.EntryDate <= @ToDate AND FinishedHandovers.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.FinishedHandover + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = FinishedHandovers.LocationID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Workshifts ON FinishedHandovers.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN Customers ON FinishedHandovers.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "       " + "\r\n";
 

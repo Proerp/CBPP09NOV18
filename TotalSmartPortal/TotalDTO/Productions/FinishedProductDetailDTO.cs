@@ -25,6 +25,9 @@ namespace TotalDTO.Productions
         public int SemifinishedProductDetailID { get; set; }
 
         public Nullable<int> CustomerID { get; set; }
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; }
+
         public int CrucialWorkerID { get; set; }
 
         public int SemifinishedHandoverID { get; set; }

@@ -42,11 +42,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      FinishedProducts.FinishedProductID, CAST(FinishedProducts.EntryDate AS DATE) AS EntryDate, FinishedProducts.Reference, Locations.Code AS LocationCode, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specs AS FirmOrderSpecs, FinishedProducts.Description, FinishedProducts.TotalQuantity + FinishedProducts.TotalQuantityExcess AS TotalQuantity, FinishedProducts.TotalQuantityFailure, FinishedProducts.TotalQuantityExcess, FinishedProducts.TotalQuantityShortage, FinishedProducts.TotalSwarfs, FinishedProducts.Approved " + "\r\n";
+            queryString = queryString + "       SELECT      FinishedProducts.FinishedProductID, CAST(FinishedProducts.EntryDate AS DATE) AS EntryDate, FinishedProducts.Reference, Locations.Code AS LocationCode, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specs AS FirmOrderSpecs, FinishedProducts.Description, Workshifts.Name AS WorkshiftName, Workshifts.EntryDate AS WorkshiftEntryDate, FinishedProducts.TotalQuantity + FinishedProducts.TotalQuantityExcess AS TotalQuantity, FinishedProducts.TotalQuantityFailure, FinishedProducts.TotalQuantityExcess, FinishedProducts.TotalQuantityShortage, FinishedProducts.TotalSwarfs, FinishedProducts.Approved " + "\r\n";
             queryString = queryString + "       FROM        FinishedProducts " + "\r\n";
             queryString = queryString + "                   INNER JOIN Locations ON FinishedProducts.EntryDate >= @FromDate AND FinishedProducts.EntryDate <= @ToDate AND FinishedProducts.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.FinishedProduct + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = FinishedProducts.LocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProducts.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON FinishedProducts.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Workshifts ON FinishedProducts.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "       " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
@@ -149,6 +150,25 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "   BEGIN  " + "\r\n";
 
             queryString = queryString + "       DECLARE @msg NVARCHAR(300) ";
+
+            queryString = queryString + "       IF (@SaveRelativeOption = 1) " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            #region UPDATE WorkshiftID
+            queryString = queryString + "               DECLARE         @EntryDate Datetime, @ShiftID int, @WorkshiftID int " + "\r\n";
+            queryString = queryString + "               SELECT          @EntryDate = CONVERT(date, EntryDate), @ShiftID = ShiftID FROM SemifinishedProducts WHERE SemifinishedProductID = @EntityID " + "\r\n";
+            queryString = queryString + "               SET             @WorkshiftID = (SELECT TOP 1 WorkshiftID FROM Workshifts WHERE EntryDate = @EntryDate AND ShiftID = @ShiftID) " + "\r\n";
+
+            queryString = queryString + "               IF             (@WorkshiftID IS NULL) " + "\r\n";
+            queryString = queryString + "                   BEGIN ";
+            queryString = queryString + "                       INSERT INTO     Workshifts(EntryDate, ShiftID, Code, Name, WorkingHours, Remarks) SELECT @EntryDate, ShiftID, Code, Name, WorkingHours, Remarks FROM Shifts WHERE ShiftID = @ShiftID " + "\r\n";
+            queryString = queryString + "                       SELECT          @WorkshiftID = SCOPE_IDENTITY(); " + "\r\n";
+            queryString = queryString + "                   END ";
+
+            queryString = queryString + "               UPDATE          SemifinishedProducts        SET WorkshiftID = @WorkshiftID WHERE SemifinishedProductID = @EntityID " + "\r\n";
+            queryString = queryString + "               UPDATE          SemifinishedProductDetails  SET WorkshiftID = @WorkshiftID WHERE SemifinishedProductID = @EntityID " + "\r\n";
+            #endregion UPDATE WorkshiftID
+            queryString = queryString + "           END " + "\r\n";
+
 
             queryString = queryString + "       UPDATE          SemifinishedProductDetails " + "\r\n";
             queryString = queryString + "       SET             SemifinishedProductDetails.QuantityFinished = ROUND(SemifinishedProductDetails.QuantityFinished + (FinishedProductDetails.Quantity + FinishedProductDetails.QuantityFailure + FinishedProductDetails.QuantityShortage) * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";

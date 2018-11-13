@@ -34,6 +34,9 @@ namespace TotalDTO.Productions
         [Display(Name = "Thành phẩm khay")]
         public string FirmOrderSpecification { get; set; }
 
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; } // WHEN ADD NEW: THIS WILL BE ZERO. THEN, THE REAL VALUE OF WorkshiftID WILL BE UPDATE BY MaterialIssueSaveRelative
+
         public virtual int CrucialWorkerID { get; set; }
 
         public virtual decimal TotalQuantityFailure { get; set; }
@@ -60,7 +63,8 @@ namespace TotalDTO.Productions
         {
             base.PerformPresaveRule();
 
-            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.CrucialWorkerID = this.CrucialWorkerID; });            
+            this.ShiftSaving(this.ShiftID);
+            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; });            
         }
         
     }
