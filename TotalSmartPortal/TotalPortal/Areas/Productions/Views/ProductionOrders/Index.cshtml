@@ -109,8 +109,12 @@
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [
-                    { field: "Code", operator: "contains", value: indexFilterText },
-                    { field: "Reference", operator: "contains", value: indexFilterText }
+                    { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "PlannedOrderCode", operator: "contains", value: indexFilterText },
+                    { field: "PlannedOrderReference", operator: "contains", value: indexFilterText },
+                    { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "Caption", operator: "contains", value: indexFilterText },
+                    { field: "Description", operator: "contains", value: indexFilterText }                    
                 ]
             });
 
