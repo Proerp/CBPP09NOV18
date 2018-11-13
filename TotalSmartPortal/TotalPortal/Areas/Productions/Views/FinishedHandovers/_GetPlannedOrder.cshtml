@@ -5,10 +5,12 @@
     .Name("finishedHandoverPendingPlannedOrderGrid")
     .Columns(columns =>
     {
-        columns.Bound(c => c.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(80);
-        columns.Bound(c => c.PlannedOrderCode).Title("Mã KHSX").Width(100);
+        columns.Bound(c => c.WorkshiftEntryDate).Title("Ngày sx").Format("{0:dd/MM/yyyy}").Width(60);
+        columns.Bound(c => c.WorkshiftCode).Title("Ca sx").Width(60);
+        columns.Bound(c => c.PlannedOrderCode).Title("Mã KHSX").Width(60);
+        columns.Bound(c => c.PlannedOrderEntryDate).Title("Ngày KHSX").Format("{0:dd/MM/yyyy}").Width(80);        
         columns.Bound(c => c.CustomerCode).Title("Mã KH").Width(100);
-        columns.Bound(c => c.CustomerName).Title("Tên KH").Width(150);
+        columns.Bound(c => c.CustomerName).Title("Tên KH").Width(207);
     })    
     .ToolBar(toolbar =>
     {

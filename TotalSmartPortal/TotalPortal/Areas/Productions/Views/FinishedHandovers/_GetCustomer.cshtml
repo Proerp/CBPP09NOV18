@@ -5,9 +5,11 @@
      .Name("finishedHandoverPendingCustomerGrid")
 
     .Columns(columns =>
-    {        
+    {
+        columns.Bound(c => c.WorkshiftEntryDate).Title("Ngày sx").Format("{0:dd/MM/yyyy}").Width(39);
+        columns.Bound(c => c.WorkshiftCode).Title("Ca sx").Width(39);
         columns.Bound(c => c.CustomerCode).Title("Mã khách hàng").Width(90);
-        columns.Bound(c => c.CustomerName).Title("Tên khách hàng").Width(190);        
+        columns.Bound(c => c.CustomerName).Title("Tên khách hàng").Width(207);        
     })
     .ToolBar(toolbar =>
     {

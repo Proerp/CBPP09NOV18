@@ -107,6 +107,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, PlannedOrderID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, PlannedOrderID) FinishedProductPackages ON PlannedOrders.PlannedOrderID = FinishedProductPackages.PlannedOrderID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Workshifts ON FinishedProductPackages.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "       ORDER BY        Workshifts.EntryDate DESC, Workshifts.Code DESC " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedHandoverPendingPlannedOrders", queryString);
         }
@@ -120,6 +121,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "       FROM            Workshifts " + "\r\n";
             queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, CustomerID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID) FinishedProductPackages ON Workshifts.WorkshiftID = FinishedProductPackages.WorkshiftID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON FinishedProductPackages.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "       ORDER BY        Workshifts.EntryDate DESC, Workshifts.Code DESC " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedHandoverPendingCustomers", queryString);
         }

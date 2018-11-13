@@ -18,7 +18,28 @@
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
     
-        
+        @Html.HiddenFor(model => model.WorkshiftID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WorkshiftCode)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.WorkshiftCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.WorkshiftCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WorkshiftEntryDate)
+            <div class="div-input">
+                @Html.Kendo().DateTimePickerFor(model => model.WorkshiftEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.WorkshiftEntryDate, "", new { @class = "text-danger" })
+            </div>
+        </div>   
+
         <div class="form-group">
             @Html.EditorFor(d => d.Storekeeper, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.Storekeeper) })
         </div>   
