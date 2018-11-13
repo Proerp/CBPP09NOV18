@@ -155,7 +155,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "           BEGIN " + "\r\n";
             #region UPDATE WorkshiftID
             queryString = queryString + "               DECLARE         @EntryDate Datetime, @ShiftID int, @WorkshiftID int " + "\r\n";
-            queryString = queryString + "               SELECT          @EntryDate = CONVERT(date, EntryDate), @ShiftID = ShiftID FROM SemifinishedProducts WHERE SemifinishedProductID = @EntityID " + "\r\n";
+            queryString = queryString + "               SELECT          @EntryDate = CONVERT(date, EntryDate), @ShiftID = ShiftID FROM FinishedProducts WHERE FinishedProductID = @EntityID " + "\r\n";
             queryString = queryString + "               SET             @WorkshiftID = (SELECT TOP 1 WorkshiftID FROM Workshifts WHERE EntryDate = @EntryDate AND ShiftID = @ShiftID) " + "\r\n";
 
             queryString = queryString + "               IF             (@WorkshiftID IS NULL) " + "\r\n";
@@ -164,8 +164,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                       SELECT          @WorkshiftID = SCOPE_IDENTITY(); " + "\r\n";
             queryString = queryString + "                   END ";
 
-            queryString = queryString + "               UPDATE          SemifinishedProducts        SET WorkshiftID = @WorkshiftID WHERE SemifinishedProductID = @EntityID " + "\r\n";
-            queryString = queryString + "               UPDATE          SemifinishedProductDetails  SET WorkshiftID = @WorkshiftID WHERE SemifinishedProductID = @EntityID " + "\r\n";
+            queryString = queryString + "               UPDATE          FinishedProducts        SET WorkshiftID = @WorkshiftID WHERE FinishedProductID = @EntityID " + "\r\n";
+            queryString = queryString + "               UPDATE          FinishedProductDetails  SET WorkshiftID = @WorkshiftID WHERE FinishedProductID = @EntityID " + "\r\n";
             #endregion UPDATE WorkshiftID
             queryString = queryString + "           END " + "\r\n";
 

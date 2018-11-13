@@ -14,6 +14,7 @@
 
             columns.Bound(p => p.FirmOrderReference).Title("KHSX").Width(30);
             columns.Bound(p => p.FirmOrderCode).Title("Số CT").Width(30);
+            columns.Bound(p => p.WorkshiftName).Title("Ca SX");
             columns.Bound(p => p.CustomerName).Title("Tên KH").Width(168);
             columns.Bound(p => p.FirmOrderSpecs).Title("Thành phẩm").Width(227);
             
@@ -48,7 +49,7 @@
             })
             .DataSource(dataSource => dataSource
                 .Ajax()
-                .Group(group => group.AddDescending(p => p.EntryDate))
+                .Group(group => group.AddDescending(p => p.EntryDate)).Group(group => group.Add(p => p.WorkshiftName))
                 .Read(read => read.Action("GetFinishedProductIndexes", "FinishedProductAPIs", new { area = "Productions" }))
                 .Sort(sort =>
                     {
@@ -112,6 +113,7 @@
                     { field: "Reference", operator: "contains", value: indexFilterText },                    
                     { field: "Description", operator: "contains", value: indexFilterText },
                     { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "WorkshiftName", operator: "contains", value: indexFilterText },
                     { field: "FirmOrderReference", operator: "contains", value: indexFilterText },
                     { field: "FirmOrderCode", operator: "contains", value: indexFilterText },
                     { field: "FirmOrderSpecs", operator: "contains", value: indexFilterText }
