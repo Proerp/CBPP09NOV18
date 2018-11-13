@@ -241,4 +241,16 @@ namespace TotalPortal.APIs.Sessions
             context.Session["FreshSession"] = freshSession;
         }
     }
+
+    public class Helpers
+    {
+        public static DateTime InitDateTime(int year, int month, int day)
+        {
+            return Sessions.Helpers.InitDateTime(year, month, day, 0, 0, 0);
+        }
+        public static DateTime InitDateTime(int year, int month, int day, int hours, int minutes, int seconds)
+        {
+            return new DateTime(year, month, day).AddHours(hours).AddMinutes(minutes).AddSeconds(seconds);
+        }
+    }
 }

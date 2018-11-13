@@ -20,7 +20,7 @@ using TotalCore.Services.Inventories;
 using TotalCore.Repositories.Commons;
 using TotalCore.Repositories.Inventories;
 
-
+using TotalPortal.APIs.Sessions;
 using TotalPortal.Controllers.Apis;
 using TotalPortal.ViewModels.Helpers;
 using TotalPortal.Areas.Inventories.ViewModels;
@@ -44,11 +44,11 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         }
 
         [HttpGet]
-        [Route("GetGoodsReceiptIndexes/{nmvnTaskID}")]        
-        public ICollection<GoodsReceiptIndex> GetGoodsReceiptIndexes(string nmvnTaskID)
+        [Route("GetGoodsReceiptIndexes/{nmvnTaskID}/{fromDay}/{fromMonth}/{fromYear}/{toDay}/{toMonth}/{toYear}")]
+        public ICollection<GoodsReceiptIndex> GetGoodsReceiptIndexes(string nmvnTaskID, int fromDay, int fromMonth, int fromYear, int toDay, int toMonth, int toYear)
         {
             this.goodsReceiptAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
-            return this.goodsReceiptAPIRepository.GetEntityIndexes<GoodsReceiptIndex>(User.Identity.GetUserId(), DateTime.Now.AddDays(-30), DateTime.Now.AddDays(30));
+            return this.goodsReceiptAPIRepository.GetEntityIndexes<GoodsReceiptIndex>(User.Identity.GetUserId(), Helpers.InitDateTime(fromYear, fromMonth, fromDay), Helpers.InitDateTime(toYear, toMonth, toDay, 23, 59, 59));
         }
 
         [HttpGet]
