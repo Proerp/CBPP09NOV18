@@ -15,6 +15,6 @@ namespace TotalModel.Models
     {
         public int WorkshiftID { get; set; }
         public System.DateTime EntryDate { get; set; }
-        public string Code { get; set; }
+        public string WorkshiftCode { get; set; }
     }
 }

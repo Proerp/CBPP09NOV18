@@ -102,7 +102,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString = " @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
-            queryString = queryString + "       SELECT          PlannedOrders.PlannedOrderID, PlannedOrders.EntryDate AS PlannedOrderEntryDate, PlannedOrders.Code AS PlannedOrderCode, Workshifts.WorkshiftID, Workshifts.EntryDate, Workshifts.Code AS WorkshiftCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
+            queryString = queryString + "       SELECT          PlannedOrders.PlannedOrderID, PlannedOrders.EntryDate AS PlannedOrderEntryDate, PlannedOrders.Code AS PlannedOrderCode, Workshifts.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
             queryString = queryString + "       FROM            PlannedOrders " + "\r\n";
             queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, PlannedOrderID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, PlannedOrderID) FinishedProductPackages ON PlannedOrders.PlannedOrderID = FinishedProductPackages.PlannedOrderID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Workshifts ON FinishedProductPackages.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
@@ -116,7 +116,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString = " @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
-            queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate, Workshifts.Code AS WorkshiftCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
+            queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
             queryString = queryString + "       FROM            Workshifts " + "\r\n";
             queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, CustomerID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID) FinishedProductPackages ON Workshifts.WorkshiftID = FinishedProductPackages.WorkshiftID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON FinishedProductPackages.CustomerID = Customers.CustomerID " + "\r\n";

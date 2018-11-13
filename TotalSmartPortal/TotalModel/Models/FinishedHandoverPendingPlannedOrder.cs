@@ -14,7 +14,6 @@ namespace TotalModel.Models
     public partial class FinishedHandoverPendingPlannedOrder
     {
         public int PlannedOrderID { get; set; }
-        public System.DateTime EntryDate { get; set; }
         public string PlannedOrderCode { get; set; }
         public int CustomerID { get; set; }
         public string CustomerCode { get; set; }
@@ -22,5 +21,6 @@ namespace TotalModel.Models
         public int WorkshiftID { get; set; }
         public string WorkshiftCode { get; set; }
         public System.DateTime PlannedOrderEntryDate { get; set; }
+        public System.DateTime WorkshiftEntryDate { get; set; }
     }
 }

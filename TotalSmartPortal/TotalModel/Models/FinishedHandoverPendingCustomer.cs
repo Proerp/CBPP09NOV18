@@ -17,7 +17,7 @@ namespace TotalModel.Models
         public string CustomerCode { get; set; }
         public string CustomerName { get; set; }
         public int WorkshiftID { get; set; }
-        public System.DateTime EntryDate { get; set; }
         public string WorkshiftCode { get; set; }
+        public System.DateTime WorkshiftEntryDate { get; set; }
     }
 }

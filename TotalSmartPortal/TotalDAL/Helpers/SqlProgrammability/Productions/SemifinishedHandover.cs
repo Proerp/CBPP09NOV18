@@ -101,7 +101,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString = " @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
-            queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate, Workshifts.Code " + "\r\n";
+            queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate, Workshifts.Code AS WorkshiftCode " + "\r\n";
             queryString = queryString + "       FROM            Workshifts " + "\r\n";
             queryString = queryString + "       WHERE           WorkshiftID IN (SELECT DISTINCT WorkshiftID FROM SemifinishedProducts WHERE SemifinishedHandoverID IS NULL AND Approved = 1) " + "\r\n";
 

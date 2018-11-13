@@ -15899,7 +15899,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
         <ComplexType Name="SemifinishedHandoverPendingWorkshift">
           <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
           <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
         </ComplexType>
         <EntityType Name="Mold">
           <Key>
@@ -16125,8 +16125,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
           <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
-          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="WorkshiftEntryDate" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="FinishedHandoverPendingDetail">
           <Property Type="Int32" Name="FinishedProductID" Nullable="false" />
@@ -16148,7 +16148,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
         </ComplexType>
         <ComplexType Name="FinishedHandoverPendingPlannedOrder">
           <Property Type="Int32" Name="PlannedOrderID" Nullable="false" />
-          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="PlannedOrderCode" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
@@ -16156,6 +16155,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
           <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
           <Property Type="DateTime" Name="PlannedOrderEntryDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="WorkshiftEntryDate" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="FinishedHandoverViewDetail">
           <Property Type="Int32" Name="FinishedHandoverDetailID" Nullable="false" />
@@ -22740,7 +22740,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedHandoverPendingWorkshift">
                 <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
                 <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="WorkshiftCode" ColumnName="WorkshiftCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -22935,8 +22935,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
                 <ScalarProperty Name="WorkshiftCode" ColumnName="WorkshiftCode" />
+                <ScalarProperty Name="WorkshiftEntryDate" ColumnName="WorkshiftEntryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -22966,7 +22966,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <ResultMapping>
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.FinishedHandoverPendingPlannedOrder">
                 <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
                 <ScalarProperty Name="PlannedOrderCode" ColumnName="PlannedOrderCode" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
@@ -22974,6 +22973,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
                 <ScalarProperty Name="WorkshiftCode" ColumnName="WorkshiftCode" />
                 <ScalarProperty Name="PlannedOrderEntryDate" ColumnName="PlannedOrderEntryDate" />
+                <ScalarProperty Name="WorkshiftEntryDate" ColumnName="WorkshiftEntryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

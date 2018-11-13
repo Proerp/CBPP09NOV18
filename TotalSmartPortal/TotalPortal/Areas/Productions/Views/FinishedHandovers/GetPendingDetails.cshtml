@@ -31,17 +31,18 @@
     })
     .Scrollable(s => s.Height(Settings.PopupContentHeightLarge))
     .DataSource(ds => ds.Ajax()
-                    .Read(read => read.Action("GetPendingDetails", "FinishedHandoverAPIs", new { area = "Productions" }).Data(@<text>
+        .Read(read => read.Action("GetPendingDetails", "FinishedHandoverAPIs", new { area = "Productions" }).Data(@<text>
             function(e) {
 
             var finishedHandoverJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
 
             return {
-            finishedHandoverID: window.parent.$("#FinishedHandoverID").val(),
-            plannedOrderID: window.parent.$("#PlannedOrderID").val(),
-            customerID: window.parent.$("#Customer_CustomerID").val(),
-            finishedProductPackageIDs: finishedHandoverJSON.map(function (elem) { return elem.FinishedProductPackageID; }).join(","),
-            isReadOnly: false
+                finishedHandoverID: window.parent.$("#FinishedHandoverID").val(),
+                workshiftID: window.parent.$("#WorkshiftID").val(),
+                plannedOrderID: window.parent.$("#PlannedOrderID").val(),
+                customerID: window.parent.$("#Customer_CustomerID").val(),
+                finishedProductPackageIDs: finishedHandoverJSON.map(function (elem) { return elem.FinishedProductPackageID; }).join(","),
+                isReadOnly: false
             };}
                     </text>))
     .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client

@@ -9,7 +9,11 @@
 {
     @Html.AntiForgeryToken()
 
-    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")     
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+
+    @Html.HiddenFor(model => model.WorkshiftID)
+    @Html.HiddenFor(model => model.WorkshiftCode)
+    @Html.HiddenFor(model => model.WorkshiftEntryDate)
 
     @Html.HiddenFor(model => model.CustomerID)
     
@@ -108,6 +112,10 @@
             $("#Customer_PaymentTermID").val(selectedDataItem === undefined || selectedDataItem.PaymentTermID === undefined ? null : selectedDataItem.PaymentTermID);
             $("#Customer_PriceCategoryID").val(selectedDataItem === undefined || selectedDataItem.CustomerPriceCategoryID === undefined ? null : selectedDataItem.CustomerPriceCategoryID);
             $("#Customer_PriceCategoryCode").val(selectedDataItem === undefined || selectedDataItem.CustomerPriceCategoryCode === undefined ? null : selectedDataItem.CustomerPriceCategoryCode);        
+
+            $("#WorkshiftID").val(selectedDataItem === undefined || selectedDataItem.WorkshiftID === undefined ? null : selectedDataItem.WorkshiftID);
+            $("#WorkshiftCode").val(selectedDataItem === undefined || selectedDataItem.WorkshiftCode === undefined ? null : selectedDataItem.WorkshiftCode);
+            $("#WorkshiftEntryDate").val(selectedDataItem === undefined || selectedDataItem.EntryDate === undefined ? null : kendo.toString(selectedDataItem.EntryDate, Settings.DateTimeFormat));
 
             $("#Description").val(selectedDataItem === undefined || selectedDataItem.Description === undefined ? null : selectedDataItem.Description);
           
