@@ -18,6 +18,8 @@ namespace TotalModel.Models
         public string GoodsArrivalReference { get; set; }
         public string GoodsArrivalCode { get; set; }
         public System.DateTime GoodsArrivalEntryDate { get; set; }
+        public string Description { get; set; }
+        public string Remarks { get; set; }
         public int CustomerID { get; set; }
         public string CustomerCode { get; set; }
         public string CustomerName { get; set; }
@@ -25,7 +27,5 @@ namespace TotalModel.Models
         public int WarehouseID { get; set; }
         public string WarehouseCode { get; set; }
         public string WarehouseName { get; set; }
-        public string Description { get; set; }
-        public string Remarks { get; set; }
     }
 }

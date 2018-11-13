@@ -25,12 +25,12 @@ namespace TotalModel.Models
         public int CommodityTypeID { get; set; }
         public Nullable<decimal> QuantityRemains { get; set; }
         public decimal Quantity { get; set; }
+        public string Description { get; set; }
+        public string Remarks { get; set; }
+        public Nullable<bool> IsSelected { get; set; }
         public string Barcode { get; set; }
         public string BatchCode { get; set; }
         public string SealCode { get; set; }
         public string LabCode { get; set; }
-        public string Description { get; set; }
-        public string Remarks { get; set; }
-        public Nullable<bool> IsSelected { get; set; }
     }
 }
