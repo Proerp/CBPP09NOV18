@@ -375,6 +375,7 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProductPackages_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProducts_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProducts_Workshifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandovers_Workshifts" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

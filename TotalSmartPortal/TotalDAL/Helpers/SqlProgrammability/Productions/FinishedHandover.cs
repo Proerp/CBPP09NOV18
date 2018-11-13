@@ -17,9 +17,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         }
 
         public void RestoreProcedure()
-        {
-            return;
-
+        {            
             this.GetFinishedHandoverIndexes();
 
             this.GetFinishedHandoverViewDetails();
@@ -104,9 +102,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString = " @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
-            queryString = queryString + "       SELECT          PlannedOrders.PlannedOrderID, PlannedOrders.EntryDate, PlannedOrders.Code AS PlannedOrderCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
-            queryString = queryString + "       FROM            Customers " + "\r\n";
-            queryString = queryString + "                       INNER JOIN PlannedOrders ON PlannedOrders.PlannedOrderID IN (SELECT DISTINCT PlannedOrderID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1) AND PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "       SELECT          PlannedOrders.PlannedOrderID, PlannedOrders.EntryDate AS PlannedOrderEntryDate, PlannedOrders.Code AS PlannedOrderCode, Workshifts.WorkshiftID, Workshifts.EntryDate, Workshifts.Code AS WorkshiftCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
+            queryString = queryString + "       FROM            PlannedOrders " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, PlannedOrderID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, PlannedOrderID) FinishedProductPackages ON PlannedOrders.PlannedOrderID = FinishedProductPackages.PlannedOrderID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Workshifts ON FinishedProductPackages.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Customers ON PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedHandoverPendingPlannedOrders", queryString);
         }
@@ -116,9 +116,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString = " @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
-            queryString = queryString + "       SELECT          Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
-            queryString = queryString + "       FROM            Customers " + "\r\n";
-            queryString = queryString + "       WHERE           CustomerID IN (SELECT DISTINCT CustomerID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY CustomerID) " + "\r\n";
+            queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate, Workshifts.Code AS WorkshiftCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
+            queryString = queryString + "       FROM            Workshifts " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, CustomerID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID) FinishedProductPackages ON Workshifts.WorkshiftID = FinishedProductPackages.WorkshiftID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Customers ON FinishedProductPackages.CustomerID = Customers.CustomerID " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedHandoverPendingCustomers", queryString);
         }

@@ -50,10 +50,10 @@ namespace TotalDAL.Repositories.Productions
             return pendingPlannedOrders;
         }
 
-        public IEnumerable<FinishedHandoverPendingDetail> GetPendingDetails(int? finishedHandoverID, int? plannedOrderID, int? customerID, string finishedProductPackageIDs, bool? isReadonly)
+        public IEnumerable<FinishedHandoverPendingDetail> GetPendingDetails(int? finishedHandoverID, int? workshiftID, int? plannedOrderID, int? customerID, string finishedProductPackageIDs, bool? isReadonly)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<FinishedHandoverPendingDetail> finishedHandoverPendingDetails = base.TotalSmartPortalEntities.GetFinishedHandoverPendingDetails(finishedHandoverID, plannedOrderID, customerID, finishedProductPackageIDs, isReadonly).ToList();
+            IEnumerable<FinishedHandoverPendingDetail> finishedHandoverPendingDetails = base.TotalSmartPortalEntities.GetFinishedHandoverPendingDetails(finishedHandoverID, workshiftID, plannedOrderID, customerID, finishedProductPackageIDs, isReadonly).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return finishedHandoverPendingDetails;

@@ -566,6 +566,7 @@
           <Property Name="FinishedHandoverID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
+          <Property Name="WorkshiftID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
           <Property Name="PlannedOrderID" Type="int" />
           <Property Name="FinishedLeaderID" Type="int" Nullable="false" />
@@ -2923,6 +2924,18 @@ warning 6035: The relationship 'FK_FinishedHandovers_AspNetUsers2' has columns t
             </Principal>
             <Dependent Role="FinishedHandovers">
               <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinishedHandovers_Workshifts">
+          <End Role="Workshifts" Type="Self.Workshifts" Multiplicity="1" />
+          <End Role="FinishedHandovers" Type="Self.FinishedHandovers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshifts">
+              <PropertyRef Name="WorkshiftID" />
+            </Principal>
+            <Dependent Role="FinishedHandovers">
+              <PropertyRef Name="WorkshiftID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6028,6 +6041,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
         </Function>
         <Function Name="GetFinishedHandoverPendingDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="FinishedHandoverID" Type="int" Mode="In" />
+          <Parameter Name="WorkshiftID" Type="int" Mode="In" />
           <Parameter Name="PlannedOrderID" Type="int" Mode="In" />
           <Parameter Name="CustomerID" Type="int" Mode="In" />
           <Parameter Name="FinishedProductPackageIDs" Type="varchar" Mode="In" />
@@ -7283,6 +7297,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           </AssociationSet>
           <AssociationSet Name="FK_FinishedHandovers_Locations" Association="Self.FK_FinishedHandovers_Locations">
             <End Role="Locations" EntitySet="Locations" />
+            <End Role="FinishedHandovers" EntitySet="FinishedHandovers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinishedHandovers_Workshifts" Association="Self.FK_FinishedHandovers_Workshifts">
+            <End Role="Workshifts" EntitySet="Workshifts" />
             <End Role="FinishedHandovers" EntitySet="FinishedHandovers" />
           </AssociationSet>
           <AssociationSet Name="FK_FinishedProductDetails_Commodities" Association="Self.FK_FinishedProductDetails_Commodities">
@@ -12283,6 +12301,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           </FunctionImport>
           <FunctionImport Name="GetFinishedHandoverPendingDetails" ReturnType="Collection(TotalSmartPortalModel.FinishedHandoverPendingDetail)">
             <Parameter Name="FinishedHandoverID" Mode="In" Type="Int32" />
+            <Parameter Name="WorkshiftID" Mode="In" Type="Int32" />
             <Parameter Name="PlannedOrderID" Mode="In" Type="Int32" />
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
             <Parameter Name="FinishedProductPackageIDs" Mode="In" Type="String" />
@@ -13010,6 +13029,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <AssociationSet Name="FK_FinishedProducts_Workshifts" Association="TotalSmartPortalModel.FK_FinishedProducts_Workshifts">
             <End Role="Workshift" EntitySet="Workshifts" />
             <End Role="FinishedProduct" EntitySet="FinishedProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinishedHandovers_Workshifts" Association="TotalSmartPortalModel.FK_FinishedHandovers_Workshifts">
+            <End Role="Workshift" EntitySet="Workshifts" />
+            <End Role="FinishedHandover" EntitySet="FinishedHandovers" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -14307,6 +14330,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="FinishedProductDetails" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Workshifts" FromRole="Workshift" ToRole="FinishedProductDetail" />
           <NavigationProperty Name="FinishedProductPackages" Relationship="TotalSmartPortalModel.FK_FinishedProductPackages_Workshifts" FromRole="Workshift" ToRole="FinishedProductPackage" />
           <NavigationProperty Name="FinishedProducts" Relationship="TotalSmartPortalModel.FK_FinishedProducts_Workshifts" FromRole="Workshift" ToRole="FinishedProduct" />
+          <NavigationProperty Name="FinishedHandovers" Relationship="TotalSmartPortalModel.FK_FinishedHandovers_Workshifts" FromRole="Workshift" ToRole="FinishedHandover" />
         </EntityType>
         <ComplexType Name="MaterialIssueIndex">
           <Property Type="Int32" Name="MaterialIssueID" Nullable="false" />
@@ -16093,11 +16117,16 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Boolean" Name="Approved" Nullable="false" />
           <Property Type="String" Name="Caption" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="WorkshiftEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="FinishedHandoverPendingCustomer">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="FinishedHandoverPendingDetail">
           <Property Type="Int32" Name="FinishedProductID" Nullable="false" />
@@ -16124,6 +16153,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
+          <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="PlannedOrderEntryDate" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="FinishedHandoverViewDetail">
           <Property Type="Int32" Name="FinishedHandoverDetailID" Nullable="false" />
@@ -17715,6 +17747,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="FinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_FinishedHandoverDetails_FinishedHandovers" FromRole="FinishedHandover" ToRole="FinishedHandoverDetail" />
           <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_FinishedHandovers_Locations" FromRole="FinishedHandover" ToRole="Location" />
           <Property Name="Caption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="WorkshiftID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedHandovers_Workshifts" FromRole="FinishedHandover" ToRole="Workshift" />
         </EntityType>
         <Association Name="FK_FinishedHandovers_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -18952,6 +18986,18 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               <PropertyRef Name="WorkshiftID" />
             </Principal>
             <Dependent Role="FinishedProduct">
+              <PropertyRef Name="WorkshiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinishedHandovers_Workshifts">
+          <End Type="TotalSmartPortalModel.Workshift" Role="Workshift" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.FinishedHandover" Role="FinishedHandover" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshift">
+              <PropertyRef Name="WorkshiftID" />
+            </Principal>
+            <Dependent Role="FinishedHandover">
               <PropertyRef Name="WorkshiftID" />
             </Dependent>
           </ReferentialConstraint>
@@ -22877,6 +22923,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
+                <ScalarProperty Name="WorkshiftEntryDate" ColumnName="WorkshiftEntryDate" />
+                <ScalarProperty Name="WorkshiftCode" ColumnName="WorkshiftCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -22886,6 +22934,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="WorkshiftCode" ColumnName="WorkshiftCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -22920,6 +22971,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
+                <ScalarProperty Name="WorkshiftCode" ColumnName="WorkshiftCode" />
+                <ScalarProperty Name="PlannedOrderEntryDate" ColumnName="PlannedOrderEntryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -23695,6 +23749,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="FinishedHandovers">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.FinishedHandover">
               <MappingFragment StoreEntitySet="FinishedHandovers">
+                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />

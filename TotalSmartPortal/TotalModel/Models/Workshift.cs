@@ -24,6 +24,7 @@ namespace TotalModel.Models
             this.FinishedProductDetails = new HashSet<FinishedProductDetail>();
             this.FinishedProductPackages = new HashSet<FinishedProductPackage>();
             this.FinishedProducts = new HashSet<FinishedProduct>();
+            this.FinishedHandovers = new HashSet<FinishedHandover>();
         }
     
         public int WorkshiftID { get; set; }
@@ -49,5 +50,7 @@ namespace TotalModel.Models
         public virtual ICollection<FinishedProductPackage> FinishedProductPackages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedProduct> FinishedProducts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinishedHandover> FinishedHandovers { get; set; }
     }
 }

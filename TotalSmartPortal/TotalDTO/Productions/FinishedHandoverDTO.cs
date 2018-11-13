@@ -22,6 +22,13 @@ namespace TotalDTO.Productions
 
         public int FinishedHandoverID { get; set; }
 
+
+        public virtual int WorkshiftID { get; set; }
+        [Display(Name = "Ca sản xuất")]
+        public string WorkshiftCode { get; set; }
+        [Display(Name = "Ngày sản xuất")]
+        public DateTime WorkshiftEntryDate { get; set; }
+
         public Nullable<int> PlannedOrderID { get; set; }       
 
         public virtual Nullable<int> CustomerID { get; set; }

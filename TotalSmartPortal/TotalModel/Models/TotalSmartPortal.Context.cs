@@ -3544,11 +3544,15 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingCustomer>("GetFinishedHandoverPendingCustomers", locationIDParameter);
         }
     
-        public virtual ObjectResult<FinishedHandoverPendingDetail> GetFinishedHandoverPendingDetails(Nullable<int> finishedHandoverID, Nullable<int> plannedOrderID, Nullable<int> customerID, string finishedProductPackageIDs, Nullable<bool> isReadonly)
+        public virtual ObjectResult<FinishedHandoverPendingDetail> GetFinishedHandoverPendingDetails(Nullable<int> finishedHandoverID, Nullable<int> workshiftID, Nullable<int> plannedOrderID, Nullable<int> customerID, string finishedProductPackageIDs, Nullable<bool> isReadonly)
         {
             var finishedHandoverIDParameter = finishedHandoverID.HasValue ?
                 new ObjectParameter("FinishedHandoverID", finishedHandoverID) :
                 new ObjectParameter("FinishedHandoverID", typeof(int));
+    
+            var workshiftIDParameter = workshiftID.HasValue ?
+                new ObjectParameter("WorkshiftID", workshiftID) :
+                new ObjectParameter("WorkshiftID", typeof(int));
     
             var plannedOrderIDParameter = plannedOrderID.HasValue ?
                 new ObjectParameter("PlannedOrderID", plannedOrderID) :
@@ -3566,7 +3570,7 @@ namespace TotalModel.Models
                 new ObjectParameter("IsReadonly", isReadonly) :
                 new ObjectParameter("IsReadonly", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingDetail>("GetFinishedHandoverPendingDetails", finishedHandoverIDParameter, plannedOrderIDParameter, customerIDParameter, finishedProductPackageIDsParameter, isReadonlyParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingDetail>("GetFinishedHandoverPendingDetails", finishedHandoverIDParameter, workshiftIDParameter, plannedOrderIDParameter, customerIDParameter, finishedProductPackageIDsParameter, isReadonlyParameter);
         }
     
         public virtual ObjectResult<FinishedHandoverPendingPlannedOrder> GetFinishedHandoverPendingPlannedOrders(Nullable<int> locationID)

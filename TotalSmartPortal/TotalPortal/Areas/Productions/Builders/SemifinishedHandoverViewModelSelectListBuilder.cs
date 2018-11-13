@@ -12,14 +12,10 @@ namespace TotalPortal.Areas.Productions.Builders
 
     public class SemifinishedHandoverViewModelSelectListBuilder : A01ViewModelSelectListBuilder<SemifinishedHandoverViewModel>, ISemifinishedHandoverViewModelSelectListBuilder
     {
-        private readonly IShiftSelectListBuilder shiftSelectListBuilder;
-        private readonly IShiftRepository shiftRepository;
-
-        public SemifinishedHandoverViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository, IShiftSelectListBuilder shiftSelectListBuilder, IShiftRepository shiftRepository)
+        
+        public SemifinishedHandoverViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository)
             : base(aspNetUserSelectListBuilder, aspNetUserRepository)
         {
-            this.shiftSelectListBuilder = shiftSelectListBuilder;
-            this.shiftRepository = shiftRepository;
         }      
     }
 }
