@@ -21,6 +21,7 @@ using TotalDTO.Productions;
 using TotalPortal.APIs.Sessions;
 
 using TotalPortal.Controllers;
+using TotalPortal.Areas.Commons.Controllers.Sessions;
 using TotalPortal.Areas.Productions.ViewModels;
 using TotalPortal.Areas.Productions.Builders;
 using TotalPortal.Areas.Productions.Controllers.Sessions;
@@ -102,6 +103,12 @@ namespace TotalPortal.Areas.Productions.Controllers
         {
             simpleViewModel = base.InitViewModelByDefault(simpleViewModel);
 
+            if (simpleViewModel.ShiftID == 0)
+            {
+                string shiftSession = ShiftSession.GetShift(this.HttpContext);
+                if (HomeSession.TryParseID(shiftSession) > 0) simpleViewModel.ShiftID = (int)HomeSession.TryParseID(shiftSession);
+            }
+
             if (simpleViewModel.CrucialWorker == null)
             {
                 string storekeeperSession = FinishedProductSession.GetCrucialWorker(this.HttpContext);
@@ -120,6 +127,7 @@ namespace TotalPortal.Areas.Productions.Controllers
         protected override void BackupViewModelToSession(FinishedProductViewModel simpleViewModel)
         {
             base.BackupViewModelToSession(simpleViewModel);
+            ShiftSession.SetShift(this.HttpContext, simpleViewModel.ShiftID);
             FinishedProductSession.SetCrucialWorker(this.HttpContext, simpleViewModel.CrucialWorker.EmployeeID, simpleViewModel.CrucialWorker.Name);
         }
 
