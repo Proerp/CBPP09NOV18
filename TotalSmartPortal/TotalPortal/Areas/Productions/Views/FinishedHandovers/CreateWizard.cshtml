@@ -10,11 +10,15 @@
     @Html.AntiForgeryToken()
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
-
+    
     @Html.HiddenFor(model => model.WorkshiftID)
     @Html.HiddenFor(model => model.WorkshiftCode)
     @Html.HiddenFor(model => model.WorkshiftEntryDate)
 
+    @Html.HiddenFor(model => model.PlannedOrderID)
+    @Html.HiddenFor(model => model.PlannedOrderCode)
+    @Html.HiddenFor(model => model.PlannedOrderEntryDate)
+    
     @Html.HiddenFor(model => model.CustomerID)
     
     @Html.HiddenFor(model => model.Customer.CustomerID)
@@ -94,7 +98,14 @@
         $("#submitCreateWizard").trigger("click");
 
 
-        function _setModelInput(selectedDataItem) {
+        function _setModelInput(selectedDataItem) {          
+            $("#WorkshiftID").val(selectedDataItem === undefined || selectedDataItem.WorkshiftID === undefined ? null : selectedDataItem.WorkshiftID);
+            $("#WorkshiftCode").val(selectedDataItem === undefined || selectedDataItem.WorkshiftCode === undefined ? null : selectedDataItem.WorkshiftCode);
+            $("#WorkshiftEntryDate").val(selectedDataItem === undefined || selectedDataItem.WorkshiftEntryDate === undefined ? null : kendo.toString(selectedDataItem.WorkshiftEntryDate, Settings.DateTimeFormat));
+
+            $("#PlannedOrderID").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderID === undefined ? null : selectedDataItem.PlannedOrderID);
+            $("#PlannedOrderCode").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderCode === undefined ? null : selectedDataItem.PlannedOrderCode);
+            $("#PlannedOrderEntryDate").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.PlannedOrderEntryDate, Settings.DateTimeFormat));
 
             $("#Customer_CustomerID").val(selectedDataItem === undefined || selectedDataItem.CustomerID === undefined ? null : selectedDataItem.CustomerID);
             $("#Customer_Code").val(selectedDataItem === undefined || selectedDataItem.CustomerCode === undefined ? null : selectedDataItem.CustomerCode);
@@ -111,14 +122,9 @@
             $("#Customer_SalespersonName").val(selectedDataItem === undefined || selectedDataItem.CustomerSalespersonName === undefined ? null : selectedDataItem.CustomerSalespersonName);
             $("#Customer_PaymentTermID").val(selectedDataItem === undefined || selectedDataItem.PaymentTermID === undefined ? null : selectedDataItem.PaymentTermID);
             $("#Customer_PriceCategoryID").val(selectedDataItem === undefined || selectedDataItem.CustomerPriceCategoryID === undefined ? null : selectedDataItem.CustomerPriceCategoryID);
-            $("#Customer_PriceCategoryCode").val(selectedDataItem === undefined || selectedDataItem.CustomerPriceCategoryCode === undefined ? null : selectedDataItem.CustomerPriceCategoryCode);        
+            $("#Customer_PriceCategoryCode").val(selectedDataItem === undefined || selectedDataItem.CustomerPriceCategoryCode === undefined ? null : selectedDataItem.CustomerPriceCategoryCode);
 
-            $("#WorkshiftID").val(selectedDataItem === undefined || selectedDataItem.WorkshiftID === undefined ? null : selectedDataItem.WorkshiftID);
-            $("#WorkshiftCode").val(selectedDataItem === undefined || selectedDataItem.WorkshiftCode === undefined ? null : selectedDataItem.WorkshiftCode);
-            $("#WorkshiftEntryDate").val(selectedDataItem === undefined || selectedDataItem.WorkshiftEntryDate === undefined ? null : kendo.toString(selectedDataItem.WorkshiftEntryDate, Settings.DateTimeFormat));
-
-            $("#Description").val(selectedDataItem === undefined || selectedDataItem.Description === undefined ? null : selectedDataItem.Description);
-          
+            $("#Description").val(selectedDataItem === undefined || selectedDataItem.Description === undefined ? null : selectedDataItem.Description);          
         }
     }
 

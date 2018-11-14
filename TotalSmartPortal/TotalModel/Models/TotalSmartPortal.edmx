@@ -2927,6 +2927,18 @@ warning 6035: The relationship 'FK_FinishedHandovers_AspNetUsers2' has columns t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FinishedHandovers_PlannedOrders">
+          <End Role="PlannedOrders" Type="Self.PlannedOrders" Multiplicity="0..1" />
+          <End Role="FinishedHandovers" Type="Self.FinishedHandovers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlannedOrders">
+              <PropertyRef Name="PlannedOrderID" />
+            </Principal>
+            <Dependent Role="FinishedHandovers">
+              <PropertyRef Name="PlannedOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FinishedHandovers_Workshifts">
           <End Role="Workshifts" Type="Self.Workshifts" Multiplicity="1" />
           <End Role="FinishedHandovers" Type="Self.FinishedHandovers" Multiplicity="*" />
@@ -7297,6 +7309,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           </AssociationSet>
           <AssociationSet Name="FK_FinishedHandovers_Locations" Association="Self.FK_FinishedHandovers_Locations">
             <End Role="Locations" EntitySet="Locations" />
+            <End Role="FinishedHandovers" EntitySet="FinishedHandovers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinishedHandovers_PlannedOrders" Association="Self.FK_FinishedHandovers_PlannedOrders">
+            <End Role="PlannedOrders" EntitySet="PlannedOrders" />
             <End Role="FinishedHandovers" EntitySet="FinishedHandovers" />
           </AssociationSet>
           <AssociationSet Name="FK_FinishedHandovers_Workshifts" Association="Self.FK_FinishedHandovers_Workshifts">
@@ -13034,6 +13050,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="Workshift" EntitySet="Workshifts" />
             <End Role="FinishedHandover" EntitySet="FinishedHandovers" />
           </AssociationSet>
+          <AssociationSet Name="FK_FinishedHandovers_PlannedOrders" Association="TotalSmartPortalModel.FK_FinishedHandovers_PlannedOrders">
+            <End Role="PlannedOrder" EntitySet="PlannedOrders" />
+            <End Role="FinishedHandover" EntitySet="FinishedHandovers" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -17749,6 +17769,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="Caption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="WorkshiftID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedHandovers_Workshifts" FromRole="FinishedHandover" ToRole="Workshift" />
+          <NavigationProperty Name="PlannedOrder" Relationship="TotalSmartPortalModel.FK_FinishedHandovers_PlannedOrders" FromRole="FinishedHandover" ToRole="PlannedOrder" />
         </EntityType>
         <Association Name="FK_FinishedHandovers_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -18004,6 +18025,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_PlannedOrders_VoidTypes" FromRole="PlannedOrder" ToRole="VoidType" />
           <NavigationProperty Name="ProductionOrderDetails" Relationship="TotalSmartPortalModel.FK_ProductionOrderDetails_PlannedOrders" FromRole="PlannedOrder" ToRole="ProductionOrderDetail" />
           <NavigationProperty Name="ProductionOrders" Relationship="TotalSmartPortalModel.FK_ProductionOrders_PlannedOrders" FromRole="PlannedOrder" ToRole="ProductionOrder" />
+          <NavigationProperty Name="FinishedHandovers" Relationship="TotalSmartPortalModel.FK_FinishedHandovers_PlannedOrders" FromRole="PlannedOrder" ToRole="FinishedHandover" />
         </EntityType>
         <EntityType Name="ProductionOrder">
           <Key>
@@ -18999,6 +19021,18 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Principal>
             <Dependent Role="FinishedHandover">
               <PropertyRef Name="WorkshiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinishedHandovers_PlannedOrders">
+          <End Type="TotalSmartPortalModel.PlannedOrder" Role="PlannedOrder" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.FinishedHandover" Role="FinishedHandover" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlannedOrder">
+              <PropertyRef Name="PlannedOrderID" />
+            </Principal>
+            <Dependent Role="FinishedHandover">
+              <PropertyRef Name="PlannedOrderID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

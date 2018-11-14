@@ -24,6 +24,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             this.GetFinishedHandoverPendingPlannedOrders();
             this.GetFinishedHandoverPendingCustomers();
+            this.GetFinishedHandoverPendingWorkshifts();
             this.GetFinishedHandoverPendingDetails();
 
             this.FinishedHandoverSaveRelative();
@@ -126,6 +127,18 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedHandoverPendingCustomers", queryString);
         }
 
+        private void GetFinishedHandoverPendingWorkshifts()
+        {
+            string queryString = " @LocationID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode " + "\r\n";
+            queryString = queryString + "       FROM            Workshifts " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID) FinishedProductPackages ON Workshifts.WorkshiftID = FinishedProductPackages.WorkshiftID " + "\r\n";
+            queryString = queryString + "       ORDER BY        Workshifts.EntryDate DESC, Workshifts.Code DESC " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedHandoverPendingWorkshifts", queryString);
+        }
 
         private void GetFinishedHandoverPendingDetails()
         {

@@ -49,5 +49,6 @@ namespace TotalModel.Models
         public virtual ICollection<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }
         public virtual Location Location { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual PlannedOrder PlannedOrder { get; set; }
     }
 }

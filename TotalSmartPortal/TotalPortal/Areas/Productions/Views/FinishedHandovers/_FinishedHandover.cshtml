@@ -40,6 +40,28 @@
             </div>
         </div>   
 
+        @Html.HiddenFor(model => model.PlannedOrderID)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PlannedOrderCode)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.PlannedOrderCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.PlannedOrderCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PlannedOrderEntryDate)
+            <div class="div-input">
+                @Html.Kendo().DateTimePickerFor(model => model.PlannedOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.PlannedOrderEntryDate, "", new { @class = "text-danger" })
+            </div>
+        </div>   
+
         <div class="form-group">
             @Html.EditorFor(d => d.Storekeeper, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.Storekeeper) })
         </div>   
