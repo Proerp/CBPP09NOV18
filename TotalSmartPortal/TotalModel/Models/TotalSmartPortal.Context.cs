@@ -4099,5 +4099,14 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BinLocationBase>("GetBinLocationBases", warehouseIDParameter, searchTextParameter);
         }
+    
+        public virtual ObjectResult<FinishedHandoverPendingWorkshift> GetFinishedHandoverPendingWorkshifts(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingWorkshift>("GetFinishedHandoverPendingWorkshifts", locationIDParameter);
+        }
     }
 }

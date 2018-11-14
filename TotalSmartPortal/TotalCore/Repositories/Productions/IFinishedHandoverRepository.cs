@@ -12,6 +12,7 @@ namespace TotalCore.Repositories.Productions
 
     public interface IFinishedHandoverAPIRepository : IGenericAPIRepository
     {
+        IEnumerable<FinishedHandoverPendingWorkshift> GetWorkshifts(int? locationID);
         IEnumerable<FinishedHandoverPendingCustomer> GetCustomers(int? locationID);
         IEnumerable<FinishedHandoverPendingPlannedOrder> GetPlannedOrders(int? locationID);
 

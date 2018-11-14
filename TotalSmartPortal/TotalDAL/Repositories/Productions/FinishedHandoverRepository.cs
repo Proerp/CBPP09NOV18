@@ -32,6 +32,15 @@ namespace TotalDAL.Repositories.Productions
         {
         }
 
+        public IEnumerable<FinishedHandoverPendingWorkshift> GetWorkshifts(int? locationID)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            IEnumerable<FinishedHandoverPendingWorkshift> pendingPlannedOrderWorkshifts = base.TotalSmartPortalEntities.GetFinishedHandoverPendingWorkshifts(locationID).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return pendingPlannedOrderWorkshifts;
+        }
+
         public IEnumerable<FinishedHandoverPendingCustomer> GetCustomers(int? locationID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;

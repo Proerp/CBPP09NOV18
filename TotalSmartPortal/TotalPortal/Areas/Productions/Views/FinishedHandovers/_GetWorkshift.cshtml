@@ -1,0 +1,58 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<FinishedHandoverPendingWorkshift>()
+     .Name("finishedHandoverPendingWorkshiftGrid")
+
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.WorkshiftEntryDate).Title("Ngày sx").Format("{0:dd/MM/yyyy}").Width(39);
+        columns.Bound(c => c.WorkshiftCode).Title("Ca sx").Width(196);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập ca sản xuất </label>
+                <input id="finishedHandoverPendingWorkshiftFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="finishedHandoverPendingWorkshiftFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetWorkshifts", "FinishedHandoverAPIs", new { area = "Productions" }).Data("onAdditionalGetWorkshifts"))
+        .ServerOperation(false)
+    )
+    .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetWorkshifts(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID
+        };
+    }
+
+    function finishedHandoverPendingWorkshiftFilter_KeyUp() {
+        var finishedHandoverPendingWorkshiftFilter = $("#finishedHandoverPendingWorkshiftFilter").val(), gridDetails = $("#finishedHandoverPendingWorkshiftGrid").data("kendoGrid");
+
+        if (finishedHandoverPendingWorkshiftFilter && finishedHandoverPendingWorkshiftFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "WorkshiftCode", operator: "contains", value: finishedHandoverPendingWorkshiftFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+
+    $("#finishedHandoverPendingWorkshiftGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>

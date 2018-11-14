@@ -55,15 +55,18 @@
                     .Content(@<text>
                     @Html.Partial("~/Areas/Productions/Views/FinishedHandovers/_GetCustomer.cshtml")
                     </text>);
+            tabStrip.Add().Text("Tồn phiếu KHSX theo khách hàng")
+                        .Content(@<text>
+                    @Html.Partial("~/Areas/Productions/Views/FinishedHandovers/_GetWorkshift.cshtml")
+                        </text>);
         }).SelectedIndex(1)
-    )
+)
 
 
     <div class="background-bar" style="height: 45px;">
         <div class="popup-button-bar">
             <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "FinishedHandovers")" formtarget="_top" style="display:none" />
             
-            <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Lập phiếu giao hàng tổng hợp </button>
             <button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Ok-1.png" /> Tiếp tục </button>            
             <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Thoát </button>
         </div>
@@ -75,7 +78,8 @@
 
 <script type="text/javascript">
     function okButton_Click() {      
-        handleOKEvent($($("#tabStrip").data("kendoTabStrip").select().index() === 0 ? "#finishedHandoverPendingPlannedOrderGrid" : "#finishedHandoverPendingCustomerGrid").data("kendoGrid"));
+        selectedTabStripIndex = $("#tabStrip").data("kendoTabStrip").select().index();
+        handleOKEvent($(selectedTabStripIndex === 0 ? "#finishedHandoverPendingPlannedOrderGrid" : (selectedTabStripIndex === 1 ? "#finishedHandoverPendingCustomerGrid" : "#finishedHandoverPendingWorkshiftGrid")).data("kendoGrid"));
     }
 
     function okWOSelectButton_Click() {

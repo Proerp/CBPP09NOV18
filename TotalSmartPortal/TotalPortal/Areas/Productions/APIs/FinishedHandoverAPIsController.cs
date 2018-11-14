@@ -33,6 +33,11 @@ namespace TotalPortal.Areas.Productions.APIs
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetWorkshifts([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        {
+            var result = this.finishedHandoverAPIRepository.GetWorkshifts(locationID);
+            return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult GetCustomers([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
         {
