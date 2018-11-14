@@ -13058,7 +13058,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="FinishedHandover" EntitySet="FinishedHandovers" />
           </AssociationSet>
           <FunctionImport Name="GetFinishedHandoverPendingWorkshifts" ReturnType="Collection(TotalSmartPortalModel.FinishedHandoverPendingWorkshift)">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">

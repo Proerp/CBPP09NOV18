@@ -30,9 +30,9 @@ namespace TotalDTO.Productions
         public DateTime WorkshiftEntryDate { get; set; }
 
         public Nullable<int> PlannedOrderID { get; set; }
-        [Display(Name = "Ca sản xuất")]
+        [Display(Name = "KHSX")]
         public string PlannedOrderCode { get; set; }
-        [Display(Name = "Ngày sản xuất")]
+        [Display(Name = "Ngày KHSX")]
         public Nullable<DateTime> PlannedOrderEntryDate { get; set; }
 
         public virtual Nullable<int> CustomerID { get; set; }
