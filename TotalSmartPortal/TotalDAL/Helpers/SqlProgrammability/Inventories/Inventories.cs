@@ -599,8 +599,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   END " + "\r\n";
 
 
-
-
+            
 
             queryString = queryString + "       IF @NeedToGenerateAverageUnitPrice = 1 " + "\r\n";
             queryString = queryString + "                   DELETE FROM WarehouseBalancePrice WHERE EntryDate >= @EntryDateEveryMonth AND CommodityID IN (SELECT CommodityID FROM @ActionTable) " + "\r\n"; //(USING @ActionTable AS A FILTER)
