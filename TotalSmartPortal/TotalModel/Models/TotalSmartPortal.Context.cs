@@ -115,6 +115,10 @@ namespace TotalModel.Models
         public virtual DbSet<GoodsArrival> GoodsArrivals { get; set; }
         public virtual DbSet<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
         public virtual DbSet<BinLocation> BinLocations { get; set; }
+        public virtual DbSet<BlendingInstructionDetail> BlendingInstructionDetails { get; set; }
+        public virtual DbSet<BlendingInstruction> BlendingInstructions { get; set; }
+        public virtual DbSet<PackageIssueDetail> PackageIssueDetails { get; set; }
+        public virtual DbSet<PackageIssue> PackageIssues { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {
@@ -4107,6 +4111,123 @@ namespace TotalModel.Models
                 new ObjectParameter("LocationID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingWorkshift>("GetFinishedHandoverPendingWorkshifts", locationIDParameter);
+        }
+    
+        public virtual ObjectResult<PackageIssueIndex> GetPackageIssueIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var aspUserIDParameter = aspUserID != null ?
+                new ObjectParameter("AspUserID", aspUserID) :
+                new ObjectParameter("AspUserID", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PackageIssueIndex>("GetPackageIssueIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
+        }
+    
+        public virtual ObjectResult<PackageIssuePendingBlendingInstructionDetail> GetPackageIssuePendingBlendingInstructionDetails(Nullable<int> locationID, Nullable<int> packageIssueID, Nullable<int> blendingInstructionID, Nullable<int> warehouseID, string goodsReceiptDetailIDs)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var packageIssueIDParameter = packageIssueID.HasValue ?
+                new ObjectParameter("PackageIssueID", packageIssueID) :
+                new ObjectParameter("PackageIssueID", typeof(int));
+    
+            var blendingInstructionIDParameter = blendingInstructionID.HasValue ?
+                new ObjectParameter("BlendingInstructionID", blendingInstructionID) :
+                new ObjectParameter("BlendingInstructionID", typeof(int));
+    
+            var warehouseIDParameter = warehouseID.HasValue ?
+                new ObjectParameter("WarehouseID", warehouseID) :
+                new ObjectParameter("WarehouseID", typeof(int));
+    
+            var goodsReceiptDetailIDsParameter = goodsReceiptDetailIDs != null ?
+                new ObjectParameter("GoodsReceiptDetailIDs", goodsReceiptDetailIDs) :
+                new ObjectParameter("GoodsReceiptDetailIDs", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PackageIssuePendingBlendingInstructionDetail>("GetPackageIssuePendingBlendingInstructionDetails", locationIDParameter, packageIssueIDParameter, blendingInstructionIDParameter, warehouseIDParameter, goodsReceiptDetailIDsParameter);
+        }
+    
+        public virtual ObjectResult<PackageIssuePendingBlendingInstruction> GetPackageIssuePendingBlendingInstructions(Nullable<int> locationID, Nullable<int> blendingInstructionID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var blendingInstructionIDParameter = blendingInstructionID.HasValue ?
+                new ObjectParameter("BlendingInstructionID", blendingInstructionID) :
+                new ObjectParameter("BlendingInstructionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PackageIssuePendingBlendingInstruction>("GetPackageIssuePendingBlendingInstructions", locationIDParameter, blendingInstructionIDParameter);
+        }
+    
+        public virtual ObjectResult<PackageIssueViewDetail> GetPackageIssueViewDetails(Nullable<int> packageIssueID)
+        {
+            var packageIssueIDParameter = packageIssueID.HasValue ?
+                new ObjectParameter("PackageIssueID", packageIssueID) :
+                new ObjectParameter("PackageIssueID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PackageIssueViewDetail>("GetPackageIssueViewDetails", packageIssueIDParameter);
+        }
+    
+        public virtual ObjectResult<string> PackageIssueApproved(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PackageIssueApproved", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> PackageIssueEditable(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PackageIssueEditable", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> PackageIssuePostSaveValidate(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PackageIssuePostSaveValidate", entityIDParameter);
+        }
+    
+        public virtual int PackageIssueSaveRelative(Nullable<int> entityID, Nullable<int> saveRelativeOption)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var saveRelativeOptionParameter = saveRelativeOption.HasValue ?
+                new ObjectParameter("SaveRelativeOption", saveRelativeOption) :
+                new ObjectParameter("SaveRelativeOption", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PackageIssueSaveRelative", entityIDParameter, saveRelativeOptionParameter);
+        }
+    
+        public virtual int PackageIssueToggleApproved(Nullable<int> entityID, Nullable<bool> approved)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var approvedParameter = approved.HasValue ?
+                new ObjectParameter("Approved", approved) :
+                new ObjectParameter("Approved", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("PackageIssueToggleApproved", entityIDParameter, approvedParameter);
         }
     }
 }

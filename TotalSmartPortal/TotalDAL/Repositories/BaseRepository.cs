@@ -322,6 +322,12 @@ namespace TotalDAL.Repositories
 
         public void CreateStoredProcedure()
         {
+            
+            //return;
+
+            Helpers.SqlProgrammability.Inventories.PackageIssue packageIssue = new Helpers.SqlProgrammability.Inventories.PackageIssue(totalSmartPortalEntities);
+            packageIssue.RestoreProcedure();
+
             //return;
 
             Helpers.SqlProgrammability.Inventories.WarehouseTransfer warehouseTransfer = new Helpers.SqlProgrammability.Inventories.WarehouseTransfer(totalSmartPortalEntities);

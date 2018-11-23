@@ -36,6 +36,8 @@ namespace TotalModel.Models
             this.TransferOrderDetails = new HashSet<TransferOrderDetail>();
             this.FirmOrderDetails = new HashSet<FirmOrderDetail>();
             this.GoodsArrivalDetails = new HashSet<GoodsArrivalDetail>();
+            this.BlendingInstructionDetails = new HashSet<BlendingInstructionDetail>();
+            this.PackageIssueDetails = new HashSet<PackageIssueDetail>();
         }
     
         public int CommodityID { get; set; }
@@ -116,5 +118,9 @@ namespace TotalModel.Models
         public virtual ICollection<FirmOrderDetail> FirmOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BlendingInstructionDetail> BlendingInstructionDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PackageIssueDetail> PackageIssueDetails { get; set; }
     }
 }

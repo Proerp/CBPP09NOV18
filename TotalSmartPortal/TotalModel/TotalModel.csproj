@@ -81,6 +81,12 @@
     <Compile Include="Models\BinLocationBase.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BlendingInstruction.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BlendingInstructionDetail.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Bom.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
@@ -397,6 +403,24 @@
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\OverStockItem.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PackageIssue.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PackageIssueDetail.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PackageIssueIndex.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PackageIssuePendingBlendingInstruction.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PackageIssuePendingBlendingInstructionDetail.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PackageIssueViewDetail.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\PackingMaterial.cs">
