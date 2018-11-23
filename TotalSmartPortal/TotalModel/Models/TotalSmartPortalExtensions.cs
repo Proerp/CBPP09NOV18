@@ -122,6 +122,36 @@ namespace TotalModel.Models
     }
 
 
+    public partial class PackageIssue : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<PackageIssueDetail>
+    {
+        public int GetID() { return this.PackageIssueID; }
+
+        public virtual Employee Storekeeper { get { return this.Employee; } }
+        public virtual Employee CrucialWorker { get { return this.Employee1; } }
+
+        public ICollection<PackageIssueDetail> GetDetails() { return this.PackageIssueDetails; }
+    }
+
+
+    public partial class PackageIssueDetail : IPrimitiveEntity, IHelperEntryDate, IHelperCommodityID, IHelperCommodityTypeID
+    {
+        public int GetID() { return this.PackageIssueDetailID; }
+    }
+
+
+    public partial class PackageIssueViewDetail
+    {
+        public Nullable<decimal> WorkshiftBlendingInstructionRemains
+        {
+            get
+            {
+                Nullable<decimal> workshiftQuantity = this.BlendingInstructionRemains; // (this.WorkingHours * this.CyclePerHours * this.MoldQuantity) * this.BlockQuantity / this.BlockUnit;
+                return this.BlendingInstructionRemains < workshiftQuantity ? this.BlendingInstructionRemains : workshiftQuantity;
+            }
+        }
+        public Nullable<decimal> QuantityRemains { get { return this.WorkshiftBlendingInstructionRemains < this.QuantityAvailables ? this.WorkshiftBlendingInstructionRemains : this.QuantityAvailables; } }
+    }
+
     public partial class WarehouseAdjustmentIndex
     {
         public virtual decimal TotalQuantityPositive { get { return this.TotalQuantity; } }

@@ -23,7 +23,6 @@ namespace TotalModel.Models
         public int PackageIssueID { get; set; }
         public System.DateTime EntryDate { get; set; }
         public string Reference { get; set; }
-        public string Code { get; set; }
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
         public int BlendingInstructionID { get; set; }

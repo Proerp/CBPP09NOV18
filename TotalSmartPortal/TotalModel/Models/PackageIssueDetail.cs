@@ -23,7 +23,6 @@ namespace TotalModel.Models
         public int CrucialWorkerID { get; set; }
         public int BlendingInstructionID { get; set; }
         public int BlendingInstructionDetailID { get; set; }
-        public int ProductionLineID { get; set; }
         public int GoodsReceiptID { get; set; }
         public int GoodsReceiptDetailID { get; set; }
         public int CommodityID { get; set; }

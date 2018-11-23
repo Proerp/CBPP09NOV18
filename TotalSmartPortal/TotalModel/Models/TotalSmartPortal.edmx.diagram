@@ -379,15 +379,15 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandovers_PlannedOrders" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.BlendingInstructionDetail" Width="1.5" PointX="55" PointY="33.5" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.BlendingInstruction" Width="1.5" PointX="47.75" PointY="14.625" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.PackageIssueDetail" Width="1.5" PointX="67" PointY="17.875" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.PackageIssue" Width="1.5" PointX="55" PointY="17" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_BlendingInstructions" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_Warehouses" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructionDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_Locations" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_VoidTypes" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_Warehouses" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.PackageIssueDetail" Width="1.5" PointX="66.875" PointY="19.75" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.PackageIssue" Width="1.5" PointX="55" PointY="17.125" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructionDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructions" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities" />
