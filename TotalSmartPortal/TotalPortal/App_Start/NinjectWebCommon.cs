@@ -125,11 +125,17 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IItemReceiptService>().To<ItemReceiptService>();
                 kernel.Bind<IItemReceiptViewModelSelectListBuilder>().To<ItemReceiptViewModelSelectListBuilder>();
                 kernel.Bind<IProductReceiptService>().To<ProductReceiptService>();
-                kernel.Bind<IProductReceiptViewModelSelectListBuilder>().To<ProductReceiptViewModelSelectListBuilder>();                
+                kernel.Bind<IProductReceiptViewModelSelectListBuilder>().To<ProductReceiptViewModelSelectListBuilder>();
 
 
 
-                
+
+                kernel.Bind<IPackageIssueService>().To<PackageIssueService>();
+                kernel.Bind<IPackageIssueRepository>().To<PackageIssueRepository>();
+                kernel.Bind<IPackageIssueAPIRepository>().To<PackageIssueAPIRepository>();
+                kernel.Bind<IPackageIssueViewModelSelectListBuilder>().To<PackageIssueViewModelSelectListBuilder>();
+
+
                 kernel.Bind<IMaterialIssueService>().To<MaterialIssueService>();
                 kernel.Bind<IMaterialIssueRepository>().To<MaterialIssueRepository>();
                 kernel.Bind<IMaterialIssueAPIRepository>().To<MaterialIssueAPIRepository>();

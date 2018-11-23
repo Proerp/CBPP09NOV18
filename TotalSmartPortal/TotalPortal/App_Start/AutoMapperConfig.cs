@@ -66,6 +66,13 @@ namespace TotalPortal.App_Start
 
 
 
+                cfg.CreateMap<PackageIssue, PackageIssueViewModel>();
+                cfg.CreateMap<PackageIssue, PackageIssueDTO>();
+                cfg.CreateMap<PackageIssuePrimitiveDTO, PackageIssue>();
+                cfg.CreateMap<PackageIssueViewDetail, PackageIssueDetailDTO>();
+                cfg.CreateMap<PackageIssueDetailDTO, PackageIssueDetail>();
+
+
                 cfg.CreateMap<MaterialIssue, MaterialIssueViewModel>();
                 cfg.CreateMap<MaterialIssue, MaterialIssueDTO>();
                 cfg.CreateMap<MaterialIssuePrimitiveDTO, MaterialIssue>();

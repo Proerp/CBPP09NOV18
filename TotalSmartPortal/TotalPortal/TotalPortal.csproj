@@ -323,6 +323,7 @@
     <Compile Include="Areas\Inventories\APIs\GoodsReceiptAPIsController.cs" />
     <Compile Include="Areas\Inventories\APIs\HandlingUnitAPIsController.cs" />
     <Compile Include="Areas\Inventories\APIs\MaterialIssueAPIsController.cs" />
+    <Compile Include="Areas\Inventories\APIs\PackageIssueAPIsController.cs" />
     <Compile Include="Areas\Inventories\APIs\TransferOrderAPIsController.cs" />
     <Compile Include="Areas\Inventories\APIs\WarehouseAdjustmentAPIsController.cs" />
     <Compile Include="Areas\Inventories\APIs\WarehouseTransferAPIsController.cs" />
