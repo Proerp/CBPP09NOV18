@@ -331,6 +331,7 @@
     <Compile Include="Areas\Inventories\Builders\GoodsReceiptViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Inventories\Builders\HandlingUnitViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Inventories\Builders\MaterialIssueViewModelSelectListBuilder.cs" />
+    <Compile Include="Areas\Inventories\Builders\PackageIssueViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Inventories\Builders\TransferOrderViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Inventories\Builders\WarehouseAdjustmentViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Inventories\Builders\WarehouseTransferViewModelSelectListBuilder.cs" />
@@ -341,10 +342,12 @@
     <Compile Include="Areas\Inventories\Controllers\GoodsReceiptsController.cs" />
     <Compile Include="Areas\Inventories\Controllers\HandlingUnitsController.cs" />
     <Compile Include="Areas\Inventories\Controllers\MaterialIssuesController.cs" />
+    <Compile Include="Areas\Inventories\Controllers\PackageIssuesController.cs" />
     <Compile Include="Areas\Inventories\Controllers\Sessions\GoodsDeliverySession.cs" />
     <Compile Include="Areas\Inventories\Controllers\Sessions\GoodsIssueSession.cs" />
     <Compile Include="Areas\Inventories\Controllers\Sessions\HandlingUnitSession.cs" />
     <Compile Include="Areas\Inventories\Controllers\Sessions\MaterialIssueSession.cs" />
+    <Compile Include="Areas\Inventories\Controllers\Sessions\PackageIssueSession.cs" />
     <Compile Include="Areas\Inventories\Controllers\TestAreaController.cs" />
     <Compile Include="Areas\Inventories\Controllers\TransferOrdersController.cs" />
     <Compile Include="Areas\Inventories\Controllers\WarehouseAdjustmentsController.cs" />
@@ -355,6 +358,7 @@
     <Compile Include="Areas\Inventories\ViewModels\GoodsReceiptViewModel.cs" />
     <Compile Include="Areas\Inventories\ViewModels\HandlingUnitViewModel.cs" />
     <Compile Include="Areas\Inventories\ViewModels\MaterialIssueViewModel.cs" />
+    <Compile Include="Areas\Inventories\ViewModels\PackageIssueViewModel.cs" />
     <Compile Include="Areas\Inventories\ViewModels\TransferOrderViewModel.cs" />
     <Compile Include="Areas\Inventories\ViewModels\WarehouseAdjustmentViewModel.cs" />
     <Compile Include="Areas\Inventories\ViewModels\WarehouseTransferViewModel.cs" />
