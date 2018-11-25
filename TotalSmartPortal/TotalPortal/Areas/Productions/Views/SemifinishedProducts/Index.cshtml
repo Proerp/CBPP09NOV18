@@ -91,7 +91,7 @@
         var grid = $("#kendoGridIndex").data("kendoGrid");
         var selectedItem = grid.dataItem(grid.select());
         if (selectedItem != undefined && selectedItem.WorkshiftID != undefined) {
-            window.open('@Url.Action("Print", "SemifinishedProducts", new { area = "Productions" })' + "/" + selectedItem.WorkshiftID)
+            window.open('@Url.Action("Print", "SemifinishedProducts", new { area = "Productions" })' + "/0/" + selectedItem.WorkshiftID)
         }
     }
 
