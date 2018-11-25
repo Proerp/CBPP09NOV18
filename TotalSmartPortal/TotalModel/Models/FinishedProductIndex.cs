@@ -31,5 +31,6 @@ namespace TotalModel.Models
         public decimal TotalQuantityShortage { get; set; }
         public string WorkshiftName { get; set; }
         public System.DateTime WorkshiftEntryDate { get; set; }
+        public int WorkshiftID { get; set; }
     }
 }

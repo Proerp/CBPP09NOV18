@@ -16599,6 +16599,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Decimal" Name="TotalQuantityShortage" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="WorkshiftName" Nullable="false" MaxLength="50" />
           <Property Type="DateTime" Name="WorkshiftEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="FinishedProductViewDetail">
           <Property Type="Int32" Name="FinishedProductDetailID" Nullable="false" />
@@ -23901,6 +23902,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="TotalQuantityShortage" ColumnName="TotalQuantityShortage" />
                 <ScalarProperty Name="WorkshiftName" ColumnName="WorkshiftName" />
                 <ScalarProperty Name="WorkshiftEntryDate" ColumnName="WorkshiftEntryDate" />
+                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

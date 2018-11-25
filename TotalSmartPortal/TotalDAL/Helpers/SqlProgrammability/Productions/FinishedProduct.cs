@@ -30,6 +30,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.FinishedProductToggleApproved();
 
             this.FinishedProductInitReference();
+
+            this.FinishedProductSheet();
         }
 
 
@@ -42,7 +44,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      FinishedProducts.FinishedProductID, CAST(FinishedProducts.EntryDate AS DATE) AS EntryDate, FinishedProducts.Reference, Locations.Code AS LocationCode, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specs AS FirmOrderSpecs, FinishedProducts.Description, Workshifts.Name AS WorkshiftName, Workshifts.EntryDate AS WorkshiftEntryDate, FinishedProducts.TotalQuantity + FinishedProducts.TotalQuantityExcess AS TotalQuantity, FinishedProducts.TotalQuantityFailure, FinishedProducts.TotalQuantityExcess, FinishedProducts.TotalQuantityShortage, FinishedProducts.TotalSwarfs, FinishedProducts.Approved " + "\r\n";
+            queryString = queryString + "       SELECT      FinishedProducts.FinishedProductID, CAST(FinishedProducts.EntryDate AS DATE) AS EntryDate, FinishedProducts.Reference, Locations.Code AS LocationCode, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specs AS FirmOrderSpecs, FinishedProducts.Description, FinishedProducts.WorkshiftID, Workshifts.Name AS WorkshiftName, Workshifts.EntryDate AS WorkshiftEntryDate, FinishedProducts.TotalQuantity + FinishedProducts.TotalQuantityExcess AS TotalQuantity, FinishedProducts.TotalQuantityFailure, FinishedProducts.TotalQuantityExcess, FinishedProducts.TotalQuantityShortage, FinishedProducts.TotalSwarfs, FinishedProducts.Approved " + "\r\n";
             queryString = queryString + "       FROM        FinishedProducts " + "\r\n";
             queryString = queryString + "                   INNER JOIN Locations ON FinishedProducts.EntryDate >= @FromDate AND FinishedProducts.EntryDate <= @ToDate AND FinishedProducts.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.FinishedProduct + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = FinishedProducts.LocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProducts.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
@@ -301,6 +303,49 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.totalSmartPortalEntities.CreateTrigger("FinishedProductInitReference", simpleInitReference.CreateQuery());
         }
 
+
+        private void FinishedProductSheet()
+        {
+            string queryString;
+
+            queryString = " @WorkshiftID int, @FinishedProductID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "    BEGIN " + "\r\n";
+            queryString = queryString + "       SET NOCOUNT ON" + "\r\n";
+
+            queryString = queryString + "       DECLARE     @LocalWorkshiftID int, @LocalFinishedProductID int      SET @LocalWorkshiftID = @WorkshiftID    SET @LocalFinishedProductID = @FinishedProductID" + "\r\n";
+
+            queryString = queryString + "       IF  (@LocalWorkshiftID <> 0) " + "\r\n";
+            queryString = queryString + "           " + this.FinishedProductSheetSQL(true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.FinishedProductSheetSQL(false) + "\r\n";
+
+            queryString = queryString + "       SET NOCOUNT OFF" + "\r\n";
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("FinishedProductSheet", queryString);
+        }
+
+        private string FinishedProductSheetSQL(bool workshiftID)
+        {
+            string queryString = " " + "\r\n";
+            queryString = queryString + "       SELECT      FinishedProducts.FinishedProductID, FinishedProductPackages.FinishedProductPackageID, FinishedProducts.EntryDate, FinishedProducts.Reference, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "                   Commodities.Code, Commodities.Name, CommodityClasses.Code AS CommodityClassCode, FinishedProductPackages.PiecePerPack, FinishedProductPackages.Quantity, FinishedProductPackages.Packages, FinishedProductPackages.OddPackages, FinishedProductPackages.QuantityFailure, FinishedProductPackages.Swarfs, CrucialWorkers.Name AS CrucialWorkerName, CrucialWorkers.LastName AS CrucialWorkerLastName, FinishedProducts.Description " + "\r\n";
+
+            queryString = queryString + "       FROM        FinishedProducts " + "\r\n";
+            queryString = queryString + "                   INNER JOIN FinishedProductPackages ON " + (workshiftID ? "FinishedProducts.WorkshiftID = @LocalWorkshiftID" : "FinishedProducts.FinishedProductID = @LocalFinishedProductID") + " AND FinishedProducts.FinishedProductID = FinishedProductPackages.FinishedProductID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Customers ON FinishedProductPackages.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON FinishedProductPackages.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN CommodityClasses ON Commodities.CommodityClassID = CommodityClasses.CommodityClassID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Workshifts ON FinishedProducts.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Employees AS CrucialWorkers ON FinishedProducts.CrucialWorkerID = CrucialWorkers.EmployeeID " + "\r\n";
+
+            queryString = queryString + "       ORDER BY    FirmOrders.Code, Commodities.Name " + "\r\n";
+            
+            return queryString;
+        }
 
         #endregion
     }
