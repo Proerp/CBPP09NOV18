@@ -38,9 +38,30 @@
 
     <div class="left-panel">
 
-        @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
-
+        <div class="SBT-Hidden">
+            @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
+        </div>
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Shift.cshtml")
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate)
+            <div class="div-input">
+                @Html.Kendo().DateTimePickerFor(model => model.StartDate).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StopDate)
+            <div class="div-input">
+                @Html.Kendo().DateTimePickerFor(model => model.StopDate).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.StopDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.StartSequenceNo)
@@ -178,8 +199,9 @@
 
 
             <div id="show-current-PriceCategory" style="float: right; margin-top: -170px; text-align: center; width: 110px; height: 110px; " title="Kho hàng">
-                <div style="height: 90px; padding-left: 22px; padding-right: 22px; padding-top: 32px;">
-                    <span style="color:blue;" id=""> </span>
+                <div style="height: 90px; padding-left: 22px; padding-right: 22px; padding-top: 22px;">
+                    <span style="color:blue;"> @Html.Label(@Model.Reference) </span>
+                    <span style="color:blue;"> @Html.Label(@Model.EntryDate.ToString()) </span>
                 </div>
             </div>
         </div>

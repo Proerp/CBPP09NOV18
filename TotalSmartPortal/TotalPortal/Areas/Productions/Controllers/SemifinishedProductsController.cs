@@ -73,6 +73,8 @@ namespace TotalPortal.Areas.Productions.Controllers
                 Customer = simpleViewModel.Customer,
 
                 ShiftID = simpleViewModel.ShiftID,
+                StartDate = simpleViewModel.StopDate != null ? simpleViewModel.StopDate : null,
+
                 StartSequenceNo = simpleViewModel.StopSequenceNo + 1,
                 FoilUnitCounts = simpleViewModel.FoilUnitCounts,
                 FoilUnitWeights = simpleViewModel.FoilUnitWeights,

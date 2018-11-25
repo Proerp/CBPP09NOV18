@@ -2036,6 +2036,8 @@
           <Property Name="OrganizationalUnitID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="ApproverID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="StopDate" Type="datetime" />
           <Property Name="StartSequenceNo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="StopSequenceNo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="FoilCounts" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -16199,6 +16201,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="FirmOrdersCode" Nullable="true" MaxLength="50" />
           <Property Type="Decimal" Name="StartSequenceNo" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="StopSequenceNo" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SemifinishedProductViewDetail">
           <Property Type="Int32" Name="SemifinishedProductDetailID" Nullable="false" />
@@ -17047,6 +17050,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_SemifinishedProducts_GoodsReceiptDetails" FromRole="SemifinishedProduct" ToRole="GoodsReceiptDetail" />
           <Property Name="Caption" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
           <Property Name="PlannedOrderID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="StopDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_MaterialIssueDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -23546,6 +23551,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="FirmOrdersCode" ColumnName="FirmOrdersCode" />
                 <ScalarProperty Name="StartSequenceNo" ColumnName="StartSequenceNo" />
                 <ScalarProperty Name="StopSequenceNo" ColumnName="StopSequenceNo" />
+                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -24269,6 +24275,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="SemifinishedProducts">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedProduct">
               <MappingFragment StoreEntitySet="SemifinishedProducts">
+                <ScalarProperty Name="StopDate" ColumnName="StopDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="HandoverApproved" ColumnName="HandoverApproved" />

@@ -76,6 +76,13 @@ namespace TotalDTO.Productions
 
         public virtual int CrucialWorkerID { get; set; }
 
+        [UIHint("DateTime")]
+        [Display(Name = "Thời gian bắt đầu SX")]
+        public Nullable<System.DateTime> StartDate { get; set; }
+        [UIHint("DateTime")]
+        [Display(Name = "Thời gian kết thúc SX")]
+        public Nullable<System.DateTime> StopDate { get; set; }
+
         [Display(Name = "Số thứ tự tấm phôi đầu")]
         [Range(0, 999999, ErrorMessage = "Số thứ tự >= 0")]
         public decimal StartSequenceNo { get; set; }

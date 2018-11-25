@@ -58,6 +58,8 @@ namespace TotalModel.Models
         public bool HandoverApproved { get; set; }
         public string Caption { get; set; }
         public int PlannedOrderID { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> StopDate { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }

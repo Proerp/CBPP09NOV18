@@ -3,11 +3,11 @@
 <div id="popupWindow"></div>
 
 <div>
-        @(Html.Kendo().Grid<TotalModel.Models.SemifinishedProductIndex>()
+    @(Html.Kendo().Grid<TotalModel.Models.SemifinishedProductIndex>()
         .Name("kendoGridIndex")
         .Columns(columns =>
         {
-            columns.Bound(p => p.SemifinishedProductID).DisplayNameTitle().Hidden();            
+            columns.Bound(p => p.SemifinishedProductID).DisplayNameTitle().Hidden();
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
 
             columns.Bound(p => p.Reference).Title("Phiếu").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedProducts", action = "Edit" }) + "/#= SemifinishedProductID #'>#=Reference#</a>");
@@ -21,7 +21,7 @@
 
             columns.Bound(p => p.StartSequenceNo).Title("BĐ").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
             columns.Bound(p => p.StopSequenceNo).Title("KT").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
-            
+
             columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
 
             columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(68)
@@ -31,6 +31,7 @@
         {
             toolbar.Template(@<text>
                 <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu nhập bán thành phẩm </button>
+                <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-green-24.png" /> In </button>
                 <div class="toolbar" style="float: right;">
                     <label>Nhập số phiếu, tên KH, ca sx, thành phẩm hoặc diễn giải </label>
                     <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
@@ -86,6 +87,13 @@
         });
     }
 
+    function callPrint() {
+        var grid = $("#kendoGridIndex").data("kendoGrid");
+        var selectedItem = grid.dataItem(grid.select());
+        if (selectedItem != undefined && selectedItem.WorkshiftID != undefined) {
+            window.open('@Url.Action("Print", "SemifinishedProducts", new { area = "Productions" })' + "/" + selectedItem.WorkshiftID)
+        }
+    }
 
     decoratingKindex = function (idx, elem) {
         if (elem.Approved == null || elem.Approved == false) {

@@ -30,5 +30,6 @@ namespace TotalModel.Models
         public string FirmOrdersCode { get; set; }
         public decimal StartSequenceNo { get; set; }
         public decimal StopSequenceNo { get; set; }
+        public int WorkshiftID { get; set; }
     }
 }
