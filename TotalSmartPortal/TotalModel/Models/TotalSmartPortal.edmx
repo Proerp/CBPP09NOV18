@@ -572,6 +572,7 @@
           <Property Name="EmployeeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EmployeeTypeID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
@@ -1204,6 +1205,7 @@
           <Property Name="MaterialIssueDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaterialIssueID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="MaterialIssueTypeID" Type="int" Nullable="false" />
           <Property Name="ShiftID" Type="int" Nullable="false" />
@@ -9196,6 +9198,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsArrivals" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_Employees" FromRole="Employee" ToRole="GoodsArrival" />
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Employees" FromRole="Employee" ToRole="PackageIssue" />
           <NavigationProperty Name="PackageIssues1" Relationship="TotalSmartPortalModel.FK_PackageIssues_Employees1" FromRole="Employee" ToRole="PackageIssue" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           </EntityType>
         <EntityType Name="EntireTerritory">
           <Key>
@@ -16899,6 +16902,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="SemifinishedProducts" Relationship="TotalSmartPortalModel.FK_SemifinishedProducts_MaterialIssueDetails" FromRole="MaterialIssueDetail" ToRole="SemifinishedProduct" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_MaterialIssueDetails" FromRole="MaterialIssueDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_GoodsReceiptDetails" FromRole="MaterialIssueDetail" ToRole="GoodsReceiptDetail" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MaterialIssue">
           <Key>
@@ -20492,6 +20496,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.Employee">
               <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
@@ -24157,6 +24162,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="MaterialIssueDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.MaterialIssueDetail">
               <MappingFragment StoreEntitySet="MaterialIssueDetails">
+                <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="QuantityLoss" ColumnName="QuantityLoss" />

@@ -51,6 +51,7 @@ namespace TotalModel.Models
         public decimal QuantityLoss { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
+        public string Code { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual Customer Customer { get; set; }
