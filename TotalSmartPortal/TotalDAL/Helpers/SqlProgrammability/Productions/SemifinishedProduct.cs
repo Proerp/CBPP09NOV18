@@ -256,23 +256,40 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void SemifinishedProductSheet()
         {
-            string queryString = " @SemifinishedProductID int " + "\r\n";
-            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            string queryString = " @WorkshiftID int, @SemifinishedProductID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       DECLARE         @LocalSemifinishedProductID int    SET @LocalSemifinishedProductID = @SemifinishedProductID" + "\r\n";
+            queryString = queryString + "       DECLARE         @LocalWorkshiftID int, @LocalSemifinishedProductID int     SET @LocalWorkshiftID = @WorkshiftID    SET @LocalSemifinishedProductID = @SemifinishedProductID" + "\r\n";
 
-            queryString = queryString + "       SELECT          SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.Reference, SemifinishedProducts.EntryDate, Workshifts.Code AS WorkshiftCode, CrucialWorkers.Name AS CrucialWorkerName, ProductionLines.Code AS ProductionLineCode, " + "\r\n";
-            queryString = queryString + "                       FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, Customers.Name AS CustomerName, Materials.Code AS MaterialCode, MaterialIssueDetails.BatchEntryDate, MaterialIssueDetails.Quantity AS MaterialQuantity, " + "\r\n";
+            queryString = queryString + "       IF  (@LocalWorkshiftID <> 0) " + "\r\n";
+            queryString = queryString + "           " + this.SemifinishedProductSheetSQL(true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.SemifinishedProductSheetSQL(false) + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("SemifinishedProductSheet", queryString);
+        }
+
+        private string SemifinishedProductSheetSQL(bool workshiftID)
+        {
+            string queryString = " " + "\r\n";
+
+            queryString = queryString + "       SELECT          SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.Reference, SemifinishedProducts.EntryDate, Workshifts.Code AS WorkshiftCode, CrucialWorkers.Name AS CrucialWorkerName, CrucialWorkers.LastName AS CrucialWorkerLastName, ProductionLines.Code AS ProductionLineCode, " + "\r\n";
+            queryString = queryString + "                       FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, Customers.Name AS CustomerName, Materials.Code AS MaterialCode, MaterialClasses.Code AS MaterialClassCode, MaterialIssueDetails.BatchEntryDate, FirmOrderDetails.Quantity AS FirmOrderQuantity, MaterialIssueDetails.Quantity AS MaterialQuantity, MaterialIssueDetails.Code AS MaterialIssueCode, " + "\r\n";
             queryString = queryString + "                       SemifinishedProducts.StartSequenceNo, SemifinishedProducts.StopSequenceNo, SemifinishedProducts.FoilCounts, SemifinishedProducts.FoilUnitCounts, SemifinishedProducts.FoilUnitWeights, SemifinishedProducts.FoilWeights, SemifinishedProducts.FailureWeights, Commodities.Code, Commodities.Name, SemifinishedProductDetails.Quantity, SemifinishedProductDetails.MoldQuantity, SemifinishedProductDetails.PiecePerPack, ISNULL(FirmOrders.Description, '') + ISNULL(' [ĐHCK: ' + SemifinishedProducts.Description + ']', '') AS Description " + "\r\n";
 
             queryString = queryString + "       FROM            SemifinishedProducts " + "\r\n";
-            queryString = queryString + "                       INNER JOIN SemifinishedProductDetails ON SemifinishedProducts.SemifinishedProductID = @LocalSemifinishedProductID AND SemifinishedProducts.SemifinishedProductID = SemifinishedProductDetails.SemifinishedProductID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN SemifinishedProductDetails ON " + (workshiftID ? "SemifinishedProducts.WorkshiftID = @LocalWorkshiftID" : "SemifinishedProducts.SemifinishedProductID = @LocalSemifinishedProductID") + " AND SemifinishedProducts.SemifinishedProductID = SemifinishedProductDetails.SemifinishedProductID " + "\r\n";
             queryString = queryString + "                       INNER JOIN FirmOrders ON SemifinishedProducts.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN FirmOrderDetails ON SemifinishedProductDetails.FirmOrderDetailID = FirmOrderDetails.FirmOrderDetailID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON SemifinishedProducts.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN MaterialIssueDetails ON SemifinishedProducts.MaterialIssueDetailID = MaterialIssueDetails.MaterialIssueDetailID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities AS Materials ON MaterialIssueDetails.CommodityID = Materials.CommodityID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN CommodityClasses MaterialClasses ON Materials.CommodityClassID = MaterialClasses.CommodityClassID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Workshifts ON SemifinishedProducts.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Employees AS CrucialWorkers ON SemifinishedProducts.CrucialWorkerID = CrucialWorkers.EmployeeID " + "\r\n";
             queryString = queryString + "                       INNER JOIN ProductionLines ON SemifinishedProducts.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
@@ -280,10 +297,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       ORDER BY        SemifinishedProductDetails.SemifinishedProductDetailID " + "\r\n";
 
-            queryString = queryString + "    END " + "\r\n";
-
-
-            this.totalSmartPortalEntities.CreateStoredProcedure("SemifinishedProductSheet", queryString);
+            return queryString;
         }
 
     }

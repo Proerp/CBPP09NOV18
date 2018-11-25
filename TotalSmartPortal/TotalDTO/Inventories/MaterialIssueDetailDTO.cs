@@ -25,6 +25,8 @@ namespace TotalDTO.Inventories
 
         public int MaterialIssueTypeID { get; set; }
 
+        public string Code { get; set; }
+
         public Nullable<int> CustomerID { get; set; }
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }

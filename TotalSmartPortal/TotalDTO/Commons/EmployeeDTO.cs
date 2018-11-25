@@ -36,6 +36,8 @@ namespace TotalDTO.Commons
         [Required(ErrorMessage = "Vui lòng nhập mã nhân viên")]
         public string Code { get; set; }
 
+        public string LastName { get { return this.Name.LastIndexOf(" ") != -1 ? this.Name.Substring(this.Name.LastIndexOf(" ")).Trim() : this.Name; } }
+
         [Display(Name = "Chức vụ")]
         [Required(ErrorMessage = "Vui lòng nhập chức vụ")]
         public string Title { get; set; }
