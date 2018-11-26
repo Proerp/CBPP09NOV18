@@ -204,7 +204,7 @@
             {
                 @Html.HiddenFor(model => model.PrintAfterClosedSubmit)
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsDeliveries")"> <img src="~/Content/Images/New/save-icon.png" /> Lưu giao hàng </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsDeliveries")" onclick="$('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Actions-document-print-icon.png" /> Lưu và in phiếu giao hàng</button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsDeliveries")" onclick="$('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Save-Print-32.png" /> Lưu và in phiếu giao hàng</button>
             }
             @if (Model.GoodsDeliveryID > 0)
             {

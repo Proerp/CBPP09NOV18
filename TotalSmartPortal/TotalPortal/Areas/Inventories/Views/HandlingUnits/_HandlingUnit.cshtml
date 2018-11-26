@@ -264,7 +264,7 @@
                 @Html.HiddenFor(model => model.PrintAfterClosedSubmit)
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Create" formaction="@Url.Action("Edit", "HandlingUnits")"> <img src="~/Content/Images/New/Save-icon-blue.png" /> Lưu và lập phiếu tiếp theo </button>
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "HandlingUnits")"> <img src="~/Content/Images/New/save-icon.png" /> Lưu nhãn thùng </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "HandlingUnits")" onclick="$('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Actions-document-print-icon.png" /> Lưu và in nhãn thùng</button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "HandlingUnits")" onclick="$('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Save-Print-32.png" /> Lưu và in nhãn thùng</button>
             }
             @if (Model.HandlingUnitID > 0)
             {
