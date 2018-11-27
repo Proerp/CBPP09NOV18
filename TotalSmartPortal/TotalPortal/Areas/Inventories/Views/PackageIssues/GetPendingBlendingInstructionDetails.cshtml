@@ -4,21 +4,14 @@
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
 
-@(Html.Kendo().Grid<MaterialIssuePendingFirmOrderMaterial>()
-    .Name("gridPendingFirmOrderMaterials")
+@(Html.Kendo().Grid<PackageIssuePendingBlendingInstructionDetail>()
+    .Name("gridPendingBlendingInstructionDetails")
     .Columns(columns =>
     {
         columns.Bound(c => c.CommodityCode).Title("Mã").Width(30).Hidden();
-        columns.Bound(p => p.CodePartB).Title("Phân loại").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(11);
-        columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
-        columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12);
-        columns.Bound(p => p.CodePartA).Title("Công thức").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12);
-        columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
-        columns.Bound(p => p.CodePartF).Title("Chiều rộng").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12);
         columns.Bound(c => c.GoodsReceiptReference).Title("Lô").Width(15);
         columns.Bound(c => c.GoodsReceiptEntryDate).Title("Ngày").Width(15).Format("{0:" + Settings.DateFormat + "}");
         columns.Bound(c => c.BatchEntryDate).Title("Ngày lô hàng").Width(15).Format("{0:" + Settings.DateFormat + "}");
-        columns.Bound(c => c.WorkshiftFirmOrderRemains).Title("Tồn LSX").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
         columns.Bound(c => c.QuantityAvailables).Title("Tồn kho").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
 
         columns.Template(t => { }).Title("&nbsp;").ClientTemplate("<input class='IsSelected' #= IsSelected ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center" }).Width(5);
@@ -34,20 +27,19 @@
     })
     .Scrollable(s => s.Height(Settings.PopupContentHeightLarge))
     .DataSource(ds => ds.Ajax()
-            .Read(read => read.Action("GetPendingFirmOrderMaterials", "MaterialIssueAPIs", new { area = "Inventories" }).Data(@<text>
+            .Read(read => read.Action("GetPendingBlendingInstructionDetails", "PackageIssueAPIs", new { area = "Inventories" }).Data(@<text>
             function(e) {
 
-            var materialIssueJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
+            var packageIssueJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
 
             return {
                 locationID: window.parent.requireConfig.pageOptions.LocationID,
-                materialIssueID: window.parent.$("#MaterialIssueID").val(),
-                firmOrderID: window.parent.$("#FirmOrderID").val(),
+                packageIssueID: window.parent.$("#PackageIssueID").val(),
+                blendingInstructionID: window.parent.$("#BlendingInstructionID").val(),
                 workshiftID: window.parent.$("#WorkshiftID").val(),
                 moldID: window.parent.$("#MoldID").val(),
                 warehouseID: window.parent.$("#Warehouse_WarehouseID").val(),
-                goodsReceiptDetailIDs : materialIssueJSON.map(function(elem){return elem.GoodsReceiptDetailID;}).join(","),
-                isReadOnly: false
+                goodsReceiptDetailIDs : packageIssueJSON.map(function(elem){return elem.GoodsReceiptDetailID;}).join(",")
             };}
             </text>))
     .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client
@@ -62,16 +54,16 @@
     </div>
 </div>
 
-<script src="@Url.Content("~/Scripts/Controllers/Inventories/MaterialIssues/AddPendingFirmOrderMaterial.js")"></script>
+<script src="@Url.Content("~/Scripts/Controllers/Inventories/PackageIssues/AddPendingBlendingInstructionDetail.js")"></script>
 
 <script type="text/javascript">
     function okButton_Click() {
-        handleOKEvent(window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource, $("#gridPendingFirmOrderMaterials").data("kendoGrid").dataSource);
+        handleOKEvent(window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource, $("#gridPendingBlendingInstructionDetails").data("kendoGrid").dataSource);
     }
 
-    $('#gridPendingFirmOrderMaterials').on('click', '.IsSelected', function () {
+    $('#gridPendingBlendingInstructionDetails').on('click', '.IsSelected', function () {
         var checked = $(this).is(':checked');
-        var grid = $('#gridPendingFirmOrderMaterials').data().kendoGrid;
+        var grid = $('#gridPendingBlendingInstructionDetails').data().kendoGrid;
         var dataItem = grid.dataItem($(this).closest('tr'));
         dataItem.set('IsSelected', checked);
     })
@@ -81,7 +73,7 @@
 
 <script>
     function filterText_KeyUp() {
-        var filterText = $("#filterText").val(), gridDetails = $("#gridPendingFirmOrderMaterials").data("kendoGrid");
+        var filterText = $("#filterText").val(), gridDetails = $("#gridPendingBlendingInstructionDetails").data("kendoGrid");
 
         if (filterText && filterText.length >= "@Settings.AutoCompleteMinLenght") {
             gridDetails.dataSource.filter({

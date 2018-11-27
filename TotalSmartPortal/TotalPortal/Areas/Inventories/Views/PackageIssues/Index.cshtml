@@ -3,25 +3,25 @@
 <div id="popupWindow"></div>
 
 <div>
-    @(Html.Kendo().Grid<TotalModel.Models.MaterialIssueIndex>()
+    @(Html.Kendo().Grid<TotalModel.Models.PackageIssueIndex>()
         .Name("kendoGridIndex")
         .Columns(columns =>
         {
-            columns.Bound(p => p.MaterialIssueID).DisplayNameTitle().Hidden();            
+            columns.Bound(p => p.PackageIssueID).DisplayNameTitle().Hidden();            
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
 
-            columns.Bound(p => p.Reference).Title("Phiếu").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/MaterialIssues", action = "Edit" }) + "/#= MaterialIssueID #'>#=Reference#</a>");
-            columns.Bound(p => p.FirmOrdersCode).Title("Số CT").Width(10);
+            columns.Bound(p => p.Reference).Title("Phiếu").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/PackageIssues", action = "Edit" }) + "/#= PackageIssueID #'>#=Reference#</a>");
+            columns.Bound(p => p.BlendingInstructionsCode).Title("Số CT").Width(10);
             columns.Bound(p => p.WorkshiftName).Title("Ca SX").Hidden();
             columns.Bound(p => p.ProductionLinesCode).Title("Máy").Width(10);
             columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(80);
-            columns.Bound(p => p.FirmOrderSpecs).Title("Sản phẩm").Width(218);
+            columns.Bound(p => p.BlendingInstructionSpecs).Title("Sản phẩm").Width(218);
             columns.Bound(p => p.Description).Title("Diễn giải").Width(196);
 
             columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
             columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
-                .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/MaterialIssues", action = "Print" }) + "/#= MaterialIssueID #' target='_blank'><span class='k-icon k-i-folder-add'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/MaterialIssues", action = "Delete" }) + "/#= MaterialIssueID #'><span class='k-icon k-delete'></span></a>");
+                .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/PackageIssues", action = "Print" }) + "/#= PackageIssueID #' target='_blank'><span class='k-icon k-i-folder-add'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/PackageIssues", action = "Delete" }) + "/#= PackageIssueID #'><span class='k-icon k-delete'></span></a>");
         })
         .ToolBar(toolbar =>
         {
@@ -45,17 +45,17 @@
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .Group(group => group.AddDescending(p => p.EntryDate)).Group(group => group.Add(p => p.WorkshiftName))
-                .Read(read => read.Action("GetMaterialIssueIndexes", "MaterialIssueAPIs", new { area = "Inventories" }))
+                .Read(read => read.Action("GetPackageIssueIndexes", "PackageIssueAPIs", new { area = "Inventories" }))
                 .Sort(sort =>
                     {
                         sort.Add(p => p.EntryDate).Descending();
-                        sort.Add(p => p.MaterialIssueID).Descending();
+                        sort.Add(p => p.PackageIssueID).Descending();
                     })
                 .PageSize(20)
                 .Model(model =>
                 {
-                    model.Id(x => x.MaterialIssueID);
-                    model.Field(m => m.MaterialIssueID).DefaultValue(0);
+                    model.Id(x => x.PackageIssueID);
+                    model.Field(m => m.PackageIssueID).DefaultValue(0);
                 })
                 .ServerOperation(true)
                 .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
@@ -71,14 +71,14 @@
     function hightLightSelectedRow(e) {
         require(["kindexGrid"], function (kindexGrid) {
             var kindexGridInstance = new kindexGrid("kendoGridIndex");
-            kindexGridInstance.setSelectedRow("MaterialIssueID", '@ViewBag.SelectedEntityID');
+            kindexGridInstance.setSelectedRow("PackageIssueID", '@ViewBag.SelectedEntityID');
         });
     }
 
     function createWizard() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "MaterialIssues")", "Chọn lệnh sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeight");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "PackageIssues")", "Chọn lệnh sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeight");
         });
     }
 
@@ -102,11 +102,11 @@
                 logic: "or",
                 filters: [
                     { field: "Reference", operator: "contains", value: indexFilterText },
-                    { field: "FirmOrdersCode", operator: "contains", value: indexFilterText },
+                    { field: "BlendingInstructionsCode", operator: "contains", value: indexFilterText },
                     { field: "WorkshiftName", operator: "contains", value: indexFilterText },
                     { field: "ProductionLinesCode", operator: "contains", value: indexFilterText },
                     { field: "CustomerName", operator: "contains", value: indexFilterText },
-                    { field: "FirmOrderSpecs", operator: "contains", value: indexFilterText },
+                    { field: "BlendingInstructionSpecs", operator: "contains", value: indexFilterText },
                     { field: "Description", operator: "contains", value: indexFilterText }
                 ]
             });

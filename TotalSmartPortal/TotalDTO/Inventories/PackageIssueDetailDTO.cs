@@ -16,8 +16,8 @@ namespace TotalDTO.Inventories
         public int PackageIssueDetailID { get; set; }
         public int PackageIssueID { get; set; }
 
-        public int BlendingIntructionID { get; set; }
-        public int BlendingIntructionMaterialID { get; set; }
+        public int BlendingInstructionID { get; set; }
+        public int BlendingInstructionDetailID { get; set; }
 
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
@@ -43,6 +43,9 @@ namespace TotalDTO.Inventories
         [Display(Name = "Ngày lô hàng")]
         [UIHint("DateTimeReadonly")]
         public System.DateTime BatchEntryDate { get; set; }
+
+        [UIHint("AutoCompletes/CommodityBase")]
+        public override string CommodityCode { get; set; }
 
         [Display(Name = "Tồn BIS")]
         [UIHint("QuantityReadonly")]

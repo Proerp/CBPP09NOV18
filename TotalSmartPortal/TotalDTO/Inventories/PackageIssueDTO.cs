@@ -22,15 +22,15 @@ namespace TotalDTO.Inventories
 
         public int PackageIssueID { get; set; }
 
-        public int BlendingIntructionID { get; set; }
+        public int BlendingInstructionID { get; set; }
         [Display(Name = "Số BIS")]
-        public string BlendingIntructionReference { get; set; }
+        public string BlendingInstructionReference { get; set; }
         [Display(Name = "Mã chứng từ")]
-        public string BlendingIntructionCode { get; set; }
+        public string BlendingInstructionCode { get; set; }
         [Display(Name = "Ngày BIS")]
-        public DateTime BlendingIntructionEntryDate { get; set; }
+        public DateTime BlendingInstructionEntryDate { get; set; }
         [Display(Name = "Diễn giải")]
-        public string BlendingIntructionDescription { get; set; }
+        public string BlendingInstructionDescription { get; set; }
         
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
@@ -43,7 +43,7 @@ namespace TotalDTO.Inventories
         {
             base.PerformPresaveRule();
 
-            this.DtoDetails().ToList().ForEach(e => { e.BlendingIntructionID = this.BlendingIntructionID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; e.WarehouseID = this.WarehouseID; });
+            this.DtoDetails().ToList().ForEach(e => { e.BlendingInstructionID = this.BlendingInstructionID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; e.WarehouseID = this.WarehouseID; });
         }
     }
 
