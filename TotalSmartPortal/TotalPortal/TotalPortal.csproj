@@ -1550,7 +1550,7 @@
     <Content Include="Areas\Inventories\Views\PackageIssues\GetPendingBlendingInstructionDetails.cshtml" />
     <Content Include="Areas\Inventories\Views\PackageIssues\Index.cshtml" />
     <Content Include="Areas\Inventories\Views\PackageIssues\Print.cshtml" />
-    <Content Include="Areas\Inventories\Views\PackageIssues\_BlendingInstruction.cshtml" />
+    <Content Include="Areas\Inventories\Views\PackageIssues\_PackageIssue.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">

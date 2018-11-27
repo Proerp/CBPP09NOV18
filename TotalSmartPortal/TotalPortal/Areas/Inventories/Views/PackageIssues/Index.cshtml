@@ -13,9 +13,6 @@
             columns.Bound(p => p.Reference).Title("Phiếu").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/PackageIssues", action = "Edit" }) + "/#= PackageIssueID #'>#=Reference#</a>");
             columns.Bound(p => p.BlendingInstructionsCode).Title("Số CT").Width(10);
             columns.Bound(p => p.WorkshiftName).Title("Ca SX").Hidden();
-            columns.Bound(p => p.ProductionLinesCode).Title("Máy").Width(10);
-            columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(80);
-            columns.Bound(p => p.BlendingInstructionSpecs).Title("Sản phẩm").Width(218);
             columns.Bound(p => p.Description).Title("Diễn giải").Width(196);
 
             columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
