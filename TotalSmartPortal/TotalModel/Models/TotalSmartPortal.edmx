@@ -19831,10 +19831,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="DateTime" Name="GoodsReceiptEntryDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="BatchID" Nullable="true" />
           <Property Type="DateTime" Name="BatchEntryDate" Nullable="true" Precision="23" />
-          <Property Type="Decimal" Name="BlendingInstructionRemains" Nullable="true" Precision="19" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="19" Scale="2" />
           <Property Type="Int32" Name="Quantity" Nullable="false" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="19" Scale="2" />
         </ComplexType>
         <ComplexType Name="PackageIssuePendingBlendingInstruction">
           <Property Type="Int32" Name="BlendingInstructionID" Nullable="false" />
@@ -19863,10 +19863,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="DateTime" Name="GoodsReceiptEntryDate" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="BatchID" Nullable="false" />
           <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
-          <Property Type="Decimal" Name="BlendingInstructionRemains" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
         <EntityType Name="PackageIssueDetail">
           <Key>
@@ -25356,10 +25356,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="GoodsReceiptEntryDate" ColumnName="GoodsReceiptEntryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
-                <ScalarProperty Name="BlendingInstructionRemains" ColumnName="BlendingInstructionRemains" />
                 <ScalarProperty Name="QuantityAvailables" ColumnName="QuantityAvailables" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -25396,10 +25396,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="GoodsReceiptEntryDate" ColumnName="GoodsReceiptEntryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
-                <ScalarProperty Name="BlendingInstructionRemains" ColumnName="BlendingInstructionRemains" />
                 <ScalarProperty Name="QuantityAvailables" ColumnName="QuantityAvailables" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

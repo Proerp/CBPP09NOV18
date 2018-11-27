@@ -26,9 +26,9 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> GoodsReceiptEntryDate { get; set; }
         public Nullable<int> BatchID { get; set; }
         public Nullable<System.DateTime> BatchEntryDate { get; set; }
-        public Nullable<decimal> BlendingInstructionRemains { get; set; }
         public Nullable<decimal> QuantityAvailables { get; set; }
         public int Quantity { get; set; }
         public Nullable<bool> IsSelected { get; set; }
+        public Nullable<decimal> QuantityRemains { get; set; }
     }
 }

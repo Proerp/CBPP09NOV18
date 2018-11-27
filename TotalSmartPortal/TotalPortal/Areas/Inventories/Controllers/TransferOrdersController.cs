@@ -18,7 +18,7 @@ using TotalPortal.Areas.Inventories.ViewModels;
 using TotalPortal.Areas.Inventories.Builders;
 
 namespace TotalPortal.Areas.Inventories.Controllers
-{  
+{
     public class TransferOrdersController<TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel> : GenericViewDetailController<TransferOrder, TransferOrderDetail, TransferOrderViewDetail, TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel>
         where TDto : TPrimitiveDto, IBaseDetailEntity<TDtoDetail>
         where TPrimitiveDto : BaseDTO, IPrimitiveEntity, IPrimitiveDTO, new()
@@ -34,7 +34,7 @@ namespace TotalPortal.Areas.Inventories.Controllers
         {
             simpleViewModel = base.InitViewModelByDefault(simpleViewModel);
 
-            simpleViewModel.Warehouse = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = 2, Code = "KM片", Name = "KM", LocationID = 1 };
+            simpleViewModel.Warehouse = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = simpleViewModel.IsMaterial ? 1 : (simpleViewModel.IsItem ? 2 : (simpleViewModel.IsProduct ? 3 : 0)), Code = simpleViewModel.IsMaterial ? "NVL原料" : (simpleViewModel.IsItem ? "KM片" : (simpleViewModel.IsProduct ? "TP成品" : "")), Name = simpleViewModel.IsMaterial ? "NVL" : (simpleViewModel.IsItem ? "KM" : (simpleViewModel.IsProduct ? "TP" : "")), LocationID = 1 };
             simpleViewModel.WarehouseReceipt = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = 6, Code = "KDH", Name = "KDH", LocationID = 2 };
 
             return simpleViewModel;
@@ -57,7 +57,7 @@ namespace TotalPortal.Areas.Inventories.Controllers
 
             ViewBag.WarehouseTaskID = (int)(viewDetailViewModel.IsMaterial ? GlobalEnums.WarehouseTaskID.MaterialAdjustment : (viewDetailViewModel.IsItem ? GlobalEnums.WarehouseTaskID.ItemAdjustment : (viewDetailViewModel.IsProduct ? GlobalEnums.WarehouseTaskID.ProductAdjustment : GlobalEnums.WarehouseTaskID.Unknown)));
             ViewBag.WarehouseTaskIDList = warehouseTaskIDList.ToString();
-        }   
+        }
 
         protected override PrintViewModel InitPrintViewModel(int? id, int? detailID)
         {
@@ -82,7 +82,7 @@ namespace TotalPortal.Areas.Inventories.Controllers
             : base(materialTransferOrderService, materialTransferOrderViewModelSelectListBuilder)
         {
         }
-    }  
+    }
 
     public class ItemTransferOrdersController : TransferOrdersController<TransferOrderDTO<TOOptionItem>, TransferOrderPrimitiveDTO<TOOptionItem>, TransferOrderDetailDTO, ItemTransferOrderViewModel>
     {
@@ -92,7 +92,7 @@ namespace TotalPortal.Areas.Inventories.Controllers
         }
     }
 
-   
+
     public class ProductTransferOrdersController : TransferOrdersController<TransferOrderDTO<TOOptionProduct>, TransferOrderPrimitiveDTO<TOOptionProduct>, TransferOrderDetailDTO, ProductTransferOrderViewModel>
     {
         public ProductTransferOrdersController(IProductTransferOrderService productTransferOrderService, IProductTransferOrderViewModelSelectListBuilder productTransferOrderViewModelSelectListBuilder)
@@ -100,5 +100,5 @@ namespace TotalPortal.Areas.Inventories.Controllers
         {
         }
     }
-   
+
 }

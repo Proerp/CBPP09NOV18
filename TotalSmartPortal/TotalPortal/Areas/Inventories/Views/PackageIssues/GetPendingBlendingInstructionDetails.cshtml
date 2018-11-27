@@ -8,7 +8,7 @@
     .Name("gridPendingBlendingInstructionDetails")
     .Columns(columns =>
     {
-        columns.Bound(c => c.CommodityCode).Title("Mã").Width(30).Hidden();
+        columns.Bound(c => c.CommodityCode).Title("Mã").Width(30);
         columns.Bound(c => c.GoodsReceiptReference).Title("Lô").Width(15);
         columns.Bound(c => c.GoodsReceiptEntryDate).Title("Ngày").Width(15).Format("{0:" + Settings.DateFormat + "}");
         columns.Bound(c => c.BatchEntryDate).Title("Ngày lô hàng").Width(15).Format("{0:" + Settings.DateFormat + "}");

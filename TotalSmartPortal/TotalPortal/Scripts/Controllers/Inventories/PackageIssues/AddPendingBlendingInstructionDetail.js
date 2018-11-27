@@ -2,21 +2,21 @@
     window.parent.$("#myWindow").data("kendoWindow").close();
 }
 
-function handleOKEvent(materialIssueGridDataSource, pendingProductionOrderDetailGridDataSource) {
-    if (materialIssueGridDataSource != undefined && pendingProductionOrderDetailGridDataSource != undefined) {
+function handleOKEvent(packageIssueGridDataSource, pendingProductionOrderDetailGridDataSource) {
+    if (packageIssueGridDataSource != undefined && pendingProductionOrderDetailGridDataSource != undefined) {
         var pendingProductionOrderDetailGridDataItems = pendingProductionOrderDetailGridDataSource.view();
-        var materialIssueJSON = materialIssueGridDataSource.data().toJSON();
+        var packageIssueJSON = packageIssueGridDataSource.data().toJSON();
         for (var i = 0; i < pendingProductionOrderDetailGridDataItems.length; i++) {
             if (pendingProductionOrderDetailGridDataItems[i].IsSelected === true && pendingProductionOrderDetailGridDataItems[i].GoodsReceiptDetailID != null)
-                _setParentInput(materialIssueJSON, pendingProductionOrderDetailGridDataItems[i]);
+                _setParentInput(packageIssueJSON, pendingProductionOrderDetailGridDataItems[i]);
         }
 
-        materialIssueJSON.push(new Object()); //Add a temporary empty row
+        packageIssueJSON.push(new Object()); //Add a temporary empty row
 
-        materialIssueGridDataSource.data(materialIssueJSON);
+        packageIssueGridDataSource.data(packageIssueJSON);
 
-        var rawData = materialIssueGridDataSource.data()
-        materialIssueGridDataSource.remove(rawData[rawData.length - 1]); //Remove the last row: this is the temporary empty row
+        var rawData = packageIssueGridDataSource.data()
+        packageIssueGridDataSource.remove(rawData[rawData.length - 1]); //Remove the last row: this is the temporary empty row
 
         cancelButton_Click();
     }
@@ -34,19 +34,19 @@ function handleOKEvent(materialIssueGridDataSource, pendingProductionOrderDetail
     //grid.dataSource.data(data); //set changed data as data of the Grid
 
 
-    function _setParentInput(materialIssueJSON, productionOrderGridDataItem) {
+    function _setParentInput(packageIssueJSON, productionOrderGridDataItem) {
 
-        //var dataRow = materialIssueJSON.add({});
+        //var dataRow = packageIssueJSON.add({});
 
         var dataRow = new Object();
 
         dataRow.LocationID = null;
         dataRow.EntryDate = null;
 
-        dataRow.MaterialIssueDetailID = 0;
-        dataRow.MaterialIssueID = window.parent.$("#MaterialIssueID").val();
+        dataRow.PackageIssueDetailID = 0;
+        dataRow.PackageIssueID = window.parent.$("#PackageIssueID").val();
 
-        dataRow.FirmOrderMaterialID = productionOrderGridDataItem.FirmOrderMaterialID;
+        dataRow.BlendingInstructionDetailID = productionOrderGridDataItem.BlendingInstructionDetailID;
 
         dataRow.CommodityID = productionOrderGridDataItem.CommodityID;
         dataRow.CommodityName = productionOrderGridDataItem.CommodityName;
@@ -59,7 +59,6 @@ function handleOKEvent(materialIssueGridDataSource, pendingProductionOrderDetail
         dataRow.GoodsReceiptReference = productionOrderGridDataItem.GoodsReceiptReference;
         dataRow.GoodsReceiptEntryDate = productionOrderGridDataItem.GoodsReceiptEntryDate;
 
-        dataRow.WorkshiftFirmOrderRemains = productionOrderGridDataItem.WorkshiftFirmOrderRemains;
         dataRow.QuantityAvailables = productionOrderGridDataItem.QuantityAvailables;
         dataRow.QuantityRemains = productionOrderGridDataItem.QuantityRemains;
         dataRow.Quantity = productionOrderGridDataItem.QuantityAvailables;
@@ -70,7 +69,7 @@ function handleOKEvent(materialIssueGridDataSource, pendingProductionOrderDetail
         dataRow.Remarks = null;
 
 
-        materialIssueJSON.push(dataRow);
+        packageIssueJSON.push(dataRow);
     }
 }
 

@@ -102,7 +102,7 @@
         
         
             tabStrip.Add().Text("Phiếu VCNB")
-                .Visible(Model.IsItem)
+                .Visible(Model.IsItem || Model.IsMaterial)
                 .Selected(Model.IsItem)
                 .Content(@<text>
                     @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetWarehouseTransfer.cshtml")
