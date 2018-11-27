@@ -37,6 +37,11 @@ namespace TotalModel.Models
         public decimal QuantityLoss { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
+        public int BinLocationID { get; set; }
+        public string SealCode { get; set; }
+        public string BatchCode { get; set; }
+        public string LabCode { get; set; }
+        public string Barcode { get; set; }
     
         public virtual BlendingInstructionDetail BlendingInstructionDetail { get; set; }
         public virtual BlendingInstruction BlendingInstruction { get; set; }
