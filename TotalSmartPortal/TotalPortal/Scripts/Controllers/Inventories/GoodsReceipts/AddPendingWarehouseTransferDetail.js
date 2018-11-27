@@ -92,10 +92,10 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetai
         dataRow.CommodityName = warehouseTransferGridDataItem.CommodityName;
         dataRow.CommodityCode = warehouseTransferGridDataItem.CommodityCode;
         dataRow.CommodityTypeID = warehouseTransferGridDataItem.CommodityTypeID;
-        dataRow.Barcode = null;
-        dataRow.BatchCode = null;
-        dataRow.SealCode = null;
-        dataRow.LabCode = null;
+        dataRow.Barcode = warehouseTransferGridDataItem.Barcode;
+        dataRow.BatchCode = warehouseTransferGridDataItem.BatchCode;
+        dataRow.SealCode = warehouseTransferGridDataItem.SealCode;
+        dataRow.LabCode = warehouseTransferGridDataItem.LabCode;
 
         dataRow.BinLocationID = 1;
         dataRow.BinLocationCode = "DEFAULT";

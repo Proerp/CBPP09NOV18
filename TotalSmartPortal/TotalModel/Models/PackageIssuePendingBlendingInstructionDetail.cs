@@ -30,5 +30,10 @@ namespace TotalModel.Models
         public int Quantity { get; set; }
         public Nullable<bool> IsSelected { get; set; }
         public Nullable<decimal> QuantityRemains { get; set; }
+        public string SealCode { get; set; }
+        public string BatchCode { get; set; }
+        public string LabCode { get; set; }
+        public string Barcode { get; set; }
+        public string BinLocationCode { get; set; }
     }
 }
