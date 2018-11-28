@@ -76,7 +76,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       SELECT          ISNULL(SemifinishedProductDetails.SemifinishedProductDetailID, 0) AS SemifinishedProductDetailID, ISNULL(SemifinishedProductDetails.SemifinishedProductID, 0) AS SemifinishedProductID, FirmOrderDetails.FirmOrderDetailID, FirmOrderDetails.PlannedOrderID, FirmOrderDetails.PlannedOrderDetailID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, FirmOrderDetails.PiecePerPack, " + "\r\n";
             queryString = queryString + "                       FirmOrderDetails.MoldQuantity, ROUND(FirmOrderDetails.Quantity - (FirmOrderDetails.QuantitySemifinished - FirmOrderDetails.QuantityShortage - FirmOrderDetails.QuantityFailure + FirmOrderDetails.QuantityExcess) + ISNULL(SemifinishedProductDetails.Quantity, 0), " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, ISNULL(SemifinishedProductDetails.Quantity, 0) AS Quantity, SemifinishedProductDetails.Remarks " + "\r\n";
-            
+
             queryString = queryString + "       FROM            FirmOrderDetails " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON FirmOrderDetails.FirmOrderID = @FirmOrderID AND FirmOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                       LEFT JOIN SemifinishedProductDetails ON SemifinishedProductDetails.SemifinishedProductID = @SemifinishedProductID AND FirmOrderDetails.FirmOrderDetailID = SemifinishedProductDetails.FirmOrderDetailID " + "\r\n";
@@ -126,7 +126,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN  " + "\r\n";
-            
+
             queryString = queryString + "       DECLARE @msg NVARCHAR(300) ";
 
 
@@ -256,17 +256,23 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void SemifinishedProductSheet()
         {
-            string queryString = " @WorkshiftID int, @SemifinishedProductID int " + "\r\n";
+            string queryString = " @WorkshiftID int, @SemifinishedProductID int, @FromDate DateTime, @ToDate DateTime " + "\r\n";
             //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       DECLARE         @LocalWorkshiftID int, @LocalSemifinishedProductID int     SET @LocalWorkshiftID = @WorkshiftID    SET @LocalSemifinishedProductID = @SemifinishedProductID" + "\r\n";
+            queryString = queryString + "       DECLARE         @LocalWorkshiftID int, @LocalSemifinishedProductID int, @LocalFromDate DateTime, @LocalToDate DateTime     " + "\r\n";
+            queryString = queryString + "       SET             @LocalWorkshiftID = @WorkshiftID    SET @LocalSemifinishedProductID = @SemifinishedProductID        SET @LocalFromDate = @FromDate      SET @LocalToDate = @ToDate " + "\r\n";
 
             queryString = queryString + "       IF  (@LocalWorkshiftID <> 0) " + "\r\n";
-            queryString = queryString + "           " + this.SemifinishedProductSheetSQL(true) + "\r\n";
+            queryString = queryString + "           " + this.SemifinishedProductSheetSQL(true, false) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-            queryString = queryString + "           " + this.SemifinishedProductSheetSQL(false) + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               IF  (@LocalSemifinishedProductID <> 0) " + "\r\n";
+            queryString = queryString + "                   " + this.SemifinishedProductSheetSQL(false, true) + "\r\n";
+            queryString = queryString + "               ELSE " + "\r\n";
+            queryString = queryString + "                   " + this.SemifinishedProductSheetSQL(false, false) + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
@@ -274,18 +280,19 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.totalSmartPortalEntities.CreateStoredProcedure("SemifinishedProductSheet", queryString);
         }
 
-        private string SemifinishedProductSheetSQL(bool workshiftID)
+        private string SemifinishedProductSheetSQL(bool workshiftID, bool semifinishedProductID)
         {
             string queryString = " " + "\r\n";
 
             queryString = queryString + "       SELECT          SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.Reference, SemifinishedProducts.EntryDate, Workshifts.Code AS WorkshiftCode, Workshifts.EntryDate AS WorkshiftEntryDate, CrucialWorkers.Name AS CrucialWorkerName, CrucialWorkers.LastName AS CrucialWorkerLastName, ProductionLines.Code AS ProductionLineCode, " + "\r\n";
-            queryString = queryString + "                       FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, Customers.Name AS CustomerName, Materials.Code AS MaterialCode, MaterialClasses.Code AS MaterialClassCode, MaterialIssueDetails.BatchEntryDate, FirmOrderDetails.Quantity AS FirmOrderQuantity, MaterialIssueDetails.Quantity AS MaterialQuantity, MaterialIssueDetails.Code AS MaterialIssueCode, " + "\r\n";
-            queryString = queryString + "                       SemifinishedProducts.StartDate, SemifinishedProducts.StopDate, SemifinishedProducts.StartSequenceNo, SemifinishedProducts.StopSequenceNo, SemifinishedProducts.FoilCounts, SemifinishedProducts.FoilUnitCounts, SemifinishedProducts.FoilUnitWeights, SemifinishedProducts.FoilWeights, SemifinishedProducts.FailureWeights, Commodities.Code, Commodities.Name, SemifinishedProductDetails.Quantity, SemifinishedProductDetails.MoldQuantity, SemifinishedProductDetails.PiecePerPack, ISNULL(FirmOrders.Description, '') + ISNULL(' [ĐHCK: ' + SemifinishedProducts.Description + ']', '') AS Description " + "\r\n";
+            queryString = queryString + "                       FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.DeliveryDate, Customers.Name AS CustomerName, Materials.Code AS MaterialCode, MaterialClasses.Code AS MaterialClassCode, MaterialIssueDetails.BatchEntryDate, FirmOrderDetails.Quantity AS FirmOrderQuantity, FirmOrderDetails.QuantitySemifinished - FirmOrderDetails.QuantityShortage - FirmOrderDetails.QuantityFailure + FirmOrderDetails.QuantityExcess AS QuantityProduced, MaterialIssueSummaries.ItemQuantity, MaterialIssueSummaries.ItemQuantitySemifinished, MaterialIssueSummaries.ItemQuantityFailure, MaterialIssueSummaries.ItemQuantityReceipted, MaterialIssueSummaries.ItemQuantityLoss, " + "\r\n"; //ACCUMMULATED
+            queryString = queryString + "                       MaterialIssueDetails.Quantity AS MaterialQuantity, MaterialIssueDetails.Code AS MaterialIssueCode, SemifinishedProducts.StartDate, SemifinishedProducts.StopDate, SemifinishedProducts.StartSequenceNo, SemifinishedProducts.StopSequenceNo, SemifinishedProducts.FoilCounts, SemifinishedProducts.FoilUnitCounts, SemifinishedProducts.FoilUnitWeights, SemifinishedProducts.FoilWeights, SemifinishedProducts.FailureWeights, Commodities.Code, Commodities.Name, Molds.Code AS MoldCode, SemifinishedProductDetails.Quantity, SemifinishedProductDetails.MoldQuantity, SemifinishedProductDetails.PiecePerPack, ISNULL(FirmOrders.Description, '') + ISNULL(' [ĐHCK: ' + SemifinishedProducts.Description + ']', '') AS Description " + "\r\n";
 
             queryString = queryString + "       FROM            SemifinishedProducts " + "\r\n";
-            queryString = queryString + "                       INNER JOIN SemifinishedProductDetails ON " + (workshiftID ? "SemifinishedProducts.WorkshiftID = @LocalWorkshiftID" : "SemifinishedProducts.SemifinishedProductID = @LocalSemifinishedProductID") + " AND SemifinishedProducts.SemifinishedProductID = SemifinishedProductDetails.SemifinishedProductID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN SemifinishedProductDetails ON " + this.SemifinishedProductSheetOption(workshiftID, semifinishedProductID) + " AND SemifinishedProducts.SemifinishedProductID = SemifinishedProductDetails.SemifinishedProductID " + "\r\n";
             queryString = queryString + "                       INNER JOIN FirmOrders ON SemifinishedProducts.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
             queryString = queryString + "                       INNER JOIN FirmOrderDetails ON SemifinishedProductDetails.FirmOrderDetailID = FirmOrderDetails.FirmOrderDetailID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Molds ON FirmOrderDetails.MoldID = Molds.MoldID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON SemifinishedProducts.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN MaterialIssueDetails ON SemifinishedProducts.MaterialIssueDetailID = MaterialIssueDetails.MaterialIssueDetailID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities AS Materials ON MaterialIssueDetails.CommodityID = Materials.CommodityID " + "\r\n";
@@ -295,10 +302,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                       INNER JOIN ProductionLines ON SemifinishedProducts.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON SemifinishedProductDetails.CommodityID = Commodities.CommodityID " + "\r\n";
 
+            queryString = queryString + "                       LEFT JOIN  (SELECT FirmOrderID, MAX(EntryDate) AS ItemEntryDate, MAX(CommodityID) AS ItemID, SUM(Quantity) AS ItemQuantity, SUM(QuantitySemifinished) AS ItemQuantitySemifinished, SUM(QuantityFailure) AS ItemQuantityFailure, SUM(QuantityReceipted) AS ItemQuantityReceipted, SUM(QuantityLoss) AS ItemQuantityLoss FROM MaterialIssueDetails WHERE FirmOrderID IN (SELECT FirmOrderID FROM SemifinishedProducts WHERE " + this.SemifinishedProductSheetOption(workshiftID, semifinishedProductID) + ") GROUP BY FirmOrderID) AS MaterialIssueSummaries ON FirmOrderDetails.FirmOrderID = MaterialIssueSummaries.FirmOrderID " + "\r\n";
+
             queryString = queryString + "       ORDER BY        SemifinishedProductDetails.SemifinishedProductDetailID " + "\r\n";
 
             return queryString;
         }
+
+        private string SemifinishedProductSheetOption(bool workshiftID, bool semifinishedProductID) { return (workshiftID ? "SemifinishedProducts.WorkshiftID = @LocalWorkshiftID" : (semifinishedProductID ? "SemifinishedProducts.SemifinishedProductID = @LocalSemifinishedProductID" : "SemifinishedProducts.EntryDate >= @LocalFromDate AND SemifinishedProducts.EntryDate <= @LocalToDate")); }
 
     }
 }
