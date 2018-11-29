@@ -308,18 +308,25 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @WorkshiftID int, @FinishedProductID int " + "\r\n";
+            queryString = " @WorkshiftID int, @FinishedProductID int, @FromDate DateTime, @ToDate DateTime " + "\r\n";
             //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
             queryString = queryString + "       SET NOCOUNT ON" + "\r\n";
 
-            queryString = queryString + "       DECLARE     @LocalWorkshiftID int, @LocalFinishedProductID int      SET @LocalWorkshiftID = @WorkshiftID    SET @LocalFinishedProductID = @FinishedProductID" + "\r\n";
+            queryString = queryString + "       DECLARE     @LocalWorkshiftID int, @LocalFinishedProductID int, @LocalFromDate DateTime, @LocalToDate DateTime      " + "\r\n";
+            queryString = queryString + "       SET         @LocalWorkshiftID = @WorkshiftID    SET @LocalFinishedProductID = @FinishedProductID        SET @LocalFromDate = @FromDate      SET @LocalToDate = @ToDate " + "\r\n";
 
             queryString = queryString + "       IF  (@LocalWorkshiftID <> 0) " + "\r\n";
-            queryString = queryString + "           " + this.FinishedProductSheetSQL(true) + "\r\n";
+            queryString = queryString + "           " + this.FinishedProductSheetSQL(true, false) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-            queryString = queryString + "           " + this.FinishedProductSheetSQL(false) + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               IF  (@LocalFinishedProductID <> 0) " + "\r\n";
+            queryString = queryString + "                   " + this.FinishedProductSheetSQL(false, true) + "\r\n";
+            queryString = queryString + "               ELSE " + "\r\n";
+            queryString = queryString + "                   " + this.FinishedProductSheetSQL(false, false) + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
+
 
             queryString = queryString + "       SET NOCOUNT OFF" + "\r\n";
             queryString = queryString + "    END " + "\r\n";
@@ -327,28 +334,34 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.totalSmartPortalEntities.CreateStoredProcedure("FinishedProductSheet", queryString);
         }
 
-        private string FinishedProductSheetSQL(bool workshiftID)
+        private string FinishedProductSheetSQL(bool workshiftID, bool finishedProductID)
         {
             string queryString = " " + "\r\n";
-            queryString = queryString + "       SELECT      FinishedProducts.FinishedProductID, FinishedProductPackages.FinishedProductPackageID, FinishedProducts.EntryDate, FinishedProducts.Reference, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, Customers.Name AS CustomerName, " + "\r\n";
-            queryString = queryString + "                   Commodities.Code, Commodities.Name, CommodityClasses.Code AS CommodityClassCode, FirmOrderDetails.FirmOrderQuantity, FinishedProductPackages.PiecePerPack, FinishedProductPackages.Quantity, FinishedProductPackages.Packages, FinishedProductPackages.OddPackages, FinishedProductPackages.QuantityFailure, FinishedProductPackages.Swarfs, CrucialWorkers.Name AS CrucialWorkerName, CrucialWorkers.LastName AS CrucialWorkerLastName, FinishedProducts.Description " + "\r\n";
+            queryString = queryString + "       SELECT      FinishedProducts.FinishedProductID, FinishedProductPackages.FinishedProductPackageID, FinishedProducts.EntryDate, FinishedProducts.Reference, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.DeliveryDate, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "                   Commodities.Code, Commodities.Name, CommodityClasses.Code AS CommodityClassCode, Molds.Code AS MoldCode, FirmOrderDetails.FirmOrderQuantity, FinishedProductSummaries.FirmOrderQuantityReceipted, FirmOrderDetails.FirmOrderQuantity - FinishedProductSummaries.FirmOrderQuantityReceipted AS FirmOrderQuantityRemains, FinishedProductSummaries.FinishedQuantityRemains + ISNULL(SemifinishedProductSummaries.SemifinishedQuantityRemains, 0) AS FinishedQuantityRemains, FinishedProductPackages.PiecePerPack, FinishedProductPackages.Quantity, FinishedProductPackages.Packages, FinishedProductPackages.OddPackages, FinishedProductPackages.QuantityFailure, FinishedProductPackages.Swarfs, CrucialWorkers.Name AS CrucialWorkerName, CrucialWorkers.LastName AS CrucialWorkerLastName, FinishedProducts.Description " + "\r\n";
 
             queryString = queryString + "       FROM        FinishedProducts " + "\r\n";
-            queryString = queryString + "                   INNER JOIN FinishedProductPackages ON " + (workshiftID ? "FinishedProducts.WorkshiftID = @LocalWorkshiftID" : "FinishedProducts.FinishedProductID = @LocalFinishedProductID") + " AND FinishedProducts.FinishedProductID = FinishedProductPackages.FinishedProductID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN FinishedProductPackages ON " + this.FinishedProductSheetOption(workshiftID, finishedProductID) + " AND FinishedProducts.FinishedProductID = FinishedProductPackages.FinishedProductID " + "\r\n";
             queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
 
-            queryString = queryString + "                   INNER JOIN (SELECT FirmOrderID, CommodityID, SUM(Quantity) AS FirmOrderQuantity FROM FirmOrderDetails WHERE FirmOrderID IN (SELECT DISTINCT FirmOrderID FROM FinishedProducts WHERE " + (workshiftID ? "WorkshiftID = @LocalWorkshiftID" : "FinishedProductID = @LocalFinishedProductID") + ") GROUP BY FirmOrderID, CommodityID) FirmOrderDetails ON FinishedProductPackages.FirmOrderID = FirmOrderDetails.FirmOrderID AND FinishedProductPackages.CommodityID = FirmOrderDetails.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN (SELECT FirmOrderID, CommodityID, MIN(MoldID) AS MoldID, SUM(Quantity) AS FirmOrderQuantity FROM FirmOrderDetails WHERE FirmOrderID IN (SELECT DISTINCT FirmOrderID FROM FinishedProducts WHERE " + this.FinishedProductSheetOption(workshiftID, finishedProductID) + ") GROUP BY FirmOrderID, CommodityID) FirmOrderDetails ON FinishedProductPackages.FirmOrderID = FirmOrderDetails.FirmOrderID AND FinishedProductPackages.CommodityID = FirmOrderDetails.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN (SELECT FirmOrderID, CommodityID, SUM(QuantityReceipted) AS FirmOrderQuantityReceipted, SUM(Quantity - QuantityReceipted) AS FinishedQuantityRemains FROM FinishedProductPackages WHERE FirmOrderID IN (SELECT DISTINCT FirmOrderID FROM FinishedProducts WHERE " + this.FinishedProductSheetOption(workshiftID, finishedProductID) + ") GROUP BY FirmOrderID, CommodityID) FinishedProductSummaries ON FinishedProductPackages.FirmOrderID = FinishedProductSummaries.FirmOrderID AND FinishedProductPackages.CommodityID = FinishedProductSummaries.CommodityID " + "\r\n";
 
+            queryString = queryString + "                   INNER JOIN Molds ON FirmOrderDetails.MoldID = Molds.MoldID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON FinishedProductPackages.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON FinishedProductPackages.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN CommodityClasses ON Commodities.CommodityClassID = CommodityClasses.CommodityClassID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Workshifts ON FinishedProducts.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Employees AS CrucialWorkers ON FinishedProducts.CrucialWorkerID = CrucialWorkers.EmployeeID " + "\r\n";
 
+            queryString = queryString + "                   LEFT JOIN (SELECT FirmOrderID, CommodityID, SUM(Quantity - QuantityFinished) AS SemifinishedQuantityRemains FROM SemifinishedProductDetails WHERE FirmOrderID IN (SELECT DISTINCT FirmOrderID FROM FinishedProducts WHERE " + this.FinishedProductSheetOption(workshiftID, finishedProductID) + ") AND ROUND(Quantity - QuantityFinished, " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY FirmOrderID, CommodityID) SemifinishedProductSummaries ON FinishedProductPackages.FirmOrderID = SemifinishedProductSummaries.FirmOrderID AND FinishedProductPackages.CommodityID = SemifinishedProductSummaries.CommodityID " + "\r\n";
+
             queryString = queryString + "       ORDER BY    FirmOrders.Code, Commodities.Name " + "\r\n";
             
             return queryString;
         }
+
+        private string FinishedProductSheetOption(bool workshiftID, bool finishedProductID) { return (workshiftID ? "FinishedProducts.WorkshiftID = @LocalWorkshiftID" : (finishedProductID ? "FinishedProducts.FinishedProductID = @LocalFinishedProductID" : "FinishedProducts.EntryDate >= @LocalFromDate AND FinishedProducts.EntryDate <= @LocalToDate")); }
 
         #endregion
     }
