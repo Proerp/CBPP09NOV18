@@ -38,7 +38,13 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<PurchaseRequisitionViewDetail, PurchaseRequisitionDetailDTO>();
                 cfg.CreateMap<PurchaseRequisitionDetailDTO, PurchaseRequisitionDetail>();
 
-                
+
+                cfg.CreateMap<PurchaseOrder, PurchaseOrderViewModel>();
+                cfg.CreateMap<PurchaseOrder, PurchaseOrderDTO>();
+                cfg.CreateMap<PurchaseOrderPrimitiveDTO, PurchaseOrder>();
+                cfg.CreateMap<PurchaseOrderViewDetail, PurchaseOrderDetailDTO>();
+                cfg.CreateMap<PurchaseOrderDetailDTO, PurchaseOrderDetail>();
+
                 
 
 

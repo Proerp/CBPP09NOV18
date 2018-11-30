@@ -1,0 +1,133 @@
+﻿@using TotalPortal.Configuration
+
+<div id="popupWindow"></div>
+
+<div>
+    @(Html.Kendo().Grid<TotalModel.Models.PurchaseRequisitionIndex>()
+            .Name("kendoGridIndex")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.PurchaseRequisitionID).DisplayNameTitle().Hidden();                
+                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(90).Filterable(false);
+
+                columns.Bound(p => p.Reference).Title("#").Width(10).Filterable(false).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseRequisitions", action = "Edit" }) + "/#= PurchaseRequisitionID #'>#=Reference#</a>");
+                columns.Bound(p => p.Code).Title("Số ĐH").Width(10).Filterable(false);
+                columns.Bound(p => p.CustomerName).Title("Nhà cung cấp").Width(180);
+                columns.Bound(p => p.DeliveryDate).Title("Ngày giao hàng").Format("{0:dd/MM/yyyy}").Width(90);
+                columns.Bound(p => p.Purposes).Title("Mục đích").Width(120);
+                columns.Bound(p => p.Description).Title("Diễn giải").Width(120);
+                columns.Bound(p => p.VoidTypeName).Title("Hủy đh").Width(80);
+
+                columns.Bound(p => p.TotalQuantity).Title("Đặt hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.TotalQuantityReceipted).Title("Xuất kho").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(92)
+                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseRequisitions", action = "Void" }) + "/#= PurchaseRequisitionID #'><span class='k-icon k-i-columns'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseRequisitions", action = "Delete" }) + "/#= PurchaseRequisitionID #'><span class='k-icon k-delete'></span></a>");
+            })
+            .ToolBar(toolbar =>
+            {
+                toolbar.Template(@<text>                    
+                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" />  Lập phiếu đề nghị mua hàng </button>
+                    <div class="toolbar" style="float: right;">
+                        <label>Nhập số đơn hàng, tên khách hàng, mục đích hoặc diễn giải để tìm</label>
+                        <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                    </div>
+                </text>);
+            })
+                    .Pageable()
+                    .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))                    
+                    .Selectable()
+                    .Sortable()
+                    .Events(e =>
+                    {
+                        e.DataBound("hightLightSelectedRow");
+                    })
+                    .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .Read(read => read.Action("GetPurchaseRequisitionIndexes", "PurchaseRequisitionAPIs", new { area = "Purchases" }))
+                        .Sort(sort =>
+                            {
+                                sort.Add(p => p.EntryDate).Descending();
+                                sort.Add(p => p.PurchaseRequisitionID).Descending();
+                            })
+                        .PageSize(20)
+                        .Model(model =>
+                        {
+                            model.Id(x => x.PurchaseRequisitionID);
+                            model.Field(m => m.PurchaseRequisitionID).DefaultValue(0);
+                        })
+                        .ServerOperation(true)
+                        .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
+                        .Aggregates(a => a.Add(x => x.TotalQuantityReceipted).Sum())
+                        )
+                    .HtmlAttributes(new { @class = "grid-class" }))
+</div>
+
+
+
+<script type="text/javascript">
+    function hightLightSelectedRow(e) {
+        require(["kindexGrid"], function (kindexGrid) {
+            var kindexGridInstance = new kindexGrid("kendoGridIndex");
+            kindexGridInstance.setSelectedRow("PurchaseRequisitionID", '@ViewBag.SelectedEntityID');
+        });
+    }
+
+    function createWizard() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "PurchaseRequisitions")", "Chọn khách hàng", "@Settings.PopupWidth", "@Settings.PopupHeightSmall");
+        });
+    }
+
+
+    decoratingKindex = function (idx, elem) {
+
+        if (elem.Approved == null || elem.Approved == false) {
+            $('tr[data-uid="' + elem.uid + '"]').addClass("NotApproved");
+        }
+        else
+        {
+            if (elem.InActive != null && elem.InActive == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus");
+            }
+
+            if (elem.InActivePartial != null && elem.InActivePartial == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus1");
+            }
+        }
+
+    }
+
+
+
+
+
+
+    function indexFilterText_KeyUp() {
+        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+        if (indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "Code", operator: "contains", value: indexFilterText },
+                    { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "Purposes", operator: "contains", value: indexFilterText },
+                    { field: "Description", operator: "contains", value: indexFilterText },
+                    { field: "VoidTypeName", operator: "contains", value: indexFilterText }                    
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+</script>
+
+
+

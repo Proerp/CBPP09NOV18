@@ -117,6 +117,12 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IPurchaseRequisitionAPIRepository>().To<PurchaseRequisitionAPIRepository>();
                 kernel.Bind<IPurchaseRequisitionViewModelSelectListBuilder>().To<PurchaseRequisitionViewModelSelectListBuilder>();
 
+                kernel.Bind<IPurchaseOrderService>().To<PurchaseOrderService>();
+                kernel.Bind<IPurchaseOrderRepository>().To<PurchaseOrderRepository>();
+                kernel.Bind<IPurchaseOrderAPIRepository>().To<PurchaseOrderAPIRepository>();
+                kernel.Bind<IPurchaseOrderViewModelSelectListBuilder>().To<PurchaseOrderViewModelSelectListBuilder>();
+
+
                 kernel.Bind<IGoodsReceiptRepository>().To<GoodsReceiptRepository>();
                 kernel.Bind<IGoodsReceiptAPIRepository>().To<GoodsReceiptAPIRepository>();
 

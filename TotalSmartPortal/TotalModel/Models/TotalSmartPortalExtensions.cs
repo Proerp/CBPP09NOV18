@@ -54,6 +54,18 @@ namespace TotalModel.Models
     }
 
 
+    public partial class PurchaseOrder : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<PurchaseOrderDetail>
+    {
+        public int GetID() { return this.PurchaseOrderID; }
+
+        public ICollection<PurchaseOrderDetail> GetDetails() { return this.PurchaseOrderDetails; }
+    }
+
+
+    public partial class PurchaseOrderDetail : IPrimitiveEntity, IHelperEntryDate, IHelperCommodityID, IHelperCommodityTypeID
+    {
+        public int GetID() { return this.PurchaseOrderDetailID; }
+    }
 
 
 
