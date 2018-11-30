@@ -14,7 +14,7 @@ namespace TotalBase
                 case GlobalEnums.NmvnTaskID.PurchaseRequisition:
                     return "PR";
                 case GlobalEnums.NmvnTaskID.PurchaseOrder:
-                    return "D";
+                    return "PO";
                 case GlobalEnums.NmvnTaskID.PurchaseInvoice:
                     return "H";
 

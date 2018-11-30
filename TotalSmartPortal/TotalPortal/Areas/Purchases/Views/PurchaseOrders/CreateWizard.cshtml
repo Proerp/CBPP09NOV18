@@ -1,7 +1,7 @@
 ﻿@using TotalPortal.Configuration;
 
 @using TotalDTO.Inventories
-@model TotalPortal.Areas.Purchases.ViewModels.PurchaseRequisitionViewModel
+@model TotalPortal.Areas.Purchases.ViewModels.PurchaseOrderViewModel
 
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
@@ -18,7 +18,7 @@
                       
     </div> <div class="background-bar" style="height: 45px;">
         <div class="popup-button-bar">
-            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "PurchaseRequisitions")" formtarget="_top" style="display:none" /> 
+            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "PurchaseOrders")" formtarget="_top" style="display:none" /> 
 
             <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Next </button>
             <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Exit </button>
