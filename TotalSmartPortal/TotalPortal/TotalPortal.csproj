@@ -338,6 +338,7 @@
     <Compile Include="Areas\Inventories\Builders\WarehouseTransferViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Inventories\Controllers\Apis\GoodsReceiptsApiController.cs" />
     <Compile Include="Areas\Inventories\Controllers\Apis\GRController.cs" />
+    <Compile Include="Areas\Inventories\Controllers\Apis\PackageIssuesApiController.cs" />
     <Compile Include="Areas\Inventories\Controllers\GoodsDeliveriesController.cs" />
     <Compile Include="Areas\Inventories\Controllers\GoodsIssuesController.cs" />
     <Compile Include="Areas\Inventories\Controllers\GoodsReceiptsController.cs" />
