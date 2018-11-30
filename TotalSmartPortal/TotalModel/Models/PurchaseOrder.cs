@@ -12,28 +12,22 @@ namespace TotalModel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class GoodsArrival
+    public partial class PurchaseOrder
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public GoodsArrival()
+        public PurchaseOrder()
         {
-            this.GoodsReceipts = new HashSet<GoodsReceipt>();
-            this.GoodsArrivalDetails = new HashSet<GoodsArrivalDetail>();
+            this.GoodsArrivals = new HashSet<GoodsArrival>();
+            this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
         }
     
-        public int GoodsArrivalID { get; set; }
+        public int PurchaseOrderID { get; set; }
         public System.DateTime EntryDate { get; set; }
         public string Reference { get; set; }
         public string Code { get; set; }
-        public Nullable<System.DateTime> InvoiceDate { get; set; }
-        public bool HasPurchaseOrder { get; set; }
-        public Nullable<int> PurchaseOrderID { get; set; }
-        public string PurchaseOrderCodes { get; set; }
-        public string PurchaseOrderReferences { get; set; }
         public int CustomerID { get; set; }
-        public int TransporterID { get; set; }
-        public int WarehouseID { get; set; }
-        public int SalespersonID { get; set; }
+        public Nullable<System.DateTime> DeliveryDate { get; set; }
+        public string Purposes { get; set; }
         public int UserID { get; set; }
         public int PreparedPersonID { get; set; }
         public int OrganizationalUnitID { get; set; }
@@ -53,15 +47,11 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> InActiveDate { get; set; }
     
         public virtual Customer Customer { get; set; }
-        public virtual Customer Customer1 { get; set; }
-        public virtual Employee Employee { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsArrival> GoodsArrivals { get; set; }
         public virtual Location Location { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
         public virtual VoidType VoidType { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
-        public virtual PurchaseOrder PurchaseOrder { get; set; }
     }
 }

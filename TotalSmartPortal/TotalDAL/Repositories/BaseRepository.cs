@@ -381,6 +381,11 @@ namespace TotalDAL.Repositories
 
             //return;
 
+            Helpers.SqlProgrammability.Purchases.PurchaseOrder purchaseOrder = new Helpers.SqlProgrammability.Purchases.PurchaseOrder(totalSmartPortalEntities);
+            purchaseOrder.RestoreProcedure();
+
+            //return;
+
             Helpers.SqlProgrammability.Purchases.PurchaseRequisition purchaseRequisition = new Helpers.SqlProgrammability.Purchases.PurchaseRequisition(totalSmartPortalEntities);
             purchaseRequisition.RestoreProcedure();
 

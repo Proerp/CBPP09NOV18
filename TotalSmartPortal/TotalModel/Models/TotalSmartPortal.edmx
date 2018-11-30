@@ -1621,6 +1621,56 @@
           <Property Name="InActive" Type="bit" Nullable="false" />
           <Property Name="InActiveDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="PurchaseOrderDetails">
+          <Key>
+            <PropertyRef Name="PurchaseOrderDetailID" />
+          </Key>
+          <Property Name="PurchaseOrderDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PurchaseOrderID" Type="int" Nullable="false" />
+          <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="CommodityID" Type="int" Nullable="false" />
+          <Property Name="CommodityTypeID" Type="int" Nullable="false" />
+          <Property Name="DeliveryDate" Type="datetime" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="QuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="VoidTypeID" Type="int" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="InActive" Type="bit" Nullable="false" />
+          <Property Name="InActivePartial" Type="bit" Nullable="false" />
+          <Property Name="InActivePartialDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="PurchaseOrders">
+          <Key>
+            <PropertyRef Name="PurchaseOrderID" />
+          </Key>
+          <Property Name="PurchaseOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="10" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="DeliveryDate" Type="datetime" />
+          <Property Name="Purposes" Type="nvarchar" MaxLength="100" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="PreparedPersonID" Type="int" Nullable="false" />
+          <Property Name="OrganizationalUnitID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="ApproverID" Type="int" Nullable="false" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalQuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="EditedDate" Type="datetime" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="ApprovedDate" Type="datetime" />
+          <Property Name="VoidTypeID" Type="int" />
+          <Property Name="InActive" Type="bit" Nullable="false" />
+          <Property Name="InActivePartial" Type="bit" Nullable="false" />
+          <Property Name="InActiveDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="PurchaseRequisitionDetails">
           <Key>
             <PropertyRef Name="PurchaseRequisitionDetailID" />
@@ -3519,6 +3569,18 @@ warning 6035: The relationship 'FK_FirmOrders_AspNetUsers2' has columns that are
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GoodsArrivalDetails_PurchaseOrderDetails">
+          <End Role="PurchaseOrderDetails" Type="Self.PurchaseOrderDetails" Multiplicity="0..1" />
+          <End Role="GoodsArrivalDetails" Type="Self.GoodsArrivalDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrderDetails">
+              <PropertyRef Name="PurchaseOrderDetailID" />
+            </Principal>
+            <Dependent Role="GoodsArrivalDetails">
+              <PropertyRef Name="PurchaseOrderDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_GoodsArrivalDetails_VoidTypes">
           <End Role="VoidTypes" Type="Self.VoidTypes" Multiplicity="0..1" />
           <End Role="GoodsArrivalDetails" Type="Self.GoodsArrivalDetails" Multiplicity="*" />
@@ -3585,6 +3647,18 @@ warning 6035: The relationship 'FK_GoodsArrivals_AspNetUsers2' has columns that 
             </Principal>
             <Dependent Role="GoodsArrivals">
               <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsArrivals_PurchaseOrders">
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="0..1" />
+          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrders">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Principal>
+            <Dependent Role="GoodsArrivals">
+              <PropertyRef Name="PurchaseOrderID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4923,6 +4997,87 @@ warning 6035: The relationship 'FK_ProductionOrders_AspNetUsers2' has columns th
             </Principal>
             <Dependent Role="Promotions">
               <PropertyRef Name="CommodityBrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderDetails_Commodities">
+          <End Role="Commodities" Type="Self.Commodities" Multiplicity="1" />
+          <End Role="PurchaseOrderDetails" Type="Self.PurchaseOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodities">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetails">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderDetails_PurchaseOrders">
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="1" />
+          <End Role="PurchaseOrderDetails" Type="Self.PurchaseOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrders">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetails">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderDetails_VoidTypes">
+          <End Role="VoidTypes" Type="Self.VoidTypes" Multiplicity="0..1" />
+          <End Role="PurchaseOrderDetails" Type="Self.PurchaseOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoidTypes">
+              <PropertyRef Name="VoidTypeID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetails">
+              <PropertyRef Name="VoidTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_PurchaseOrders_AspNetUsers' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_PurchaseOrders_AspNetUsers" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_PurchaseOrders_AspNetUsers1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_PurchaseOrders_AspNetUsers1" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_PurchaseOrders_AspNetUsers2' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_PurchaseOrders_AspNetUsers2" />-->
+        <Association Name="FK_PurchaseOrders_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrders_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrders_VoidTypes">
+          <End Role="VoidTypes" Type="Self.VoidTypes" Multiplicity="0..1" />
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoidTypes">
+              <PropertyRef Name="VoidTypeID" />
+            </Principal>
+            <Dependent Role="PurchaseOrders">
+              <PropertyRef Name="VoidTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6766,6 +6921,14 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="GetPurchaseOrderIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
+          <Parameter Name="FromDate" Type="datetime" Mode="In" />
+          <Parameter Name="ToDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="GetPurchaseOrderViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PurchaseOrderID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetPurchaseRequisitionIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
@@ -7143,6 +7306,37 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
         <Function Name="PromotionVoidable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
+        <Function Name="PurchaseOrderApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PurchaseOrderEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PurchaseOrderPostSaveValidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PurchaseOrderSaveRelative" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="SaveRelativeOption" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PurchaseOrderToggleApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="Approved" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="PurchaseOrderToggleVoid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="InActive" Type="bit" Mode="In" />
+          <Parameter Name="VoidTypeID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PurchaseOrderToggleVoidDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="EntityDetailID" Type="int" Mode="In" />
+          <Parameter Name="InActivePartial" Type="bit" Mode="In" />
+          <Parameter Name="VoidTypeID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PurchaseOrderVoidable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
         <Function Name="PurchaseRequisitionApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
@@ -7466,6 +7660,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySet Name="ProductionOrders" EntityType="Self.ProductionOrders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PromotionCommodityCodeParts" EntityType="Self.PromotionCommodityCodeParts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Promotions" EntityType="Self.Promotions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrderDetails" EntityType="Self.PurchaseOrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PurchaseOrders" EntityType="Self.PurchaseOrders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseRequisitionDetails" EntityType="Self.PurchaseRequisitionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PurchaseRequisitions" EntityType="Self.PurchaseRequisitions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReceiptDetails" EntityType="Self.ReceiptDetails" Schema="dbo" store:Type="Tables" />
@@ -7873,6 +8069,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
             <End Role="GoodsArrivalDetails" EntitySet="GoodsArrivalDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivalDetails_PurchaseOrderDetails" Association="Self.FK_GoodsArrivalDetails_PurchaseOrderDetails">
+            <End Role="PurchaseOrderDetails" EntitySet="PurchaseOrderDetails" />
+            <End Role="GoodsArrivalDetails" EntitySet="GoodsArrivalDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_GoodsArrivalDetails_VoidTypes" Association="Self.FK_GoodsArrivalDetails_VoidTypes">
             <End Role="VoidTypes" EntitySet="VoidTypes" />
             <End Role="GoodsArrivalDetails" EntitySet="GoodsArrivalDetails" />
@@ -7891,6 +8091,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           </AssociationSet>
           <AssociationSet Name="FK_GoodsArrivals_Locations" Association="Self.FK_GoodsArrivals_Locations">
             <End Role="Locations" EntitySet="Locations" />
+            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivals_PurchaseOrders" Association="Self.FK_GoodsArrivals_PurchaseOrders">
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
             <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
           </AssociationSet>
           <AssociationSet Name="FK_GoodsArrivals_VoidTypes" Association="Self.FK_GoodsArrivals_VoidTypes">
@@ -8316,6 +8520,30 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <AssociationSet Name="FK_Promotions_CommodityBrands" Association="Self.FK_Promotions_CommodityBrands">
             <End Role="CommodityBrands" EntitySet="CommodityBrands" />
             <End Role="Promotions" EntitySet="Promotions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetails_Commodities" Association="Self.FK_PurchaseOrderDetails_Commodities">
+            <End Role="Commodities" EntitySet="Commodities" />
+            <End Role="PurchaseOrderDetails" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetails_PurchaseOrders" Association="Self.FK_PurchaseOrderDetails_PurchaseOrders">
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderDetails" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetails_VoidTypes" Association="Self.FK_PurchaseOrderDetails_VoidTypes">
+            <End Role="VoidTypes" EntitySet="VoidTypes" />
+            <End Role="PurchaseOrderDetails" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrders_Customers" Association="Self.FK_PurchaseOrders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrders_Locations" Association="Self.FK_PurchaseOrders_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrders_VoidTypes" Association="Self.FK_PurchaseOrders_VoidTypes">
+            <End Role="VoidTypes" EntitySet="VoidTypes" />
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
           </AssociationSet>
           <AssociationSet Name="FK_PurchaseRequisitionDetails_Commodities" Association="Self.FK_PurchaseRequisitionDetails_Commodities">
             <End Role="Commodities" EntitySet="Commodities" />
@@ -9030,6 +9258,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="FirmOrderDetails" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Customers" FromRole="Customer" ToRole="FirmOrderDetail" />
           <NavigationProperty Name="GoodsArrivals" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_Customers" FromRole="Customer" ToRole="GoodsArrival" />
           <NavigationProperty Name="GoodsArrivals1" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_Customers1" FromRole="Customer" ToRole="GoodsArrival" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_Customers" FromRole="Customer" ToRole="PurchaseOrder" />
         </EntityType>
         <EntityType Name="CustomerType">
           <Key>
@@ -9510,6 +9739,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsArrivals" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_Locations" FromRole="Location" ToRole="GoodsArrival" />
           <NavigationProperty Name="BlendingInstructions" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_Locations" FromRole="Location" ToRole="BlendingInstruction" />
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Locations" FromRole="Location" ToRole="PackageIssue" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_Locations" FromRole="Location" ToRole="PurchaseOrder" />
         </EntityType>
         <EntityType Name="Module">
           <Key>
@@ -10007,6 +10237,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsArrivals" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_VoidTypes" FromRole="VoidType" ToRole="GoodsArrival" />
           <NavigationProperty Name="GoodsArrivalDetails" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_VoidTypes" FromRole="VoidType" ToRole="GoodsArrivalDetail" />
           <NavigationProperty Name="BlendingInstructions" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_VoidTypes" FromRole="VoidType" ToRole="BlendingInstruction" />
+          <NavigationProperty Name="PurchaseOrderDetails" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_VoidTypes" FromRole="VoidType" ToRole="PurchaseOrderDetail" />
+          <NavigationProperty Name="PurchaseOrders" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_VoidTypes" FromRole="VoidType" ToRole="PurchaseOrder" />
         </EntityType>
         <Association Name="FK_AccessControls_OrganizationalUnits">
           <End Role="OrganizationalUnits" Type="Self.OrganizationalUnit" Multiplicity="1" />
@@ -13673,6 +13905,79 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="Workshift" EntitySet="Workshifts" />
             <End Role="PackageIssue" EntitySet="PackageIssues" />
           </AssociationSet>
+          <EntitySet Name="PurchaseOrderDetails" EntityType="TotalSmartPortalModel.PurchaseOrderDetail" />
+          <EntitySet Name="PurchaseOrders" EntityType="TotalSmartPortalModel.PurchaseOrder" />
+          <AssociationSet Name="FK_PurchaseOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrders_Customers" Association="TotalSmartPortalModel.FK_PurchaseOrders_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivalDetails_PurchaseOrderDetails" Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_PurchaseOrderDetails">
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
+            <End Role="GoodsArrivalDetail" EntitySet="GoodsArrivalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivals_PurchaseOrders" Association="TotalSmartPortalModel.FK_GoodsArrivals_PurchaseOrders">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="GoodsArrival" EntitySet="GoodsArrivals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrders_Locations" Association="TotalSmartPortalModel.FK_PurchaseOrders_Locations">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetails_PurchaseOrders" Association="TotalSmartPortalModel.FK_PurchaseOrderDetails_PurchaseOrders">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetails_VoidTypes" Association="TotalSmartPortalModel.FK_PurchaseOrderDetails_VoidTypes">
+            <End Role="VoidType" EntitySet="VoidTypes" />
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrders_VoidTypes" Association="TotalSmartPortalModel.FK_PurchaseOrders_VoidTypes">
+            <End Role="VoidType" EntitySet="VoidTypes" />
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+          </AssociationSet>
+          <FunctionImport Name="GetPurchaseOrderIndexes" ReturnType="Collection(TotalSmartPortalModel.PurchaseOrderIndex)">
+            <Parameter Name="AspUserID" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetPurchaseOrderViewDetails" ReturnType="Collection(TotalSmartPortalModel.PurchaseOrderViewDetail)">
+            <Parameter Name="PurchaseOrderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PurchaseOrderApproved" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PurchaseOrderEditable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PurchaseOrderPostSaveValidate" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PurchaseOrderSaveRelative">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="SaveRelativeOption" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PurchaseOrderToggleApproved">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="Approved" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="PurchaseOrderToggleVoid">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="InActive" Mode="In" Type="Boolean" />
+            <Parameter Name="VoidTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PurchaseOrderToggleVoidDetail">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="EntityDetailID" Mode="In" Type="Int32" />
+            <Parameter Name="InActivePartial" Mode="In" Type="Boolean" />
+            <Parameter Name="VoidTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PurchaseOrderVoidable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -15669,6 +15974,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsArrivalDetails" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" FromRole="Commodity" ToRole="GoodsArrivalDetail" />
           <NavigationProperty Name="BlendingInstructionDetails" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" FromRole="Commodity" ToRole="BlendingInstructionDetail" />
           <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities" FromRole="Commodity" ToRole="PackageIssueDetail" />
+          <NavigationProperty Name="PurchaseOrderDetails" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities" FromRole="Commodity" ToRole="PurchaseOrderDetail" />
         </EntityType>
         <EntityType Name="CommodityBrand">
           <Key>
@@ -19327,6 +19633,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_Warehouses" FromRole="GoodsArrival" ToRole="Warehouse" />
           <NavigationProperty Name="GoodsReceipts" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_GoodsArrivals" FromRole="GoodsArrival" ToRole="GoodsReceipt" />
           <NavigationProperty Name="GoodsArrivalDetails" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_GoodsArrivals" FromRole="GoodsArrival" ToRole="GoodsArrivalDetail" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_PurchaseOrders" FromRole="GoodsArrival" ToRole="PurchaseOrder" />
         </EntityType>
         <Association Name="FK_GoodsArrivals_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -19483,6 +19790,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsArrival" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_GoodsArrivals" FromRole="GoodsArrivalDetail" ToRole="GoodsArrival" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_VoidTypes" FromRole="GoodsArrivalDetail" ToRole="VoidType" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalDetails" FromRole="GoodsArrivalDetail" ToRole="GoodsReceiptDetail" />
+          <NavigationProperty Name="PurchaseOrderDetail" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_PurchaseOrderDetails" FromRole="GoodsArrivalDetail" ToRole="PurchaseOrderDetail" />
         </EntityType>
         <Association Name="FK_GoodsArrivalDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -20135,6 +20443,194 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="PurchaseOrderDetail">
+          <Key>
+            <PropertyRef Name="PurchaseOrderDetailID" />
+          </Key>
+          <Property Name="PurchaseOrderDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseOrderID" Type="Int32" Nullable="false" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="CommodityID" Type="Int32" Nullable="false" />
+          <Property Name="CommodityTypeID" Type="Int32" Nullable="false" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
+          <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="QuantityReceipted" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VoidTypeID" Type="Int32" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="InActive" Type="Boolean" Nullable="false" />
+          <Property Name="InActivePartial" Type="Boolean" Nullable="false" />
+          <Property Name="InActivePartialDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities" FromRole="PurchaseOrderDetail" ToRole="Commodity" />
+          <NavigationProperty Name="GoodsArrivalDetails" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_PurchaseOrderDetails" FromRole="PurchaseOrderDetail" ToRole="GoodsArrivalDetail" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_PurchaseOrders" FromRole="PurchaseOrderDetail" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_VoidTypes" FromRole="PurchaseOrderDetail" ToRole="VoidType" />
+        </EntityType>
+        <EntityType Name="PurchaseOrder">
+          <Key>
+            <PropertyRef Name="PurchaseOrderID" />
+          </Key>
+          <Property Name="PurchaseOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
+          <Property Name="Purposes" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="PreparedPersonID" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationalUnitID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="ApproverID" Type="Int32" Nullable="false" />
+          <Property Name="TotalQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalQuantityReceipted" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EditedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="VoidTypeID" Type="Int32" />
+          <Property Name="InActive" Type="Boolean" Nullable="false" />
+          <Property Name="InActivePartial" Type="Boolean" Nullable="false" />
+          <Property Name="InActiveDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_Customers" FromRole="PurchaseOrder" ToRole="Customer" />
+          <NavigationProperty Name="GoodsArrivals" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_PurchaseOrders" FromRole="PurchaseOrder" ToRole="GoodsArrival" />
+          <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_Locations" FromRole="PurchaseOrder" ToRole="Location" />
+          <NavigationProperty Name="PurchaseOrderDetails" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_PurchaseOrders" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
+          <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_VoidTypes" FromRole="PurchaseOrder" ToRole="VoidType" />
+        </EntityType>
+        <Association Name="FK_PurchaseOrderDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrders_Customers">
+          <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsArrivalDetails_PurchaseOrderDetails">
+          <End Type="TotalSmartPortalModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.GoodsArrivalDetail" Role="GoodsArrivalDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrderDetail">
+              <PropertyRef Name="PurchaseOrderDetailID" />
+            </Principal>
+            <Dependent Role="GoodsArrivalDetail">
+              <PropertyRef Name="PurchaseOrderDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsArrivals_PurchaseOrders">
+          <End Type="TotalSmartPortalModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.GoodsArrival" Role="GoodsArrival" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Principal>
+            <Dependent Role="GoodsArrival">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrders_Locations">
+          <End Type="TotalSmartPortalModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderDetails_PurchaseOrders">
+          <End Type="TotalSmartPortalModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderDetails_VoidTypes">
+          <End Type="TotalSmartPortalModel.VoidType" Role="VoidType" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoidType">
+              <PropertyRef Name="VoidTypeID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="VoidTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrders_VoidTypes">
+          <End Type="TotalSmartPortalModel.VoidType" Role="VoidType" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoidType">
+              <PropertyRef Name="VoidTypeID" />
+            </Principal>
+            <Dependent Role="PurchaseOrder">
+              <PropertyRef Name="VoidTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="PurchaseOrderIndex">
+          <Property Type="Int32" Name="PurchaseOrderID" Nullable="false" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="true" />
+          <Property Type="String" Name="Reference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="LocationCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="VoidTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="DeliveryDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Purposes" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TotalQuantityReceipted" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="Approved" Nullable="false" />
+          <Property Type="Boolean" Name="InActive" Nullable="false" />
+          <Property Type="Boolean" Name="InActivePartial" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="PurchaseOrderViewDetail">
+          <Property Type="Int32" Name="PurchaseOrderDetailID" Nullable="false" />
+          <Property Type="Int32" Name="PurchaseOrderID" Nullable="false" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
+          <Property Type="Int32" Name="VoidTypeID" Nullable="true" />
+          <Property Type="String" Name="VoidTypeCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="VoidTypeName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="VoidClassID" Nullable="true" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="InActivePartial" Nullable="false" />
+          <Property Type="DateTime" Name="InActivePartialDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -25515,6 +26011,107 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderDetails">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.PurchaseOrderDetail">
+              <MappingFragment StoreEntitySet="PurchaseOrderDetails">
+                <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
+                <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="VoidTypeID" ColumnName="VoidTypeID" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="QuantityReceipted" ColumnName="QuantityReceipted" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
+                <ScalarProperty Name="PurchaseOrderDetailID" ColumnName="PurchaseOrderDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrders">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.PurchaseOrder">
+              <MappingFragment StoreEntitySet="PurchaseOrders">
+                <ScalarProperty Name="InActiveDate" ColumnName="InActiveDate" />
+                <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="VoidTypeID" ColumnName="VoidTypeID" />
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TotalQuantityReceipted" ColumnName="TotalQuantityReceipted" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="ApproverID" ColumnName="ApproverID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="OrganizationalUnitID" ColumnName="OrganizationalUnitID" />
+                <ScalarProperty Name="PreparedPersonID" ColumnName="PreparedPersonID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Purposes" ColumnName="Purposes" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetPurchaseOrderIndexes" FunctionName="TotalSmartPortalModel.Store.GetPurchaseOrderIndexes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.PurchaseOrderIndex">
+                <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="VoidTypeName" ColumnName="VoidTypeName" />
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="Purposes" ColumnName="Purposes" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalQuantityReceipted" ColumnName="TotalQuantityReceipted" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPurchaseOrderViewDetails" FunctionName="TotalSmartPortalModel.Store.GetPurchaseOrderViewDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.PurchaseOrderViewDetail">
+                <ScalarProperty Name="PurchaseOrderDetailID" ColumnName="PurchaseOrderDetailID" />
+                <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="VoidTypeID" ColumnName="VoidTypeID" />
+                <ScalarProperty Name="VoidTypeCode" ColumnName="VoidTypeCode" />
+                <ScalarProperty Name="VoidTypeName" ColumnName="VoidTypeName" />
+                <ScalarProperty Name="VoidClassID" ColumnName="VoidClassID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
+                <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PurchaseOrderApproved" FunctionName="TotalSmartPortalModel.Store.PurchaseOrderApproved" />
+          <FunctionImportMapping FunctionImportName="PurchaseOrderEditable" FunctionName="TotalSmartPortalModel.Store.PurchaseOrderEditable" />
+          <FunctionImportMapping FunctionImportName="PurchaseOrderPostSaveValidate" FunctionName="TotalSmartPortalModel.Store.PurchaseOrderPostSaveValidate" />
+          <FunctionImportMapping FunctionImportName="PurchaseOrderSaveRelative" FunctionName="TotalSmartPortalModel.Store.PurchaseOrderSaveRelative" />
+          <FunctionImportMapping FunctionImportName="PurchaseOrderToggleApproved" FunctionName="TotalSmartPortalModel.Store.PurchaseOrderToggleApproved" />
+          <FunctionImportMapping FunctionImportName="PurchaseOrderToggleVoid" FunctionName="TotalSmartPortalModel.Store.PurchaseOrderToggleVoid" />
+          <FunctionImportMapping FunctionImportName="PurchaseOrderToggleVoidDetail" FunctionName="TotalSmartPortalModel.Store.PurchaseOrderToggleVoidDetail" />
+          <FunctionImportMapping FunctionImportName="PurchaseOrderVoidable" FunctionName="TotalSmartPortalModel.Store.PurchaseOrderVoidable" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -46,6 +46,7 @@ namespace TotalModel.Models
             this.GoodsArrivals = new HashSet<GoodsArrival>();
             this.BlendingInstructions = new HashSet<BlendingInstruction>();
             this.PackageIssues = new HashSet<PackageIssue>();
+            this.PurchaseOrders = new HashSet<PurchaseOrder>();
         }
     
         public int LocationID { get; set; }
@@ -118,5 +119,7 @@ namespace TotalModel.Models
         public virtual ICollection<BlendingInstruction> BlendingInstructions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PackageIssue> PackageIssues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
     }
 }
