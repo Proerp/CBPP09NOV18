@@ -379,6 +379,8 @@ namespace TotalDAL.Repositories
             Helpers.SqlProgrammability.Productions.FinishedHandover finishedHandover = new Helpers.SqlProgrammability.Productions.FinishedHandover(totalSmartPortalEntities);
             finishedHandover.RestoreProcedure();
 
+            Helpers.SqlProgrammability.Purchases.GoodsArrival goodsArrival = new Helpers.SqlProgrammability.Purchases.GoodsArrival(totalSmartPortalEntities);
+            goodsArrival.RestoreProcedure();
             //return;
 
             Helpers.SqlProgrammability.Purchases.PurchaseOrder purchaseOrder = new Helpers.SqlProgrammability.Purchases.PurchaseOrder(totalSmartPortalEntities);
