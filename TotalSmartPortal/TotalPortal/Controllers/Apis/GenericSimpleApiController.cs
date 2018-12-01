@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Newtonsoft.Json;
 
 using AutoMapper;
 
@@ -199,7 +200,10 @@ namespace TotalPortal.Controllers.Apis
             else
             {
                 if (simpleViewModel.SubmitTypeOption == GlobalEnums.SubmitTypeOption.Popup) this.DecorateViewModel(simpleViewModel);
-                return Ok(this.TailorViewModel(simpleViewModel));
+
+                //return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, this.TailorViewModel(simpleViewModel))); //RETURN WITH MODEL
+                string modelStateErrors = JsonConvert.SerializeObject(ModelState.Values.SelectMany(state => state.Errors).Select(error => string.IsNullOrEmpty(error.ErrorMessage) ? error.Exception.Message : error.ErrorMessage));
+                return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, modelStateErrors));
             }
         }
 
