@@ -62,9 +62,27 @@ namespace TotalModel.Models
     }
 
 
-    public partial class PurchaseOrderDetail : IPrimitiveEntity, IHelperEntryDate, IHelperCommodityID, IHelperCommodityTypeID
+    public partial class PurchaseOrderDetail : IPrimitiveEntity
     {
         public int GetID() { return this.PurchaseOrderDetailID; }
+    }
+
+
+
+    public partial class GoodsArrival : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<GoodsArrivalDetail>
+    {
+        public int GetID() { return this.GoodsArrivalID; }
+
+        public virtual Employee Salesperson { get { return this.Employee; } }
+        public virtual Customer Transporter { get { return this.Customer1; } }
+
+        public ICollection<GoodsArrivalDetail> GetDetails() { return this.GoodsArrivalDetails; }
+    }
+
+
+    public partial class GoodsArrivalDetail : IPrimitiveEntity
+    {
+        public int GetID() { return this.GoodsArrivalDetailID; }
     }
 
 
