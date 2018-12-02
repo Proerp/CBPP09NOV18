@@ -82,6 +82,7 @@
     <Compile Include="Productions\SemifinishedHandoverService.cs" />
     <Compile Include="Productions\SemifinishedProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Purchases\GoodsArrivalService.cs" />
     <Compile Include="Purchases\PurchaseOrderService.cs" />
     <Compile Include="Purchases\PurchaseRequisitionService.cs" />
     <Compile Include="Sales\DeliveryAdviceService.cs" />

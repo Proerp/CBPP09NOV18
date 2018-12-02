@@ -392,11 +392,13 @@
     <Compile Include="Areas\Productions\ViewModels\SemifinishedProductViewModel.cs" />
     <Compile Include="Areas\Purchases\APIs\PurchaseOrderAPIsController.cs" />
     <Compile Include="Areas\Purchases\APIs\PurchaseRequisitionAPIsController.cs" />
+    <Compile Include="Areas\Purchases\Builders\GoodsArrivalViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Purchases\Builders\PurchaseOrderViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Purchases\Builders\PurchaseRequisitionViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Purchases\Controllers\PurchaseOrdersController.cs" />
     <Compile Include="Areas\Purchases\Controllers\PurchaseRequisitionsController.cs" />
     <Compile Include="Areas\Purchases\PurchasesAreaRegistration.cs" />
+    <Compile Include="Areas\Purchases\ViewModels\GoodsArrivalViewModel.cs" />
     <Compile Include="Areas\Purchases\ViewModels\PurchaseOrderViewModel.cs" />
     <Compile Include="Areas\Purchases\ViewModels\PurchaseRequisitionViewModel.cs" />
     <Compile Include="Areas\Sales\APIs\DeliveryAdviceAPIsController.cs" />

@@ -91,6 +91,7 @@
     <Compile Include="Repositories\Productions\IProductionOrderRepository.cs" />
     <Compile Include="Repositories\Productions\ISemifinishedHandoverRepository.cs" />
     <Compile Include="Repositories\Productions\ISemifinishedProductRepository.cs" />
+    <Compile Include="Repositories\Purchases\IGoodsArrivalRepository.cs" />
     <Compile Include="Repositories\Purchases\IPurchaseOrderRepository.cs" />
     <Compile Include="Repositories\Purchases\IPurchaseRequisitionRepository.cs" />
     <Compile Include="Repositories\Sales\ISalesOrderRepository.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Services\Productions\IProductionOrderService.cs" />
     <Compile Include="Services\Productions\ISemifinishedHandoverService.cs" />
     <Compile Include="Services\Productions\ISemifinishedProductService.cs" />
+    <Compile Include="Services\Purchases\IGoodsArrivalService.cs" />
     <Compile Include="Services\Purchases\IPurchaseOrderService.cs" />
     <Compile Include="Services\Purchases\IPurchaseRequisitionService.cs" />
     <Compile Include="Services\Sales\IDeliveryAdviceService.cs" />
