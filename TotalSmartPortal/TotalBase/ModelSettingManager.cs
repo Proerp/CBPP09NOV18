@@ -15,6 +15,9 @@ namespace TotalBase
                     return "PR";
                 case GlobalEnums.NmvnTaskID.PurchaseOrder:
                     return "PO";
+                case GlobalEnums.NmvnTaskID.GoodsArrival:
+                    return "GA";
+
                 case GlobalEnums.NmvnTaskID.PurchaseInvoice:
                     return "H";
 
@@ -26,7 +29,7 @@ namespace TotalBase
 
                 case GlobalEnums.NmvnTaskID.MaterialIssue:
                     return "MI";
-                    
+
 
 
                 case GlobalEnums.NmvnTaskID.SalesOrder:
@@ -70,11 +73,11 @@ namespace TotalBase
 
                 case GlobalEnums.NmvnTaskID.TransferOrder:
                     return "TO";
-//                    return @"CASE WHEN @StockTransferTypeID = 
-//                                    " + (int)GlobalEnums.StockTransferTypeID.VehicleTransfer + @" THEN 'LX' ELSE 
-//                             CASE WHEN @StockTransferTypeID = 
-//                                    " + (int)GlobalEnums.StockTransferTypeID.PartTransfer + @" THEN 'LP' ELSE '#' END 
-//                             END";
+                //                    return @"CASE WHEN @StockTransferTypeID = 
+                //                                    " + (int)GlobalEnums.StockTransferTypeID.VehicleTransfer + @" THEN 'LX' ELSE 
+                //                             CASE WHEN @StockTransferTypeID = 
+                //                                    " + (int)GlobalEnums.StockTransferTypeID.PartTransfer + @" THEN 'LP' ELSE '#' END 
+                //                             END";
 
                 case GlobalEnums.NmvnTaskID.StockTransfer:
                     return @"CASE WHEN @StockTransferTypeID = 

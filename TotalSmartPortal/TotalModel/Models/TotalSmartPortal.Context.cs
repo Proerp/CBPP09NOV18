@@ -4357,5 +4357,135 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PurchaseOrderVoidable", entityIDParameter);
         }
+    
+        public virtual ObjectResult<GoodsArrivalIndex> GetGoodsArrivalIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<bool> pendingOnly)
+        {
+            var aspUserIDParameter = aspUserID != null ?
+                new ObjectParameter("AspUserID", aspUserID) :
+                new ObjectParameter("AspUserID", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(System.DateTime));
+    
+            var pendingOnlyParameter = pendingOnly.HasValue ?
+                new ObjectParameter("PendingOnly", pendingOnly) :
+                new ObjectParameter("PendingOnly", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalIndex>("GetGoodsArrivalIndexes", aspUserIDParameter, fromDateParameter, toDateParameter, pendingOnlyParameter);
+        }
+    
+        public virtual ObjectResult<GoodsArrivalPendingCustomer> GetGoodsArrivalPendingCustomers(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalPendingCustomer>("GetGoodsArrivalPendingCustomers", locationIDParameter);
+        }
+    
+        public virtual ObjectResult<GoodsArrivalPendingPurchaseOrderDetail> GetGoodsArrivalPendingPurchaseOrderDetails(Nullable<int> locationID, Nullable<int> goodsArrivalID, Nullable<int> purchaseOrderID, Nullable<int> customerID, Nullable<int> transporterID, string purchaseOrderDetailIDs)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var goodsArrivalIDParameter = goodsArrivalID.HasValue ?
+                new ObjectParameter("GoodsArrivalID", goodsArrivalID) :
+                new ObjectParameter("GoodsArrivalID", typeof(int));
+    
+            var purchaseOrderIDParameter = purchaseOrderID.HasValue ?
+                new ObjectParameter("PurchaseOrderID", purchaseOrderID) :
+                new ObjectParameter("PurchaseOrderID", typeof(int));
+    
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            var transporterIDParameter = transporterID.HasValue ?
+                new ObjectParameter("TransporterID", transporterID) :
+                new ObjectParameter("TransporterID", typeof(int));
+    
+            var purchaseOrderDetailIDsParameter = purchaseOrderDetailIDs != null ?
+                new ObjectParameter("PurchaseOrderDetailIDs", purchaseOrderDetailIDs) :
+                new ObjectParameter("PurchaseOrderDetailIDs", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalPendingPurchaseOrderDetail>("GetGoodsArrivalPendingPurchaseOrderDetails", locationIDParameter, goodsArrivalIDParameter, purchaseOrderIDParameter, customerIDParameter, transporterIDParameter, purchaseOrderDetailIDsParameter);
+        }
+    
+        public virtual ObjectResult<GoodsArrivalPendingPurchaseOrder> GetGoodsArrivalPendingPurchaseOrders(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalPendingPurchaseOrder>("GetGoodsArrivalPendingPurchaseOrders", locationIDParameter);
+        }
+    
+        public virtual ObjectResult<GoodsArrivalViewDetail> GetGoodsArrivalViewDetails(Nullable<int> goodsArrivalID)
+        {
+            var goodsArrivalIDParameter = goodsArrivalID.HasValue ?
+                new ObjectParameter("GoodsArrivalID", goodsArrivalID) :
+                new ObjectParameter("GoodsArrivalID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalViewDetail>("GetGoodsArrivalViewDetails", goodsArrivalIDParameter);
+        }
+    
+        public virtual ObjectResult<string> GoodsArrivalApproved(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GoodsArrivalApproved", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> GoodsArrivalEditable(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GoodsArrivalEditable", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> GoodsArrivalPostSaveValidate(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GoodsArrivalPostSaveValidate", entityIDParameter);
+        }
+    
+        public virtual int GoodsArrivalSaveRelative(Nullable<int> entityID, Nullable<int> saveRelativeOption)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var saveRelativeOptionParameter = saveRelativeOption.HasValue ?
+                new ObjectParameter("SaveRelativeOption", saveRelativeOption) :
+                new ObjectParameter("SaveRelativeOption", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GoodsArrivalSaveRelative", entityIDParameter, saveRelativeOptionParameter);
+        }
+    
+        public virtual int GoodsArrivalToggleApproved(Nullable<int> entityID, Nullable<bool> approved)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var approvedParameter = approved.HasValue ?
+                new ObjectParameter("Approved", approved) :
+                new ObjectParameter("Approved", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GoodsArrivalToggleApproved", entityIDParameter, approvedParameter);
+        }
     }
 }

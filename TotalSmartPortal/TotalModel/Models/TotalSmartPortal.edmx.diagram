@@ -401,10 +401,11 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Workshifts" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.PurchaseOrderDetail" Width="1.5" PointX="28.5" PointY="39.875" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.PurchaseOrder" Width="1.5" PointX="26.25" PointY="36.5" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.PurchaseOrderDetail" Width="1.5" PointX="28.5" PointY="40" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.PurchaseOrder" Width="1.5" PointX="26.25" PointY="36.375" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PurchaseOrders_Customers" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PurchaseOrders_Customers1" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_PurchaseOrderDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivals_PurchaseOrders" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PurchaseOrders_Locations" />

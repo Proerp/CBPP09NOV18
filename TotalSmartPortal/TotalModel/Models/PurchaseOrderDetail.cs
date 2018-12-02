@@ -25,11 +25,12 @@ namespace TotalModel.Models
         public System.DateTime EntryDate { get; set; }
         public int LocationID { get; set; }
         public int CustomerID { get; set; }
+        public int TransporterID { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public decimal Quantity { get; set; }
-        public decimal QuantityReceipted { get; set; }
+        public decimal QuantityArrived { get; set; }
         public string Remarks { get; set; }
         public Nullable<int> VoidTypeID { get; set; }
         public bool Approved { get; set; }

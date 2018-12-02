@@ -51,6 +51,7 @@ namespace TotalModel.Models
             this.GoodsArrivals = new HashSet<GoodsArrival>();
             this.GoodsArrivals1 = new HashSet<GoodsArrival>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.PurchaseOrders1 = new HashSet<PurchaseOrder>();
         }
     
         public int CustomerID { get; set; }
@@ -154,5 +155,7 @@ namespace TotalModel.Models
         public virtual ICollection<GoodsArrival> GoodsArrivals1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PurchaseOrder> PurchaseOrders1 { get; set; }
     }
 }

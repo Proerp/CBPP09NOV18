@@ -11,22 +11,18 @@ namespace TotalModel.Models
 {
     using System;
     
-    public partial class PurchaseOrderIndex
+    public partial class GoodsArrivalIndex
     {
-        public int PurchaseOrderID { get; set; }
+        public int GoodsArrivalID { get; set; }
         public Nullable<System.DateTime> EntryDate { get; set; }
         public string Reference { get; set; }
         public string Code { get; set; }
         public string LocationCode { get; set; }
         public string CustomerName { get; set; }
-        public string VoidTypeName { get; set; }
-        public Nullable<System.DateTime> DeliveryDate { get; set; }
-        public string Purposes { get; set; }
+        public string TransporterName { get; set; }
         public string Description { get; set; }
         public decimal TotalQuantity { get; set; }
+        public decimal TotalQuantityReceipted { get; set; }
         public bool Approved { get; set; }
-        public bool InActive { get; set; }
-        public bool InActivePartial { get; set; }
-        public decimal TotalQuantityArrived { get; set; }
     }
 }

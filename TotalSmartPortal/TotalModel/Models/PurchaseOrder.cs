@@ -26,6 +26,7 @@ namespace TotalModel.Models
         public string Reference { get; set; }
         public string Code { get; set; }
         public int CustomerID { get; set; }
+        public int TransporterID { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public string Purposes { get; set; }
         public int UserID { get; set; }
@@ -34,7 +35,7 @@ namespace TotalModel.Models
         public int LocationID { get; set; }
         public int ApproverID { get; set; }
         public decimal TotalQuantity { get; set; }
-        public decimal TotalQuantityReceipted { get; set; }
+        public decimal TotalQuantityArrived { get; set; }
         public string Description { get; set; }
         public string Remarks { get; set; }
         public System.DateTime CreatedDate { get; set; }
@@ -47,6 +48,7 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> InActiveDate { get; set; }
     
         public virtual Customer Customer { get; set; }
+        public virtual Customer Customer1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrival> GoodsArrivals { get; set; }
         public virtual Location Location { get; set; }
