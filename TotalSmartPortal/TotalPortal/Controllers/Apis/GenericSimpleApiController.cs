@@ -202,6 +202,8 @@ namespace TotalPortal.Controllers.Apis
                 if (simpleViewModel.SubmitTypeOption == GlobalEnums.SubmitTypeOption.Popup) this.DecorateViewModel(simpleViewModel);
 
                 //return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, this.TailorViewModel(simpleViewModel))); //RETURN WITH MODEL
+                //var errorList = ModelState.Where(elem => elem.Value.Errors.Any()).ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Errors.Select(e => string.IsNullOrEmpty(e.ErrorMessage) ? e.Exception.Message : e.ErrorMessage).ToArray()); //RETURN ERROR ARRAY
+                //var errorList = ModelState.Values.SelectMany(state => state.Errors).Select(error => string.IsNullOrEmpty(error.ErrorMessage) ? error.Exception.Message : error.ErrorMessage).ToArray(); //RETURN ERROR ARRAY
                 string modelStateErrors = JsonConvert.SerializeObject(ModelState.Values.SelectMany(state => state.Errors).Select(error => string.IsNullOrEmpty(error.ErrorMessage) ? error.Exception.Message : error.ErrorMessage));
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, modelStateErrors));
             }
