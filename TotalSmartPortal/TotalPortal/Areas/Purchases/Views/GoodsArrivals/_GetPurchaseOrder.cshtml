@@ -1,16 +1,15 @@
 ﻿@using TotalPortal.Configuration
 @using TotalModel.Models;
 
-@(Html.Kendo().Grid<DeliveryAdvicePendingSalesOrder>()
-    .Name("deliveryAdvicePendingSalesOrderGrid")
+@(Html.Kendo().Grid<GoodsArrivalPendingPurchaseOrder>()
+    .Name("goodsArrivalPendingPurchaseOrderGrid")
     .Columns(columns =>
     {
-        columns.Bound(c => c.WarehouseCode).Title("Kho").Width(35);
-        columns.Bound(c => c.SalesOrderCode).Title("Số ĐH").Width(50);
-        columns.Bound(c => c.SalesOrderEntryDate).Title("Ngày ĐH").Width(55).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.PurchaseOrderCode).Title("Số ĐH").Width(50);
+        columns.Bound(c => c.PurchaseOrderEntryDate).Title("Ngày ĐH").Width(55).Format("{0:" + Settings.DateFormat + "}");
         columns.Bound(c => c.CustomerName).Title("khách hàng").Width(140);
-        columns.Bound(c => c.ReceiverDescription).Title("Giao hàng").Width(150);
-        columns.Bound(c => c.Addressee).Title("Người nhận").Width(80);
+        columns.Bound(c => c.TransporterCode).Title("Giao hàng").Width(150);
+        columns.Bound(c => c.TransporterName).Title("Người nhận").Width(80);
         columns.Bound(c => c.Description).Title("Diễn giải").Width(80);
     })
     .ToolBar(toolbar =>
@@ -18,45 +17,45 @@
         toolbar.Template(@<text>
             <div class="toolbar" style="float: right;">
                 <label>Nhập số đơn hàng/ hoặc mã, tên, MST khách hàng hay đơn vị, người nhận hàng, hoặc mã kho</label>
-                <input id="deliveryAdvicePendingSalesOrderFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="deliveryAdvicePendingSalesOrderFilter_KeyUp()" />
+                <input id="goodsArrivalPendingPurchaseOrderFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="goodsArrivalPendingPurchaseOrderFilter_KeyUp()" />
             </div>
         </text>);
     })
         .Scrollable(s => s.Height(Settings.PopupContentHeight))
         .DataSource(ds => ds.Ajax()
-            .Read(read => read.Action("GetSalesOrders", "DeliveryAdviceAPIs", new { area = "Sales" }).Data("onAdditionalGetSalesOrders"))
+            .Read(read => read.Action("GetPurchaseOrders", "GoodsArrivalAPIs", new { area = "Sales" }).Data("onAdditionalGetPurchaseOrders"))
             .ServerOperation(false)
         )
         .Selectable()
 )
 
 <script type="text/javascript">
-    function onAdditionalGetSalesOrders(e) {
+    function onAdditionalGetPurchaseOrders(e) {
         return {
             locationID: window.parent.requireConfig.pageOptions.LocationID
         };
     }
 
-    function deliveryAdvicePendingSalesOrderFilter_KeyUp() {
-        var deliveryAdvicePendingSalesOrderFilter = $("#deliveryAdvicePendingSalesOrderFilter").val(), gridDetails = $("#deliveryAdvicePendingSalesOrderGrid").data("kendoGrid");
+    function goodsArrivalPendingPurchaseOrderFilter_KeyUp() {
+        var goodsArrivalPendingPurchaseOrderFilter = $("#goodsArrivalPendingPurchaseOrderFilter").val(), gridDetails = $("#goodsArrivalPendingPurchaseOrderGrid").data("kendoGrid");
 
-        if (deliveryAdvicePendingSalesOrderFilter && deliveryAdvicePendingSalesOrderFilter.length >= "@Settings.AutoCompleteMinLenght") {
+        if (goodsArrivalPendingPurchaseOrderFilter && goodsArrivalPendingPurchaseOrderFilter.length >= "@Settings.AutoCompleteMinLenght") {
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [
-                    { field: "SalesOrderCode", operator: "contains", value: deliveryAdvicePendingSalesOrderFilter },
-                    { field: "SalesOrderReference", operator: "contains", value: deliveryAdvicePendingSalesOrderFilter },
+                    { field: "PurchaseOrderCode", operator: "contains", value: goodsArrivalPendingPurchaseOrderFilter },
+                    { field: "PurchaseOrderReference", operator: "contains", value: goodsArrivalPendingPurchaseOrderFilter },
                     
-                    { field: "CustomerCode", operator: "contains", value: deliveryAdvicePendingSalesOrderFilter },
-                    { field: "CustomerName", operator: "contains", value: deliveryAdvicePendingSalesOrderFilter },
-                    { field: "CustomerVATCode", operator: "contains", value: deliveryAdvicePendingSalesOrderFilter },
+                    { field: "CustomerCode", operator: "contains", value: goodsArrivalPendingPurchaseOrderFilter },
+                    { field: "CustomerName", operator: "contains", value: goodsArrivalPendingPurchaseOrderFilter },
+                    { field: "CustomerVATCode", operator: "contains", value: goodsArrivalPendingPurchaseOrderFilter },
 
-                    { field: "ReceiverCode", operator: "contains", value: deliveryAdvicePendingSalesOrderFilter },
-                    { field: "ReceiverName", operator: "contains", value: deliveryAdvicePendingSalesOrderFilter },
+                    { field: "TransporterCode", operator: "contains", value: goodsArrivalPendingPurchaseOrderFilter },
+                    { field: "TransporterName", operator: "contains", value: goodsArrivalPendingPurchaseOrderFilter },
 
-                    { field: "Addressee", operator: "contains", value: deliveryAdvicePendingSalesOrderFilter },
+                    { field: "Addressee", operator: "contains", value: goodsArrivalPendingPurchaseOrderFilter },
 
-                    { field: "WarehouseCode", operator: "contains", value: deliveryAdvicePendingSalesOrderFilter }
+                    { field: "WarehouseCode", operator: "contains", value: goodsArrivalPendingPurchaseOrderFilter }
                 ]
             });
 
@@ -67,7 +66,7 @@
         }
     }
 
-    $("#deliveryAdvicePendingSalesOrderGrid").dblclick(function (e) {
+    $("#goodsArrivalPendingPurchaseOrderGrid").dblclick(function (e) {
         okButton_Click();
     })
 </script>
