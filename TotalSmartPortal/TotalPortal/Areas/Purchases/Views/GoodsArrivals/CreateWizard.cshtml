@@ -10,11 +10,6 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
 
-    @Html.Hidden("WarehouseTaskID", (int)@ViewBag.WarehouseTaskID);
-    @Html.Hidden("WarehouseTaskIDList", (string)@ViewBag.WarehouseTaskIDList);
-    
-    @Html.HiddenFor(model => model.ShowDiscount);
-
     @Html.HiddenFor(model => model.HasPurchaseOrder)
     @Html.HiddenFor(model => model.PurchaseOrderID)
     @Html.HiddenFor(model => model.PurchaseOrderCode)
@@ -34,16 +29,17 @@
             tabStrip.Add().Text("Khách hàng không có đơn hàng")
                 .Selected(true)
                 .Content(@<text>
-                    @Html.Partial("~/Views/Helpers/Commons/_SearchCustomer.cshtml")
+                    @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+                    @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID) })
                 </text>);
 
             tabStrip.Add().Text("Giao hàng theo đơn đặt hàng")
                 .Content(@<text>
-                    @Html.Partial("~/Areas/Sales/Views/GoodsArrivals/_GetPurchaseOrder.cshtml")
+                    @Html.Partial("~/Areas/Purchases/Views/GoodsArrivals/_GetPurchaseOrder.cshtml")
                 </text>);
             tabStrip.Add().Text("Giao hàng tổng hợp của nhiều đơn đặt hàng")
                     .Content(@<text>
-                    @Html.Partial("~/Areas/Sales/Views/GoodsArrivals/_GetCustomer.cshtml")
+                    @Html.Partial("~/Areas/Purchases/Views/GoodsArrivals/_GetCustomer.cshtml")
                     </text>);
         })
     )
@@ -122,14 +118,9 @@
                 $("#Customer_Telephone").val(selectedDataItem === undefined || selectedDataItem.CustomerTelephone === undefined ? null : selectedDataItem.CustomerTelephone);
                 $("#Customer_BillingAddress").val(selectedDataItem === undefined || selectedDataItem.CustomerBillingAddress === undefined ? null : selectedDataItem.CustomerBillingAddress);
                 $("#Customer_ShippingAddress").val(selectedDataItem === undefined || selectedDataItem.CustomerShippingAddress === undefined ? null : selectedDataItem.CustomerShippingAddress);
-                $("#Customer_TerritoryID").val(selectedDataItem === undefined || selectedDataItem.CustomerTerritoryID === undefined ? null : selectedDataItem.CustomerTerritoryID);
-                $("#Customer_EntireTerritoryEntireName").val(selectedDataItem === undefined || selectedDataItem.CustomerEntireTerritoryEntireName === undefined ? null : selectedDataItem.CustomerEntireTerritoryEntireName);
                 $("#Customer_SalespersonID").val(selectedDataItem === undefined || selectedDataItem.CustomerSalespersonID === undefined ? null : selectedDataItem.CustomerSalespersonID);
                 $("#Customer_SalespersonName").val(selectedDataItem === undefined || selectedDataItem.CustomerSalespersonName === undefined ? null : selectedDataItem.CustomerSalespersonName);
-                $("#Customer_PaymentTermID").val(selectedDataItem === undefined || selectedDataItem.PaymentTermID === undefined ? null : selectedDataItem.PaymentTermID);
-                $("#Customer_PriceCategoryID").val(selectedDataItem === undefined || selectedDataItem.CustomerPriceCategoryID === undefined ? null : selectedDataItem.CustomerPriceCategoryID);
-                $("#Customer_PriceCategoryCode").val(selectedDataItem === undefined || selectedDataItem.CustomerPriceCategoryCode === undefined ? null : selectedDataItem.CustomerPriceCategoryCode);
-
+                
                 $("#Transporter_CustomerID").val(selectedDataItem === undefined || selectedDataItem.TransporterID === undefined ? null : selectedDataItem.TransporterID);
                 $("#Transporter_Code").val(selectedDataItem === undefined || selectedDataItem.TransporterCode === undefined ? null : selectedDataItem.TransporterCode);
                 $("#Transporter_Name").val(selectedDataItem === undefined || selectedDataItem.TransporterName === undefined ? null : selectedDataItem.TransporterName);
@@ -139,14 +130,9 @@
                 $("#Transporter_Telephone").val(selectedDataItem === undefined || selectedDataItem.TransporterTelephone === undefined ? null : selectedDataItem.TransporterTelephone);
                 $("#Transporter_BillingAddress").val(selectedDataItem === undefined || selectedDataItem.TransporterBillingAddress === undefined ? null : selectedDataItem.TransporterBillingAddress);
                 $("#Transporter_ShippingAddress").val(selectedDataItem === undefined || selectedDataItem.TransporterShippingAddress === undefined ? null : selectedDataItem.TransporterShippingAddress);
-                $("#Transporter_TerritoryID").val(selectedDataItem === undefined || selectedDataItem.TransporterTerritoryID === undefined ? null : selectedDataItem.TransporterTerritoryID);
-                $("#Transporter_EntireTerritoryEntireName").val(selectedDataItem === undefined || selectedDataItem.TransporterEntireTerritoryEntireName === undefined ? null : selectedDataItem.TransporterEntireTerritoryEntireName);
                 $("#Transporter_SalespersonID").val(selectedDataItem === undefined || selectedDataItem.TransporterSalespersonID === undefined ? null : selectedDataItem.TransporterSalespersonID);
                 $("#Transporter_SalespersonName").val(selectedDataItem === undefined || selectedDataItem.TransporterSalespersonName === undefined ? null : selectedDataItem.TransporterSalespersonName);
-                $("#Transporter_PaymentTermID").val(selectedDataItem === undefined || selectedDataItem.PaymentTermID === undefined ? null : selectedDataItem.PaymentTermID);
-                $("#Transporter_PriceCategoryID").val(selectedDataItem === undefined || selectedDataItem.TransporterPriceCategoryID === undefined ? null : selectedDataItem.TransporterPriceCategoryID);
-                $("#Transporter_PriceCategoryCode").val(selectedDataItem === undefined || selectedDataItem.TransporterPriceCategoryCode === undefined ? null : selectedDataItem.TransporterPriceCategoryCode);
-
+                
                 $("#PurchaseOrderID").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderID === undefined ? null : selectedDataItem.PurchaseOrderID);
                 $("#PurchaseOrderCode").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderCode === undefined ? null : selectedDataItem.PurchaseOrderCode);
                 $("#PurchaseOrderReference").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderReference === undefined ? null : selectedDataItem.PurchaseOrderReference);
@@ -165,8 +151,3 @@
     }
 
 </script>
-
-
-
-
-

@@ -10,7 +10,7 @@
     @Html.AntiForgeryToken()
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
-    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTopA.cshtml")
+    @Html.HiddenFor(model => model.TotalQuantity)
 
     @Html.HiddenFor(model => model.GoodsArrivalID)
     @Html.HiddenFor(model => model.HasPurchaseOrder)
@@ -87,8 +87,6 @@
             @Html.EditorFor(d => d.Transporter, new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
 
             @Html.DisplayFor(d => d.Warehouse, "Commons/WarehouseBase")
-
-            @Html.Partial("~/Views/Helpers/Commons/_PriceCategory.cshtml")
         </div>
 
         <div class="div-k-grid-detail">
@@ -221,7 +219,6 @@
                                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
-                                @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PaymentTerm.cshtml")
                             </div>
 
                             <div class="right-second-panel">
@@ -264,7 +261,7 @@
     function GetPendingGoodsIssueDetails() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingPurchaseOrderDetails", "GoodsArrivals", new { area = "Sales" })", "Chọn mặt hàng từ đơn đặt hàng", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingPurchaseOrderDetails", "GoodsArrivals", new { area = "Purchases" })", "Chọn mặt hàng từ đơn đặt hàng", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
     }
 

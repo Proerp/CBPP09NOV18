@@ -22,7 +22,7 @@
     })
     .Scrollable(s => s.Height(Settings.PopupContentHeight))
     .DataSource(ds => ds.Ajax()
-        .Read(read => read.Action("GetCustomers", "GoodsArrivalAPIs", new { area = "Sales" }).Data("onAdditionalGetCustomers"))
+        .Read(read => read.Action("GetCustomers", "GoodsArrivalAPIs", new { area = "Purchases" }).Data("onAdditionalGetCustomers"))
         .ServerOperation(false)
     )
     .Selectable()
@@ -43,13 +43,7 @@
                 logic: "or",
                 filters: [
                     { field: "CustomerCode", operator: "contains", value: goodsArrivalPendingCustomerFilter },
-                    { field: "CustomerName", operator: "contains", value: goodsArrivalPendingCustomerFilter },
-                    { field: "CustomerVATCode", operator: "contains", value: goodsArrivalPendingCustomerFilter },
-                    { field: "CustomerTelephone", operator: "contains", value: goodsArrivalPendingCustomerFilter },
-                    { field: "CustomerBillingAddress", operator: "contains", value: goodsArrivalPendingCustomerFilter },
-                    { field: "CustomerEntireTerritoryEntireName", operator: "contains", value: goodsArrivalPendingCustomerFilter },
-                    { field: "Addressee", operator: "contains", value: goodsArrivalPendingCustomerFilter },
-                    { field: "WarehouseCode", operator: "contains", value: goodsArrivalPendingCustomerFilter }
+                    { field: "CustomerName", operator: "contains", value: goodsArrivalPendingCustomerFilter }
                 ]
             });
 

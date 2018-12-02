@@ -5,9 +5,6 @@ using TotalModel.Models;
 
 namespace TotalCore.Repositories.Purchases
 {
-    interface IGoodsArrivalRepository
-    {
-    }
     public interface IGoodsArrivalRepository : IGenericWithDetailRepository<GoodsArrival, GoodsArrivalDetail>
     {
     }
