@@ -2,21 +2,21 @@
     window.parent.$("#myWindow").data("kendoWindow").close();
 }
 
-function handleOKEvent(deliveryAdviceGridDataSource, pendingSalesOrderDetailGridDataSource) {
-    if (deliveryAdviceGridDataSource != undefined && pendingSalesOrderDetailGridDataSource != undefined) {
-        var pendingSalesOrderDetailGridDataItems = pendingSalesOrderDetailGridDataSource.view();
-        var deliveryAdviceJSON = deliveryAdviceGridDataSource.data().toJSON();
-        for (var i = 0; i < pendingSalesOrderDetailGridDataItems.length; i++) {
-            if (pendingSalesOrderDetailGridDataItems[i].IsSelected === true)
-                _setParentInput(deliveryAdviceJSON, pendingSalesOrderDetailGridDataItems[i]);
+function handleOKEvent(goodsArrivalGridDataSource, pendingPurchaseOrderDetailGridDataSource) {
+    if (goodsArrivalGridDataSource != undefined && pendingPurchaseOrderDetailGridDataSource != undefined) {
+        var pendingPurchaseOrderDetailGridDataItems = pendingPurchaseOrderDetailGridDataSource.view();
+        var goodsArrivalJSON = goodsArrivalGridDataSource.data().toJSON();
+        for (var i = 0; i < pendingPurchaseOrderDetailGridDataItems.length; i++) {
+            if (pendingPurchaseOrderDetailGridDataItems[i].IsSelected === true)
+                _setParentInput(goodsArrivalJSON, pendingPurchaseOrderDetailGridDataItems[i]);
         }
 
-        deliveryAdviceJSON.push(new Object()); //Add a temporary empty row
+        goodsArrivalJSON.push(new Object()); //Add a temporary empty row
 
-        deliveryAdviceGridDataSource.data(deliveryAdviceJSON);
+        goodsArrivalGridDataSource.data(goodsArrivalJSON);
 
-        var rawData = deliveryAdviceGridDataSource.data()
-        deliveryAdviceGridDataSource.remove(rawData[rawData.length - 1]); //Remove the last row: this is the temporary empty row
+        var rawData = goodsArrivalGridDataSource.data()
+        goodsArrivalGridDataSource.remove(rawData[rawData.length - 1]); //Remove the last row: this is the temporary empty row
 
         cancelButton_Click();
     }
@@ -34,67 +34,36 @@ function handleOKEvent(deliveryAdviceGridDataSource, pendingSalesOrderDetailGrid
     //grid.dataSource.data(data); //set changed data as data of the Grid
 
 
-    function _setParentInput(deliveryAdviceJSON, salesOrderGridDataItem) {
+    function _setParentInput(goodsArrivalJSON, purchaseOrderGridDataItem) {
 
-        //var dataRow = deliveryAdviceJSON.add({});
+        //var dataRow = goodsArrivalJSON.add({});
 
         var dataRow = new Object();
 
         dataRow.LocationID = null;
         dataRow.EntryDate = null;
 
-        dataRow.DeliveryAdviceDetailID = 0;
-        dataRow.DeliveryAdviceID = window.parent.$("#DeliveryAdviceID").val();
+        dataRow.GoodsArrivalDetailID = 0;
+        dataRow.GoodsArrivalID = window.parent.$("#GoodsArrivalID").val();
         
-        dataRow.SalesOrderID = salesOrderGridDataItem.SalesOrderID;
-        dataRow.SalesOrderDetailID = salesOrderGridDataItem.SalesOrderDetailID;
-        dataRow.SalesOrderCode = salesOrderGridDataItem.SalesOrderCode;
-        dataRow.SalesOrderReference = salesOrderGridDataItem.SalesOrderReference;
-        dataRow.SalesOrderEntryDate = salesOrderGridDataItem.SalesOrderEntryDate;
+        dataRow.PurchaseOrderID = purchaseOrderGridDataItem.PurchaseOrderID;
+        dataRow.PurchaseOrderDetailID = purchaseOrderGridDataItem.PurchaseOrderDetailID;
+        dataRow.PurchaseOrderCode = purchaseOrderGridDataItem.PurchaseOrderCode;
+        dataRow.PurchaseOrderReference = purchaseOrderGridDataItem.PurchaseOrderReference;
+        dataRow.PurchaseOrderEntryDate = purchaseOrderGridDataItem.PurchaseOrderEntryDate;
 
-        dataRow.CommodityID = salesOrderGridDataItem.CommodityID;
-        dataRow.CommodityName = salesOrderGridDataItem.CommodityName;
-        dataRow.CommodityCode = salesOrderGridDataItem.CommodityCode;
-        dataRow.CommodityTypeID = salesOrderGridDataItem.CommodityTypeID;
+        dataRow.CommodityID = purchaseOrderGridDataItem.CommodityID;
+        dataRow.CommodityName = purchaseOrderGridDataItem.CommodityName;
+        dataRow.CommodityCode = purchaseOrderGridDataItem.CommodityCode;
+        dataRow.CommodityTypeID = purchaseOrderGridDataItem.CommodityTypeID;
 
-        dataRow.WarehouseID = salesOrderGridDataItem.WarehouseID;
-        dataRow.WarehouseCode = salesOrderGridDataItem.WarehouseCode;
-
-        dataRow.CalculatingTypeID = salesOrderGridDataItem.CalculatingTypeID;
-        dataRow.VATbyRow = salesOrderGridDataItem.VATbyRow;
-
-        dataRow.QuantityAvailable = salesOrderGridDataItem.QuantityAvailable;
-        dataRow.ControlFreeQuantity = salesOrderGridDataItem.ControlFreeQuantity;
-        dataRow.QuantityRemains = salesOrderGridDataItem.QuantityRemains;
-        dataRow.Quantity = salesOrderGridDataItem.Quantity;
-        dataRow.FreeQuantityRemains = salesOrderGridDataItem.FreeQuantityRemains;
-        dataRow.FreeQuantity = salesOrderGridDataItem.FreeQuantity;
-        dataRow.ListedPrice = salesOrderGridDataItem.ListedPrice;
-        dataRow.DiscountPercent = salesOrderGridDataItem.DiscountPercent;
-        dataRow.UnitPrice = salesOrderGridDataItem.UnitPrice;
-        dataRow.ListedAmount = salesOrderGridDataItem.ListedAmount;
-        dataRow.Amount = salesOrderGridDataItem.Amount;
-        dataRow.TradeDiscountRate = salesOrderGridDataItem.TradeDiscountRate;
-        dataRow.VATPercent = salesOrderGridDataItem.VATPercent;
-        dataRow.ListedVATAmount = salesOrderGridDataItem.ListedVATAmount;
-        dataRow.VATAmount = salesOrderGridDataItem.VATAmount;
-        dataRow.ListedGrossPrice = salesOrderGridDataItem.ListedGrossPrice;
-        dataRow.GrossPrice = salesOrderGridDataItem.GrossPrice;
-        dataRow.ListedGrossAmount = salesOrderGridDataItem.ListedGrossAmount;
-        dataRow.GrossAmount = salesOrderGridDataItem.GrossAmount;
-
-        dataRow.IsBonus = salesOrderGridDataItem.IsBonus;
-
+        dataRow.QuantityAvailable = purchaseOrderGridDataItem.QuantityAvailable;
+        dataRow.ControlFreeQuantity = purchaseOrderGridDataItem.ControlFreeQuantity;
+        dataRow.QuantityRemains = purchaseOrderGridDataItem.QuantityRemains;
+        dataRow.Quantity = purchaseOrderGridDataItem.Quantity;
 
         dataRow.Remarks = null;
-        dataRow.VoidTypeID = null;
-        dataRow.VoidTypeName = null;
-        dataRow.InActive = false;
-        dataRow.InActivePartial = false;
-        dataRow.InActiveIssue = false;
 
-
-        deliveryAdviceJSON.push(dataRow);
+        goodsArrivalJSON.push(dataRow);
     }
 }
-

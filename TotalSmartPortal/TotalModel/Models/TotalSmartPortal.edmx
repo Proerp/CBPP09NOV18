@@ -14048,7 +14048,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="PendingOnly" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalPendingCustomers" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalPendingCustomer)">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalPendingPurchaseOrderDetails" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalPendingPurchaseOrderDetail)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
@@ -14059,19 +14059,19 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="PurchaseOrderDetailIDs" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalPendingPurchaseOrders" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalPendingPurchaseOrder)">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalViewDetails" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalViewDetail)">
-            <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
+          <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GoodsArrivalApproved" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GoodsArrivalEditable" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GoodsArrivalPostSaveValidate" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GoodsArrivalSaveRelative">
             <Parameter Name="EntityID" Mode="In" Type="Int32" />
@@ -20785,6 +20785,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="TransporterShippingAddress" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="Description" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="Remarks" Nullable="false" MaxLength="1" />
+          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
+          <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
         </ComplexType>
         <ComplexType Name="GoodsArrivalPendingPurchaseOrderDetail">
           <Property Type="Int32" Name="PurchaseOrderID" Nullable="false" />
@@ -20829,6 +20832,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="TransporterTelephone" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="TransporterBillingAddress" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="TransporterShippingAddress" Nullable="true" MaxLength="200" />
+          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
+          <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
         </ComplexType>
         <ComplexType Name="GoodsArrivalViewDetail">
           <Property Type="Int32" Name="GoodsArrivalDetailID" Nullable="false" />
@@ -26371,6 +26377,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="TransporterShippingAddress" ColumnName="TransporterShippingAddress" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -26423,6 +26432,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="TransporterTelephone" ColumnName="TransporterTelephone" />
                 <ScalarProperty Name="TransporterBillingAddress" ColumnName="TransporterBillingAddress" />
                 <ScalarProperty Name="TransporterShippingAddress" ColumnName="TransporterShippingAddress" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

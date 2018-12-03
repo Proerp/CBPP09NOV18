@@ -39,5 +39,8 @@ namespace TotalModel.Models
         public string TransporterTelephone { get; set; }
         public string TransporterBillingAddress { get; set; }
         public string TransporterShippingAddress { get; set; }
+        public int WarehouseID { get; set; }
+        public string WarehouseCode { get; set; }
+        public string WarehouseName { get; set; }
     }
 }

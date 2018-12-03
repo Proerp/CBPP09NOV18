@@ -1908,7 +1908,6 @@
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\Open.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\Print.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\AddPendingPurchaseOrderDetail.js" />
-    <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Create.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Delete.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Edit.js" />

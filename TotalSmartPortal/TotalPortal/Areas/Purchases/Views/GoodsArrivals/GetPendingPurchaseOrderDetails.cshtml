@@ -38,15 +38,7 @@
                 purchaseOrderID: window.parent.$("#PurchaseOrderID").val(),
                 customerID: window.parent.$("#Customer_CustomerID").val(),  
                 transporterID: window.parent.$("#Transporter_CustomerID").val(),
-                priceCategoryID: window.parent.$("#PriceCategoryID").val(),
-                warehouseID: window.parent.$("#Warehouse_WarehouseID").val(),
-                shippingAddress: window.parent.$("#ShippingAddress").val(),                
-                addressee: window.parent.$("#Addressee").val(),                
-                tradePromotionID: window.parent.$("#TradePromotionID").val(),                
-                vatPercent: window.parent.$("#VATPercent").val(),
-                entryDate: window.parent.$("#EntryDate").val(),
-                purchaseOrderDetailIDs : goodsArrivalJSON.map(function(elem){return elem.PurchaseOrderDetailID;}).join(","),
-                isReadOnly: false
+                purchaseOrderDetailIDs : goodsArrivalJSON.map(function(elem){return elem.PurchaseOrderDetailID;}).join(",")
             };}
             </text>))
     .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client
