@@ -18,7 +18,7 @@
     <div class="left-panel">
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
-       
+
 
         @Html.HiddenFor(model => model.PurchaseOrderID)
         @Html.HiddenFor(model => model.PurchaseOrderCode)
@@ -95,51 +95,58 @@
                 .Columns(columns =>
                 {
 
-                    columns.Bound(p => p.GoodsArrivalDetailID).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.GoodsArrivalDetailID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= GoodsArrivalDetailID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].GoodsArrivalDetailID' value='#= GoodsArrivalDetailID #' />");
-                    columns.Bound(p => p.GoodsArrivalID).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.GoodsArrivalID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= GoodsArrivalID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].GoodsArrivalID' value='#= GoodsArrivalID #' />");
 
-                    columns.Bound(p => p.PurchaseOrderID).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.PurchaseOrderID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (PurchaseOrderID == null)? '' : PurchaseOrderID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].PurchaseOrderID' value='#= (PurchaseOrderID == null) ? '' : PurchaseOrderID #' />");
-                    columns.Bound(p => p.PurchaseOrderDetailID).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.PurchaseOrderDetailID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (PurchaseOrderDetailID == null)? '' : PurchaseOrderDetailID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].PurchaseOrderDetailID' value='#= (PurchaseOrderDetailID == null) ? '' : PurchaseOrderDetailID #' />");
 
-                    columns.Bound(p => p.PurchaseOrderCode).DisplayNameTitle().Filterable(false).Width(60).Hidden()
+                    columns.Bound(p => p.PurchaseOrderCode).DisplayNameTitle().Width(60).Hidden()
                         .ClientTemplate("#= (PurchaseOrderCode == null)? '' : PurchaseOrderCode #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].PurchaseOrderCode' value='#= (PurchaseOrderCode == null) ? '' : PurchaseOrderCode #' />");
-                    columns.Bound(p => p.PurchaseOrderReference).DisplayNameTitle().Filterable(false).Width(60).Hidden(@Model.HasPurchaseOrder && @Model.PurchaseOrderID == null ? false : true)
+                    columns.Bound(p => p.PurchaseOrderReference).DisplayNameTitle().Width(60).Hidden(@Model.HasPurchaseOrder && @Model.PurchaseOrderID == null ? false : true)
                         .ClientTemplate("#= (PurchaseOrderReference == null)? '' : PurchaseOrderReference #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].PurchaseOrderReference' value='#= (PurchaseOrderReference == null) ? '' : PurchaseOrderReference #' />");
-                    columns.Bound(p => p.PurchaseOrderEntryDate).DisplayNameTitle().Filterable(false).Width(80).Hidden(@Model.HasPurchaseOrder && @Model.PurchaseOrderID == null ? false : true)
+                    columns.Bound(p => p.PurchaseOrderEntryDate).DisplayNameTitle().Width(80).Hidden(@Model.HasPurchaseOrder && @Model.PurchaseOrderID == null ? false : true)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (PurchaseOrderEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', PurchaseOrderEntryDate) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].PurchaseOrderEntryDate' value='#= (PurchaseOrderEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', PurchaseOrderEntryDate) #' />");
 
 
-                    columns.Bound(p => p.CommodityID).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Filterable(false).Width(90).HtmlAttributes(new { style = "" }).Hidden()
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(90).HtmlAttributes(new { style = "" }).Hidden()
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Filterable(false).Width(200).EditorTemplateName(@Model.HasPurchaseOrder ? "StringReadonly" : "AutoCompletes/CommodityAvailable")
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(200).EditorTemplateName(@Model.HasPurchaseOrder ? "StringReadonly" : "AutoCompletes/CommodityAvailable")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)")
                         .ClientTemplate("<div> #= CommodityCode #</div>" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
 
-                    columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
-                    columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Filterable(false).Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(@Model.HasPurchaseOrder ? false : true)
+                    columns.Bound(p => p.SealCode).DisplayNameTitle().Width(50)
+                        .ClientTemplate("#= (SealCode == null)? '' : SealCode #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].SealCode' value='#= (SealCode == null) ? '' : SealCode #' />");
+                    columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(50)
+                        .ClientTemplate("#= (BatchCode == null)? '' : BatchCode #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].BatchCode' value='#= (BatchCode == null) ? '' : BatchCode #' />");
+                    columns.Bound(p => p.LabCode).DisplayNameTitle().Width(50)
+                        .ClientTemplate("#= (LabCode == null)? '' : LabCode #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].LabCode' value='#= (LabCode == null) ? '' : LabCode #' />");
+
+                    columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(@Model.HasPurchaseOrder ? false : true)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format(Settings.kfmQuantity, sum) #")
                         .ClientTemplate("#= kendo.format(Settings.kfmQuantity, QuantityRemains) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
-                    columns.Bound(p => p.Quantity).DisplayNameTitle().Filterable(false).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(50)
+                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(50)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format(Settings.kfmQuantity, sum) #")
                         .ClientTemplate("#= kendo.format(Settings.kfmQuantity, Quantity) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
 
-                    columns.Bound(p => p.Remarks).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.Remarks).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
                     columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(50).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center" });
                 })
-                    .Filterable()
+                    .Filterable(f => f.Enabled(false))
                     .Navigatable()
 
                     .ToolBar(toolbar =>
@@ -172,30 +179,30 @@
                         }
                     })
 
-                    .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
-                    .Selectable(settings =>
-                    {
-                        settings.Mode(GridSelectionMode.Multiple);
-                        settings.Type(GridSelectionType.Row);
-                    })
-                    .DataSource(dataSource => dataSource
-                .Ajax()
-                .Batch(true)
-                .ServerOperation(false)
-                .Model(model =>
-                {
-                    model.Id(x => x.GoodsArrivalDetailID);
-                    model.Field(m => m.GoodsArrivalDetailID).DefaultValue(0);
-                    model.Field(m => m.GoodsArrivalID).DefaultValue(@Model.GoodsArrivalID);
-                })
-                .Events(events =>
-                {
-                    events.Error("kendGrid_ErrorHandler");
-                })
-                .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
-                .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                )
+                                                        .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
+                                                        .Selectable(settings =>
+                                                        {
+                                                            settings.Mode(GridSelectionMode.Multiple);
+                                                            settings.Type(GridSelectionType.Row);
+                                                        })
+                                                        .DataSource(dataSource => dataSource
+                                                    .Ajax()
+                                                    .Batch(true)
+                                                    .ServerOperation(false)
+                                                    .Model(model =>
+                                                    {
+                                                        model.Id(x => x.GoodsArrivalDetailID);
+                                                        model.Field(m => m.GoodsArrivalDetailID).DefaultValue(0);
+                                                        model.Field(m => m.GoodsArrivalID).DefaultValue(@Model.GoodsArrivalID);
+                                                    })
+                                                    .Events(events =>
+                                                    {
+                                                        events.Error("kendGrid_ErrorHandler");
+                                                    })
+                                                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                                                    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                                                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                                                    )
             )
         </div>
 

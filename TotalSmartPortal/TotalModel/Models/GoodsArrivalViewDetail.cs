@@ -27,5 +27,8 @@ namespace TotalModel.Models
         public Nullable<decimal> QuantityRemains { get; set; }
         public decimal Quantity { get; set; }
         public string Remarks { get; set; }
+        public string SealCode { get; set; }
+        public string BatchCode { get; set; }
+        public string LabCode { get; set; }
     }
 }

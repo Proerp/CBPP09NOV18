@@ -17,7 +17,8 @@ namespace TotalDTO.Purchases
         public int CustomerID { get; set; }
         public int TransporterID { get; set; }
         public int SalespersonID { get; set; }
-        public int WarehouseID { get; set; }
+
+        public Nullable<int> WarehouseID { get; set; }
 
         public Nullable<int> PurchaseOrderID { get; set; }
         public Nullable<int> PurchaseOrderDetailID { get; set; }
@@ -36,6 +37,17 @@ namespace TotalDTO.Purchases
         [UIHint("AutoCompletes/CommodityBase")]
         public override string CommodityCode { get; set; }
 
+        [Display(Name = "Số seal")]
+        [Required(ErrorMessage = "Vui lòng nhập số seal")]
+        public virtual string SealCode { get; set; }
+
+        [Display(Name = "Số batch")]
+        [Required(ErrorMessage = "Vui lòng nhập số batch")]
+        public virtual string BatchCode { get; set; }
+
+        [Display(Name = "Lab code")]
+        [Required(ErrorMessage = "Vui lòng nhập lab code")]
+        public virtual string LabCode { get; set; }
 
         [Display(Name = "Tồn đơn")]
         [UIHint("QuantityReadonly")]

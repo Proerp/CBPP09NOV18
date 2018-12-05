@@ -16,6 +16,10 @@
     @Html.HiddenFor(model => model.PurchaseOrderReference)
     @Html.HiddenFor(model => model.PurchaseOrderEntryDate)
 
+    @Html.HiddenFor(model => model.Warehouse.WarehouseID)
+    @Html.HiddenFor(model => model.Warehouse.Code)
+    @Html.HiddenFor(model => model.Warehouse.Name)
+    
     @Html.HiddenFor(model => model.Salesperson.EmployeeID);
     @Html.HiddenFor(model => model.Salesperson.Name);
 
