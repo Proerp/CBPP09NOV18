@@ -1960,6 +1960,8 @@
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourceFreeQuantitySubscribe.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourceListedAmount.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourceListedAmountSubscribe.js" />
+    <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourcePackage.js" />
+    <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourcePackageSubscribe.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourceQuantity.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourceQuantitySubscribe.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourceReceipt.js" />

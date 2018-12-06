@@ -43,8 +43,19 @@ namespace TotalDTO.Purchases
         [Display(Name = "Chứng từ khuyến mãi")]
         public string PromotionVouchers { get; set; }
 
-
         public virtual int SalespersonID { get; set; }
+
+        [Display(Name = "Tổng trọng lượng")]
+        public decimal TotalPackages { get; set; }
+        protected virtual decimal GetTotalWeight() { return this.DtoDetails().Select(o => o.Packages).Sum(); }
+
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            foreach (var result in base.Validate(validationContext)) { yield return result; }
+
+            if (this.TotalPackages != this.GetTotalWeight()) yield return new ValidationResult("Lỗi tổng số kiện", new[] { "TotalPackages" });
+        }
 
         public override void PerformPresaveRule()
         {

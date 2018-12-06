@@ -30,5 +30,7 @@ namespace TotalModel.Models
         public string SealCode { get; set; }
         public string BatchCode { get; set; }
         public string LabCode { get; set; }
+        public decimal UnitWeight { get; set; }
+        public decimal Packages { get; set; }
     }
 }

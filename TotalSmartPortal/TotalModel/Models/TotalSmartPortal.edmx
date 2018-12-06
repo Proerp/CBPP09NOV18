@@ -857,6 +857,8 @@
           <Property Name="ExpiryDate" Type="datetime" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UnitWeight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Packages" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="VoidTypeID" Type="int" />
           <Property Name="Approved" Type="bit" Nullable="false" />
@@ -888,6 +890,7 @@
           <Property Name="ApproverID" Type="int" Nullable="false" />
           <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalPackages" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
@@ -3593,99 +3596,6 @@ warning 6035: The relationship 'FK_FirmOrders_AspNetUsers2' has columns that are
             </Principal>
             <Dependent Role="GoodsArrivalDetails">
               <PropertyRef Name="VoidTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_GoodsArrivals_AspNetUsers' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_GoodsArrivals_AspNetUsers" />-->
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_GoodsArrivals_AspNetUsers1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_GoodsArrivals_AspNetUsers1" />-->
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_GoodsArrivals_AspNetUsers2' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_GoodsArrivals_AspNetUsers2" />-->
-        <Association Name="FK_GoodsArrivals_Customers">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
-          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CustomerID" />
-            </Principal>
-            <Dependent Role="GoodsArrivals">
-              <PropertyRef Name="CustomerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GoodsArrivals_Customers1">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
-          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CustomerID" />
-            </Principal>
-            <Dependent Role="GoodsArrivals">
-              <PropertyRef Name="TransporterID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GoodsArrivals_Employees">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
-          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="GoodsArrivals">
-              <PropertyRef Name="SalespersonID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GoodsArrivals_Locations">
-          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
-          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Locations">
-              <PropertyRef Name="LocationID" />
-            </Principal>
-            <Dependent Role="GoodsArrivals">
-              <PropertyRef Name="LocationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GoodsArrivals_PurchaseOrders">
-          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="0..1" />
-          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PurchaseOrders">
-              <PropertyRef Name="PurchaseOrderID" />
-            </Principal>
-            <Dependent Role="GoodsArrivals">
-              <PropertyRef Name="PurchaseOrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GoodsArrivals_VoidTypes">
-          <End Role="VoidTypes" Type="Self.VoidTypes" Multiplicity="0..1" />
-          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="VoidTypes">
-              <PropertyRef Name="VoidTypeID" />
-            </Principal>
-            <Dependent Role="GoodsArrivals">
-              <PropertyRef Name="VoidTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GoodsArrivals_Warehouses">
-          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1" />
-          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouses">
-              <PropertyRef Name="WarehouseID" />
-            </Principal>
-            <Dependent Role="GoodsArrivals">
-              <PropertyRef Name="WarehouseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8131,34 +8041,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <AssociationSet Name="FK_GoodsArrivalDetails_VoidTypes" Association="Self.FK_GoodsArrivalDetails_VoidTypes">
             <End Role="VoidTypes" EntitySet="VoidTypes" />
             <End Role="GoodsArrivalDetails" EntitySet="GoodsArrivalDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GoodsArrivals_Customers" Association="Self.FK_GoodsArrivals_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GoodsArrivals_Customers1" Association="Self.FK_GoodsArrivals_Customers1">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GoodsArrivals_Employees" Association="Self.FK_GoodsArrivals_Employees">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GoodsArrivals_Locations" Association="Self.FK_GoodsArrivals_Locations">
-            <End Role="Locations" EntitySet="Locations" />
-            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GoodsArrivals_PurchaseOrders" Association="Self.FK_GoodsArrivals_PurchaseOrders">
-            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
-            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GoodsArrivals_VoidTypes" Association="Self.FK_GoodsArrivals_VoidTypes">
-            <End Role="VoidTypes" EntitySet="VoidTypes" />
-            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GoodsArrivals_Warehouses" Association="Self.FK_GoodsArrivals_Warehouses">
-            <End Role="Warehouses" EntitySet="Warehouses" />
-            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
           </AssociationSet>
           <AssociationSet Name="FK_GoodsDeliveries_Customers1" Association="Self.FK_GoodsDeliveries_Customers1">
             <End Role="Customers" EntitySet="Customers" />
@@ -19738,6 +19620,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsReceipts" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_GoodsArrivals" FromRole="GoodsArrival" ToRole="GoodsReceipt" />
           <NavigationProperty Name="GoodsArrivalDetails" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_GoodsArrivals" FromRole="GoodsArrival" ToRole="GoodsArrivalDetail" />
           <NavigationProperty Name="PurchaseOrder" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_PurchaseOrders" FromRole="GoodsArrival" ToRole="PurchaseOrder" />
+          <Property Name="TotalPackages" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_GoodsArrivals_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -19896,6 +19779,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalDetails" FromRole="GoodsArrivalDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="PurchaseOrderDetail" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_PurchaseOrderDetails" FromRole="GoodsArrivalDetail" ToRole="PurchaseOrderDetail" />
           <Property Name="SerialID" Type="Int32" Nullable="false" />
+          <Property Name="UnitWeight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Packages" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_GoodsArrivalDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -20763,6 +20648,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="TotalQuantityReceipted" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Boolean" Name="Approved" Nullable="false" />
+          <Property Type="Decimal" Name="TotalPackages" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="GoodsArrivalPendingCustomer">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
@@ -20850,12 +20736,14 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
           <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
-          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="UnitWeight" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Packages" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -25877,6 +25765,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="GoodsArrivals">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrival">
               <MappingFragment StoreEntitySet="GoodsArrivals">
+                <ScalarProperty Name="TotalPackages" ColumnName="TotalPackages" />
                 <ScalarProperty Name="InActiveDate" ColumnName="InActiveDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
@@ -25958,6 +25847,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="GoodsArrivalDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrivalDetail">
               <MappingFragment StoreEntitySet="GoodsArrivalDetails">
+                <ScalarProperty Name="Packages" ColumnName="Packages" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
                 <ScalarProperty Name="SerialID" ColumnName="SerialID" />
                 <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
@@ -26355,6 +26246,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
                 <ScalarProperty Name="TotalQuantityReceipted" ColumnName="TotalQuantityReceipted" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="TotalPackages" ColumnName="TotalPackages" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -26464,6 +26356,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="SealCode" ColumnName="SealCode" />
                 <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
+                <ScalarProperty Name="Packages" ColumnName="Packages" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

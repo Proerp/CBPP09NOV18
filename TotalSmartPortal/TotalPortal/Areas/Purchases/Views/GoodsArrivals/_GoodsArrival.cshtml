@@ -11,6 +11,7 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
     @Html.HiddenFor(model => model.TotalQuantity)
+    @Html.HiddenFor(model => model.TotalPackages)
 
     @Html.HiddenFor(model => model.GoodsArrivalID)
     @Html.HiddenFor(model => model.HasPurchaseOrder)
@@ -141,6 +142,15 @@
                         .ClientFooterTemplate("#= kendo.format(Settings.kfmQuantity, sum) #")
                         .ClientTemplate("#= kendo.format(Settings.kfmQuantity, Quantity) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
 
+                    columns.Bound(p => p.UnitWeight).DisplayNameTitle().Filterable(false).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(90)
+                        .Format(Settings.kfmQuantity)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', UnitWeight) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].UnitWeight' value='#= UnitWeight #' />");
+
+                    columns.Bound(p => p.Packages).DisplayNameTitle().Filterable(false).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(90)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Packages) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].Packages' value='#= Packages #' />");
+
                     columns.Bound(p => p.Remarks).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
@@ -181,30 +191,31 @@
                         }
                     })
 
-                                                        .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
-                                                        .Selectable(settings =>
-                                                        {
-                                                            settings.Mode(GridSelectionMode.Multiple);
-                                                            settings.Type(GridSelectionType.Row);
-                                                        })
-                                                        .DataSource(dataSource => dataSource
-                                                    .Ajax()
-                                                    .Batch(true)
-                                                    .ServerOperation(false)
-                                                    .Model(model =>
-                                                    {
-                                                        model.Id(x => x.GoodsArrivalDetailID);
-                                                        model.Field(m => m.GoodsArrivalDetailID).DefaultValue(0);
-                                                        model.Field(m => m.GoodsArrivalID).DefaultValue(@Model.GoodsArrivalID);
-                                                    })
-                                                    .Events(events =>
-                                                    {
-                                                        events.Error("kendGrid_ErrorHandler");
-                                                    })
-                                                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                                                    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
-                                                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                                                    )
+                    .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
+                    .Selectable(settings =>
+                    {
+                        settings.Mode(GridSelectionMode.Multiple);
+                        settings.Type(GridSelectionType.Row);
+                    })
+                    .DataSource(dataSource => dataSource
+                .Ajax()
+                .Batch(true)
+                .ServerOperation(false)
+                .Model(model =>
+                {
+                    model.Id(x => x.GoodsArrivalDetailID);
+                    model.Field(m => m.GoodsArrivalDetailID).DefaultValue(0);
+                    model.Field(m => m.GoodsArrivalID).DefaultValue(@Model.GoodsArrivalID);
+                })
+                .Events(events =>
+                {
+                    events.Error("kendGrid_ErrorHandler");
+                })
+                .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                .Aggregates(a => a.Add(x => x.Packages).Sum())
+                )
             )
         </div>
 

@@ -47,6 +47,8 @@ namespace TotalModel.Models
         public bool InActivePartial { get; set; }
         public Nullable<System.DateTime> InActivePartialDate { get; set; }
         public int SerialID { get; set; }
+        public decimal UnitWeight { get; set; }
+        public decimal Packages { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual GoodsArrival GoodsArrival { get; set; }
