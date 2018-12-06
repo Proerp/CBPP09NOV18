@@ -15,7 +15,7 @@
 
     definedExemplar.prototype.handleDataSourceChange = function (e) {
         if (e.action != undefined) {
-            if (e.action == "remove") {
+            if (e.action == "add" || e.action == "remove") {
                 this._removeTotalToModelProperty(e.items.length >= 1 ? e.items[0] : null);
             }
             else {

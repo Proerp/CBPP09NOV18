@@ -158,6 +158,8 @@
                                 toolbar.Template(@<text>
                                     <button type="button" class="k-button" onclick="GetPendingGoodsIssueDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng từ đơn đặt hàng </button>
                                     <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Giao hàng toàn bộ đơn hàng </button>
+
+                                    <button type="button" class="k-button" onclick="duplicate()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Duplicate </button>
                                 </text>);
                             else
                                 toolbar.Template(@<text>
@@ -270,6 +272,18 @@
             var createWizardWindow = new kpopupWindow();
             createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingPurchaseOrderDetails", "GoodsArrivals", new { area = "Purchases" })", "Chọn mặt hàng từ đơn đặt hàng", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
+    }
+
+    function duplicate() { //https://www.telerik.com/forums/copy-row-in-the-grid
+        var grid = $("#kendoGridDetails").data("kendoGrid");
+        var selectedItem = grid.dataItem(grid.select());
+        if (selectedItem != undefined) {
+            var newItem = selectedItem.toJSON();
+            newItem.GoodsArrivalDetailID = 0; newItem.Quantity = 0;
+
+            var idx = grid.dataSource.indexOf(selectedItem); // Get the index in the DataSource (not in current page of the grid) https://stackoverflow.com/questions/24931390/kendo-ui-grid-inline-insert-new-row-at-a-specific-position-on-the-grid
+            grid.dataSource.insert(idx, newItem);
+        }
     }
 
     window.urlCommoditiesApi = '@Url.Action("GetCommodityImport", "CommodityAPIs", new { area = "Commons" })';
