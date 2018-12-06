@@ -32,5 +32,8 @@ namespace TotalModel.Models
         public string LabCode { get; set; }
         public decimal UnitWeight { get; set; }
         public decimal Packages { get; set; }
+        public Nullable<int> Shelflife { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     }
 }
