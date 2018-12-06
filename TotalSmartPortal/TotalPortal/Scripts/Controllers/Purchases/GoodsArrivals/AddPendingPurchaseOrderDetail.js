@@ -56,6 +56,7 @@ function handleOKEvent(goodsArrivalGridDataSource, pendingPurchaseOrderDetailGri
         dataRow.CommodityName = purchaseOrderGridDataItem.CommodityName;
         dataRow.CommodityCode = purchaseOrderGridDataItem.CommodityCode;
         dataRow.CommodityTypeID = purchaseOrderGridDataItem.CommodityTypeID;
+        dataRow.Shelflife = purchaseOrderGridDataItem.Shelflife;
 
         dataRow.QuantityAvailable = purchaseOrderGridDataItem.QuantityAvailable;
         dataRow.ControlFreeQuantity = purchaseOrderGridDataItem.ControlFreeQuantity;
@@ -68,6 +69,10 @@ function handleOKEvent(goodsArrivalGridDataSource, pendingPurchaseOrderDetailGri
         dataRow.SealCode = null;
         dataRow.BatchCode = null;
         dataRow.LabCode = null;
+
+        dataRow.ProductionDate = null;
+        dataRow.ExpiryDate = null;
+
         dataRow.Remarks = null;
 
         goodsArrivalJSON.push(dataRow);

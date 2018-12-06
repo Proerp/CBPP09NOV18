@@ -126,6 +126,9 @@
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
+                    columns.Bound(p => p.Shelflife).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(50)
+                        .ClientTemplate("#= (Shelflife == null)? '' : Shelflife #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].Shelflife' value='#= (Shelflife == null) ? '' : Shelflife #' />");                    
+                    
                     columns.Bound(p => p.SealCode).DisplayNameTitle().Width(50)
                         .ClientTemplate("#= (SealCode == null)? '' : SealCode #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].SealCode' value='#= (SealCode == null) ? '' : SealCode #' />");
                     columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(50)
@@ -133,6 +136,13 @@
                     columns.Bound(p => p.LabCode).DisplayNameTitle().Width(50)
                         .ClientTemplate("#= (LabCode == null)? '' : LabCode #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].LabCode' value='#= (LabCode == null) ? '' : LabCode #' />");
 
+                    columns.Bound(p => p.ProductionDate).DisplayNameTitle().Width(80)
+                        .Format("{0:" + @Settings.DateFormat + "}")
+                        .ClientTemplate("#= (ProductionDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ProductionDate) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].ProductionDate' value='#= (ProductionDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ProductionDate) #' />");
+                    columns.Bound(p => p.ExpiryDate).DisplayNameTitle().Width(80)
+                        .Format("{0:" + @Settings.DateFormat + "}")
+                        .ClientTemplate("#= (ExpiryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].ExpiryDate' value='#= (ExpiryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #' />");
+                                        
                     columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(@Model.HasPurchaseOrder ? false : true)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format(Settings.kfmQuantity, sum) #")
