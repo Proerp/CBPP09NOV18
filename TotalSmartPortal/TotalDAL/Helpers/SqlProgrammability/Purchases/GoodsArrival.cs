@@ -312,8 +312,36 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "           BEGIN " + "\r\n";
             queryString = queryString + "               UPDATE          GoodsArrivalDetails  SET Approved = @Approved, InActive = 0, InActivePartial = 0, InActivePartialDate = NULL, VoidTypeID = NULL WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
 
-            queryString = queryString + "               UPDATE          ERmgrVCP.dbo.GoodsArrivals  SET Approved = @Approved, ApprovedDate = GetDate(), InActive = 0, InActivePartial = 0, InActiveDate = NULL, VoidTypeID = NULL WHERE GoodsArrivalID = @EntityID " + "\r\n";
-            queryString = queryString + "               UPDATE          ERmgrVCP.dbo.GoodsArrivalDetails  SET Approved = @Approved, InActive = 0, InActivePartial = 0, InActivePartialDate = NULL, VoidTypeID = NULL WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
+
+            #region INIT GoodsArrivalPackages
+            queryString = queryString + "               IF (@Approved = 1) " + "\r\n";
+            queryString = queryString + "                   BEGIN " + "\r\n";
+            queryString = queryString + "                       INSERT INTO     GoodsArrivalPackages (GoodsArrivalID, EntryDate, LocationID, ShiftID, WorkshiftID, CustomerID, FirmOrderID, PlannedOrderID, CommodityID, CommodityTypeID, PiecePerPack, Quantity, QuantityFailure, QuantityExcess, QuantityShortage, Swarfs, QuantityReceipted, Packages, OddPackages, QuantityWeights, QuantityFailureWeights, QuantityExcessWeights, QuantityShortageWeights, Remarks, Approved, HandoverApproved, SemifinishedProductReferences) " + "\r\n";
+            queryString = queryString + "                       SELECT          MIN(GoodsArrivalID) AS GoodsArrivalID, MIN(EntryDate) AS EntryDate, MIN(LocationID) AS LocationID, MIN(ShiftID) AS ShiftID, MIN(WorkshiftID) AS WorkshiftID, MIN(CustomerID) AS CustomerID, MIN(FirmOrderID) AS FirmOrderID, MIN(PlannedOrderID) AS PlannedOrderID, CommodityID, MIN(CommodityTypeID) AS CommodityTypeID, MIN(PiecePerPack) AS PiecePerPack, ROUND(SUM(Quantity + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") AS Quantity, ROUND(SUM(QuantityFailure), " + (int)GlobalEnums.rndQuantity + ") AS QuantityFailure, ROUND(SUM(QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") AS QuantityExcess, ROUND(SUM(QuantityShortage), " + (int)GlobalEnums.rndQuantity + ") AS QuantityShortage, ROUND(SUM(Swarfs), " + (int)GlobalEnums.rndQuantity + ") AS Swarfs, 0 AS QuantityReceipted, IIF(MIN(PiecePerPack) <> 0, CAST(ROUND(SUM(Quantity + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") AS int) / MIN(PiecePerPack), 0) AS Packages, IIF(MIN(PiecePerPack) <> 0, ROUND(SUM(Quantity + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") % MIN(PiecePerPack), 0) AS OddPackages, 999 AS QuantityWeights, 999 AS QuantityFailureWeights, 999 AS QuantityExcessWeights, 999 AS QuantityShortageWeights, MAX(Remarks) AS Remarks, 1 AS Approved, 0 AS HandoverApproved, " + "\r\n";
+
+            queryString = queryString + "                                       STUFF   ((SELECT ', ' + SemifinishedProducts.Reference " + "\r\n";
+            queryString = queryString + "                                       FROM    GoodsArrivalDetails INNER JOIN SemifinishedProducts ON GoodsArrivalDetails.SemifinishedProductID = SemifinishedProducts.SemifinishedProductID " + "\r\n";
+            queryString = queryString + "                                       WHERE   GoodsArrivalDetails.GoodsArrivalID = @EntityID AND GoodsArrivalDetails.CommodityID = GoodsArrivalDetailResults.CommodityID " + "\r\n";
+            queryString = queryString + "                                       FOR XML PATH(''),TYPE).value('(./text())[1]','VARCHAR(MAX)'),1,1,'') AS SemifinishedProductReferences " + "\r\n";
+
+            queryString = queryString + "                       FROM            GoodsArrivalDetails  GoodsArrivalDetailResults " + "\r\n";
+            queryString = queryString + "                       WHERE           GoodsArrivalID = @EntityID " + "\r\n";
+            queryString = queryString + "                       GROUP BY        CommodityID; " + "\r\n";
+
+            queryString = queryString + "                       UPDATE          GoodsArrivalDetails " + "\r\n";
+            queryString = queryString + "                       SET             GoodsArrivalDetails.GoodsArrivalPackageID = GoodsArrivalPackages.GoodsArrivalPackageID " + "\r\n";
+            queryString = queryString + "                       FROM            GoodsArrivalDetails INNER JOIN GoodsArrivalPackages ON GoodsArrivalDetails.GoodsArrivalID = @EntityID AND GoodsArrivalDetails.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID AND GoodsArrivalDetails.CommodityID = GoodsArrivalPackages.CommodityID; " + "\r\n";
+            queryString = queryString + "                   END " + "\r\n";
+
+            queryString = queryString + "               ELSE " + "\r\n";
+            queryString = queryString + "                   BEGIN " + "\r\n";
+            queryString = queryString + "                       UPDATE          GoodsArrivalDetails SET GoodsArrivalPackageID = NULL WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
+            queryString = queryString + "                       DELETE FROM     GoodsArrivalPackages WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
+            queryString = queryString + "                   END " + "\r\n";
+            #endregion INIT GoodsArrivalPackages
+
+
+
             queryString = queryString + "           END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
