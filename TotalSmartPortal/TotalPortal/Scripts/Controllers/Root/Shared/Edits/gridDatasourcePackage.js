@@ -48,5 +48,20 @@
     }
 
 
+
+
+    definedExemplar.prototype._changeProductionDate = function (dataRow) {
+        this._updateExpiryDate(dataRow);
+    }
+
+    definedExemplar.prototype._changeShelflife = function (dataRow) {
+        this._updateExpiryDate(dataRow);
+    }
+
+    definedExemplar.prototype._updateExpiryDate = function (dataRow) {
+        dataRow.set("ExpiryDate", dataRow.ProductionDate != null && dataRow.Shelflife != null ? this._addMonths(dataRow.ProductionDate, dataRow.Shelflife) : null);
+    }
+
+
     return definedExemplar;
 }));
