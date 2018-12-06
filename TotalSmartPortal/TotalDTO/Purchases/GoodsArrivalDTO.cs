@@ -43,15 +43,15 @@ namespace TotalDTO.Purchases
         [Display(Name = "Chứng từ khuyến mãi")]
         public string PromotionVouchers { get; set; }
 
-        
+
         public virtual int SalespersonID { get; set; }
 
         public override void PerformPresaveRule()
         {
             base.PerformPresaveRule();
 
-            string purchaseOrderReferences = ""; string purchaseOrderCodes = "";
-            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.TransporterID = this.TransporterID; e.WarehouseID = this.WarehouseID; e.SalespersonID = this.SalespersonID; if (this.HasPurchaseOrder && purchaseOrderReferences.IndexOf(e.PurchaseOrderReference) < 0) purchaseOrderReferences = purchaseOrderReferences + (purchaseOrderReferences != "" ? ", " : "") + e.PurchaseOrderReference; if (this.HasPurchaseOrder && purchaseOrderCodes.IndexOf(e.PurchaseOrderCode) < 0) purchaseOrderCodes = purchaseOrderCodes + (purchaseOrderCodes != "" ? ", " : "") + e.PurchaseOrderCode; });
+            string purchaseOrderReferences = ""; string purchaseOrderCodes = ""; int serialID = 0;
+            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.TransporterID = this.TransporterID; e.WarehouseID = this.WarehouseID; e.SalespersonID = this.SalespersonID; e.SerialID = ++serialID; if (this.HasPurchaseOrder && purchaseOrderReferences.IndexOf(e.PurchaseOrderReference) < 0) purchaseOrderReferences = purchaseOrderReferences + (purchaseOrderReferences != "" ? ", " : "") + e.PurchaseOrderReference; if (this.HasPurchaseOrder && purchaseOrderCodes.IndexOf(e.PurchaseOrderCode) < 0) purchaseOrderCodes = purchaseOrderCodes + (purchaseOrderCodes != "" ? ", " : "") + e.PurchaseOrderCode; });
             this.PurchaseOrderReferences = purchaseOrderReferences; this.PurchaseOrderCodes = purchaseOrderCodes != "" ? purchaseOrderCodes : null; if (this.HasPurchaseOrder) this.Code = this.PurchaseOrderCodes;
         }
     }

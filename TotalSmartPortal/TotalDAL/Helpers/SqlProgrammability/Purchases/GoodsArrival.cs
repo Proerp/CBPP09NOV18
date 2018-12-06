@@ -83,14 +83,16 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "       SELECT      GoodsArrivalDetails.GoodsArrivalDetailID, GoodsArrivalDetails.GoodsArrivalID, GoodsArrivalDetails.PurchaseOrderID, GoodsArrivalDetails.PurchaseOrderDetailID, PurchaseOrders.Reference AS PurchaseOrderReference, PurchaseOrders.Code AS PurchaseOrderCode, PurchaseOrders.EntryDate AS PurchaseOrderEntryDate, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, GoodsArrivalDetails.CommodityTypeID, " + "\r\n";
-            queryString = queryString + "                   ROUND(ISNULL(PurchaseOrderDetails.Quantity, 0) - ISNULL(PurchaseOrderDetails.QuantityArrived, 0) + GoodsArrivalDetails.Quantity, 0) AS QuantityRemains, " + "\r\n";
+            queryString = queryString + "                   ROUND(ISNULL(PurchaseOrderDetails.Quantity, 0) - ISNULL(PurchaseOrderDetails.QuantityArrived, 0) + ISNULL(GoodsArrivalSummaries.Quantity, 0), " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
             queryString = queryString + "                   GoodsArrivalDetails.Quantity, GoodsArrivalDetails.SealCode, GoodsArrivalDetails.BatchCode, GoodsArrivalDetails.LabCode, GoodsArrivalDetails.Remarks " + "\r\n";
             queryString = queryString + "       FROM        GoodsArrivalDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON GoodsArrivalDetails.GoodsArrivalID = @GoodsArrivalID AND GoodsArrivalDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+            
             queryString = queryString + "                   LEFT JOIN PurchaseOrderDetails ON GoodsArrivalDetails.PurchaseOrderDetailID = PurchaseOrderDetails.PurchaseOrderDetailID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN PurchaseOrders ON PurchaseOrderDetails.PurchaseOrderID = PurchaseOrders.PurchaseOrderID " + "\r\n";
+            queryString = queryString + "                   LEFT JOIN (SELECT PurchaseOrderDetailID, SUM(Quantity) AS Quantity FROM GoodsArrivalDetails WHERE GoodsArrivalID = @GoodsArrivalID AND NOT PurchaseOrderDetailID IS NULL GROUP BY PurchaseOrderDetailID) AS GoodsArrivalSummaries ON GoodsArrivalDetails.PurchaseOrderDetailID = GoodsArrivalSummaries.PurchaseOrderDetailID " + "\r\n";
 
-            queryString = queryString + "       ORDER BY    Commodities.CommodityTypeID, GoodsArrivalDetails.GoodsArrivalID, GoodsArrivalDetails.GoodsArrivalDetailID " + "\r\n";
+            queryString = queryString + "       ORDER BY    GoodsArrivalDetails.SerialID " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
@@ -244,12 +246,16 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "   IF (SELECT HasPurchaseOrder FROM GoodsArrivals WHERE GoodsArrivalID = @EntityID) = 1 " + "\r\n";
             queryString = queryString + "       BEGIN " + "\r\n";
-            queryString = queryString + "           UPDATE          PurchaseOrderDetails " + "\r\n";
-            queryString = queryString + "           SET             PurchaseOrderDetails.QuantityArrived = ROUND(PurchaseOrderDetails.QuantityArrived + GoodsArrivalDetails.Quantity * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";
-            queryString = queryString + "           FROM            GoodsArrivalDetails " + "\r\n";
-            queryString = queryString + "                           INNER JOIN PurchaseOrderDetails ON ((PurchaseOrderDetails.Approved = 1 AND PurchaseOrderDetails.InActive = 0 AND PurchaseOrderDetails.InActivePartial = 0) OR @SaveRelativeOption = -1) AND GoodsArrivalDetails.GoodsArrivalID = @EntityID AND GoodsArrivalDetails.PurchaseOrderDetailID = PurchaseOrderDetails.PurchaseOrderDetailID " + "\r\n";
 
-            queryString = queryString + "           IF @@ROWCOUNT <> (SELECT COUNT(*) FROM GoodsArrivalDetails WHERE GoodsArrivalID = @EntityID) " + "\r\n";
+            queryString = queryString + "           DECLARE         @GoodsArrivalSummaries TABLE (PurchaseOrderDetailID int NOT NULL, Quantity decimal(18, 2) NOT NULL) " + "\r\n";
+            queryString = queryString + "           INSERT INTO     @GoodsArrivalSummaries (PurchaseOrderDetailID, Quantity) SELECT PurchaseOrderDetailID, SUM(Quantity) AS Quantity FROM GoodsArrivalDetails WHERE GoodsArrivalID = @EntityID GROUP BY PurchaseOrderDetailID " + "\r\n";
+
+            queryString = queryString + "           UPDATE          PurchaseOrderDetails " + "\r\n";
+            queryString = queryString + "           SET             PurchaseOrderDetails.QuantityArrived = ROUND(PurchaseOrderDetails.QuantityArrived + GoodsArrivalSummaries.Quantity * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";
+            queryString = queryString + "           FROM            @GoodsArrivalSummaries AS GoodsArrivalSummaries " + "\r\n";
+            queryString = queryString + "                           INNER JOIN PurchaseOrderDetails ON GoodsArrivalSummaries.PurchaseOrderDetailID = PurchaseOrderDetails.PurchaseOrderDetailID AND ((PurchaseOrderDetails.Approved = 1 AND PurchaseOrderDetails.InActive = 0 AND PurchaseOrderDetails.InActivePartial = 0) OR @SaveRelativeOption = -1) " + "\r\n";
+
+            queryString = queryString + "           IF @@ROWCOUNT <> (SELECT COUNT(*) FROM @GoodsArrivalSummaries) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
             queryString = queryString + "                   DECLARE     @msg NVARCHAR(300) = N'Đơn hàng không tồn tại, chưa duyệt hoặc đã hủy' ; " + "\r\n";
             queryString = queryString + "                   THROW       61001,  @msg, 1; " + "\r\n";

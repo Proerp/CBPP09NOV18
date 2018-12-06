@@ -847,6 +847,7 @@
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="SerialID" Type="int" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="60" />
           <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
           <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
@@ -19894,6 +19895,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_VoidTypes" FromRole="GoodsArrivalDetail" ToRole="VoidType" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalDetails" FromRole="GoodsArrivalDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="PurchaseOrderDetail" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_PurchaseOrderDetails" FromRole="GoodsArrivalDetail" ToRole="PurchaseOrderDetail" />
+          <Property Name="SerialID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_GoodsArrivalDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -25956,6 +25958,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="GoodsArrivalDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrivalDetail">
               <MappingFragment StoreEntitySet="GoodsArrivalDetails">
+                <ScalarProperty Name="SerialID" ColumnName="SerialID" />
                 <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />

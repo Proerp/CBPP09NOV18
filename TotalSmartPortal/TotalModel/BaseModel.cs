@@ -25,6 +25,8 @@ namespace TotalModel
         string Caption { get; set; }
         [Display(Name = "Ghi chú")]
         string Remarks { get; set; }
+
+        int SerialID { get; set; }
     }
 
     public abstract class BaseModel : IBaseModel
@@ -43,6 +45,8 @@ namespace TotalModel
         public virtual string Caption { get; set; }
         [Display(Name = "Ghi chú")]
         public virtual string Remarks { get; set; }
+
+        public int SerialID { get; set; }
 
         public virtual bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
