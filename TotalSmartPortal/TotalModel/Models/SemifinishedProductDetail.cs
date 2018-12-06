@@ -42,12 +42,12 @@ namespace TotalModel.Models
         public int PiecePerPack { get; set; }
         public int MoldQuantity { get; set; }
     
-        public virtual Commodity Commodity { get; set; }
         public virtual FirmOrder FirmOrder { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }
         public virtual MaterialIssue MaterialIssue { get; set; }
         public virtual PlannedOrderDetail PlannedOrderDetail { get; set; }
         public virtual SemifinishedProduct SemifinishedProduct { get; set; }
         public virtual FirmOrderDetail FirmOrderDetail { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }

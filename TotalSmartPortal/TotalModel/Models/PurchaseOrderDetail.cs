@@ -38,10 +38,10 @@ namespace TotalModel.Models
         public bool InActivePartial { get; set; }
         public Nullable<System.DateTime> InActivePartialDate { get; set; }
     
-        public virtual Commodity Commodity { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
         public virtual PurchaseOrder PurchaseOrder { get; set; }
         public virtual VoidType VoidType { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }

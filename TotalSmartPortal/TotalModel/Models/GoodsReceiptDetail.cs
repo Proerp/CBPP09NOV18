@@ -63,7 +63,6 @@ namespace TotalModel.Models
         public string Barcode { get; set; }
         public int BinLocationID { get; set; }
     
-        public virtual Commodity Commodity { get; set; }
         public virtual GoodsReceipt GoodsReceipt { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }
         public virtual PurchaseRequisitionDetail PurchaseRequisitionDetail { get; set; }
@@ -83,5 +82,6 @@ namespace TotalModel.Models
         public virtual BinLocation BinLocation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PackageIssueDetail> PackageIssueDetails { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }

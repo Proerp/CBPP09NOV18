@@ -26,8 +26,8 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public bool Approved { get; set; }
     
-        public virtual Commodity Commodity { get; set; }
         public virtual FinishedHandover FinishedHandover { get; set; }
         public virtual FinishedProductPackage FinishedProductPackage { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }

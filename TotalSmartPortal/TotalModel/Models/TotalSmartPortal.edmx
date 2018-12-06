@@ -263,7 +263,8 @@
           <Property Name="Packing" Type="nvarchar" MaxLength="60" />
           <Property Name="Origin" Type="nvarchar" MaxLength="60" />
           <Property Name="Weight" Type="float" />
-          <Property Name="LeadTime" Type="float" />
+          <Property Name="Shelflife" Type="int" />
+          <Property Name="LeadTime" Type="int" />
           <Property Name="HSCode" Type="nvarchar" MaxLength="20" />
           <Property Name="Discontinue" Type="bit" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
@@ -12633,64 +12634,11 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="Customer" EntitySet="Customers" />
             <End Role="WarehouseAdjustment" EntitySet="WarehouseAdjustments" />
           </AssociationSet>
-          <EntitySet Name="Commodities" EntityType="TotalSmartPortalModel.Commodity" />
           <EntitySet Name="CommodityBrands" EntityType="TotalSmartPortalModel.CommodityBrand" />
           <EntitySet Name="CommodityCategories" EntityType="TotalSmartPortalModel.CommodityCategory" />
           <EntitySet Name="CommodityClasses" EntityType="TotalSmartPortalModel.CommodityClass" />
           <EntitySet Name="CommodityLines" EntityType="TotalSmartPortalModel.CommodityLine" />
           <EntitySet Name="CommodityTypes" EntityType="TotalSmartPortalModel.CommodityType" />
-          <AssociationSet Name="FK_AccountInvoiceDetails_Commodities" Association="TotalSmartPortalModel.FK_AccountInvoiceDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="AccountInvoiceDetail" EntitySet="AccountInvoiceDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Commodities_CommodityBrands" Association="TotalSmartPortalModel.FK_Commodities_CommodityBrands">
-            <End Role="CommodityBrand" EntitySet="CommodityBrands" />
-            <End Role="Commodity" EntitySet="Commodities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Commodities_CommodityCategories" Association="TotalSmartPortalModel.FK_Commodities_CommodityCategories">
-            <End Role="CommodityCategory" EntitySet="CommodityCategories" />
-            <End Role="Commodity" EntitySet="Commodities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Commodities_CommodityClasses" Association="TotalSmartPortalModel.FK_Commodities_CommodityClasses">
-            <End Role="CommodityClass" EntitySet="CommodityClasses" />
-            <End Role="Commodity" EntitySet="Commodities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Commodities_CommodityLines" Association="TotalSmartPortalModel.FK_Commodities_CommodityLines">
-            <End Role="CommodityLine" EntitySet="CommodityLines" />
-            <End Role="Commodity" EntitySet="Commodities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Commodities_CommodityTypes" Association="TotalSmartPortalModel.FK_Commodities_CommodityTypes">
-            <End Role="CommodityType" EntitySet="CommodityTypes" />
-            <End Role="Commodity" EntitySet="Commodities" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CreditNoteDetails_Commodities" Association="TotalSmartPortalModel.FK_CreditNoteDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="CreditNoteDetail" EntitySet="CreditNoteDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DeliveryAdviceDetails_Commodities" Association="TotalSmartPortalModel.FK_DeliveryAdviceDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="DeliveryAdviceDetail" EntitySet="DeliveryAdviceDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GoodsIssueDetails_Commodities" Association="TotalSmartPortalModel.FK_GoodsIssueDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="GoodsIssueDetail" EntitySet="GoodsIssueDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseRequisitionDetails_Commodities" Association="TotalSmartPortalModel.FK_PurchaseRequisitionDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="PurchaseRequisitionDetail" EntitySet="PurchaseRequisitionDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SalesOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_SalesOrderDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="SalesOrderDetail" EntitySet="SalesOrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SalesReturnDetails_Commodities" Association="TotalSmartPortalModel.FK_SalesReturnDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="SalesReturnDetail" EntitySet="SalesReturnDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_WarehouseAdjustmentDetails_Commodities" Association="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="WarehouseAdjustmentDetail" EntitySet="WarehouseAdjustmentDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_CommodityBrands_CommodityBrands" Association="TotalSmartPortalModel.FK_CommodityBrands_CommodityBrands">
             <End Role="CommodityBrand" EntitySet="CommodityBrands" />
             <End Role="CommodityBrand1" EntitySet="CommodityBrands" />
@@ -12732,10 +12680,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           </AssociationSet>
           <EntitySet Name="FirmOrders" EntityType="TotalSmartPortalModel.FirmOrder" />
           <EntitySet Name="PlannedOrderDetails" EntityType="TotalSmartPortalModel.PlannedOrderDetail" />
-          <AssociationSet Name="FK_PlannedOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_PlannedOrderDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="PlannedOrderDetail" EntitySet="PlannedOrderDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_FirmOrders_Customers" Association="TotalSmartPortalModel.FK_FirmOrders_Customers">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="FirmOrder" EntitySet="FirmOrders" />
@@ -12793,10 +12737,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySet Name="Boms" EntityType="TotalSmartPortalModel.Bom" />
           <AssociationSet Name="FK_BomDetails_Boms" Association="TotalSmartPortalModel.FK_BomDetails_Boms">
             <End Role="Bom" EntitySet="Boms" />
-            <End Role="BomDetail" EntitySet="BomDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BomDetails_Materials" Association="TotalSmartPortalModel.FK_BomDetails_Materials">
-            <End Role="Commodity" EntitySet="Commodities" />
             <End Role="BomDetail" EntitySet="BomDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_FirmOrders_Boms" Association="TotalSmartPortalModel.FK_FirmOrders_Boms">
@@ -13034,14 +12974,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySet Name="MaterialIssues" EntityType="TotalSmartPortalModel.MaterialIssue" />
           <EntitySet Name="SemifinishedProductDetails" EntityType="TotalSmartPortalModel.SemifinishedProductDetail" />
           <EntitySet Name="SemifinishedProducts" EntityType="TotalSmartPortalModel.SemifinishedProduct" />
-          <AssociationSet Name="FK_MaterialIssueDetails_Commodities" Association="TotalSmartPortalModel.FK_MaterialIssueDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="MaterialIssueDetail" EntitySet="MaterialIssueDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedProductDetails_Commodities" Association="TotalSmartPortalModel.FK_SemifinishedProductDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="SemifinishedProductDetail" EntitySet="SemifinishedProductDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_MaterialIssueDetails_Customers" Association="TotalSmartPortalModel.FK_MaterialIssueDetails_Customers">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="MaterialIssueDetail" EntitySet="MaterialIssueDetails" />
@@ -13184,10 +13116,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="FinishedProduct" EntitySet="FinishedProducts" />
           </AssociationSet>
           <EntitySet Name="FinishedProductDetails" EntityType="TotalSmartPortalModel.FinishedProductDetail" />
-          <AssociationSet Name="FK_FinishedProductDetails_Commodities" Association="TotalSmartPortalModel.FK_FinishedProductDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="FinishedProductDetail" EntitySet="FinishedProductDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_FinishedProductDetails_FinishedProducts" Association="TotalSmartPortalModel.FK_FinishedProductDetails_FinishedProducts">
             <End Role="FinishedProduct" EntitySet="FinishedProducts" />
             <End Role="FinishedProductDetail" EntitySet="FinishedProductDetails" />
@@ -13227,10 +13155,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="WarehouseTransferDetails" EntityType="TotalSmartPortalModel.WarehouseTransferDetail" />
-          <AssociationSet Name="FK_WarehouseTransferDetails_Commodities" Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="WarehouseTransferDetail" EntitySet="WarehouseTransferDetails" />
-          </AssociationSet>
           <FunctionImport Name="GetWarehouseTransferIndexes" ReturnType="Collection(TotalSmartPortalModel.WarehouseTransferIndex)">
             <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="AspUserID" Mode="In" Type="String" />
@@ -13349,14 +13273,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           </AssociationSet>
           <EntitySet Name="FinishedHandoverDetails" EntityType="TotalSmartPortalModel.FinishedHandoverDetail" />
           <EntitySet Name="GoodsReceiptDetails" EntityType="TotalSmartPortalModel.GoodsReceiptDetail" />
-          <AssociationSet Name="FK_FinishedHandoverDetails_Commodities" Association="TotalSmartPortalModel.FK_FinishedHandoverDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="FinishedHandoverDetail" EntitySet="FinishedHandoverDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GoodsReceiptDetails_Commodities" Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="GoodsReceiptDetail" EntitySet="GoodsReceiptDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_GoodsReceiptDetails_GoodsReceipts" Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsReceipts">
             <End Role="GoodsReceipt" EntitySet="GoodsReceipts" />
             <End Role="GoodsReceiptDetail" EntitySet="GoodsReceiptDetails" />
@@ -13424,10 +13340,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="FinishedHandover" EntitySet="FinishedHandovers" />
           </AssociationSet>
           <EntitySet Name="TransferOrderDetails" EntityType="TotalSmartPortalModel.TransferOrderDetail" />
-          <AssociationSet Name="FK_TransferOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_TransferOrderDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="TransferOrderDetail" EntitySet="TransferOrderDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_TransferOrderDetails_Warehouses" Association="TotalSmartPortalModel.FK_TransferOrderDetails_Warehouses">
             <End Role="Warehouse" EntitySet="Warehouses" />
             <End Role="TransferOrderDetail" EntitySet="TransferOrderDetails" />
@@ -13596,10 +13508,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="Bom" EntitySet="Boms" />
             <End Role="FirmOrderDetail" EntitySet="FirmOrderDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_FirmOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_FirmOrderDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="FirmOrderDetail" EntitySet="FirmOrderDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_FirmOrderDetails_Customers" Association="TotalSmartPortalModel.FK_FirmOrderDetails_Customers">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="FirmOrderDetail" EntitySet="FirmOrderDetails" />
@@ -13663,10 +13571,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="GoodsArrivalDetails" EntityType="TotalSmartPortalModel.GoodsArrivalDetail" />
-          <AssociationSet Name="FK_GoodsArrivalDetails_Commodities" Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="GoodsArrivalDetail" EntitySet="GoodsArrivalDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_GoodsArrivalDetails_GoodsArrivals" Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_GoodsArrivals">
             <End Role="GoodsArrival" EntitySet="GoodsArrivals" />
             <End Role="GoodsArrivalDetail" EntitySet="GoodsArrivalDetails" />
@@ -13731,10 +13635,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySet Name="BlendingInstructions" EntityType="TotalSmartPortalModel.BlendingInstruction" />
           <AssociationSet Name="FK_BlendingInstructionDetails_BlendingInstructions" Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_BlendingInstructions">
             <End Role="BlendingInstruction" EntitySet="BlendingInstructions" />
-            <End Role="BlendingInstructionDetail" EntitySet="BlendingInstructionDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BlendingInstructionDetails_Commodities" Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
             <End Role="BlendingInstructionDetail" EntitySet="BlendingInstructionDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_BlendingInstructionDetails_Warehouses" Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_Warehouses">
@@ -13802,10 +13702,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <AssociationSet Name="FK_PackageIssues_BlendingInstructions" Association="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions">
             <End Role="BlendingInstruction" EntitySet="BlendingInstructions" />
             <End Role="PackageIssue" EntitySet="PackageIssues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PackageIssueDetails_Commodities" Association="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="PackageIssueDetail" EntitySet="PackageIssueDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_PackageIssues_Employees" Association="TotalSmartPortalModel.FK_PackageIssues_Employees">
             <End Role="Employee" EntitySet="Employees" />
@@ -13888,10 +13784,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           </FunctionImport>
           <EntitySet Name="PurchaseOrderDetails" EntityType="TotalSmartPortalModel.PurchaseOrderDetail" />
           <EntitySet Name="PurchaseOrders" EntityType="TotalSmartPortalModel.PurchaseOrder" />
-          <AssociationSet Name="FK_PurchaseOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_PurchaseOrders_Customers" Association="TotalSmartPortalModel.FK_PurchaseOrders_Customers">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
@@ -13964,6 +13856,115 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="EntityID" Mode="In" Type="Int32" />
             <Parameter Name="Approved" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <EntitySet Name="Commodities" EntityType="TotalSmartPortalModel.Commodity" />
+          <AssociationSet Name="FK_AccountInvoiceDetails_Commodities" Association="TotalSmartPortalModel.FK_AccountInvoiceDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="AccountInvoiceDetail" EntitySet="AccountInvoiceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BlendingInstructionDetails_Commodities" Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="BlendingInstructionDetail" EntitySet="BlendingInstructionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BomDetails_Materials" Association="TotalSmartPortalModel.FK_BomDetails_Materials">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="BomDetail" EntitySet="BomDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Commodities_CommodityBrands" Association="TotalSmartPortalModel.FK_Commodities_CommodityBrands">
+            <End Role="CommodityBrand" EntitySet="CommodityBrands" />
+            <End Role="Commodity" EntitySet="Commodities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Commodities_CommodityCategories" Association="TotalSmartPortalModel.FK_Commodities_CommodityCategories">
+            <End Role="CommodityCategory" EntitySet="CommodityCategories" />
+            <End Role="Commodity" EntitySet="Commodities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Commodities_CommodityClasses" Association="TotalSmartPortalModel.FK_Commodities_CommodityClasses">
+            <End Role="CommodityClass" EntitySet="CommodityClasses" />
+            <End Role="Commodity" EntitySet="Commodities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Commodities_CommodityLines" Association="TotalSmartPortalModel.FK_Commodities_CommodityLines">
+            <End Role="CommodityLine" EntitySet="CommodityLines" />
+            <End Role="Commodity" EntitySet="Commodities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Commodities_CommodityTypes" Association="TotalSmartPortalModel.FK_Commodities_CommodityTypes">
+            <End Role="CommodityType" EntitySet="CommodityTypes" />
+            <End Role="Commodity" EntitySet="Commodities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CreditNoteDetails_Commodities" Association="TotalSmartPortalModel.FK_CreditNoteDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="CreditNoteDetail" EntitySet="CreditNoteDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeliveryAdviceDetails_Commodities" Association="TotalSmartPortalModel.FK_DeliveryAdviceDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="DeliveryAdviceDetail" EntitySet="DeliveryAdviceDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinishedHandoverDetails_Commodities" Association="TotalSmartPortalModel.FK_FinishedHandoverDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="FinishedHandoverDetail" EntitySet="FinishedHandoverDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinishedProductDetails_Commodities" Association="TotalSmartPortalModel.FK_FinishedProductDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="FinishedProductDetail" EntitySet="FinishedProductDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FirmOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_FirmOrderDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="FirmOrderDetail" EntitySet="FirmOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivalDetails_Commodities" Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="GoodsArrivalDetail" EntitySet="GoodsArrivalDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsIssueDetails_Commodities" Association="TotalSmartPortalModel.FK_GoodsIssueDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="GoodsIssueDetail" EntitySet="GoodsIssueDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsReceiptDetails_Commodities" Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="GoodsReceiptDetail" EntitySet="GoodsReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MaterialIssueDetails_Commodities" Association="TotalSmartPortalModel.FK_MaterialIssueDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="MaterialIssueDetail" EntitySet="MaterialIssueDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssueDetails_Commodities" Association="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="PackageIssueDetail" EntitySet="PackageIssueDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlannedOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_PlannedOrderDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="PlannedOrderDetail" EntitySet="PlannedOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="PurchaseOrderDetail" EntitySet="PurchaseOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseRequisitionDetails_Commodities" Association="TotalSmartPortalModel.FK_PurchaseRequisitionDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="PurchaseRequisitionDetail" EntitySet="PurchaseRequisitionDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_SalesOrderDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="SalesOrderDetail" EntitySet="SalesOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesReturnDetails_Commodities" Association="TotalSmartPortalModel.FK_SalesReturnDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="SalesReturnDetail" EntitySet="SalesReturnDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedProductDetails_Commodities" Association="TotalSmartPortalModel.FK_SemifinishedProductDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="SemifinishedProductDetail" EntitySet="SemifinishedProductDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransferOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_TransferOrderDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="TransferOrderDetail" EntitySet="TransferOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarehouseAdjustmentDetails_Commodities" Association="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="WarehouseAdjustmentDetail" EntitySet="WarehouseAdjustmentDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarehouseTransferDetails_Commodities" Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="WarehouseTransferDetail" EntitySet="WarehouseTransferDetails" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -15423,8 +15424,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="InActivePartialDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PurchaseRequisition" Relationship="TotalSmartPortalModel.FK_PurchaseRequisitionDetails_PurchaseRequisitions" FromRole="PurchaseRequisitionDetail" ToRole="PurchaseRequisition" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_PurchaseRequisitionDetails_VoidTypes" FromRole="PurchaseRequisitionDetail" ToRole="VoidType" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PurchaseRequisitionDetails_Commodities" FromRole="PurchaseRequisitionDetail" ToRole="Commodity" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_PurchaseRequisitionDetails" FromRole="PurchaseRequisitionDetail" ToRole="GoodsReceiptDetail" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PurchaseRequisitionDetails_Commodities" FromRole="PurchaseRequisitionDetail" ToRole="Commodity" />
         </EntityType>
         <EntityType Name="PurchaseRequisition">
           <Key>
@@ -15717,9 +15718,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="Warehouse1" Relationship="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_Warehouses1" FromRole="WarehouseAdjustmentDetail" ToRole="Warehouse" />
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_Commodities" FromRole="WarehouseAdjustmentDetail" ToRole="Commodity" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_WarehouseAdjustmentDetails" FromRole="WarehouseAdjustmentDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_GoodsReceiptDetails" FromRole="WarehouseAdjustmentDetail" ToRole="GoodsReceiptDetail" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_Commodities" FromRole="WarehouseAdjustmentDetail" ToRole="Commodity" />
           </EntityType>
         <EntityType Name="WarehouseAdjustment">
           <Key>
@@ -15896,72 +15897,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="Commodity">
-          <Key>
-            <PropertyRef Name="CommodityID" />
-          </Key>
-          <Property Name="CommodityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OfficialCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CodePartA" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CodePartB" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CodePartC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CodePartD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CodePartE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="CodePartF" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="OfficialName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="OriginalName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="PreviousCommodityID" Type="Int32" />
-          <Property Name="CommodityBrandID" Type="Int32" Nullable="false" />
-          <Property Name="CommodityCategoryID" Type="Int32" Nullable="false" />
-          <Property Name="CommodityTypeID" Type="Int32" Nullable="false" />
-          <Property Name="CommodityClassID" Type="Int32" Nullable="false" />
-          <Property Name="CommodityLineID" Type="Int32" Nullable="false" />
-          <Property Name="SupplierID" Type="Int32" Nullable="false" />
-          <Property Name="PiecePerPack" Type="Int32" Nullable="false" />
-          <Property Name="QuantityAlert" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="ListedPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="GrossPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="PurchaseUnit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="SalesUnit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Packing" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="Origin" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
-          <Property Name="Weight" Type="Double" />
-          <Property Name="LeadTime" Type="Double" />
-          <Property Name="HSCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Discontinue" Type="Boolean" Nullable="false" />
-          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="InActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AccountInvoiceDetails" Relationship="TotalSmartPortalModel.FK_AccountInvoiceDetails_Commodities" FromRole="Commodity" ToRole="AccountInvoiceDetail" />
-          <NavigationProperty Name="CommodityBrand" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityBrands" FromRole="Commodity" ToRole="CommodityBrand" />
-          <NavigationProperty Name="CommodityCategory" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityCategories" FromRole="Commodity" ToRole="CommodityCategory" />
-          <NavigationProperty Name="CommodityClass" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityClasses" FromRole="Commodity" ToRole="CommodityClass" />
-          <NavigationProperty Name="CommodityLine" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityLines" FromRole="Commodity" ToRole="CommodityLine" />
-          <NavigationProperty Name="CommodityType" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityTypes" FromRole="Commodity" ToRole="CommodityType" />
-          <NavigationProperty Name="CreditNoteDetails" Relationship="TotalSmartPortalModel.FK_CreditNoteDetails_Commodities" FromRole="Commodity" ToRole="CreditNoteDetail" />
-          <NavigationProperty Name="DeliveryAdviceDetails" Relationship="TotalSmartPortalModel.FK_DeliveryAdviceDetails_Commodities" FromRole="Commodity" ToRole="DeliveryAdviceDetail" />
-          <NavigationProperty Name="GoodsIssueDetails" Relationship="TotalSmartPortalModel.FK_GoodsIssueDetails_Commodities" FromRole="Commodity" ToRole="GoodsIssueDetail" />
-          <NavigationProperty Name="PurchaseRequisitionDetails" Relationship="TotalSmartPortalModel.FK_PurchaseRequisitionDetails_Commodities" FromRole="Commodity" ToRole="PurchaseRequisitionDetail" />
-          <NavigationProperty Name="SalesOrderDetails" Relationship="TotalSmartPortalModel.FK_SalesOrderDetails_Commodities" FromRole="Commodity" ToRole="SalesOrderDetail" />
-          <NavigationProperty Name="SalesReturnDetails" Relationship="TotalSmartPortalModel.FK_SalesReturnDetails_Commodities" FromRole="Commodity" ToRole="SalesReturnDetail" />
-          <NavigationProperty Name="WarehouseAdjustmentDetails" Relationship="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_Commodities" FromRole="Commodity" ToRole="WarehouseAdjustmentDetail" />
-          <NavigationProperty Name="PlannedOrderDetails" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Commodities" FromRole="Commodity" ToRole="PlannedOrderDetail" />
-          <NavigationProperty Name="BomDetails" Relationship="TotalSmartPortalModel.FK_BomDetails_Materials" FromRole="Commodity" ToRole="BomDetail" />
-          <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Commodities" FromRole="Commodity" ToRole="MaterialIssueDetail" />
-          <NavigationProperty Name="SemifinishedProductDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_Commodities" FromRole="Commodity" ToRole="SemifinishedProductDetail" />
-          <NavigationProperty Name="FinishedProductDetails" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Commodities" FromRole="Commodity" ToRole="FinishedProductDetail" />
-          <NavigationProperty Name="WarehouseTransferDetails" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities" FromRole="Commodity" ToRole="WarehouseTransferDetail" />
-          <NavigationProperty Name="FinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_FinishedHandoverDetails_Commodities" FromRole="Commodity" ToRole="FinishedHandoverDetail" />
-          <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities" FromRole="Commodity" ToRole="GoodsReceiptDetail" />
-          <NavigationProperty Name="TransferOrderDetails" Relationship="TotalSmartPortalModel.FK_TransferOrderDetails_Commodities" FromRole="Commodity" ToRole="TransferOrderDetail" />
-          <NavigationProperty Name="FirmOrderDetails" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Commodities" FromRole="Commodity" ToRole="FirmOrderDetail" />
-          <NavigationProperty Name="GoodsArrivalDetails" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" FromRole="Commodity" ToRole="GoodsArrivalDetail" />
-          <NavigationProperty Name="BlendingInstructionDetails" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" FromRole="Commodity" ToRole="BlendingInstructionDetail" />
-          <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities" FromRole="Commodity" ToRole="PackageIssueDetail" />
-          <NavigationProperty Name="PurchaseOrderDetails" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities" FromRole="Commodity" ToRole="PurchaseOrderDetail" />
-        </EntityType>
         <EntityType Name="CommodityBrand">
           <Key>
             <PropertyRef Name="CommodityBrandID" />
@@ -15970,10 +15905,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="AncestorID" Type="Int32" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Commodities" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityBrands" FromRole="CommodityBrand" ToRole="Commodity" />
           <NavigationProperty Name="CommodityBrands1" Relationship="TotalSmartPortalModel.FK_CommodityBrands_CommodityBrands" FromRole="CommodityBrand" ToRole="CommodityBrand1" />
           <NavigationProperty Name="CommodityBrand1" Relationship="TotalSmartPortalModel.FK_CommodityBrands_CommodityBrands" FromRole="CommodityBrand1" ToRole="CommodityBrand" />
           <NavigationProperty Name="Promotions" Relationship="TotalSmartPortalModel.FK_Promotions_CommodityBrands" FromRole="CommodityBrand" ToRole="Promotion" />
+          <NavigationProperty Name="Commodities" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityBrands" FromRole="CommodityBrand" ToRole="Commodity" />
         </EntityType>
         <EntityType Name="CommodityCategory">
           <Key>
@@ -15991,10 +15926,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="VATPercent" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="ClearancePercent" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Commodities" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityCategories" FromRole="CommodityCategory" ToRole="Commodity" />
           <NavigationProperty Name="CommodityCategories1" Relationship="TotalSmartPortalModel.FK_CommodityCategories_CommodityCategories" FromRole="CommodityCategory" ToRole="CommodityCategory1" />
           <NavigationProperty Name="CommodityCategory1" Relationship="TotalSmartPortalModel.FK_CommodityCategories_CommodityCategories" FromRole="CommodityCategory1" ToRole="CommodityCategory" />
           <Property Name="CommodityTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Commodities" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityCategories" FromRole="CommodityCategory" ToRole="Commodity" />
         </EntityType>
         <EntityType Name="CommodityClass">
           <Key>
@@ -16026,162 +15961,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Commodities" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityTypes" FromRole="CommodityType" ToRole="Commodity" />
         </EntityType>
-        <Association Name="FK_AccountInvoiceDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.AccountInvoiceDetail" Role="AccountInvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="AccountInvoiceDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Commodities_CommodityBrands">
-          <End Type="TotalSmartPortalModel.CommodityBrand" Role="CommodityBrand" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CommodityBrand">
-              <PropertyRef Name="CommodityBrandID" />
-            </Principal>
-            <Dependent Role="Commodity">
-              <PropertyRef Name="CommodityBrandID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Commodities_CommodityCategories">
-          <End Type="TotalSmartPortalModel.CommodityCategory" Role="CommodityCategory" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CommodityCategory">
-              <PropertyRef Name="CommodityCategoryID" />
-            </Principal>
-            <Dependent Role="Commodity">
-              <PropertyRef Name="CommodityCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Commodities_CommodityClasses">
-          <End Type="TotalSmartPortalModel.CommodityClass" Role="CommodityClass" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CommodityClass">
-              <PropertyRef Name="CommodityClassID" />
-            </Principal>
-            <Dependent Role="Commodity">
-              <PropertyRef Name="CommodityClassID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Commodities_CommodityLines">
-          <End Type="TotalSmartPortalModel.CommodityLine" Role="CommodityLine" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CommodityLine">
-              <PropertyRef Name="CommodityLineID" />
-            </Principal>
-            <Dependent Role="Commodity">
-              <PropertyRef Name="CommodityLineID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Commodities_CommodityTypes">
-          <End Type="TotalSmartPortalModel.CommodityType" Role="CommodityType" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CommodityType">
-              <PropertyRef Name="CommodityTypeID" />
-            </Principal>
-            <Dependent Role="Commodity">
-              <PropertyRef Name="CommodityTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CreditNoteDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.CreditNoteDetail" Role="CreditNoteDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="CreditNoteDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DeliveryAdviceDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.DeliveryAdviceDetail" Role="DeliveryAdviceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="DeliveryAdviceDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GoodsIssueDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.GoodsIssueDetail" Role="GoodsIssueDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="GoodsIssueDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseRequisitionDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PurchaseRequisitionDetail" Role="PurchaseRequisitionDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="PurchaseRequisitionDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SalesOrderDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SalesOrderDetail" Role="SalesOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="SalesOrderDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SalesReturnDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SalesReturnDetail" Role="SalesReturnDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="SalesReturnDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_WarehouseAdjustmentDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.WarehouseAdjustmentDetail" Role="WarehouseAdjustmentDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="WarehouseAdjustmentDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CommodityBrands_CommodityBrands">
           <End Type="TotalSmartPortalModel.CommodityBrand" Role="CommodityBrand" Multiplicity="0..1" />
           <End Type="TotalSmartPortalModel.CommodityBrand" Role="CommodityBrand1" Multiplicity="*" />
@@ -16393,7 +16172,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="InActive" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartial" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartialDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Commodities" FromRole="PlannedOrderDetail" ToRole="Commodity" />
           <NavigationProperty Name="Customer" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Customers" FromRole="PlannedOrderDetail" ToRole="Customer" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_VoidTypes" FromRole="PlannedOrderDetail" ToRole="VoidType" />
           <NavigationProperty Name="Bom" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Boms" FromRole="PlannedOrderDetail" ToRole="Bom" />
@@ -16407,19 +16185,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="QuantityOnhand" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Specs" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PlannedOrder" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_PlannedOrders" FromRole="PlannedOrderDetail" ToRole="PlannedOrder" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Commodities" FromRole="PlannedOrderDetail" ToRole="Commodity" />
         </EntityType>
-        <Association Name="FK_PlannedOrderDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PlannedOrderDetail" Role="PlannedOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="PlannedOrderDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_FirmOrders_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
           <End Type="TotalSmartPortalModel.FirmOrder" Role="FirmOrder" Multiplicity="*" />
@@ -16612,18 +16379,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Principal>
             <Dependent Role="BomDetail">
               <PropertyRef Name="BomID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BomDetails_Materials">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.BomDetail" Role="BomDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="BomDetail">
-              <PropertyRef Name="MaterialID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -17191,7 +16946,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="QuantityLoss" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Commodities" FromRole="MaterialIssueDetail" ToRole="Commodity" />
           <NavigationProperty Name="Customer" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Customers" FromRole="MaterialIssueDetail" ToRole="Customer" />
           <NavigationProperty Name="FirmOrderMaterial" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_FirmOrderMaterials" FromRole="MaterialIssueDetail" ToRole="FirmOrderMaterial" />
           <NavigationProperty Name="FirmOrder" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_FirmOrders" FromRole="MaterialIssueDetail" ToRole="FirmOrder" />
@@ -17204,6 +16958,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_MaterialIssueDetails" FromRole="MaterialIssueDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_GoodsReceiptDetails" FromRole="MaterialIssueDetail" ToRole="GoodsReceiptDetail" />
           <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Commodities" FromRole="MaterialIssueDetail" ToRole="Commodity" />
         </EntityType>
         <EntityType Name="MaterialIssue">
           <Key>
@@ -17285,7 +17040,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
           <Property Name="HandoverApproved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_Commodities" FromRole="SemifinishedProductDetail" ToRole="Commodity" />
           <NavigationProperty Name="FirmOrder" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_FirmOrders" FromRole="SemifinishedProductDetail" ToRole="FirmOrder" />
           <NavigationProperty Name="MaterialIssueDetail" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_MaterialIssueDetails" FromRole="SemifinishedProductDetail" ToRole="MaterialIssueDetail" />
           <NavigationProperty Name="MaterialIssue" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_MaterialIssues" FromRole="SemifinishedProductDetail" ToRole="MaterialIssue" />
@@ -17294,6 +17048,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="PiecePerPack" Type="Int32" Nullable="false" />
           <Property Name="MoldQuantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="FirmOrderDetail" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_FirmOrderDetails" FromRole="SemifinishedProductDetail" ToRole="FirmOrderDetail" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_Commodities" FromRole="SemifinishedProductDetail" ToRole="Commodity" />
         </EntityType>
         <EntityType Name="SemifinishedProduct">
           <Key>
@@ -17351,30 +17106,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="StopDate" Type="DateTime" Precision="3" />
         </EntityType>
-        <Association Name="FK_MaterialIssueDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.MaterialIssueDetail" Role="MaterialIssueDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="MaterialIssueDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedProductDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedProductDetail" Role="SemifinishedProductDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="SemifinishedProductDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_MaterialIssueDetails_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
           <End Type="TotalSmartPortalModel.MaterialIssueDetail" Role="MaterialIssueDetail" Multiplicity="*" />
@@ -17862,7 +17593,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
           <Property Name="HandoverApproved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Commodities" FromRole="FinishedProductDetail" ToRole="Commodity" />
           <NavigationProperty Name="FinishedProduct" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_FinishedProducts" FromRole="FinishedProductDetail" ToRole="FinishedProduct" />
           <Property Name="FinishedProductPackageID" Type="Int32" />
           <NavigationProperty Name="FinishedProductPackage" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_FinishedProductPackages" FromRole="FinishedProductDetail" ToRole="FinishedProductPackage" />
@@ -17872,19 +17602,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="WorkshiftID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Shifts" FromRole="FinishedProductDetail" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Workshifts" FromRole="FinishedProductDetail" ToRole="Workshift" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Commodities" FromRole="FinishedProductDetail" ToRole="Commodity" />
         </EntityType>
-        <Association Name="FK_FinishedProductDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.FinishedProductDetail" Role="FinishedProductDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="FinishedProductDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_FinishedProductDetails_FinishedProducts">
           <End Type="TotalSmartPortalModel.FinishedProduct" Role="FinishedProduct" Multiplicity="1" />
           <End Type="TotalSmartPortalModel.FinishedProductDetail" Role="FinishedProductDetail" Multiplicity="*" />
@@ -17962,7 +17681,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="QuantityReceipted" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities" FromRole="WarehouseTransferDetail" ToRole="Commodity" />
           <Property Name="HasTransferOrder" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_WarehouseTransferDetails" FromRole="WarehouseTransferDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_GoodsReceiptDetails" FromRole="WarehouseTransferDetail" ToRole="GoodsReceiptDetail" />
@@ -17971,19 +17689,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="LocationIssuedID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TransferOrder" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_TransferOrders" FromRole="WarehouseTransferDetail" ToRole="TransferOrder" />
           <NavigationProperty Name="WarehouseTransfer" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_WarehouseTransfers" FromRole="WarehouseTransferDetail" ToRole="WarehouseTransfer" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities" FromRole="WarehouseTransferDetail" ToRole="Commodity" />
           </EntityType>
-        <Association Name="FK_WarehouseTransferDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.WarehouseTransferDetail" Role="WarehouseTransferDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="WarehouseTransferDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="WarehouseTransferIndex">
           <Property Type="Int32" Name="WarehouseTransferID" Nullable="false" />
           <Property Type="DateTime" Name="EntryDate" Nullable="true" />
@@ -18382,9 +18089,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_FinishedHandoverDetails_Commodities" FromRole="FinishedHandoverDetail" ToRole="Commodity" />
           <NavigationProperty Name="FinishedHandover" Relationship="TotalSmartPortalModel.FK_FinishedHandoverDetails_FinishedHandovers" FromRole="FinishedHandoverDetail" ToRole="FinishedHandover" />
           <NavigationProperty Name="FinishedProductPackage" Relationship="TotalSmartPortalModel.FK_FinishedHandoverDetails_FinishedProductPackages" FromRole="FinishedHandoverDetail" ToRole="FinishedProductPackage" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_FinishedHandoverDetails_Commodities" FromRole="FinishedHandoverDetail" ToRole="Commodity" />
         </EntityType>
         <EntityType Name="GoodsReceiptDetail">
           <Key>
@@ -18421,7 +18128,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="QuantityIssued" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities" FromRole="GoodsReceiptDetail" ToRole="Commodity" />
           <NavigationProperty Name="GoodsReceipt" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsReceipts" FromRole="GoodsReceiptDetail" ToRole="GoodsReceipt" />
           <NavigationProperty Name="MaterialIssueDetail" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_MaterialIssueDetails" FromRole="GoodsReceiptDetail" ToRole="MaterialIssueDetail" />
           <NavigationProperty Name="PurchaseRequisitionDetail" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_PurchaseRequisitionDetails" FromRole="GoodsReceiptDetail" ToRole="PurchaseRequisitionDetail" />
@@ -18443,31 +18149,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="BinLocationID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BinLocation" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations" FromRole="GoodsReceiptDetail" ToRole="BinLocation" />
           <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_GoodsReceiptDetails" FromRole="GoodsReceiptDetail" ToRole="PackageIssueDetail" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities" FromRole="GoodsReceiptDetail" ToRole="Commodity" />
         </EntityType>
-        <Association Name="FK_FinishedHandoverDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.FinishedHandoverDetail" Role="FinishedHandoverDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="FinishedHandoverDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GoodsReceiptDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.GoodsReceiptDetail" Role="GoodsReceiptDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="GoodsReceiptDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_GoodsReceiptDetails_GoodsReceipts">
           <End Type="TotalSmartPortalModel.GoodsReceipt" Role="GoodsReceipt" Multiplicity="1" />
           <End Type="TotalSmartPortalModel.GoodsReceiptDetail" Role="GoodsReceiptDetail" Multiplicity="*" />
@@ -18787,25 +18470,13 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="InActive" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartial" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartialDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_TransferOrderDetails_Commodities" FromRole="TransferOrderDetail" ToRole="Commodity" />
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_TransferOrderDetails_Warehouses" FromRole="TransferOrderDetail" ToRole="Warehouse" />
           <NavigationProperty Name="Warehouse1" Relationship="TotalSmartPortalModel.FK_TransferOrderDetails_Warehouses1" FromRole="TransferOrderDetail" ToRole="Warehouse" />
           <NavigationProperty Name="WarehouseTransferDetails" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_TransferOrderDetails" FromRole="TransferOrderDetail" ToRole="WarehouseTransferDetail" />
           <Property Name="LocationIssuedID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="TransferOrder" Relationship="TotalSmartPortalModel.FK_TransferOrderDetails_TransferOrders" FromRole="TransferOrderDetail" ToRole="TransferOrder" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_TransferOrderDetails_Commodities" FromRole="TransferOrderDetail" ToRole="Commodity" />
         </EntityType>
-        <Association Name="FK_TransferOrderDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.TransferOrderDetail" Role="TransferOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="TransferOrderDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TransferOrderDetails_Warehouses">
           <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
           <End Type="TotalSmartPortalModel.TransferOrderDetail" Role="TransferOrderDetail" Multiplicity="*" />
@@ -19485,13 +19156,13 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="InActivePartial" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartialDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Bom" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Boms" FromRole="FirmOrderDetail" ToRole="Bom" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Commodities" FromRole="FirmOrderDetail" ToRole="Commodity" />
           <NavigationProperty Name="Customer" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Customers" FromRole="FirmOrderDetail" ToRole="Customer" />
           <NavigationProperty Name="FirmOrder" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_FirmOrders" FromRole="FirmOrderDetail" ToRole="FirmOrder" />
           <NavigationProperty Name="Mold" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Molds" FromRole="FirmOrderDetail" ToRole="Mold" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_VoidTypes" FromRole="FirmOrderDetail" ToRole="VoidType" />
           <NavigationProperty Name="SemifinishedProductDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_FirmOrderDetails" FromRole="FirmOrderDetail" ToRole="SemifinishedProductDetail" />
           <Property Name="HasProductionOrders" Type="Int32" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Commodities" FromRole="FirmOrderDetail" ToRole="Commodity" />
         </EntityType>
         <Association Name="FK_FirmOrderDetails_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -19502,18 +19173,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Principal>
             <Dependent Role="FirmOrderDetail">
               <PropertyRef Name="BomID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FirmOrderDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.FirmOrderDetail" Role="FirmOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="FirmOrderDetail">
-              <PropertyRef Name="CommodityID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -19773,7 +19432,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="InActive" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartial" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartialDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" FromRole="GoodsArrivalDetail" ToRole="Commodity" />
           <NavigationProperty Name="GoodsArrival" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_GoodsArrivals" FromRole="GoodsArrivalDetail" ToRole="GoodsArrival" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_VoidTypes" FromRole="GoodsArrivalDetail" ToRole="VoidType" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalDetails" FromRole="GoodsArrivalDetail" ToRole="GoodsReceiptDetail" />
@@ -19781,19 +19439,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="SerialID" Type="Int32" Nullable="false" />
           <Property Name="UnitWeight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Packages" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" FromRole="GoodsArrivalDetail" ToRole="Commodity" />
         </EntityType>
-        <Association Name="FK_GoodsArrivalDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.GoodsArrivalDetail" Role="GoodsArrivalDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="GoodsArrivalDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_GoodsArrivalDetails_GoodsArrivals">
           <End Type="TotalSmartPortalModel.GoodsArrival" Role="GoodsArrival" Multiplicity="1" />
           <End Type="TotalSmartPortalModel.GoodsArrivalDetail" Role="GoodsArrivalDetail" Multiplicity="*" />
@@ -20001,9 +19648,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="InActivePartial" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartialDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="BlendingInstruction" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_BlendingInstructions" FromRole="BlendingInstructionDetail" ToRole="BlendingInstruction" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" FromRole="BlendingInstructionDetail" ToRole="Commodity" />
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_Warehouses" FromRole="BlendingInstructionDetail" ToRole="Warehouse" />
           <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructionDetails" FromRole="BlendingInstructionDetail" ToRole="PackageIssueDetail" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" FromRole="BlendingInstructionDetail" ToRole="Commodity" />
         </EntityType>
         <EntityType Name="BlendingInstruction">
           <Key>
@@ -20047,18 +19694,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Principal>
             <Dependent Role="BlendingInstructionDetail">
               <PropertyRef Name="BlendingInstructionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BlendingInstructionDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.BlendingInstructionDetail" Role="BlendingInstructionDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="BlendingInstructionDetail">
-              <PropertyRef Name="CommodityID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -20216,7 +19851,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="Approved" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BlendingInstructionDetail" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructionDetails" FromRole="PackageIssueDetail" ToRole="BlendingInstructionDetail" />
           <NavigationProperty Name="BlendingInstruction" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructions" FromRole="PackageIssueDetail" ToRole="BlendingInstruction" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities" FromRole="PackageIssueDetail" ToRole="Commodity" />
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_GoodsReceiptDetails" FromRole="PackageIssueDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="PackageIssue" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_PackageIssues" FromRole="PackageIssueDetail" ToRole="PackageIssue" />
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Shifts" FromRole="PackageIssueDetail" ToRole="Shift" />
@@ -20226,6 +19860,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="BatchCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="LabCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="Barcode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities" FromRole="PackageIssueDetail" ToRole="Commodity" />
         </EntityType>
         <EntityType Name="PackageIssue">
           <Key>
@@ -20298,18 +19933,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Principal>
             <Dependent Role="PackageIssue">
               <PropertyRef Name="BlendingInstructionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PackageIssueDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PackageIssueDetail" Role="PackageIssueDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="PackageIssueDetail">
-              <PropertyRef Name="CommodityID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -20487,10 +20110,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="InActive" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartial" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartialDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities" FromRole="PurchaseOrderDetail" ToRole="Commodity" />
           <NavigationProperty Name="GoodsArrivalDetails" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_PurchaseOrderDetails" FromRole="PurchaseOrderDetail" ToRole="GoodsArrivalDetail" />
           <NavigationProperty Name="PurchaseOrder" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_PurchaseOrders" FromRole="PurchaseOrderDetail" ToRole="PurchaseOrder" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_VoidTypes" FromRole="PurchaseOrderDetail" ToRole="VoidType" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities" FromRole="PurchaseOrderDetail" ToRole="Commodity" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -20528,18 +20151,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_PurchaseOrders" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_VoidTypes" FromRole="PurchaseOrder" ToRole="VoidType" />
         </EntityType>
-        <Association Name="FK_PurchaseOrderDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="PurchaseOrderDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PurchaseOrders_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
           <End Type="TotalSmartPortalModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="*" />
@@ -20745,6 +20356,397 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Decimal" Name="UnitWeight" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="Packages" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
+        <EntityType Name="Commodity">
+          <Key>
+            <PropertyRef Name="CommodityID" />
+          </Key>
+          <Property Name="CommodityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OfficialCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CodePartA" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CodePartB" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CodePartC" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CodePartD" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CodePartE" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="CodePartF" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OfficialName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="OriginalName" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="PreviousCommodityID" Type="Int32" />
+          <Property Name="CommodityBrandID" Type="Int32" Nullable="false" />
+          <Property Name="CommodityCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CommodityTypeID" Type="Int32" Nullable="false" />
+          <Property Name="CommodityClassID" Type="Int32" Nullable="false" />
+          <Property Name="CommodityLineID" Type="Int32" Nullable="false" />
+          <Property Name="SupplierID" Type="Int32" Nullable="false" />
+          <Property Name="PiecePerPack" Type="Int32" Nullable="false" />
+          <Property Name="QuantityAlert" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="ListedPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="GrossPrice" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PurchaseUnit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SalesUnit" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Packing" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Origin" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="Double" />
+          <Property Name="Shelflife" Type="Int32" />
+          <Property Name="LeadTime" Type="Int32" />
+          <Property Name="HSCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Discontinue" Type="Boolean" Nullable="false" />
+          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="InActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AccountInvoiceDetails" Relationship="TotalSmartPortalModel.FK_AccountInvoiceDetails_Commodities" FromRole="Commodity" ToRole="AccountInvoiceDetail" />
+          <NavigationProperty Name="BlendingInstructionDetails" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" FromRole="Commodity" ToRole="BlendingInstructionDetail" />
+          <NavigationProperty Name="BomDetails" Relationship="TotalSmartPortalModel.FK_BomDetails_Materials" FromRole="Commodity" ToRole="BomDetail" />
+          <NavigationProperty Name="CommodityBrand" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityBrands" FromRole="Commodity" ToRole="CommodityBrand" />
+          <NavigationProperty Name="CommodityCategory" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityCategories" FromRole="Commodity" ToRole="CommodityCategory" />
+          <NavigationProperty Name="CommodityClass" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityClasses" FromRole="Commodity" ToRole="CommodityClass" />
+          <NavigationProperty Name="CommodityLine" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityLines" FromRole="Commodity" ToRole="CommodityLine" />
+          <NavigationProperty Name="CommodityType" Relationship="TotalSmartPortalModel.FK_Commodities_CommodityTypes" FromRole="Commodity" ToRole="CommodityType" />
+          <NavigationProperty Name="CreditNoteDetails" Relationship="TotalSmartPortalModel.FK_CreditNoteDetails_Commodities" FromRole="Commodity" ToRole="CreditNoteDetail" />
+          <NavigationProperty Name="DeliveryAdviceDetails" Relationship="TotalSmartPortalModel.FK_DeliveryAdviceDetails_Commodities" FromRole="Commodity" ToRole="DeliveryAdviceDetail" />
+          <NavigationProperty Name="FinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_FinishedHandoverDetails_Commodities" FromRole="Commodity" ToRole="FinishedHandoverDetail" />
+          <NavigationProperty Name="FinishedProductDetails" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Commodities" FromRole="Commodity" ToRole="FinishedProductDetail" />
+          <NavigationProperty Name="FirmOrderDetails" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Commodities" FromRole="Commodity" ToRole="FirmOrderDetail" />
+          <NavigationProperty Name="GoodsArrivalDetails" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" FromRole="Commodity" ToRole="GoodsArrivalDetail" />
+          <NavigationProperty Name="GoodsIssueDetails" Relationship="TotalSmartPortalModel.FK_GoodsIssueDetails_Commodities" FromRole="Commodity" ToRole="GoodsIssueDetail" />
+          <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities" FromRole="Commodity" ToRole="GoodsReceiptDetail" />
+          <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Commodities" FromRole="Commodity" ToRole="MaterialIssueDetail" />
+          <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities" FromRole="Commodity" ToRole="PackageIssueDetail" />
+          <NavigationProperty Name="PlannedOrderDetails" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Commodities" FromRole="Commodity" ToRole="PlannedOrderDetail" />
+          <NavigationProperty Name="PurchaseOrderDetails" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities" FromRole="Commodity" ToRole="PurchaseOrderDetail" />
+          <NavigationProperty Name="PurchaseRequisitionDetails" Relationship="TotalSmartPortalModel.FK_PurchaseRequisitionDetails_Commodities" FromRole="Commodity" ToRole="PurchaseRequisitionDetail" />
+          <NavigationProperty Name="SalesOrderDetails" Relationship="TotalSmartPortalModel.FK_SalesOrderDetails_Commodities" FromRole="Commodity" ToRole="SalesOrderDetail" />
+          <NavigationProperty Name="SalesReturnDetails" Relationship="TotalSmartPortalModel.FK_SalesReturnDetails_Commodities" FromRole="Commodity" ToRole="SalesReturnDetail" />
+          <NavigationProperty Name="SemifinishedProductDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_Commodities" FromRole="Commodity" ToRole="SemifinishedProductDetail" />
+          <NavigationProperty Name="TransferOrderDetails" Relationship="TotalSmartPortalModel.FK_TransferOrderDetails_Commodities" FromRole="Commodity" ToRole="TransferOrderDetail" />
+          <NavigationProperty Name="WarehouseAdjustmentDetails" Relationship="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_Commodities" FromRole="Commodity" ToRole="WarehouseAdjustmentDetail" />
+          <NavigationProperty Name="WarehouseTransferDetails" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities" FromRole="Commodity" ToRole="WarehouseTransferDetail" />
+        </EntityType>
+        <Association Name="FK_AccountInvoiceDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.AccountInvoiceDetail" Role="AccountInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="AccountInvoiceDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlendingInstructionDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.BlendingInstructionDetail" Role="BlendingInstructionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="BlendingInstructionDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BomDetails_Materials">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.BomDetail" Role="BomDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="BomDetail">
+              <PropertyRef Name="MaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Commodities_CommodityBrands">
+          <End Type="TotalSmartPortalModel.CommodityBrand" Role="CommodityBrand" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommodityBrand">
+              <PropertyRef Name="CommodityBrandID" />
+            </Principal>
+            <Dependent Role="Commodity">
+              <PropertyRef Name="CommodityBrandID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Commodities_CommodityCategories">
+          <End Type="TotalSmartPortalModel.CommodityCategory" Role="CommodityCategory" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommodityCategory">
+              <PropertyRef Name="CommodityCategoryID" />
+            </Principal>
+            <Dependent Role="Commodity">
+              <PropertyRef Name="CommodityCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Commodities_CommodityClasses">
+          <End Type="TotalSmartPortalModel.CommodityClass" Role="CommodityClass" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommodityClass">
+              <PropertyRef Name="CommodityClassID" />
+            </Principal>
+            <Dependent Role="Commodity">
+              <PropertyRef Name="CommodityClassID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Commodities_CommodityLines">
+          <End Type="TotalSmartPortalModel.CommodityLine" Role="CommodityLine" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommodityLine">
+              <PropertyRef Name="CommodityLineID" />
+            </Principal>
+            <Dependent Role="Commodity">
+              <PropertyRef Name="CommodityLineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Commodities_CommodityTypes">
+          <End Type="TotalSmartPortalModel.CommodityType" Role="CommodityType" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommodityType">
+              <PropertyRef Name="CommodityTypeID" />
+            </Principal>
+            <Dependent Role="Commodity">
+              <PropertyRef Name="CommodityTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CreditNoteDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.CreditNoteDetail" Role="CreditNoteDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="CreditNoteDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeliveryAdviceDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.DeliveryAdviceDetail" Role="DeliveryAdviceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="DeliveryAdviceDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinishedHandoverDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.FinishedHandoverDetail" Role="FinishedHandoverDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="FinishedHandoverDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinishedProductDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.FinishedProductDetail" Role="FinishedProductDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="FinishedProductDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FirmOrderDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.FirmOrderDetail" Role="FirmOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="FirmOrderDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsArrivalDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.GoodsArrivalDetail" Role="GoodsArrivalDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="GoodsArrivalDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsIssueDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.GoodsIssueDetail" Role="GoodsIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="GoodsIssueDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsReceiptDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.GoodsReceiptDetail" Role="GoodsReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="GoodsReceiptDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MaterialIssueDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.MaterialIssueDetail" Role="MaterialIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="MaterialIssueDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssueDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssueDetail" Role="PackageIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="PackageIssueDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlannedOrderDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PlannedOrderDetail" Role="PlannedOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="PlannedOrderDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PurchaseOrderDetail" Role="PurchaseOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="PurchaseOrderDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseRequisitionDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PurchaseRequisitionDetail" Role="PurchaseRequisitionDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="PurchaseRequisitionDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesOrderDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SalesOrderDetail" Role="SalesOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="SalesOrderDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesReturnDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SalesReturnDetail" Role="SalesReturnDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="SalesReturnDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedProductDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedProductDetail" Role="SemifinishedProductDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="SemifinishedProductDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransferOrderDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.TransferOrderDetail" Role="TransferOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="TransferOrderDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarehouseAdjustmentDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.WarehouseAdjustmentDetail" Role="WarehouseAdjustmentDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="WarehouseAdjustmentDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WarehouseTransferDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.WarehouseTransferDetail" Role="WarehouseTransferDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="WarehouseTransferDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -23899,46 +23901,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CommodityEditable" FunctionName="TotalSmartPortalModel.Store.CommodityEditable" />
-          <EntitySetMapping Name="Commodities">
-            <EntityTypeMapping TypeName="TotalSmartPortalModel.Commodity">
-              <MappingFragment StoreEntitySet="Commodities">
-                <ScalarProperty Name="InActive" ColumnName="InActive" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="Discontinue" ColumnName="Discontinue" />
-                <ScalarProperty Name="HSCode" ColumnName="HSCode" />
-                <ScalarProperty Name="LeadTime" ColumnName="LeadTime" />
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-                <ScalarProperty Name="Origin" ColumnName="Origin" />
-                <ScalarProperty Name="Packing" ColumnName="Packing" />
-                <ScalarProperty Name="SalesUnit" ColumnName="SalesUnit" />
-                <ScalarProperty Name="PurchaseUnit" ColumnName="PurchaseUnit" />
-                <ScalarProperty Name="GrossPrice" ColumnName="GrossPrice" />
-                <ScalarProperty Name="ListedPrice" ColumnName="ListedPrice" />
-                <ScalarProperty Name="QuantityAlert" ColumnName="QuantityAlert" />
-                <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
-                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
-                <ScalarProperty Name="CommodityLineID" ColumnName="CommodityLineID" />
-                <ScalarProperty Name="CommodityClassID" ColumnName="CommodityClassID" />
-                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
-                <ScalarProperty Name="CommodityCategoryID" ColumnName="CommodityCategoryID" />
-                <ScalarProperty Name="CommodityBrandID" ColumnName="CommodityBrandID" />
-                <ScalarProperty Name="PreviousCommodityID" ColumnName="PreviousCommodityID" />
-                <ScalarProperty Name="OriginalName" ColumnName="OriginalName" />
-                <ScalarProperty Name="OfficialName" ColumnName="OfficialName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="CodePartF" ColumnName="CodePartF" />
-                <ScalarProperty Name="CodePartE" ColumnName="CodePartE" />
-                <ScalarProperty Name="CodePartD" ColumnName="CodePartD" />
-                <ScalarProperty Name="CodePartC" ColumnName="CodePartC" />
-                <ScalarProperty Name="CodePartB" ColumnName="CodePartB" />
-                <ScalarProperty Name="CodePartA" ColumnName="CodePartA" />
-                <ScalarProperty Name="OfficialCode" ColumnName="OfficialCode" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
-                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="CommodityBrands">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.CommodityBrand">
               <MappingFragment StoreEntitySet="CommodityBrands">
@@ -26366,6 +26328,47 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <FunctionImportMapping FunctionImportName="GoodsArrivalPostSaveValidate" FunctionName="TotalSmartPortalModel.Store.GoodsArrivalPostSaveValidate" />
           <FunctionImportMapping FunctionImportName="GoodsArrivalSaveRelative" FunctionName="TotalSmartPortalModel.Store.GoodsArrivalSaveRelative" />
           <FunctionImportMapping FunctionImportName="GoodsArrivalToggleApproved" FunctionName="TotalSmartPortalModel.Store.GoodsArrivalToggleApproved" />
+          <EntitySetMapping Name="Commodities">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.Commodity">
+              <MappingFragment StoreEntitySet="Commodities">
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Discontinue" ColumnName="Discontinue" />
+                <ScalarProperty Name="HSCode" ColumnName="HSCode" />
+                <ScalarProperty Name="LeadTime" ColumnName="LeadTime" />
+                <ScalarProperty Name="Shelflife" ColumnName="Shelflife" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Origin" ColumnName="Origin" />
+                <ScalarProperty Name="Packing" ColumnName="Packing" />
+                <ScalarProperty Name="SalesUnit" ColumnName="SalesUnit" />
+                <ScalarProperty Name="PurchaseUnit" ColumnName="PurchaseUnit" />
+                <ScalarProperty Name="GrossPrice" ColumnName="GrossPrice" />
+                <ScalarProperty Name="ListedPrice" ColumnName="ListedPrice" />
+                <ScalarProperty Name="QuantityAlert" ColumnName="QuantityAlert" />
+                <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="CommodityLineID" ColumnName="CommodityLineID" />
+                <ScalarProperty Name="CommodityClassID" ColumnName="CommodityClassID" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="CommodityCategoryID" ColumnName="CommodityCategoryID" />
+                <ScalarProperty Name="CommodityBrandID" ColumnName="CommodityBrandID" />
+                <ScalarProperty Name="PreviousCommodityID" ColumnName="PreviousCommodityID" />
+                <ScalarProperty Name="OriginalName" ColumnName="OriginalName" />
+                <ScalarProperty Name="OfficialName" ColumnName="OfficialName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CodePartF" ColumnName="CodePartF" />
+                <ScalarProperty Name="CodePartE" ColumnName="CodePartE" />
+                <ScalarProperty Name="CodePartD" ColumnName="CodePartD" />
+                <ScalarProperty Name="CodePartC" ColumnName="CodePartC" />
+                <ScalarProperty Name="CodePartB" ColumnName="CodePartB" />
+                <ScalarProperty Name="CodePartA" ColumnName="CodePartA" />
+                <ScalarProperty Name="OfficialCode" ColumnName="OfficialCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

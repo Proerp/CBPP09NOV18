@@ -53,7 +53,6 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public string Code { get; set; }
     
-        public virtual Commodity Commodity { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual FirmOrderMaterial FirmOrderMaterial { get; set; }
         public virtual FirmOrder FirmOrder { get; set; }
@@ -68,5 +67,6 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         public virtual GoodsReceiptDetail GoodsReceiptDetail { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }

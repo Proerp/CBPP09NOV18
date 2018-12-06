@@ -48,7 +48,6 @@ namespace TotalModel.Models
         public decimal QuantityOnhand { get; set; }
         public string Specs { get; set; }
     
-        public virtual Commodity Commodity { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual VoidType VoidType { get; set; }
         public virtual Bom Bom { get; set; }
@@ -56,5 +55,6 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedProductDetail> SemifinishedProductDetails { get; set; }
         public virtual PlannedOrder PlannedOrder { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }

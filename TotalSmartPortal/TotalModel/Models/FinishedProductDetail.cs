@@ -44,10 +44,10 @@ namespace TotalModel.Models
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
     
-        public virtual Commodity Commodity { get; set; }
         public virtual FinishedProduct FinishedProduct { get; set; }
         public virtual FinishedProductPackage FinishedProductPackage { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }

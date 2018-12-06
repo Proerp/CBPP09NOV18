@@ -33,6 +33,15 @@ namespace TotalDTO.Purchases
         [UIHint("DateTimeReadonly")]
         public Nullable<System.DateTime> PurchaseOrderEntryDate { get; set; }
 
+        [Display(Name = "Ngày SX")]
+        [UIHint("Date")]
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        [Display(Name = "Shelflife")]
+        [UIHint("IntegerReadonly")]
+        public Nullable<int> Shelflife { get; set; }
+        [Display(Name = "HSD")]
+        [UIHint("Date")]
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
 
         [UIHint("AutoCompletes/CommodityBase")]
         public override string CommodityCode { get; set; }

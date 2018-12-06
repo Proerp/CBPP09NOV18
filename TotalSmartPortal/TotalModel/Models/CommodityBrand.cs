@@ -17,9 +17,9 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CommodityBrand()
         {
-            this.Commodities = new HashSet<Commodity>();
             this.CommodityBrands1 = new HashSet<CommodityBrand>();
             this.Promotions = new HashSet<Promotion>();
+            this.Commodities = new HashSet<Commodity>();
         }
     
         public int CommodityBrandID { get; set; }
@@ -28,11 +28,11 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Commodity> Commodities { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CommodityBrand> CommodityBrands1 { get; set; }
         public virtual CommodityBrand CommodityBrand1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Promotion> Promotions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Commodity> Commodities { get; set; }
     }
 }
