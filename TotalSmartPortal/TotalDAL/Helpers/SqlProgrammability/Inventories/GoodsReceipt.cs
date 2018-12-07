@@ -119,7 +119,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   LEFT JOIN FinishedProductPackages ON GoodsReceiptDetails.FinishedProductPackageID = FinishedProductPackages.FinishedProductPackageID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
 
-            queryString = queryString + "       ORDER BY    Commodities.CommodityTypeID, GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
+            queryString = queryString + "       ORDER BY    Commodities.CommodityTypeID, GoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 

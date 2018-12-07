@@ -57,10 +57,10 @@ namespace TotalPortal.Areas.Inventories.Controllers
             return View("../GoodsReceipts/GetPendingPurchaseRequisitionDetails", this.InitViewModel(new TViewDetailViewModel()));
         }
 
-        public virtual ActionResult GetPendingGoodsArrivalDetails()
+        public virtual ActionResult GetPendingGoodsArrivalPackages()
         {
             this.AddRequireJsOptions();
-            return View("../GoodsReceipts/GetPendingGoodsArrivalDetails", this.InitViewModel(new TViewDetailViewModel()));
+            return View("../GoodsReceipts/GetPendingGoodsArrivalPackages", this.InitViewModel(new TViewDetailViewModel()));
         }
 
         public virtual ActionResult GetPendingWarehouseTransferDetails()

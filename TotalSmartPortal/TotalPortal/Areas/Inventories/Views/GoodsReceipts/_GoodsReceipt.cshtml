@@ -261,6 +261,8 @@
                         .ClientTemplate("#= (GoodsArrivalID == null)? '' : GoodsArrivalID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalID' value='#= (GoodsArrivalID == null) ? '' : GoodsArrivalID #' />");
                     columns.Bound(p => p.GoodsArrivalDetailID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (GoodsArrivalDetailID == null)? '' : GoodsArrivalDetailID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalDetailID' value='#= (GoodsArrivalDetailID == null) ? '' : GoodsArrivalDetailID #' />");
+                    columns.Bound(p => p.GoodsArrivalPackageID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (GoodsArrivalPackageID == null)? '' : GoodsArrivalPackageID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalPackageID' value='#= (GoodsArrivalPackageID == null) ? '' : GoodsArrivalPackageID #' />");
 
                     columns.Bound(p => p.GoodsArrivalCode).DisplayNameTitle().Width(60).Hidden()
                         .ClientTemplate("#= (GoodsArrivalCode == null)? '' : GoodsArrivalCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalCode' value='#= (GoodsArrivalCode == null) ? '' : GoodsArrivalCode #' />");
@@ -395,7 +397,7 @@
 
                                 case (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival:
                                     toolbar.Template(@<text>
-                                        <button type="button" class="k-button" onclick="GetPendingGoodsArrivalDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng </button>
+                                        <button type="button" class="k-button" onclick="GetPendingGoodsArrivalPackages()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng </button>
                                         <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Nhập kho toàn bộ </button>
                                     </text>);
                                     break;
@@ -552,10 +554,10 @@
 
 
 
-    function GetPendingGoodsArrivalDetails() {
+    function GetPendingGoodsArrivalPackages() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingGoodsArrivalDetails", Model.ControllerName, new { area = "Inventories" })", "Chọn mặt hàng ", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingGoodsArrivalPackages", Model.ControllerName, new { area = "Inventories" })", "Chọn mặt hàng ", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
     }
 

@@ -1549,7 +1549,7 @@
     <Content Include="Areas\Commons\Views\Molds\Edit.cshtml" />
     <Content Include="Areas\Commons\Views\Molds\Index.cshtml" />
     <Content Include="Areas\Commons\Views\Molds\_Mold.cshtml" />
-    <Content Include="Areas\Inventories\Views\GoodsReceipts\GetPendingGoodsArrivalDetails.cshtml" />
+    <Content Include="Areas\Inventories\Views\GoodsReceipts\GetPendingGoodsArrivalPackages.cshtml" />
     <Content Include="Areas\Inventories\Views\GoodsReceipts\_GetGoodsArrival.cshtml" />
     <Content Include="Areas\Productions\Views\FinishedHandovers\_GetWorkshift.cshtml" />
     <Content Include="Areas\Inventories\Views\PackageIssues\Approve.cshtml" />
@@ -1663,7 +1663,7 @@
     <Content Include="Scripts\Controllers\Inventories\GoodsIssues\Index.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsIssues\Open.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsIssues\Print.js" />
-    <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingGoodsArrivalDetail.js" />
+    <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingGoodsArrivalPackage.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingMaterialIssueDetail.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingPlannedOrderDetail.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingPurchaseRequisitionDetail.js" />

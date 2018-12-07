@@ -59,10 +59,10 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         }
 
         [HttpGet]
-        [Route("GetPendingGoodsArrivalDetails/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{goodsArrivalDetailIDs}/{isReadonly}")]
-        public IEnumerable<GoodsReceiptPendingGoodsArrivalDetail> GetPendingGoodsArrivalDetails(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string goodsArrivalDetailIDs, bool isReadonly)
+        [Route("GetPendingGoodsArrivalPackages/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{goodsArrivalPackageIDs}")]
+        public IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string goodsArrivalPackageIDs)
         {
-            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalDetails(locationID, goodsReceiptID, goodsArrivalID, goodsArrivalDetailIDs, false);
+            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(locationID, goodsReceiptID, goodsArrivalID, goodsArrivalPackageIDs);
         }
     }
 

@@ -82,13 +82,13 @@ namespace TotalDAL.Repositories.Inventories
             return pendingGoodsArrivals;
         }
 
-        public IEnumerable<GoodsReceiptPendingGoodsArrivalDetail> GetPendingGoodsArrivalDetails(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string goodsArrivalDetailIDs, bool isReadonly)
+        public IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string goodsArrivalPackageIDs)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<GoodsReceiptPendingGoodsArrivalDetail> pendingGoodsArrivalDetails = base.TotalSmartPortalEntities.GetGoodsReceiptPendingGoodsArrivalDetails(locationID, goodsReceiptID, goodsArrivalID, goodsArrivalDetailIDs, isReadonly).ToList();
+            IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> pendingGoodsArrivalPackages = base.TotalSmartPortalEntities.GetGoodsReceiptPendingGoodsArrivalPackages(locationID, goodsReceiptID, goodsArrivalID, goodsArrivalPackageIDs).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
-            return pendingGoodsArrivalDetails;
+            return pendingGoodsArrivalPackages;
         }
 
 

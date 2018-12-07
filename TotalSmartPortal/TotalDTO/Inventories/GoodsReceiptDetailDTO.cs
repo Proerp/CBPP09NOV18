@@ -36,6 +36,7 @@ namespace TotalDTO.Inventories
 
         public Nullable<int> GoodsArrivalID { get; set; }
         public Nullable<int> GoodsArrivalDetailID { get; set; }
+        public Nullable<int> GoodsArrivalPackageID { get; set; }        
 
         [Display(Name = "Phiếu ĐH")]
         [UIHint("StringReadonly")]

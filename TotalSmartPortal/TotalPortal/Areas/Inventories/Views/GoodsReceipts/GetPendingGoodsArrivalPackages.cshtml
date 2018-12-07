@@ -4,8 +4,8 @@
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
 
-@(Html.Kendo().Grid<GoodsReceiptPendingGoodsArrivalDetail>()
-    .Name("gridPendingGoodsArrivalDetails")
+@(Html.Kendo().Grid<GoodsReceiptPendingGoodsArrivalPackage>()
+    .Name("gridPendingGoodsArrivalPackages")
     .Columns(columns =>
     {
         columns.Bound(c => c.GoodsArrivalReference).Title("Số #").Width(30);
@@ -29,7 +29,7 @@
     })
     .Scrollable(s => s.Height(Settings.PopupContentHeightLarge))
     .DataSource(ds => ds.Ajax()
-            .Read(read => read.Action("GetPendingGoodsArrivalDetails", "GoodsReceiptAPIs", new { area = "Inventories" }).Data(@<text>
+            .Read(read => read.Action("GetPendingGoodsArrivalPackages", "GoodsReceiptAPIs", new { area = "Inventories" }).Data(@<text>
             function(e) {
 
             var goodsReceiptJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
@@ -38,8 +38,7 @@
             locationID: window.parent.requireConfig.pageOptions.LocationID,
             goodsReceiptID: window.parent.$("#GoodsReceiptID").val(),
             goodsArrivalID: window.parent.$("#GoodsArrivalID").val(),
-            goodsArrivalDetailIDs : goodsReceiptJSON.map(function(elem){return elem.GoodsArrivalDetailID;}).join(","),
-            isReadOnly: false
+            goodsArrivalPackageIDs : goodsReceiptJSON.map(function(elem){return elem.GoodsArrivalPackageID;}).join(",")            
             };}
             </text>))
     .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client
@@ -54,16 +53,16 @@
     </div>
 </div>
 
-<script src="@Url.Content("~/Scripts/Controllers/Inventories/GoodsReceipts/AddPendingGoodsArrivalDetail.js")"></script>
+<script src="@Url.Content("~/Scripts/Controllers/Inventories/GoodsReceipts/AddPendingGoodsArrivalPackage.js")"></script>
 
 <script type="text/javascript">
     function okButton_Click() {
-        handleOKEvent(window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource, $("#gridPendingGoodsArrivalDetails").data("kendoGrid").dataSource);
+        handleOKEvent(window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource, $("#gridPendingGoodsArrivalPackages").data("kendoGrid").dataSource);
     }
 
-    $('#gridPendingGoodsArrivalDetails').on('click', '.IsSelected', function () {
+    $('#gridPendingGoodsArrivalPackages').on('click', '.IsSelected', function () {
         var checked = $(this).is(':checked');
-        var grid = $('#gridPendingGoodsArrivalDetails').data().kendoGrid;
+        var grid = $('#gridPendingGoodsArrivalPackages').data().kendoGrid;
         var dataItem = grid.dataItem($(this).closest('tr'));
         dataItem.set('IsSelected', checked);
     })
@@ -73,7 +72,7 @@
 
 <script>
     function filterText_KeyUp() {
-        var filterText = $("#filterText").val(), gridDetails = $("#gridPendingGoodsArrivalDetails").data("kendoGrid");
+        var filterText = $("#filterText").val(), gridDetails = $("#gridPendingGoodsArrivalPackages").data("kendoGrid");
 
         if (filterText && filterText.length >= "@Settings.AutoCompleteMinLenght") {
             gridDetails.dataSource.filter({

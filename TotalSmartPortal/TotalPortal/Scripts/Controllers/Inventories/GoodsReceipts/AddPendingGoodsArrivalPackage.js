@@ -2,13 +2,13 @@
     window.parent.$("#myWindow").data("kendoWindow").close();
 }
 
-function handleOKEvent(goodsReceiptGridDataSource, pendingGoodsArrivalDetailGridDataSource) {
-    if (goodsReceiptGridDataSource != undefined && pendingGoodsArrivalDetailGridDataSource != undefined) {
-        var pendingGoodsArrivalDetailGridDataItems = pendingGoodsArrivalDetailGridDataSource.view();
+function handleOKEvent(goodsReceiptGridDataSource, pendingGoodsArrivalPackageGridDataSource) {
+    if (goodsReceiptGridDataSource != undefined && pendingGoodsArrivalPackageGridDataSource != undefined) {
+        var pendingGoodsArrivalPackageGridDataItems = pendingGoodsArrivalPackageGridDataSource.view();
         var goodsReceiptJSON = goodsReceiptGridDataSource.data().toJSON();
-        for (var i = 0; i < pendingGoodsArrivalDetailGridDataItems.length; i++) {
-            if (pendingGoodsArrivalDetailGridDataItems[i].IsSelected === true)
-                _setParentInput(goodsReceiptJSON, pendingGoodsArrivalDetailGridDataItems[i]);
+        for (var i = 0; i < pendingGoodsArrivalPackageGridDataItems.length; i++) {
+            if (pendingGoodsArrivalPackageGridDataItems[i].IsSelected === true)
+                _setParentInput(goodsReceiptJSON, pendingGoodsArrivalPackageGridDataItems[i]);
         }
 
         goodsReceiptJSON.push(new Object()); //Add a temporary empty row
@@ -74,6 +74,7 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingGoodsArrivalDetailGrid
 
         dataRow.GoodsArrivalID = goodsArrivalGridDataItem.GoodsArrivalID;
         dataRow.GoodsArrivalDetailID = goodsArrivalGridDataItem.GoodsArrivalDetailID;
+        dataRow.GoodsArrivalPackageID = goodsArrivalGridDataItem.GoodsArrivalPackageID;
         dataRow.GoodsArrivalCode = goodsArrivalGridDataItem.GoodsArrivalCode;
         dataRow.GoodsArrivalReference = goodsArrivalGridDataItem.GoodsArrivalReference;
         dataRow.GoodsArrivalEntryDate = goodsArrivalGridDataItem.GoodsArrivalEntryDate;
