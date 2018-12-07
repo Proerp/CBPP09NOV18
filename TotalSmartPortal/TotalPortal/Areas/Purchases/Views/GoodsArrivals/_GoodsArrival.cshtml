@@ -265,12 +265,23 @@
         <div class="right-botton-panel">
             @if (Model.Editable)
             {
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsArrivals")"> <img src="~/Content/Images/New/save-icon.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsArrivals")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-icon.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsArrivals")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/save-verify-icon.png" /> Lưu và duyệt </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsArrivals")" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Save-Print-32.png" /> Lưu, duyệt và in </button>
             }
             else
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "GoodsArrivals", new { id = @Model.GoodsArrivalID })'"> <img src="~/Content/Images/New/Apps-printer-icon.png" /> In tổng hợp xuất kho </button>
+                if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
+                {
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "GoodsArrivals", new {id = @Model.GoodsArrivalID })'"> <img src="~/Content/Images/Mains/Cross-icon-cancel32.png" /> Hủy duyệt </button>
+                }
             }
+
+            @if (Model.GoodsArrivalID > 0)
+            {
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "GoodsArrivals", new { id = @Model.GoodsArrivalID })'"> <img src="~/Content/Images/New/Apps-printer-icon.png" /> In </button>
+            }
+            
         </div>
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
