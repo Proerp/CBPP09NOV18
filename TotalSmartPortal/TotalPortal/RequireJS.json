@@ -54,7 +54,8 @@
         "gridEditorProductionLineInvoked": "Controllers/Root/Shared/Edits/gridEditorProductionLineInvoked",
         "gridEditorBom": "Controllers/Root/Shared/Edits/gridEditorBom",
         "gridEditorBomInvoked": "Controllers/Root/Shared/Edits/gridEditorBomInvoked",
-
+        "gridEditorBinLocation": "Controllers/Root/Shared/Edits/gridEditorBinLocation",
+        "gridEditorBinLocationInvoked": "Controllers/Root/Shared/Edits/gridEditorBinLocationInvoked",
 
         "gridWidget": "Controllers/Root/Shared/Edits/gridWidget",
         "gridWidgetQuantityRemains": "Controllers/Root/Shared/Edits/gridWidgetQuantityRemains",

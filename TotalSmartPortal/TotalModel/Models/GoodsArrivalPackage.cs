@@ -12,11 +12,18 @@ namespace TotalModel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class GoodsArrivalDetail
+    public partial class GoodsArrivalPackage
     {
-        public int GoodsArrivalDetailID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public GoodsArrivalPackage()
+        {
+            this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
+        }
+    
+        public int GoodsArrivalPackageID { get; set; }
         public System.DateTime EntryDate { get; set; }
         public int GoodsArrivalID { get; set; }
+        public int GoodsArrivalDetailID { get; set; }
         public int LocationID { get; set; }
         public int CustomerID { get; set; }
         public int TransporterID { get; set; }
@@ -25,6 +32,7 @@ namespace TotalModel.Models
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public int WarehouseID { get; set; }
+        public int SerialID { get; set; }
         public string Code { get; set; }
         public string SealCode { get; set; }
         public string BatchCode { get; set; }
@@ -34,19 +42,20 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public decimal Quantity { get; set; }
         public decimal QuantityReceipted { get; set; }
+        public decimal UnitWeight { get; set; }
+        public decimal Packages { get; set; }
         public string Remarks { get; set; }
         public Nullable<int> VoidTypeID { get; set; }
         public bool Approved { get; set; }
         public bool InActive { get; set; }
         public bool InActivePartial { get; set; }
         public Nullable<System.DateTime> InActivePartialDate { get; set; }
-        public int SerialID { get; set; }
-        public decimal UnitWeight { get; set; }
-        public decimal Packages { get; set; }
     
-        public virtual GoodsArrival GoodsArrival { get; set; }
-        public virtual VoidType VoidType { get; set; }
-        public virtual PurchaseOrderDetail PurchaseOrderDetail { get; set; }
         public virtual Commodity Commodity { get; set; }
+        public virtual GoodsArrival GoodsArrival { get; set; }
+        public virtual PurchaseOrderDetail PurchaseOrderDetail { get; set; }
+        public virtual VoidType VoidType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
     }
 }

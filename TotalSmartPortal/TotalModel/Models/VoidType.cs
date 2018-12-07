@@ -37,6 +37,7 @@ namespace TotalModel.Models
             this.BlendingInstructions = new HashSet<BlendingInstruction>();
             this.PurchaseOrderDetails = new HashSet<PurchaseOrderDetail>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
+            this.GoodsArrivalPackages = new HashSet<GoodsArrivalPackage>();
         }
     
         public int VoidTypeID { get; set; }
@@ -87,5 +88,7 @@ namespace TotalModel.Models
         public virtual ICollection<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsArrivalPackage> GoodsArrivalPackages { get; set; }
     }
 }

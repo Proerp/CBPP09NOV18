@@ -1968,6 +1968,8 @@
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourceReceiptSubscribe.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourceWeight.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridDatasourceWeightSubscribe.js" />
+    <Content Include="Scripts\Controllers\Root\Shared\Edits\gridEditorBinLocation.js" />
+    <Content Include="Scripts\Controllers\Root\Shared\Edits\gridEditorBinLocationInvoked.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridEditorBom.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridEditorBomInvoked.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Edits\gridEditorCommoditiesInGoodsReceipts.js" />
@@ -2843,6 +2845,7 @@
     <Content Include="Views\Helpers\Commons\_PlannedOrderLogs.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\IntegerReadonly.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DropDowns\TransferOrderType.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AutoCompletes\BinLocationBase.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

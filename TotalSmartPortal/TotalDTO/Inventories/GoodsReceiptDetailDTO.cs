@@ -152,7 +152,9 @@ namespace TotalDTO.Inventories
 
         public int BinLocationID { get; set; }
         [Display(Name = "Vị trí")]
+        [Required(ErrorMessage = "Vui lòng chọn vị trí")]
         [UIHint("StringReadonly")]
+        //[UIHint("AutoCompletes/BinLocationBase")]
         public string BinLocationCode { get; set; }
 
         [Display(Name = "SL Tồn")]
