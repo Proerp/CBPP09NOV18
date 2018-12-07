@@ -337,7 +337,6 @@
     <Compile Include="Areas\Inventories\Builders\WarehouseAdjustmentViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Inventories\Builders\WarehouseTransferViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Inventories\Controllers\Apis\GoodsReceiptsApiController.cs" />
-    <Compile Include="Areas\Inventories\Controllers\Apis\GRController.cs" />
     <Compile Include="Areas\Inventories\Controllers\Apis\PackageIssuesApiController.cs" />
     <Compile Include="Areas\Inventories\Controllers\GoodsDeliveriesController.cs" />
     <Compile Include="Areas\Inventories\Controllers\GoodsIssuesController.cs" />
@@ -435,7 +434,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ReportsController.cs" />
-    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
