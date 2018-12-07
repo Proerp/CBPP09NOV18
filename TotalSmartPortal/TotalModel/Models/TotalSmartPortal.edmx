@@ -3685,6 +3685,99 @@ warning 6035: The relationship 'FK_FirmOrders_AspNetUsers2' has columns that are
           </ReferentialConstraint>
         </Association>
         <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_GoodsArrivals_AspNetUsers' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_GoodsArrivals_AspNetUsers" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_GoodsArrivals_AspNetUsers1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_GoodsArrivals_AspNetUsers1" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_GoodsArrivals_AspNetUsers2' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_GoodsArrivals_AspNetUsers2" />-->
+        <Association Name="FK_GoodsArrivals_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="GoodsArrivals">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsArrivals_Customers1">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="GoodsArrivals">
+              <PropertyRef Name="TransporterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsArrivals_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="GoodsArrivals">
+              <PropertyRef Name="SalespersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsArrivals_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="GoodsArrivals">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsArrivals_PurchaseOrders">
+          <End Role="PurchaseOrders" Type="Self.PurchaseOrders" Multiplicity="0..1" />
+          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrders">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Principal>
+            <Dependent Role="GoodsArrivals">
+              <PropertyRef Name="PurchaseOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsArrivals_VoidTypes">
+          <End Role="VoidTypes" Type="Self.VoidTypes" Multiplicity="0..1" />
+          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoidTypes">
+              <PropertyRef Name="VoidTypeID" />
+            </Principal>
+            <Dependent Role="GoodsArrivals">
+              <PropertyRef Name="VoidTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsArrivals_Warehouses">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1" />
+          <End Role="GoodsArrivals" Type="Self.GoodsArrivals" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="WarehouseID" />
+            </Principal>
+            <Dependent Role="GoodsArrivals">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_GoodsDeliveries_AspNetUsers' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_GoodsDeliveries_AspNetUsers" />-->
         <!--Errors Found During Generation:
@@ -8142,6 +8235,34 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <AssociationSet Name="FK_GoodsArrivalPackages_VoidTypes" Association="Self.FK_GoodsArrivalPackages_VoidTypes">
             <End Role="VoidTypes" EntitySet="VoidTypes" />
             <End Role="GoodsArrivalPackages" EntitySet="GoodsArrivalPackages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivals_Customers" Association="Self.FK_GoodsArrivals_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivals_Customers1" Association="Self.FK_GoodsArrivals_Customers1">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivals_Employees" Association="Self.FK_GoodsArrivals_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivals_Locations" Association="Self.FK_GoodsArrivals_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivals_PurchaseOrders" Association="Self.FK_GoodsArrivals_PurchaseOrders">
+            <End Role="PurchaseOrders" EntitySet="PurchaseOrders" />
+            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivals_VoidTypes" Association="Self.FK_GoodsArrivals_VoidTypes">
+            <End Role="VoidTypes" EntitySet="VoidTypes" />
+            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsArrivals_Warehouses" Association="Self.FK_GoodsArrivals_Warehouses">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="GoodsArrivals" EntitySet="GoodsArrivals" />
           </AssociationSet>
           <AssociationSet Name="FK_GoodsDeliveries_Customers1" Association="Self.FK_GoodsDeliveries_Customers1">
             <End Role="Customers" EntitySet="Customers" />
