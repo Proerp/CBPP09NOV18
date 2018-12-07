@@ -1068,6 +1068,7 @@
           <Property Name="PurchaseRequisitionDetailID" Type="int" />
           <Property Name="GoodsArrivalID" Type="int" />
           <Property Name="GoodsArrivalDetailID" Type="int" />
+          <Property Name="GoodsArrivalPackageID" Type="int" />
           <Property Name="FinishedProductID" Type="int" />
           <Property Name="FinishedProductPackageID" Type="int" />
           <Property Name="MaterialIssueID" Type="int" />
@@ -6604,12 +6605,11 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
         <Function Name="GetGoodsReceiptPendingCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetGoodsReceiptPendingGoodsArrivalDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetGoodsReceiptPendingGoodsArrivalPackages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="GoodsReceiptID" Type="int" Mode="In" />
           <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
-          <Parameter Name="GoodsArrivalDetailIDs" Type="varchar" Mode="In" />
-          <Parameter Name="IsReadonly" Type="bit" Mode="In" />
+          <Parameter Name="GoodsArrivalPackageIDs" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetGoodsReceiptPendingGoodsArrivals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -13560,13 +13560,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="GoodsArrival" EntitySet="GoodsArrivals" />
             <End Role="GoodsReceipt" EntitySet="GoodsReceipts" />
           </AssociationSet>
-          <FunctionImport Name="GetGoodsReceiptPendingGoodsArrivalDetails" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingGoodsArrivalDetail)">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
-            <Parameter Name="GoodsReceiptID" Mode="In" Type="Int32" />
-            <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
-            <Parameter Name="GoodsArrivalDetailIDs" Mode="In" Type="String" />
-            <Parameter Name="IsReadonly" Mode="In" Type="Boolean" />
-          </FunctionImport>
           <FunctionImport Name="GetGoodsReceiptPendingGoodsArrivals" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingGoodsArrival)">
           <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -13965,6 +13958,12 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="Commodity" EntitySet="Commodities" />
             <End Role="WarehouseTransferDetail" EntitySet="WarehouseTransferDetails" />
           </AssociationSet>
+          <FunctionImport Name="GetGoodsReceiptPendingGoodsArrivalPackages" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingGoodsArrivalPackage)">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="GoodsReceiptID" Mode="In" Type="Int32" />
+            <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
+            <Parameter Name="GoodsArrivalPackageIDs" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -18150,6 +18149,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="BinLocation" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations" FromRole="GoodsReceiptDetail" ToRole="BinLocation" />
           <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_GoodsReceiptDetails" FromRole="GoodsReceiptDetail" ToRole="PackageIssueDetail" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities" FromRole="GoodsReceiptDetail" ToRole="Commodity" />
+          <Property Name="GoodsArrivalPackageID" Type="Int32" />
         </EntityType>
         <Association Name="FK_GoodsReceiptDetails_GoodsReceipts">
           <End Type="TotalSmartPortalModel.GoodsReceipt" Role="GoodsReceipt" Multiplicity="1" />
@@ -18322,6 +18322,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
           <Property Type="Int32" Name="BinLocationID" Nullable="false" />
           <Property Type="String" Name="BinLocationCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="GoodsArrivalPackageID" Nullable="true" />
         </ComplexType>
         <EntityType Name="ModuleDetail">
           <Key>
@@ -19365,27 +19366,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="GoodsReceiptPendingGoodsArrivalDetail">
-          <Property Type="Int32" Name="GoodsArrivalID" Nullable="false" />
-          <Property Type="Int32" Name="GoodsArrivalDetailID" Nullable="false" />
-          <Property Type="String" Name="GoodsArrivalReference" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="GoodsArrivalCode" Nullable="true" MaxLength="60" />
-          <Property Type="DateTime" Name="GoodsArrivalEntryDate" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="CommodityID" Nullable="false" />
-          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
-          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
-          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="19" Scale="2" />
-          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="1" Scale="1" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
-          <Property Type="Boolean" Name="IsSelected" Nullable="true" />
-          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
-          <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
-          <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
-          <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
-        </ComplexType>
         <ComplexType Name="GoodsReceiptPendingGoodsArrival">
           <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
           <Property Type="Int32" Name="GoodsArrivalID" Nullable="false" />
@@ -20751,6 +20731,29 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GoodsReceiptPendingGoodsArrivalPackage">
+          <Property Type="Int32" Name="GoodsArrivalID" Nullable="false" />
+          <Property Type="Int32" Name="GoodsArrivalDetailID" Nullable="false" />
+          <Property Type="Int32" Name="GoodsArrivalPackageID" Nullable="false" />
+          <Property Type="String" Name="GoodsArrivalReference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="GoodsArrivalCode" Nullable="true" MaxLength="60" />
+          <Property Type="DateTime" Name="GoodsArrivalEntryDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
+          <Property Type="Int32" Name="SerialID" Nullable="false" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="1" Scale="1" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="IsSelected" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -25340,6 +25343,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="GoodsReceiptDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptDetail">
               <MappingFragment StoreEntitySet="GoodsReceiptDetails">
+                <ScalarProperty Name="GoodsArrivalPackageID" ColumnName="GoodsArrivalPackageID" />
                 <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
@@ -25434,6 +25438,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
                 <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
                 <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
+                <ScalarProperty Name="GoodsArrivalPackageID" ColumnName="GoodsArrivalPackageID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -25765,31 +25770,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetGoodsReceiptPendingGoodsArrivalDetails" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptPendingGoodsArrivalDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptPendingGoodsArrivalDetail">
-                <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
-                <ScalarProperty Name="GoodsArrivalDetailID" ColumnName="GoodsArrivalDetailID" />
-                <ScalarProperty Name="GoodsArrivalReference" ColumnName="GoodsArrivalReference" />
-                <ScalarProperty Name="GoodsArrivalCode" ColumnName="GoodsArrivalCode" />
-                <ScalarProperty Name="GoodsArrivalEntryDate" ColumnName="GoodsArrivalEntryDate" />
-                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
-                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
-                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
-                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
-                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
-                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
-                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
-                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
-                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
-                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetGoodsReceiptPendingGoodsArrivals" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptPendingGoodsArrivals">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptPendingGoodsArrival">
@@ -26377,6 +26357,33 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetGoodsReceiptPendingGoodsArrivalPackages" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptPendingGoodsArrivalPackages">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptPendingGoodsArrivalPackage">
+                <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
+                <ScalarProperty Name="GoodsArrivalDetailID" ColumnName="GoodsArrivalDetailID" />
+                <ScalarProperty Name="GoodsArrivalPackageID" ColumnName="GoodsArrivalPackageID" />
+                <ScalarProperty Name="GoodsArrivalReference" ColumnName="GoodsArrivalReference" />
+                <ScalarProperty Name="GoodsArrivalCode" ColumnName="GoodsArrivalCode" />
+                <ScalarProperty Name="GoodsArrivalEntryDate" ColumnName="GoodsArrivalEntryDate" />
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="SerialID" ColumnName="SerialID" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
+                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

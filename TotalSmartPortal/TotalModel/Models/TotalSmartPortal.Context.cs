@@ -4059,31 +4059,6 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("MoldDeletable", entityIDParameter);
         }
     
-        public virtual ObjectResult<GoodsReceiptPendingGoodsArrivalDetail> GetGoodsReceiptPendingGoodsArrivalDetails(Nullable<int> locationID, Nullable<int> goodsReceiptID, Nullable<int> goodsArrivalID, string goodsArrivalDetailIDs, Nullable<bool> isReadonly)
-        {
-            var locationIDParameter = locationID.HasValue ?
-                new ObjectParameter("LocationID", locationID) :
-                new ObjectParameter("LocationID", typeof(int));
-    
-            var goodsReceiptIDParameter = goodsReceiptID.HasValue ?
-                new ObjectParameter("GoodsReceiptID", goodsReceiptID) :
-                new ObjectParameter("GoodsReceiptID", typeof(int));
-    
-            var goodsArrivalIDParameter = goodsArrivalID.HasValue ?
-                new ObjectParameter("GoodsArrivalID", goodsArrivalID) :
-                new ObjectParameter("GoodsArrivalID", typeof(int));
-    
-            var goodsArrivalDetailIDsParameter = goodsArrivalDetailIDs != null ?
-                new ObjectParameter("GoodsArrivalDetailIDs", goodsArrivalDetailIDs) :
-                new ObjectParameter("GoodsArrivalDetailIDs", typeof(string));
-    
-            var isReadonlyParameter = isReadonly.HasValue ?
-                new ObjectParameter("IsReadonly", isReadonly) :
-                new ObjectParameter("IsReadonly", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrivalDetail>("GetGoodsReceiptPendingGoodsArrivalDetails", locationIDParameter, goodsReceiptIDParameter, goodsArrivalIDParameter, goodsArrivalDetailIDsParameter, isReadonlyParameter);
-        }
-    
         public virtual ObjectResult<GoodsReceiptPendingGoodsArrival> GetGoodsReceiptPendingGoodsArrivals(Nullable<int> locationID)
         {
             var locationIDParameter = locationID.HasValue ?
@@ -4486,6 +4461,27 @@ namespace TotalModel.Models
                 new ObjectParameter("Approved", typeof(bool));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GoodsArrivalToggleApproved", entityIDParameter, approvedParameter);
+        }
+    
+        public virtual ObjectResult<GoodsReceiptPendingGoodsArrivalPackage> GetGoodsReceiptPendingGoodsArrivalPackages(Nullable<int> locationID, Nullable<int> goodsReceiptID, Nullable<int> goodsArrivalID, string goodsArrivalPackageIDs)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var goodsReceiptIDParameter = goodsReceiptID.HasValue ?
+                new ObjectParameter("GoodsReceiptID", goodsReceiptID) :
+                new ObjectParameter("GoodsReceiptID", typeof(int));
+    
+            var goodsArrivalIDParameter = goodsArrivalID.HasValue ?
+                new ObjectParameter("GoodsArrivalID", goodsArrivalID) :
+                new ObjectParameter("GoodsArrivalID", typeof(int));
+    
+            var goodsArrivalPackageIDsParameter = goodsArrivalPackageIDs != null ?
+                new ObjectParameter("GoodsArrivalPackageIDs", goodsArrivalPackageIDs) :
+                new ObjectParameter("GoodsArrivalPackageIDs", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrivalPackage>("GetGoodsReceiptPendingGoodsArrivalPackages", locationIDParameter, goodsReceiptIDParameter, goodsArrivalIDParameter, goodsArrivalPackageIDsParameter);
         }
     }
 }

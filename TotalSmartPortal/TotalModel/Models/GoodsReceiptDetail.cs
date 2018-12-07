@@ -62,6 +62,7 @@ namespace TotalModel.Models
         public string LabCode { get; set; }
         public string Barcode { get; set; }
         public int BinLocationID { get; set; }
+        public Nullable<int> GoodsArrivalPackageID { get; set; }
     
         public virtual GoodsReceipt GoodsReceipt { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }

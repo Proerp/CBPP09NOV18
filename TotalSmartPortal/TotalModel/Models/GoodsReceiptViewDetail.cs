@@ -63,5 +63,6 @@ namespace TotalModel.Models
         public string LabCode { get; set; }
         public int BinLocationID { get; set; }
         public string BinLocationCode { get; set; }
+        public Nullable<int> GoodsArrivalPackageID { get; set; }
     }
 }

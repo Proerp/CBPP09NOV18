@@ -312,7 +312,7 @@
     <Compile Include="Models\GoodsReceiptPendingGoodsArrival.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GoodsReceiptPendingGoodsArrivalDetail.cs">
+    <Compile Include="Models\GoodsReceiptPendingGoodsArrivalPackage.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\GoodsReceiptPendingMaterialIssueDetail.cs">
