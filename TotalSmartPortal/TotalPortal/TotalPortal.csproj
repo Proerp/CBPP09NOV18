@@ -1581,6 +1581,7 @@
     <Content Include="Areas\Purchases\Views\GoodsArrivals\_GetCustomer.cshtml" />
     <Content Include="Areas\Purchases\Views\GoodsArrivals\_GetPurchaseOrder.cshtml" />
     <Content Include="Areas\Purchases\Views\GoodsArrivals\_GoodsArrival.cshtml" />
+    <Content Include="Areas\Purchases\Views\GoodsArrivals\Approve.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -1908,6 +1909,7 @@
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\Open.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\Print.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\AddPendingPurchaseOrderDetail.js" />
+    <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Approve.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Delete.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Edit.js" />

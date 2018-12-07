@@ -20,6 +20,15 @@
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.Code)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         @Html.HiddenFor(model => model.PurchaseOrderID)
         @Html.HiddenFor(model => model.PurchaseOrderCode)
@@ -82,7 +91,7 @@
 
     <div class="right-panel">
 
-        <div class="right-top-panel right-top-panel-H1">
+        <div class="right-top-panel right-top-panel-H2">
 
             @Html.EditorFor(d => d.Customer, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
             @Html.EditorFor(d => d.Transporter, new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })

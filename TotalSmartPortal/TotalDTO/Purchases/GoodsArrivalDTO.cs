@@ -37,7 +37,7 @@ namespace TotalDTO.Purchases
         [Display(Name = "Ngày đặt hàng")]
         public Nullable<System.DateTime> PurchaseOrderEntryDate { get; set; }
 
-        [Display(Name = "Số đơn hàng")]
+        [Display(Name = "Số invoice")]
         [UIHint("Commons/SOCode")]
         public string Code { get; set; }
         [Display(Name = "Chứng từ khuyến mãi")]

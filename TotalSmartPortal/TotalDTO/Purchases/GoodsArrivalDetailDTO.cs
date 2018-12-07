@@ -46,11 +46,11 @@ namespace TotalDTO.Purchases
         [UIHint("AutoCompletes/CommodityBase")]
         public override string CommodityCode { get; set; }
 
-        [Display(Name = "Số seal")]
+        [Display(Name = "Số cont")]
         [Required(ErrorMessage = "Vui lòng nhập số seal")]
         public virtual string SealCode { get; set; }
 
-        [Display(Name = "Số batch")]
+        [Display(Name = "Số lô")]
         [Required(ErrorMessage = "Vui lòng nhập số batch")]
         public virtual string BatchCode { get; set; }
 
