@@ -22,6 +22,8 @@ namespace TotalBase
                     return "H";
 
 
+                case GlobalEnums.NmvnTaskID.BlendingInstruction:
+                    return "FT";
                 case GlobalEnums.NmvnTaskID.PlannedOrder:
                     return "PL";
                 case GlobalEnums.NmvnTaskID.ProductionOrder:

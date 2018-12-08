@@ -357,6 +357,11 @@ namespace TotalDAL.Repositories
 
             //return;
 
+            Helpers.SqlProgrammability.Productions.BlendingInstruction blendingInstruction = new Helpers.SqlProgrammability.Productions.BlendingInstruction(totalSmartPortalEntities);
+            blendingInstruction.RestoreProcedure();
+
+            //return;
+
             Helpers.SqlProgrammability.Productions.PlannedOrder plannedOrder = new Helpers.SqlProgrammability.Productions.PlannedOrder(totalSmartPortalEntities);
             plannedOrder.RestoreProcedure();
 
