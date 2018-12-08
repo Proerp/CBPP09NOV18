@@ -113,8 +113,6 @@ namespace TotalModel.Models
         public virtual DbSet<GoodsArrival> GoodsArrivals { get; set; }
         public virtual DbSet<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
         public virtual DbSet<BinLocation> BinLocations { get; set; }
-        public virtual DbSet<BlendingInstructionDetail> BlendingInstructionDetails { get; set; }
-        public virtual DbSet<BlendingInstruction> BlendingInstructions { get; set; }
         public virtual DbSet<PackageIssueDetail> PackageIssueDetails { get; set; }
         public virtual DbSet<PackageIssue> PackageIssues { get; set; }
         public virtual DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
@@ -122,6 +120,8 @@ namespace TotalModel.Models
         public virtual DbSet<Commodity> Commodities { get; set; }
         public virtual DbSet<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         public virtual DbSet<GoodsArrivalPackage> GoodsArrivalPackages { get; set; }
+        public virtual DbSet<BlendingInstructionDetail> BlendingInstructionDetails { get; set; }
+        public virtual DbSet<BlendingInstruction> BlendingInstructions { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {

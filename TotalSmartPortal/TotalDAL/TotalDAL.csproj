@@ -71,6 +71,7 @@
     <Compile Include="Helpers\SqlProgrammability\Inventories\TransferOrder.cs" />
     <Compile Include="Helpers\SqlProgrammability\Inventories\WarehouseAdjustment.cs" />
     <Compile Include="Helpers\SqlProgrammability\Inventories\WarehouseTransfer.cs" />
+    <Compile Include="Helpers\SqlProgrammability\Productions\BlendingInstruction.cs" />
     <Compile Include="Helpers\SqlProgrammability\Productions\FinishedHandover.cs" />
     <Compile Include="Helpers\SqlProgrammability\Productions\FinishedProduct.cs" />
     <Compile Include="Helpers\SqlProgrammability\Productions\PlannedOrder.cs" />

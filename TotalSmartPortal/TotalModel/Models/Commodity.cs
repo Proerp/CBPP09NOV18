@@ -18,7 +18,6 @@ namespace TotalModel.Models
         public Commodity()
         {
             this.AccountInvoiceDetails = new HashSet<AccountInvoiceDetail>();
-            this.BlendingInstructionDetails = new HashSet<BlendingInstructionDetail>();
             this.BomDetails = new HashSet<BomDetail>();
             this.CreditNoteDetails = new HashSet<CreditNoteDetail>();
             this.DeliveryAdviceDetails = new HashSet<DeliveryAdviceDetail>();
@@ -40,6 +39,7 @@ namespace TotalModel.Models
             this.WarehouseTransferDetails = new HashSet<WarehouseTransferDetail>();
             this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
             this.GoodsArrivalPackages = new HashSet<GoodsArrivalPackage>();
+            this.BlendingInstructionDetails = new HashSet<BlendingInstructionDetail>();
         }
     
         public int CommodityID { get; set; }
@@ -80,8 +80,6 @@ namespace TotalModel.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountInvoiceDetail> AccountInvoiceDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BlendingInstructionDetail> BlendingInstructionDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BomDetail> BomDetails { get; set; }
         public virtual CommodityBrand CommodityBrand { get; set; }
@@ -129,5 +127,7 @@ namespace TotalModel.Models
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrivalPackage> GoodsArrivalPackages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BlendingInstructionDetail> BlendingInstructionDetails { get; set; }
     }
 }

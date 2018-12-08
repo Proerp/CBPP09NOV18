@@ -43,12 +43,12 @@ namespace TotalModel.Models
         public string LabCode { get; set; }
         public string Barcode { get; set; }
     
-        public virtual BlendingInstructionDetail BlendingInstructionDetail { get; set; }
-        public virtual BlendingInstruction BlendingInstruction { get; set; }
         public virtual PackageIssue PackageIssue { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
         public virtual Commodity Commodity { get; set; }
         public virtual GoodsReceiptDetail GoodsReceiptDetail { get; set; }
+        public virtual BlendingInstructionDetail BlendingInstructionDetail { get; set; }
+        public virtual BlendingInstruction BlendingInstruction { get; set; }
     }
 }

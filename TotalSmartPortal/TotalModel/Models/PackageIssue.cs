@@ -46,7 +46,6 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
     
-        public virtual BlendingInstruction BlendingInstruction { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual Employee Employee1 { get; set; }
         public virtual Location Location { get; set; }
@@ -55,5 +54,6 @@ namespace TotalModel.Models
         public virtual Shift Shift { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual BlendingInstruction BlendingInstruction { get; set; }
     }
 }

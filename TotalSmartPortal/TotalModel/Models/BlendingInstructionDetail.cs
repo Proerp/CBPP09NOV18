@@ -27,7 +27,6 @@ namespace TotalModel.Models
         public string Code { get; set; }
         public int OrganizationalUnitID { get; set; }
         public int LocationID { get; set; }
-        public int WarehouseID { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public decimal Quantity { get; set; }
@@ -41,9 +40,8 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> InActivePartialDate { get; set; }
     
         public virtual BlendingInstruction BlendingInstruction { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
+        public virtual Commodity Commodity { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PackageIssueDetail> PackageIssueDetails { get; set; }
-        public virtual Commodity Commodity { get; set; }
     }
 }

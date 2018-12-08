@@ -338,18 +338,8 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProducts_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandovers_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandovers_PlannedOrders" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.BlendingInstructionDetail" Width="1.5" PointX="55" PointY="33.5" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.BlendingInstruction" Width="1.5" PointX="47.75" PointY="14.625" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_BlendingInstructions" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_Warehouses" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_Locations" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_VoidTypes" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_Warehouses" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.PackageIssueDetail" Width="1.5" PointX="66.875" PointY="19.75" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.PackageIssue" Width="1.5" PointX="55" PointY="17.125" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructionDetails" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructions" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Employees" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Employees1" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Locations" />
@@ -371,7 +361,6 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_PurchaseOrders_VoidTypes" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.Commodity" Width="1.5" PointX="11" PointY="40" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_AccountInvoiceDetails_Commodities" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BomDetails_Materials" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_Commodities_CommodityBrands" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_Commodities_CommodityCategories" />
@@ -417,6 +406,15 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalPackages_PurchaseOrderDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalPackages_VoidTypes" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalPackages" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.BlendingInstructionDetail" Width="1.5" PointX="23.5" PointY="42.875" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.BlendingInstruction" Width="1.5" PointX="21.25" PointY="13.625" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_BlendingInstructions" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructionDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_Locations" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_VoidTypes" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructions" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
