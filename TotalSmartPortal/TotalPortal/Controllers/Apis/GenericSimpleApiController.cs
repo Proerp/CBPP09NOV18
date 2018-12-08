@@ -204,7 +204,7 @@ namespace TotalPortal.Controllers.Apis
                 //return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, this.TailorViewModel(simpleViewModel))); //RETURN WITH MODEL
                 //string modelStateErrors = JsonConvert.SerializeObject(ModelState.Values.SelectMany(state => state.Errors).Select(error => string.IsNullOrEmpty(error.ErrorMessage) ? error.Exception.Message : error.ErrorMessage));
                 //var errorList = ModelState.Values.SelectMany(state => state.Errors).Select(error => string.IsNullOrEmpty(error.ErrorMessage) ? error.Exception.Message : error.ErrorMessage).ToArray(); //RETURN ERROR ARRAY
-                
+
                 var errorList = ModelState.Where(elem => elem.Value.Errors.Any()).ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Errors.Select(e => string.IsNullOrEmpty(e.ErrorMessage) ? e.Exception.Message : e.ErrorMessage).ToArray()); //RETURN ERROR ARRAY
                 return ResponseMessage(Request.CreateResponse(HttpStatusCode.BadRequest, errorList));
             }
@@ -530,7 +530,8 @@ namespace TotalPortal.Controllers.Apis
             }
             catch (Exception exception)
             {
-                ModelState.AddModelError(string.Empty, exception);
+                Exception baseException = exception.GetBaseException();
+                ModelState.AddModelError(string.Empty, baseException != null ? baseException : exception);
                 return false;
             }
         }
