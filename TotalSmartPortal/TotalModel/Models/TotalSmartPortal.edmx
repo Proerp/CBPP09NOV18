@@ -181,6 +181,7 @@
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="VoucherDate" Type="datetime" />
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="StorekeeperID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
@@ -1418,6 +1419,7 @@
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="BatchID" Type="int" Nullable="false" />
           <Property Name="BatchEntryDate" Type="datetime" Nullable="false" />
+          <Property Name="ProductionLineID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="BinLocationID" Type="int" Nullable="false" />
           <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
@@ -1442,6 +1444,7 @@
           <Property Name="ShiftID" Type="int" Nullable="false" />
           <Property Name="WorkshiftID" Type="int" Nullable="false" />
           <Property Name="BlendingInstructionID" Type="int" Nullable="false" />
+          <Property Name="ProductionLineID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="CrucialWorkerID" Type="int" Nullable="false" />
           <Property Name="StorekeeperID" Type="int" Nullable="false" />
@@ -2590,6 +2593,18 @@ warning 6035: The relationship 'FK_AccountInvoices_AspNetUsers2' has columns tha
               <PropertyRef Name="CommodityID" />
             </Principal>
             <Dependent Role="BlendingInstructionDetails">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BlendingInstructions_Commodities">
+          <End Role="Commodities" Type="Self.Commodities" Multiplicity="1" />
+          <End Role="BlendingInstructions" Type="Self.BlendingInstructions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodities">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="BlendingInstructions">
               <PropertyRef Name="CommodityID" />
             </Dependent>
           </ReferentialConstraint>
@@ -4679,6 +4694,18 @@ warning 6035: The relationship 'FK_OrganizationalUnitIUsers_AspNetUsers' has col
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_PackageIssueDetails_ProductionLines">
+          <End Role="ProductionLines" Type="Self.ProductionLines" Multiplicity="1" />
+          <End Role="PackageIssueDetails" Type="Self.PackageIssueDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionLines">
+              <PropertyRef Name="ProductionLineID" />
+            </Principal>
+            <Dependent Role="PackageIssueDetails">
+              <PropertyRef Name="ProductionLineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PackageIssueDetails_Shifts">
           <End Role="Shifts" Type="Self.Shifts" Multiplicity="1" />
           <End Role="PackageIssueDetails" Type="Self.PackageIssueDetails" Multiplicity="*" />
@@ -4757,6 +4784,18 @@ warning 6035: The relationship 'FK_PackageIssues_AspNetUsers2' has columns that 
             </Principal>
             <Dependent Role="PackageIssues">
               <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_ProductionLines">
+          <End Role="ProductionLines" Type="Self.ProductionLines" Multiplicity="1" />
+          <End Role="PackageIssues" Type="Self.PackageIssues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionLines">
+              <PropertyRef Name="ProductionLineID" />
+            </Principal>
+            <Dependent Role="PackageIssues">
+              <PropertyRef Name="ProductionLineID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6416,6 +6455,37 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="PromotionID" Type="int" Mode="In" />
           <Parameter Name="CustomerID" Type="int" Mode="In" />
         </Function>
+        <Function Name="BlendingInstructionApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="BlendingInstructionEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="BlendingInstructionPostSaveValidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="BlendingInstructionSaveRelative" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="SaveRelativeOption" Type="int" Mode="In" />
+        </Function>
+        <Function Name="BlendingInstructionToggleApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="Approved" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="BlendingInstructionToggleVoid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="InActive" Type="bit" Mode="In" />
+          <Parameter Name="VoidTypeID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="BlendingInstructionToggleVoidDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="EntityDetailID" Type="int" Mode="In" />
+          <Parameter Name="InActivePartial" Type="bit" Mode="In" />
+          <Parameter Name="VoidTypeID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="BlendingInstructionVoidable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
         <Function Name="CommodityDeletable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
@@ -6540,6 +6610,19 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
         <Function Name="GetBinLocationBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetBlendingInstructionIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
+          <Parameter Name="FromDate" Type="datetime" Mode="In" />
+          <Parameter Name="ToDate" Type="datetime" Mode="In" />
+          <Parameter Name="FilterOptionID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetBlendingInstructionLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
+          <Parameter Name="FirmOrderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetBlendingInstructionViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetBomBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
@@ -7863,6 +7946,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="Commodities" EntitySet="Commodities" />
             <End Role="BlendingInstructionDetails" EntitySet="BlendingInstructionDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_BlendingInstructions_Commodities" Association="Self.FK_BlendingInstructions_Commodities">
+            <End Role="Commodities" EntitySet="Commodities" />
+            <End Role="BlendingInstructions" EntitySet="BlendingInstructions" />
+          </AssociationSet>
           <AssociationSet Name="FK_BlendingInstructions_Locations" Association="Self.FK_BlendingInstructions_Locations">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="BlendingInstructions" EntitySet="BlendingInstructions" />
@@ -8527,6 +8614,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="PackageIssues" EntitySet="PackageIssues" />
             <End Role="PackageIssueDetails" EntitySet="PackageIssueDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_PackageIssueDetails_ProductionLines" Association="Self.FK_PackageIssueDetails_ProductionLines">
+            <End Role="ProductionLines" EntitySet="ProductionLines" />
+            <End Role="PackageIssueDetails" EntitySet="PackageIssueDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_PackageIssueDetails_Shifts" Association="Self.FK_PackageIssueDetails_Shifts">
             <End Role="Shifts" EntitySet="Shifts" />
             <End Role="PackageIssueDetails" EntitySet="PackageIssueDetails" />
@@ -8549,6 +8640,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           </AssociationSet>
           <AssociationSet Name="FK_PackageIssues_Locations" Association="Self.FK_PackageIssues_Locations">
             <End Role="Locations" EntitySet="Locations" />
+            <End Role="PackageIssues" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_ProductionLines" Association="Self.FK_PackageIssues_ProductionLines">
+            <End Role="ProductionLines" EntitySet="ProductionLines" />
             <End Role="PackageIssues" EntitySet="PackageIssues" />
           </AssociationSet>
           <AssociationSet Name="FK_PackageIssues_Shifts" Association="Self.FK_PackageIssues_Shifts">
@@ -14162,6 +14257,62 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="BlendingInstruction" EntitySet="BlendingInstructions" />
             <End Role="PackageIssue" EntitySet="PackageIssues" />
           </AssociationSet>
+          <AssociationSet Name="FK_BlendingInstructions_Commodities" Association="TotalSmartPortalModel.FK_BlendingInstructions_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="BlendingInstruction" EntitySet="BlendingInstructions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssueDetails_ProductionLines" Association="TotalSmartPortalModel.FK_PackageIssueDetails_ProductionLines">
+            <End Role="ProductionLine" EntitySet="ProductionLines" />
+            <End Role="PackageIssueDetail" EntitySet="PackageIssueDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_ProductionLines" Association="TotalSmartPortalModel.FK_PackageIssues_ProductionLines">
+            <End Role="ProductionLine" EntitySet="ProductionLines" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <FunctionImport Name="BlendingInstructionApproved" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="BlendingInstructionEditable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="BlendingInstructionPostSaveValidate" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="BlendingInstructionSaveRelative">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="SaveRelativeOption" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="BlendingInstructionToggleApproved">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="Approved" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="BlendingInstructionToggleVoid">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="InActive" Mode="In" Type="Boolean" />
+            <Parameter Name="VoidTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="BlendingInstructionToggleVoidDetail">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="EntityDetailID" Mode="In" Type="Int32" />
+            <Parameter Name="InActivePartial" Mode="In" Type="Boolean" />
+            <Parameter Name="VoidTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="BlendingInstructionVoidable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBlendingInstructionIndexes" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionIndex)">
+            <Parameter Name="AspUserID" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+            <Parameter Name="FilterOptionID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBlendingInstructionLogs" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionLog)">
+            <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
+            <Parameter Name="FirmOrderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBlendingInstructionViewDetails" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionViewDetail)">
+            <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -15438,6 +15589,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="MaterialIssues" Relationship="TotalSmartPortalModel.FK_MaterialIssues_ProductionLines" FromRole="ProductionLine" ToRole="MaterialIssue" />
           <NavigationProperty Name="SemifinishedProducts" Relationship="TotalSmartPortalModel.FK_SemifinishedProducts_ProductionLines" FromRole="ProductionLine" ToRole="SemifinishedProduct" />
+          <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_ProductionLines" FromRole="ProductionLine" ToRole="PackageIssueDetail" />
+          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_ProductionLines" FromRole="ProductionLine" ToRole="PackageIssue" />
         </EntityType>
         <EntityType Name="Workshift">
           <Key>
@@ -19701,6 +19854,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_GoodsReceiptDetails" FromRole="PackageIssueDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="BlendingInstructionDetail" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructionDetails" FromRole="PackageIssueDetail" ToRole="BlendingInstructionDetail" />
           <NavigationProperty Name="BlendingInstruction" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructions" FromRole="PackageIssueDetail" ToRole="BlendingInstruction" />
+          <Property Name="ProductionLineID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductionLine" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_ProductionLines" FromRole="PackageIssueDetail" ToRole="ProductionLine" />
         </EntityType>
         <EntityType Name="PackageIssue">
           <Key>
@@ -19739,6 +19894,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_PackageIssues_Warehouses" FromRole="PackageIssue" ToRole="Warehouse" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_PackageIssues_Workshifts" FromRole="PackageIssue" ToRole="Workshift" />
           <NavigationProperty Name="BlendingInstruction" Relationship="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" FromRole="PackageIssue" ToRole="BlendingInstruction" />
+          <Property Name="ProductionLineID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProductionLine" Relationship="TotalSmartPortalModel.FK_PackageIssues_ProductionLines" FromRole="PackageIssue" ToRole="ProductionLine" />
         </EntityType>
         <Association Name="FK_PackageIssues_Employees">
           <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
@@ -20220,6 +20377,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities" FromRole="Commodity" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsArrivalPackages" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_Commodities" FromRole="Commodity" ToRole="GoodsArrivalPackage" />
           <NavigationProperty Name="BlendingInstructionDetails" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" FromRole="Commodity" ToRole="BlendingInstructionDetail" />
+          <NavigationProperty Name="BlendingInstructions" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_Commodities" FromRole="Commodity" ToRole="BlendingInstruction" />
         </EntityType>
         <Association Name="FK_AccountInvoiceDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -20928,6 +21086,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_VoidTypes" FromRole="BlendingInstruction" ToRole="VoidType" />
           <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructions" FromRole="BlendingInstruction" ToRole="PackageIssueDetail" />
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" FromRole="BlendingInstruction" ToRole="PackageIssue" />
+          <Property Name="VoucherDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_Commodities" FromRole="BlendingInstruction" ToRole="Commodity" />
         </EntityType>
         <Association Name="FK_BlendingInstructionDetails_BlendingInstructions">
           <End Type="TotalSmartPortalModel.BlendingInstruction" Role="BlendingInstruction" Multiplicity="1" />
@@ -21013,6 +21173,93 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_BlendingInstructions_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.BlendingInstruction" Role="BlendingInstruction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="BlendingInstruction">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssueDetails_ProductionLines">
+          <End Type="TotalSmartPortalModel.ProductionLine" Role="ProductionLine" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssueDetail" Role="PackageIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionLine">
+              <PropertyRef Name="ProductionLineID" />
+            </Principal>
+            <Dependent Role="PackageIssueDetail">
+              <PropertyRef Name="ProductionLineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_ProductionLines">
+          <End Type="TotalSmartPortalModel.ProductionLine" Role="ProductionLine" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionLine">
+              <PropertyRef Name="ProductionLineID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="ProductionLineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="BlendingInstructionIndex">
+          <Property Type="Int32" Name="BlendingInstructionID" Nullable="false" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="BlendingInstructionEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Reference" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Code" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="VoucherDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="BlendingInstructionDetailID" Nullable="true" />
+          <Property Type="Int32" Name="SerialID" Nullable="true" />
+          <Property Type="String" Name="CommodityCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="true" MaxLength="200" />
+          <Property Type="Boolean" Name="Approved" Nullable="false" />
+          <Property Type="Boolean" Name="InActive" Nullable="false" />
+          <Property Type="Boolean" Name="InActivePartial" Nullable="false" />
+          <Property Type="String" Name="VoidTypeName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="ItemCode" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ItemEntryDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="ItemQuantity" Nullable="true" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="BlendingInstructionLog">
+          <Property Type="Int32" Name="PackageIssueDetailID" Nullable="false" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="ProductionLineCode" Nullable="false" MaxLength="50" />
+          <Property Type="DateTime" Name="PackageIssueWorkshiftEntryDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="PackageIssueWorkshiftCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="GoodsReceiptReference" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Decimal" Name="PackageIssueDetailQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="SemifinishedProductWorkshiftEntryDate" Nullable="true" />
+          <Property Type="Int32" Name="SemifinishedProductWorkshiftCode" Nullable="true" />
+          <Property Type="Int32" Name="CommoditiyCode" Nullable="true" />
+          <Property Type="Int32" Name="Quantity" Nullable="true" />
+          <Property Type="Int32" Name="Weights" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="BlendingInstructionViewDetail">
+          <Property Type="Int32" Name="BlendingInstructionDetailID" Nullable="false" />
+          <Property Type="Int32" Name="BlendingInstructionID" Nullable="false" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="VoidTypeID" Nullable="true" />
+          <Property Type="String" Name="VoidTypeCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="VoidTypeName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="VoidClassID" Nullable="true" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="InActivePartial" Nullable="false" />
+          <Property Type="DateTime" Name="InActivePartialDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -26174,6 +26421,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="PackageIssueDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.PackageIssueDetail">
               <MappingFragment StoreEntitySet="PackageIssueDetails">
+                <ScalarProperty Name="ProductionLineID" ColumnName="ProductionLineID" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
                 <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
@@ -26208,6 +26456,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="PackageIssues">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.PackageIssue">
               <MappingFragment StoreEntitySet="PackageIssues">
+                <ScalarProperty Name="ProductionLineID" ColumnName="ProductionLineID" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
@@ -26653,6 +26902,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="BlendingInstructions">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.BlendingInstruction">
               <MappingFragment StoreEntitySet="BlendingInstructions">
+                <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
                 <ScalarProperty Name="InActiveDate" ColumnName="InActiveDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
@@ -26678,6 +26928,77 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="BlendingInstructionApproved" FunctionName="TotalSmartPortalModel.Store.BlendingInstructionApproved" />
+          <FunctionImportMapping FunctionImportName="BlendingInstructionEditable" FunctionName="TotalSmartPortalModel.Store.BlendingInstructionEditable" />
+          <FunctionImportMapping FunctionImportName="BlendingInstructionPostSaveValidate" FunctionName="TotalSmartPortalModel.Store.BlendingInstructionPostSaveValidate" />
+          <FunctionImportMapping FunctionImportName="BlendingInstructionSaveRelative" FunctionName="TotalSmartPortalModel.Store.BlendingInstructionSaveRelative" />
+          <FunctionImportMapping FunctionImportName="BlendingInstructionToggleApproved" FunctionName="TotalSmartPortalModel.Store.BlendingInstructionToggleApproved" />
+          <FunctionImportMapping FunctionImportName="BlendingInstructionToggleVoid" FunctionName="TotalSmartPortalModel.Store.BlendingInstructionToggleVoid" />
+          <FunctionImportMapping FunctionImportName="BlendingInstructionToggleVoidDetail" FunctionName="TotalSmartPortalModel.Store.BlendingInstructionToggleVoidDetail" />
+          <FunctionImportMapping FunctionImportName="BlendingInstructionVoidable" FunctionName="TotalSmartPortalModel.Store.BlendingInstructionVoidable" />
+          <FunctionImportMapping FunctionImportName="GetBlendingInstructionIndexes" FunctionName="TotalSmartPortalModel.Store.GetBlendingInstructionIndexes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BlendingInstructionIndex">
+                <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="BlendingInstructionEntryDate" ColumnName="BlendingInstructionEntryDate" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="BlendingInstructionDetailID" ColumnName="BlendingInstructionDetailID" />
+                <ScalarProperty Name="SerialID" ColumnName="SerialID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
+                <ScalarProperty Name="VoidTypeName" ColumnName="VoidTypeName" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ItemCode" ColumnName="ItemCode" />
+                <ScalarProperty Name="ItemEntryDate" ColumnName="ItemEntryDate" />
+                <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBlendingInstructionLogs" FunctionName="TotalSmartPortalModel.Store.GetBlendingInstructionLogs">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BlendingInstructionLog">
+                <ScalarProperty Name="PackageIssueDetailID" ColumnName="PackageIssueDetailID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="ProductionLineCode" ColumnName="ProductionLineCode" />
+                <ScalarProperty Name="PackageIssueWorkshiftEntryDate" ColumnName="PackageIssueWorkshiftEntryDate" />
+                <ScalarProperty Name="PackageIssueWorkshiftCode" ColumnName="PackageIssueWorkshiftCode" />
+                <ScalarProperty Name="GoodsReceiptReference" ColumnName="GoodsReceiptReference" />
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="PackageIssueDetailQuantity" ColumnName="PackageIssueDetailQuantity" />
+                <ScalarProperty Name="SemifinishedProductWorkshiftEntryDate" ColumnName="SemifinishedProductWorkshiftEntryDate" />
+                <ScalarProperty Name="SemifinishedProductWorkshiftCode" ColumnName="SemifinishedProductWorkshiftCode" />
+                <ScalarProperty Name="CommoditiyCode" ColumnName="CommoditiyCode" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Weights" ColumnName="Weights" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBlendingInstructionViewDetails" FunctionName="TotalSmartPortalModel.Store.GetBlendingInstructionViewDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BlendingInstructionViewDetail">
+                <ScalarProperty Name="BlendingInstructionDetailID" ColumnName="BlendingInstructionDetailID" />
+                <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="VoidTypeID" ColumnName="VoidTypeID" />
+                <ScalarProperty Name="VoidTypeCode" ColumnName="VoidTypeCode" />
+                <ScalarProperty Name="VoidTypeName" ColumnName="VoidTypeName" />
+                <ScalarProperty Name="VoidClassID" ColumnName="VoidClassID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
+                <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

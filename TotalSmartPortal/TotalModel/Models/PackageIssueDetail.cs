@@ -42,6 +42,7 @@ namespace TotalModel.Models
         public string BatchCode { get; set; }
         public string LabCode { get; set; }
         public string Barcode { get; set; }
+        public int ProductionLineID { get; set; }
     
         public virtual PackageIssue PackageIssue { get; set; }
         public virtual Shift Shift { get; set; }
@@ -50,5 +51,6 @@ namespace TotalModel.Models
         public virtual GoodsReceiptDetail GoodsReceiptDetail { get; set; }
         public virtual BlendingInstructionDetail BlendingInstructionDetail { get; set; }
         public virtual BlendingInstruction BlendingInstruction { get; set; }
+        public virtual ProductionLine ProductionLine { get; set; }
     }
 }

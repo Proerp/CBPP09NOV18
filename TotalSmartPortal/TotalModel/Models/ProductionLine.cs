@@ -19,6 +19,8 @@ namespace TotalModel.Models
         {
             this.MaterialIssues = new HashSet<MaterialIssue>();
             this.SemifinishedProducts = new HashSet<SemifinishedProduct>();
+            this.PackageIssueDetails = new HashSet<PackageIssueDetail>();
+            this.PackageIssues = new HashSet<PackageIssue>();
         }
     
         public int ProductionLineID { get; set; }
@@ -33,5 +35,9 @@ namespace TotalModel.Models
         public virtual ICollection<MaterialIssue> MaterialIssues { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedProduct> SemifinishedProducts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PackageIssueDetail> PackageIssueDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PackageIssue> PackageIssues { get; set; }
     }
 }

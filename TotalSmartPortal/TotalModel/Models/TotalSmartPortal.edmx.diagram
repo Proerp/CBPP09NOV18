@@ -415,6 +415,9 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_VoidTypes" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructions" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_Commodities" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_ProductionLines" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_ProductionLines" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

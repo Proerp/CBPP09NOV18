@@ -4484,5 +4484,148 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrivalPackage>("GetGoodsReceiptPendingGoodsArrivalPackages", locationIDParameter, goodsReceiptIDParameter, goodsArrivalIDParameter, goodsArrivalPackageIDsParameter);
         }
+    
+        public virtual ObjectResult<string> BlendingInstructionApproved(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("BlendingInstructionApproved", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> BlendingInstructionEditable(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("BlendingInstructionEditable", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> BlendingInstructionPostSaveValidate(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("BlendingInstructionPostSaveValidate", entityIDParameter);
+        }
+    
+        public virtual int BlendingInstructionSaveRelative(Nullable<int> entityID, Nullable<int> saveRelativeOption)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var saveRelativeOptionParameter = saveRelativeOption.HasValue ?
+                new ObjectParameter("SaveRelativeOption", saveRelativeOption) :
+                new ObjectParameter("SaveRelativeOption", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BlendingInstructionSaveRelative", entityIDParameter, saveRelativeOptionParameter);
+        }
+    
+        public virtual int BlendingInstructionToggleApproved(Nullable<int> entityID, Nullable<bool> approved)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var approvedParameter = approved.HasValue ?
+                new ObjectParameter("Approved", approved) :
+                new ObjectParameter("Approved", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BlendingInstructionToggleApproved", entityIDParameter, approvedParameter);
+        }
+    
+        public virtual int BlendingInstructionToggleVoid(Nullable<int> entityID, Nullable<bool> inActive, Nullable<int> voidTypeID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var inActiveParameter = inActive.HasValue ?
+                new ObjectParameter("InActive", inActive) :
+                new ObjectParameter("InActive", typeof(bool));
+    
+            var voidTypeIDParameter = voidTypeID.HasValue ?
+                new ObjectParameter("VoidTypeID", voidTypeID) :
+                new ObjectParameter("VoidTypeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BlendingInstructionToggleVoid", entityIDParameter, inActiveParameter, voidTypeIDParameter);
+        }
+    
+        public virtual int BlendingInstructionToggleVoidDetail(Nullable<int> entityID, Nullable<int> entityDetailID, Nullable<bool> inActivePartial, Nullable<int> voidTypeID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var entityDetailIDParameter = entityDetailID.HasValue ?
+                new ObjectParameter("EntityDetailID", entityDetailID) :
+                new ObjectParameter("EntityDetailID", typeof(int));
+    
+            var inActivePartialParameter = inActivePartial.HasValue ?
+                new ObjectParameter("InActivePartial", inActivePartial) :
+                new ObjectParameter("InActivePartial", typeof(bool));
+    
+            var voidTypeIDParameter = voidTypeID.HasValue ?
+                new ObjectParameter("VoidTypeID", voidTypeID) :
+                new ObjectParameter("VoidTypeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BlendingInstructionToggleVoidDetail", entityIDParameter, entityDetailIDParameter, inActivePartialParameter, voidTypeIDParameter);
+        }
+    
+        public virtual ObjectResult<string> BlendingInstructionVoidable(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("BlendingInstructionVoidable", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<BlendingInstructionIndex> GetBlendingInstructionIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<int> filterOptionID)
+        {
+            var aspUserIDParameter = aspUserID != null ?
+                new ObjectParameter("AspUserID", aspUserID) :
+                new ObjectParameter("AspUserID", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(System.DateTime));
+    
+            var filterOptionIDParameter = filterOptionID.HasValue ?
+                new ObjectParameter("FilterOptionID", filterOptionID) :
+                new ObjectParameter("FilterOptionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionIndex>("GetBlendingInstructionIndexes", aspUserIDParameter, fromDateParameter, toDateParameter, filterOptionIDParameter);
+        }
+    
+        public virtual ObjectResult<BlendingInstructionLog> GetBlendingInstructionLogs(Nullable<int> blendingInstructionID, Nullable<int> firmOrderID)
+        {
+            var blendingInstructionIDParameter = blendingInstructionID.HasValue ?
+                new ObjectParameter("BlendingInstructionID", blendingInstructionID) :
+                new ObjectParameter("BlendingInstructionID", typeof(int));
+    
+            var firmOrderIDParameter = firmOrderID.HasValue ?
+                new ObjectParameter("FirmOrderID", firmOrderID) :
+                new ObjectParameter("FirmOrderID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionLog>("GetBlendingInstructionLogs", blendingInstructionIDParameter, firmOrderIDParameter);
+        }
+    
+        public virtual ObjectResult<BlendingInstructionViewDetail> GetBlendingInstructionViewDetails(Nullable<int> blendingInstructionID)
+        {
+            var blendingInstructionIDParameter = blendingInstructionID.HasValue ?
+                new ObjectParameter("BlendingInstructionID", blendingInstructionID) :
+                new ObjectParameter("BlendingInstructionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionViewDetail>("GetBlendingInstructionViewDetails", blendingInstructionIDParameter);
+        }
     }
 }

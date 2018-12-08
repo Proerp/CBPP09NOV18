@@ -40,6 +40,7 @@ namespace TotalModel.Models
             this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
             this.GoodsArrivalPackages = new HashSet<GoodsArrivalPackage>();
             this.BlendingInstructionDetails = new HashSet<BlendingInstructionDetail>();
+            this.BlendingInstructions = new HashSet<BlendingInstruction>();
         }
     
         public int CommodityID { get; set; }
@@ -129,5 +130,7 @@ namespace TotalModel.Models
         public virtual ICollection<GoodsArrivalPackage> GoodsArrivalPackages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlendingInstructionDetail> BlendingInstructionDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BlendingInstruction> BlendingInstructions { get; set; }
     }
 }

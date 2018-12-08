@@ -44,6 +44,7 @@ namespace TotalModel.Models
         public bool InActive { get; set; }
         public bool InActivePartial { get; set; }
         public Nullable<System.DateTime> InActiveDate { get; set; }
+        public Nullable<System.DateTime> VoucherDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlendingInstructionDetail> BlendingInstructionDetails { get; set; }
@@ -53,5 +54,6 @@ namespace TotalModel.Models
         public virtual ICollection<PackageIssueDetail> PackageIssueDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PackageIssue> PackageIssues { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }
