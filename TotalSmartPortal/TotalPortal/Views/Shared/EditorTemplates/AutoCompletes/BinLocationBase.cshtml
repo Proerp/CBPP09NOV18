@@ -9,11 +9,11 @@
         .Placeholder("Nhập bin ...")
         .HeaderTemplate("<div class=\"dropdown-header general-custom-header binLocation-custom-header\">" +
                             "<span class=\"k-widget k-header\">Vị trí</span>" +
-                            "<span class=\"k-widget k-header\">Tên nguyên liệu</span>" +
+                            //"<span class=\"k-widget k-header\">Tên nguyên liệu</span>" + ---HERE---
                         "</div>")
         .Template("<div class=\"dropdown-body general-custom-body binLocation-custom-body\">" +
                     "<span class=\"k-state-default\"><p>#: data.Code #</p></span>" +
-                    "<span class=\"k-state-default\"><p>#: data.Name #</p></span>" +
+                    //"<span class=\"k-state-default\"><p>#: data.Name #</p></span>" + ---HERE---
                   "</div>")
 
         .DataSource(source =>
@@ -62,13 +62,13 @@
     */
 
 
-    .binLocation-custom-header > span:first-child {
+    /*.binLocation-custom-header > span:first-child {
         width: 205px;
-    }
+    } ---HERE---  */
 
 
     .binLocation-custom-header > span:last-child {
-        width: 177px;
+        width: 135px;
     }
 
 
@@ -76,13 +76,13 @@
 
 
 
-    .k-item > .binLocation-custom-body > span:first-child {
+    /*.k-item > .binLocation-custom-body > span:first-child {
         width: 204px;
-    }
+    } ---HERE---  */
 
 
     .k-item > .binLocation-custom-body > span:last-child {
-        width: 150px;
+        width: 108px;
     }
 
     /*#endregion */

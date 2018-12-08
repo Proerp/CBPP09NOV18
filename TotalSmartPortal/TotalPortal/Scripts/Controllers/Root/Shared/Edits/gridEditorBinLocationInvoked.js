@@ -12,7 +12,7 @@
 
     gridEditorBinLocationDataBound = function (e) {
         $(".k-animation-container:has(#BinLocationCode-list)").css("width", "382");
-        $("#BinLocationCode-list").css("width", "382");
+        $("#BinLocationCode-list").css("width", "135");
         //$("#BinLocationCode-list").css("height", $("#BinLocationCode-list").height() + 1);
     }
 
