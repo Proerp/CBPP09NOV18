@@ -1693,7 +1693,6 @@
     <Content Include="Scripts\Controllers\Inventories\ItemReceipts\Index.js" />
     <Content Include="Scripts\Controllers\Inventories\ItemReceipts\Open.js" />
     <Content Include="Scripts\Controllers\Inventories\ItemReceipts\Print.js" />
-    <Content Include="Scripts\Controllers\Inventories\ItemReceipts\Void.js" />
     <Content Include="Scripts\Controllers\Inventories\ItemTransferOrders\Approve.js" />
     <Content Include="Scripts\Controllers\Inventories\ItemTransferOrders\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Inventories\ItemTransferOrders\Delete.js" />
@@ -1732,7 +1731,6 @@
     <Content Include="Scripts\Controllers\Inventories\MaterialReceipts\Index.js" />
     <Content Include="Scripts\Controllers\Inventories\MaterialReceipts\Open.js" />
     <Content Include="Scripts\Controllers\Inventories\MaterialReceipts\Print.js" />
-    <Content Include="Scripts\Controllers\Inventories\MaterialReceipts\Void.js" />
     <Content Include="Scripts\Controllers\Inventories\MaterialTransferOrders\Approve.js" />
     <Content Include="Scripts\Controllers\Inventories\MaterialTransferOrders\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Inventories\MaterialTransferOrders\Delete.js" />
@@ -1813,7 +1811,6 @@
     <Content Include="Scripts\Controllers\Inventories\ProductReceipts\Index.js" />
     <Content Include="Scripts\Controllers\Inventories\ProductReceipts\Open.js" />
     <Content Include="Scripts\Controllers\Inventories\ProductReceipts\Print.js" />
-    <Content Include="Scripts\Controllers\Inventories\ProductReceipts\Void.js" />
     <Content Include="Scripts\Controllers\Inventories\ProductTransferOrders\Approve.js" />
     <Content Include="Scripts\Controllers\Inventories\ProductTransferOrders\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Inventories\ProductTransferOrders\Delete.js" />
