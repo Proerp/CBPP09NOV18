@@ -349,7 +349,6 @@
     <Compile Include="Areas\Inventories\Controllers\Sessions\HandlingUnitSession.cs" />
     <Compile Include="Areas\Inventories\Controllers\Sessions\MaterialIssueSession.cs" />
     <Compile Include="Areas\Inventories\Controllers\Sessions\PackageIssueSession.cs" />
-    <Compile Include="Areas\Inventories\Controllers\TestAreaController.cs" />
     <Compile Include="Areas\Inventories\Controllers\TransferOrdersController.cs" />
     <Compile Include="Areas\Inventories\Controllers\WarehouseAdjustmentsController.cs" />
     <Compile Include="Areas\Inventories\Controllers\WarehouseTransfersController.cs" />
