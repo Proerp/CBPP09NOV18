@@ -16,9 +16,25 @@ namespace TotalDTO.Commons
     public class CMDProduct : ICMDOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.Product; } } }
 
 
-    public interface ICommodityPrimitiveDTO : IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
+    public interface ICommodityBaseDTO
     {
         int CommodityID { get; set; }
+        [Display(Name = "Mã")]
+        string Code { get; }
+        [Display(Name = "Tên sp")]
+        [Required(ErrorMessage = "Vui lòng nhập tên sp")]
+        string Name { get; set; }
+    }
+
+    public class CommodityBaseDTO : BaseDTO, ICommodityBaseDTO
+    {
+        public int CommodityID { get; set; }
+        public string Code { get; }
+        public string Name { get; set; }
+    }
+
+    public interface ICommodityPrimitiveDTO : ICommodityBaseDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
+    {
         string Code { get; }
         string OfficialCode { get; }
 
@@ -32,9 +48,7 @@ namespace TotalDTO.Commons
         [Display(Name = "Chiều rộng")]
         string CodePartF { get; set; }
 
-        [Display(Name = "Tên thường gọi")]
-        [Required(ErrorMessage = "Vui lòng nhập tên thường gọi")]
-        string Name { get; set; }
+        
         [Display(Name = "Tên chính thức")]
         [Required(ErrorMessage = "Vui lòng nhập tên chính thức")]
         string OfficialName { get; set; }
@@ -88,7 +102,7 @@ namespace TotalDTO.Commons
         bool IsProduct { get; }
     }
 
-    public class CommodityPrimitiveDTO<TCommodityOption> : BaseDTO, IPrimitiveEntity, IPrimitiveDTO
+    public class CommodityPrimitiveDTO<TCommodityOption> : CommodityBaseDTO, IPrimitiveEntity, IPrimitiveDTO
         where TCommodityOption : ICMDOption, new()
     {
         public GlobalEnums.NmvnTaskID NMVNTaskID { get { return new TCommodityOption().NMVNTaskID; } }
@@ -97,7 +111,7 @@ namespace TotalDTO.Commons
         public void SetID(int id) { this.CommodityID = id; }
 
         public int CommodityID { get; set; }
-        public string Code { get { return ((this.CommodityTypeID != (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartB) ? this.CodePartB + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartC) ? this.CodePartC + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartD) ? this.CodePartD + " " : "") + (this.CommodityTypeID == (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartE) ? this.CodePartE + " x " : "") + (!String.IsNullOrWhiteSpace(this.CodePartF) ? this.CodePartF : "")).Trim(); } }
+        public override string Code { get { return ((this.CommodityTypeID != (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartB) ? this.CodePartB + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartC) ? this.CodePartC + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartD) ? this.CodePartD + " " : "") + (this.CommodityTypeID == (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartE) ? this.CodePartE + " x " : "") + (!String.IsNullOrWhiteSpace(this.CodePartF) ? this.CodePartF : "")).Trim(); } }
         public string OfficialCode { get { return TotalBase.CommonExpressions.AlphaNumericString(this.Code); } }
         public string CodePartA { get; set; }
         public string CodePartB { get { return this.CommodityCategoryName.IndexOf("[") >= 0 ? this.CommodityCategoryName.Remove(this.CommodityCategoryName.IndexOf("[")).Trim() : this.CommodityCategoryName; } }
@@ -106,7 +120,6 @@ namespace TotalDTO.Commons
         public string CodePartE { get; set; }
         public string CodePartF { get; set; }
 
-        public string Name { get; set; }
         public string OfficialName { get; set; }
         public string OriginalName { get { return this.OfficialName; } }
 

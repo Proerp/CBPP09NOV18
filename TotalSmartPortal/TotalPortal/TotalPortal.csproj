@@ -2842,6 +2842,7 @@
     <Content Include="Views\Shared\EditorTemplates\IntegerReadonly.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DropDowns\TransferOrderType.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AutoCompletes\BinLocationBase.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AutoCompletes\Commodity.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -132,6 +132,8 @@
     <Compile Include="Inventories\WarehouseTransferDetailDTO.cs" />
     <Compile Include="Inventories\WarehouseTransferDTO.cs" />
     <Compile Include="IPrimitiveDTO.cs" />
+    <Compile Include="Productions\BlendingInstructionDetailDTO.cs" />
+    <Compile Include="Productions\BlendingInstructionDTO.cs" />
     <Compile Include="Productions\FinishedHandoverDetailDTO.cs" />
     <Compile Include="Productions\FinishedHandoverDTO.cs" />
     <Compile Include="Productions\FinishedProductDetailDTO.cs" />
