@@ -324,7 +324,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void GetBlendingInstructionLogs()
         {
-            string queryString = " @BlendingInstructionID int, @FirmOrderID int " + "\r\n";
+            string queryString = " @BlendingInstructionID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";

@@ -4606,17 +4606,13 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionIndex>("GetBlendingInstructionIndexes", aspUserIDParameter, fromDateParameter, toDateParameter, filterOptionIDParameter);
         }
     
-        public virtual ObjectResult<BlendingInstructionLog> GetBlendingInstructionLogs(Nullable<int> blendingInstructionID, Nullable<int> firmOrderID)
+        public virtual ObjectResult<BlendingInstructionLog> GetBlendingInstructionLogs(Nullable<int> blendingInstructionID)
         {
             var blendingInstructionIDParameter = blendingInstructionID.HasValue ?
                 new ObjectParameter("BlendingInstructionID", blendingInstructionID) :
                 new ObjectParameter("BlendingInstructionID", typeof(int));
     
-            var firmOrderIDParameter = firmOrderID.HasValue ?
-                new ObjectParameter("FirmOrderID", firmOrderID) :
-                new ObjectParameter("FirmOrderID", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionLog>("GetBlendingInstructionLogs", blendingInstructionIDParameter, firmOrderIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionLog>("GetBlendingInstructionLogs", blendingInstructionIDParameter);
         }
     
         public virtual ObjectResult<BlendingInstructionViewDetail> GetBlendingInstructionViewDetails(Nullable<int> blendingInstructionID)

@@ -20,7 +20,7 @@ namespace TotalDTO.Commons
     {
         int CommodityID { get; set; }
         [Display(Name = "Mã")]
-        string Code { get; }
+        string Code { get; set; }
         [Display(Name = "Tên sp")]
         [Required(ErrorMessage = "Vui lòng nhập tên sp")]
         string Name { get; set; }
@@ -29,13 +29,13 @@ namespace TotalDTO.Commons
     public class CommodityBaseDTO : BaseDTO, ICommodityBaseDTO
     {
         public int CommodityID { get; set; }
-        public string Code { get; }
+        public virtual string Code { get; set; }
         public string Name { get; set; }
     }
 
     public interface ICommodityPrimitiveDTO : ICommodityBaseDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
     {
-        string Code { get; }
+        string Code { get; set; }
         string OfficialCode { get; }
 
         [Display(Name = "Mã")]

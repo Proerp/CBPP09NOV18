@@ -6621,7 +6621,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
         </Function>
         <Function Name="GetBlendingInstructionLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
-          <Parameter Name="FirmOrderID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetBlendingInstructionViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
@@ -14272,7 +14271,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           </FunctionImport>
           <FunctionImport Name="GetBlendingInstructionLogs" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionLog)">
             <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
-            <Parameter Name="FirmOrderID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetBlendingInstructionViewDetails" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionViewDetail)">
           <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
