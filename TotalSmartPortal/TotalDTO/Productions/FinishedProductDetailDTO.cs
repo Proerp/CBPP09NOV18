@@ -133,7 +133,7 @@ namespace TotalDTO.Productions
         [UIHint("QuantityReadonly")]
         public decimal QuantityWeights { get { return this.PiecePerPack > 0 ? this.Quantity * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
 
-        [Display(Name = "P-Phẩm")]
+        [Display(Name = "PP")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityFailure { get; set; }
         [Display(Name = "PP (kg)")]

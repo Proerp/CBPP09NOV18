@@ -122,7 +122,7 @@
                     columns.Bound(p => p.PiecePerPack).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Hidden()
                         .ClientTemplate("#= (PiecePerPack == null)? '' : PiecePerPack #" + "<input type='hidden' name='FinishedProductViewDetails[#= index(data) #].PiecePerPack' value='#= (PiecePerPack == null) ? '' : PiecePerPack #' />");
 
-                    columns.Bound(p => p.PackageUnitWeights).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
+                    columns.Bound(p => p.PackageUnitWeights).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Hidden()
                         .ClientTemplate("#= (PackageUnitWeights == null)? '' : PackageUnitWeights #" + "<input type='hidden' name='FinishedProductViewDetails[#= index(data) #].PackageUnitWeights' value='#= (PackageUnitWeights == null) ? '' : PackageUnitWeights #' />");
 
                     columns.Bound(p => p.SemifinishedProductReference).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10)
@@ -327,7 +327,7 @@
                     .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
                     .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', QuantityRemains) #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
 
-                columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
+                columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(35)
                     .Format(Settings.kfmN0)
                     .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
                     .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', Quantity) #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
@@ -335,7 +335,7 @@
                 columns.Bound(p => p.PiecePerPack).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(50)
                     .ClientTemplate("#= (PiecePerPack == null)? '' : PiecePerPack #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].PiecePerPack' value='#= (PiecePerPack == null) ? '' : PiecePerPack #' />");
 
-                columns.Bound(p => p.PackageUnitWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                columns.Bound(p => p.PackageUnitWeights).DisplayNameTitle().Width(20).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                     .Format(Settings.kfmWeight)
                     .ClientTemplate("#= kendo.format('" + Settings.kfmWeight + "', PackageUnitWeights) #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].PackageUnitWeights' value='#= PackageUnitWeights #' />");
 
@@ -353,7 +353,7 @@
                     .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                     .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityWeights) #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].QuantityWeights' value='#= QuantityWeights #' />");
 
-                columns.Bound(p => p.QuantityFailure).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
+                columns.Bound(p => p.QuantityFailure).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20)
                     .Format(Settings.kfmN0)
                     .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
                     .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', QuantityFailure) #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].QuantityFailure' value='#= QuantityFailure #' />");
@@ -441,8 +441,8 @@
             summaryDataItem.set("Packages", summaryDataItem["PiecePerPack"] * 1 > 0 ? Math.trunc(DoRound(quantity / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity)) : 0);
             summaryDataItem.set("OddPackages", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantity % summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity) : 0);
 
-            summaryDataItem.set("QuantityWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantity * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity) : 0);
-            summaryDataItem.set("QuantityFailureWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantityFailure * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity) : 0);
+            summaryDataItem.set("QuantityWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantity * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndWeight) : 0);
+            summaryDataItem.set("QuantityFailureWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantityFailure * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndWeight) : 0);
         }
 
         kenGridSummaries.unbind("dataBinding"); //When finish modifying the data, unbind dataBinding event
