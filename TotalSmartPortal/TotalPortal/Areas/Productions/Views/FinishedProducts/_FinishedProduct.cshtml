@@ -78,7 +78,7 @@
 
 
         <div class="div-k-grid-detail">
-                        @(Html.Kendo().Grid(Model.FinishedProductViewDetails)
+            @(Html.Kendo().Grid(Model.FinishedProductViewDetails)
                 .Name("kendoGridDetails")
                 .Columns(columns =>
                 {
@@ -121,6 +121,9 @@
 
                     columns.Bound(p => p.PiecePerPack).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Hidden()
                         .ClientTemplate("#= (PiecePerPack == null)? '' : PiecePerPack #" + "<input type='hidden' name='FinishedProductViewDetails[#= index(data) #].PiecePerPack' value='#= (PiecePerPack == null) ? '' : PiecePerPack #' />");
+
+                    columns.Bound(p => p.PackageUnitWeights).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
+                        .ClientTemplate("#= (PackageUnitWeights == null)? '' : PackageUnitWeights #" + "<input type='hidden' name='FinishedProductViewDetails[#= index(data) #].PackageUnitWeights' value='#= (PackageUnitWeights == null) ? '' : PackageUnitWeights #' />");
 
                     columns.Bound(p => p.SemifinishedProductReference).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10)
                        .ClientTemplate("#= (SemifinishedProductReference == null)? '' : SemifinishedProductReference #" + "<input type='hidden' name='FinishedProductViewDetails[#= index(data) #].SemifinishedProductReference' value='#= (SemifinishedProductReference == null) ? '' : SemifinishedProductReference #' />");
@@ -198,33 +201,33 @@
                             }
                         </text>);
                     }).DataSource(dataSource => dataSource
-                    .Ajax()
-                    .Batch(true)
-                    .ServerOperation(false)
-                    .Model(model =>
-                    {
-                        model.Id(x => x.FinishedProductDetailID);
-                        model.Field(m => m.FinishedProductDetailID).DefaultValue(0);
-                        model.Field(m => m.FinishedProductID).DefaultValue(@Model.FinishedProductID);
-                    })
-                    .Events(events =>
-                    {
-                        //events.Change("dataSourceChange");
-                        events.Error("kendGrid_ErrorHandler");
-                    })
-                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
-                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                    .Aggregates(a => a.Add(x => x.QuantityFailure).Sum())
-                    .Aggregates(a => a.Add(x => x.QuantityExcess).Sum())
-                    .Aggregates(a => a.Add(x => x.QuantityShortage).Sum())
-                    .Aggregates(a => a.Add(x => x.QuantityAndExcess).Sum())
-                    .Aggregates(a => a.Add(x => x.Swarfs).Sum())
-                )
+    .Ajax()
+    .Batch(true)
+    .ServerOperation(false)
+    .Model(model =>
+    {
+        model.Id(x => x.FinishedProductDetailID);
+        model.Field(m => m.FinishedProductDetailID).DefaultValue(0);
+        model.Field(m => m.FinishedProductID).DefaultValue(@Model.FinishedProductID);
+    })
+    .Events(events =>
+    {
+        //events.Change("dataSourceChange");
+        events.Error("kendGrid_ErrorHandler");
+    })
+    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+    .Aggregates(a => a.Add(x => x.Quantity).Sum())
+    .Aggregates(a => a.Add(x => x.QuantityFailure).Sum())
+    .Aggregates(a => a.Add(x => x.QuantityExcess).Sum())
+    .Aggregates(a => a.Add(x => x.QuantityShortage).Sum())
+    .Aggregates(a => a.Add(x => x.QuantityAndExcess).Sum())
+    .Aggregates(a => a.Add(x => x.Swarfs).Sum())
+)
             )
         </div>
 
-       
+
 
         <div class="div-k-panel">
             @(Html.Kendo().PanelBar()
@@ -305,8 +308,8 @@
     </div>
 
     @helper kendoSummaryGrid()
-    {
-        @(Html.Kendo().Grid(Model.FinishedProductSummaries)
+{
+    @(Html.Kendo().Grid(Model.FinishedProductSummaries)
             .Name("kendoGridSummaries")
             .Columns(columns =>
             {
@@ -317,17 +320,6 @@
                     .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
                 columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(160).HtmlAttributes(new { style = "" })
                     .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
-
-
-
-                columns.Bound(p => p.FoilUnitCounts).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
-                    .Format(Settings.kfmQuantity)
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', FoilUnitCounts) #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].FoilUnitCounts' value='#= FoilUnitCounts #' />");
-                columns.Bound(p => p.FoilUnitWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
-                    .Format(Settings.kfmQuantity)
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', FoilUnitWeights) #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].FoilUnitWeights' value='#= FoilUnitWeights #' />");
-                columns.Bound(p => p.FoilUnitWeightsPerCounts).DisplayNameTitle().Width(150).HtmlAttributes(new { style = "" }).Hidden()
-                    .ClientTemplate("#= FoilUnitWeightsPerCounts #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].FoilUnitWeightsPerCounts' value='#= FoilUnitWeightsPerCounts #' />");
 
 
                 columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
@@ -342,6 +334,10 @@
 
                 columns.Bound(p => p.PiecePerPack).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(50)
                     .ClientTemplate("#= (PiecePerPack == null)? '' : PiecePerPack #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].PiecePerPack' value='#= (PiecePerPack == null) ? '' : PiecePerPack #' />");
+
+                columns.Bound(p => p.PackageUnitWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                    .Format(Settings.kfmWeight)
+                    .ClientTemplate("#= kendo.format('" + Settings.kfmWeight + "', PackageUnitWeights) #" + "<input type='hidden' name='FinishedProductSummaryViewDetails[#= index(data) #].PackageUnitWeights' value='#= PackageUnitWeights #' />");
 
                 columns.Bound(p => p.Packages).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                     .Format(Settings.kfmN0)
@@ -403,8 +399,8 @@
                 .Aggregates(a => a.Add(x => x.QuantityFailureWeights).Sum())
                 .Aggregates(a => a.Add(x => x.Swarfs).Sum())
             )
-        )
-    }
+    )
+}
 
 }
 
@@ -445,8 +441,8 @@
             summaryDataItem.set("Packages", summaryDataItem["PiecePerPack"] * 1 > 0 ? Math.trunc(DoRound(quantity / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity)) : 0);
             summaryDataItem.set("OddPackages", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantity % summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity) : 0);
 
-            summaryDataItem.set("QuantityWeights", summaryDataItem["FoilUnitCounts"] * 1 > 0 ? DoRound(quantity * summaryDataItem["FoilUnitWeights"] / summaryDataItem["FoilUnitCounts"], requireConfig.websiteOptions.rndQuantity) : 0);
-            summaryDataItem.set("QuantityFailureWeights", summaryDataItem["FoilUnitCounts"] * 1 > 0 ? DoRound(quantityFailure * summaryDataItem["FoilUnitWeights"] / summaryDataItem["FoilUnitCounts"], requireConfig.websiteOptions.rndQuantity) : 0);
+            summaryDataItem.set("QuantityWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantity * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity) : 0);
+            summaryDataItem.set("QuantityFailureWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantityFailure * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity) : 0);
         }
 
         kenGridSummaries.unbind("dataBinding"); //When finish modifying the data, unbind dataBinding event
@@ -482,7 +478,7 @@
 
     dataSourceSummaryChange = function (e) {
         var dataRow = e.items[0];
-        if (e.field === "PiecePerPack") {
+        if (e.field === "PiecePerPack" || e.field === "PackageUnitWeights") {
 
             var kenGrid = $("#kendoGridDetails").data("kendoGrid");
             var detailDataRows = kenGrid.dataSource.data();
@@ -490,7 +486,10 @@
             for (var i = 0; i < detailDataRows.length; i++) {
                 var detailDataItem = detailDataRows[i];
                 if (detailDataItem["CommodityID"] === dataRow["CommodityID"]) {
-                    detailDataItem.set("PiecePerPack", dataRow["PiecePerPack"]);
+                    if (e.field === "PiecePerPack")
+                        detailDataItem.set("PiecePerPack", dataRow["PiecePerPack"]);
+                    if (e.field === "PackageUnitWeights")
+                        detailDataItem.set("PackageUnitWeights", dataRow["PackageUnitWeights"]);
                 }
             }
 

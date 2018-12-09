@@ -51,6 +51,7 @@ namespace TotalModel.Models
         public decimal QuantityShortageWeights { get; set; }
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
+        public Nullable<int> PackageUnitWeights { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }

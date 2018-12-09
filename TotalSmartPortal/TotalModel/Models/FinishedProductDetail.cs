@@ -43,6 +43,7 @@ namespace TotalModel.Models
         public decimal QuantityShortage { get; set; }
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
+        public Nullable<int> PackageUnitWeights { get; set; }
     
         public virtual FinishedProduct FinishedProduct { get; set; }
         public virtual FinishedProductPackage FinishedProductPackage { get; set; }

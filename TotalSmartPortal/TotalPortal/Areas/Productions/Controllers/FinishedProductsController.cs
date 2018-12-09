@@ -54,7 +54,10 @@ namespace TotalPortal.Areas.Productions.Controllers
                         finishedProductViewModel.GetDetails().Each(detailDTO =>
                         {
                             if (detailDTO.CommodityID == finishedProductViewModel.ViewDetails[i].CommodityID)
+                            {
                                 detailDTO.PiecePerPack = finishedProductViewModel.ViewDetails[i].PiecePerPack;
+                                detailDTO.PackageUnitWeights = finishedProductViewModel.ViewDetails[i].PackageUnitWeights;
+                            }
                         });
                 }
 
@@ -65,10 +68,9 @@ namespace TotalPortal.Areas.Productions.Controllers
                                                 CommodityID = sl.First().CommodityID,
                                                 CommodityCode = sl.First().CommodityCode,
                                                 CommodityName = sl.First().CommodityName,
-                                                PiecePerPack = sl.First().PiecePerPack,
 
-                                                FoilUnitCounts = 1,
-                                                FoilUnitWeights = 1,
+                                                PiecePerPack = sl.First().PiecePerPack,
+                                                PackageUnitWeights = sl.First().PackageUnitWeights,
 
                                                 QuantityRemains = sl.Sum(s => s.QuantityRemains),
                                                 Quantity = sl.Sum(s => (s.Quantity + s.QuantityExcess)),

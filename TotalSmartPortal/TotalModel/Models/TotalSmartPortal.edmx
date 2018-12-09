@@ -662,6 +662,7 @@
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="PiecePerPack" Type="int" Nullable="false" />
+          <Property Name="PackageUnitWeights" Type="int" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityFailure" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityExcess" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -690,6 +691,7 @@
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="PiecePerPack" Type="int" Nullable="false" />
+          <Property Name="PackageUnitWeights" Type="int" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityFailure" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityExcess" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -17031,6 +17033,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="SemifinishedProductReference" Nullable="true" MaxLength="10" />
           <Property Type="Decimal" Name="QuantityExcess" Nullable="false" Precision="1" Scale="1" />
           <Property Type="Decimal" Name="QuantityShortage" Nullable="false" Precision="1" Scale="1" />
+          <Property Type="Int32" Name="PackageUnitWeights" Nullable="false" />
         </ComplexType>
         <ComplexType Name="FinishedProductPendingFirmOrder">
           <Property Type="Int32" Name="FirmOrderID" Nullable="false" />
@@ -17951,6 +17954,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Shifts" FromRole="FinishedProductDetail" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Workshifts" FromRole="FinishedProductDetail" ToRole="Workshift" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Commodities" FromRole="FinishedProductDetail" ToRole="Commodity" />
+          <Property Name="PackageUnitWeights" Type="Int32" />
         </EntityType>
         <Association Name="FK_FinishedProductDetails_FinishedProducts">
           <End Type="TotalSmartPortalModel.FinishedProduct" Role="FinishedProduct" Multiplicity="1" />
@@ -18722,6 +18726,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_FinishedProductPackages_Shifts" FromRole="FinishedProductPackage" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedProductPackages_Workshifts" FromRole="FinishedProductPackage" ToRole="Workshift" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedProductPackages" FromRole="FinishedProductPackage" ToRole="GoodsReceiptDetail" />
+          <Property Name="PackageUnitWeights" Type="Int32" />
         </EntityType>
         <Association Name="FK_FinishedHandoverDetails_FinishedProductPackages">
           <End Type="TotalSmartPortalModel.FinishedProductPackage" Role="FinishedProductPackage" Multiplicity="1" />
@@ -25063,6 +25068,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="SemifinishedProductReference" ColumnName="SemifinishedProductReference" />
                 <ScalarProperty Name="QuantityExcess" ColumnName="QuantityExcess" />
                 <ScalarProperty Name="QuantityShortage" ColumnName="QuantityShortage" />
+                <ScalarProperty Name="PackageUnitWeights" ColumnName="PackageUnitWeights" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -25464,6 +25470,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="FinishedProductDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.FinishedProductDetail">
               <MappingFragment StoreEntitySet="FinishedProductDetails">
+                <ScalarProperty Name="PackageUnitWeights" ColumnName="PackageUnitWeights" />
                 <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
                 <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
                 <ScalarProperty Name="QuantityShortage" ColumnName="QuantityShortage" />
@@ -25990,6 +25997,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="FinishedProductPackages">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.FinishedProductPackage">
               <MappingFragment StoreEntitySet="FinishedProductPackages">
+                <ScalarProperty Name="PackageUnitWeights" ColumnName="PackageUnitWeights" />
                 <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
                 <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
                 <ScalarProperty Name="QuantityShortageWeights" ColumnName="QuantityShortageWeights" />

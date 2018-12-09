@@ -56,10 +56,8 @@ namespace TotalDTO.Productions
         [UIHint("DateTimeReadonly")]
         public System.DateTime BatchEntryDate { get; set; }
 
-        [UIHint("QuantityReadonly")]
-        public decimal FoilUnitCounts { get; set; }
-        [UIHint("QuantityReadonly")]
-        public decimal FoilUnitWeights { get; set; }
+        [Display(Name = "TL kiện")]
+        public virtual decimal PackageUnitWeights { get; set; }
 
 
         [Display(Name = "Tồn phôi")]
@@ -112,13 +110,9 @@ namespace TotalDTO.Productions
         [Display(Name = "Cái/ kiện")]
         [UIHint("Integer")]
         public int PiecePerPack { get; set; }
-
-        [UIHint("QuantityReadonly")]
-        public decimal FoilUnitCounts { get; set; }
-        [UIHint("QuantityReadonly")]
-        public decimal FoilUnitWeights { get; set; }
-        [Display(Name = "Kg/ tấm")]
-        public string FoilUnitWeightsPerCounts { get { return this.FoilUnitWeights.ToString("N2") + "/" + this.FoilUnitCounts.ToString("N0"); } }
+        [Display(Name = "TL kiện")]
+        [UIHint("Weight")]
+        public virtual decimal PackageUnitWeights { get; set; }
 
 
         [Display(Name = "Tồn phôi")]
@@ -137,14 +131,14 @@ namespace TotalDTO.Productions
 
         [Display(Name = "TP (kg)")]
         [UIHint("QuantityReadonly")]
-        public decimal QuantityWeights { get { return this.FoilUnitCounts > 0 ? this.Quantity * this.FoilUnitWeights / this.FoilUnitCounts : 0; } set { } }
+        public decimal QuantityWeights { get { return this.PiecePerPack > 0 ? this.Quantity * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
 
         [Display(Name = "P-Phẩm")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityFailure { get; set; }
         [Display(Name = "PP (kg)")]
         [UIHint("QuantityReadonly")]
-        public decimal QuantityFailureWeights { get { return this.FoilUnitCounts > 0 ? this.QuantityFailure * this.FoilUnitWeights / this.FoilUnitCounts : 0; } set { } }
+        public decimal QuantityFailureWeights { get { return this.PiecePerPack > 0 ? this.QuantityFailure * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
 
         [Display(Name = "Biên (kg)")]
         [UIHint("QuantityReadonly")]
