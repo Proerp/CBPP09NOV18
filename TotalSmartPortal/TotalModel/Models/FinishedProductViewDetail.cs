@@ -42,6 +42,6 @@ namespace TotalModel.Models
         public string SemifinishedProductReference { get; set; }
         public decimal QuantityExcess { get; set; }
         public decimal QuantityShortage { get; set; }
-        public int PackageUnitWeights { get; set; }
+        public decimal PackageUnitWeights { get; set; }
     }
 }

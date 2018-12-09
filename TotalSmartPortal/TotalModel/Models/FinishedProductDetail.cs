@@ -18,6 +18,8 @@ namespace TotalModel.Models
         public int FinishedProductID { get; set; }
         public System.DateTime EntryDate { get; set; }
         public int LocationID { get; set; }
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; }
         public int CustomerID { get; set; }
         public int CrucialWorkerID { get; set; }
         public int FirmOrderID { get; set; }
@@ -27,28 +29,26 @@ namespace TotalModel.Models
         public int SemifinishedProductID { get; set; }
         public int SemifinishedProductDetailID { get; set; }
         public int SemifinishedHandoverID { get; set; }
+        public Nullable<int> FinishedProductPackageID { get; set; }
         public Nullable<int> FinishedHandoverID { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public int PiecePerPack { get; set; }
+        public decimal PackageUnitWeights { get; set; }
         public decimal Quantity { get; set; }
         public decimal QuantityFailure { get; set; }
+        public decimal QuantityExcess { get; set; }
+        public decimal QuantityShortage { get; set; }
         public decimal Swarfs { get; set; }
         public decimal QuantityReceipted { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public bool HandoverApproved { get; set; }
-        public Nullable<int> FinishedProductPackageID { get; set; }
-        public decimal QuantityExcess { get; set; }
-        public decimal QuantityShortage { get; set; }
-        public int ShiftID { get; set; }
-        public int WorkshiftID { get; set; }
-        public Nullable<int> PackageUnitWeights { get; set; }
     
-        public virtual FinishedProduct FinishedProduct { get; set; }
+        public virtual Commodity Commodity { get; set; }
         public virtual FinishedProductPackage FinishedProductPackage { get; set; }
+        public virtual FinishedProduct FinishedProduct { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
-        public virtual Commodity Commodity { get; set; }
     }
 }

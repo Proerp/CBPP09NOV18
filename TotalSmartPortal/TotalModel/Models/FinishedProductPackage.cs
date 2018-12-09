@@ -26,6 +26,8 @@ namespace TotalModel.Models
         public int FinishedProductID { get; set; }
         public System.DateTime EntryDate { get; set; }
         public int LocationID { get; set; }
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; }
         public int CustomerID { get; set; }
         public int FirmOrderID { get; set; }
         public int PlannedOrderID { get; set; }
@@ -34,24 +36,22 @@ namespace TotalModel.Models
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public int PiecePerPack { get; set; }
+        public decimal PackageUnitWeights { get; set; }
         public decimal Quantity { get; set; }
         public decimal QuantityFailure { get; set; }
+        public decimal QuantityExcess { get; set; }
+        public decimal QuantityShortage { get; set; }
         public decimal Swarfs { get; set; }
         public decimal QuantityReceipted { get; set; }
         public decimal Packages { get; set; }
         public decimal OddPackages { get; set; }
         public decimal QuantityWeights { get; set; }
         public decimal QuantityFailureWeights { get; set; }
+        public decimal QuantityExcessWeights { get; set; }
+        public decimal QuantityShortageWeights { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public bool HandoverApproved { get; set; }
-        public decimal QuantityExcess { get; set; }
-        public decimal QuantityShortage { get; set; }
-        public decimal QuantityExcessWeights { get; set; }
-        public decimal QuantityShortageWeights { get; set; }
-        public int ShiftID { get; set; }
-        public int WorkshiftID { get; set; }
-        public Nullable<int> PackageUnitWeights { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }

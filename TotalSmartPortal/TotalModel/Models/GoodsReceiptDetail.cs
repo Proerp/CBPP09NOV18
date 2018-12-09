@@ -66,7 +66,6 @@ namespace TotalModel.Models
     
         public virtual BinLocation BinLocation { get; set; }
         public virtual Commodity Commodity { get; set; }
-        public virtual FinishedProductPackage FinishedProductPackage { get; set; }
         public virtual GoodsReceipt GoodsReceipt { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }
         public virtual PurchaseRequisitionDetail PurchaseRequisitionDetail { get; set; }
@@ -84,5 +83,6 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
         public virtual GoodsArrivalPackage GoodsArrivalPackage { get; set; }
+        public virtual FinishedProductPackage FinishedProductPackage { get; set; }
     }
 }

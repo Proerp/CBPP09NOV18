@@ -52,9 +52,9 @@ namespace TotalModel.Models
         public virtual FinishedProduct FinishedProduct1 { get; set; }
         public virtual FirmOrder FirmOrder { get; set; }
         public virtual Location Location { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FinishedProductDetail> FinishedProductDetails { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinishedProductDetail> FinishedProductDetails { get; set; }
     }
 }
