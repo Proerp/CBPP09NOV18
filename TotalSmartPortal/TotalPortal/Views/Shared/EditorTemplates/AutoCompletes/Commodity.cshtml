@@ -3,15 +3,16 @@
 @model TotalDTO.Commons.ICommodityBaseDTO
 
 @Html.HiddenFor(model => model.CommodityID)
+@Html.HiddenFor(model => model.Name)
 
-@Html.Hidden("TempName", (@Model != null ? @Model.Name : ""))
+@Html.Hidden("TempCode", (@Model != null ? @Model.Code : ""))
 
 
-@Html.Label((ViewData["CommodityDisplayName"] != null ? (ViewData["CommodityDisplayName"]).ToString() : "Tên nhân viên"))
+@Html.Label((ViewData["CommodityDisplayCode"] != null ? (ViewData["CommodityDisplayCode"]).ToString() : "Tên sản phẩm"))
 <div class="div-input">
 
-    @(Html.Kendo().AutoCompleteFor(model => model.Name)
-        .DataTextField("Name")
+    @(Html.Kendo().AutoCompleteFor(model => model.Code)
+        .DataTextField("Code")
         .Filter("contains")
         .MinLength(1)
         .Placeholder("Chọn nhân viên...")
@@ -32,13 +33,13 @@
 
 </div>
 <div class="div-validation-message">
-    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
 </div>
 
 <script type="text/javascript">
 
     getCommodityModelID = function (modelID) {
-        return modelID.substring(0, modelID.length - 4); //At first: Pass: modelID = this.element.attr('id') = 'Commodity_Name', Then: Return: ('Commodity_Name').substring(0, modelID.length - 4) = 'Commodity_'
+        return modelID.substring(0, modelID.length - 4); //At first: Pass: modelID = this.element.attr('id') = 'Commodity_Code', Then: Return: ('Commodity_Code').substring(0, modelID.length - 4) = 'Commodity_'
     }
 
     commodity_Select = function (e) {
@@ -47,9 +48,10 @@
         var dataItem = e.sender.dataItem(e.item.index());
 
         $("#" + modelID + "CommodityID").val(dataItem.CommodityID);
+        $("#" + modelID + "Name").val(dataItem.Name);
 
         //Remember last AutoComplete value
-        $("#" + modelID + "TempName").val(dataItem.Name);
+        $("#" + modelID + "TempCode").val(dataItem.Code);
 
         //Trigger change event. This event is not used in this editor template. It will be catch out side of this editor template
         $("#" + modelID + "CommodityID").trigger("change");
@@ -57,7 +59,7 @@
 
     $(".CommodityBase_AutoComplete").focusout(function (e) {
         var modelID = getCommodityModelID(this.id);
-        $(this).val($("#" + modelID + "TempName").val());
+        $(this).val($("#" + modelID + "TempCode").val());
     });
 
 </script>

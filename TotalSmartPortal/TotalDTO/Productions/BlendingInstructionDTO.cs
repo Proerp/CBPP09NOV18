@@ -34,14 +34,14 @@ namespace TotalDTO.Productions
         [Display(Name = "Mục đích")]
         public string Purposes { get; set; }
 
-        public virtual int CustomerID { get; set; }
+        public virtual int CommodityID { get; set; }
 
         public override void PerformPresaveRule()
         {
             base.PerformPresaveRule();
 
             string caption = "";
-            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; if (caption.IndexOf(e.CommodityName) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityName; });
+            this.DtoDetails().ToList().ForEach(e => { if (caption.IndexOf(e.CommodityName) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityName; });
             this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
     }
@@ -53,9 +53,9 @@ namespace TotalDTO.Productions
             this.BlendingInstructionViewDetails = new List<BlendingInstructionDetailDTO>();
         }
 
-        public override int CustomerID { get { return (this.Customer != null ? this.Customer.CustomerID : 0); } }
-        [UIHint("Commons/CustomerBase")]
-        public CustomerBaseDTO Customer { get; set; }
+        public override int CommodityID { get { return (this.Commodity != null ? this.Commodity.CommodityID : 0); } }
+        [UIHint("Commons/CommodityBase")]
+        public CommodityBaseDTO Commodity { get; set; }
 
         public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }
         [UIHint("AutoCompletes/VoidType")]
