@@ -33,9 +33,8 @@ namespace TotalDAL.Repositories.Productions
         protected override ObjectParameter[] GetEntityIndexParameters(string aspUserID, System.DateTime fromDate, System.DateTime toDate)
         {
             ObjectParameter[] baseParameters = base.GetEntityIndexParameters(aspUserID, fromDate, toDate);
-            ObjectParameter[] objectParameters = new ObjectParameter[] { baseParameters[0], baseParameters[1], baseParameters[2], new ObjectParameter("DateOptionID", this.RepositoryBag.ContainsKey("DateOptionID") && this.RepositoryBag["DateOptionID"] != null ? this.RepositoryBag["DateOptionID"] : 0), new ObjectParameter("FilterOptionID", this.RepositoryBag.ContainsKey("FilterOptionID") && this.RepositoryBag["FilterOptionID"] != null ? this.RepositoryBag["FilterOptionID"] : 0) };
+            ObjectParameter[] objectParameters = new ObjectParameter[] { baseParameters[0], baseParameters[1], baseParameters[2], new ObjectParameter("FilterOptionID", this.RepositoryBag.ContainsKey("FilterOptionID") && this.RepositoryBag["FilterOptionID"] != null ? this.RepositoryBag["FilterOptionID"] : 0) };
 
-            this.RepositoryBag.Remove("DateOptionID");
             this.RepositoryBag.Remove("FilterOptionID");
 
             return objectParameters;

@@ -1,0 +1,214 @@
+﻿@using TotalPortal.Configuration
+
+@model TotalPortal.Areas.Productions.ViewModels.PlannedOrderViewModel
+
+<div id="popupWindow"></div>
+
+<div>
+    @Html.Hidden("LastDateOptionID", "10")
+    @Html.Hidden("LastFilterOptionID", "10")
+    @Html.Hidden("SelectedFirmOrderID", "0")
+
+        @(Html.Kendo().Grid<TotalModel.Models.PlannedOrderIndex>()
+            .Name("kendoGridIndex")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.PlannedOrderID).DisplayNameTitle().Hidden();
+                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
+
+                columns.Bound(p => p.Reference).Title("KHSX").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/PlannedOrders", action = "Edit" }) + "/#= PlannedOrderID #'>#=Reference#</a>");
+                columns.Bound(p => p.Code).Title("Số CT").Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+                columns.Bound(p => p.DisplayDate).Title("ĐH/GH").Format("{0:dd/MM}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+                columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(108);
+                columns.Bound(p => p.CommodityName).Title("Mặt hàng").Width(193);
+                                
+                columns.Bound(p => p.QuantityRequested).Title("SL Y/C").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.Quantity).Title("Phải SX").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantityProduced).Title("Đã SX").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantitySemifinishedRemains).Title("Chưa ĐG").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+
+                columns.Bound(p => p.ItemEntryDate).Title("Cấp M").Format("{0:dd/MM HH:mm}").Width(68).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+                
+                columns.Bound(p => p.ItemQuantityNet).Title("Màng Kg").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.ItemQuantitySemifinished).Title("Phôi Kg").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(111)
+                    .ClientTemplate("<a class='k-button' title='Cấp màng cho đơn hàng này' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px;' onclick='createMaterialIssue(#= FirmOrderID #)'><span class='k-icon k-i-calendar'></span></a><a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Productions/PlannedOrders", action = "Void" }) + "/#= PlannedOrderID #'><span class='k-icon k-i-columns'></span></a><a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px; min-width:22px; width:22px' href='" + Url.RouteUrl("Default", new { controller = "Productions/PlannedOrders", action = "Delete" }) + "/#= PlannedOrderID #'><span class='k-icon k-delete'></span></a>");
+            })
+            .ToolBar(toolbar =>
+            {
+                toolbar.Template(@<text>
+                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập đơn hàng </button>
+                    <button type="button" title="Cập nhật số liệu sản xuất" class="k-button" onclick="indexFilterText_KeyUp(true)"> <img src="~/Content/Images/New/Refresh-icon.png" /> </button>            
+                    <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> In </button>
+                    <div class="toolbar" style="float: right;">
+                        <label>Nhập số ĐH, tên KH hoặc SP</label>
+                        <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 108px; " onkeyup="indexFilterText_KeyUp()" />
+
+                        <span id="filterExtended">
+                            @(Html.Kendo().DropDownList()
+                                    .Name("ShowFilterOptionID")
+                                    .DataTextField("Text")
+                                    .DataValueField("Value")
+                                    .HtmlAttributes(new { @style = "width: 207px; text-align: center; " })
+                                    .BindTo(new List<SelectListItem>()
+                                      {
+                                            new SelectListItem { Text = "ĐH cần sản xuất", Value = "10"},
+                                            new SelectListItem { Text = "ĐH cần sản xuất [Chưa SX]", Value = "11"},
+                                            new SelectListItem { Text = "ĐH cần sản xuất [Đang SX]", Value = "12"},
+                                            new SelectListItem { Text = "ĐH đã sản xuất [Từ ... Đến]", Value = "20"},
+                                            new SelectListItem { Text = "Tất cả [Từ ... Đến]", Value = "0"},
+                                      })
+                                    .Events(e => e.Change("indexFilterText_KeyUp"))
+                            )
+
+                            @(Html.Kendo().DropDownList()
+                                    .Name("ShowDateOptionID")
+                                    .DataTextField("Text")
+                                    .DataValueField("Value")
+                                    .HtmlAttributes(new { @style = "width: 88px; text-align: center; " })
+                                    .BindTo(new List<SelectListItem>()
+                                      {
+                                            new SelectListItem { Text = "Ngày ĐH", Value = "10"},
+                                            new SelectListItem { Text = "Ngày GH", Value = "11"}
+                                      })
+                                    .Events(e => e.Change("indexFilterText_KeyUp"))
+                            )
+
+                            @Html.Kendo().DatePickerFor(m => m.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                            @Html.Kendo().DatePickerFor(m => m.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                        </span>
+
+
+                        @*</div>*@
+
+
+
+                    </div>
+                </text>        );
+            })
+            .Filterable(f => f.Enabled(false))
+            .Pageable()
+            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
+            .Selectable()
+            .Sortable()
+            .Events(e =>
+            {
+                e.DataBound("hightLightSelectedRow");
+            })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Group(group => group.AddDescending(p => p.EntryDate))
+                .Read(read => read.Action("GetPlannedOrderIndexes", "PlannedOrderAPIs", new { area = "Productions" }).Data("onGetPlannedOrderIndexes"))
+                .Sort(sort =>
+                    {
+                        sort.Add(p => p.EntryDate).Descending();
+                        sort.Add(p => p.PlannedOrderID).Descending();
+                        sort.Add(p => p.CommodityCode);
+                    })
+                .PageSize(20)
+                .Model(model =>
+                {
+                    model.Id(x => x.PlannedOrderID);
+                    model.Field(m => m.PlannedOrderID).DefaultValue(0);
+                })
+                .ServerOperation(true)
+                .Aggregates(a => a.Add(x => x.QuantityRequested).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityOnhand).Sum())
+                .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityProduced).Sum())
+                .Aggregates(a => a.Add(x => x.QuantitySemifinishedRemains).Sum())                
+                .Aggregates(a => a.Add(x => x.ItemQuantityNet).Sum())
+                .Aggregates(a => a.Add(x => x.ItemQuantitySemifinished).Sum())                                                   
+                )
+            .HtmlAttributes(new { @class = "grid-class" }))
+</div>
+
+
+
+<script type="text/javascript">
+
+    function onGetPlannedOrderIndexes(e) {
+        var indexFilterText = $("#indexFilterText").val();
+        return {
+            withExtendedSearch: true, //indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght03" ? true : false,
+            extendedFromDate: $("#GlobalFromDate").val(),
+            extendedToDate: $("#GlobalToDate").val(),
+            dateOptionID: $("#ShowDateOptionID").val(),
+            filterOptionID: $("#ShowFilterOptionID").val()
+        };
+    }
+
+    function hightLightSelectedRow(e) {
+        require(["kindexGrid"], function (kindexGrid) {
+            var kindexGridInstance = new kindexGrid("kendoGridIndex");
+            kindexGridInstance.setSelectedRow("PlannedOrderID", '@ViewBag.SelectedEntityID');
+        });
+    }
+
+    function createWizard() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "PlannedOrders")", "Lập đơn hàng sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+        });
+    }
+
+    function createMaterialIssue(firmOrderID) {        
+        $("#SelectedFirmOrderID").val(firmOrderID);
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "MaterialIssues", new { area = "Inventories" })", "Chọn lệnh sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeight");
+        });
+    }
+
+    function callPrint() {
+        window.open('@Url.Action("Print", "PlannedOrders", new { area = "Productions" })' + "/" + $("#ShowDateOptionID").val() + "/" + $("#ShowFilterOptionID").val())
+    }
+
+    decoratingKindex = function (idx, elem) {
+
+        if (elem.Approved == null || elem.Approved == false) {
+            $('tr[data-uid="' + elem.uid + '"]').addClass("NotApproved");
+        }
+        else {
+            if (elem.InActive != null && elem.InActive == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus");
+            }
+
+            if (elem.InActivePartial != null && elem.InActivePartial == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus1");
+            }
+        }
+    }
+
+
+
+
+
+
+    function indexFilterText_KeyUp(readDataSource) {
+        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastDateOptionID").val() != $("#ShowDateOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val()) {
+            $("#LastDateOptionID").val($("#ShowDateOptionID").val());
+            $("#LastFilterOptionID").val($("#ShowFilterOptionID").val());
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "Code", operator: "contains", value: indexFilterText },
+                    { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "CommodityName", operator: "contains", value: indexFilterText }
+                ]
+            });
+
+
+        } else {
+            if (indexFilterText && indexFilterText.length && gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+</script>
+
+

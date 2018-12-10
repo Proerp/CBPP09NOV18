@@ -1,0 +1,68 @@
+﻿@using TotalPortal.Configuration;
+
+@using TotalDTO.Inventories
+@model TotalPortal.Areas.Productions.ViewModels.PlannedOrderViewModel
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+
+    <div style="margin-top: 39px; margin-right: 18px;">
+        
+        @Html.EditorFor(d => (d as IWarehouseAdjustmentDTO).Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+                      
+    </div> <div class="background-bar" style="height: 45px;">
+        <div class="popup-button-bar">
+            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "PlannedOrders")" formtarget="_top" style="display:none" /> 
+
+            <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Tiếp tục </button>
+            <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Thoát </button>
+        </div>
+    </div>
+
+}
+
+<link href="@Url.Content("~/Content/CustomCss/GeneralPopup.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+
+    function okButton_Click() {
+        handleOKEvent($($("#tabStrip").data("kendoTabStrip").select().index() === 0 ? "#gridPromotion" : "#gridXXXX_ReserveForLater").data("kendoGrid"));
+    }
+
+    function okWOSelectButton_Click() {
+        handleOKEvent();
+    }
+
+    function handleOKEvent(selectedGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
+
+        if ($("#Project_ProjectID").val() === null || $("#Project_ProjectID").val() === "")
+            return false;
+
+        if (selectedGrid === undefined)
+            _setModelInput();
+        else {
+            var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
+            if (selectedDataItem === undefined)
+                return false;
+
+            _setModelInput(selectedDataItem);
+        }
+        $("#submitCreateWizard").trigger("click");
+
+
+        function _setModelInput(selectedDataItem) {
+        }
+    }
+
+</script>
+
+
+
+
+

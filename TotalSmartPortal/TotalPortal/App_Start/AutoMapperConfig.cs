@@ -171,6 +171,12 @@ namespace TotalPortal.App_Start
 
 
 
+                cfg.CreateMap<BlendingInstruction, BlendingInstructionViewModel>();
+                cfg.CreateMap<BlendingInstruction, BlendingInstructionDTO>();
+                cfg.CreateMap<BlendingInstructionPrimitiveDTO, BlendingInstruction>();
+                cfg.CreateMap<BlendingInstructionViewDetail, BlendingInstructionDetailDTO>();
+                cfg.CreateMap<BlendingInstructionDetailDTO, BlendingInstructionDetail>();
+
                 cfg.CreateMap<PlannedOrder, PlannedOrderViewModel>();
                 cfg.CreateMap<PlannedOrder, PlannedOrderDTO>();
                 cfg.CreateMap<PlannedOrderPrimitiveDTO, PlannedOrder>();

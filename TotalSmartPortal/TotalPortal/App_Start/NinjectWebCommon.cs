@@ -202,11 +202,16 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IItemTransferService>().To<ItemTransferService>();
                 kernel.Bind<IItemTransferViewModelSelectListBuilder>().To<ItemTransferViewModelSelectListBuilder>();
                 kernel.Bind<IProductTransferService>().To<ProductTransferService>();
-                kernel.Bind<IProductTransferViewModelSelectListBuilder>().To<ProductTransferViewModelSelectListBuilder>();                
+                kernel.Bind<IProductTransferViewModelSelectListBuilder>().To<ProductTransferViewModelSelectListBuilder>();
 
 
 
 
+
+                kernel.Bind<IBlendingInstructionService>().To<BlendingInstructionService>();
+                kernel.Bind<IBlendingInstructionRepository>().To<BlendingInstructionRepository>();
+                kernel.Bind<IBlendingInstructionAPIRepository>().To<BlendingInstructionAPIRepository>();
+                kernel.Bind<IBlendingInstructionViewModelSelectListBuilder>().To<BlendingInstructionViewModelSelectListBuilder>();
 
                 kernel.Bind<IPlannedOrderService>().To<PlannedOrderService>();
                 kernel.Bind<IPlannedOrderRepository>().To<PlannedOrderRepository>();
