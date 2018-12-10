@@ -21,9 +21,13 @@
                 columns.Bound(p => p.VoucherDate).Title("Ngày CT").Format("{0:dd/MM}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                 columns.Bound(p => p.CommodityName).Title("Mặt hàng").Width(193);
                                 
-                columns.Bound(p => p.Quantity).Title("Phải SX").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.Quantity).Title("SLYC").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantityIssued).Title("Đã xuất").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantityRemains).Title("Tồn BIS").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
-                columns.Bound(p => p.ItemEntryDate).Title("Cấp M").Format("{0:dd/MM HH:mm}").Width(68).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+                columns.Bound(p => p.QuantityAvailableL2).Title("Kho PC").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
+                columns.Bound(p => p.QuantityAvailableL1).Title("Kho NVL").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
+                columns.Bound(p => p.QuantityAvailableL0).Title("Mới về").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
                 
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(111)
                     .ClientTemplate("<a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Void" }) + "/#= BlendingInstructionID #'><span class='k-icon k-i-columns'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Delete" }) + "/#= BlendingInstructionID #'><span class='k-icon k-i-close'></span></a>");
@@ -107,6 +111,8 @@
                 })
                 .ServerOperation(true)
                 .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityIssued).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
                 )
             .HtmlAttributes(new { @class = "grid-class" }))
 </div>

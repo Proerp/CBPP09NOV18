@@ -21,7 +21,6 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> VoucherDate { get; set; }
         public string Description { get; set; }
         public Nullable<int> BlendingInstructionDetailID { get; set; }
-        public Nullable<int> SerialID { get; set; }
         public string CommodityCode { get; set; }
         public string CommodityName { get; set; }
         public bool Approved { get; set; }
@@ -29,8 +28,10 @@ namespace TotalModel.Models
         public bool InActivePartial { get; set; }
         public string VoidTypeName { get; set; }
         public Nullable<decimal> Quantity { get; set; }
-        public string ItemCode { get; set; }
-        public Nullable<System.DateTime> ItemEntryDate { get; set; }
-        public Nullable<decimal> ItemQuantity { get; set; }
+        public Nullable<decimal> QuantityIssued { get; set; }
+        public Nullable<decimal> QuantityRemains { get; set; }
+        public Nullable<decimal> QuantityAvailableL0 { get; set; }
+        public Nullable<decimal> QuantityAvailableL1 { get; set; }
+        public Nullable<decimal> QuantityAvailableL2 { get; set; }
     }
 }
