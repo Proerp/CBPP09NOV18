@@ -1584,7 +1584,6 @@
     <Content Include="Areas\Purchases\Views\GoodsArrivals\_GoodsArrival.cshtml" />
     <Content Include="Areas\Purchases\Views\GoodsArrivals\Approve.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\Approve.cshtml" />
-    <Content Include="Areas\Productions\Views\BlendingInstructions\CreateWizard.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\Delete.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\Edit.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\Index.cshtml" />
@@ -1871,7 +1870,6 @@
     <Content Include="Scripts\Controllers\Inventories\WarehouseTransfers\Void.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Approve.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Create.js" />
-    <Content Include="Scripts\Controllers\Productions\BlendingInstructions\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Delete.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Edit.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Index.js" />

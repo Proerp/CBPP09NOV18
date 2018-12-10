@@ -27,10 +27,6 @@ namespace TotalDTO.Productions
         [Display(Name = "Ngày chứng từ")]
         public Nullable<System.DateTime> VoucherDate { get; set; }
 
-        [Display(Name = "Ngày giao hàng")]
-        [Required(ErrorMessage = "Vui lòng nhập ngày giao hàng")]
-        public Nullable<System.DateTime> DeliveryDate { get; set; }
-
         [Display(Name = "Mục đích")]
         public string Purposes { get; set; }
 
