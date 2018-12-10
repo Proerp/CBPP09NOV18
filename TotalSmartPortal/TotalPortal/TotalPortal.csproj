@@ -1869,6 +1869,7 @@
     <Content Include="Scripts\Controllers\Inventories\WarehouseTransfers\Print.js" />
     <Content Include="Scripts\Controllers\Inventories\WarehouseTransfers\Void.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Approve.js" />
+    <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Create.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Delete.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Edit.js" />

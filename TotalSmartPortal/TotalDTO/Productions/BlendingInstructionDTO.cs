@@ -54,7 +54,7 @@ namespace TotalDTO.Productions
         }
 
         public override int CommodityID { get { return (this.Commodity != null ? this.Commodity.CommodityID : 0); } }
-        [UIHint("Commons/CommodityBase")]
+        [UIHint("AutoCompletes/Commodity")]
         public CommodityBaseDTO Commodity { get; set; }
 
         public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }

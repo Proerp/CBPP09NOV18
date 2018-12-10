@@ -2,17 +2,17 @@
 
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
-@model TotalPortal.Areas.Productions.ViewModels.PlannedOrderViewModel
+@model TotalPortal.Areas.Productions.ViewModels.BlendingInstructionViewModel
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    @Html.Hidden("Id", @Model.PlannedOrderID);
+    @Html.Hidden("Id", @Model.BlendingInstructionID);
 
     if (Model.ViewDetails.Count > 0)
     {
-        @Html.Hidden("DetailId", @Model.ViewDetails[0].PlannedOrderDetailID);
+        @Html.Hidden("DetailId", @Model.ViewDetails[0].BlendingInstructionDetailID);
         @Html.Hidden("InActivePartial", @Model.ViewDetails[0].InActivePartial);
         <div class="left-panel">
             <div style="padding: 16px;"> <img src="~/Content/Images/Mains/@(@Model.ViewDetails[0].InActivePartial ? "iSync-icon64.png" : "blue-cross-icon64.png")" title="Hủy/ phục hồi một phần đơn hàng" />  </div>
@@ -22,20 +22,6 @@
                 @Html.LabelFor(model => model.ViewDetails[0].CommodityName)
                 <div class="div-input">
                     @Html.Kendo().MaskedTextBoxFor(model => model.ViewDetails[0].CommodityName).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ViewDetails[0].MoldCode)
-                <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => model.ViewDetails[0].MoldCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                @Html.LabelFor(model => model.ViewDetails[0].BomCode)
-                <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => model.ViewDetails[0].BomCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                 </div>
             </div>
 

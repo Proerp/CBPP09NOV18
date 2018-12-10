@@ -20,7 +20,16 @@
         {
             source.Read(read =>
             {
-                read.Action("SearchCommoditys", "CommodityAPIs", new { area = "Commons" }).Data(@<text> function(e) {return {searchText: e.filter.filters[0].value};} </text>);//Send parameter to controller search action
+                read.Action("SearchCommodities", "CommodityAPIs", new { area = "Commons" }).Data(@<text> 
+    
+                    function(e) {
+                    return {
+                    searchText: e.filter.filters[0].value,
+                    commodityTypeIDList: requireConfig.pageOptions.commodityTypeIDList,
+                    isOnlyAlphaNumericString: false
+                    };}
+    
+                </text>);//Send parameter to controller search action
             })
             .ServerFiltering(true);
         })

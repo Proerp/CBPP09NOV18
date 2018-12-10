@@ -14270,7 +14270,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="FilterOptionID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetBlendingInstructionLogs" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionLog)">
-            <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
+          <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetBlendingInstructionViewDetails" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionViewDetail)">
           <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
@@ -21074,6 +21074,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Boolean" Name="InActivePartial" Nullable="false" />
           <Property Type="DateTime" Name="InActivePartialDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
         </ComplexType>
         <EntityType Name="FinishedProductDetail">
           <Key>
@@ -26930,6 +26931,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
                 <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

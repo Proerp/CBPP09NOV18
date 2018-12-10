@@ -175,7 +175,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "    BEGIN " + "\r\n";
 
             queryString = queryString + "       SELECT      BlendingInstructionDetails.BlendingInstructionDetailID, BlendingInstructionDetails.BlendingInstructionID, " + "\r\n";
-            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BlendingInstructionDetails.CommodityTypeID, " + "\r\n";
             queryString = queryString + "                   VoidTypes.VoidTypeID, VoidTypes.Code AS VoidTypeCode, VoidTypes.Name AS VoidTypeName, VoidTypes.VoidClassID, " + "\r\n";
             queryString = queryString + "                   BlendingInstructionDetails.Quantity, BlendingInstructionDetails.InActivePartial, BlendingInstructionDetails.InActivePartialDate, BlendingInstructionDetails.Remarks " + "\r\n";
             queryString = queryString + "       FROM        BlendingInstructionDetails " + "\r\n";

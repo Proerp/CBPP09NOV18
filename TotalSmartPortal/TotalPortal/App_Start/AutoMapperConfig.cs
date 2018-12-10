@@ -318,6 +318,7 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<CommodityPrimitiveDTO<CMDItem>, Commodity>();
                 cfg.CreateMap<CommodityPrimitiveDTO<CMDProduct>, Commodity>();
 
+                cfg.CreateMap<Commodity, CommodityBaseDTO>();
 
                 cfg.CreateMap<Promotion, PromotionViewModel>();
                 cfg.CreateMap<Promotion, PromotionDTO>();
