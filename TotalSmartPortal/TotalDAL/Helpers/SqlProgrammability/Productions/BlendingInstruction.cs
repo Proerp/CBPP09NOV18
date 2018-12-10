@@ -43,7 +43,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString;
 
             queryString = " @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime, @FilterOptionID int " + "\r\n";
-            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
@@ -111,7 +111,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       FROM        BlendingInstructions " + "\r\n";
             queryString = queryString + "                   INNER JOIN  Commodities ON " + (filterOptionID == 0 || filterOptionID == 20 ? "BlendingInstructions.EntryDate" + " >= @LocalFromDate AND " + "BlendingInstructions.EntryDate" + " <= @LocalToDate AND" : "") + " BlendingInstructions.OrganizationalUnitID IN (SELECT DISTINCT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @LocalAspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.BlendingInstruction + " AND AccessControls.AccessLevel > 0) AND BlendingInstructions.CommodityID = Commodities.CommodityID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN  BlendingInstructionDetails ON " + this.SQLPendingVsFinished(filterOptionID) + " BlendingInstructionDetails.BlendingInstructionID = BlendingInstructionDetails.BlendingInstructionID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN  BlendingInstructionDetails ON " + this.SQLPendingVsFinished(filterOptionID) + " BlendingInstructions.BlendingInstructionID = BlendingInstructionDetails.BlendingInstructionID " + "\r\n";
 
             queryString = queryString + "                   LEFT JOIN   VoidTypes ON BlendingInstructions.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN   VoidTypes VoidTypeDetails ON BlendingInstructionDetails.VoidTypeID = VoidTypeDetails.VoidTypeID " + "\r\n";

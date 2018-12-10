@@ -626,6 +626,17 @@ tr:hover {
     text-align: center;
 }
 
+/*BEGIN: CSS FOR DELETE BUTTON IN DETAIL GRID*/
+.k-grid .k-delete 
+{
+    padding: 0px;
+    height: 12px;
+    width: 12px;
+    margin-right:0px;
+}
+/*BEGIN: CSS FOR DELETE BUTTON IN DETAIL GRID*/
+
+
 /*.k-window-titlebar,
 .myWindow .k-window-content {
     background-color: #0A7A06;
@@ -878,8 +889,12 @@ a[class^='info-bar'] {
 }
 
 .k-grid tbody .k-button, .k-ie8 .k-grid tbody button.k-button {
-    min-width: 29px;
-    padding-left: 10px;
+    /*min-width: 29px;
+    padding-left: 10px;*/
+
+    min-width: 18px;
+    padding: 0px;
+    margin:0px;
 }
 
 .multiline-grid {
