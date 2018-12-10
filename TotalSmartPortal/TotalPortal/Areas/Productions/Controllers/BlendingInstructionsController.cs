@@ -31,6 +31,8 @@ namespace TotalPortal.Areas.Productions.Controllers
             commodityTypeIDList.Append((int)GlobalEnums.CommodityTypeID.Materials);
 
             RequireJsOptions.Add("commodityTypeIDList", commodityTypeIDList.ToString(), RequireJsOptionsScope.Page);
+
+            RequireJsOptions.Add("masterCommodityTypeIDs", ((int)GlobalEnums.CommodityTypeID.Products).ToString(), RequireJsOptionsScope.Page);
         }
     }
 
