@@ -21,6 +21,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.GetTransferOrderIndexes();
 
             this.GetTransferOrderViewDetails();
+            this.GetTransferOrderPendingBlendingInstructions();
 
             this.TransferOrderApproved();
             this.TransferOrderEditable();
@@ -75,7 +76,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   ISNULL(CommoditiesAvailables.QuantityAvailables, 0) AS QuantityAvailables, TransferOrderDetails.Quantity, TransferOrderDetails.Remarks, " + "\r\n";
             queryString = queryString + "                   VoidTypes.VoidTypeID, VoidTypes.Code AS VoidTypeCode, VoidTypes.Name AS VoidTypeName, VoidTypes.VoidClassID, TransferOrderDetails.InActivePartial " + "\r\n";
             queryString = queryString + "       FROM        @TransferOrderDetails TransferOrderDetails " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Commodities ON TransferOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";            
+            queryString = queryString + "                   INNER JOIN Commodities ON TransferOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN (SELECT CommodityID, SUM(Quantity - QuantityIssued) AS QuantityAvailables FROM GoodsReceiptDetails WHERE ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 AND WarehouseID = (SELECT TOP 1 WarehouseID FROM @TransferOrderDetails) AND CommodityID IN (SELECT DISTINCT CommodityID FROM @TransferOrderDetails) GROUP BY CommodityID) CommoditiesAvailables ON TransferOrderDetails.CommodityID = CommoditiesAvailables.CommodityID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN VoidTypes ON TransferOrderDetails.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
 
@@ -84,6 +85,42 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.totalSmartPortalEntities.CreateStoredProcedure("GetTransferOrderViewDetails", queryString);
         }
 
+
+        #region Pending
+        private void GetTransferOrderPendingBlendingInstructions()
+        {
+            string queryString;
+
+            queryString = " @LocationID Int, @TransferOrderID Int, @WarehouseID Int, @CommodityIDs varchar(3999) " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       DECLARE         @BlendingInstructionDetails TABLE (CommodityID int NOT NULL, QuantityRemains decimal(18, 2) NOT NULL, QuantityTransferOrders decimal(18, 2) NOT NULL, QuantityAvailableL2 decimal(18, 2) NOT NULL) " + "\r\n";
+
+
+            queryString = queryString + "       INSERT INTO     @BlendingInstructionDetails (CommodityID, QuantityRemains, QuantityTransferOrders, QuantityAvailableL2) " + "\r\n";
+            queryString = queryString + "       SELECT          CommodityID, ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, 0 AS QuantityTransferOrders, 0 AS QuantityAvailableL2 FROM BlendingInstructionDetails WHERE InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n"; //Approved = 1 AND 
+
+            queryString = queryString + "       INSERT INTO     @BlendingInstructionDetails (CommodityID, QuantityRemains, QuantityTransferOrders, QuantityAvailableL2) " + "\r\n";
+            queryString = queryString + "       SELECT          CommodityID, 0 AS QuantityRemains, ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityTransferOrders, 0 AS QuantityAvailableL2 FROM TransferOrderDetails WHERE CommodityID IN (SELECT CommodityID FROM @BlendingInstructionDetails) AND LocationIssuedID = 1 AND LocationReceiptID = 2 AND TransferOrderID <> @TransferOrderID AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n"; //Approved = 1 AND 
+
+            queryString = queryString + "       INSERT INTO     @BlendingInstructionDetails (CommodityID, QuantityRemains, QuantityTransferOrders, QuantityAvailableL2) " + "\r\n";
+            queryString = queryString + "       SELECT          GoodsReceiptDetails.CommodityID, 0 AS QuantityRemains, 0 AS QuantityTransferOrders, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains FROM GoodsReceiptDetails INNER JOIN Warehouses ON GoodsReceiptDetails.WarehouseID = Warehouses.WarehouseID WHERE GoodsReceiptDetails.CommodityID IN (SELECT CommodityID FROM @BlendingInstructionDetails) AND Warehouses.LocationID = 2 AND ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n";
+
+
+            queryString = queryString + "       SELECT          BlendingInstructionDetails.CommodityID, SUM(BlendingInstructionDetails.QuantityRemains) AS QuantityRemains, SUM(BlendingInstructionDetails.QuantityTransferOrders) AS QuantityTransferOrders, SUM(BlendingInstructionDetails.QuantityAvailableL2) AS QuantityAvailableL2 " + "\r\n";
+            queryString = queryString + "       FROM            @BlendingInstructionDetails BlendingInstructionDetails " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Commodities ON BlendingInstructionDetails.CommodityID NOT IN (SELECT Id FROM dbo.SplitToIntList (@CommodityIDs)) AND BlendingInstructionDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "       GROUP BY        BlendingInstructionDetails.CommodityID " + "\r\n";
+            queryString = queryString + "       HAVING          ROUND(SUM(BlendingInstructionDetails.QuantityRemains) - SUM(BlendingInstructionDetails.QuantityTransferOrders) - SUM(BlendingInstructionDetails.QuantityAvailableL2), " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetTransferOrderPendingBlendingInstructions", queryString);
+        }
+        #endregion Pending
 
         private void TransferOrderApproved()
         {
