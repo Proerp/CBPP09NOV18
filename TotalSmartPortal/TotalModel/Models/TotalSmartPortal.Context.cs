@@ -3827,7 +3827,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WarehouseTransferIndex>("GetWarehouseTransferIndexes", nMVNTaskIDParameter, aspUserIDParameter, fromDateParameter, toDateParameter);
         }
     
-        public virtual ObjectResult<WarehouseTransferPendingTransferOrderDetail> GetWarehouseTransferPendingTransferOrderDetails(Nullable<int> locationID, Nullable<int> nMVNTaskID, Nullable<int> warehouseTransferID, Nullable<int> transferOrderID, Nullable<int> warehouseID, Nullable<int> warehouseReceiptID, string goodsReceiptDetailIDs, Nullable<bool> isReadonly)
+        public virtual ObjectResult<WarehouseTransferPendingTransferOrderDetail> GetWarehouseTransferPendingTransferOrderDetails(Nullable<int> locationID, Nullable<int> nMVNTaskID, Nullable<int> warehouseTransferID, Nullable<int> transferOrderID, Nullable<int> warehouseID, Nullable<int> warehouseReceiptID, string goodsReceiptDetailIDs)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
@@ -3857,11 +3857,7 @@ namespace TotalModel.Models
                 new ObjectParameter("GoodsReceiptDetailIDs", goodsReceiptDetailIDs) :
                 new ObjectParameter("GoodsReceiptDetailIDs", typeof(string));
     
-            var isReadonlyParameter = isReadonly.HasValue ?
-                new ObjectParameter("IsReadonly", isReadonly) :
-                new ObjectParameter("IsReadonly", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WarehouseTransferPendingTransferOrderDetail>("GetWarehouseTransferPendingTransferOrderDetails", locationIDParameter, nMVNTaskIDParameter, warehouseTransferIDParameter, transferOrderIDParameter, warehouseIDParameter, warehouseReceiptIDParameter, goodsReceiptDetailIDsParameter, isReadonlyParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WarehouseTransferPendingTransferOrderDetail>("GetWarehouseTransferPendingTransferOrderDetails", locationIDParameter, nMVNTaskIDParameter, warehouseTransferIDParameter, transferOrderIDParameter, warehouseIDParameter, warehouseReceiptIDParameter, goodsReceiptDetailIDsParameter);
         }
     
         public virtual ObjectResult<WarehouseTransferPendingTransferOrder> GetWarehouseTransferPendingTransferOrders(Nullable<int> locationID, Nullable<int> nMVNTaskID)

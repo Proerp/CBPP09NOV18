@@ -32,5 +32,9 @@ namespace TotalModel.Models
         public decimal Quantity { get; set; }
         public string Remarks { get; set; }
         public decimal TransferOrderRemains { get; set; }
+        public int BinLocationIssuedID { get; set; }
+        public string BinLocationIssuedCode { get; set; }
+        public int BinLocationID { get; set; }
+        public string BinLocationCode { get; set; }
     }
 }

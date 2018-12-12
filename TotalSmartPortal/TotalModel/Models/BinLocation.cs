@@ -18,6 +18,7 @@ namespace TotalModel.Models
         public BinLocation()
         {
             this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
+            this.WarehouseTransferDetails = new HashSet<WarehouseTransferDetail>();
         }
     
         public int BinLocationID { get; set; }
@@ -34,5 +35,7 @@ namespace TotalModel.Models
         public virtual Warehouse Warehouse { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
     }
 }

@@ -23,6 +23,8 @@
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsReceiptID)
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsReceiptTypeID)
 
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).BinLocation_WarehouseID)
+
     <div class="left-panel">
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
@@ -355,7 +357,7 @@
 
                     columns.Bound(p => p.BinLocationID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= BinLocationID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BinLocationID' value='#= BinLocationID #' />");                    
-                    columns.Bound(p => p.BinLocationCode).DisplayNameTitle().Width(68).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival ? false : true)
+                    columns.Bound(p => p.BinLocationCode).DisplayNameTitle().Width(68).Hidden(!GlobalEnums.CBPP)
                         .ClientTemplate("#= (BinLocationCode == null)? '' : BinLocationCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BinLocationCode' value='#= (BinLocationCode == null) ? '' : BinLocationCode #' />");
                     
 

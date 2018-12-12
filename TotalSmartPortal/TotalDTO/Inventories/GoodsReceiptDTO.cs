@@ -28,6 +28,8 @@ namespace TotalDTO.Inventories
         Nullable<int> WarehouseID { get; set; }
         Nullable<int> WarehouseIssueID { get; set; }
 
+        Nullable<int> BinLocation_WarehouseID { get; set; }
+
         int GoodsReceiptTypeID { get; set; }
 
         Nullable<int> PurchaseRequisitionID { get; set; }
@@ -103,6 +105,8 @@ namespace TotalDTO.Inventories
 
         public virtual Nullable<int> WarehouseID { get; set; }
         public virtual Nullable<int> WarehouseIssueID { get; set; }
+
+        public virtual Nullable<int> BinLocation_WarehouseID { get; set; }
 
         public int GoodsReceiptTypeID { get; set; }
 
@@ -224,6 +228,9 @@ namespace TotalDTO.Inventories
         [Display(Name = "Kho hàng")]
         [UIHint("AutoCompletes/WarehouseBase")]
         public WarehouseBaseDTO WarehouseIssue { get; set; }
+
+
+        public override Nullable<int> BinLocation_WarehouseID { get { return (this.Warehouse != null ? this.Warehouse.WarehouseID : null); } set { } }
 
 
         public override int StorekeeperID { get { return (this.Storekeeper != null ? this.Storekeeper.EmployeeID : 0); } }

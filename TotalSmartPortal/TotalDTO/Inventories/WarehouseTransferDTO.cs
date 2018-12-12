@@ -31,6 +31,9 @@ namespace TotalDTO.Inventories
         Nullable<int> LocationIssuedID { get; set; }
         Nullable<int> WarehouseReceiptID { get; set; }
         Nullable<int> LocationReceiptID { get; set; }
+
+        Nullable<int> BinLocation_WarehouseID { get; set; }
+
         Nullable<int> TransferOrderID { get; set; }
         [Display(Name = "Lệnh VCNB")]
         string TransferOrderReference { get; set; }
@@ -60,7 +63,9 @@ namespace TotalDTO.Inventories
         public virtual Nullable<int> LocationIssuedID { get; set; }
         public virtual Nullable<int> WarehouseReceiptID { get; set; }
         public virtual Nullable<int> LocationReceiptID { get; set; }
-        
+
+        public virtual Nullable<int> BinLocation_WarehouseID { get; set; }
+
         public virtual Nullable<int> TransferOrderID { get; set; }
         [Display(Name = "Lệnh VCNB")]
         public string TransferOrderReference { get; set; }
@@ -118,6 +123,10 @@ namespace TotalDTO.Inventories
         public override Nullable<int> WarehouseReceiptID { get { return (this.WarehouseReceipt != null ? this.WarehouseReceipt.WarehouseID : null); } }
         public override Nullable<int> LocationReceiptID { get { return (this.WarehouseReceipt != null ? (Nullable<int>)this.WarehouseReceipt.LocationID : null); } }
         public WarehouseBaseDTO WarehouseReceipt { get; set; }
+
+
+        public override Nullable<int> BinLocation_WarehouseID { get { return (this.WarehouseReceipt != null ? this.WarehouseReceipt.WarehouseID : null); } set { } }
+
 
         public override int StorekeeperID { get { return (this.Storekeeper != null ? this.Storekeeper.EmployeeID : 0); } }
         public EmployeeBaseDTO Storekeeper { get; set; }

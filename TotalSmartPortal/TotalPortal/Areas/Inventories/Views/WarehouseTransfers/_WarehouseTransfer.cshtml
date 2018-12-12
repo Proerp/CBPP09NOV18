@@ -22,6 +22,8 @@
 
     @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderID)
 
+    @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).BinLocation_WarehouseID)
+    
     <div class="left-panel">
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml", @Model, new ViewDataDictionary { { "EntryDateReadonly", false } })
@@ -134,6 +136,18 @@
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (BatchEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].BatchEntryDate' value='#= (BatchEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #' />");
 
+
+                    columns.Bound(p => p.BinLocationIssuedID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= BinLocationIssuedID #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].BinLocationIssuedID' value='#= BinLocationIssuedID #' />");
+                    columns.Bound(p => p.BinLocationIssuedCode).DisplayNameTitle().Width(68).Hidden(!GlobalEnums.CBPP)
+                        .ClientTemplate("#= (BinLocationIssuedCode == null)? '' : BinLocationIssuedCode #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].BinLocationIssuedCode' value='#= (BinLocationIssuedCode == null) ? '' : BinLocationIssuedCode #' />");
+                    
+                    columns.Bound(p => p.BinLocationCode).DisplayNameTitle().Width(68).Hidden(!GlobalEnums.CBPP)
+                        .ClientTemplate("#= (BinLocationCode == null)? '' : BinLocationCode #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].BinLocationCode' value='#= (BinLocationCode == null) ? '' : BinLocationCode #' />");
+                    columns.Bound(p => p.BinLocationID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= BinLocationID #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].BinLocationID' value='#= BinLocationID #' />");
+
+                                        
                     columns.Bound(p => p.TransferOrderRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(!@Model.HasTransferOrder)
                         .Format(Settings.kfmQuantity)
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', TransferOrderRemains) #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].TransferOrderRemains' value='#= TransferOrderRemains #' />");

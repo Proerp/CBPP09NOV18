@@ -2367,6 +2367,7 @@
           <Property Name="LocationReceiptID" Type="int" Nullable="false" />
           <Property Name="GoodsReceiptID" Type="int" Nullable="false" />
           <Property Name="GoodsReceiptDetailID" Type="int" Nullable="false" />
+          <Property Name="BinLocationID" Type="int" Nullable="false" />
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="BatchID" Type="int" Nullable="false" />
@@ -6268,6 +6269,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WarehouseTransferDetails_BinLocations">
+          <End Role="BinLocations" Type="Self.BinLocations" Multiplicity="1" />
+          <End Role="WarehouseTransferDetails" Type="Self.WarehouseTransferDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BinLocations">
+              <PropertyRef Name="BinLocationID" />
+            </Principal>
+            <Dependent Role="WarehouseTransferDetails">
+              <PropertyRef Name="BinLocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WarehouseTransferDetails_Commodities">
           <End Role="Commodities" Type="Self.Commodities" Multiplicity="1" />
           <End Role="WarehouseTransferDetails" Type="Self.WarehouseTransferDetails" Multiplicity="*" />
@@ -7302,7 +7315,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
           <Parameter Name="WarehouseReceiptID" Type="int" Mode="In" />
           <Parameter Name="GoodsReceiptDetailIDs" Type="varchar" Mode="In" />
-          <Parameter Name="IsReadonly" Type="bit" Mode="In" />
         </Function>
         <Function Name="GetWarehouseTransferPendingTransferOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -9115,6 +9127,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <AssociationSet Name="FK_WarehouseAdjustments_Warehouses1" Association="Self.FK_WarehouseAdjustments_Warehouses1">
             <End Role="Warehouses" EntitySet="Warehouses" />
             <End Role="WarehouseAdjustments" EntitySet="WarehouseAdjustments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WarehouseTransferDetails_BinLocations" Association="Self.FK_WarehouseTransferDetails_BinLocations">
+            <End Role="BinLocations" EntitySet="BinLocations" />
+            <End Role="WarehouseTransferDetails" EntitySet="WarehouseTransferDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_WarehouseTransferDetails_Commodities" Association="Self.FK_WarehouseTransferDetails_Commodities">
             <End Role="Commodities" EntitySet="Commodities" />
@@ -13454,7 +13470,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
             <Parameter Name="WarehouseReceiptID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsReceiptDetailIDs" Mode="In" Type="String" />
-            <Parameter Name="IsReadonly" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GetWarehouseTransferPendingTransferOrders" ReturnType="Collection(TotalSmartPortalModel.WarehouseTransferPendingTransferOrder)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
@@ -14323,6 +14338,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="TransferOrderID" Mode="In" Type="Int32" />
             <Parameter Name="CommodityIDs" Mode="In" Type="String" />
           </FunctionImport>
+          <AssociationSet Name="FK_WarehouseTransferDetails_BinLocations" Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_BinLocations">
+            <End Role="BinLocation" EntitySet="BinLocations" />
+            <End Role="WarehouseTransferDetail" EntitySet="WarehouseTransferDetails" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -17998,6 +18017,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities" FromRole="WarehouseTransferDetail" ToRole="Commodity" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_WarehouseTransferDetails" FromRole="WarehouseTransferDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_GoodsReceiptDetails" FromRole="WarehouseTransferDetail" ToRole="GoodsReceiptDetail" />
+          <Property Name="BinLocationID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BinLocation" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_BinLocations" FromRole="WarehouseTransferDetail" ToRole="BinLocation" />
           </EntityType>
         <ComplexType Name="WarehouseTransferIndex">
           <Property Type="Int32" Name="WarehouseTransferID" Nullable="false" />
@@ -18040,6 +18061,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
           <Property Type="Decimal" Name="TransferOrderRemains" Nullable="true" Precision="19" Scale="2" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="BinLocationID" Nullable="true" />
+          <Property Type="String" Name="BinLocationCode" Nullable="true" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="WarehouseTransferPendingWarehouse">
           <Property Type="Int32" Name="WarehouseID" Nullable="false" />
@@ -18087,6 +18110,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
           <Property Type="Decimal" Name="TransferOrderRemains" Nullable="false" Precision="38" Scale="2" />
+          <Property Type="Int32" Name="BinLocationIssuedID" Nullable="false" />
+          <Property Type="String" Name="BinLocationIssuedCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BinLocationID" Nullable="false" />
+          <Property Type="String" Name="BinLocationCode" Nullable="false" MaxLength="50" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingWarehouse">
           <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
@@ -19521,6 +19548,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="InActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_BinLocations_Warehouses" FromRole="BinLocation" ToRole="Warehouse" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations" FromRole="BinLocation" ToRole="GoodsReceiptDetail" />
+          <NavigationProperty Name="WarehouseTransferDetails" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_BinLocations" FromRole="BinLocation" ToRole="WarehouseTransferDetail" />
         </EntityType>
         <Association Name="FK_BinLocations_Warehouses">
           <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
@@ -21286,6 +21314,18 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Int32" Name="CommodityTypeID" Nullable="true" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
         </ComplexType>
+        <Association Name="FK_WarehouseTransferDetails_BinLocations">
+          <End Type="TotalSmartPortalModel.BinLocation" Role="BinLocation" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.WarehouseTransferDetail" Role="WarehouseTransferDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BinLocation">
+              <PropertyRef Name="BinLocationID" />
+            </Principal>
+            <Dependent Role="WarehouseTransferDetail">
+              <PropertyRef Name="BinLocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -25547,6 +25587,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="WarehouseTransferDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.WarehouseTransferDetail">
               <MappingFragment StoreEntitySet="WarehouseTransferDetails">
+                <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
                 <ScalarProperty Name="LocationIssuedID" ColumnName="LocationIssuedID" />
                 <ScalarProperty Name="LocationReceiptID" ColumnName="LocationReceiptID" />
                 <ScalarProperty Name="HasTransferOrder" ColumnName="HasTransferOrder" />
@@ -25619,6 +25660,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
                 <ScalarProperty Name="TransferOrderRemains" ColumnName="TransferOrderRemains" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
+                <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -25663,6 +25706,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="TransferOrderRemains" ColumnName="TransferOrderRemains" />
+                <ScalarProperty Name="BinLocationIssuedID" ColumnName="BinLocationIssuedID" />
+                <ScalarProperty Name="BinLocationIssuedCode" ColumnName="BinLocationIssuedCode" />
+                <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
+                <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

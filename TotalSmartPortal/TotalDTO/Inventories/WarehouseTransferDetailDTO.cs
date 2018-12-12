@@ -48,6 +48,18 @@ namespace TotalDTO.Inventories
         [UIHint("DateTimeReadonly")]
         public System.DateTime BatchEntryDate { get; set; }
 
+        public int BinLocationIssuedID { get; set; }
+        [Display(Name = "Vị trí")]
+        [UIHint("StringReadonly")]
+        public string BinLocationIssuedCode { get; set; }
+
+
+        public int BinLocationID { get; set; }
+        [Display(Name = "Vị trí mới")]
+        [Required(ErrorMessage = "Vui lòng chọn vị trí")]
+        [UIHint("AutoCompletes/BinLocationBase")]
+        public string BinLocationCode { get; set; }
+
         [Display(Name = "Tồn lệnh")]
         [UIHint("QuantityReadonly")]
         public decimal TransferOrderRemains { get; set; }

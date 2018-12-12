@@ -42,6 +42,7 @@ namespace TotalModel.Models
         public bool HasTransferOrder { get; set; }
         public int LocationReceiptID { get; set; }
         public int LocationIssuedID { get; set; }
+        public int BinLocationID { get; set; }
     
         public virtual TransferOrderDetail TransferOrderDetail { get; set; }
         public virtual TransferOrder TransferOrder { get; set; }
@@ -50,5 +51,6 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         public virtual GoodsReceiptDetail GoodsReceiptDetail { get; set; }
+        public virtual BinLocation BinLocation { get; set; }
     }
 }

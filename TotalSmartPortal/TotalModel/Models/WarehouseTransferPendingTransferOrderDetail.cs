@@ -38,5 +38,7 @@ namespace TotalModel.Models
         public Nullable<bool> IsSelected { get; set; }
         public Nullable<decimal> TransferOrderRemains { get; set; }
         public string Remarks { get; set; }
+        public Nullable<int> BinLocationID { get; set; }
+        public string BinLocationCode { get; set; }
     }
 }

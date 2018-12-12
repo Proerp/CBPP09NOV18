@@ -47,9 +47,7 @@
                 transferOrderID: window.parent.$("#TransferOrderID").val(),
                 warehouseID: window.parent.$("#Warehouse_WarehouseID").val(),
                 warehouseReceiptID: window.parent.$("#WarehouseReceipt_WarehouseID").val(),                    
-                goodsReceiptDetailIDs : materialIssueJSON.map(function(elem){return elem.GoodsReceiptDetailID;}).join(","),
-                onlyApproved: true,
-                onlyIssuable: true
+                goodsReceiptDetailIDs : materialIssueJSON.map(function(elem){return elem.GoodsReceiptDetailID;}).join(",")
             };}
             </text>))
     .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client
