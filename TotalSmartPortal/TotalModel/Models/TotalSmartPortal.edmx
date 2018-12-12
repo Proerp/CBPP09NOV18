@@ -7231,6 +7231,12 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="GetTransferOrderPendingBlendingInstructions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="TransferOrderID" Type="int" Mode="In" />
+          <Parameter Name="WarehouseID" Type="int" Mode="In" />
+          <Parameter Name="CommodityIDs" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetTransferOrderViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="TransferOrderID" Type="int" Mode="In" />
         </Function>
@@ -14313,6 +14319,12 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="FinishedProductPackage" EntitySet="FinishedProductPackages" />
             <End Role="GoodsReceiptDetail" EntitySet="GoodsReceiptDetails" />
           </AssociationSet>
+          <FunctionImport Name="GetTransferOrderPendingBlendingInstructions" ReturnType="Collection(TotalSmartPortalModel.TransferOrderPendingBlendingInstruction)">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="TransferOrderID" Mode="In" Type="Int32" />
+            <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
+            <Parameter Name="CommodityIDs" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -21265,6 +21277,12 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="TransferOrderPendingBlendingInstruction">
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="QuantityTransferOrders" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailableL2" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -27009,6 +27027,16 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetTransferOrderPendingBlendingInstructions" FunctionName="TotalSmartPortalModel.Store.GetTransferOrderPendingBlendingInstructions">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.TransferOrderPendingBlendingInstruction">
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
+                <ScalarProperty Name="QuantityTransferOrders" ColumnName="QuantityTransferOrders" />
+                <ScalarProperty Name="QuantityAvailableL2" ColumnName="QuantityAvailableL2" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

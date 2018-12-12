@@ -686,6 +686,9 @@
     <Compile Include="Models\TransferOrderIndex.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TransferOrderPendingBlendingInstruction.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\TransferOrderType.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
