@@ -5,7 +5,7 @@
 
 
 @(Html.Kendo().Grid<TransferOrderPendingBlendingInstruction>()
-    .Name("gridTransferOrderPendingBlendingInstructions")
+    .Name("gridPendingBlendingInstructions")
     .Columns(columns =>
     {
         columns.Bound(c => c.CommodityCode).Title("Mã").Width(30);
@@ -50,16 +50,16 @@
     </div>
 </div>
 
-<script src="@Url.Content("~/Scripts/Controllers/Inventories/PackageIssues/AddPendingBlendingInstructionDetail.js")"></script>
+<script src="@Url.Content("~/Scripts/Controllers/Inventories/TransferOrders/AddPendingBlendingInstruction.js")"></script>
 
 <script type="text/javascript">
     function okButton_Click() {
-        handleOKEvent(window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource, $("#gridTransferOrderPendingBlendingInstructions").data("kendoGrid").dataSource);
+        handleOKEvent(window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource, $("#gridPendingBlendingInstructions").data("kendoGrid").dataSource);
     }
 
-    $('#gridTransferOrderPendingBlendingInstructions').on('click', '.IsSelected', function () {
+    $('#gridPendingBlendingInstructions').on('click', '.IsSelected', function () {
         var checked = $(this).is(':checked');
-        var grid = $('#gridTransferOrderPendingBlendingInstructions').data().kendoGrid;
+        var grid = $('#gridPendingBlendingInstructions').data().kendoGrid;
         var dataItem = grid.dataItem($(this).closest('tr'));
         dataItem.set('IsSelected', checked);
     })
@@ -69,7 +69,7 @@
 
 <script>
     function filterText_KeyUp() {
-        var filterText = $("#filterText").val(), gridDetails = $("#gridTransferOrderPendingBlendingInstructions").data("kendoGrid");
+        var filterText = $("#filterText").val(), gridDetails = $("#gridPendingBlendingInstructions").data("kendoGrid");
 
         if (filterText && filterText.length >= "@Settings.AutoCompleteMinLenght") {
             gridDetails.dataSource.filter({

@@ -1842,6 +1842,7 @@
     <Content Include="Scripts\Controllers\Inventories\ProductTransfers\Open.js" />
     <Content Include="Scripts\Controllers\Inventories\ProductTransfers\Print.js" />
     <Content Include="Scripts\Controllers\Inventories\ProductTransfers\Void.js" />
+    <Content Include="Scripts\Controllers\Inventories\TransferOrders\AddPendingBlendingInstruction.js" />
     <Content Include="Scripts\Controllers\Inventories\TransferOrders\Approve.js" />
     <Content Include="Scripts\Controllers\Inventories\TransferOrders\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Inventories\TransferOrders\Delete.js" />
