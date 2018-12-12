@@ -30,6 +30,12 @@ namespace TotalPortal.Areas.Inventories.Controllers
         {
         }
 
+        public virtual ActionResult GetPendingBlendingInstructions()
+        {
+            this.AddRequireJsOptions();
+            return View();
+        }
+
         protected override TViewDetailViewModel InitViewModelByDefault(TViewDetailViewModel simpleViewModel)
         {
             simpleViewModel = base.InitViewModelByDefault(simpleViewModel);

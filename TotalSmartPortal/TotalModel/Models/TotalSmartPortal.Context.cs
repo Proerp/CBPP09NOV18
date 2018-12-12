@@ -4624,7 +4624,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionViewDetail>("GetBlendingInstructionViewDetails", blendingInstructionIDParameter);
         }
     
-        public virtual ObjectResult<TransferOrderPendingBlendingInstruction> GetTransferOrderPendingBlendingInstructions(Nullable<int> locationID, Nullable<int> transferOrderID, Nullable<int> warehouseID, string commodityIDs)
+        public virtual ObjectResult<TransferOrderPendingBlendingInstruction> GetTransferOrderPendingBlendingInstructions(Nullable<int> locationID, Nullable<int> transferOrderID, string commodityIDs)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
@@ -4634,15 +4634,11 @@ namespace TotalModel.Models
                 new ObjectParameter("TransferOrderID", transferOrderID) :
                 new ObjectParameter("TransferOrderID", typeof(int));
     
-            var warehouseIDParameter = warehouseID.HasValue ?
-                new ObjectParameter("WarehouseID", warehouseID) :
-                new ObjectParameter("WarehouseID", typeof(int));
-    
             var commodityIDsParameter = commodityIDs != null ?
                 new ObjectParameter("CommodityIDs", commodityIDs) :
                 new ObjectParameter("CommodityIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderPendingBlendingInstruction>("GetTransferOrderPendingBlendingInstructions", locationIDParameter, transferOrderIDParameter, warehouseIDParameter, commodityIDsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderPendingBlendingInstruction>("GetTransferOrderPendingBlendingInstructions", locationIDParameter, transferOrderIDParameter, commodityIDsParameter);
         }
     }
 }

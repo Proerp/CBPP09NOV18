@@ -1,4 +1,6 @@
-﻿using TotalModel.Models;
+﻿using System.Collections.Generic;
+
+using TotalModel.Models;
 
 namespace TotalCore.Repositories.Inventories
 {
@@ -8,5 +10,6 @@ namespace TotalCore.Repositories.Inventories
 
     public interface ITransferOrderAPIRepository : IGenericAPIRepository
     {
+        IEnumerable<TransferOrderPendingBlendingInstruction> GetTransferOrderPendingBlendingInstructions(int? locationID, int? transferOrderID, string commodityIDs);
     }    
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 
 using TotalModel.Models;
@@ -37,6 +39,15 @@ namespace TotalDAL.Repositories.Inventories
             this.RepositoryBag.Remove("NMVNTaskID");
 
             return objectParameters;
+        }
+
+        public IEnumerable<TransferOrderPendingBlendingInstruction> GetTransferOrderPendingBlendingInstructions(int? locationID, int? transferOrderID, string commodityIDs)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            IEnumerable<TransferOrderPendingBlendingInstruction> transferOrderPendingBlendingInstructions = base.TotalSmartPortalEntities.GetTransferOrderPendingBlendingInstructions(locationID, transferOrderID, commodityIDs).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return transferOrderPendingBlendingInstructions;
         }
     }
 }

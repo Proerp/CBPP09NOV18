@@ -91,7 +91,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            queryString = " @LocationID Int, @TransferOrderID Int, @WarehouseID Int, @CommodityIDs varchar(3999) " + "\r\n";
+            queryString = " @LocationID Int, @TransferOrderID Int, @CommodityIDs varchar(3999) " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -110,7 +110,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       SELECT          GoodsReceiptDetails.CommodityID, 0 AS QuantityRemains, 0 AS QuantityTransferOrders, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains FROM GoodsReceiptDetails INNER JOIN Warehouses ON GoodsReceiptDetails.WarehouseID = Warehouses.WarehouseID WHERE GoodsReceiptDetails.CommodityID IN (SELECT CommodityID FROM @BlendingInstructionDetails) AND Warehouses.LocationID = 2 AND ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n";
 
 
-            queryString = queryString + "       SELECT          BlendingInstructionDetails.CommodityID, SUM(BlendingInstructionDetails.QuantityRemains) AS QuantityRemains, SUM(BlendingInstructionDetails.QuantityTransferOrders) AS QuantityTransferOrders, SUM(BlendingInstructionDetails.QuantityAvailableL2) AS QuantityAvailableL2 " + "\r\n";
+            queryString = queryString + "       SELECT          BlendingInstructionDetails.CommodityID, MIN(Commodities.Code) AS CommodityCode, MIN(Commodities.Name) AS CommodityName, MIN(Commodities.OfficialCode) AS OfficialCode, MIN(Commodities.CommodityTypeID) AS CommodityTypeID, SUM(BlendingInstructionDetails.QuantityRemains) AS QuantityRemains, SUM(BlendingInstructionDetails.QuantityTransferOrders) AS QuantityTransferOrders, SUM(BlendingInstructionDetails.QuantityAvailableL2) AS QuantityAvailableL2, CAST(0 AS bit) AS IsSelected " + "\r\n";
             queryString = queryString + "       FROM            @BlendingInstructionDetails BlendingInstructionDetails " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON BlendingInstructionDetails.CommodityID NOT IN (SELECT Id FROM dbo.SplitToIntList (@CommodityIDs)) AND BlendingInstructionDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "       GROUP BY        BlendingInstructionDetails.CommodityID " + "\r\n";

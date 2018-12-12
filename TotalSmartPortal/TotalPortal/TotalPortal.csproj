@@ -1593,6 +1593,8 @@
     <Content Include="Areas\Productions\Views\BlendingInstructions\VoidDetailSuccess.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\_BlendingInstruction.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\Create.cshtml" />
+    <Content Include="Areas\Inventories\Views\TransferOrders\GetPendingBlendingInstructions.cshtml" />
+    <Content Include="Areas\Inventories\Views\MaterialTransferOrders\GetPendingBlendingInstructions.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">

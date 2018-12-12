@@ -17,5 +17,10 @@ namespace TotalModel.Models
         public Nullable<decimal> QuantityRemains { get; set; }
         public Nullable<decimal> QuantityTransferOrders { get; set; }
         public Nullable<decimal> QuantityAvailableL2 { get; set; }
+        public string CommodityCode { get; set; }
+        public string CommodityName { get; set; }
+        public string OfficialCode { get; set; }
+        public Nullable<int> CommodityTypeID { get; set; }
+        public Nullable<bool> IsSelected { get; set; }
     }
 }

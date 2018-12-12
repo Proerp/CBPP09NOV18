@@ -7234,7 +7234,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
         <Function Name="GetTransferOrderPendingBlendingInstructions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="TransferOrderID" Type="int" Mode="In" />
-          <Parameter Name="WarehouseID" Type="int" Mode="In" />
           <Parameter Name="CommodityIDs" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetTransferOrderViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -14322,7 +14321,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <FunctionImport Name="GetTransferOrderPendingBlendingInstructions" ReturnType="Collection(TotalSmartPortalModel.TransferOrderPendingBlendingInstruction)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="TransferOrderID" Mode="In" Type="Int32" />
-            <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
             <Parameter Name="CommodityIDs" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
@@ -21282,6 +21280,11 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="QuantityTransferOrders" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailableL2" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="String" Name="CommodityCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="OfficialCode" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="true" />
+          <Property Type="Boolean" Name="IsSelected" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -27034,6 +27037,11 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
                 <ScalarProperty Name="QuantityTransferOrders" ColumnName="QuantityTransferOrders" />
                 <ScalarProperty Name="QuantityAvailableL2" ColumnName="QuantityAvailableL2" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="OfficialCode" ColumnName="OfficialCode" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
