@@ -20,7 +20,7 @@
             columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
             columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(68)
-                .ClientTemplate("<a class='k-button' title='In' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Print" }) + "/#= GoodsReceiptID #'><span class='k-icon sbt-printer'></span></a> <a class='k-button' title='Xóa chứng từ' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= GoodsReceiptID #'><span class='k-icon k-i-close'></span></a>");
+                .ClientTemplate("<a class='k-button' title='In' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Print" }) + "/#= GoodsReceiptID #'><span class='k-icon sbt-printer'></span></a> <a class='k-button' title='Xóa chứng từ' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= GoodsReceiptID #'><span class='k-icon sbt-delete'></span></a>");
         })
         .ToolBar(toolbar =>
         {

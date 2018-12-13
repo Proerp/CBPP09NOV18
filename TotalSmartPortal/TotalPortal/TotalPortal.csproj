@@ -707,6 +707,13 @@
     <Content Include="Content\Images\Mains\Sale-Discount.png" />
     <Content Include="Content\Images\Mains\Sale-icon.png" />
     <Content Include="Content\Images\Mains\select-by-color-icon-32.png" />
+    <Content Include="Content\Images\Mains\Size12\add-12-fill-r.png" />
+    <Content Include="Content\Images\Mains\Size12\add-12-fill.png" />
+    <Content Include="Content\Images\Mains\Size12\add-12-ok.png" />
+    <Content Include="Content\Images\Mains\Size12\add-12.png" />
+    <Content Include="Content\Images\Mains\Size12\add-file-12.png" />
+    <Content Include="Content\Images\Mains\Size12\add-icon-12.png" />
+    <Content Include="Content\Images\Mains\Size12\bookmark-add-12.png" />
     <Content Include="Content\Images\Mains\Size12\cancel-green-12-ok.png" />
     <Content Include="Content\Images\Mains\Size12\cancel-icon-12.png" />
     <Content Include="Content\Images\Mains\Size12\cancel-yellow-12-ok.png" />

@@ -30,7 +30,7 @@
                 columns.Bound(p => p.QuantityAvailableL0).Title("Mới về").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
                 
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(111)
-                    .ClientTemplate("<a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Void" }) + "/#= BlendingInstructionID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Delete" }) + "/#= BlendingInstructionID #'><span class='k-icon k-i-close'></span></a>");
+                    .ClientTemplate("<a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Void" }) + "/#= BlendingInstructionID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Delete" }) + "/#= BlendingInstructionID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>
             {

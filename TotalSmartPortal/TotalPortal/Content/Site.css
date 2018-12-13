@@ -640,11 +640,16 @@ tr:hover {
     background-position: center;
 }
 
-.sbt-printer {
-    background-image: url('Images/Mains/Size12/printer-icon-12x13.png');
+.sbt-add {
+    background-image: url('Images/Mains/Size12/add-file-12.png');
     background-position: center;
-    margin-bottom: 1px;
 }
+
+.sbt-plus {
+    background-image: url('Images/Mains/Size12/add-12-fill-r.png');
+    background-position: center;
+}
+
 .sbt-delete {
     background-image: url('Images/Mains/Size12/erase-12-ok.png');
     background-position: center;
@@ -652,6 +657,12 @@ tr:hover {
 .sbt-void {
     background-image: url('Images/Mains/Size12/cancel-green-12-ok.png');
     background-position: center;
+}
+
+.sbt-printer {
+    background-image: url('Images/Mains/Size12/printer-icon-12x13.png');
+    background-position: center;
+    margin-bottom: 1px;
 }
 /*BEGIN: CSS FOR DELETE BUTTON IN DETAIL GRID*/
 
