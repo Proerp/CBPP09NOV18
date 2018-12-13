@@ -632,8 +632,12 @@ tr:hover {
     padding: 0px;
     height: 12px;
     width: 12px;
-    margin-left:-4px;
+    margin-top: 5px;
+    margin-left:0px;
     margin-right:0px;
+    
+    background-image: url('Images/Mains/Size12/erase-12-ok.png');
+    background-position: center;
 }
 
 .sbt-printer {
@@ -642,7 +646,7 @@ tr:hover {
     margin-bottom: 1px;
 }
 .sbt-delete {
-    background-image: url('Images/Mains/Size12/cross-icon-12-ok.png');
+    background-image: url('Images/Mains/Size12/erase-12-ok.png');
     background-position: center;
 }
 .sbt-void {

@@ -675,6 +675,9 @@
     <Content Include="Content\Images\Mains\Bookmark-add-icon-32.png" />
     <Content Include="Content\Images\Mains\Borderlands-Select-icon32.png" />
     <Content Include="Content\Images\Mains\Box_Grey.png" />
+    <Content Include="Content\Images\Mains\cancel-green-28.png" />
+    <Content Include="Content\Images\Mains\cancel-green-32.png" />
+    <Content Include="Content\Images\Mains\cancel-yellow-28.png" />
     <Content Include="Content\Images\Mains\Click_here_blue.png" />
     <Content Include="Content\Images\Mains\contacts-icon-32.png" />
     <Content Include="Content\Images\Mains\Cross-icon-cancel32.png" />
@@ -688,6 +691,7 @@
     <Content Include="Content\Images\Mains\data-add-icon-32.png" />
     <Content Include="Content\Images\Mains\Ecommerce-Sale-icon-32.png" />
     <Content Include="Content\Images\Mains\folder-documents-icon-32.png" />
+    <Content Include="Content\Images\Mains\gray-no-checkbox-32.png" />
     <Content Include="Content\Images\Mains\iSync-icon32.png" />
     <Content Include="Content\Images\Mains\iSync-icon64.png" />
     <Content Include="Content\Images\Mains\Navigate-right.png" />
@@ -707,6 +711,7 @@
     <Content Include="Content\Images\Mains\Size12\cancel-icon-12.png" />
     <Content Include="Content\Images\Mains\Size12\cancel-yellow-12-ok.png" />
     <Content Include="Content\Images\Mains\Size12\cross-icon-12-ok.png" />
+    <Content Include="Content\Images\Mains\Size12\erase-12-ok.png" />
     <Content Include="Content\Images\Mains\Size12\printer-icon-12.png" />
     <Content Include="Content\Images\Mains\Size12\printer-icon-12x13.png" />
     <Content Include="Content\Images\Mains\Size16\printer-icon-16.png" />
@@ -737,6 +742,10 @@
     <Content Include="Content\Images\Mains\Size24\Truck-icon-24.png" />
     <Content Include="Content\Images\Mains\Size24\Truck_Transportation-24.png" />
     <Content Include="Content\Images\Mains\Size24\Users-Exit-icon-24.png" />
+    <Content Include="Content\Images\Mains\square-checkbox-32-ok.png" />
+    <Content Include="Content\Images\Mains\Square-no-checkbox-32.png" />
+    <Content Include="Content\Images\Mains\Square-no-checkbox-36.png" />
+    <Content Include="Content\Images\Mains\square-Nocheckbox-32-ok.png" />
     <Content Include="Content\Images\Mains\Users-Exit-icon.png" />
     <Content Include="Content\Images\Menu\arrow-down-16.png" />
     <Content Include="Content\Images\Menu\arrow-up-16.png" />
@@ -837,6 +846,9 @@
     <Content Include="Content\Images\New\downarrow1xx.png" />
     <Content Include="Content\Images\New\downarrow1xxx.png" />
     <Content Include="Content\Images\New\EditService.png" />
+    <Content Include="Content\Images\New\erase-28.png" />
+    <Content Include="Content\Images\New\erase-29.png" />
+    <Content Include="Content\Images\New\erase-32.png" />
     <Content Include="Content\Images\New\excel-icon.png" />
     <Content Include="Content\Images\New\Expand Arrow-50.png" />
     <Content Include="Content\Images\New\Fixxing48.png" />
