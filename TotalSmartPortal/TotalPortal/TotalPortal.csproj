@@ -703,6 +703,13 @@
     <Content Include="Content\Images\Mains\Sale-Discount.png" />
     <Content Include="Content\Images\Mains\Sale-icon.png" />
     <Content Include="Content\Images\Mains\select-by-color-icon-32.png" />
+    <Content Include="Content\Images\Mains\Size12\cancel-green-12-ok.png" />
+    <Content Include="Content\Images\Mains\Size12\cancel-icon-12.png" />
+    <Content Include="Content\Images\Mains\Size12\cancel-yellow-12-ok.png" />
+    <Content Include="Content\Images\Mains\Size12\cross-icon-12-ok.png" />
+    <Content Include="Content\Images\Mains\Size12\printer-icon-12.png" />
+    <Content Include="Content\Images\Mains\Size12\printer-icon-12x13.png" />
+    <Content Include="Content\Images\Mains\Size16\printer-icon-16.png" />
     <Content Include="Content\Images\Mains\Size24\Accept-female-user.png" />
     <Content Include="Content\Images\Mains\Size24\Accept-Male-User.png" />
     <Content Include="Content\Images\Mains\Size24\Accept-Total.png" />

@@ -98,8 +98,8 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetai
         dataRow.SealCode = warehouseTransferGridDataItem.SealCode;
         dataRow.LabCode = warehouseTransferGridDataItem.LabCode;
 
-        dataRow.BinLocationID = 1;
-        dataRow.BinLocationCode = "DEFAULT";
+        dataRow.BinLocationID = warehouseTransferGridDataItem.BinLocationID;
+        dataRow.BinLocationCode = warehouseTransferGridDataItem.BinLocationCode;
 
         dataRow.QuantityRemains = warehouseTransferGridDataItem.QuantityRemains;
         dataRow.Quantity = warehouseTransferGridDataItem.Quantity;

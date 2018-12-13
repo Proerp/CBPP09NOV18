@@ -473,13 +473,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString = "";
 
             queryString = queryString + "       SELECT      WarehouseTransfers.WarehouseTransferID, WarehouseTransferDetails.WarehouseTransferDetailID, WarehouseTransfers.Reference AS WarehouseTransferReference, WarehouseTransfers.EntryDate AS WarehouseTransferEntryDate, WarehouseTransferGoodsReceiptDetails.Reference AS GoodsReceiptReference, WarehouseTransferGoodsReceiptDetails.EntryDate AS GoodsReceiptEntryDate, WarehouseTransferGoodsReceiptDetails.BatchEntryDate, WarehouseTransferGoodsReceiptDetails.SealCode, WarehouseTransferGoodsReceiptDetails.BatchCode, WarehouseTransferGoodsReceiptDetails.LabCode, WarehouseTransferGoodsReceiptDetails.Barcode, " + "\r\n";
-            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, WarehouseTransferDetails.BinLocationID, BinLocations.Code AS BinLocationCode, " + "\r\n";
             queryString = queryString + "                   ROUND(WarehouseTransferDetails.Quantity - WarehouseTransferDetails.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
             queryString = queryString + "                   0.0 AS Quantity, WarehouseTransfers.Description, WarehouseTransferDetails.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        WarehouseTransfers " + "\r\n";
             queryString = queryString + "                   INNER JOIN WarehouseTransferDetails ON " + (isWarehouseTransferID ? " WarehouseTransfers.WarehouseTransferID = @WarehouseTransferID " : "WarehouseTransfers.NMVNTaskID = @NMVNTaskID - 1000000 AND WarehouseTransfers.WarehouseReceiptID = @WarehouseID AND WarehouseTransfers.WarehouseID = @WarehouseIssueID ") + " AND WarehouseTransferDetails.Approved = 1 AND ROUND(WarehouseTransferDetails.Quantity - WarehouseTransferDetails.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 AND WarehouseTransfers.WarehouseTransferID = WarehouseTransferDetails.WarehouseTransferID" + (isWarehouseTransferDetailIDs ? " AND WarehouseTransferDetails.WarehouseTransferDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@WarehouseTransferDetailIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON WarehouseTransferDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN BinLocations ON WarehouseTransferDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN GoodsReceiptDetails WarehouseTransferGoodsReceiptDetails ON WarehouseTransferDetails.GoodsReceiptDetailID = WarehouseTransferGoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
 
             return queryString;
@@ -490,13 +491,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString = "";
 
             queryString = queryString + "       SELECT      WarehouseTransfers.WarehouseTransferID, WarehouseTransferDetails.WarehouseTransferDetailID, WarehouseTransfers.Reference AS WarehouseTransferReference, WarehouseTransfers.EntryDate AS WarehouseTransferEntryDate, WarehouseTransferGoodsReceiptDetails.Reference AS GoodsReceiptReference, WarehouseTransferGoodsReceiptDetails.EntryDate AS GoodsReceiptEntryDate, WarehouseTransferGoodsReceiptDetails.BatchEntryDate, WarehouseTransferGoodsReceiptDetails.SealCode, WarehouseTransferGoodsReceiptDetails.BatchCode, WarehouseTransferGoodsReceiptDetails.LabCode, WarehouseTransferGoodsReceiptDetails.Barcode, " + "\r\n";
-            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, WarehouseTransferDetails.BinLocationID, BinLocations.Code AS BinLocationCode, " + "\r\n";
             queryString = queryString + "                   ROUND(WarehouseTransferDetails.Quantity - WarehouseTransferDetails.QuantityReceipted + GoodsReceiptDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
             queryString = queryString + "                   0.0 AS Quantity, WarehouseTransfers.Description, WarehouseTransferDetails.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        WarehouseTransferDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN GoodsReceiptDetails ON GoodsReceiptDetails.GoodsReceiptID = @GoodsReceiptID AND WarehouseTransferDetails.WarehouseTransferDetailID = GoodsReceiptDetails.WarehouseTransferDetailID" + (isWarehouseTransferDetailIDs ? " AND WarehouseTransferDetails.WarehouseTransferDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@WarehouseTransferDetailIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON WarehouseTransferDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN BinLocations ON WarehouseTransferDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN WarehouseTransfers ON WarehouseTransferDetails.WarehouseTransferID = WarehouseTransfers.WarehouseTransferID " + "\r\n";
             queryString = queryString + "                   INNER JOIN GoodsReceiptDetails WarehouseTransferGoodsReceiptDetails ON WarehouseTransferDetails.GoodsReceiptDetailID = WarehouseTransferGoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
 

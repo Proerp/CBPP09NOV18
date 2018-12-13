@@ -632,7 +632,22 @@ tr:hover {
     padding: 0px;
     height: 12px;
     width: 12px;
+    margin-left:-4px;
     margin-right:0px;
+}
+
+.sbt-printer {
+    background-image: url('Images/Mains/Size12/printer-icon-12x13.png');
+    background-position: center;
+    margin-bottom: 1px;
+}
+.sbt-delete {
+    background-image: url('Images/Mains/Size12/cross-icon-12-ok.png');
+    background-position: center;
+}
+.sbt-void {
+    background-image: url('Images/Mains/Size12/cancel-green-12-ok.png');
+    background-position: center;
 }
 /*BEGIN: CSS FOR DELETE BUTTON IN DETAIL GRID*/
 
