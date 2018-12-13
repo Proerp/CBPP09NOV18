@@ -279,11 +279,11 @@
             {
                 @Html.HiddenFor(model => model.PrintAfterClosedSubmit)
                 <button type="submit" formaction="@Url.Action("Edit", "Receipts")" class="k-button custom-button SubmitTypeOption-Closed"> <img src="~/Content/Images/New/save-icon.png" alt="" /> Lưu </button>
-                <button type="submit" onclick="$('#PrintAfterClosedSubmit').val(true);" formaction="@Url.Action("Edit", "Receipts")" class="k-button custom-button SubmitTypeOption-Closed"> <img src="~/Content/Images/New/Apps-printer-icon.png" alt="SavePreview" /> In phiếu thu</button>
+                <button type="submit" onclick="$('#PrintAfterClosedSubmit').val(true);" formaction="@Url.Action("Edit", "Receipts")" class="k-button custom-button SubmitTypeOption-Closed"> <img src="~/Content/Images/New/printer-cashier-32.png" alt="SavePreview" /> In phiếu thu</button>
             }
             else
             {
-                <button formaction="@Url.Action("Print", "Receipts", new { id = @Model.ReceiptID })" class="k-button custom-button"> <img src="~/Content/Images/New/Apps-printer-icon.png" alt="SavePreview" /> In phiếu thu </button>
+                <button formaction="@Url.Action("Print", "Receipts", new { id = @Model.ReceiptID })" class="k-button custom-button"> <img src="~/Content/Images/New/printer-cashier-32.png" alt="SavePreview" /> In phiếu thu </button>
             }
         </div>
 

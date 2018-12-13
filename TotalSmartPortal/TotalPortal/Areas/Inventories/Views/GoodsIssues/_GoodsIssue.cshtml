@@ -333,20 +333,20 @@
             @if (Model.Editable)
             {
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Save" formaction="@Url.Action("Edit", "GoodsIssues")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-icon.png" /> Lưu PXK </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsIssues")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/Save-Print-32.png" /> Lưu và in phiếu xuất kho</button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsIssues")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/Printer-Boat-32.png" /> Lưu và in phiếu xuất kho</button>
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsIssues")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Ok-icon-1.png" /> Hoàn tất xuất kho </button>
             }
             else
             {
                 if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
                 {
-                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "GoodsIssues", new {id = @Model.GoodsIssueID })'"> <img src="~/Content/Images/Mains/Cross-icon-cancel32.png" /> Hủy duyệt phiếu xuất kho </button>
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "GoodsIssues", new {id = @Model.GoodsIssueID })'"> <img src="~/Content/Images/Mains/cashier-nocheck-32.png" /> Hủy duyệt phiếu xuất kho </button>
                 }
             }
 
             @if (Model.GoodsIssueID > 0)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "GoodsIssues", new { id = @Model.GoodsIssueID })'"> <img src="~/Content/Images/New/Apps-printer-icon.png" /> In phiếu xuất kho </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "GoodsIssues", new { id = @Model.GoodsIssueID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In phiếu xuất kho </button>
             }
     
         </div>

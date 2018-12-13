@@ -273,16 +273,16 @@
             {
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)"> <img src="~/Content/Images/New/save-icon.png" /> Lưu </button>
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/save-verify-icon.png" /> Lưu và duyệt</button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Save-Print-32.png" /> Lưu, duyệt và in PXK</button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Printer-Boat-32.png" /> Lưu, duyệt và in PXK</button>
             }
             else
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", Model.ControllerName, new { id = @Model.WarehouseTransferID })'"> <img src="~/Content/Images/New/Apps-printer-icon.png" /> In PXK </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", Model.ControllerName, new { id = @Model.WarehouseTransferID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In PXK </button>
             }
 
             @if (Model.WarehouseTransferID > 0 && !Model.Approvable && !Model.UnApprovable)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.WarehouseTransferID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Actions-ok-icon32.png" : "Cross-icon-cancel32.png")" /> @(!Model.Approved ? "Duyệt PXK" : "Hủy duyệt PXK") </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.WarehouseTransferID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "cloud-check-32.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt PXK" : "Hủy duyệt PXK") </button>
             }
         </div>
 

@@ -338,7 +338,7 @@
             
             @if (Model.SalesReturnID > 0 && !Model.Approvable && !Model.UnApprovable)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "SalesReturns", new {id = @Model.SalesReturnID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Actions-ok-icon32.png" : "Cross-icon-cancel32.png")" /> @(!Model.Approved ? "Duyệt phiếu trả hàng" : "Hủy duyệt phiếu trả hàng này") </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "SalesReturns", new {id = @Model.SalesReturnID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "cloud-check-32.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt phiếu trả hàng" : "Hủy duyệt phiếu trả hàng này") </button>
             }                        
         </div>
 

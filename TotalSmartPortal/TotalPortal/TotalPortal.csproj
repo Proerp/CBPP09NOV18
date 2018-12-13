@@ -672,13 +672,17 @@
     <Content Include="Content\Images\Mains\Blue-Right 48.png" />
     <Content Include="Content\Images\Mains\Blue-Right 64.png" />
     <Content Include="Content\Images\Mains\Blue-Right.png" />
+    <Content Include="Content\Images\Mains\Boat-check-32.png" />
     <Content Include="Content\Images\Mains\Bookmark-add-icon-32.png" />
     <Content Include="Content\Images\Mains\Borderlands-Select-icon32.png" />
     <Content Include="Content\Images\Mains\Box_Grey.png" />
     <Content Include="Content\Images\Mains\cancel-green-28.png" />
     <Content Include="Content\Images\Mains\cancel-green-32.png" />
     <Content Include="Content\Images\Mains\cancel-yellow-28.png" />
+    <Content Include="Content\Images\Mains\Cashier-Check-32.png" />
+    <Content Include="Content\Images\Mains\cashier-nocheck-32.png" />
     <Content Include="Content\Images\Mains\Click_here_blue.png" />
+    <Content Include="Content\Images\Mains\cloud-check-32.png" />
     <Content Include="Content\Images\Mains\contacts-icon-32.png" />
     <Content Include="Content\Images\Mains\Cross-icon-cancel32.png" />
     <Content Include="Content\Images\Mains\Cross-icon-cancel64.png" />
@@ -837,6 +841,7 @@
     <Content Include="Content\Images\New\Apps-printer-icon.png" />
     <Content Include="Content\Images\New\bank.png" />
     <Content Include="Content\Images\New\BirthdayIcon.png" />
+    <Content Include="Content\Images\New\Boat-Print-32-N.png" />
     <Content Include="Content\Images\New\bottles-icon.png" />
     <Content Include="Content\Images\New\bucket-icon.png" />
     <Content Include="Content\Images\New\Cleanup48.png" />
@@ -932,6 +937,9 @@
     <Content Include="Content\Images\New\person_icon.png" />
     <Content Include="Content\Images\New\pipe-line-icon.png" />
     <Content Include="Content\Images\New\Printer-author-24.png" />
+    <Content Include="Content\Images\New\Printer-Boat-32-1.png" />
+    <Content Include="Content\Images\New\Printer-Boat-32.png" />
+    <Content Include="Content\Images\New\printer-cashier-32.png" />
     <Content Include="Content\Images\New\Printer-green-24.png" />
     <Content Include="Content\Images\New\Printer-vector-24.png" />
     <Content Include="Content\Images\New\Printer-vector-32.png" />

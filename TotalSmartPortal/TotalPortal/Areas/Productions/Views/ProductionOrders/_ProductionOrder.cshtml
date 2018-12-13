@@ -271,13 +271,13 @@
             {
                 if (!Model.Voidable && !Model.UnVoidable)
                 {
-                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "ProductionOrders", new { id = @Model.ProductionOrderID })'"> <img src="~/Content/Images/New/Apps-printer-icon.png" /> In tổng hợp xuất kho </button>
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "ProductionOrders", new { id = @Model.ProductionOrderID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In tổng hợp xuất kho </button>
                 }
             }
 
             @if (Model.ProductionOrderID > 0 && !Model.Approvable && !Model.UnApprovable)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "ProductionOrders", new {id = @Model.ProductionOrderID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Actions-ok-icon32.png" : "Cross-icon-cancel32.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "ProductionOrders", new {id = @Model.ProductionOrderID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "cloud-check-32.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
             }
         </div>
 
