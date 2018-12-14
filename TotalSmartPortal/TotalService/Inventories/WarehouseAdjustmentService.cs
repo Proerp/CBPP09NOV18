@@ -42,10 +42,12 @@ namespace TotalService.Inventories
 
             if (warehouseAdjustment.HasPositiveLine)
             {
+                GRHelperService grHelperService = new GRHelperService(this.GetGROption(warehouseAdjustment.NMVNTaskID), this.GenericWithDetailRepository.TotalSmartPortalEntities, this.UserID);
+
                 IGoodsReceiptAPIRepository goodsReceiptAPIRepository = new GoodsReceiptAPIRepository(this.GenericWithDetailRepository.TotalSmartPortalEntities);
                 if (saveRelativeOption == SaveRelativeOption.Update)
                 {
-                    IGoodsReceiptDTO goodsReceiptDTO = this.NewGoodsReceiptDTO(warehouseAdjustment.NMVNTaskID);
+                    IGoodsReceiptDTO goodsReceiptDTO = grHelperService.NewGoodsReceiptDTO();
 
                     goodsReceiptDTO.EntryDate = warehouseAdjustment.EntryDate;
                     goodsReceiptDTO.Warehouse = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = warehouseAdjustment.WarehouseReceiptID };
@@ -96,14 +98,14 @@ namespace TotalService.Inventories
 
                     goodsReceiptDTO.TotalQuantity = goodsReceiptDTO.GetTotalQuantity();
 
-                    this.DoSaveOrDeleteGoodsReceipt(warehouseAdjustment.NMVNTaskID, true, goodsReceiptDTO, null);
+                    grHelperService.Save(goodsReceiptDTO);
                 }
 
                 if (saveRelativeOption == SaveRelativeOption.Undo)
                 {//NOTES: THIS UNDO REQUIRE: JUST SAVE ONLY ONE GoodsReceipt FOR AN WarehouseAdjustment
                     int? goodsReceiptID = goodsReceiptAPIRepository.GetGoodsReceiptIDofWarehouseAdjustment(warehouseAdjustment.WarehouseAdjustmentID);
                     if (goodsReceiptID != null)
-                        this.DoSaveOrDeleteGoodsReceipt(warehouseAdjustment.NMVNTaskID, false, null, goodsReceiptID);
+                        grHelperService.Delete(goodsReceiptID);
                     else
                         throw new Exception("Lỗi không tìm thấy phiếu nhập kho cũ của phiếu điều chỉnh kho này!" + "\r\n" + "\r\n" + "Vui lòng kiểm tra lại dữ liệu trước khi tiếp tục.");
                 }
@@ -112,62 +114,20 @@ namespace TotalService.Inventories
 
 
         #region Helper for save or delete GoodsReceipt
-        private IGoodsReceiptDTO NewGoodsReceiptDTO(int nmvnTaskID)
+        private GlobalEnums.GROption GetGROption(int nmvnTaskID)
         {
-            if (this.IsMaterial(nmvnTaskID))
-                return new GoodsReceiptDTO<GROptionMaterial>();
+            if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherMaterialIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherMaterialReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.MaterialAdjustment)
+                return GlobalEnums.GROption.IsMaterial;
             else
-                if (this.IsItem(nmvnTaskID))
-                    return new GoodsReceiptDTO<GROptionItem>();
+                if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherItemIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherItemReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.ItemAdjustment)
+                    return GlobalEnums.GROption.IsItem;
                 else
-                    if (this.IsProduct(nmvnTaskID))
-                        return new GoodsReceiptDTO<GROptionProduct>();
+                    if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherProductIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherProductReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.ProductAdjustment)
+                        return GlobalEnums.GROption.IsProduct;
                     else
-                        return null;
+                        return GlobalEnums.GROption.Unknown;
         }
-
-        private void DoSaveOrDeleteGoodsReceipt(int nmvnTaskID, bool doSaveOrDelete, IGoodsReceiptDTO goodsReceiptDTO, int? goodsReceiptID)
-        {
-            //***VERY IMPORTANT***: THE BaseService.UserID IS AUTOMATICALLY SET BY CustomControllerAttribute OF CONTROLLER, ONLY WHEN BaseService IS INITIALIZED BY CONTROLLER. BUT HERE, THE this.goodsReceiptBaseService IS INITIALIZED BY VehiclesInvoiceService => SO SHOULD SET goodsReceiptBaseService.UserID = this.UserID
-            if (this.IsMaterial(nmvnTaskID))
-            {
-                IMaterialReceiptBaseService goodsReceiptBaseService = new MaterialReceiptBaseService(new GoodsReceiptRepository(this.GenericWithDetailRepository.TotalSmartPortalEntities));
-                goodsReceiptBaseService.UserID = this.UserID;
-
-                if (doSaveOrDelete)
-                    goodsReceiptBaseService.Save((GoodsReceiptDTO<GROptionMaterial>)goodsReceiptDTO, true);
-                else
-                    goodsReceiptBaseService.Delete((int)goodsReceiptID, true);
-            }
-            else
-                if (this.IsItem(nmvnTaskID))
-                {
-                    IItemReceiptBaseService goodsReceiptBaseService = new ItemReceiptBaseService(new GoodsReceiptRepository(this.GenericWithDetailRepository.TotalSmartPortalEntities));
-                    goodsReceiptBaseService.UserID = this.UserID;
-
-                    if (doSaveOrDelete)
-                        goodsReceiptBaseService.Save((GoodsReceiptDTO<GROptionItem>)goodsReceiptDTO, true);
-                    else
-                        goodsReceiptBaseService.Delete((int)goodsReceiptID, true);
-                }
-                else
-                    if (this.IsProduct(nmvnTaskID))
-                    {
-                        IProductReceiptBaseService goodsReceiptBaseService = new ProductReceiptBaseService(new GoodsReceiptRepository(this.GenericWithDetailRepository.TotalSmartPortalEntities));
-                        goodsReceiptBaseService.UserID = this.UserID;
-                        if (doSaveOrDelete)
-                            goodsReceiptBaseService.Save((GoodsReceiptDTO<GROptionProduct>)goodsReceiptDTO, true);
-                        else
-                            goodsReceiptBaseService.Delete((int)goodsReceiptID, true);
-                    }
-        }
-
-        private bool IsMaterial(int nmvnTaskID) { return nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherMaterialIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherMaterialReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.MaterialAdjustment; }
-        private bool IsItem(int nmvnTaskID) { return nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherItemIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherItemReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.ItemAdjustment; }
-        private bool IsProduct(int nmvnTaskID) { return nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherProductIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherProductReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.ProductAdjustment; }
-
         #endregion Helper for save or delete GoodsReceipt
-
 
     }
 

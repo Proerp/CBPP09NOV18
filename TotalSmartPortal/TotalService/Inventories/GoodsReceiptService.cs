@@ -5,10 +5,11 @@ using System.Data.Entity.Core.Objects;
 using TotalDTO;
 using TotalModel;
 using TotalModel.Models;
+using TotalBase.Enums;
 using TotalDTO.Inventories;
 using TotalCore.Repositories.Inventories;
 using TotalCore.Services.Inventories;
-using TotalBase.Enums;
+using TotalDAL.Repositories.Inventories;
 
 namespace TotalService.Inventories
 {
@@ -112,5 +113,78 @@ namespace TotalService.Inventories
     {
         public ProductReceiptService(IGoodsReceiptRepository warehouseReceiptRepository)
             : base(warehouseReceiptRepository) { }
+    }
+
+
+
+    public class GRHelperService
+    {
+        private GlobalEnums.GROption grOption;
+
+        private IMaterialReceiptBaseService materialReceiptBaseService;
+        private IItemReceiptBaseService itemReceiptBaseService;
+        private IProductReceiptBaseService productReceiptBaseService;
+        
+        public GRHelperService(GlobalEnums.GROption grOption, TotalSmartPortalEntities totalSmartPortalEntities, int serviceUserID)
+        {
+            this.grOption = grOption;
+
+            //***VERY IMPORTANT***: THE BaseService.UserID IS AUTOMATICALLY SET BY CustomControllerAttribute OF CONTROLLER, ONLY WHEN BaseService IS INITIALIZED BY CONTROLLER. BUT HERE, THE this.goodsReceiptBaseService IS INITIALIZED BY VehiclesInvoiceService => SO SHOULD SET goodsReceiptBaseService.UserID = serviceUserID
+            if (this.grOption == GlobalEnums.GROption.IsMaterial)
+            {
+                this.materialReceiptBaseService = new MaterialReceiptBaseService(new GoodsReceiptRepository(totalSmartPortalEntities));
+                materialReceiptBaseService.UserID = serviceUserID;
+            }
+            else
+                if (this.grOption == GlobalEnums.GROption.IsItem)
+                {
+                    this.itemReceiptBaseService = new ItemReceiptBaseService(new GoodsReceiptRepository(totalSmartPortalEntities));
+                    itemReceiptBaseService.UserID = serviceUserID;
+                }
+                else
+                    if (this.grOption == GlobalEnums.GROption.IsProduct)
+                    {
+                        this.productReceiptBaseService = new ProductReceiptBaseService(new GoodsReceiptRepository(totalSmartPortalEntities));
+                        productReceiptBaseService.UserID = serviceUserID;
+                    }
+        }
+
+        public IGoodsReceiptDTO NewGoodsReceiptDTO()
+        {
+            if (this.grOption == GlobalEnums.GROption.IsMaterial)
+                return new GoodsReceiptDTO<GROptionMaterial>();
+            else
+                if (this.grOption == GlobalEnums.GROption.IsItem)
+                    return new GoodsReceiptDTO<GROptionItem>();
+                else
+                    if (this.grOption == GlobalEnums.GROption.IsProduct)
+                        return new GoodsReceiptDTO<GROptionProduct>();
+                    else
+                        return null;
+        }
+
+        public void Save(IGoodsReceiptDTO goodsReceiptDTO)
+        {
+            if (this.grOption == GlobalEnums.GROption.IsMaterial)
+                materialReceiptBaseService.Save((GoodsReceiptDTO<GROptionMaterial>)goodsReceiptDTO, true);
+            else
+                if (this.grOption == GlobalEnums.GROption.IsItem)
+                    itemReceiptBaseService.Save((GoodsReceiptDTO<GROptionItem>)goodsReceiptDTO, true);
+                else
+                    if (this.grOption == GlobalEnums.GROption.IsProduct)
+                        productReceiptBaseService.Save((GoodsReceiptDTO<GROptionProduct>)goodsReceiptDTO, true);
+        }
+
+        public void Delete(int? goodsReceiptID)
+        {
+            if (this.grOption == GlobalEnums.GROption.IsMaterial)
+                materialReceiptBaseService.Delete((int)goodsReceiptID, true);
+            else
+                if (this.grOption == GlobalEnums.GROption.IsItem)
+                    itemReceiptBaseService.Delete((int)goodsReceiptID, true);
+                else
+                    if (this.grOption == GlobalEnums.GROption.IsProduct)
+                        productReceiptBaseService.Delete((int)goodsReceiptID, true);
+        }
     }
 }

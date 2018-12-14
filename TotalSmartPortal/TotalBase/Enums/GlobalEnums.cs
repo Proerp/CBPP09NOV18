@@ -167,6 +167,14 @@ namespace TotalBase.Enums
             Pickup = 686868
         };
 
+        public enum GROption
+        {
+            Unknown = 0,
+            IsMaterial = 1,
+            IsItem = 2,
+            IsProduct = 3
+        }
+
         public enum MaterialIssueTypeID
         {
             AllMaterialIssue = 999,
