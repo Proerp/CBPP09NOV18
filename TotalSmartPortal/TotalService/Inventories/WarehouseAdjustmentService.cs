@@ -56,11 +56,11 @@ namespace TotalService.Inventories
 
                     goodsReceiptDTO.Warehouse = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = warehouseAdjustment.WarehouseReceiptID };
                     goodsReceiptDTO.Customer = new TotalDTO.Commons.CustomerBaseDTO() { CustomerID = warehouseAdjustment.CustomerID };
-                    
+
                     goodsReceiptDTO.StorekeeperID = warehouseAdjustment.StorekeeperID;
                     goodsReceiptDTO.PreparedPersonID = warehouseAdjustment.PreparedPersonID;
                     goodsReceiptDTO.ApproverID = warehouseAdjustment.PreparedPersonID;
-                    
+
                     goodsReceiptDTO.Purposes = warehouseAdjustment.AdjustmentJobs;
                     goodsReceiptDTO.Description = warehouseAdjustment.Description;
                     goodsReceiptDTO.Remarks = warehouseAdjustment.Remarks;
@@ -102,11 +102,8 @@ namespace TotalService.Inventories
 
                 if (saveRelativeOption == SaveRelativeOption.Undo)
                 {//NOTES: THIS UNDO REQUIRE: JUST SAVE ONLY ONE GoodsReceipt FOR AN WarehouseAdjustment
-                    int? goodsReceiptID = goodsReceiptAPIRepository.GetGoodsReceiptIDofWarehouseAdjustment(warehouseAdjustment.WarehouseAdjustmentID);
-                    if (goodsReceiptID != null)
-                        grHelperService.Delete(goodsReceiptID);
-                    else
-                        throw new Exception("Lỗi không tìm thấy phiếu nhập kho cũ của phiếu điều chỉnh kho này!" + "\r\n" + "\r\n" + "Vui lòng kiểm tra lại dữ liệu trước khi tiếp tục.");
+                    int? goodsReceiptID = goodsReceiptAPIRepository.GetGoodsReceiptID(null, null, null, warehouseAdjustment.WarehouseAdjustmentID);
+                    grHelperService.Delete(goodsReceiptID);
                 }
             }
         }

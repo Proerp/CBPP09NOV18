@@ -2385,6 +2385,7 @@
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="NMVNTaskID" Type="int" Nullable="false" />
+          <Property Name="OneStep" Type="bit" Nullable="false" />
           <Property Name="HasTransferOrder" Type="bit" Nullable="false" />
           <Property Name="TransferOrderID" Type="int" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
@@ -6841,7 +6842,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="OnlyApproved" Type="bit" Mode="In" />
           <Parameter Name="OnlyIssuable" Type="bit" Mode="In" />
         </Function>
-        <Function Name="GetGoodsReceiptIDofWarehouseAdjustment" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="GetGoodsReceiptID" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
+          <Parameter Name="PlannedOrderID" Type="int" Mode="In" />
+          <Parameter Name="WarehouseTransferID" Type="int" Mode="In" />
           <Parameter Name="WarehouseAdjustmentID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetGoodsReceiptIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -6904,7 +6908,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
           <Parameter Name="WarehouseIssueID" Type="int" Mode="In" />
           <Parameter Name="WarehouseTransferDetailIDs" Type="varchar" Mode="In" />
-          <Parameter Name="IsReadonly" Type="bit" Mode="In" />
+          <Parameter Name="OneStep" Type="bit" Mode="In" />
         </Function>
         <Function Name="GetGoodsReceiptPendingWarehouseTransfers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -12916,9 +12920,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="Warehouse" EntitySet="Warehouses" />
             <End Role="WarehouseAdjustment" EntitySet="WarehouseAdjustments" />
           </AssociationSet>
-          <FunctionImport Name="GetGoodsReceiptIDofWarehouseAdjustment" ReturnType="Collection(Int32)">
-          <Parameter Name="WarehouseAdjustmentID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="GetPendingWarehouseAdjustmentDetails" ReturnType="Collection(TotalSmartPortalModel.PendingWarehouseAdjustmentDetail)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsReceiptID" Mode="In" Type="Int32" />
@@ -13510,7 +13511,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
             <Parameter Name="WarehouseIssueID" Mode="In" Type="Int32" />
             <Parameter Name="WarehouseTransferDetailIDs" Mode="In" Type="String" />
-            <Parameter Name="IsReadonly" Mode="In" Type="Boolean" />
+            <Parameter Name="OneStep" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsReceiptPendingWarehouseTransfers" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingWarehouseTransfer)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
@@ -14342,6 +14343,12 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="BinLocation" EntitySet="BinLocations" />
             <End Role="WarehouseTransferDetail" EntitySet="WarehouseTransferDetails" />
           </AssociationSet>
+          <FunctionImport Name="GetGoodsReceiptID" ReturnType="Collection(Int32)">
+            <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
+            <Parameter Name="PlannedOrderID" Mode="In" Type="Int32" />
+            <Parameter Name="WarehouseTransferID" Mode="In" Type="Int32" />
+            <Parameter Name="WarehouseAdjustmentID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -18986,6 +18993,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Warehouses" FromRole="WarehouseTransfer" ToRole="Warehouse" />
           <NavigationProperty Name="Warehouse1" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Warehouses1" FromRole="WarehouseTransfer" ToRole="Warehouse" />
           <NavigationProperty Name="WarehouseTransferDetails" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_WarehouseTransfers" FromRole="WarehouseTransfer" ToRole="WarehouseTransferDetail" />
+          <Property Name="OneStep" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_WarehouseTransfers_Employees">
           <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
@@ -24427,7 +24435,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetGoodsReceiptIDofWarehouseAdjustment" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptIDofWarehouseAdjustment" />
           <FunctionImportMapping FunctionImportName="GetPendingWarehouseAdjustmentDetails" FunctionName="TotalSmartPortalModel.Store.GetPendingWarehouseAdjustmentDetails">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.PendingWarehouseAdjustmentDetail">
@@ -26132,6 +26139,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="WarehouseTransfers">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.WarehouseTransfer">
               <MappingFragment StoreEntitySet="WarehouseTransfers">
+                <ScalarProperty Name="OneStep" ColumnName="OneStep" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
@@ -27096,6 +27104,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetGoodsReceiptID" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptID" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

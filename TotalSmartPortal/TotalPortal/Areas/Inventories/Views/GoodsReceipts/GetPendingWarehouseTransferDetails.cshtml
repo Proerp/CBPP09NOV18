@@ -42,7 +42,7 @@
                 warehouseID: window.parent.$("#Warehouse_WarehouseID").val(),
                 warehouseIssueID: window.parent.$("#WarehouseIssue_WarehouseID").val(),
                 warehouseTransferDetailIDs : goodsReceiptJSON.map(function(elem){return elem.WarehouseTransferDetailID;}).join(","),
-                isReadOnly: false
+                oneStep: false
             };}
             </text>))
     .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client

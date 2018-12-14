@@ -407,7 +407,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            queryString = " @NMVNTaskID int, @GoodsReceiptID Int, @WarehouseTransferID Int, @WarehouseID Int, @WarehouseIssueID Int, @WarehouseTransferDetailIDs varchar(3999), @IsReadonly bit " + "\r\n";
+            queryString = " @NMVNTaskID int, @GoodsReceiptID Int, @WarehouseTransferID Int, @WarehouseID Int, @WarehouseIssueID Int, @WarehouseTransferDetailIDs varchar(3999), @OneStep bit " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -447,21 +447,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   ORDER BY WarehouseTransfers.EntryDate, WarehouseTransfers.WarehouseTransferID, WarehouseTransferDetails.WarehouseTransferDetailID " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-
-            queryString = queryString + "               IF (@IsReadonly = 1) " + "\r\n";
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.BuildSQLWarehouseTransferEdit(isWarehouseTransferID, isWarehouseTransferDetailIDs) + "\r\n";
-            queryString = queryString + "                       ORDER BY WarehouseTransfers.EntryDate, WarehouseTransfers.WarehouseTransferID, WarehouseTransferDetails.WarehouseTransferDetailID " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
-
-            queryString = queryString + "               ELSE " + "\r\n"; //FULL SELECT FOR EDIT MODE
-
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.BuildSQLWarehouseTransferNew(isWarehouseTransferID, isWarehouseTransferDetailIDs) + " WHERE WarehouseTransferDetails.WarehouseTransferDetailID NOT IN (SELECT WarehouseTransferDetailID FROM GoodsReceiptDetails WHERE GoodsReceiptID = @GoodsReceiptID) " + "\r\n";
-            queryString = queryString + "                       UNION ALL " + "\r\n";
-            queryString = queryString + "                       " + this.BuildSQLWarehouseTransferEdit(isWarehouseTransferID, isWarehouseTransferDetailIDs) + "\r\n";
-            queryString = queryString + "                       ORDER BY WarehouseTransfers.EntryDate, WarehouseTransfers.WarehouseTransferID, WarehouseTransferDetails.WarehouseTransferDetailID " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
+            
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLWarehouseTransferNew(isWarehouseTransferID, isWarehouseTransferDetailIDs) + " WHERE WarehouseTransferDetails.WarehouseTransferDetailID NOT IN (SELECT WarehouseTransferDetailID FROM GoodsReceiptDetails WHERE GoodsReceiptID = @GoodsReceiptID) " + "\r\n";
+            queryString = queryString + "                   UNION ALL " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLWarehouseTransferEdit(isWarehouseTransferID, isWarehouseTransferDetailIDs) + "\r\n";
+            queryString = queryString + "                   ORDER BY WarehouseTransfers.EntryDate, WarehouseTransfers.WarehouseTransferID, WarehouseTransferDetails.WarehouseTransferDetailID " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
 
@@ -478,7 +470,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   0.0 AS Quantity, WarehouseTransfers.Description, WarehouseTransferDetails.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        WarehouseTransfers " + "\r\n";
-            queryString = queryString + "                   INNER JOIN WarehouseTransferDetails ON " + (isWarehouseTransferID ? " WarehouseTransfers.WarehouseTransferID = @WarehouseTransferID " : "WarehouseTransfers.NMVNTaskID = @NMVNTaskID - 1000000 AND WarehouseTransfers.WarehouseReceiptID = @WarehouseID AND WarehouseTransfers.WarehouseID = @WarehouseIssueID ") + " AND WarehouseTransferDetails.Approved = 1 AND ROUND(WarehouseTransferDetails.Quantity - WarehouseTransferDetails.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 AND WarehouseTransfers.WarehouseTransferID = WarehouseTransferDetails.WarehouseTransferID" + (isWarehouseTransferDetailIDs ? " AND WarehouseTransferDetails.WarehouseTransferDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@WarehouseTransferDetailIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN WarehouseTransferDetails ON " + (isWarehouseTransferID ? " WarehouseTransfers.WarehouseTransferID = @WarehouseTransferID " : "WarehouseTransfers.NMVNTaskID = @NMVNTaskID - 1000000 AND WarehouseTransfers.WarehouseReceiptID = @WarehouseID AND WarehouseTransfers.WarehouseID = @WarehouseIssueID ") + " AND (@OneStep = 1 OR WarehouseTransferDetails.Approved = 1) AND ROUND(WarehouseTransferDetails.Quantity - WarehouseTransferDetails.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 AND WarehouseTransfers.WarehouseTransferID = WarehouseTransferDetails.WarehouseTransferID" + (isWarehouseTransferDetailIDs ? " AND WarehouseTransferDetails.WarehouseTransferDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@WarehouseTransferDetailIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON WarehouseTransferDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN BinLocations ON WarehouseTransferDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN GoodsReceiptDetails WarehouseTransferGoodsReceiptDetails ON WarehouseTransferDetails.GoodsReceiptDetailID = WarehouseTransferGoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
@@ -787,7 +779,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                           UPDATE          WarehouseTransferDetails " + "\r\n";
             queryString = queryString + "                           SET             WarehouseTransferDetails.QuantityReceipted = ROUND(WarehouseTransferDetails.QuantityReceipted + GoodsReceiptDetails.Quantity * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";
             queryString = queryString + "                           FROM            GoodsReceiptDetails " + "\r\n";
-            queryString = queryString + "                                           INNER JOIN WarehouseTransferDetails ON (WarehouseTransferDetails.Approved = 1 OR @SaveRelativeOption = -1) AND GoodsReceiptDetails.GoodsReceiptID = @EntityID AND GoodsReceiptDetails.WarehouseTransferDetailID = WarehouseTransferDetails.WarehouseTransferDetailID " + "\r\n";
+            queryString = queryString + "                                           INNER JOIN WarehouseTransferDetails ON (WarehouseTransferDetails.OneStep = 1 OR WarehouseTransferDetails.Approved = 1 OR @SaveRelativeOption = -1) AND GoodsReceiptDetails.GoodsReceiptID = @EntityID AND GoodsReceiptDetails.WarehouseTransferDetailID = WarehouseTransferDetails.WarehouseTransferDetailID " + "\r\n";
             queryString = queryString + "                           SET @AffectedROWCOUNT = @@ROWCOUNT " + "\r\n";
             queryString = queryString + "                       END " + "\r\n";
 

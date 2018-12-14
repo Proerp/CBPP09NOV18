@@ -124,7 +124,7 @@ namespace TotalService.Inventories
         private IMaterialReceiptBaseService materialReceiptBaseService;
         private IItemReceiptBaseService itemReceiptBaseService;
         private IProductReceiptBaseService productReceiptBaseService;
-        
+
         public GRHelperService(GlobalEnums.GROption grOption, TotalSmartPortalEntities totalSmartPortalEntities, int serviceUserID)
         {
             this.grOption = grOption;
@@ -177,14 +177,19 @@ namespace TotalService.Inventories
 
         public void Delete(int? goodsReceiptID)
         {
-            if (this.grOption == GlobalEnums.GROption.IsMaterial)
-                materialReceiptBaseService.Delete((int)goodsReceiptID, true);
-            else
-                if (this.grOption == GlobalEnums.GROption.IsItem)
-                    itemReceiptBaseService.Delete((int)goodsReceiptID, true);
+            if (goodsReceiptID != null)
+            {
+                if (this.grOption == GlobalEnums.GROption.IsMaterial)
+                    materialReceiptBaseService.Delete((int)goodsReceiptID, true);
                 else
-                    if (this.grOption == GlobalEnums.GROption.IsProduct)
-                        productReceiptBaseService.Delete((int)goodsReceiptID, true);
+                    if (this.grOption == GlobalEnums.GROption.IsItem)
+                        itemReceiptBaseService.Delete((int)goodsReceiptID, true);
+                    else
+                        if (this.grOption == GlobalEnums.GROption.IsProduct)
+                            productReceiptBaseService.Delete((int)goodsReceiptID, true);
+            }
+            else
+                throw new Exception("Lỗi không tìm thấy phiếu nhập kho cũ của phiếu này!" + "\r\n" + "\r\n" + "Vui lòng kiểm tra lại dữ liệu trước khi tiếp tục.");
         }
     }
 }

@@ -40,7 +40,7 @@ namespace TotalService.Inventories
         {
             base.SaveRelative(warehouseTransfer, saveRelativeOption);
 
-            if (true) //warehouseTransfer.OneStep
+            if (warehouseTransfer.OneStep) //warehouseTransfer.OneStep
             {
                 GRHelperService grHelperService = new GRHelperService(this.GetGROption(warehouseTransfer.NMVNTaskID), this.GenericWithDetailRepository.TotalSmartPortalEntities, this.UserID);
 
@@ -68,7 +68,7 @@ namespace TotalService.Inventories
                     goodsReceiptDTO.Approved = warehouseTransfer.Approved;
                     goodsReceiptDTO.ApprovedDate = warehouseTransfer.ApprovedDate;
 
-                    List<GoodsReceiptPendingWarehouseTransferDetail> pendingWarehouseTransferDetails = goodsReceiptAPIRepository.GetPendingWarehouseTransferDetails((int)goodsReceiptDTO.NMVNTaskID, null, goodsReceiptDTO.WarehouseTransferID, goodsReceiptDTO.WarehouseID, goodsReceiptDTO.WarehouseIssueID, null, false);
+                    List<GoodsReceiptPendingWarehouseTransferDetail> pendingWarehouseTransferDetails = goodsReceiptAPIRepository.GetPendingWarehouseTransferDetails((int)goodsReceiptDTO.NMVNTaskID, null, goodsReceiptDTO.WarehouseTransferID, goodsReceiptDTO.WarehouseID, goodsReceiptDTO.WarehouseIssueID, null, warehouseTransfer.OneStep);
                     foreach (GoodsReceiptPendingWarehouseTransferDetail pendingWarehouseTransferDetail in pendingWarehouseTransferDetails)
                     {
                         GoodsReceiptDetailDTO goodsReceiptDetailDTO = new GoodsReceiptDetailDTO()
@@ -112,11 +112,8 @@ namespace TotalService.Inventories
 
                 if (saveRelativeOption == SaveRelativeOption.Undo)
                 {//NOTES: THIS UNDO REQUIRE: JUST SAVE ONLY ONE GoodsReceipt FOR AN WarehouseTransfer
-                    int? goodsReceiptID = 1;// goodsReceiptAPIRepository.GetGoodsReceiptIDofWarehouseTransfer(warehouseTransfer.WarehouseTransferID);
-                    if (goodsReceiptID != null)
-                        grHelperService.Delete(goodsReceiptID);
-                    else
-                        throw new Exception("Lỗi không tìm thấy phiếu nhập kho cũ của phiếu điều chỉnh kho này!" + "\r\n" + "\r\n" + "Vui lòng kiểm tra lại dữ liệu trước khi tiếp tục.");
+                    int? goodsReceiptID = goodsReceiptAPIRepository.GetGoodsReceiptID(null, null, warehouseTransfer.WarehouseTransferID, null);
+                    grHelperService.Delete(goodsReceiptID);
                 }
             }
         }
@@ -125,13 +122,13 @@ namespace TotalService.Inventories
         #region Helper for save or delete GoodsReceipt
         private GlobalEnums.GROption GetGROption(int nmvnTaskID)
         {
-            if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherMaterialIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherMaterialReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.MaterialTransfer)
+            if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.MaterialTransfer)
                 return GlobalEnums.GROption.IsMaterial;
             else
-                if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherItemIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherItemReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.ItemTransfer)
+                if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.ItemTransfer)
                     return GlobalEnums.GROption.IsItem;
                 else
-                    if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherProductIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherProductReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.ProductTransfer)
+                    if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.ProductTransfer)
                         return GlobalEnums.GROption.IsProduct;
                     else
                         return GlobalEnums.GROption.Unknown;

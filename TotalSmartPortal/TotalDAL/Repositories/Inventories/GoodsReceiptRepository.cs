@@ -111,17 +111,17 @@ namespace TotalDAL.Repositories.Inventories
             return pendingWarehouseTransfers;
         }
 
-        public List<GoodsReceiptPendingWarehouseTransferDetail> GetPendingWarehouseTransferDetails(int? nmvnTaskID, int? goodsReceiptID, int? warehouseTransferID, int? warehouseID, int? warehouseIssueID, string warehouseTransferDetailIDs, bool isReadonly)
+        public List<GoodsReceiptPendingWarehouseTransferDetail> GetPendingWarehouseTransferDetails(int? nmvnTaskID, int? goodsReceiptID, int? warehouseTransferID, int? warehouseID, int? warehouseIssueID, string warehouseTransferDetailIDs, bool oneStep)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            List<GoodsReceiptPendingWarehouseTransferDetail> pendingWarehouseTransferDetails = base.TotalSmartPortalEntities.GetGoodsReceiptPendingWarehouseTransferDetails(nmvnTaskID, goodsReceiptID, warehouseTransferID, warehouseID, warehouseIssueID, warehouseTransferDetailIDs, isReadonly).ToList();
+            List<GoodsReceiptPendingWarehouseTransferDetail> pendingWarehouseTransferDetails = base.TotalSmartPortalEntities.GetGoodsReceiptPendingWarehouseTransferDetails(nmvnTaskID, goodsReceiptID, warehouseTransferID, warehouseID, warehouseIssueID, warehouseTransferDetailIDs, oneStep).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingWarehouseTransferDetails;
         }
 
 
-        
+
 
 
         public IEnumerable<GoodsReceiptPendingPlannedOrderCustomer> GetPlannedOrderCustomers(int? locationID)
@@ -168,12 +168,13 @@ namespace TotalDAL.Repositories.Inventories
             return base.TotalSmartPortalEntities.GetPendingWarehouseAdjustmentDetails(locationID, goodsReceiptID, warehouseAdjustmentID, warehouseID, warehouseAdjustmentDetailIDs, isReadonly).ToList();
         }
 
-        public int? GetGoodsReceiptIDofWarehouseAdjustment(int? warehouseAdjustmentID)
+
+
+
+        public int? GetGoodsReceiptID(int? goodsArrivalID, int? plannedOrderID, int? warehouseTransferID, int? warehouseAdjustmentID)
         {
-            return base.TotalSmartPortalEntities.GetGoodsReceiptIDofWarehouseAdjustment(warehouseAdjustmentID).FirstOrDefault();
+            return base.TotalSmartPortalEntities.GetGoodsReceiptID(goodsArrivalID, plannedOrderID, warehouseTransferID, warehouseAdjustmentID).FirstOrDefault();
         }
-
-
 
         public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? commodityID, string commodityIDs, int? batchID, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
         {
