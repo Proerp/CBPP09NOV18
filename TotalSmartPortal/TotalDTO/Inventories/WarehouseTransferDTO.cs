@@ -25,6 +25,7 @@ namespace TotalDTO.Inventories
         
         int WarehouseTransferTypeID { get; set; }
 
+        bool OneStep { get; set; }
         bool HasTransferOrder { get; set; }
 
         Nullable<int> WarehouseID { get; set; }
@@ -57,6 +58,7 @@ namespace TotalDTO.Inventories
 
         public int WarehouseTransferTypeID { get; set; }
 
+        public bool OneStep { get; set; }
         public bool HasTransferOrder { get; set; }
 
         public virtual Nullable<int> WarehouseID { get; set; }
@@ -113,6 +115,7 @@ namespace TotalDTO.Inventories
     {
         public WarehouseTransferDTO()
         {
+            this.OneStep = GlobalEnums.CBPP;
             this.WarehouseTransferViewDetails = new List<WarehouseTransferDetailDTO>();
         }
 

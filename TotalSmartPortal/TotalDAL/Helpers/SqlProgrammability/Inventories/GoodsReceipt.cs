@@ -52,7 +52,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             this.GoodsReceiptInitReference();
 
-            this.GetGoodsReceiptIDofWarehouseAdjustment();
+            this.GetGoodsReceiptID();
             this.GetGoodsReceiptDetailAvailables();
         }
 
@@ -924,17 +924,29 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
 
 
-        private void GetGoodsReceiptIDofWarehouseAdjustment()
+        private void GetGoodsReceiptID()
         {
             string queryString;
 
-            queryString = " @WarehouseAdjustmentID Int " + "\r\n";
+            queryString = " @GoodsArrivalID Int, @PlannedOrderID Int, @WarehouseTransferID Int, @WarehouseAdjustmentID Int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "   SELECT TOP 1 GoodsReceiptID FROM GoodsReceipts WHERE WarehouseAdjustmentID = @WarehouseAdjustmentID " + "\r\n";
+            queryString = queryString + "   IF (NOT @GoodsArrivalID IS NULL) " + "\r\n";
+            queryString = queryString + "       SELECT TOP 1 GoodsReceiptID FROM GoodsReceipts WHERE GoodsArrivalID = @GoodsArrivalID " + "\r\n";
+            queryString = queryString + "   ELSE " + "\r\n";
+            queryString = queryString + "       IF (NOT @PlannedOrderID IS NULL) " + "\r\n";
+            queryString = queryString + "           SELECT TOP 1 GoodsReceiptID FROM GoodsReceipts WHERE PlannedOrderID = @PlannedOrderID " + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           IF (NOT @WarehouseTransferID IS NULL) " + "\r\n";
+            queryString = queryString + "               SELECT TOP 1 GoodsReceiptID FROM GoodsReceipts WHERE WarehouseTransferID = @WarehouseTransferID " + "\r\n";
+            queryString = queryString + "           ELSE " + "\r\n";
+            queryString = queryString + "               IF (NOT @WarehouseAdjustmentID IS NULL) " + "\r\n";
+            queryString = queryString + "                   SELECT TOP 1 GoodsReceiptID FROM GoodsReceipts WHERE WarehouseAdjustmentID = @WarehouseAdjustmentID " + "\r\n";
+            queryString = queryString + "               ELSE " + "\r\n";
+            queryString = queryString + "                   SELECT NULL " + "\r\n";
 
-            this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptIDofWarehouseAdjustment", queryString);
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptID", queryString);
         }
 
         private void GetGoodsReceiptDetailAvailables()

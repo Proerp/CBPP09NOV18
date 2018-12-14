@@ -35,6 +35,109 @@ namespace TotalService.Inventories
             return base.Save(dto);
         }
 
+
+        protected override void SaveRelative(WarehouseTransfer warehouseTransfer, SaveRelativeOption saveRelativeOption)
+        {
+            base.SaveRelative(warehouseTransfer, saveRelativeOption);
+
+            if (true) //warehouseTransfer.OneStep
+            {
+                GRHelperService grHelperService = new GRHelperService(this.GetGROption(warehouseTransfer.NMVNTaskID), this.GenericWithDetailRepository.TotalSmartPortalEntities, this.UserID);
+
+                IGoodsReceiptAPIRepository goodsReceiptAPIRepository = new GoodsReceiptAPIRepository(this.GenericWithDetailRepository.TotalSmartPortalEntities);
+                if (saveRelativeOption == SaveRelativeOption.Update)
+                {
+                    IGoodsReceiptDTO goodsReceiptDTO = grHelperService.NewGoodsReceiptDTO();
+
+                    goodsReceiptDTO.EntryDate = warehouseTransfer.EntryDate;
+
+                    goodsReceiptDTO.GoodsReceiptTypeID = (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer;
+                    goodsReceiptDTO.WarehouseTransferID = warehouseTransfer.WarehouseTransferID;
+
+                    goodsReceiptDTO.Warehouse = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = warehouseTransfer.WarehouseReceiptID };
+                    goodsReceiptDTO.WarehouseIssue = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = warehouseTransfer.WarehouseID };
+
+                    goodsReceiptDTO.StorekeeperID = warehouseTransfer.StorekeeperID;
+                    goodsReceiptDTO.PreparedPersonID = warehouseTransfer.PreparedPersonID;
+                    goodsReceiptDTO.ApproverID = warehouseTransfer.PreparedPersonID;
+
+                    goodsReceiptDTO.Purposes = warehouseTransfer.Caption;
+                    goodsReceiptDTO.Description = warehouseTransfer.Description;
+                    goodsReceiptDTO.Remarks = warehouseTransfer.Remarks;
+
+                    goodsReceiptDTO.Approved = warehouseTransfer.Approved;
+                    goodsReceiptDTO.ApprovedDate = warehouseTransfer.ApprovedDate;
+
+                    List<GoodsReceiptPendingWarehouseTransferDetail> pendingWarehouseTransferDetails = goodsReceiptAPIRepository.GetPendingWarehouseTransferDetails((int)goodsReceiptDTO.NMVNTaskID, null, goodsReceiptDTO.WarehouseTransferID, goodsReceiptDTO.WarehouseID, goodsReceiptDTO.WarehouseIssueID, null, false);
+                    foreach (GoodsReceiptPendingWarehouseTransferDetail pendingWarehouseTransferDetail in pendingWarehouseTransferDetails)
+                    {
+                        GoodsReceiptDetailDTO goodsReceiptDetailDTO = new GoodsReceiptDetailDTO()
+                        {
+                            GoodsReceiptID = goodsReceiptDTO.GoodsReceiptID,
+
+                            WarehouseTransferID = pendingWarehouseTransferDetail.WarehouseTransferID,
+                            WarehouseTransferDetailID = pendingWarehouseTransferDetail.WarehouseTransferDetailID,
+                            WarehouseTransferReference = pendingWarehouseTransferDetail.WarehouseTransferReference,
+                            WarehouseTransferEntryDate = pendingWarehouseTransferDetail.WarehouseTransferEntryDate,
+                            GoodsReceiptReference = pendingWarehouseTransferDetail.GoodsReceiptReference,
+                            GoodsReceiptEntryDate = pendingWarehouseTransferDetail.GoodsReceiptEntryDate,
+                            BatchEntryDate = pendingWarehouseTransferDetail.BatchEntryDate,
+
+
+                            //BatchID = pendingWarehouseTransferDetail.BatchID,
+
+                            CommodityID = pendingWarehouseTransferDetail.CommodityID,
+                            CommodityCode = pendingWarehouseTransferDetail.CommodityCode,
+                            CommodityName = pendingWarehouseTransferDetail.CommodityName,
+                            CommodityTypeID = pendingWarehouseTransferDetail.CommodityTypeID,
+
+                            Barcode = pendingWarehouseTransferDetail.Barcode,
+                            BatchCode = pendingWarehouseTransferDetail.BatchCode,
+                            SealCode = pendingWarehouseTransferDetail.SealCode,
+                            LabCode = pendingWarehouseTransferDetail.LabCode,
+
+                            BinLocationID = pendingWarehouseTransferDetail.BinLocationID,
+                            BinLocationCode = pendingWarehouseTransferDetail.BinLocationCode,
+
+                            QuantityRemains = (decimal)pendingWarehouseTransferDetail.QuantityRemains,
+                            Quantity = (decimal)pendingWarehouseTransferDetail.QuantityRemains,
+                        };
+                        goodsReceiptDTO.ViewDetails.Add(goodsReceiptDetailDTO);
+                    }
+
+                    goodsReceiptDTO.TotalQuantity = goodsReceiptDTO.GetTotalQuantity();
+
+                    grHelperService.Save(goodsReceiptDTO);
+                }
+
+                if (saveRelativeOption == SaveRelativeOption.Undo)
+                {//NOTES: THIS UNDO REQUIRE: JUST SAVE ONLY ONE GoodsReceipt FOR AN WarehouseTransfer
+                    int? goodsReceiptID = 1;// goodsReceiptAPIRepository.GetGoodsReceiptIDofWarehouseTransfer(warehouseTransfer.WarehouseTransferID);
+                    if (goodsReceiptID != null)
+                        grHelperService.Delete(goodsReceiptID);
+                    else
+                        throw new Exception("Lỗi không tìm thấy phiếu nhập kho cũ của phiếu điều chỉnh kho này!" + "\r\n" + "\r\n" + "Vui lòng kiểm tra lại dữ liệu trước khi tiếp tục.");
+                }
+            }
+        }
+
+
+        #region Helper for save or delete GoodsReceipt
+        private GlobalEnums.GROption GetGROption(int nmvnTaskID)
+        {
+            if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherMaterialIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherMaterialReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.MaterialTransfer)
+                return GlobalEnums.GROption.IsMaterial;
+            else
+                if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherItemIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherItemReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.ItemTransfer)
+                    return GlobalEnums.GROption.IsItem;
+                else
+                    if (nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherProductIssue || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.OtherProductReceipt || nmvnTaskID == (int)GlobalEnums.NmvnTaskID.ProductTransfer)
+                        return GlobalEnums.GROption.IsProduct;
+                    else
+                        return GlobalEnums.GROption.Unknown;
+        }
+        #endregion Helper for save or delete GoodsReceipt
+
     }
 
 
@@ -54,5 +157,5 @@ namespace TotalService.Inventories
     {
         public ProductTransferService(IWarehouseTransferRepository warehouseTransferRepository)
             : base(warehouseTransferRepository) { }
-    }   
+    }
 }
