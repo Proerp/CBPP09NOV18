@@ -247,12 +247,12 @@
         <div class="right-botton-panel">
             @if (Model.Editable)
             {
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "CreditNotes")"> <img src="~/Content/Images/New/save-icon.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "CreditNotes")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
             }
 
             @if (Model.CreditNoteID > 0 && !Model.Approvable && !Model.UnApprovable)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "CreditNotes", new {id = @Model.CreditNoteID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "cloud-check-32.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt phiếu chiết khấu" : "Hủy duyệt phiếu chiết khấu") </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "CreditNotes", new {id = @Model.CreditNoteID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-Lime.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt phiếu chiết khấu" : "Hủy duyệt phiếu chiết khấu") </button>
             }
 
         </div>

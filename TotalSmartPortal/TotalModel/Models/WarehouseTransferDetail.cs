@@ -43,6 +43,7 @@ namespace TotalModel.Models
         public int LocationReceiptID { get; set; }
         public int LocationIssuedID { get; set; }
         public int BinLocationID { get; set; }
+        public bool OneStep { get; set; }
     
         public virtual TransferOrderDetail TransferOrderDetail { get; set; }
         public virtual TransferOrder TransferOrder { get; set; }

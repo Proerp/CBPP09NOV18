@@ -353,12 +353,12 @@
         <div class="right-botton-panel">
             @if (Model.Editable)
             {
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SalesOrders")"> <img src="~/Content/Images/New/save-icon.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SalesOrders")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
             }
 
             @if (Model.SalesOrderID > 0 && !Model.Approvable && !Model.UnApprovable)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "SalesOrders", new {id = @Model.SalesOrderID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "cloud-check-32.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt đơn hàng" : "Hủy duyệt đơn hàng này") </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "SalesOrders", new {id = @Model.SalesOrderID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-Lime.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt đơn hàng" : "Hủy duyệt đơn hàng này") </button>
             }
 
         </div>

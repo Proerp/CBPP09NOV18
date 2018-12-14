@@ -681,6 +681,9 @@
     <Content Include="Content\Images\Mains\cancel-yellow-28.png" />
     <Content Include="Content\Images\Mains\Cashier-Check-32.png" />
     <Content Include="Content\Images\Mains\cashier-nocheck-32.png" />
+    <Content Include="Content\Images\Mains\Check-32-Lime.png" />
+    <Content Include="Content\Images\Mains\Check-32-m16.png" />
+    <Content Include="Content\Images\Mains\Check-32-O.png" />
     <Content Include="Content\Images\Mains\Click_here_blue.png" />
     <Content Include="Content\Images\Mains\cloud-check-32.png" />
     <Content Include="Content\Images\Mains\contacts-icon-32.png" />
@@ -844,6 +847,7 @@
     <Content Include="Content\Images\New\Boat-Print-32-N.png" />
     <Content Include="Content\Images\New\bottles-icon.png" />
     <Content Include="Content\Images\New\bucket-icon.png" />
+    <Content Include="Content\Images\New\Check-32-Beige.png" />
     <Content Include="Content\Images\New\Cleanup48.png" />
     <Content Include="Content\Images\New\Cleanup64.png" />
     <Content Include="Content\Images\New\customer_div_bg.png" />
@@ -936,6 +940,7 @@
     <Content Include="Content\Images\New\PersonIconYellow.png" />
     <Content Include="Content\Images\New\person_icon.png" />
     <Content Include="Content\Images\New\pipe-line-icon.png" />
+    <Content Include="Content\Images\New\Print-Gray-32.png" />
     <Content Include="Content\Images\New\Printer-author-24.png" />
     <Content Include="Content\Images\New\Printer-Boat-32-1.png" />
     <Content Include="Content\Images\New\Printer-Boat-32.png" />
@@ -946,12 +951,17 @@
     <Content Include="Content\Images\New\Refresh-icon.png" />
     <Content Include="Content\Images\New\Sale2-24.png" />
     <Content Include="Content\Images\New\Sale2-32.png" />
+    <Content Include="Content\Images\New\save-32-m20.png" />
     <Content Include="Content\Images\New\Save-icon-blue.png" />
     <Content Include="Content\Images\New\save-icon.png" />
     <Content Include="Content\Images\New\Save-Next.png" />
     <Content Include="Content\Images\New\Save-Print-32.png" />
     <Content Include="Content\Images\New\Save-print.png" />
     <Content Include="Content\Images\New\Save-Slide.png" />
+    <Content Include="Content\Images\New\Save-Verify-32-O.png" />
+    <Content Include="Content\Images\New\Save-Verify-32-ON.png" />
+    <Content Include="Content\Images\New\Save-Verify-32-RD.png" />
+    <Content Include="Content\Images\New\Save-Verify-32.png" />
     <Content Include="Content\Images\New\save-verify-icon.png" />
     <Content Include="Content\Images\New\Save-Wooden.png" />
     <Content Include="Content\Images\New\sprite.png" />

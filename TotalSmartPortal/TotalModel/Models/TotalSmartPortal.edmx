@@ -2357,6 +2357,7 @@
           <Property Name="WarehouseTransferID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="NMVNTaskID" Type="int" Nullable="false" />
+          <Property Name="OneStep" Type="bit" Nullable="false" />
           <Property Name="HasTransferOrder" Type="bit" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="TransferOrderID" Type="int" />
@@ -18026,6 +18027,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_GoodsReceiptDetails" FromRole="WarehouseTransferDetail" ToRole="GoodsReceiptDetail" />
           <Property Name="BinLocationID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="BinLocation" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_BinLocations" FromRole="WarehouseTransferDetail" ToRole="BinLocation" />
+          <Property Name="OneStep" Type="Boolean" Nullable="false" />
           </EntityType>
         <ComplexType Name="WarehouseTransferIndex">
           <Property Type="Int32" Name="WarehouseTransferID" Nullable="false" />
@@ -25596,6 +25598,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="WarehouseTransferDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.WarehouseTransferDetail">
               <MappingFragment StoreEntitySet="WarehouseTransferDetails">
+                <ScalarProperty Name="OneStep" ColumnName="OneStep" />
                 <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
                 <ScalarProperty Name="LocationIssuedID" ColumnName="LocationIssuedID" />
                 <ScalarProperty Name="LocationReceiptID" ColumnName="LocationReceiptID" />

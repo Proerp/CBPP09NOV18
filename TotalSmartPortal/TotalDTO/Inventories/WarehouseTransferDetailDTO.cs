@@ -20,6 +20,9 @@ namespace TotalDTO.Inventories
         public int WarehouseTransferTypeID { get; set; }
         public GlobalEnums.NmvnTaskID NMVNTaskID { get; set; }
 
+        public bool OneStep { get; set; }
+        public bool HasTransferOrder { get; set; }
+
         public int WarehouseID { get; set; }
         public Nullable<int> LocationIssuedID { get; set; }
         public Nullable<int> WarehouseReceiptID { get; set; }

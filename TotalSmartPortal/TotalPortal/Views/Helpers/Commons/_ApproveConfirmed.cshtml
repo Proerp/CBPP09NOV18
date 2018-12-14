@@ -3,7 +3,7 @@
 <div class="single-full-panel">
     @if (Model.Approvable || Model.UnApprovable)
     {
-        <button type="submit" form="MainForm" class="k-button custom-button"> <img src="~/Content/Images/Mains/@(@Model.Approvable ? "cloud-check-32.png" : "cashier-nocheck-32.png")" alt="" /> Xác nhận @(Model.Approvable ? "" : "hủy") duyệt dữ liệu </button>
+        <button type="submit" form="MainForm" class="k-button custom-button"> <img src="~/Content/Images/Mains/@(@Model.Approvable ? "Check-32-Lime.png" : "cashier-nocheck-32.png")" alt="" /> Xác nhận @(Model.Approvable ? "" : "hủy") duyệt dữ liệu </button>
     }
     else
     {
