@@ -681,7 +681,12 @@
     <Content Include="Content\Images\Mains\cancel-yellow-28.png" />
     <Content Include="Content\Images\Mains\Cashier-Check-32.png" />
     <Content Include="Content\Images\Mains\cashier-nocheck-32.png" />
+    <Content Include="Content\Images\Mains\Check-32-CHY.png" />
+    <Content Include="Content\Images\Mains\Check-32-CLY.png" />
+    <Content Include="Content\Images\Mains\Check-32-CY.png" />
+    <Content Include="Content\Images\Mains\Check-32-CyanYellow.png" />
     <Content Include="Content\Images\Mains\Check-32-Lime.png" />
+    <Content Include="Content\Images\Mains\Check-32-LimeYellow.png" />
     <Content Include="Content\Images\Mains\Check-32-m16.png" />
     <Content Include="Content\Images\Mains\Check-32-O.png" />
     <Content Include="Content\Images\Mains\Click_here_blue.png" />

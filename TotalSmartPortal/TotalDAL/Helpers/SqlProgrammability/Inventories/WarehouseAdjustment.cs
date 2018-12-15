@@ -141,7 +141,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void WarehouseAdjustmentEditable()
         {
-            string[] queryArray = new string[3]; //IMPORTANT: THESE QUERIES ARE COPIED FROM GoodsReceiptEditable
+            string[] queryArray = new string[4]; //IMPORTANT: THESE QUERIES ARE COPIED FROM GoodsReceiptEditable
 
             string queryString = "       DECLARE @GoodsReceiptID int " + "\r\n";
             queryString = queryString + "       IF ((SELECT HasPositiveLine FROM WarehouseAdjustments WHERE WarehouseAdjustmentID = @EntityID) = 0) BEGIN SELECT @FoundEntity AS FoundEntity    RETURN 0 END " + "\r\n";
@@ -152,6 +152,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryArray[0] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM MaterialIssueDetails WHERE GoodsReceiptID = @GoodsReceiptID ";
             queryArray[1] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM WarehouseTransferDetails WHERE GoodsReceiptID = @GoodsReceiptID ";
             queryArray[2] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM WarehouseAdjustmentDetails WHERE GoodsReceiptID = @GoodsReceiptID ";
+            queryArray[3] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM PackageIssueDetails WHERE GoodsReceiptID = @GoodsReceiptID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("WarehouseAdjustmentEditable", queryArray, queryString);
         }

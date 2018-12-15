@@ -282,7 +282,7 @@
 
             @if (Model.WarehouseTransferID > 0 && !Model.Approvable && !Model.UnApprovable)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.WarehouseTransferID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-Lime.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt PXK" : "Hủy duyệt PXK") </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.WarehouseTransferID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt PXK" : "Hủy duyệt PXK") </button>
             }
         </div>
 

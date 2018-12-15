@@ -243,7 +243,7 @@
 
             @if (Model.PurchaseOrderID > 0 && !Model.Approvable && !Model.UnApprovable)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "PurchaseOrders", new {id = @Model.PurchaseOrderID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-Lime.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "PurchaseOrders", new {id = @Model.PurchaseOrderID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cashier-nocheck-32.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
             }
 
         </div>
