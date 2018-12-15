@@ -141,7 +141,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void WarehouseAdjustmentEditable()
         {
-            string[] queryArray = new string[4]; //IMPORTANT: THESE QUERIES ARE COPIED FROM GoodsReceiptEditable
+            string[] queryArray = new string[4]; //IMPORTANT: THESE QUERIES ARE COPIED FROM GoodsReceiptEditable (THE SAME: GoodsReceiptEditable, WarehouseAdjustmentEditable, WarehouseTransferEditable)
 
             string queryString = "       DECLARE @GoodsReceiptID int " + "\r\n";
             queryString = queryString + "       IF ((SELECT HasPositiveLine FROM WarehouseAdjustments WHERE WarehouseAdjustmentID = @EntityID) = 0) BEGIN SELECT @FoundEntity AS FoundEntity    RETURN 0 END " + "\r\n";

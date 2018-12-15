@@ -152,6 +152,26 @@ namespace TotalDAL
         }
 
 
+        public static string SqlToCheckExisting(this DbContext dbContext, string[] queryArray)
+        {
+            string queryString = "";
+
+            if (queryArray != null)
+            {
+                foreach (string subQuery in queryArray)
+                {
+                    queryString = queryString + "       " + subQuery + "\r\n";
+                    queryString = queryString + "       IF NOT @FoundEntity IS NULL " + "\r\n";
+                    queryString = queryString + "           BEGIN " + "\r\n";
+                    queryString = queryString + "               SELECT @FoundEntity AS FoundEntity " + "\r\n";
+                    queryString = queryString + "               RETURN 1 " + "\r\n";
+                    queryString = queryString + "           END " + "\r\n";
+                }
+            }
+
+            return queryString;
+        }
+
         /// <summary>
         /// Create new stored procedure to check a pecific existing, for example: Editable, Revisable, ...
         /// </summary>
@@ -172,18 +192,7 @@ namespace TotalDAL
             if (predefineString != null)
                 queryString = queryString + predefineString + "\r\n";
 
-            if (queryArray != null)
-            {
-                foreach (string subQuery in queryArray)
-                {
-                    queryString = queryString + "       " + subQuery + "\r\n";
-                    queryString = queryString + "       IF NOT @FoundEntity IS NULL " + "\r\n";
-                    queryString = queryString + "           BEGIN " + "\r\n";
-                    queryString = queryString + "               SELECT @FoundEntity AS FoundEntity " + "\r\n";
-                    queryString = queryString + "               RETURN 1 " + "\r\n";
-                    queryString = queryString + "           END " + "\r\n";
-                }
-            }
+            queryString = queryString + dbContext.SqlToCheckExisting(queryArray);
 
             queryString = queryString + "       SELECT @FoundEntity AS FoundEntity " + "\r\n";
             queryString = queryString + "       RETURN 0 " + "\r\n";

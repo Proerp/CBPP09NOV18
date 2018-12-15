@@ -1141,6 +1141,7 @@
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="NMVNTaskID" Type="int" Nullable="false" />
+          <Property Name="OneStep" Type="bit" Nullable="false" />
           <Property Name="GoodsReceiptTypeID" Type="int" Nullable="false" />
           <Property Name="PurchaseRequisitionID" Type="int" />
           <Property Name="GoodsArrivalID" Type="int" />
@@ -18218,6 +18219,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="GoodsArrivalID" Type="Int32" />
           <NavigationProperty Name="GoodsArrival" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_GoodsArrivals" FromRole="GoodsReceipt" ToRole="GoodsArrival" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsReceipts" FromRole="GoodsReceipt" ToRole="GoodsReceiptDetail" />
+          <Property Name="OneStep" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_GoodsReceipts_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -25808,6 +25810,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="GoodsReceipts">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsReceipt">
               <MappingFragment StoreEntitySet="GoodsReceipts">
+                <ScalarProperty Name="OneStep" ColumnName="OneStep" />
                 <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />

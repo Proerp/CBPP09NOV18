@@ -876,12 +876,15 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void GoodsReceiptEditable()
         {
-            string[] queryArray = new string[4]; //IMPORTANT: THESE QUERIES SHOULD BE COPIED TO WarehouseAdjustmentEditable
+            string[] queryArray = new string[5]; //IMPORTANT: THESE QUERIES SHOULD BE COPIED TO WarehouseAdjustmentEditable AND WarehouseTransferEditable (THE SAME: GoodsReceiptEditable, WarehouseAdjustmentEditable, WarehouseTransferEditable)
 
             queryArray[0] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM MaterialIssueDetails WHERE GoodsReceiptID = @EntityID ";
             queryArray[1] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM WarehouseTransferDetails WHERE GoodsReceiptID = @EntityID ";
             queryArray[2] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM WarehouseAdjustmentDetails WHERE GoodsReceiptID = @EntityID ";
             queryArray[3] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM PackageIssueDetails WHERE GoodsReceiptID = @EntityID ";
+
+            //THIS QUERY IS USED ONLY BY GoodsReceiptEditable
+            queryArray[4] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM GoodsReceipts WHERE GoodsReceiptID = @EntityID AND (NOT WarehouseAdjustmentID IS NULL OR (NOT WarehouseTransferID IS NULL AND OneStep = 1)) ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("GoodsReceiptEditable", queryArray);
         }

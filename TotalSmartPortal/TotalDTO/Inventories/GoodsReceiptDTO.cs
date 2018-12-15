@@ -30,6 +30,7 @@ namespace TotalDTO.Inventories
 
         Nullable<int> BinLocation_WarehouseID { get; set; }
 
+        bool OneStep { get; set; }
         int GoodsReceiptTypeID { get; set; }
 
         Nullable<int> PurchaseRequisitionID { get; set; }
@@ -108,6 +109,7 @@ namespace TotalDTO.Inventories
 
         public virtual Nullable<int> BinLocation_WarehouseID { get; set; }
 
+        public bool OneStep { get; set; }
         public int GoodsReceiptTypeID { get; set; }
 
         public Nullable<int> PurchaseRequisitionID { get; set; }

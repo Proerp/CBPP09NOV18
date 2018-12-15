@@ -134,10 +134,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void TransferOrderEditable()
         {
-            string[] queryArray = new string[0];
+            string[] queryArray = new string[2];
 
-            //queryArray[0] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM MaterialIssueDetails WHERE GoodsReceiptID = @GoodsReceiptID ";
-            //queryArray[1] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM TransferOrderDetails WHERE GoodsReceiptID = @GoodsReceiptID ";
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = TransferOrderID FROM WarehouseTransfers WHERE TransferOrderID = @EntityID ";
+            queryArray[1] = " SELECT TOP 1 @FoundEntity = TransferOrderID FROM WarehouseTransferDetails WHERE TransferOrderID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("TransferOrderEditable", queryArray);
         }

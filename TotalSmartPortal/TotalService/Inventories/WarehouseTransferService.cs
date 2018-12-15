@@ -40,7 +40,7 @@ namespace TotalService.Inventories
         {
             base.SaveRelative(warehouseTransfer, saveRelativeOption);
 
-            if (warehouseTransfer.OneStep) //warehouseTransfer.OneStep
+            if (warehouseTransfer.OneStep)
             {
                 GRHelperService grHelperService = new GRHelperService(this.GetGROption(warehouseTransfer.NMVNTaskID), this.GenericWithDetailRepository.TotalSmartPortalEntities, this.UserID);
 
@@ -53,6 +53,7 @@ namespace TotalService.Inventories
 
                     goodsReceiptDTO.GoodsReceiptTypeID = (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer;
                     goodsReceiptDTO.WarehouseTransferID = warehouseTransfer.WarehouseTransferID;
+                    goodsReceiptDTO.OneStep = warehouseTransfer.OneStep;
 
                     goodsReceiptDTO.Warehouse = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = warehouseTransfer.WarehouseReceiptID };
                     goodsReceiptDTO.WarehouseIssue = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = warehouseTransfer.WarehouseID };
@@ -68,7 +69,7 @@ namespace TotalService.Inventories
                     goodsReceiptDTO.Approved = warehouseTransfer.Approved;
                     goodsReceiptDTO.ApprovedDate = warehouseTransfer.ApprovedDate;
 
-                    List<GoodsReceiptPendingWarehouseTransferDetail> pendingWarehouseTransferDetails = goodsReceiptAPIRepository.GetPendingWarehouseTransferDetails((int)goodsReceiptDTO.NMVNTaskID, null, goodsReceiptDTO.WarehouseTransferID, goodsReceiptDTO.WarehouseID, goodsReceiptDTO.WarehouseIssueID, null, warehouseTransfer.OneStep);
+                    List<GoodsReceiptPendingWarehouseTransferDetail> pendingWarehouseTransferDetails = goodsReceiptAPIRepository.GetPendingWarehouseTransferDetails((int)goodsReceiptDTO.NMVNTaskID, null, goodsReceiptDTO.WarehouseTransferID, goodsReceiptDTO.WarehouseID, goodsReceiptDTO.WarehouseIssueID, null, goodsReceiptDTO.OneStep);
                     foreach (GoodsReceiptPendingWarehouseTransferDetail pendingWarehouseTransferDetail in pendingWarehouseTransferDetails)
                     {
                         GoodsReceiptDetailDTO goodsReceiptDetailDTO = new GoodsReceiptDetailDTO()

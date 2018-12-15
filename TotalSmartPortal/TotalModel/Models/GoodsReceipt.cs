@@ -52,6 +52,7 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public string Caption { get; set; }
         public Nullable<int> GoodsArrivalID { get; set; }
+        public bool OneStep { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Location Location { get; set; }

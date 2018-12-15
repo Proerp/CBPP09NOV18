@@ -304,11 +304,33 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void WarehouseTransferEditable()
         {
-            string[] queryArray = new string[1];
+            string[] queryArray = null; //IMPORTANT: THESE QUERIES ARE COPIED FROM GoodsReceiptEditable (THE SAME: GoodsReceiptEditable, WarehouseAdjustmentEditable, WarehouseTransferEditable)
+            string[] queryOneStep = new string[4];
+            string[] queryTwoStep = new string[2];
 
-            queryArray[0] = " SELECT TOP 1 @FoundEntity = WarehouseTransferID FROM GoodsReceiptDetails WHERE WarehouseTransferID = @EntityID ";
+            queryOneStep[0] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM MaterialIssueDetails WHERE GoodsReceiptID = @GoodsReceiptID ";
+            queryOneStep[1] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM WarehouseTransferDetails WHERE GoodsReceiptID = @GoodsReceiptID ";
+            queryOneStep[2] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM WarehouseAdjustmentDetails WHERE GoodsReceiptID = @GoodsReceiptID ";
+            queryOneStep[3] = " SELECT TOP 1 @FoundEntity = GoodsReceiptID FROM PackageIssueDetails WHERE GoodsReceiptID = @GoodsReceiptID ";
 
-            this.totalSmartPortalEntities.CreateProcedureToCheckExisting("WarehouseTransferEditable", queryArray);
+            queryTwoStep[0] = " SELECT TOP 1 @FoundEntity = WarehouseTransferID FROM GoodsReceipts WHERE WarehouseTransferID = @EntityID ";
+            queryTwoStep[1] = " SELECT TOP 1 @FoundEntity = WarehouseTransferID FROM GoodsReceiptDetails WHERE WarehouseTransferID = @EntityID ";
+
+
+            string queryString = "       DECLARE @GoodsReceiptID int " + "\r\n";
+
+            queryString = queryString + "       IF ((SELECT OneStep FROM WarehouseTransfers WHERE WarehouseTransferID = @EntityID) = 1) " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               SELECT TOP 1 @GoodsReceiptID = GoodsReceiptID FROM GoodsReceipts WHERE WarehouseTransferID = @EntityID " + "\r\n";
+            queryString = queryString + "               IF (@GoodsReceiptID IS NULL) BEGIN SELECT @FoundEntity AS FoundEntity    RETURN 0 END " + "\r\n";
+            queryString = queryString + "               " + this.totalSmartPortalEntities.SqlToCheckExisting(queryOneStep) + "\r\n";
+            queryString = queryString + "           END " + "\r\n";            
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               " + this.totalSmartPortalEntities.SqlToCheckExisting(queryTwoStep) + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateProcedureToCheckExisting("WarehouseTransferEditable", queryArray, queryString);
         }
 
         private void WarehouseTransferToggleApproved()
@@ -322,6 +344,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       IF @@ROWCOUNT = 1 " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
             queryString = queryString + "               UPDATE          WarehouseTransferDetails  SET Approved = @Approved WHERE WarehouseTransferID = @EntityID ; " + "\r\n";
+
+            queryString = queryString + "               UPDATE          GoodsReceipts  SET Approved = @Approved, ApprovedDate = GetDate() WHERE WarehouseTransferID = @EntityID " + "\r\n";
+            queryString = queryString + "               UPDATE          GoodsReceiptDetails  SET Approved = @Approved WHERE WarehouseTransferID = @EntityID ; " + "\r\n";
+
             queryString = queryString + "           END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
