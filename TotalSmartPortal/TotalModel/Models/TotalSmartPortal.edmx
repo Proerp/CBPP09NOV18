@@ -16074,6 +16074,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="CodePartE" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="CodePartF" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="OfficialCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BinLocationID" Nullable="false" />
+          <Property Type="String" Name="BinLocationCode" Nullable="false" MaxLength="50" />
         </ComplexType>
         <EntityType Name="WarehouseAdjustmentDetail">
           <Key>
@@ -24380,6 +24382,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="CodePartE" ColumnName="CodePartE" />
                 <ScalarProperty Name="CodePartF" ColumnName="CodePartF" />
                 <ScalarProperty Name="OfficialCode" ColumnName="OfficialCode" />
+                <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
+                <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

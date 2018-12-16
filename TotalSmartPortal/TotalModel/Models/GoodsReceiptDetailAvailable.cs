@@ -39,5 +39,7 @@ namespace TotalModel.Models
         public string CodePartE { get; set; }
         public string CodePartF { get; set; }
         public string OfficialCode { get; set; }
+        public int BinLocationID { get; set; }
+        public string BinLocationCode { get; set; }
     }
 }
