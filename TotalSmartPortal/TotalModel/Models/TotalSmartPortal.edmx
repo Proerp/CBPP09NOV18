@@ -1331,6 +1331,8 @@
           <Property Name="ModuleDetailID" Type="int" Nullable="false" />
           <Property Name="TaskID" Type="int" Nullable="false" />
           <Property Name="ModuleID" Type="int" Nullable="false" />
+          <Property Name="ModuleLineID" Type="int" Nullable="false" />
+          <Property Name="SoftName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="SoftDescription" Type="nvarchar" MaxLength="20" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="DescriptionEN" Type="nvarchar" MaxLength="50" Nullable="false" />
@@ -18513,6 +18515,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="ImageIndex" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="InActive" Type="Double" Nullable="false" />
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
+          <Property Name="ModuleLineID" Type="Int32" Nullable="false" />
+          <Property Name="SoftName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ModuleDefault">
           <Key>
@@ -25966,6 +25970,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="ModuleDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.ModuleDetail">
               <MappingFragment StoreEntitySet="ModuleDetails">
+                <ScalarProperty Name="SoftName" ColumnName="SoftName" />
+                <ScalarProperty Name="ModuleLineID" ColumnName="ModuleLineID" />
                 <ScalarProperty Name="Enabled" ColumnName="Enabled" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
                 <ScalarProperty Name="ImageIndex" ColumnName="ImageIndex" />

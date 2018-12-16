@@ -27,5 +27,7 @@ namespace TotalModel.Models
         public string ImageIndex { get; set; }
         public double InActive { get; set; }
         public bool Enabled { get; set; }
+        public int ModuleLineID { get; set; }
+        public string SoftName { get; set; }
     }
 }
