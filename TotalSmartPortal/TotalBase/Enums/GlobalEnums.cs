@@ -3,7 +3,7 @@ namespace TotalBase.Enums
 {
     public static class GlobalEnums
     {
-        public static bool CBPP = false;
+        public static bool CBPP = true;
 
         public static bool ERPConnected = false;
 
