@@ -31,17 +31,17 @@ namespace TotalService.Inventories
 
         public override bool Approvable(TDto dto)
         {
-            return (dto.WarehouseAdjustmentID == null) && base.Approvable(dto);
+            return !(dto.WarehouseAdjustmentID != null || (dto.WarehouseTransferID != null && dto.OneStep)) && base.Approvable(dto);
         }
 
         public override bool UnApprovable(TDto dto)
         {
-            return (dto.WarehouseAdjustmentID == null) && base.UnApprovable(dto);
+            return !(dto.WarehouseAdjustmentID != null || (dto.WarehouseTransferID != null && dto.OneStep)) && base.UnApprovable(dto);
         }
 
         public override bool Editable(TDto dto)
         {
-            return (dto.WarehouseAdjustmentID == null) && base.Editable(dto);
+            return !(dto.WarehouseAdjustmentID != null || (dto.WarehouseTransferID != null && dto.OneStep)) && base.Editable(dto);
         }
     }
 
