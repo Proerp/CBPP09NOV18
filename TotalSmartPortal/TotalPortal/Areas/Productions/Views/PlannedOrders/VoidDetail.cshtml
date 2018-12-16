@@ -15,7 +15,7 @@
         @Html.Hidden("DetailId", @Model.ViewDetails[0].PlannedOrderDetailID);
         @Html.Hidden("InActivePartial", @Model.ViewDetails[0].InActivePartial);
         <div class="left-panel">
-            <div style="padding: 16px;"> <img src="~/Content/Images/Mains/@(@Model.ViewDetails[0].InActivePartial ? "iSync-icon64.png" : "blue-cross-icon64.png")" title="Hủy/ phục hồi một phần đơn hàng" />  </div>
+            <div style="padding: 16px;"> <img src="~/Content/Images/Mains/@(@Model.ViewDetails[0].InActivePartial ? "cancel-yellow-64.png" : "cancel-green-64.png")" title="Hủy/ phục hồi một phần đơn hàng" style="max-width: 48px;" />  </div>
         </div>
         <div class="right-panel" style="padding-right:17px;">
             <div class=" form-group">
@@ -54,7 +54,7 @@
         </div>
         <div class="background-bar">
             <div class="popup-button-bar">
-                <button type="submit" class="k-button"> <img src="~/Content/Images/Mains/@(@Model.ViewDetails[0].InActivePartial ? "iSync-icon32.png" : "blue-cross-icon32.png")" alt="" /> Xác nhận @(@Model.ViewDetails[0].InActivePartial ? "phục hồi" : "hủy") mặt hàng này </button>
+                <button type="submit" class="k-button"> <img src="~/Content/Images/Mains/@(@Model.ViewDetails[0].InActivePartial ? "cancel-yellow-32.png" : "cancel-green-32.png")" alt="" /> Xác nhận @(@Model.ViewDetails[0].InActivePartial ? "phục hồi" : "hủy") mặt hàng này </button>
                 <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Users-Exit-icon.png" alt="" /> Thoát </button>
             </div>
         </div>

@@ -678,7 +678,10 @@
     <Content Include="Content\Images\Mains\Box_Grey.png" />
     <Content Include="Content\Images\Mains\cancel-green-28.png" />
     <Content Include="Content\Images\Mains\cancel-green-32.png" />
+    <Content Include="Content\Images\Mains\cancel-green-64.png" />
     <Content Include="Content\Images\Mains\cancel-yellow-28.png" />
+    <Content Include="Content\Images\Mains\cancel-yellow-32.png" />
+    <Content Include="Content\Images\Mains\cancel-yellow-64.png" />
     <Content Include="Content\Images\Mains\Cashier-Check-32.png" />
     <Content Include="Content\Images\Mains\cashier-nocheck-32.png" />
     <Content Include="Content\Images\Mains\Check-32-CHY.png" />
