@@ -1,4 +1,4 @@
-﻿
+﻿@using TotalBase.Enums
 
 <!DOCTYPE html>
 <html>
@@ -41,6 +41,7 @@
 <body>
 
     <div id="main-popup" class="container body-content">
+        @Html.Hidden("CBPP", GlobalEnums.CBPP)
         @RenderBody()
         @Scripts.Render("~/bundles/jqueryval") @*Still using jquery validation*@
     </div>
