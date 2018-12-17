@@ -15,12 +15,14 @@
 
                 columns.Bound(p => p.Reference).Title("Phiếu").Width(1).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= TransferOrderID #'>#=Reference#</a>");
                 columns.Bound(p => p.TransferOrderTypeName).Title("PL").Width(10);
-                columns.Bound(p => p.Caption).Title("Mặt hàng").Width(338);
+                columns.Bound(p => p.Caption).Title("Mặt hàng").Width(368);
                 
-                columns.Bound(p => p.TransferOrderJobs).Title("Mục đích").Width(107);
+                columns.Bound(p => p.TransferOrderJobs).Title("Mục đích").Width(127);
                 columns.Bound(p => p.VoidTypeName).Title("Hủy lệnh").Width(20);
                 
-                columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);                
+                columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
+
+                columns.Template(t => { }).Title("&nbsp;").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(50)
                     .ClientTemplate("<a class='k-button' title='Hủy phiếu' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Void" }) + "/#= TransferOrderID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= TransferOrderID #'><span class='k-icon sbt-delete'></span></a>");

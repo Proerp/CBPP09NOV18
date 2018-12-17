@@ -16,7 +16,7 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
 
-    @Html.HiddenFor(model => (model as ICommodityPrimitiveDTO).CommodityID)
+    @Html.HiddenFor(model => (model as ICommodityBaseDTO).CommodityID)
     @Html.HiddenFor(model => (model as ICommodityPrimitiveDTO).CommodityCategoryName)
     @Html.HiddenFor(model => (model as ICommodityPrimitiveDTO).CommodityLineName)
     @Html.HiddenFor(model => (model as ICommodityPrimitiveDTO).CommodityClassName)
@@ -80,12 +80,12 @@
         <div class="form-group" style="height: 27px;"></div>
 
         <div class="form-group">
-            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Name)
+            @Html.LabelFor(model => (model as ICommodityBaseDTO).Name)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Name).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityBaseDTO).Name).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Name, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as ICommodityBaseDTO).Name, "", new { @class = "text-danger" })
             </div>
         </div>
 

@@ -11,7 +11,7 @@
 @model  ICommodityViewModel
 
 
-@Html.HiddenFor(model => (model as ICommodityPrimitiveDTO).CommodityID)
+@Html.HiddenFor(model => (model as ICommodityBaseDTO).CommodityID)
 @Html.HiddenFor(model => (model as IBaseDTO).Editable)
 
 <div class="left-panel">
