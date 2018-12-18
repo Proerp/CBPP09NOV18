@@ -505,14 +505,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString = " @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
-            queryString = queryString + "       SELECT          " + (int)@GlobalEnums.GoodsReceiptTypeID.FinishedProduct + " AS GoodsReceiptTypeID, PlannedOrders.PlannedOrderID, PlannedOrders.EntryDate AS PlannedOrderEntryDate, PlannedOrders.Reference AS PlannedOrderReference, PlannedOrders.Code AS PlannedOrderCode, PlannedOrders.Caption AS PlannedOrderCaption, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName " + "\r\n";
-            queryString = queryString + "       FROM            Customers " + "\r\n";
+            queryString = queryString + "       SELECT          " + (int)@GlobalEnums.GoodsReceiptTypeID.FinishedProduct + " AS GoodsReceiptTypeID, PlannedOrders.PlannedOrderID, PlannedOrders.EntryDate AS PlannedOrderEntryDate, PlannedOrders.Reference AS PlannedOrderReference, PlannedOrders.Code AS PlannedOrderCode, PlannedOrders.Caption AS PlannedOrderCaption, FinishedProductPackages.MinHandoverDate, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName " + "\r\n";
+            queryString = queryString + "       FROM            PlannedOrders " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT PlannedOrderID, MIN(FinishedHandoverDate) AS MinHandoverDate FROM FinishedProductPackages WHERE LocationID = @LocationID AND Approved = 1 AND HandoverApproved = 1 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY PlannedOrderID) FinishedProductPackages ON PlannedOrders.PlannedOrderID = FinishedProductPackages.PlannedOrderID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Customers ON PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
 
 
             queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = 3 " + "\r\n";
-
-
-            queryString = queryString + "                       INNER JOIN PlannedOrders ON PlannedOrders.PlannedOrderID IN (SELECT DISTINCT PlannedOrderID FROM FinishedProductPackages WHERE LocationID = @LocationID AND Approved = 1 AND HandoverApproved = 1 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0) AND PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptPendingPlannedOrders", queryString);
         }

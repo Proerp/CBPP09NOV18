@@ -8,8 +8,9 @@
         columns.Bound(c => c.PlannedOrderReference).Title("KHSX").Width(38);
         columns.Bound(c => c.PlannedOrderCode).Title("Số CT").Width(38);
         columns.Bound(c => c.PlannedOrderEntryDate).Title("Ngày KHSX").Width(55).Format("{0:" + Settings.DateFormat + "}");
-        columns.Bound(c => c.CustomerCode).Title("Mã KH").Width(68);
-        columns.Bound(c => c.CustomerName).Title("Tên KH").Width(140);
+        columns.Bound(c => c.MinHandoverDate).Title("Ngày GH").Width(55).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.CustomerCode).Title("Mã KH").Width(60);
+        columns.Bound(c => c.CustomerName).Title("Tên KH").Width(132);
         columns.Bound(c => c.PlannedOrderCaption).Title("Mặt hàng").Width(250);        
     })
     .ToolBar(toolbar =>

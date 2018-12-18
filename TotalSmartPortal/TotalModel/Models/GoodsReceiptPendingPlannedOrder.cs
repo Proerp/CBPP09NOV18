@@ -25,5 +25,6 @@ namespace TotalModel.Models
         public string WarehouseCode { get; set; }
         public string WarehouseName { get; set; }
         public string PlannedOrderCaption { get; set; }
+        public Nullable<System.DateTime> MinHandoverDate { get; set; }
     }
 }
