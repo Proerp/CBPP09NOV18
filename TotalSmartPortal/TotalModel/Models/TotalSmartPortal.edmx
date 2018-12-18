@@ -7247,6 +7247,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="ConfigID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetTaskIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <Function Name="GetTransferOrderAvailableWarehouses" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetTransferOrderIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
@@ -14362,6 +14366,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetTransferOrderAvailableWarehouses" ReturnType="Collection(TotalSmartPortalModel.TransferOrderAvailableWarehouse)">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -21369,6 +21377,16 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="WarehouseReceiptName" Nullable="false" MaxLength="60" />
           <Property Type="Int32" Name="LocationReceiptID" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="TransferOrderAvailableWarehouse">
+          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
+          <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="LocationIssuedID" Nullable="false" />
+          <Property Type="Int32" Name="WarehouseReceiptID" Nullable="false" />
+          <Property Type="String" Name="WarehouseReceiptCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="WarehouseReceiptName" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="LocationReceiptID" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -27151,6 +27169,20 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.WarehouseTransferAvailableWarehouse">
                 <ScalarProperty Name="HasTransferOrder" ColumnName="HasTransferOrder" />
                 <ScalarProperty Name="Categories" ColumnName="Categories" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="LocationIssuedID" ColumnName="LocationIssuedID" />
+                <ScalarProperty Name="WarehouseReceiptID" ColumnName="WarehouseReceiptID" />
+                <ScalarProperty Name="WarehouseReceiptCode" ColumnName="WarehouseReceiptCode" />
+                <ScalarProperty Name="WarehouseReceiptName" ColumnName="WarehouseReceiptName" />
+                <ScalarProperty Name="LocationReceiptID" ColumnName="LocationReceiptID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTransferOrderAvailableWarehouses" FunctionName="TotalSmartPortalModel.Store.GetTransferOrderAvailableWarehouses">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.TransferOrderAvailableWarehouse">
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />

@@ -4661,5 +4661,18 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WarehouseTransferAvailableWarehouse>("GetWarehouseTransferAvailableWarehouses", locationIDParameter, nMVNTaskIDParameter);
         }
+    
+        public virtual ObjectResult<TransferOrderAvailableWarehouse> GetTransferOrderAvailableWarehouses(Nullable<int> locationID, Nullable<int> nMVNTaskID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderAvailableWarehouse>("GetTransferOrderAvailableWarehouses", locationIDParameter, nMVNTaskIDParameter);
+        }
     }
 }

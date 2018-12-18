@@ -1575,7 +1575,7 @@
     <Content Include="Areas\Inventories\Views\MaterialTransfers\GetGoodsReceiptDetailAvailables.cshtml" />
     <Content Include="Areas\Inventories\Views\ItemTransfers\GetGoodsReceiptDetailAvailables.cshtml" />
     <Content Include="Areas\Inventories\Views\WarehouseTransfers\_GetTransferOrder.cshtml" />
-    <Content Include="Areas\Inventories\Views\WarehouseTransfers\_GetWarehouse.cshtml" />
+    <Content Include="Areas\Inventories\Views\WarehouseTransfers\_GetPendingWarehouse.cshtml" />
     <Content Include="Areas\Inventories\Views\WarehouseTransfers\GetTransferOrderDetails.cshtml" />
     <Content Include="Areas\Inventories\Views\MaterialTransfers\GetTransferOrderDetails.cshtml" />
     <Content Include="Areas\Inventories\Views\ItemTransfers\GetTransferOrderDetails.cshtml" />
@@ -1647,6 +1647,7 @@
     <Content Include="Areas\Productions\Views\BlendingInstructions\Create.cshtml" />
     <Content Include="Areas\Inventories\Views\TransferOrders\GetPendingBlendingInstructions.cshtml" />
     <Content Include="Areas\Inventories\Views\MaterialTransferOrders\GetPendingBlendingInstructions.cshtml" />
+    <Content Include="Areas\Inventories\Views\WarehouseTransfers\_GetAvailableWarehouse.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">

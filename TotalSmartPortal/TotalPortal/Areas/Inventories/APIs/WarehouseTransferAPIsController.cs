@@ -35,9 +35,15 @@ namespace TotalPortal.Areas.Inventories.APIs
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetWarehouses([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
+        public JsonResult GetAvailableWarehouses([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
         {
-            var result = this.transferOrderAPIRepository.GetWarehouses(locationID, nmvnTaskID);
+            var result = this.transferOrderAPIRepository.GetAvailableWarehouses(locationID, nmvnTaskID);
+            return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult GetPendingWarehouses([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
+        {
+            var result = this.transferOrderAPIRepository.GetPendingWarehouses(locationID, nmvnTaskID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 

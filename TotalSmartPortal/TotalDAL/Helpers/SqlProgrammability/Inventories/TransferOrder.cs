@@ -21,6 +21,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.GetTransferOrderIndexes();
 
             this.GetTransferOrderViewDetails();
+
+            this.GetTransferOrderAvailableWarehouses();
             this.GetTransferOrderPendingBlendingInstructions();
 
             this.TransferOrderApproved();
@@ -87,6 +89,23 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
 
         #region Pending
+
+        private void GetTransferOrderAvailableWarehouses()
+        {
+            string queryString = " @LocationID int, @NMVNTaskID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       SELECT          Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, WarehouseReceipts.WarehouseID AS WarehouseReceiptID, WarehouseReceipts.Code AS WarehouseReceiptCode, WarehouseReceipts.Name AS WarehouseReceiptName, WarehouseReceipts.LocationID AS LocationReceiptID " + "\r\n";
+            queryString = queryString + "       FROM            Warehouses  " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses AS WarehouseReceipts ON Warehouses.WarehouseID <> WarehouseReceipts.WarehouseID " + "\r\n";
+            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (1, 6) AND WarehouseReceipts.WarehouseID IN (1, 6) " + "\r\n";
+
+            queryString = queryString + "       ORDER BY        WarehouseID " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetTransferOrderAvailableWarehouses", queryString);
+        }
+
         private void GetTransferOrderPendingBlendingInstructions()
         {
             string queryString;

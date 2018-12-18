@@ -20,14 +20,14 @@
     })
     .Scrollable(s => s.Height(Settings.PopupContentHeight))
     .DataSource(ds => ds.Ajax()
-        .Read(read => read.Action("GetWarehouses", "WarehouseTransferAPIs", new { area = "Inventories" }).Data("onAdditionalGetWarehouses"))
+        .Read(read => read.Action("GetPendingWarehouses", "WarehouseTransferAPIs", new { area = "Inventories" }).Data("onAdditionalGetPendingWarehouses"))
         .ServerOperation(false)
     )
     .Selectable()
 )
 
 <script type="text/javascript">
-    function onAdditionalGetWarehouses(e) {
+    function onAdditionalGetPendingWarehouses(e) {
         return {
             locationID: window.parent.requireConfig.pageOptions.LocationID,
             nmvnTaskID: window.parent.requireConfig.pageOptions.NmvnTaskID
