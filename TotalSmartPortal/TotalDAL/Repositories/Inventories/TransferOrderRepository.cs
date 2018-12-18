@@ -41,6 +41,15 @@ namespace TotalDAL.Repositories.Inventories
             return objectParameters;
         }
 
+        public IEnumerable<TransferOrderAvailableWarehouse> GetAvailableWarehouses(int? locationID, int? nmvnTaskID)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            IEnumerable<TransferOrderAvailableWarehouse> availableWarehouses = base.TotalSmartPortalEntities.GetTransferOrderAvailableWarehouses(locationID, nmvnTaskID).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return availableWarehouses;
+        }
+
         public IEnumerable<TransferOrderPendingBlendingInstruction> GetTransferOrderPendingBlendingInstructions(int? locationID, int? transferOrderID, string commodityIDs)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;

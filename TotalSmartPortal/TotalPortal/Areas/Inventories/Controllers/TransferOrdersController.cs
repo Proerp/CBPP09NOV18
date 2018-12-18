@@ -36,15 +36,15 @@ namespace TotalPortal.Areas.Inventories.Controllers
             return View();
         }
 
-        protected override TViewDetailViewModel InitViewModelByDefault(TViewDetailViewModel simpleViewModel)
-        {
-            simpleViewModel = base.InitViewModelByDefault(simpleViewModel);
+        //protected override TViewDetailViewModel InitViewModelByDefault(TViewDetailViewModel simpleViewModel)
+        //{
+        //    simpleViewModel = base.InitViewModelByDefault(simpleViewModel);
 
-            simpleViewModel.Warehouse = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = simpleViewModel.IsMaterial ? 1 : (simpleViewModel.IsItem ? 2 : (simpleViewModel.IsProduct ? 3 : 0)), Code = simpleViewModel.IsMaterial ? "NVL原料" : (simpleViewModel.IsItem ? "KM片" : (simpleViewModel.IsProduct ? "TP成品" : "")), Name = simpleViewModel.IsMaterial ? "NVL" : (simpleViewModel.IsItem ? "KM" : (simpleViewModel.IsProduct ? "TP" : "")), LocationID = 1 };
-            simpleViewModel.WarehouseReceipt = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = 6, Code = "KDH", Name = "KDH", LocationID = 2 };
+        //    simpleViewModel.Warehouse = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = simpleViewModel.IsMaterial ? 1 : (simpleViewModel.IsItem ? 2 : (simpleViewModel.IsProduct ? 3 : 0)), Code = simpleViewModel.IsMaterial ? "NVL原料" : (simpleViewModel.IsItem ? "KM片" : (simpleViewModel.IsProduct ? "TP成品" : "")), Name = simpleViewModel.IsMaterial ? "NVL" : (simpleViewModel.IsItem ? "KM" : (simpleViewModel.IsProduct ? "TP" : "")), LocationID = 1 };
+        //    simpleViewModel.WarehouseReceipt = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = 6, Code = "KDH", Name = "KDH", LocationID = 2 };
 
-            return simpleViewModel;
-        }
+        //    return simpleViewModel;
+        //}
 
         public override void AddRequireJsOptions()
         {

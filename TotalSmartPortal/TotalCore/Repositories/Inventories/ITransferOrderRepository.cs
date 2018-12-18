@@ -10,6 +10,7 @@ namespace TotalCore.Repositories.Inventories
 
     public interface ITransferOrderAPIRepository : IGenericAPIRepository
     {
+        IEnumerable<TransferOrderAvailableWarehouse> GetAvailableWarehouses(int? locationID, int? nmvnTaskID);
         IEnumerable<TransferOrderPendingBlendingInstruction> GetTransferOrderPendingBlendingInstructions(int? locationID, int? transferOrderID, string commodityIDs);
     }    
 }

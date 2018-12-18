@@ -17,18 +17,18 @@ namespace TotalPortal.Areas.Inventories.APIs
     [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
     public class WarehouseTransferAPIsController : Controller
     {
-        private readonly IWarehouseTransferAPIRepository transferOrderAPIRepository;
+        private readonly IWarehouseTransferAPIRepository warehouseTransferAPIRepository;
 
-        public WarehouseTransferAPIsController(IWarehouseTransferAPIRepository transferOrderAPIRepository)
+        public WarehouseTransferAPIsController(IWarehouseTransferAPIRepository warehouseTransferAPIRepository)
         {
-            this.transferOrderAPIRepository = transferOrderAPIRepository;
+            this.warehouseTransferAPIRepository = warehouseTransferAPIRepository;
         }
 
 
         public JsonResult GetWarehouseTransferIndexes([DataSourceRequest] DataSourceRequest request, string nmvnTaskID)
         {
-            this.transferOrderAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
-            ICollection<WarehouseTransferIndex> transferOrderIndexes = this.transferOrderAPIRepository.GetEntityIndexes<WarehouseTransferIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext));
+            this.warehouseTransferAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
+            ICollection<WarehouseTransferIndex> transferOrderIndexes = this.warehouseTransferAPIRepository.GetEntityIndexes<WarehouseTransferIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext));
 
             DataSourceResult response = transferOrderIndexes.ToDataSourceResult(request);
 
@@ -37,25 +37,25 @@ namespace TotalPortal.Areas.Inventories.APIs
 
         public JsonResult GetAvailableWarehouses([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
         {
-            var result = this.transferOrderAPIRepository.GetAvailableWarehouses(locationID, nmvnTaskID);
+            var result = this.warehouseTransferAPIRepository.GetAvailableWarehouses(locationID, nmvnTaskID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetPendingWarehouses([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
         {
-            var result = this.transferOrderAPIRepository.GetPendingWarehouses(locationID, nmvnTaskID);
+            var result = this.warehouseTransferAPIRepository.GetPendingWarehouses(locationID, nmvnTaskID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetTransferOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
         {
-            var result = this.transferOrderAPIRepository.GetTransferOrders(locationID, nmvnTaskID);
+            var result = this.warehouseTransferAPIRepository.GetTransferOrders(locationID, nmvnTaskID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetTransferOrderDetails([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID, int? warehouseTransferID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string goodsReceiptDetailIDs)
         {
-            var result = this.transferOrderAPIRepository.GetTransferOrderDetails(locationID, nmvnTaskID, warehouseTransferID, transferOrderID, warehouseID, warehouseReceiptID, goodsReceiptDetailIDs);
+            var result = this.warehouseTransferAPIRepository.GetTransferOrderDetails(locationID, nmvnTaskID, warehouseTransferID, transferOrderID, warehouseID, warehouseReceiptID, goodsReceiptDetailIDs);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
     }
