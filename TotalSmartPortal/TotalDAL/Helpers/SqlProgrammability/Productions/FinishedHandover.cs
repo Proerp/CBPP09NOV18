@@ -260,7 +260,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "               DECLARE @msg NVARCHAR(300) " + "\r\n"; ;
 
             queryString = queryString + "               UPDATE      FinishedProductPackages" + "\r\n";
-            queryString = queryString + "               SET         FinishedProductPackages.FinishedHandoverID = FinishedHandoverDetails.FinishedHandoverID " + "\r\n";
+            queryString = queryString + "               SET         FinishedProductPackages.FinishedHandoverID = FinishedHandoverDetails.FinishedHandoverID, FinishedProductPackages.FinishedHandoverDate = FinishedHandoverDetails.EntryDate " + "\r\n";
             queryString = queryString + "               FROM        FinishedProductPackages INNER JOIN" + "\r\n";
             queryString = queryString + "                           FinishedHandoverDetails ON FinishedHandoverDetails.FinishedHandoverID = @EntityID AND FinishedProductPackages.Approved = 1 AND FinishedProductPackages.FinishedProductPackageID = FinishedHandoverDetails.FinishedProductPackageID " + "\r\n";
 
