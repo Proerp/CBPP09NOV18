@@ -53,6 +53,8 @@
         <div class="right-top-panel right-top-panel-H2">
             @Html.EditorFor(d => d.Customer, new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
 
+            @Html.EditorFor(d => d.Transporter, new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter) })
+
             <div class="form-group">
                 <div class="right-panel-label right-panel-label-whole-width">
                     @Html.LabelFor(model => model.Purposes)

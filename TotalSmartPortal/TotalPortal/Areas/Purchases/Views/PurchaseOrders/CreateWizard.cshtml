@@ -14,7 +14,9 @@
 
     <div style="margin-top: 39px; margin-right: 18px;">
         
-        @Html.EditorFor(d => (d as IWarehouseAdjustmentDTO).Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+        @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+
+        @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID) })
                       
     </div> <div class="background-bar" style="height: 45px;">
         <div class="popup-button-bar">

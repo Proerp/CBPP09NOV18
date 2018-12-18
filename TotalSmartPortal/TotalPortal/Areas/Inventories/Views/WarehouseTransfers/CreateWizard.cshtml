@@ -42,7 +42,7 @@
                     @Html.Partial("~/Areas/Inventories/Views/WarehouseTransfers/_GetAvailableWarehouse.cshtml")
                 </text>);
             tabStrip.Add().Text("Xuất không có lệnh VCNB")
-                .Visible(!GlobalEnums.CBPP)
+                //.Visible(!GlobalEnums.CBPP)
                 .Selected(!GlobalEnums.CBPP)
                 .Content(@<text>
                     <div style="margin-top: 39px; margin-right: 18px;">
@@ -83,10 +83,13 @@
     function okButton_Click() {
         var selectedGrid;
         switch ($("#tabStrip").data("kendoTabStrip").select().index()) {
-            case 1:
-                selectedGrid = $("#warehouseTransferPendingTransferOrderGrid").data("kendoGrid");
+            case 0:
+                selectedGrid = $("#warehouseTransferAvailableWarehouseGrid").data("kendoGrid");
                 break;
             case 2:
+                selectedGrid = $("#warehouseTransferPendingTransferOrderGrid").data("kendoGrid");
+                break;
+            case 3:
                 selectedGrid = $("#warehouseTransferPendingWarehouseGrid").data("kendoGrid");
                 break;
             default:
@@ -94,7 +97,7 @@
                 break;
         }
 
-        if ($("#tabStrip").data("kendoTabStrip").select().index() != 0)
+        if ($("#tabStrip").data("kendoTabStrip").select().index() != 1)
             handleOKEvent(selectedGrid);
     }
 
@@ -103,15 +106,9 @@
     }
 
     function handleOKEvent(selectedGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
-
-        if ($("#Project_ProjectID").val() === null || $("#Project_ProjectID").val() === "")
-            return false;
-
         if (selectedGrid === undefined)
             _setModelInput();
         else {
-           
-
             var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
             if (selectedDataItem === undefined || selectedDataItem === null)
                 return false;

@@ -22,6 +22,7 @@ namespace TotalDTO.Purchases
         public int PurchaseOrderID { get; set; }
 
         public virtual Nullable<int> CustomerID { get; set; }
+        public virtual Nullable<int> TransporterID { get; set; }
 
         [Display(Name = "Số chứng từ")]
         public string Code { get; set; }
@@ -36,7 +37,7 @@ namespace TotalDTO.Purchases
         {
             base.PerformPresaveRule();
 
-            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = (int)this.CustomerID; });
+            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = (int)this.CustomerID; e.TransporterID = (int)this.TransporterID; });
         }
     }
 
@@ -50,6 +51,10 @@ namespace TotalDTO.Purchases
         public override Nullable<int> CustomerID { get { return (this.Customer != null ? (this.Customer.CustomerID > 0 ? (Nullable<int>)this.Customer.CustomerID : null) : null); } }
         [UIHint("Commons/CustomerBase")]
         public CustomerBaseDTO Customer { get; set; }
+
+        public override Nullable<int> TransporterID { get { return (this.Transporter != null ? (this.Transporter.CustomerID > 0 ? (Nullable<int>)this.Transporter.CustomerID : null) : null); } }
+        [UIHint("Commons/CustomerBase")]
+        public CustomerBaseDTO Transporter { get; set; }
 
         public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }
         [UIHint("AutoCompletes/VoidType")]

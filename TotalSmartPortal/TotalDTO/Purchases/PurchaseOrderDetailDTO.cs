@@ -14,6 +14,7 @@ namespace TotalDTO.Purchases
         public int PurchaseOrderID { get; set; }
 
         public int CustomerID { get; set; }
+        public int TransporterID { get; set; }
 
         //[Display(Name = "Mã CK")]
         [UIHint("AutoCompletes/CommodityBase")]
