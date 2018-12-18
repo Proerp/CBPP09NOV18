@@ -31,7 +31,7 @@ namespace TotalDTO.Inventories
         public DateTime BlendingInstructionEntryDate { get; set; }
         [Display(Name = "Diễn giải")]
         public string BlendingInstructionDescription { get; set; }
-        
+
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
 
@@ -53,6 +53,7 @@ namespace TotalDTO.Inventories
         public PackageIssueDTO()
         {
             this.PackageIssueViewDetails = new List<PackageIssueDetailDTO>();
+            if (GlobalEnums.CBPP) { this.Storekeeper = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; this.CrucialWorker = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; }
         }
 
         public override Nullable<int> WarehouseID { get { return (this.Warehouse != null ? this.Warehouse.WarehouseID : null); } }

@@ -115,8 +115,10 @@ namespace TotalDTO.Inventories
     {
         public WarehouseTransferDTO()
         {
-            this.OneStep = GlobalEnums.CBPP;
             this.WarehouseTransferViewDetails = new List<WarehouseTransferDetailDTO>();
+
+            this.OneStep = GlobalEnums.CBPP;
+            if (GlobalEnums.CBPP) { this.Storekeeper = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; }
         }
 
         public override Nullable<int> WarehouseID { get { return (this.Warehouse != null ? this.Warehouse.WarehouseID : null); } }

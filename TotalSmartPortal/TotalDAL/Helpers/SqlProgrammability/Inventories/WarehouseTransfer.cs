@@ -22,6 +22,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             this.GetWarehouseTransferViewDetails();
 
+            this.GetWarehouseTransferAvailableWarehouses();
             this.GetWarehouseTransferPendingWarehouses();
             this.GetWarehouseTransferPendingTransferOrders();
             this.GetWarehouseTransferPendingTransferOrderDetails();
@@ -97,6 +98,28 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
 
 
+
+        private void GetWarehouseTransferAvailableWarehouses()
+        {
+            string queryString = " @LocationID int, @NMVNTaskID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       SELECT          CAST(0 AS bit) AS HasTransferOrder, N'Chuyển kho' AS Categories, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, WarehouseReceipts.WarehouseID AS WarehouseReceiptID, WarehouseReceipts.Code AS WarehouseReceiptCode, WarehouseReceipts.Name AS WarehouseReceiptName, WarehouseReceipts.LocationID AS LocationReceiptID " + "\r\n";
+            queryString = queryString + "       FROM            Warehouses  " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses AS WarehouseReceipts ON Warehouses.WarehouseID <> WarehouseReceipts.WarehouseID " + "\r\n";
+            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (1, 6) AND WarehouseReceipts.WarehouseID IN (1, 6) " + "\r\n";
+
+            queryString = queryString + "       UNION ALL       " + "\r\n";
+
+            queryString = queryString + "       SELECT          CAST(0 AS bit) AS HasTransferOrder, N'Chuyển vị trí' AS Categories, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, Warehouses.WarehouseID AS WarehouseReceiptID, Warehouses.Code AS WarehouseReceiptCode, Warehouses.Name AS WarehouseReceiptName, Warehouses.LocationID AS LocationReceiptID " + "\r\n";
+            queryString = queryString + "       FROM            Warehouses  " + "\r\n";
+            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (1, 6) " + "\r\n";
+
+            queryString = queryString + "       ORDER BY        Categories DESC, WarehouseID " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetWarehouseTransferAvailableWarehouses", queryString);
+        }
 
         private void GetWarehouseTransferPendingTransferOrders()
         {
