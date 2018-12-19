@@ -64,6 +64,15 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         {
             return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(locationID, goodsReceiptID, goodsArrivalID, goodsArrivalPackageIDs);
         }
+
+
+
+        [HttpGet]
+        [Route("GetGoodsReceiptDetailAvailables/{locationID}/{warehouseID}/{commodityID}/{commodityIDs}/{batchID}/{goodsReceiptDetailIDs}/{onlyApproved}/{onlyIssuable}")]
+        public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? commodityID, string commodityIDs, int? batchID, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
+        {
+            return this.goodsReceiptAPIRepository.GetGoodsReceiptDetailAvailables(locationID, warehouseID, commodityID, commodityIDs, batchID, goodsReceiptDetailIDs, onlyApproved, onlyIssuable);
+        }
     }
 
 

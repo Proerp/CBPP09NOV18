@@ -968,7 +968,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "           " + this.GetGoodsReceiptDetailAvailableSQL(isWarehouseID, true, false) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
-            queryString = queryString + "               IF  (@CommodityIDs <> '') " + "\r\n";
+            queryString = queryString + "               IF  (@CommodityIDs <> '' AND @CommodityIDs <> '0') " + "\r\n";
             queryString = queryString + "                   " + this.GetGoodsReceiptDetailAvailableSQL(isWarehouseID, false, true) + "\r\n";
             queryString = queryString + "               ELSE " + "\r\n";
             queryString = queryString + "                   " + this.GetGoodsReceiptDetailAvailableSQL(isWarehouseID, false, false) + "\r\n";
