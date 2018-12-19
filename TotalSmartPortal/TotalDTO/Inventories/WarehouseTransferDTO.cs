@@ -23,8 +23,6 @@ namespace TotalDTO.Inventories
     {
         int WarehouseTransferID { get; set; }
         
-        int WarehouseTransferTypeID { get; set; }
-
         bool OneStep { get; set; }
         bool HasTransferOrder { get; set; }
 
@@ -56,8 +54,6 @@ namespace TotalDTO.Inventories
 
         public int WarehouseTransferID { get; set; }
 
-        public int WarehouseTransferTypeID { get; set; }
-
         public bool OneStep { get; set; }
         public bool HasTransferOrder { get; set; }
 
@@ -83,7 +79,7 @@ namespace TotalDTO.Inventories
             base.PerformPresaveRule();
 
             string caption = "";
-            this.DtoDetails().ToList().ForEach(e => { e.WarehouseTransferTypeID = this.WarehouseTransferTypeID; e.NMVNTaskID = this.NMVNTaskID; e.WarehouseID = (int)this.WarehouseID; e.WarehouseReceiptID = this.WarehouseReceiptID; e.LocationIssuedID = this.LocationIssuedID; e.LocationReceiptID = this.LocationReceiptID; e.HasTransferOrder = this.HasTransferOrder; e.OneStep = this.OneStep; if (caption.IndexOf(e.CommodityCode) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityCode; });
+            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.WarehouseID = (int)this.WarehouseID; e.WarehouseReceiptID = this.WarehouseReceiptID; e.LocationIssuedID = this.LocationIssuedID; e.LocationReceiptID = this.LocationReceiptID; e.HasTransferOrder = this.HasTransferOrder; e.OneStep = this.OneStep; if (caption.IndexOf(e.CommodityCode) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityCode; });
             this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
 

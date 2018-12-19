@@ -17,7 +17,6 @@ namespace TotalDTO.Inventories
         public virtual Nullable<int> TransferOrderID { get; set; }
         public virtual Nullable<int> TransferOrderDetailID { get; set; }
 
-        public int WarehouseTransferTypeID { get; set; }
         public GlobalEnums.NmvnTaskID NMVNTaskID { get; set; }
 
         public bool OneStep { get; set; }
@@ -30,8 +29,6 @@ namespace TotalDTO.Inventories
 
         [UIHint("AutoCompletes/CommodityBase")]
         public override string CommodityCode { get; set; }
-
-        public Nullable<int> CustomerID { get; set; }
 
         public Nullable<int> GoodsReceiptID { get; set; }
         public Nullable<int> GoodsReceiptDetailID { get; set; }
