@@ -25,6 +25,10 @@
 
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Shift.cshtml")
 
+        <div class="form-group">
+            @Html.EditorFor(d => d.ProductionLine)
+        </div>
+
         <div class="SBT-Hidden">
             @Html.EditorFor(d => d.Warehouse, new { WarehouseDisplayName = @Model.GetDisplayName(m => m.Warehouse) })
         </div>

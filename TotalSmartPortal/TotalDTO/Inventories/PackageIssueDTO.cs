@@ -35,6 +35,8 @@ namespace TotalDTO.Inventories
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
 
+        public virtual int ProductionLineID { get; set; }
+
         public virtual Nullable<int> WarehouseID { get; set; }
         public virtual int StorekeeperID { get; set; }
         public virtual int CrucialWorkerID { get; set; }
@@ -43,7 +45,7 @@ namespace TotalDTO.Inventories
         {
             base.PerformPresaveRule();
 
-            this.DtoDetails().ToList().ForEach(e => { e.BlendingInstructionID = this.BlendingInstructionID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; e.WarehouseID = this.WarehouseID; });
+            this.DtoDetails().ToList().ForEach(e => { e.BlendingInstructionID = this.BlendingInstructionID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.ProductionLineID = this.ProductionLineID; e.CrucialWorkerID = this.CrucialWorkerID; e.WarehouseID = this.WarehouseID; });
         }
     }
 
@@ -53,13 +55,18 @@ namespace TotalDTO.Inventories
         public PackageIssueDTO()
         {
             this.PackageIssueViewDetails = new List<PackageIssueDetailDTO>();
-            if (GlobalEnums.CBPP) { this.Storekeeper = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; this.CrucialWorker = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; }
+            if (GlobalEnums.CBPP) { this.ProductionLine = new ProductionLineBaseDTO() { ProductionLineID = 10, Code = "UNKNOWN", Name = "UNKNOWN" }; this.Storekeeper = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; this.CrucialWorker = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; }
         }
 
         public override Nullable<int> WarehouseID { get { return (this.Warehouse != null ? this.Warehouse.WarehouseID : null); } }
         [Display(Name = "Kho hàng")]
         [UIHint("AutoCompletes/WarehouseBase")]
         public WarehouseBaseDTO Warehouse { get; set; }
+
+        public override int ProductionLineID { get { return (this.ProductionLine != null ? this.ProductionLine.ProductionLineID : 0); } }
+        [Display(Name = "Mã số máy")]
+        [UIHint("AutoCompletes/ProductionLine")]
+        public ProductionLineBaseDTO ProductionLine { get; set; }
 
         public override int StorekeeperID { get { return (this.Storekeeper != null ? this.Storekeeper.EmployeeID : 0); } }
         [Display(Name = "Thủ kho")]
