@@ -1,4 +1,7 @@
 ﻿using System;
+
+////https://codebeautify.org/jsonviewer
+
 namespace TotalBase.Enums
 {
     public static class GlobalEnums

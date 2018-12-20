@@ -331,6 +331,35 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "               IF (@Approved = 1) " + "\r\n";
             queryString = queryString + "                   BEGIN " + "\r\n";
 
+            #region INIT Labs
+            queryString = queryString + "                       INSERT INTO     Labs (EntryDate, Code, GoodsArrivalID, UserID, PreparedPersonID, OrganizationalUnitID, LocationID, ApproverID, TotalQuantity, Description, Remarks, CreatedDate, EditedDate, Approved, ApprovedDate, VoidTypeID, InActive, InActiveDate, CommodityCodes, CommodityNames, SealCodes, BatchCodes) " + "\r\n";
+            queryString = queryString + "                       SELECT          MIN(GoodsArrivals.EntryDate), GoodsArrivalDetails.LabCode, @EntityID, MIN(GoodsArrivals.UserID), MIN(GoodsArrivals.PreparedPersonID), MIN(GoodsArrivals.OrganizationalUnitID), MIN(GoodsArrivals.LocationID), MIN(GoodsArrivals.ApproverID), SUM(GoodsArrivalDetails.Quantity), MIN(GoodsArrivals.Description), MIN(GoodsArrivals.Remarks), MIN(GoodsArrivals.CreatedDate), MIN(GoodsArrivals.EditedDate), @Approved, MIN(GoodsArrivals.ApprovedDate), NULL AS VoidTypeID, 0 AS InActive, NULL AS InActiveDate, " + "\r\n";
+
+            queryString = queryString + "                                       LTRIM(STUFF   ((SELECT ', ' + Commodities.Code " + "\r\n";
+            queryString = queryString + "                                       FROM    GoodsArrivalDetails GoodsArrivalCommodities INNER JOIN Commodities ON GoodsArrivalCommodities.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                                       WHERE   GoodsArrivalCommodities.GoodsArrivalID = @EntityID AND GoodsArrivalCommodities.LabCode = GoodsArrivalDetails.LabCode " + "\r\n";
+            queryString = queryString + "                                       FOR XML PATH(''),TYPE).value('(./text())[1]','NVARCHAR(MAX)'),1,1,'')) AS CommodityCodes, " + "\r\n";
+
+            queryString = queryString + "                                       LTRIM(STUFF   ((SELECT ', ' + Commodities.Name " + "\r\n";
+            queryString = queryString + "                                       FROM    GoodsArrivalDetails GoodsArrivalCommodities INNER JOIN Commodities ON GoodsArrivalCommodities.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                                       WHERE   GoodsArrivalCommodities.GoodsArrivalID = @EntityID AND GoodsArrivalCommodities.LabCode = GoodsArrivalDetails.LabCode " + "\r\n";
+            queryString = queryString + "                                       FOR XML PATH(''),TYPE).value('(./text())[1]','NVARCHAR(MAX)'),1,1,'')) AS CommodityNames, " + "\r\n";
+
+            queryString = queryString + "                                       LTRIM(STUFF   ((SELECT ', ' + GoodsArrivalSealCodes.SealCode " + "\r\n";
+            queryString = queryString + "                                       FROM    GoodsArrivalDetails GoodsArrivalSealCodes " + "\r\n";
+            queryString = queryString + "                                       WHERE   GoodsArrivalSealCodes.GoodsArrivalID = @EntityID AND GoodsArrivalSealCodes.LabCode = GoodsArrivalDetails.LabCode " + "\r\n";
+            queryString = queryString + "                                       FOR XML PATH(''),TYPE).value('(./text())[1]','NVARCHAR(MAX)'),1,1,'')) AS SealCodes, " + "\r\n";
+
+            queryString = queryString + "                                       LTRIM(STUFF   ((SELECT ', ' + GoodsArrivalBatchCodes.BatchCode " + "\r\n";
+            queryString = queryString + "                                       FROM    GoodsArrivalDetails GoodsArrivalBatchCodes " + "\r\n";
+            queryString = queryString + "                                       WHERE   GoodsArrivalBatchCodes.GoodsArrivalID = @EntityID AND GoodsArrivalBatchCodes.LabCode = GoodsArrivalDetails.LabCode " + "\r\n";
+            queryString = queryString + "                                       FOR XML PATH(''),TYPE).value('(./text())[1]','NVARCHAR(MAX)'),1,1,'')) AS BatchCodes " + "\r\n";
+
+            queryString = queryString + "                       FROM            GoodsArrivals INNER JOIN GoodsArrivalDetails ON GoodsArrivals.GoodsArrivalID = @EntityID AND GoodsArrivals.GoodsArrivalID = GoodsArrivalDetails.GoodsArrivalID " + "\r\n";
+            queryString = queryString + "                       GROUP BY        GoodsArrivalDetails.LabCode; " + "\r\n";
+            #endregion INIT Labs
+
+
             queryString = queryString + "                       DECLARE         @EntryDate datetime, @GoodsArrivalID int, @GoodsArrivalDetailID int, @LocationID int, @CustomerID int, @TransporterID int, @PurchaseOrderID int, @PurchaseOrderDetailID int, @CommodityID int, @CommodityTypeID int, @WarehouseID int, @SerialID int, @Code nvarchar(60), @SealCode nvarchar(60), @BatchCode nvarchar(60), @LabCode nvarchar(60), @Barcode nvarchar(60), @ProductionDate datetime, @ExpiryDate datetime, @Quantity decimal(18, 2), @QuantityReceipted decimal(18, 2), @UnitWeight decimal(18, 2), @Packages decimal(18, 2), @Remarks nvarchar(100), @VoidTypeID int, @InActive bit, @InActivePartial bit, @InActivePartialDate datetime; " + "\r\n";
 
             queryString = queryString + "                       DECLARE         CURSORGoodsArrivalDetails CURSOR LOCAL FOR SELECT EntryDate, GoodsArrivalID, GoodsArrivalDetailID, LocationID, CustomerID, TransporterID, PurchaseOrderID, PurchaseOrderDetailID, CommodityID, CommodityTypeID, WarehouseID, SerialID, Code, SealCode, BatchCode, LabCode, Barcode, ProductionDate, ExpiryDate, Quantity, QuantityReceipted, UnitWeight, Packages, Remarks, VoidTypeID, InActive, InActivePartial, InActivePartialDate FROM GoodsArrivalDetails WHERE GoodsArrivalID = @EntityID ORDER BY SerialID; " + "\r\n";
@@ -356,6 +385,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "               ELSE " + "\r\n";
             queryString = queryString + "                   BEGIN " + "\r\n";
+            queryString = queryString + "                       DELETE FROM     Labs WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
             queryString = queryString + "                       DELETE FROM     GoodsArrivalPackages WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
             #endregion INIT GoodsArrivalPackages
