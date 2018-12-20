@@ -120,6 +120,7 @@ namespace TotalDTO.Inventories
         public Nullable<int> WarehouseAdjustmentTypeID { get; set; }
 
 
+        public int LabID { get; set; }
         public int BatchID { get; set; }
 
 
