@@ -63,6 +63,7 @@ namespace TotalModel.Models
         public decimal QuantityIssued { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
+        public int LabID { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
         public virtual Commodity Commodity { get; set; }

@@ -196,7 +196,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString = "";
 
             queryString = queryString + "       SELECT      GoodsArrivals.GoodsArrivalID, GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivals.Reference AS GoodsArrivalReference, GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.EntryDate AS GoodsArrivalEntryDate, GETDATE() AS BatchEntryDate, " + "\r\n";
-            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, GoodsArrivalPackages.SerialID, GoodsArrivalPackages.Barcode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.SealCode, GoodsArrivalPackages.LabCode, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, GoodsArrivalPackages.LabID, GoodsArrivalPackages.SerialID, GoodsArrivalPackages.Barcode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.SealCode, GoodsArrivalPackages.LabCode, " + "\r\n";
             queryString = queryString + "                   ROUND(GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
             queryString = queryString + "                   0.0 AS Quantity, GoodsArrivals.Description, GoodsArrivalPackages.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
@@ -212,7 +212,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString = "";
 
             queryString = queryString + "       SELECT      GoodsArrivals.GoodsArrivalID, GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivals.Reference AS GoodsArrivalReference, GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.EntryDate AS GoodsArrivalEntryDate, GETDATE() AS BatchEntryDate, " + "\r\n";
-            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, GoodsArrivalPackages.SerialID, GoodsArrivalPackages.Barcode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.SealCode, GoodsArrivalPackages.LabCode, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, GoodsArrivalPackages.LabID, GoodsArrivalPackages.SerialID, GoodsArrivalPackages.Barcode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.SealCode, GoodsArrivalPackages.LabCode, " + "\r\n";
             queryString = queryString + "                   ROUND(GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted + GoodsReceiptDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
             queryString = queryString + "                   0.0 AS Quantity, GoodsArrivals.Description, GoodsArrivalPackages.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 

@@ -43,6 +43,7 @@ namespace TotalModel.Models
         public int SerialID { get; set; }
         public decimal UnitWeight { get; set; }
         public decimal Packages { get; set; }
+        public Nullable<int> LabID { get; set; }
     
         public virtual GoodsArrival GoodsArrival { get; set; }
         public virtual VoidType VoidType { get; set; }

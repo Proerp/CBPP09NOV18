@@ -357,14 +357,18 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "                       FROM            GoodsArrivals INNER JOIN GoodsArrivalDetails ON GoodsArrivals.GoodsArrivalID = @EntityID AND GoodsArrivals.GoodsArrivalID = GoodsArrivalDetails.GoodsArrivalID " + "\r\n";
             queryString = queryString + "                       GROUP BY        GoodsArrivalDetails.LabCode; " + "\r\n";
+
+            queryString = queryString + "                       UPDATE          GoodsArrivalDetails SET GoodsArrivalDetails.LabID = Labs.LabID " + "\r\n";
+            queryString = queryString + "                       FROM            GoodsArrivalDetails INNER JOIN Labs ON GoodsArrivalDetails.GoodsArrivalID = @EntityID AND GoodsArrivalDetails.GoodsArrivalID = Labs.GoodsArrivalID AND GoodsArrivalDetails.LabCode = Labs.Code; " + "\r\n";
+
             #endregion INIT Labs
 
 
-            queryString = queryString + "                       DECLARE         @EntryDate datetime, @GoodsArrivalID int, @GoodsArrivalDetailID int, @LocationID int, @CustomerID int, @TransporterID int, @PurchaseOrderID int, @PurchaseOrderDetailID int, @CommodityID int, @CommodityTypeID int, @WarehouseID int, @SerialID int, @Code nvarchar(60), @SealCode nvarchar(60), @BatchCode nvarchar(60), @LabCode nvarchar(60), @Barcode nvarchar(60), @ProductionDate datetime, @ExpiryDate datetime, @Quantity decimal(18, 2), @QuantityReceipted decimal(18, 2), @UnitWeight decimal(18, 2), @Packages decimal(18, 2), @Remarks nvarchar(100), @VoidTypeID int, @InActive bit, @InActivePartial bit, @InActivePartialDate datetime; " + "\r\n";
+            queryString = queryString + "                       DECLARE         @EntryDate datetime, @GoodsArrivalID int, @GoodsArrivalDetailID int, @LocationID int, @CustomerID int, @TransporterID int, @PurchaseOrderID int, @PurchaseOrderDetailID int, @CommodityID int, @CommodityTypeID int, @WarehouseID int, @SerialID int, @LabID int, @Code nvarchar(60), @SealCode nvarchar(60), @BatchCode nvarchar(60), @LabCode nvarchar(60), @Barcode nvarchar(60), @ProductionDate datetime, @ExpiryDate datetime, @Quantity decimal(18, 2), @QuantityReceipted decimal(18, 2), @UnitWeight decimal(18, 2), @Packages decimal(18, 2), @Remarks nvarchar(100), @VoidTypeID int, @InActive bit, @InActivePartial bit, @InActivePartialDate datetime; " + "\r\n";
 
-            queryString = queryString + "                       DECLARE         CURSORGoodsArrivalDetails CURSOR LOCAL FOR SELECT EntryDate, GoodsArrivalID, GoodsArrivalDetailID, LocationID, CustomerID, TransporterID, PurchaseOrderID, PurchaseOrderDetailID, CommodityID, CommodityTypeID, WarehouseID, SerialID, Code, SealCode, BatchCode, LabCode, Barcode, ProductionDate, ExpiryDate, Quantity, QuantityReceipted, UnitWeight, Packages, Remarks, VoidTypeID, InActive, InActivePartial, InActivePartialDate FROM GoodsArrivalDetails WHERE GoodsArrivalID = @EntityID ORDER BY SerialID; " + "\r\n";
+            queryString = queryString + "                       DECLARE         CURSORGoodsArrivalDetails CURSOR LOCAL FOR SELECT EntryDate, GoodsArrivalID, GoodsArrivalDetailID, LocationID, CustomerID, TransporterID, PurchaseOrderID, PurchaseOrderDetailID, CommodityID, CommodityTypeID, WarehouseID, SerialID, LabID, Code, SealCode, BatchCode, LabCode, Barcode, ProductionDate, ExpiryDate, Quantity, QuantityReceipted, UnitWeight, Packages, Remarks, VoidTypeID, InActive, InActivePartial, InActivePartialDate FROM GoodsArrivalDetails WHERE GoodsArrivalID = @EntityID ORDER BY SerialID; " + "\r\n";
             queryString = queryString + "                       OPEN            CURSORGoodsArrivalDetails; " + "\r\n";
-            queryString = queryString + "                       FETCH NEXT FROM CURSORGoodsArrivalDetails INTO @EntryDate, @GoodsArrivalID, @GoodsArrivalDetailID, @LocationID, @CustomerID, @TransporterID, @PurchaseOrderID, @PurchaseOrderDetailID, @CommodityID, @CommodityTypeID, @WarehouseID, @SerialID, @Code, @SealCode, @BatchCode, @LabCode, @Barcode, @ProductionDate, @ExpiryDate, @Quantity, @QuantityReceipted, @UnitWeight, @Packages, @Remarks, @VoidTypeID, @InActive, @InActivePartial, @InActivePartialDate; " + "\r\n";
+            queryString = queryString + "                       FETCH NEXT FROM CURSORGoodsArrivalDetails INTO @EntryDate, @GoodsArrivalID, @GoodsArrivalDetailID, @LocationID, @CustomerID, @TransporterID, @PurchaseOrderID, @PurchaseOrderDetailID, @CommodityID, @CommodityTypeID, @WarehouseID, @SerialID, @LabID, @Code, @SealCode, @BatchCode, @LabCode, @Barcode, @ProductionDate, @ExpiryDate, @Quantity, @QuantityReceipted, @UnitWeight, @Packages, @Remarks, @VoidTypeID, @InActive, @InActivePartial, @InActivePartialDate; " + "\r\n";
 
             queryString = queryString + "                       WHILE @@FETCH_STATUS = 0 " + "\r\n";
             queryString = queryString + "                           BEGIN " + "\r\n";
@@ -372,21 +376,23 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                               WHILE @Packages > 0 " + "\r\n";
             queryString = queryString + "                                   BEGIN " + "\r\n";
 
-            queryString = queryString + "                                       INSERT INTO GoodsArrivalPackages(EntryDate, GoodsArrivalID, GoodsArrivalDetailID, LocationID, CustomerID, TransporterID, PurchaseOrderID, PurchaseOrderDetailID, CommodityID, CommodityTypeID, WarehouseID, SerialID, Code, SealCode, BatchCode, LabCode, Barcode, ProductionDate, ExpiryDate, Quantity, QuantityReceipted, UnitWeight, Packages, Remarks, VoidTypeID, Approved, InActive, InActivePartial, InActivePartialDate) " + "\r\n";
-            queryString = queryString + "                                       VALUES                          (@EntryDate, @GoodsArrivalID, @GoodsArrivalDetailID, @LocationID, @CustomerID, @TransporterID, @PurchaseOrderID, @PurchaseOrderDetailID, @CommodityID, @CommodityTypeID, @WarehouseID, @SerialID, @Code, @SealCode, @BatchCode, @LabCode, '171123C500' + @BatchCode + @LabCode + ISNULL(@Barcode, '') + RIGHT(CAST(1000 + CAST(@Packages AS INT) AS NVARCHAR), 3), @ProductionDate, @ExpiryDate, @UnitWeight, 0, @UnitWeight, 1, @Remarks, @VoidTypeID, @Approved, @InActive, @InActivePartial, @InActivePartialDate); " + "\r\n";
+            queryString = queryString + "                                       INSERT INTO GoodsArrivalPackages(EntryDate, GoodsArrivalID, GoodsArrivalDetailID, LocationID, CustomerID, TransporterID, PurchaseOrderID, PurchaseOrderDetailID, CommodityID, CommodityTypeID, WarehouseID, SerialID, LabID, Code, SealCode, BatchCode, LabCode, Barcode, ProductionDate, ExpiryDate, Quantity, QuantityReceipted, UnitWeight, Packages, Remarks, VoidTypeID, Approved, InActive, InActivePartial, InActivePartialDate) " + "\r\n";
+            queryString = queryString + "                                       VALUES                          (@EntryDate, @GoodsArrivalID, @GoodsArrivalDetailID, @LocationID, @CustomerID, @TransporterID, @PurchaseOrderID, @PurchaseOrderDetailID, @CommodityID, @CommodityTypeID, @WarehouseID, @SerialID, @LabID, @Code, @SealCode, @BatchCode, @LabCode, '171123C500' + @BatchCode + @LabCode + ISNULL(@Barcode, '') + RIGHT(CAST(1000 + CAST(@Packages AS INT) AS NVARCHAR), 3), @ProductionDate, @ExpiryDate, @UnitWeight, 0, @UnitWeight, 1, @Remarks, @VoidTypeID, @Approved, @InActive, @InActivePartial, @InActivePartialDate); " + "\r\n";
 
             queryString = queryString + "                                       SET @Packages = @Packages - 1 " + "\r\n";
             queryString = queryString + "                                   END " + "\r\n";
 
-            queryString = queryString + "                               FETCH NEXT FROM CURSORGoodsArrivalDetails INTO @EntryDate, @GoodsArrivalID, @GoodsArrivalDetailID, @LocationID, @CustomerID, @TransporterID, @PurchaseOrderID, @PurchaseOrderDetailID, @CommodityID, @CommodityTypeID, @WarehouseID, @SerialID, @Code, @SealCode, @BatchCode, @LabCode, @Barcode, @ProductionDate, @ExpiryDate, @Quantity, @QuantityReceipted, @UnitWeight, @Packages, @Remarks, @VoidTypeID, @InActive, @InActivePartial, @InActivePartialDate; " + "\r\n";
+            queryString = queryString + "                               FETCH NEXT FROM CURSORGoodsArrivalDetails INTO @EntryDate, @GoodsArrivalID, @GoodsArrivalDetailID, @LocationID, @CustomerID, @TransporterID, @PurchaseOrderID, @PurchaseOrderDetailID, @CommodityID, @CommodityTypeID, @WarehouseID, @SerialID, @LabID, @Code, @SealCode, @BatchCode, @LabCode, @Barcode, @ProductionDate, @ExpiryDate, @Quantity, @QuantityReceipted, @UnitWeight, @Packages, @Remarks, @VoidTypeID, @InActive, @InActivePartial, @InActivePartialDate; " + "\r\n";
             queryString = queryString + "                           END " + "\r\n";
             
             queryString = queryString + "                   END " + "\r\n";
 
             queryString = queryString + "               ELSE " + "\r\n";
             queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       DELETE FROM     Labs WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
-            queryString = queryString + "                       DELETE FROM     GoodsArrivalPackages WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
+            queryString = queryString + "                       UPDATE          GoodsArrivalDetails SET LabID = NULL WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
+
+            queryString = queryString + "                       DELETE FROM     GoodsArrivalPackages WHERE GoodsArrivalID = @EntityID ; " + "\r\n";            
+            queryString = queryString + "                       DELETE FROM     Labs WHERE GoodsArrivalID = @EntityID ; " + "\r\n";            
             queryString = queryString + "                   END " + "\r\n";
             #endregion INIT GoodsArrivalPackages
 

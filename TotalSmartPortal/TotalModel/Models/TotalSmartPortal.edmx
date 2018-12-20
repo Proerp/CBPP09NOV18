@@ -852,6 +852,7 @@
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="SerialID" Type="int" Nullable="false" />
+          <Property Name="LabID" Type="int" />
           <Property Name="Code" Type="nvarchar" MaxLength="60" />
           <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
           <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
@@ -887,6 +888,7 @@
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="SerialID" Type="int" Nullable="false" />
+          <Property Name="LabID" Type="int" />
           <Property Name="Code" Type="nvarchar" MaxLength="60" />
           <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
           <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
@@ -1124,6 +1126,7 @@
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="WarehouseIssueID" Type="int" />
+          <Property Name="LabID" Type="int" Nullable="false" />
           <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
           <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
           <Property Name="LabCode" Type="nvarchar" MaxLength="60" />
@@ -19540,6 +19543,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="UnitWeight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Packages" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" FromRole="GoodsArrivalDetail" ToRole="Commodity" />
+          <Property Name="LabID" Type="Int32" />
         </EntityType>
         <Association Name="FK_GoodsArrivalDetails_GoodsArrivals">
           <End Type="TotalSmartPortalModel.GoodsArrival" Role="GoodsArrival" Multiplicity="1" />
@@ -20604,6 +20608,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
+          <Property Type="Int32" Name="LabID" Nullable="true" />
         </ComplexType>
         <EntityType Name="GoodsReceiptDetail">
           <Key>
@@ -20663,6 +20668,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="WarehouseTransferDetails" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_GoodsReceiptDetails" FromRole="GoodsReceiptDetail" ToRole="WarehouseTransferDetail" />
           <NavigationProperty Name="GoodsArrivalPackage" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalPackages" FromRole="GoodsReceiptDetail" ToRole="GoodsArrivalPackage" />
           <NavigationProperty Name="FinishedProductPackage" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedProductPackages" FromRole="GoodsReceiptDetail" ToRole="FinishedProductPackage" />
+          <Property Name="LabID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_GoodsReceiptDetails_BinLocations">
           <End Type="TotalSmartPortalModel.BinLocation" Role="BinLocation" Multiplicity="1" />
@@ -20859,6 +20865,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="PurchaseOrderDetail" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_PurchaseOrderDetails" FromRole="GoodsArrivalPackage" ToRole="PurchaseOrderDetail" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_VoidTypes" FromRole="GoodsArrivalPackage" ToRole="VoidType" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalPackages" FromRole="GoodsArrivalPackage" ToRole="GoodsReceiptDetail" />
+          <Property Name="LabID" Type="Int32" />
         </EntityType>
         <Association Name="FK_GoodsArrivalPackages_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -26328,6 +26335,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="GoodsArrivalDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrivalDetail">
               <MappingFragment StoreEntitySet="GoodsArrivalDetails">
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="Packages" ColumnName="Packages" />
                 <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
                 <ScalarProperty Name="SerialID" ColumnName="SerialID" />
@@ -26865,12 +26873,14 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <EntitySetMapping Name="GoodsReceiptDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptDetail">
               <MappingFragment StoreEntitySet="GoodsReceiptDetails">
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="QuantityIssued" ColumnName="QuantityIssued" />
@@ -26916,6 +26926,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="GoodsArrivalPackages">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrivalPackage">
               <MappingFragment StoreEntitySet="GoodsArrivalPackages">
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
