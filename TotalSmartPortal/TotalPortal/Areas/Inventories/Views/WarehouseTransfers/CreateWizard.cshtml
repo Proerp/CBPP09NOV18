@@ -35,14 +35,8 @@
         .Name("tabStrip")
         .Items(tabStrip =>
         {
-            tabStrip.Add().Text("Xuất không có lệnh VCNB")
-                .Visible(GlobalEnums.CBPP)
-                .Selected(GlobalEnums.CBPP)                
-                .Content(@<text>
-                    @Html.Partial("~/Areas/Inventories/Views/WarehouseTransfers/_GetAvailableWarehouse.cshtml")
-                </text>);
-            tabStrip.Add().Text("Xuất không có lệnh VCNB")
-                //.Visible(!GlobalEnums.CBPP)
+            tabStrip.Add().Text("VCNB không có lệnh")
+                .Visible(!GlobalEnums.CBPP)
                 .Selected(!GlobalEnums.CBPP)
                 .Content(@<text>
                     <div style="margin-top: 39px; margin-right: 18px;">
@@ -52,6 +46,23 @@
 
                     </div>
                 </text>);
+        
+        
+        
+            tabStrip.Add().Text("Xuất không có lệnh VCNB")
+                .Visible(GlobalEnums.CBPP)
+                .Selected(GlobalEnums.CBPP)
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/WarehouseTransfers/_GetAvailableWarehouse.cshtml")
+
+                    <div style="display: none;"> @*NOTE HERE: WE DUPLICATE THIS CODE FOR THE SECOND TABTRIP, BECAUSE THE SECOND TAB STRIP IS HIDDEN*@
+                        @Html.EditorFor(d => (d as IWarehouseTransferDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID) })
+
+                        @Html.EditorFor(d => (d as IWarehouseTransferDTO).WarehouseReceipt, new { WarehouseDisplayName = @Model.WarehouseReceipt.GetDisplayName(m => m.WarehouseID) })
+                    </div>
+
+
+                </text>);            
             tabStrip.Add().Text("Xuất theo lệnh VCNB")
                 .Content(@<text>
                     @Html.Partial("~/Areas/Inventories/Views/WarehouseTransfers/_GetTransferOrder.cshtml")
@@ -82,22 +93,22 @@
 
     function okButton_Click() {
         var selectedGrid;
-        switch ($("#tabStrip").data("kendoTabStrip").select().index()) {
-            case 0:
+        switch ($("#tabStrip").data("kendoTabStrip").select().text()) {
+            case "Xuất không có lệnh VCNB":
                 selectedGrid = $("#warehouseTransferAvailableWarehouseGrid").data("kendoGrid");
                 break;
-            case 2:
+            case "Xuất theo lệnh VCNB":
                 selectedGrid = $("#warehouseTransferPendingTransferOrderGrid").data("kendoGrid");
                 break;
-            case 3:
+            case "Xuất tổng hợp của nhiều lệnh":
                 selectedGrid = $("#warehouseTransferPendingWarehouseGrid").data("kendoGrid");
                 break;
             default:
                 $("#submitCreateWizard").trigger("click");
                 break;
         }
-
-        if ($("#tabStrip").data("kendoTabStrip").select().index() != 1)
+        
+        if ($("#tabStrip").data("kendoTabStrip").select().text() != "VCNB không có lệnh")
             handleOKEvent(selectedGrid);
     }
 
