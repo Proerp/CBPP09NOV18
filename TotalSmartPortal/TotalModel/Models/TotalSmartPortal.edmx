@@ -852,7 +852,7 @@
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="SerialID" Type="int" Nullable="false" />
-          <Property Name="LabID" Type="int" />
+          <Property Name="LabID" Type="int" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="60" />
           <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
           <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
@@ -888,7 +888,7 @@
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="SerialID" Type="int" Nullable="false" />
-          <Property Name="LabID" Type="int" />
+          <Property Name="LabID" Type="int" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="60" />
           <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
           <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
@@ -19607,7 +19607,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="UnitWeight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Packages" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" FromRole="GoodsArrivalDetail" ToRole="Commodity" />
-          <Property Name="LabID" Type="Int32" />
+          <Property Name="LabID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_GoodsArrivalDetails_GoodsArrivals">
           <End Type="TotalSmartPortalModel.GoodsArrival" Role="GoodsArrival" Multiplicity="1" />
@@ -20933,7 +20933,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="PurchaseOrderDetail" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_PurchaseOrderDetails" FromRole="GoodsArrivalPackage" ToRole="PurchaseOrderDetail" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_VoidTypes" FromRole="GoodsArrivalPackage" ToRole="VoidType" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalPackages" FromRole="GoodsArrivalPackage" ToRole="GoodsReceiptDetail" />
-          <Property Name="LabID" Type="Int32" />
+          <Property Name="LabID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_GoodsArrivalPackages_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
