@@ -89,6 +89,8 @@ namespace TotalService.Inventories
                             CommodityCode = pendingWarehouseAdjustmentDetail.CommodityCode,
                             CommodityName = pendingWarehouseAdjustmentDetail.CommodityName,
 
+                            LabID = -1,
+
                             QuantityRemains = (decimal)pendingWarehouseAdjustmentDetail.QuantityRemains,
                             Quantity = (decimal)pendingWarehouseAdjustmentDetail.QuantityRemains,
                         };

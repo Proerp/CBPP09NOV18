@@ -67,6 +67,8 @@ function handleOKEvent(materialIssueGridDataSource, pendingProductionOrderDetail
         dataRow.BatchID = productionOrderGridDataItem.BatchID;
         dataRow.BatchEntryDate = productionOrderGridDataItem.BatchEntryDate;
 
+        dataRow.LabID = productionOrderGridDataItem.LabID;
+
         dataRow.Remarks = null;
 
 

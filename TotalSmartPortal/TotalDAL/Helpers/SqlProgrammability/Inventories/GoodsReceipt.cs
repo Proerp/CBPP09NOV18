@@ -641,7 +641,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString;
 
             queryString = " @LocationID Int, @GoodsReceiptID Int, @MaterialIssueDetailIDs varchar(3999), @IsReadonly bit " + "\r\n";
-            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN " + "\r\n";
@@ -693,7 +693,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString = "";
 
             queryString = queryString + "       SELECT      MaterialIssueDetails.MaterialIssueID, MaterialIssueDetails.MaterialIssueDetailID, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specs AS FirmOrderSpecs, MaterialIssueDetails.EntryDate AS MaterialIssueEntryDate, MaterialIssueDetails.BatchEntryDate, " + "\r\n";
-            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, MaterialIssueDetails.LabID, " + "\r\n";
             queryString = queryString + "                   ROUND(MaterialIssueDetails.Quantity - MaterialIssueDetails.QuantitySemifinished - MaterialIssueDetails.QuantityFailure - MaterialIssueDetails.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n"; //QuantityRemains NOT INCLUDED QuantityLoss, BUT: CHECK PENDING MUST MINUS QuantityLoss!!!!!!
             queryString = queryString + "                   0.0 AS Quantity, MaterialIssueDetails.Remarks, CAST(0 AS bit) AS IsSelected, " + "\r\n";
             queryString = queryString + "                   Workshifts.Name AS WorkshiftName, Workshifts.EntryDate AS WorkshiftEntryDate, ProductionLines.Code AS ProductionLinesCode " + "\r\n";
@@ -712,7 +712,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString = "";
 
             queryString = queryString + "       SELECT      MaterialIssueDetails.MaterialIssueID, MaterialIssueDetails.MaterialIssueDetailID, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specs AS FirmOrderSpecs, MaterialIssueDetails.EntryDate AS MaterialIssueEntryDate, MaterialIssueDetails.BatchEntryDate, " + "\r\n";
-            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, MaterialIssueDetails.LabID, " + "\r\n";
             queryString = queryString + "                   ROUND(MaterialIssueDetails.Quantity - MaterialIssueDetails.QuantitySemifinished - MaterialIssueDetails.QuantityFailure - MaterialIssueDetails.QuantityReceipted + GoodsReceiptDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
             queryString = queryString + "                   0.0 AS Quantity, MaterialIssueDetails.Remarks, CAST(0 AS bit) AS IsSelected, " + "\r\n";
             queryString = queryString + "                   Workshifts.Name AS WorkshiftName, Workshifts.EntryDate AS WorkshiftEntryDate, ProductionLines.Code AS ProductionLinesCode " + "\r\n";

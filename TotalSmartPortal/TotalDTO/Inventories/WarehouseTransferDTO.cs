@@ -113,7 +113,7 @@ namespace TotalDTO.Inventories
         {
             this.WarehouseTransferViewDetails = new List<WarehouseTransferDetailDTO>();
 
-            //this.OneStep = GlobalEnums.CBPP;
+            this.OneStep = GlobalEnums.CBPP;
             if (GlobalEnums.CBPP) { this.Storekeeper = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; }
         }
 
