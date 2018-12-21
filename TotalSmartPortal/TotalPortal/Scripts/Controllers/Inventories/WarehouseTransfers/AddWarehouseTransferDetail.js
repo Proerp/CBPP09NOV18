@@ -69,12 +69,6 @@ function handleOKEvent(warehouseTransferGridDataSource, goodsReceiptDetailAvaila
         dataRow.SealCode = warehouseTransferGridDataItem.SealCode;
         dataRow.LabCode = warehouseTransferGridDataItem.LabCode;
 
-        dataRow.WarehouseID = warehouseTransferGridDataItem.WarehouseID;
-        dataRow.WarehouseCode = warehouseTransferGridDataItem.WarehouseCode;
-
-        dataRow.WarehouseReceiptID = warehouseTransferGridDataItem.WarehouseReceiptID;
-        dataRow.WarehouseReceiptCode = warehouseTransferGridDataItem.WarehouseReceiptCode;
-
         dataRow.BinLocationIssuedID = warehouseTransferGridDataItem.BinLocationID;
         dataRow.BinLocationIssuedCode = warehouseTransferGridDataItem.BinLocationCode;
 

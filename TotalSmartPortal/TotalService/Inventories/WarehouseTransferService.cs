@@ -100,7 +100,7 @@ namespace TotalService.Inventories
                             LabCode = pendingWarehouseTransferDetail.LabCode,
 
                             ProductionDate = pendingWarehouseTransferDetail.ProductionDate,
-                            EntryDate = pendingWarehouseTransferDetail.ExpiryDate,
+                            ExpiryDate = pendingWarehouseTransferDetail.ExpiryDate,
 
                             BinLocationID = pendingWarehouseTransferDetail.BinLocationID,
                             BinLocationCode = pendingWarehouseTransferDetail.BinLocationCode,
