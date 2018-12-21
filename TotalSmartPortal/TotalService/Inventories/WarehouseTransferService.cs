@@ -99,6 +99,9 @@ namespace TotalService.Inventories
                             SealCode = pendingWarehouseTransferDetail.SealCode,
                             LabCode = pendingWarehouseTransferDetail.LabCode,
 
+                            ProductionDate = pendingWarehouseTransferDetail.ProductionDate,
+                            EntryDate = pendingWarehouseTransferDetail.ExpiryDate,
+
                             BinLocationID = pendingWarehouseTransferDetail.BinLocationID,
                             BinLocationCode = pendingWarehouseTransferDetail.BinLocationCode,
 

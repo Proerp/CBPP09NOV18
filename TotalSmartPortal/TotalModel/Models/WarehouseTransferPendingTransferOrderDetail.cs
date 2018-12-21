@@ -40,5 +40,12 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public Nullable<int> BinLocationID { get; set; }
         public string BinLocationCode { get; set; }
+        public string Barcode { get; set; }
+        public string BatchCode { get; set; }
+        public string SealCode { get; set; }
+        public string LabCode { get; set; }
+        public Nullable<int> LabID { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     }
 }

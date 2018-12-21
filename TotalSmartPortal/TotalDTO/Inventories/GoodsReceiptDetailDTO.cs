@@ -157,6 +157,9 @@ namespace TotalDTO.Inventories
         [UIHint("AutoCompletes/BinLocationBase")]
         public string BinLocationCode { get; set; }
 
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
+
         [Display(Name = "SL Tồn")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }

@@ -64,6 +64,11 @@ function handleOKEvent(warehouseTransferGridDataSource, goodsReceiptDetailAvaila
         dataRow.BatchID = warehouseTransferGridDataItem.BatchID;
         dataRow.BatchEntryDate = warehouseTransferGridDataItem.BatchEntryDate;
 
+        dataRow.Barcode = warehouseTransferGridDataItem.Barcode;
+        dataRow.BatchCode = warehouseTransferGridDataItem.BatchCode;
+        dataRow.SealCode = warehouseTransferGridDataItem.SealCode;
+        dataRow.LabCode = warehouseTransferGridDataItem.LabCode;
+
         dataRow.WarehouseID = warehouseTransferGridDataItem.WarehouseID;
         dataRow.WarehouseCode = warehouseTransferGridDataItem.WarehouseCode;
 

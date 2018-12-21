@@ -48,6 +48,19 @@ namespace TotalDTO.Inventories
         [UIHint("DateTimeReadonly")]
         public System.DateTime BatchEntryDate { get; set; }
 
+        [Display(Name = "Mã vạch")]
+        [UIHint("StringReadonly")]
+        public string Barcode { get; set; }
+        [Display(Name = "Số cont")]
+        [UIHint("StringReadonly")]
+        public string SealCode { get; set; }
+        [Display(Name = "Số lô")]
+        [UIHint("StringReadonly")]
+        public string BatchCode { get; set; }
+        [Display(Name = "Mã Lab")]
+        [UIHint("StringReadonly")]
+        public string LabCode { get; set; }
+
         public int BinLocationIssuedID { get; set; }
         [Display(Name = "Vị trí")]
         [UIHint("StringReadonly")]

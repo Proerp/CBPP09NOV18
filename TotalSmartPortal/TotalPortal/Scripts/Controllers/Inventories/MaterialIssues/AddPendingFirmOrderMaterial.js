@@ -69,6 +69,14 @@ function handleOKEvent(materialIssueGridDataSource, pendingProductionOrderDetail
 
         dataRow.LabID = productionOrderGridDataItem.LabID;
 
+        dataRow.Barcode = productionOrderGridDataItem.Barcode;
+        dataRow.BatchCode = productionOrderGridDataItem.BatchCode;
+        dataRow.SealCode = productionOrderGridDataItem.SealCode;
+        dataRow.LabCode = productionOrderGridDataItem.LabCode;
+
+        dataRow.ProductionDate = productionOrderGridDataItem.ProductionDate;
+        dataRow.ExpiryDate = productionOrderGridDataItem.ExpiryDate;
+
         dataRow.Remarks = null;
 
 

@@ -104,6 +104,9 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetai
         dataRow.BinLocationID = warehouseTransferGridDataItem.BinLocationID;
         dataRow.BinLocationCode = warehouseTransferGridDataItem.BinLocationCode;
 
+        dataRow.ProductionDate = warehouseTransferGridDataItem.ProductionDate;
+        dataRow.ExpiryDate = warehouseTransferGridDataItem.ExpiryDate;
+
         dataRow.QuantityRemains = warehouseTransferGridDataItem.QuantityRemains;
         dataRow.Quantity = warehouseTransferGridDataItem.Quantity;
 
