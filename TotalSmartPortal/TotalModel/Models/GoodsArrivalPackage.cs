@@ -50,7 +50,7 @@ namespace TotalModel.Models
         public bool InActive { get; set; }
         public bool InActivePartial { get; set; }
         public Nullable<System.DateTime> InActivePartialDate { get; set; }
-        public int LabID { get; set; }
+        public Nullable<int> LabID { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual GoodsArrival GoodsArrival { get; set; }
