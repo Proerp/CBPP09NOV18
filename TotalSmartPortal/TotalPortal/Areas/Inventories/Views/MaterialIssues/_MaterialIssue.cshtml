@@ -160,6 +160,9 @@
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (GoodsReceiptEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].GoodsReceiptEntryDate' value='#= (GoodsReceiptEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #' />");
 
+                    columns.Bound(p => p.LabID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= LabID #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].LabID' value='#= LabID #' />");
+
                     columns.Bound(p => p.BatchID).DisplayNameTitle().Filterable(false).Hidden()
                         .ClientTemplate("#= BatchID #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].BatchID' value='#= BatchID #' />");
                     columns.Bound(p => p.BatchEntryDate).DisplayNameTitle().Filterable(false).Width(80)
