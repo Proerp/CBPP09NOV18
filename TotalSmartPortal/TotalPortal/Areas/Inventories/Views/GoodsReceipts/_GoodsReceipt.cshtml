@@ -365,11 +365,11 @@
                     columns.Bound(p => p.BinLocationCode).DisplayNameTitle().Width(68).Hidden(!GlobalEnums.CBPP)
                         .ClientTemplate("#= (BinLocationCode == null)? '' : BinLocationCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BinLocationCode' value='#= (BinLocationCode == null) ? '' : BinLocationCode #' />");
 
-                    columns.Bound(p => p.ProductionDate).DisplayNameTitle().Width(38).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer ? false : true)
+                    columns.Bound(p => p.ProductionDate).DisplayNameTitle().Width(38).Hidden(true)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (ProductionDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ProductionDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].ProductionDate' value='#= (ProductionDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ProductionDate) #' />");
 
-                    columns.Bound(p => p.ExpiryDate).DisplayNameTitle().Width(38).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer ? false : true)
+                    columns.Bound(p => p.ExpiryDate).DisplayNameTitle().Width(38).Hidden(true)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (ExpiryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].ExpiryDate' value='#= (ExpiryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #' />");
                     

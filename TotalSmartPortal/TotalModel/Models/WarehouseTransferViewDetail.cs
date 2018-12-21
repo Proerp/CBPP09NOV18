@@ -36,5 +36,12 @@ namespace TotalModel.Models
         public string BinLocationIssuedCode { get; set; }
         public int BinLocationID { get; set; }
         public string BinLocationCode { get; set; }
+        public int LabID { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public string Barcode { get; set; }
+        public string BatchCode { get; set; }
+        public string SealCode { get; set; }
+        public string LabCode { get; set; }
     }
 }

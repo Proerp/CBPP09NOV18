@@ -135,10 +135,10 @@
                     columns.Bound(p => p.BatchEntryDate).DisplayNameTitle().Width(30)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (BatchEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].BatchEntryDate' value='#= (BatchEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #' />");
-                    columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(20)
+                    columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(20).Hidden(true)
                         .ClientTemplate("#= (BatchCode == null)? '' : BatchCode #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].BatchCode' value='#= (BatchCode == null) ? '' : BatchCode #' />");
 
-                    columns.Bound(p => p.Barcode).DisplayNameTitle().Width(20)
+                    columns.Bound(p => p.Barcode).DisplayNameTitle().Width(20).Hidden(!GlobalEnums.CBPP)
                         .ClientTemplate("#= (Barcode == null)? '' : Barcode #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].Barcode' value='#= (Barcode == null) ? '' : Barcode #' />");
                     columns.Bound(p => p.SealCode).DisplayNameTitle().Width(20).Hidden(true)
                         .ClientTemplate("#= (SealCode == null)? '' : SealCode #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].SealCode' value='#= (SealCode == null) ? '' : SealCode #' />");

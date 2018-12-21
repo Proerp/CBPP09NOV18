@@ -168,20 +168,20 @@
                     columns.Bound(p => p.BatchEntryDate).DisplayNameTitle().Filterable(false).Width(80)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (BatchEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].BatchEntryDate' value='#= (BatchEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #' />");
-                    columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(20)
+                    columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(20).Hidden(!GlobalEnums.CBPP)
                         .ClientTemplate("#= (BatchCode == null)? '' : BatchCode #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].BatchCode' value='#= (BatchCode == null) ? '' : BatchCode #' />");
 
-                    columns.Bound(p => p.Barcode).DisplayNameTitle().Width(20)
+                    columns.Bound(p => p.Barcode).DisplayNameTitle().Width(20).Hidden(!GlobalEnums.CBPP)
                         .ClientTemplate("#= (Barcode == null)? '' : Barcode #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].Barcode' value='#= (Barcode == null) ? '' : Barcode #' />");
-                    columns.Bound(p => p.SealCode).DisplayNameTitle().Width(20).Hidden(true)
+                    columns.Bound(p => p.SealCode).DisplayNameTitle().Width(20).Hidden(!GlobalEnums.CBPP)
                         .ClientTemplate("#= (SealCode == null)? '' : SealCode #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].SealCode' value='#= (SealCode == null) ? '' : SealCode #' />");
-                    columns.Bound(p => p.LabCode).DisplayNameTitle().Width(20).Hidden(true)
+                    columns.Bound(p => p.LabCode).DisplayNameTitle().Width(20).Hidden(!GlobalEnums.CBPP)
                         .ClientTemplate("#= (LabCode == null)? '' : LabCode #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].LabCode' value='#= (LabCode == null) ? '' : LabCode #' />");
 
-                    columns.Bound(p => p.ProductionDate).DisplayNameTitle().Filterable(false).Width(80)
+                    columns.Bound(p => p.ProductionDate).DisplayNameTitle().Width(80).Hidden(true)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (ProductionDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ProductionDate) #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].ProductionDate' value='#= (ProductionDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ProductionDate) #' />");
-                    columns.Bound(p => p.ExpiryDate).DisplayNameTitle().Filterable(false).Width(80)
+                    columns.Bound(p => p.ExpiryDate).DisplayNameTitle().Width(80).Hidden(true)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (ExpiryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].ExpiryDate' value='#= (ExpiryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #' />");
                     
