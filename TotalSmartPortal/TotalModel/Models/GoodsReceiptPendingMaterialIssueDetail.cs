@@ -31,5 +31,6 @@ namespace TotalModel.Models
         public string FirmOrderCode { get; set; }
         public string FirmOrderSpecs { get; set; }
         public System.DateTime BatchEntryDate { get; set; }
+        public int LabID { get; set; }
     }
 }

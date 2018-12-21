@@ -52,6 +52,7 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public string Code { get; set; }
+        public int LabID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual FirmOrderMaterial FirmOrderMaterial { get; set; }

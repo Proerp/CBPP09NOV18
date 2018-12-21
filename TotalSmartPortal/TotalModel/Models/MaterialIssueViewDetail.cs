@@ -31,5 +31,6 @@ namespace TotalModel.Models
         public Nullable<decimal> FirmOrderRemains { get; set; }
         public int BatchID { get; set; }
         public System.DateTime BatchEntryDate { get; set; }
+        public int LabID { get; set; }
     }
 }

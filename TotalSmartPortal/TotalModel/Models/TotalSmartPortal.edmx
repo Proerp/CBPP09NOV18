@@ -1270,6 +1270,7 @@
           <Property Name="GoodsReceiptDetailID" Type="int" Nullable="false" />
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
+          <Property Name="LabID" Type="int" Nullable="false" />
           <Property Name="BatchID" Type="int" Nullable="false" />
           <Property Name="BatchEntryDate" Type="datetime" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
@@ -15712,6 +15713,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Decimal" Name="FirmOrderRemains" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Int32" Name="BatchID" Nullable="false" />
           <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="LabID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="PlannedOrderIndex">
           <Property Type="Int32" Name="PlannedOrderID" Nullable="false" />
@@ -16928,6 +16930,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="CodePartD" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="CodePartE" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="CodePartF" Nullable="true" MaxLength="20" />
+          <Property Type="Int32" Name="LabID" Nullable="true" />
         </ComplexType>
         <ComplexType Name="CommodityMold">
           <Property Type="Int32" Name="CommodityMoldID" Nullable="false" />
@@ -17200,6 +17203,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="FirmOrderCode" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="FirmOrderSpecs" Nullable="true" MaxLength="800" />
           <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="LabID" Nullable="false" />
           </ComplexType>
         <ComplexType Name="PlannedOrderLog">
           <Property Type="Int32" Name="MaterialIssueDetailID" Nullable="false" />
@@ -17372,6 +17376,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Commodities" FromRole="MaterialIssueDetail" ToRole="Commodity" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_MaterialIssueDetails" FromRole="MaterialIssueDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_GoodsReceiptDetails" FromRole="MaterialIssueDetail" ToRole="GoodsReceiptDetail" />
+          <Property Name="LabID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="MaterialIssue">
           <Key>
@@ -24155,6 +24160,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="FirmOrderRemains" ColumnName="FirmOrderRemains" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -24987,6 +24993,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="CodePartD" ColumnName="CodePartD" />
                 <ScalarProperty Name="CodePartE" ColumnName="CodePartE" />
                 <ScalarProperty Name="CodePartF" ColumnName="CodePartF" />
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -25250,6 +25257,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="FirmOrderCode" ColumnName="FirmOrderCode" />
                 <ScalarProperty Name="FirmOrderSpecs" ColumnName="FirmOrderSpecs" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -25422,6 +25430,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="MaterialIssueDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.MaterialIssueDetail">
               <MappingFragment StoreEntitySet="MaterialIssueDetails">
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
