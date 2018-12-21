@@ -92,6 +92,8 @@ namespace TotalService.Inventories
                             CommodityName = pendingWarehouseTransferDetail.CommodityName,
                             CommodityTypeID = pendingWarehouseTransferDetail.CommodityTypeID,
 
+                            LabID = pendingWarehouseTransferDetail.LabID,
+
                             Barcode = pendingWarehouseTransferDetail.Barcode,
                             BatchCode = pendingWarehouseTransferDetail.BatchCode,
                             SealCode = pendingWarehouseTransferDetail.SealCode,

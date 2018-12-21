@@ -93,6 +93,9 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPurchaseRequisitionDet
         dataRow.CommodityName = purchaseRequisitionGridDataItem.CommodityName;
         dataRow.CommodityCode = purchaseRequisitionGridDataItem.CommodityCode;
         dataRow.CommodityTypeID = purchaseRequisitionGridDataItem.CommodityTypeID;
+
+        dataRow.LabID = -1;
+
         dataRow.Barcode = null;
         dataRow.BatchCode = null;
         dataRow.SealCode = null;

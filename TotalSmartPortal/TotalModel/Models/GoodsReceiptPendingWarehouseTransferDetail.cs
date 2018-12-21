@@ -35,5 +35,6 @@ namespace TotalModel.Models
         public string Barcode { get; set; }
         public int BinLocationID { get; set; }
         public string BinLocationCode { get; set; }
+        public int LabID { get; set; }
     }
 }

@@ -16098,6 +16098,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="OfficialCode" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="BinLocationID" Nullable="false" />
           <Property Type="String" Name="BinLocationCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="LabID" Nullable="false" />
         </ComplexType>
         <EntityType Name="WarehouseAdjustmentDetail">
           <Key>
@@ -18182,6 +18183,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
           <Property Type="Int32" Name="BinLocationID" Nullable="false" />
           <Property Type="String" Name="BinLocationCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="LabID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingWarehouseTransfer">
           <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
@@ -24437,6 +24439,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="OfficialCode" ColumnName="OfficialCode" />
                 <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
                 <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -25843,6 +25846,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
                 <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
                 <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
