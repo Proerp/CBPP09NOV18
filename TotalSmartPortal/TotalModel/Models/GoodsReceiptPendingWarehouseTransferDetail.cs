@@ -36,5 +36,7 @@ namespace TotalModel.Models
         public int BinLocationID { get; set; }
         public string BinLocationCode { get; set; }
         public int LabID { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     }
 }

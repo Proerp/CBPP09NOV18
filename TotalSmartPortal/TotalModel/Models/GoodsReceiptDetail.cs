@@ -64,6 +64,8 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public int LabID { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
         public virtual Commodity Commodity { get; set; }

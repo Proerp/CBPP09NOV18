@@ -35,5 +35,7 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public Nullable<bool> IsSelected { get; set; }
         public Nullable<int> LabID { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     }
 }

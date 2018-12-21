@@ -65,5 +65,7 @@ namespace TotalModel.Models
         public string BinLocationCode { get; set; }
         public Nullable<int> GoodsArrivalPackageID { get; set; }
         public int LabID { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     }
 }

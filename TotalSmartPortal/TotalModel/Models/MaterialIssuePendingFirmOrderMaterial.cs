@@ -37,5 +37,9 @@ namespace TotalModel.Models
         public string CodePartE { get; set; }
         public string CodePartF { get; set; }
         public Nullable<int> LabID { get; set; }
+        public string Barcode { get; set; }
+        public string BatchCode { get; set; }
+        public string SealCode { get; set; }
+        public string LabCode { get; set; }
     }
 }

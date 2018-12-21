@@ -1131,6 +1131,8 @@
           <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
           <Property Name="LabCode" Type="nvarchar" MaxLength="60" />
           <Property Name="Barcode" Type="nvarchar" MaxLength="60" />
+          <Property Name="ProductionDate" Type="datetime" />
+          <Property Name="ExpiryDate" Type="datetime" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityIssued" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
@@ -1273,6 +1275,12 @@
           <Property Name="LabID" Type="int" Nullable="false" />
           <Property Name="BatchID" Type="int" Nullable="false" />
           <Property Name="BatchEntryDate" Type="datetime" Nullable="false" />
+          <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
+          <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
+          <Property Name="LabCode" Type="nvarchar" MaxLength="60" />
+          <Property Name="Barcode" Type="nvarchar" MaxLength="60" />
+          <Property Name="ProductionDate" Type="datetime" />
+          <Property Name="ExpiryDate" Type="datetime" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantitySemifinished" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -15714,6 +15722,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Int32" Name="BatchID" Nullable="false" />
           <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="LabID" Nullable="false" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
         </ComplexType>
         <ComplexType Name="PlannedOrderIndex">
           <Property Type="Int32" Name="PlannedOrderID" Nullable="false" />
@@ -16105,6 +16117,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
+          <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
         </ComplexType>
         <EntityType Name="WarehouseAdjustmentDetail">
           <Key>
@@ -16935,6 +16949,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="CodePartE" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="CodePartF" Nullable="true" MaxLength="20" />
           <Property Type="Int32" Name="LabID" Nullable="true" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
         </ComplexType>
         <ComplexType Name="CommodityMold">
           <Property Type="Int32" Name="CommodityMoldID" Nullable="false" />
@@ -17208,6 +17226,12 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="FirmOrderSpecs" Nullable="true" MaxLength="800" />
           <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="LabID" Nullable="false" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
+          <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           </ComplexType>
         <ComplexType Name="PlannedOrderLog">
           <Property Type="Int32" Name="MaterialIssueDetailID" Nullable="false" />
@@ -17381,6 +17405,12 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_MaterialIssueDetails" FromRole="MaterialIssueDetail" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_GoodsReceiptDetails" FromRole="MaterialIssueDetail" ToRole="GoodsReceiptDetail" />
           <Property Name="LabID" Type="Int32" Nullable="false" />
+          <Property Name="SealCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="BatchCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="LabCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Barcode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ProductionDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="MaterialIssue">
           <Key>
@@ -18193,6 +18223,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Int32" Name="BinLocationID" Nullable="false" />
           <Property Type="String" Name="BinLocationCode" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="LabID" Nullable="false" />
+          <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingWarehouseTransfer">
           <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
@@ -18530,6 +18562,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="BinLocationCode" Nullable="false" MaxLength="50" />
           <Property Type="Int32" Name="GoodsArrivalPackageID" Nullable="true" />
           <Property Type="Int32" Name="LabID" Nullable="false" />
+          <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
         </ComplexType>
         <EntityType Name="ModuleDetail">
           <Key>
@@ -20621,6 +20655,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
           <Property Type="Int32" Name="LabID" Nullable="true" />
+          <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
         </ComplexType>
         <EntityType Name="GoodsReceiptDetail">
           <Key>
@@ -20681,6 +20717,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="GoodsArrivalPackage" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalPackages" FromRole="GoodsReceiptDetail" ToRole="GoodsArrivalPackage" />
           <NavigationProperty Name="FinishedProductPackage" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedProductPackages" FromRole="GoodsReceiptDetail" ToRole="FinishedProductPackage" />
           <Property Name="LabID" Type="Int32" Nullable="false" />
+          <Property Name="ProductionDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_GoodsReceiptDetails_BinLocations">
           <End Type="TotalSmartPortalModel.BinLocation" Role="BinLocation" Multiplicity="1" />
@@ -24165,6 +24203,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -24454,6 +24496,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
                 <ScalarProperty Name="SealCode" ColumnName="SealCode" />
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -25002,6 +25046,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="CodePartE" ColumnName="CodePartE" />
                 <ScalarProperty Name="CodePartF" ColumnName="CodePartF" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -25266,6 +25314,12 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="FirmOrderSpecs" ColumnName="FirmOrderSpecs" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -25438,6 +25492,12 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="MaterialIssueDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.MaterialIssueDetail">
               <MappingFragment StoreEntitySet="MaterialIssueDetails">
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
@@ -25864,6 +25924,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
                 <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -26036,6 +26098,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
                 <ScalarProperty Name="GoodsArrivalPackageID" ColumnName="GoodsArrivalPackageID" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -26897,12 +26961,16 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <EntitySetMapping Name="GoodsReceiptDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptDetail">
               <MappingFragment StoreEntitySet="GoodsReceiptDetails">
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
