@@ -4095,7 +4095,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PackageIssueIndex>("GetPackageIssueIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
         }
     
-        public virtual ObjectResult<PackageIssuePendingBlendingInstructionDetail> GetPackageIssuePendingBlendingInstructionDetails(Nullable<int> locationID, Nullable<int> packageIssueID, Nullable<int> blendingInstructionID, Nullable<int> warehouseID, string goodsReceiptDetailIDs)
+        public virtual ObjectResult<PackageIssuePendingBlendingInstructionDetail> GetPackageIssuePendingBlendingInstructionDetails(Nullable<int> locationID, Nullable<int> packageIssueID, Nullable<int> blendingInstructionID, Nullable<int> warehouseID, string goodsReceiptDetailIDs, Nullable<bool> webAPI)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
@@ -4117,7 +4117,11 @@ namespace TotalModel.Models
                 new ObjectParameter("GoodsReceiptDetailIDs", goodsReceiptDetailIDs) :
                 new ObjectParameter("GoodsReceiptDetailIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PackageIssuePendingBlendingInstructionDetail>("GetPackageIssuePendingBlendingInstructionDetails", locationIDParameter, packageIssueIDParameter, blendingInstructionIDParameter, warehouseIDParameter, goodsReceiptDetailIDsParameter);
+            var webAPIParameter = webAPI.HasValue ?
+                new ObjectParameter("WebAPI", webAPI) :
+                new ObjectParameter("WebAPI", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PackageIssuePendingBlendingInstructionDetail>("GetPackageIssuePendingBlendingInstructionDetails", locationIDParameter, packageIssueIDParameter, blendingInstructionIDParameter, warehouseIDParameter, goodsReceiptDetailIDsParameter, webAPIParameter);
         }
     
         public virtual ObjectResult<PackageIssuePendingBlendingInstruction> GetPackageIssuePendingBlendingInstructions(Nullable<int> locationID, Nullable<int> blendingInstructionID)

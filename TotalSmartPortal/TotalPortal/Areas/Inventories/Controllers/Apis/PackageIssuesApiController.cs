@@ -57,7 +57,7 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         [Route("GetPendingBlendingInstructionDetails/{locationID}/{packageIssueID}/{blendingInstructionID}/{warehouseID}/{goodsReceiptDetailIDs}")]
         public IEnumerable<PackageIssuePendingBlendingInstructionDetail> GetPendingBlendingInstructionDetails(int? locationID, int? packageIssueID, int? blendingInstructionID, int? warehouseID, string goodsReceiptDetailIDs)
         {
-            return this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(locationID, packageIssueID, blendingInstructionID, warehouseID, goodsReceiptDetailIDs);
+            return this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(locationID, packageIssueID, blendingInstructionID, warehouseID, goodsReceiptDetailIDs, true);
         }
     }
 }

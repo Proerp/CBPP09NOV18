@@ -13,7 +13,7 @@ namespace TotalCore.Repositories.Inventories
     {
         IEnumerable<PackageIssuePendingBlendingInstruction> GetBlendingInstructions(int? locationID, int? blendingInstructionID);
 
-        IEnumerable<PackageIssuePendingBlendingInstructionDetail> GetPendingBlendingInstructionDetails(int? locationID, int? materialIssueID, int? blendingInstructionID, int? warehouseID, string goodsReceiptDetailIDs);
+        IEnumerable<PackageIssuePendingBlendingInstructionDetail> GetPendingBlendingInstructionDetails(int? locationID, int? materialIssueID, int? blendingInstructionID, int? warehouseID, string goodsReceiptDetailIDs, bool webAPI);
     }
 
 }

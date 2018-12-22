@@ -116,16 +116,22 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            queryString = " @LocationID Int, @PackageIssueID Int, @BlendingInstructionID Int, @WarehouseID Int, @GoodsReceiptDetailIDs varchar(3999) " + "\r\n";
+            queryString = " @LocationID Int, @PackageIssueID Int, @BlendingInstructionID Int, @WarehouseID Int, @GoodsReceiptDetailIDs varchar(3999), @WebAPI bit" + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN " + "\r\n";
 
-            queryString = queryString + "       IF  (@GoodsReceiptDetailIDs <> '') " + "\r\n";
-            queryString = queryString + "           " + this.BuildSQLPendingDetails(true) + "\r\n";
+            queryString = queryString + "       IF (@WebAPI = 1) " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLNew(false) + "\r\n"; //SHOULD SAVE BEFORE CALL NEXT
+            queryString = queryString + "           ORDER BY BlendingInstructionDetails.BlendingInstructionDetailID " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-            queryString = queryString + "           " + this.BuildSQLPendingDetails(false) + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               IF  (@GoodsReceiptDetailIDs <> '') " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLPendingDetails(true) + "\r\n";
+            queryString = queryString + "               ELSE " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLPendingDetails(false) + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
 

@@ -7018,6 +7018,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
           <Parameter Name="GoodsReceiptDetailIDs" Type="varchar" Mode="In" />
+          <Parameter Name="WebAPI" Type="bit" Mode="In" />
         </Function>
         <Function Name="GetPackageIssuePendingBlendingInstructions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -13883,6 +13884,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
             <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsReceiptDetailIDs" Mode="In" Type="String" />
+            <Parameter Name="WebAPI" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GetPackageIssuePendingBlendingInstructions" ReturnType="Collection(TotalSmartPortalModel.PackageIssuePendingBlendingInstruction)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
