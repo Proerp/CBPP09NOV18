@@ -99,7 +99,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       SELECT          Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, WarehouseReceipts.WarehouseID AS WarehouseReceiptID, WarehouseReceipts.Code AS WarehouseReceiptCode, WarehouseReceipts.Name AS WarehouseReceiptName, WarehouseReceipts.LocationID AS LocationReceiptID " + "\r\n";
             queryString = queryString + "       FROM            Warehouses  " + "\r\n";
             queryString = queryString + "                       INNER JOIN Warehouses AS WarehouseReceipts ON Warehouses.WarehouseID <> WarehouseReceipts.WarehouseID " + "\r\n";
-            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (1) AND WarehouseReceipts.WarehouseID IN (6) " + "\r\n";
+            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (" + (GlobalEnums.CBPP ? "1" : "2") + ") AND WarehouseReceipts.WarehouseID IN (6) " + "\r\n";
 
             queryString = queryString + "       ORDER BY        WarehouseID " + "\r\n";
 
