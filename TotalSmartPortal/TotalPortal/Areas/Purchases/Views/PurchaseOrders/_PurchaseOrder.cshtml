@@ -139,17 +139,8 @@
                             </text>);
                         }
                         else
-                        {//Add a functionless button for display purpose only
-                            toolbar.Template(
-                                @<text>
-                                    <div>
-                                        @(Html.Kendo().Button()
-                                            .Name("iconButton")
-                                            .HtmlAttributes(new { type = "button" })
-                                            .SpriteCssClass("k-icon k-i-ungroup") //.Content("My button label")
-                                        )
-                                    </div>
-                                </text>);
+                        {
+                            toolbar.Template(@<text> @Commons.Toolbars.BlankToolbar() </text>);
                         }
                                 })
 
