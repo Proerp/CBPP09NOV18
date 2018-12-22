@@ -200,7 +200,7 @@ namespace TotalModel.Models
 
     public partial class TransferOrder : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<TransferOrderDetail>
     {
-        public int GetID() { return this.TransferOrderID; }    
+        public int GetID() { return this.TransferOrderID; }
 
         public virtual Warehouse WarehouseReceipt { get { return this.Warehouse1; } }
 
@@ -240,6 +240,12 @@ namespace TotalModel.Models
     public partial class WarehouseTransferPendingTransferOrderDetail
     {
         public virtual decimal? QuantityRemains { get { return this.QuantityAvailables; } }
+    }
+
+
+    public partial class BlendingInstructionIndex
+    {
+        public string Features { get { return this.Reference + (this.Code != null ? " [" + this.Code + "]" : "") + " SP: " + this.ProductCode + " [" + this.ProductName + "]" + (this.Jobs != null ? " {" + this.Jobs + "}" : ""); } }
     }
 
     public partial class BlendingInstruction : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<BlendingInstructionDetail>

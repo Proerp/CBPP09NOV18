@@ -4576,7 +4576,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("BlendingInstructionVoidable", entityIDParameter);
         }
     
-        public virtual ObjectResult<BlendingInstructionIndex> GetBlendingInstructionIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<int> filterOptionID)
+        public virtual ObjectResult<BlendingInstructionIndex> GetBlendingInstructionIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<int> labOptionID, Nullable<int> filterOptionID)
         {
             var aspUserIDParameter = aspUserID != null ?
                 new ObjectParameter("AspUserID", aspUserID) :
@@ -4590,11 +4590,15 @@ namespace TotalModel.Models
                 new ObjectParameter("ToDate", toDate) :
                 new ObjectParameter("ToDate", typeof(System.DateTime));
     
+            var labOptionIDParameter = labOptionID.HasValue ?
+                new ObjectParameter("LabOptionID", labOptionID) :
+                new ObjectParameter("LabOptionID", typeof(int));
+    
             var filterOptionIDParameter = filterOptionID.HasValue ?
                 new ObjectParameter("FilterOptionID", filterOptionID) :
                 new ObjectParameter("FilterOptionID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionIndex>("GetBlendingInstructionIndexes", aspUserIDParameter, fromDateParameter, toDateParameter, filterOptionIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionIndex>("GetBlendingInstructionIndexes", aspUserIDParameter, fromDateParameter, toDateParameter, labOptionIDParameter, filterOptionIDParameter);
         }
     
         public virtual ObjectResult<BlendingInstructionLog> GetBlendingInstructionLogs(Nullable<int> blendingInstructionID)

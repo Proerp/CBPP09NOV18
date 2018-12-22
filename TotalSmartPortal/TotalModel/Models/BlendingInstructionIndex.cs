@@ -34,5 +34,6 @@ namespace TotalModel.Models
         public Nullable<decimal> QuantityAvailableArrivals { get; set; }
         public Nullable<decimal> QuantityAvailableLocation1 { get; set; }
         public Nullable<decimal> QuantityAvailableLocation2 { get; set; }
+        public string Jobs { get; set; }
     }
 }

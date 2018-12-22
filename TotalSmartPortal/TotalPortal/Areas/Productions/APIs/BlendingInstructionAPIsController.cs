@@ -26,9 +26,10 @@ namespace TotalPortal.Areas.Productions.APIs
         }
 
 
-        public JsonResult GetBlendingInstructionIndexes([DataSourceRequest] DataSourceRequest request, bool withExtendedSearch, DateTime extendedFromDate, DateTime extendedToDate, int dateOptionID, int filterOptionID)
+        public JsonResult GetBlendingInstructionIndexes([DataSourceRequest] DataSourceRequest request, bool withExtendedSearch, DateTime extendedFromDate, DateTime extendedToDate, int filterOptionID, int labOptionID)
         {
-            this.blendingInstructionAPIRepository.RepositoryBag["FilterOptionID"] = filterOptionID;
+            this.blendingInstructionAPIRepository.RepositoryBag["LabOptionID"] = labOptionID;
+            this.blendingInstructionAPIRepository.RepositoryBag["FilterOptionID"] = filterOptionID;            
             ICollection<BlendingInstructionIndex> blendingInstructionIndexes = this.blendingInstructionAPIRepository.GetEntityIndexes<BlendingInstructionIndex>(User.Identity.GetUserId(), (withExtendedSearch ? extendedFromDate : HomeSession.GetGlobalFromDate(this.HttpContext)), (withExtendedSearch ? extendedToDate : HomeSession.GetGlobalToDate(this.HttpContext)));
 
             DataSourceResult response = blendingInstructionIndexes.ToDataSourceResult(request);

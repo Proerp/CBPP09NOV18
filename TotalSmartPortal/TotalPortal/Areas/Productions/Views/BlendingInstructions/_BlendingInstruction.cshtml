@@ -106,7 +106,7 @@
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
 
 
-                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(68).Hidden()
+                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(168)
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
                     columns.Bound(p => p.InActivePartial).DisplayNameTitle().Hidden()

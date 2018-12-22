@@ -6648,6 +6648,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
+          <Parameter Name="LabOptionID" Type="int" Mode="In" />
           <Parameter Name="FilterOptionID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetBlendingInstructionLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -14315,6 +14316,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="AspUserID" Mode="In" Type="String" />
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+            <Parameter Name="LabOptionID" Mode="In" Type="Int32" />
             <Parameter Name="FilterOptionID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetBlendingInstructionLogs" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionLog)">
@@ -21199,6 +21201,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Decimal" Name="QuantityAvailableArrivals" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailableLocation1" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailableLocation2" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="Jobs" Nullable="true" MaxLength="100" />
           </ComplexType>
         <ComplexType Name="BlendingInstructionLog">
           <Property Type="Int32" Name="PackageIssueDetailID" Nullable="false" />
@@ -27175,6 +27178,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="QuantityAvailableArrivals" ColumnName="QuantityAvailableArrivals" />
                 <ScalarProperty Name="QuantityAvailableLocation1" ColumnName="QuantityAvailableLocation1" />
                 <ScalarProperty Name="QuantityAvailableLocation2" ColumnName="QuantityAvailableLocation2" />
+                <ScalarProperty Name="Jobs" ColumnName="Jobs" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

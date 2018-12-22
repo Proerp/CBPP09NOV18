@@ -5,7 +5,7 @@
 <div id="popupWindow"></div>
 
 <div>
-    @Html.Hidden("LastDateOptionID", "10")
+    @Html.Hidden("LastLabOptionID", "1")
     @Html.Hidden("LastFilterOptionID", "10")
     @Html.Hidden("SelectedFirmOrderID", "0")
 
@@ -14,34 +14,40 @@
             .Columns(columns =>
             {
                 columns.Bound(p => p.BlendingInstructionID).DisplayNameTitle().Hidden();
-                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
+                columns.Bound(p => p.EntryDate).Title("Ngày lập").Format("{0:dd/MM/yyyy}").Hidden();
+                columns.Bound(p => p.Features).Title("BIS").Hidden();
+                
+                //columns.Bound(p => p.Reference).Title("KHSX").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Edit" }) + "/#= BlendingInstructionID #'>#=Reference#</a>");
+                //columns.Bound(p => p.Code).Title("Số CT").Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+                columns.Bound(p => p.VoucherDate).Title("Ngày SX").Format("{0:dd/MM}").Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+                //columns.Bound(p => p.ProductCode).Title("Mặt hàng").Width(193);
 
-                columns.Bound(p => p.Reference).Title("KHSX").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Edit" }) + "/#= BlendingInstructionID #'>#=Reference#</a>");
-                columns.Bound(p => p.Code).Title("Số CT").Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
-                columns.Bound(p => p.VoucherDate).Title("Ngày CT").Format("{0:dd/MM}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
-                columns.Bound(p => p.CommodityName).Title("Mặt hàng").Width(193);
+                columns.Bound(p => p.CommodityCode).Title("Mã NVL").Width(96).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Edit" }) + "/#= BlendingInstructionID #'>#=CommodityCode#</a>");
+                columns.Bound(p => p.CommodityName).Title("Tên nguyên liệu").Width(168);
                                 
-                columns.Bound(p => p.Quantity).Title("SLYC").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                columns.Bound(p => p.QuantityIssued).Title("Đã xuất").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                columns.Bound(p => p.QuantityRemains).Title("Tồn BIS").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.Quantity).Title("SL Y/C").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantityIssued).Title("Đã xuất").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantityRemains).Title("Tồn BIS").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
-                columns.Bound(p => p.QuantityAvailableL2).Title("Kho PC").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
-                columns.Bound(p => p.QuantityAvailableL1).Title("Kho NVL").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
-                columns.Bound(p => p.QuantityAvailableL0).Title("Mới về").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
+                columns.Bound(p => p.QuantityAvailableLocation2).Title("Kho PC").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);
+                columns.Bound(p => p.QuantityAvailableLocation1).Title("Kho NVL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);
+                columns.Bound(p => p.QuantityAvailableArrivals).Title("Mới về").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);
 
+                columns.Bound(p => p.Description).Title("Ghi chú").Width(96);
+                
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
-                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(111)
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
                     .ClientTemplate("<a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Void" }) + "/#= BlendingInstructionID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Delete" }) + "/#= BlendingInstructionID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>
             {
                 toolbar.Template(@<text>
-                    <button type="button" class="k-button" onclick="location.href = '@Url.Action("Create", "BlendingInstructions")'"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập đơn hàng </button>
+                    <button type="button" class="k-button" onclick="location.href = '@Url.Action("Create", "BlendingInstructions")'"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập lệnh pha chế </button>
                     <button type="button" title="Cập nhật số liệu sản xuất" class="k-button" onclick="indexFilterText_KeyUp(true)"> <img src="~/Content/Images/New/Refresh-icon.png" /> </button>            
                     <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> In </button>
                     <div class="toolbar" style="float: right;">
-                        <label>Nhập số ĐH, tên KH hoặc SP</label>
+                        <label>Lọc theo số BIS, sản phẩm hoặc NVL</label>
                         <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 108px; " onkeyup="indexFilterText_KeyUp()" />
 
                         <span id="filterExtended">
@@ -49,27 +55,27 @@
                                     .Name("ShowFilterOptionID")
                                     .DataTextField("Text")
                                     .DataValueField("Value")
-                                    .HtmlAttributes(new { @style = "width: 207px; text-align: center; " })
+                                    .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
-                                            new SelectListItem { Text = "ĐH cần sản xuất", Value = "10"},
-                                            new SelectListItem { Text = "ĐH cần sản xuất [Chưa SX]", Value = "11"},
-                                            new SelectListItem { Text = "ĐH cần sản xuất [Đang SX]", Value = "12"},
-                                            new SelectListItem { Text = "ĐH đã sản xuất [Từ ... Đến]", Value = "20"},
+                                            new SelectListItem { Text = "BIS cần pha chế", Value = "10"},
+                                            new SelectListItem { Text = "BIS cần pc [Chưa PC]", Value = "11"},
+                                            new SelectListItem { Text = "BIS cần pc [Đang PC]", Value = "12"},
+                                            new SelectListItem { Text = "BIS đã pc [Từ ... Đến]", Value = "20"},
                                             new SelectListItem { Text = "Tất cả [Từ ... Đến]", Value = "0"},
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
 
                             @(Html.Kendo().DropDownList()
-                                    .Name("ShowDateOptionID")
+                                    .Name("ShowLabOptionID")
                                     .DataTextField("Text")
                                     .DataValueField("Value")
-                                    .HtmlAttributes(new { @style = "width: 88px; text-align: center; " })
+                                    .HtmlAttributes(new { @style = "width: 118px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
-                                            new SelectListItem { Text = "Ngày ĐH", Value = "10"},
-                                            new SelectListItem { Text = "Ngày GH", Value = "11"}
+                                            new SelectListItem { Text = "Đã kiểm định", Value = "1"},
+                                            new SelectListItem { Text = "BG chưa QC", Value = "0"}
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
@@ -97,13 +103,12 @@
             })
             .DataSource(dataSource => dataSource
                 .Ajax()
-                .Group(group => group.AddDescending(p => p.EntryDate))
+                .Group(group => group.AddDescending(p => p.EntryDate)).Group(group => group.Add(p => p.Features))
                 .Read(read => read.Action("GetBlendingInstructionIndexes", "BlendingInstructionAPIs", new { area = "Productions" }).Data("onGetBlendingInstructionIndexes"))
                 .Sort(sort =>
                     {
                         sort.Add(p => p.EntryDate).Descending();
                         sort.Add(p => p.BlendingInstructionID).Descending();
-                        sort.Add(p => p.CommodityCode);
                     })
                 .PageSize(20)
                 .Model(model =>
@@ -129,7 +134,7 @@
             withExtendedSearch: true, //indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght03" ? true : false,
             extendedFromDate: $("#GlobalFromDate").val(),
             extendedToDate: $("#GlobalToDate").val(),
-            dateOptionID: $("#ShowDateOptionID").val(),
+            labOptionID: $("#ShowLabOptionID").val(),
             filterOptionID: $("#ShowFilterOptionID").val()
         };
     }
@@ -157,7 +162,7 @@
     }
 
     function callPrint() {
-        window.open('@Url.Action("Print", "BlendingInstructions", new { area = "Productions" })' + "/" + $("#ShowDateOptionID").val() + "/" + $("#ShowFilterOptionID").val())
+        window.open('@Url.Action("Print", "BlendingInstructions", new { area = "Productions" })' + "/" + $("#ShowLabOptionID").val() + "/" + $("#ShowFilterOptionID").val())
     }
 
     decoratingKindex = function (idx, elem) {
@@ -184,14 +189,14 @@
     function indexFilterText_KeyUp(readDataSource) {
         var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
 
-        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastDateOptionID").val() != $("#ShowDateOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val()) {
-            $("#LastDateOptionID").val($("#ShowDateOptionID").val());
+        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastLabOptionID").val() != $("#ShowLabOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val()) {
+            $("#LastLabOptionID").val($("#ShowLabOptionID").val());
             $("#LastFilterOptionID").val($("#ShowFilterOptionID").val());
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [
                     { field: "Reference", operator: "contains", value: indexFilterText },
-                    { field: "Code", operator: "contains", value: indexFilterText },
+                    { field: "Features", operator: "contains", value: indexFilterText },
                     { field: "CommodityName", operator: "contains", value: indexFilterText },
                     { field: "CommodityName", operator: "contains", value: indexFilterText }
                 ]
