@@ -15,7 +15,6 @@ namespace TotalModel.Models
     {
         public int BlendingInstructionID { get; set; }
         public System.DateTime EntryDate { get; set; }
-        public System.DateTime BlendingInstructionEntryDate { get; set; }
         public string Reference { get; set; }
         public string Code { get; set; }
         public Nullable<System.DateTime> VoucherDate { get; set; }
@@ -30,8 +29,10 @@ namespace TotalModel.Models
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<decimal> QuantityIssued { get; set; }
         public Nullable<decimal> QuantityRemains { get; set; }
-        public Nullable<decimal> QuantityAvailableL0 { get; set; }
-        public Nullable<decimal> QuantityAvailableL1 { get; set; }
-        public Nullable<decimal> QuantityAvailableL2 { get; set; }
+        public string ProductCode { get; set; }
+        public string ProductName { get; set; }
+        public Nullable<decimal> QuantityAvailableArrivals { get; set; }
+        public Nullable<decimal> QuantityAvailableLocation1 { get; set; }
+        public Nullable<decimal> QuantityAvailableLocation2 { get; set; }
     }
 }

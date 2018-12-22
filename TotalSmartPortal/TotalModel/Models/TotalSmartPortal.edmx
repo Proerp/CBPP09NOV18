@@ -21180,7 +21180,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
         <ComplexType Name="BlendingInstructionIndex">
           <Property Type="Int32" Name="BlendingInstructionID" Nullable="false" />
           <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="BlendingInstructionEntryDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="Reference" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="Code" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="VoucherDate" Nullable="true" Precision="23" />
@@ -21195,9 +21194,11 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityIssued" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="QuantityAvailableL0" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="QuantityAvailableL1" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="QuantityAvailableL2" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="ProductCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductName" Nullable="true" MaxLength="200" />
+          <Property Type="Decimal" Name="QuantityAvailableArrivals" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailableLocation1" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailableLocation2" Nullable="true" Precision="18" Scale="2" />
           </ComplexType>
         <ComplexType Name="BlendingInstructionLog">
           <Property Type="Int32" Name="PackageIssueDetailID" Nullable="false" />
@@ -27155,7 +27156,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.BlendingInstructionIndex">
                 <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
                 <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="BlendingInstructionEntryDate" ColumnName="BlendingInstructionEntryDate" />
                 <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
@@ -27170,9 +27170,11 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="QuantityIssued" ColumnName="QuantityIssued" />
                 <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
-                <ScalarProperty Name="QuantityAvailableL0" ColumnName="QuantityAvailableL0" />
-                <ScalarProperty Name="QuantityAvailableL1" ColumnName="QuantityAvailableL1" />
-                <ScalarProperty Name="QuantityAvailableL2" ColumnName="QuantityAvailableL2" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="QuantityAvailableArrivals" ColumnName="QuantityAvailableArrivals" />
+                <ScalarProperty Name="QuantityAvailableLocation1" ColumnName="QuantityAvailableLocation1" />
+                <ScalarProperty Name="QuantityAvailableLocation2" ColumnName="QuantityAvailableLocation2" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
