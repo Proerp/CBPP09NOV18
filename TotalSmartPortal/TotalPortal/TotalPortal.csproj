@@ -1649,6 +1649,7 @@
     <Content Include="Areas\Inventories\Views\TransferOrders\GetPendingBlendingInstructions.cshtml" />
     <Content Include="Areas\Inventories\Views\MaterialTransferOrders\GetPendingBlendingInstructions.cshtml" />
     <Content Include="Areas\Inventories\Views\WarehouseTransfers\_GetAvailableWarehouse.cshtml" />
+    <Content Include="App_Code\Commons\Toolbars.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
