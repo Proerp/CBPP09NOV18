@@ -344,6 +344,7 @@
     <Compile Include="Areas\Inventories\Controllers\GoodsIssuesController.cs" />
     <Compile Include="Areas\Inventories\Controllers\GoodsReceiptsController.cs" />
     <Compile Include="Areas\Inventories\Controllers\HandlingUnitsController.cs" />
+    <Compile Include="Areas\Inventories\Controllers\InventoryControlsController.cs" />
     <Compile Include="Areas\Inventories\Controllers\MaterialIssuesController.cs" />
     <Compile Include="Areas\Inventories\Controllers\PackageIssuesController.cs" />
     <Compile Include="Areas\Inventories\Controllers\Sessions\GoodsDeliverySession.cs" />
@@ -1658,6 +1659,7 @@
     <Content Include="Areas\Inventories\Views\MaterialTransferOrders\GetPendingBlendingInstructions.cshtml" />
     <Content Include="Areas\Inventories\Views\WarehouseTransfers\_GetAvailableWarehouse.cshtml" />
     <Content Include="App_Code\Commons\Toolbars.cshtml" />
+    <Content Include="Areas\Inventories\Views\InventoryControls\Summaries.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -1757,6 +1759,8 @@
     <Content Include="Scripts\Controllers\Inventories\HandlingUnits\Edit.js" />
     <Content Include="Scripts\Controllers\Inventories\HandlingUnits\Index.js" />
     <Content Include="Scripts\Controllers\Inventories\HandlingUnits\Open.js" />
+    <Content Include="Scripts\Controllers\Inventories\InventoryControls\Details.js" />
+    <Content Include="Scripts\Controllers\Inventories\InventoryControls\Summaries.js" />
     <Content Include="Scripts\Controllers\Inventories\ItemAdjustments\Approve.js" />
     <Content Include="Scripts\Controllers\Inventories\ItemAdjustments\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Inventories\ItemAdjustments\Delete.js" />

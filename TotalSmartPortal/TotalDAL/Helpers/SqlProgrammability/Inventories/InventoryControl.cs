@@ -69,7 +69,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "       FROM        " + "\r\n";
             if (summaryOnly)
-                queryString = queryString + "              (SELECT CommodityID, NULL AS BinLocationID, NULL AS EntryDate, NULL AS Code, NULL AS SealCode, NULL AS BatchCode, NULL AS LabCode, NULL AS Barcode, NULL AS ProductionDate, NULL AS ExpiryDate, NULL AS Approved, SUM(BisQuantity) AS BisQuantity, SUM(BisQuantityIssued) AS BisQuantityIssued, SUM(BisQuantityRemains) AS BisQuantityRemains, SUM(QuantityAvailableArrivals) AS QuantityAvailableArrivals, SUM(QuantityAvailableLocation1) AS QuantityAvailableLocation1, SUM(QuantityAvailableLocation2) AS QuantityAvailableLocation2 FROM @InventoryControls GROUP BY CommodityID) InventoryControls " + "\r\n";
+                queryString = queryString + "              (SELECT CommodityID, NULL AS BinLocationID, NULL AS EntryDate, NULL AS Code, NULL AS SealCode, NULL AS BatchCode, NULL AS LabCode, NULL AS Barcode, MIN(ProductionDate) AS ProductionDate, MIN(ExpiryDate) AS ExpiryDate, NULL AS Approved, SUM(BisQuantity) AS BisQuantity, SUM(BisQuantityIssued) AS BisQuantityIssued, SUM(BisQuantityRemains) AS BisQuantityRemains, SUM(QuantityAvailableArrivals) AS QuantityAvailableArrivals, SUM(QuantityAvailableLocation1) AS QuantityAvailableLocation1, SUM(QuantityAvailableLocation2) AS QuantityAvailableLocation2 FROM @InventoryControls GROUP BY CommodityID) InventoryControls " + "\r\n";
             else
                 queryString = queryString + "               @InventoryControls InventoryControls " + "\r\n";
 

@@ -26,8 +26,8 @@ namespace TotalModel.Models
         public Nullable<int> BatchCode { get; set; }
         public Nullable<int> LabCode { get; set; }
         public Nullable<int> Barcode { get; set; }
-        public Nullable<int> ProductionDate { get; set; }
-        public Nullable<int> ExpiryDate { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
         public Nullable<int> Approved { get; set; }
         public Nullable<decimal> BisQuantity { get; set; }
         public Nullable<decimal> BisQuantityIssued { get; set; }

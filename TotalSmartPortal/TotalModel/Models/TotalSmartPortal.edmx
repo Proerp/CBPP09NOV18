@@ -21496,8 +21496,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Int32" Name="BatchCode" Nullable="true" />
           <Property Type="Int32" Name="LabCode" Nullable="true" />
           <Property Type="Int32" Name="Barcode" Nullable="true" />
-          <Property Type="Int32" Name="ProductionDate" Nullable="true" />
-          <Property Type="Int32" Name="ExpiryDate" Nullable="true" />
+          <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="Approved" Nullable="true" />
           <Property Type="Decimal" Name="BisQuantity" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="BisQuantityIssued" Nullable="true" Precision="38" Scale="2" />
