@@ -111,6 +111,8 @@ namespace TotalPortal.App_Start
 
                 kernel.Bind<IReportAPIRepository>().To<ReportAPIRepository>();
 
+                kernel.Bind<IInventoryControlAPIRepository>().To<InventoryControlAPIRepository>();
+
 
                 kernel.Bind<IPurchaseRequisitionService>().To<PurchaseRequisitionService>();
                 kernel.Bind<IPurchaseRequisitionRepository>().To<PurchaseRequisitionRepository>();

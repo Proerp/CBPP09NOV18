@@ -80,6 +80,7 @@
     <Compile Include="Repositories\Inventories\IGoodsDeliveryRepository.cs" />
     <Compile Include="Repositories\Inventories\IGoodsReceiptRepository.cs" />
     <Compile Include="Repositories\Inventories\IHandlingUnitRepository.cs" />
+    <Compile Include="Repositories\Inventories\IInventoryControlRepository.cs" />
     <Compile Include="Repositories\Inventories\IMaterialIssueRepository.cs" />
     <Compile Include="Repositories\Inventories\IPackageIssueRepository.cs" />
     <Compile Include="Repositories\Inventories\ITransferOrderRepository.cs" />
