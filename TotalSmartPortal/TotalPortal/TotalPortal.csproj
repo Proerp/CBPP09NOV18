@@ -738,6 +738,11 @@
     <Content Include="Content\Images\Mains\Size12\printer-icon-12.png" />
     <Content Include="Content\Images\Mains\Size12\printer-icon-12x13.png" />
     <Content Include="Content\Images\Mains\Size16\printer-icon-16.png" />
+    <Content Include="Content\Images\Mains\Size24\A-Check-24.png" />
+    <Content Include="Content\Images\Mains\Size24\A-Checked-24.png" />
+    <Content Include="Content\Images\Mains\Size24\A-Checklist-24.png" />
+    <Content Include="Content\Images\Mains\Size24\A-Checkmark-24.png" />
+    <Content Include="Content\Images\Mains\Size24\A-Task-24.png" />
     <Content Include="Content\Images\Mains\Size24\Accept-female-user.png" />
     <Content Include="Content\Images\Mains\Size24\Accept-Male-User.png" />
     <Content Include="Content\Images\Mains\Size24\Accept-Total.png" />
@@ -750,6 +755,7 @@
     <Content Include="Content\Images\Mains\Size24\data-add-icon-24.png" />
     <Content Include="Content\Images\Mains\Size24\Delivery-80-24.png" />
     <Content Include="Content\Images\Mains\Size24\Ecommerce-Sale-icon-24.png" />
+    <Content Include="Content\Images\Mains\Size24\Edit-crop-24.png" />
     <Content Include="Content\Images\Mains\Size24\folder-documents-icon-24.png" />
     <Content Include="Content\Images\Mains\Size24\Location-30-24.png" />
     <Content Include="Content\Images\Mains\Size24\Map-11-24.png" />
