@@ -4682,5 +4682,30 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderAvailableWarehouse>("GetTransferOrderAvailableWarehouses", locationIDParameter, nMVNTaskIDParameter);
         }
+    
+        public virtual ObjectResult<InventoryControl> GetInventoryControls(string aspUserID, Nullable<bool> summaryOnly, Nullable<int> labOptionID, Nullable<int> filterOptionID, Nullable<int> expiryDay)
+        {
+            var aspUserIDParameter = aspUserID != null ?
+                new ObjectParameter("AspUserID", aspUserID) :
+                new ObjectParameter("AspUserID", typeof(string));
+    
+            var summaryOnlyParameter = summaryOnly.HasValue ?
+                new ObjectParameter("SummaryOnly", summaryOnly) :
+                new ObjectParameter("SummaryOnly", typeof(bool));
+    
+            var labOptionIDParameter = labOptionID.HasValue ?
+                new ObjectParameter("LabOptionID", labOptionID) :
+                new ObjectParameter("LabOptionID", typeof(int));
+    
+            var filterOptionIDParameter = filterOptionID.HasValue ?
+                new ObjectParameter("FilterOptionID", filterOptionID) :
+                new ObjectParameter("FilterOptionID", typeof(int));
+    
+            var expiryDayParameter = expiryDay.HasValue ?
+                new ObjectParameter("ExpiryDay", expiryDay) :
+                new ObjectParameter("ExpiryDay", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InventoryControl>("GetInventoryControls", aspUserIDParameter, summaryOnlyParameter, labOptionIDParameter, filterOptionIDParameter, expiryDayParameter);
+        }
     }
 }

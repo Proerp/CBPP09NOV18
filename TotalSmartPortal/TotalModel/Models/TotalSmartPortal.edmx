@@ -6960,6 +6960,13 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
         <Function Name="GetHandlingUnitViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="HandlingUnitID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetInventoryControls" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
+          <Parameter Name="SummaryOnly" Type="bit" Mode="In" />
+          <Parameter Name="LabOptionID" Type="int" Mode="In" />
+          <Parameter Name="FilterOptionID" Type="int" Mode="In" />
+          <Parameter Name="ExpiryDay" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetLocationOrganizationalUnits" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nothing" Type="int" Mode="In" />
         </Function>
@@ -14386,6 +14393,13 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetInventoryControls" ReturnType="Collection(TotalSmartPortalModel.InventoryControl)">
+            <Parameter Name="AspUserID" Mode="In" Type="String" />
+            <Parameter Name="SummaryOnly" Mode="In" Type="Boolean" />
+            <Parameter Name="LabOptionID" Mode="In" Type="Int32" />
+            <Parameter Name="FilterOptionID" Mode="In" Type="Int32" />
+            <Parameter Name="ExpiryDay" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -21468,6 +21482,30 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="WarehouseReceiptName" Nullable="false" MaxLength="60" />
           <Property Type="Int32" Name="LocationReceiptID" Nullable="false" />
         </ComplexType>
+        <ComplexType Name="InventoryControl">
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="CategoryName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="SalesUnit" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="LeadTime" Nullable="true" />
+          <Property Type="Int32" Name="BinLocationCode" Nullable="true" />
+          <Property Type="Int32" Name="EntryDate" Nullable="true" />
+          <Property Type="Int32" Name="Code" Nullable="true" />
+          <Property Type="Int32" Name="SealCode" Nullable="true" />
+          <Property Type="Int32" Name="BatchCode" Nullable="true" />
+          <Property Type="Int32" Name="LabCode" Nullable="true" />
+          <Property Type="Int32" Name="Barcode" Nullable="true" />
+          <Property Type="Int32" Name="ProductionDate" Nullable="true" />
+          <Property Type="Int32" Name="ExpiryDate" Nullable="true" />
+          <Property Type="Int32" Name="Approved" Nullable="true" />
+          <Property Type="Decimal" Name="BisQuantity" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="BisQuantityIssued" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="BisQuantityRemains" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailableArrivals" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailableLocation1" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailableLocation2" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -27337,6 +27375,34 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="WarehouseReceiptCode" ColumnName="WarehouseReceiptCode" />
                 <ScalarProperty Name="WarehouseReceiptName" ColumnName="WarehouseReceiptName" />
                 <ScalarProperty Name="LocationReceiptID" ColumnName="LocationReceiptID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetInventoryControls" FunctionName="TotalSmartPortalModel.Store.GetInventoryControls">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.InventoryControl">
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="SalesUnit" ColumnName="SalesUnit" />
+                <ScalarProperty Name="LeadTime" ColumnName="LeadTime" />
+                <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="BisQuantity" ColumnName="BisQuantity" />
+                <ScalarProperty Name="BisQuantityIssued" ColumnName="BisQuantityIssued" />
+                <ScalarProperty Name="BisQuantityRemains" ColumnName="BisQuantityRemains" />
+                <ScalarProperty Name="QuantityAvailableArrivals" ColumnName="QuantityAvailableArrivals" />
+                <ScalarProperty Name="QuantityAvailableLocation1" ColumnName="QuantityAvailableLocation1" />
+                <ScalarProperty Name="QuantityAvailableLocation2" ColumnName="QuantityAvailableLocation2" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

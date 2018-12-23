@@ -325,6 +325,10 @@ namespace TotalDAL.Repositories
             
             //return;
 
+            Helpers.SqlProgrammability.Inventories.InventoryControl inventoryControl = new Helpers.SqlProgrammability.Inventories.InventoryControl(totalSmartPortalEntities);
+            inventoryControl.RestoreProcedure();
+            //return;
+
             Helpers.SqlProgrammability.Inventories.PackageIssue packageIssue = new Helpers.SqlProgrammability.Inventories.PackageIssue(totalSmartPortalEntities);
             packageIssue.RestoreProcedure();
 

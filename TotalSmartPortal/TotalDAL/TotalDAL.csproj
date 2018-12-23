@@ -66,6 +66,7 @@
     <Compile Include="Helpers\SqlProgrammability\Inventories\GoodsDelivery.cs" />
     <Compile Include="Helpers\SqlProgrammability\Inventories\HandlingUnit.cs" />
     <Compile Include="Helpers\SqlProgrammability\Inventories\GoodsReceipt.cs" />
+    <Compile Include="Helpers\SqlProgrammability\Inventories\InventoryControl.cs" />
     <Compile Include="Helpers\SqlProgrammability\Inventories\MaterialIssue.cs" />
     <Compile Include="Helpers\SqlProgrammability\Inventories\PackageIssue.cs" />
     <Compile Include="Helpers\SqlProgrammability\Inventories\TransferOrder.cs" />

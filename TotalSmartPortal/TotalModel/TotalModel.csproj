@@ -378,6 +378,9 @@
     <Compile Include="Models\HandlingUnitViewDetail.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InventoryControl.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Location.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
