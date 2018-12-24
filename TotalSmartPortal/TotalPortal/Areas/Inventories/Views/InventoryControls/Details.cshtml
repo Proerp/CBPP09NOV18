@@ -14,9 +14,15 @@
                 columns.Bound(p => p.CommodityCode).Title("Mã NVL").Hidden();
                 columns.Bound(p => p.CommodityName).Title("Tên nguyên liệu").Width(168);
 
+                columns.Bound(p => p.BinLocationCode).Title("Vị trí").Width(30);
+                columns.Bound(p => p.BatchCode).Title("Vị trí").Width(30);
+                columns.Bound(p => p.LabCode).Title("Vị trí").Width(30);
+                columns.Bound(p => p.Barcode).Title("Vị trí").Width(30);
+
+                columns.Bound(p => p.ProductionDate).Title("NSX").Format("{0:dd/MM/yyyy}");
                 columns.Bound(p => p.ExpiryDate).Title("HSD").Format("{0:dd/MM/yyyy}");
-                columns.Bound(p => p.LeadTime).Title("LeadTime").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);
                 
+
                 columns.Bound(p => p.BisQuantity).Title("SL Y/C").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 columns.Bound(p => p.BisQuantityIssued).Title("Đã xuất").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 columns.Bound(p => p.BisQuantityRemains).Title("Tồn BIS").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
@@ -24,6 +30,8 @@
                 columns.Bound(p => p.QuantityAvailableLocation2).Title("Kho PC").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 columns.Bound(p => p.QuantityAvailableLocation1).Title("Kho NVL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 columns.Bound(p => p.QuantityAvailableArrivals).Title("Mới về").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+
+                columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
                     .ClientTemplate("<a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Void" }) + "/#= CommodityID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Delete" }) + "/#= CommodityID #'><span class='k-icon sbt-delete'></span></a>");
@@ -78,35 +86,35 @@
                     </div>
                 </text>);
             })
-            .Filterable(f => f.Enabled(false))
-            .Pageable()
-            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
-            .Selectable()
-            .Sortable()
-            .Events(e =>
-            {
-                e.DataBound("hightLightSelectedRow");
-            })
-            .DataSource(dataSource => dataSource
-                .Ajax()
-                .Group(group => group.Add(p => p.CategoryName))
-                                                .Read(read => read.Action("GetBlendingInstructions", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
-                .Sort(sort => { sort.Add(p => p.CommodityCode); })
-                .PageSize(20)
-                .Model(model =>
-                {
-                    model.Id(x => x.CommodityID);
-                    model.Field(m => m.CommodityID).DefaultValue(0);
-                })
-                .ServerOperation(true)
-                .Aggregates(a => a.Add(x => x.BisQuantity).Sum())
-                .Aggregates(a => a.Add(x => x.BisQuantityIssued).Sum())
-                .Aggregates(a => a.Add(x => x.BisQuantityRemains).Sum())
-                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation1).Sum())
-                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation2).Sum())
-                .Aggregates(a => a.Add(x => x.QuantityAvailableArrivals).Sum())
-                )
-            .HtmlAttributes(new { @class = "grid-class" }))
+                                            .Filterable(f => f.Enabled(false))
+                                            .Pageable()
+                                            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
+                                            .Selectable()
+                                            .Sortable()
+                                            .Events(e =>
+                                            {
+                                                e.DataBound("hightLightSelectedRow");
+                                            })
+                                            .DataSource(dataSource => dataSource
+                                                .Ajax()
+                                                .Group(group => group.Add(p => p.CategoryName))
+                                                                                .Read(read => read.Action("GetBlendingInstructions", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
+                                                .Sort(sort => { sort.Add(p => p.CommodityCode); })
+                                                .PageSize(20)
+                                                .Model(model =>
+                                                {
+                                                    model.Id(x => x.CommodityID);
+                                                    model.Field(m => m.CommodityID).DefaultValue(0);
+                                                })
+                                                .ServerOperation(true)
+                                                .Aggregates(a => a.Add(x => x.BisQuantity).Sum())
+                                                .Aggregates(a => a.Add(x => x.BisQuantityIssued).Sum())
+                                                .Aggregates(a => a.Add(x => x.BisQuantityRemains).Sum())
+                                                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation1).Sum())
+                                                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation2).Sum())
+                                                .Aggregates(a => a.Add(x => x.QuantityAvailableArrivals).Sum())
+                                                )
+                                            .HtmlAttributes(new { @class = "grid-class" }))
 </div>
 
 
@@ -116,7 +124,7 @@
     function onGetInventoryControls(e) {
         var indexFilterText = $("#indexFilterText").val();
         return {
-            summaryOnly: true,
+            summaryOnly: false,
             labOptionID: $("#ShowLabOptionID").val(),
             filterOptionID: $("#ShowFilterOptionID").val(),
             expiryDay: 80
@@ -192,44 +200,3 @@
     }
 
 </script>
-
-
-
-
-
-<style>
-    #kendoGridIndex.k-grid *, #kendoGridTaskIndex.k-grid *, #kendoGridUserReportControl.k-grid * { /*BORDER ONLY*/
-        /*border: 0 !important;*/
-    }
-    /*#kendoGridIndex.k-grid, #kendoGridTaskIndex.k-grid * {  ALL GRID LINE (BORDER + INNER)
-        background: white !important;
-        border: 0 !important;
-    }*/
-
-
-    #kendoGridIndex.k-grid .k-header, #kendoGridTaskIndex.k-grid .k-header, #kendoGridUserReportControl.k-grid .k-header {
-        /*display: none;-------------*/
-    }
-
-    #kendoGridIndex td.k-group-cell, #kendoGridTaskIndex td.k-group-cell, #kendoGridUserReportControl td.k-group-cell {
-        /*background-color: white;----------------*/
-    }
-
-    .k-pager-wrap {
-        display: none;
-    }
-
-
-    .first-panel {
-        float: left;
-        width: 22%;
-        box-sizing: border-box;
-    }
-
-    .second-panel {
-        float: left;
-        width: 78%;
-        padding-left: 1px;
-        box-sizing: border-box;
-    }
-</style>

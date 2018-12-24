@@ -48,10 +48,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "           END " + "\r\n";
 
 
-            queryString = queryString + "       IF  (@LocalSummaryOnly = 1) " + "\r\n";
-            queryString = queryString + "           " + this.GetInventoryControlIndexSQL(true) + "\r\n";
-            queryString = queryString + "       ELSE " + "\r\n"; //20
+            queryString = queryString + "       IF  (@LocalSummaryOnly = 0) " + "\r\n";
             queryString = queryString + "           " + this.GetInventoryControlIndexSQL(false) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n"; //20
+            queryString = queryString + "           " + this.GetInventoryControlIndexSQL(true) + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
@@ -69,7 +69,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "       FROM        " + "\r\n";
             if (summaryOnly)
-                queryString = queryString + "              (SELECT CommodityID, NULL AS BinLocationID, NULL AS EntryDate, NULL AS Code, NULL AS SealCode, NULL AS BatchCode, NULL AS LabCode, NULL AS Barcode, MIN(ProductionDate) AS ProductionDate, MIN(ExpiryDate) AS ExpiryDate, NULL AS Approved, SUM(BisQuantity) AS BisQuantity, SUM(BisQuantityIssued) AS BisQuantityIssued, SUM(BisQuantityRemains) AS BisQuantityRemains, SUM(QuantityAvailableArrivals) AS QuantityAvailableArrivals, SUM(QuantityAvailableLocation1) AS QuantityAvailableLocation1, SUM(QuantityAvailableLocation2) AS QuantityAvailableLocation2 FROM @InventoryControls GROUP BY CommodityID) InventoryControls " + "\r\n";
+                queryString = queryString + "              (SELECT CommodityID, CAST(NULL AS int) AS BinLocationID, CAST(NULL AS Datetime) AS EntryDate, CAST(NULL AS nvarchar) AS Code, CAST(NULL AS nvarchar) AS SealCode, CAST(NULL AS nvarchar) AS BatchCode, CAST(NULL AS nvarchar) AS LabCode, CAST(NULL AS nvarchar) AS Barcode, MIN(ProductionDate) AS ProductionDate, MIN(ExpiryDate) AS ExpiryDate, CAST(0 AS Bit) AS Approved, SUM(BisQuantity) AS BisQuantity, SUM(BisQuantityIssued) AS BisQuantityIssued, SUM(BisQuantityRemains) AS BisQuantityRemains, SUM(QuantityAvailableArrivals) AS QuantityAvailableArrivals, SUM(QuantityAvailableLocation1) AS QuantityAvailableLocation1, SUM(QuantityAvailableLocation2) AS QuantityAvailableLocation2 FROM @InventoryControls GROUP BY CommodityID) InventoryControls " + "\r\n";
             else
                 queryString = queryString + "               @InventoryControls InventoryControls " + "\r\n";
 
