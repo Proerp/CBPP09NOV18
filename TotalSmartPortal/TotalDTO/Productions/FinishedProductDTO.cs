@@ -12,7 +12,7 @@ using TotalDTO.Commons;
 using TotalDTO.Helpers.Interfaces;
 
 namespace TotalDTO.Productions
-{  
+{
     public class FinishedProductPrimitiveDTO : QuantityDTO<FinishedProductDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
     {
         public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.FinishedProduct; } }
@@ -20,7 +20,7 @@ namespace TotalDTO.Productions
         public int GetID() { return this.FinishedProductID; }
         public void SetID(int id) { this.FinishedProductID = id; }
 
-        public int FinishedProductID { get; set; }     
+        public int FinishedProductID { get; set; }
 
         public virtual Nullable<int> CustomerID { get; set; }
 
@@ -64,9 +64,9 @@ namespace TotalDTO.Productions
             base.PerformPresaveRule();
 
             this.ShiftSaving(this.ShiftID);
-            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; });            
+            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; });
         }
-        
+
     }
 
 
@@ -85,7 +85,7 @@ namespace TotalDTO.Productions
         public override int CrucialWorkerID { get { return (this.CrucialWorker != null ? this.CrucialWorker.EmployeeID : 0); } }
         [Display(Name = "NV đóng gói")]
         [UIHint("AutoCompletes/EmployeeBase")]
-        public EmployeeBaseDTO CrucialWorker { get; set; }        
+        public EmployeeBaseDTO CrucialWorker { get; set; }
 
         public List<FinishedProductDetailDTO> FinishedProductViewDetails { get; set; }
         public List<FinishedProductDetailDTO> ViewDetails { get { return this.FinishedProductViewDetails; } set { this.FinishedProductViewDetails = value; } }
@@ -96,5 +96,15 @@ namespace TotalDTO.Productions
 
 
         public List<FinishedProductSummaryDTO> FinishedProductSummaries { get; set; }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            foreach (var result in base.Validate(validationContext)) { yield return result; }
+
+            foreach (FinishedProductSummaryDTO finishedProductSummaryDTO in this.FinishedProductSummaries)
+            {
+                if ((finishedProductSummaryDTO.Quantity != 0 || finishedProductSummaryDTO.QuantityFailure != 0) && finishedProductSummaryDTO.PackageUnitWeights == 0) yield return new ValidationResult("Vui lòng nhập khối lượng của một kiện.", new[] { "TotalQuantity" });
+            }
+        }
     }
 }
