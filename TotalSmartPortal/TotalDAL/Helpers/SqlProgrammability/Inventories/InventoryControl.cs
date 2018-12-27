@@ -18,7 +18,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         public void RestoreProcedure()
         {
-            //this.GetInventoryControls();
+            this.GetInventoryControls();
         }
 
 
