@@ -360,6 +360,7 @@
     <Compile Include="Areas\Inventories\ViewModels\GoodsIssueViewModel.cs" />
     <Compile Include="Areas\Inventories\ViewModels\GoodsReceiptViewModel.cs" />
     <Compile Include="Areas\Inventories\ViewModels\HandlingUnitViewModel.cs" />
+    <Compile Include="Areas\Inventories\ViewModels\InventoryControlViewModel.cs" />
     <Compile Include="Areas\Inventories\ViewModels\MaterialIssueViewModel.cs" />
     <Compile Include="Areas\Inventories\ViewModels\PackageIssueViewModel.cs" />
     <Compile Include="Areas\Inventories\ViewModels\TransferOrderViewModel.cs" />
