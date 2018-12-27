@@ -6965,6 +6965,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="SummaryOnly" Type="bit" Mode="In" />
           <Parameter Name="LabOptionID" Type="int" Mode="In" />
           <Parameter Name="FilterOptionID" Type="int" Mode="In" />
+          <Parameter Name="pendingOptionID" Type="int" Mode="In" />
           <Parameter Name="ExpiryDay" Type="int" Mode="In" />
         </Function>
         <Function Name="GetLocationOrganizationalUnits" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -14398,6 +14399,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="SummaryOnly" Mode="In" Type="Boolean" />
             <Parameter Name="LabOptionID" Mode="In" Type="Int32" />
             <Parameter Name="FilterOptionID" Mode="In" Type="Int32" />
+            <Parameter Name="pendingOptionID" Mode="In" Type="Int32" />
             <Parameter Name="ExpiryDay" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>

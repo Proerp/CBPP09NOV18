@@ -18,7 +18,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         public void RestoreProcedure()
         {
-            this.GetInventoryControls();
+            //this.GetInventoryControls();
         }
 
 
@@ -26,7 +26,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            queryString = " @AspUserID nvarchar(128), @SummaryOnly bit, @LabOptionID int, @FilterOptionID int, @ExpiryDay int " + "\r\n";
+            queryString = " @AspUserID nvarchar(128), @SummaryOnly bit, @LabOptionID int, @FilterOptionID int, @pendingOptionID int, @ExpiryDay int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";

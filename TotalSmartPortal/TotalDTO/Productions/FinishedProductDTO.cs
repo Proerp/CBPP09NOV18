@@ -96,15 +96,5 @@ namespace TotalDTO.Productions
 
 
         public List<FinishedProductSummaryDTO> FinishedProductSummaries { get; set; }
-
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            foreach (var result in base.Validate(validationContext)) { yield return result; }
-
-            foreach (FinishedProductSummaryDTO finishedProductSummaryDTO in this.FinishedProductSummaries)
-            {
-                if ((finishedProductSummaryDTO.Quantity != 0 || finishedProductSummaryDTO.QuantityFailure != 0) && finishedProductSummaryDTO.PackageUnitWeights == 0) yield return new ValidationResult("Vui lòng nhập khối lượng của một kiện.", new[] { "TotalQuantity" });
-            }
-        }
     }
 }

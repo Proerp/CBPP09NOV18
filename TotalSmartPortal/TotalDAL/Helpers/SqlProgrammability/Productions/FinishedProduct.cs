@@ -215,10 +215,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void FinishedProductPostSaveValidate()
         {
-            string[] queryArray = new string[2];
+            string[] queryArray = new string[3];
 
-            queryArray[0] = " SELECT TOP 1 @FoundEntity = N'Ngày sản xuất phôi: ' + CAST(SemifinishedProducts.EntryDate AS nvarchar) FROM FinishedProductDetails INNER JOIN SemifinishedProducts ON FinishedProductDetails.FinishedProductID = @EntityID AND FinishedProductDetails.SemifinishedProductID = SemifinishedProducts.SemifinishedProductID AND FinishedProductDetails.EntryDate < SemifinishedProducts.EntryDate ";
-            queryArray[1] = " SELECT TOP 1 @FoundEntity = N'Số lượng đóng gói vượt quá số lượng phôi: ' + CAST(ROUND(Quantity - QuantityFinished, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM SemifinishedProductDetails WHERE (ROUND(Quantity - QuantityFinished, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = N'Vui lòng nhập trọng lượng kiện' FROM FinishedProductDetails WHERE FinishedProductID = @EntityID AND ((Quantity <> 0 OR QuantityFailure <> 0 OR QuantityExcess <> 0 OR QuantityShortage <> 0) AND PackageUnitWeights = 0) ";
+
+            queryArray[1] = " SELECT TOP 1 @FoundEntity = N'Ngày sản xuất phôi: ' + CAST(SemifinishedProducts.EntryDate AS nvarchar) FROM FinishedProductDetails INNER JOIN SemifinishedProducts ON FinishedProductDetails.FinishedProductID = @EntityID AND FinishedProductDetails.SemifinishedProductID = SemifinishedProducts.SemifinishedProductID AND FinishedProductDetails.EntryDate < SemifinishedProducts.EntryDate ";
+            queryArray[2] = " SELECT TOP 1 @FoundEntity = N'Số lượng đóng gói vượt quá số lượng phôi: ' + CAST(ROUND(Quantity - QuantityFinished, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM SemifinishedProductDetails WHERE (ROUND(Quantity - QuantityFinished, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("FinishedProductPostSaveValidate", queryArray);
         }
