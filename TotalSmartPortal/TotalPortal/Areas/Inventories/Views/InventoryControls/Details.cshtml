@@ -2,8 +2,9 @@
 
 <div>
     @Html.Hidden("LastLabOptionID", "1")
-    @Html.Hidden("LastFilterOptionID", "10")
+    @Html.Hidden("LastFilterOptionID", "0")
     @Html.Hidden("LastPendingOptionID", "1")
+    @Html.Hidden("LastShelfLife", "80")
     @Html.Hidden("SelectedFirmOrderID", "0")
 
     @(Html.Kendo().Grid<TotalModel.Models.InventoryControl>()
@@ -31,7 +32,8 @@
                 columns.Bound(p => p.QuantityAvailableArrivals).Title("Mới về").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
-
+                columns.Template(t => { }).Title("Lab").ClientTemplate("<input class='IsSelected' #= LabApproved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
+                
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
                     .ClientTemplate("<a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Void" }) + "/#= CommodityID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Delete" }) + "/#= CommodityID #'><span class='k-icon sbt-delete'></span></a>");
             })
@@ -43,7 +45,7 @@
                     <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> In </button>
                     <div class="toolbar" style="float: right;">
                         <label>Lọc theo số BIS, sản phẩm hoặc NVL</label>
-                        <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 108px; " onkeyup="indexFilterText_KeyUp()" />
+                        <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 108px; " value="107A BM 07" onkeyup="indexFilterText_KeyUp()" />
 
                         <span id="filterExtended">
                             @(Html.Kendo().DropDownList()
@@ -72,6 +74,8 @@
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
+                            
+                            @(Html.Kendo().IntegerTextBox().Name("ShowShelfLife").Value(80).Enable(false).HtmlAttributes(new { @style = "width: 68px; text-align: center; " }).Events(e => e.Change("indexFilterText_KeyUp")))
 
                             @(Html.Kendo().DropDownList()
                                     .Name("ShowLabOptionID")
@@ -96,35 +100,36 @@
                     </div>
                 </text>);
             })
-                                                                                                                                            .Filterable(f => f.Enabled(false))
-                                                                                                                                            .Pageable()
-                                                                                                                                            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
-                                                                                                                                            .Selectable()
-                                                                                                                                            .Sortable()
-                                                                                                                                            .Events(e =>
-                                                                                                                                            {
-                                                                                                                                                e.DataBound("hightLightSelectedRow");
-                                                                                                                                            })
-                                                                                                                                            .DataSource(dataSource => dataSource
-                                                                                                                                                .Ajax()
-                                                                                                                                                .Group(group => group.Add(p => p.CategoryName)).Group(group => group.Add(p => p.Features))
-                                                                                                                                                .Read(read => read.Action("GetBlendingInstructions", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
-                                                                                                                                                .Sort(sort => { sort.Add(p => p.CommodityCode); })
-                                                                                                                                                .PageSize(20)
-                                                                                                                                                .Model(model =>
-                                                                                                                                                {
-                                                                                                                                                    model.Id(x => x.CommodityID);
-                                                                                                                                                    model.Field(m => m.CommodityID).DefaultValue(0);
-                                                                                                                                                })
-                                                                                                                                                .ServerOperation(true)
-                                                                                                                                                .Aggregates(a => a.Add(x => x.BisQuantity).Sum())
-                                                                                                                                                .Aggregates(a => a.Add(x => x.BisQuantityIssued).Sum())
-                                                                                                                                                .Aggregates(a => a.Add(x => x.BisQuantityRemains).Sum())
-                                                                                                                                                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation1).Sum())
-                                                                                                                                                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation2).Sum())
-                                                                                                                                                .Aggregates(a => a.Add(x => x.QuantityAvailableArrivals).Sum())
-                                                                                                                                                )
-                                                                                                                                            .HtmlAttributes(new { @class = "grid-class" }))
+            .Filterable(f => f.Enabled(false))
+            .Pageable()
+            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
+            .Selectable()
+            .Sortable()
+            .Events(e =>
+            {
+                e.DataBound("hightLightSelectedRow");
+            })
+            .AutoBind (1==2? true: false)
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Group(group => group.Add(p => p.CategoryName)).Group(group => group.Add(p => p.Features))
+                .Read(read => read.Action("GetBlendingInstructions", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
+                .Sort(sort => { sort.Add(p => p.CommodityCode); })
+                .PageSize(20)
+                .Model(model =>
+                {
+                    model.Id(x => x.CommodityID);
+                    model.Field(m => m.CommodityID).DefaultValue(0);
+                })
+                .ServerOperation(true)
+                .Aggregates(a => a.Add(x => x.BisQuantity).Sum())
+                .Aggregates(a => a.Add(x => x.BisQuantityIssued).Sum())
+                .Aggregates(a => a.Add(x => x.BisQuantityRemains).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation1).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation2).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityAvailableArrivals).Sum())
+                )
+            .HtmlAttributes(new { @class = "grid-class" }))
 </div>
 
 
@@ -133,12 +138,13 @@
 
     function onGetInventoryControls(e) {
         var indexFilterText = $("#indexFilterText").val();
+        alert("2")
         return {
             summaryOnly: false,
             labOptionID: $("#ShowLabOptionID").val(),
             filterOptionID: $("#ShowFilterOptionID").val(),
             pendingOptionID: $("#ShowPendingOptionID").val(),
-            expiryDay: 80
+            shelfLife: $("#ShowShelfLife").val()
         };
     }
 
@@ -216,10 +222,16 @@
     function indexFilterText_KeyUp(readDataSource) {
         var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
 
-        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastLabOptionID").val() != $("#ShowLabOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val() || $("#LastPendingOptionID").val() != $("#ShowPendingOptionID").val()) {
+        alert("1")
+        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastLabOptionID").val() != $("#ShowLabOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val() || $("#LastPendingOptionID").val() != $("#ShowPendingOptionID").val() || $("#LastShelfLife").val() != $("#ShowShelfLife").val()) {
+
+            if ($("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val()) { $("#ShowShelfLife").data("kendoNumericTextBox").enable($("#ShowFilterOptionID").val() == 20 ? true : false); }
+
             $("#LastLabOptionID").val($("#ShowLabOptionID").val());
             $("#LastFilterOptionID").val($("#ShowFilterOptionID").val());
             $("#LastPendingOptionID").val($("#ShowPendingOptionID").val());
+            $("#LastShelfLife").val($("#ShowShelfLife").val());
+
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [

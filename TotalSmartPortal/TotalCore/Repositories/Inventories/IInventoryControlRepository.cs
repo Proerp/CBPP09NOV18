@@ -7,7 +7,7 @@ namespace TotalCore.Repositories.Inventories
 {
     public interface IInventoryControlAPIRepository : IGenericAPIRepository
     {
-        List<InventoryControl> GetInventoryControls(string aspUserID, bool? summaryOnly, int? labOptionID, int? filterOptionID, int? pendingOptionID, int? expiryDay);
+        List<InventoryControl> GetInventoryControls(string aspUserID, bool? summaryOnly, int? labOptionID, int? filterOptionID, int? pendingOptionID, int? shelfLife);
     }
 
 }

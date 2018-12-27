@@ -6965,8 +6965,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Parameter Name="SummaryOnly" Type="bit" Mode="In" />
           <Parameter Name="LabOptionID" Type="int" Mode="In" />
           <Parameter Name="FilterOptionID" Type="int" Mode="In" />
-          <Parameter Name="pendingOptionID" Type="int" Mode="In" />
-          <Parameter Name="ExpiryDay" Type="int" Mode="In" />
+          <Parameter Name="PendingOptionID" Type="int" Mode="In" />
+          <Parameter Name="ShelfLife" Type="int" Mode="In" />
         </Function>
         <Function Name="GetLocationOrganizationalUnits" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nothing" Type="int" Mode="In" />
@@ -14399,8 +14399,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="SummaryOnly" Mode="In" Type="Boolean" />
             <Parameter Name="LabOptionID" Mode="In" Type="Int32" />
             <Parameter Name="FilterOptionID" Mode="In" Type="Int32" />
-            <Parameter Name="pendingOptionID" Mode="In" Type="Int32" />
-            <Parameter Name="ExpiryDay" Mode="In" Type="Int32" />
+            <Parameter Name="PendingOptionID" Mode="In" Type="Int32" />
+            <Parameter Name="ShelfLife" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -21512,6 +21512,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Int32" Name="WarehouseTransferID" Nullable="true" />
           <Property Type="Int32" Name="WarehouseAdjustmentID" Nullable="true" />
           <Property Type="Int32" Name="BlendingInstructionID" Nullable="true" />
+          <Property Type="Boolean" Name="LabApproved" Nullable="false" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -27415,6 +27416,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="WarehouseTransferID" ColumnName="WarehouseTransferID" />
                 <ScalarProperty Name="WarehouseAdjustmentID" ColumnName="WarehouseAdjustmentID" />
                 <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
+                <ScalarProperty Name="LabApproved" ColumnName="LabApproved" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

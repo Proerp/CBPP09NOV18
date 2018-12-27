@@ -4683,7 +4683,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderAvailableWarehouse>("GetTransferOrderAvailableWarehouses", locationIDParameter, nMVNTaskIDParameter);
         }
     
-        public virtual ObjectResult<InventoryControl> GetInventoryControls(string aspUserID, Nullable<bool> summaryOnly, Nullable<int> labOptionID, Nullable<int> filterOptionID, Nullable<int> pendingOptionID, Nullable<int> expiryDay)
+        public virtual ObjectResult<InventoryControl> GetInventoryControls(string aspUserID, Nullable<bool> summaryOnly, Nullable<int> labOptionID, Nullable<int> filterOptionID, Nullable<int> pendingOptionID, Nullable<int> shelfLife)
         {
             var aspUserIDParameter = aspUserID != null ?
                 new ObjectParameter("AspUserID", aspUserID) :
@@ -4702,14 +4702,14 @@ namespace TotalModel.Models
                 new ObjectParameter("FilterOptionID", typeof(int));
     
             var pendingOptionIDParameter = pendingOptionID.HasValue ?
-                new ObjectParameter("pendingOptionID", pendingOptionID) :
-                new ObjectParameter("pendingOptionID", typeof(int));
+                new ObjectParameter("PendingOptionID", pendingOptionID) :
+                new ObjectParameter("PendingOptionID", typeof(int));
     
-            var expiryDayParameter = expiryDay.HasValue ?
-                new ObjectParameter("ExpiryDay", expiryDay) :
-                new ObjectParameter("ExpiryDay", typeof(int));
+            var shelfLifeParameter = shelfLife.HasValue ?
+                new ObjectParameter("ShelfLife", shelfLife) :
+                new ObjectParameter("ShelfLife", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InventoryControl>("GetInventoryControls", aspUserIDParameter, summaryOnlyParameter, labOptionIDParameter, filterOptionIDParameter, pendingOptionIDParameter, expiryDayParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InventoryControl>("GetInventoryControls", aspUserIDParameter, summaryOnlyParameter, labOptionIDParameter, filterOptionIDParameter, pendingOptionIDParameter, shelfLifeParameter);
         }
     }
 }

@@ -4,6 +4,7 @@
     @Html.Hidden("LastLabOptionID", "0")
     @Html.Hidden("LastFilterOptionID", "0")
     @Html.Hidden("SelectedFirmOrderID", "0")
+    @Html.Hidden("LastShelfLife", "80")
 
     @(Html.Kendo().Grid<TotalModel.Models.InventoryControl>()
             .Name("kendoGridIndex")
@@ -52,6 +53,8 @@
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
+
+                            @(Html.Kendo().IntegerTextBox().Name("ShowShelfLife").Value(80).Enable(false).HtmlAttributes(new { @style = "width: 68px; text-align: center; " }).Events(e => e.Change("indexFilterText_KeyUp")))
 
                             @(Html.Kendo().DropDownList()
                                     .Name("ShowLabOptionID")
@@ -118,7 +121,7 @@
             labOptionID: $("#ShowLabOptionID").val(),
             filterOptionID: $("#ShowFilterOptionID").val(),
             pendingOptionID: 1,
-            expiryDay: 80
+            shelfLife: $("#ShowShelfLife").val()
         };
     }
 
@@ -172,9 +175,14 @@
     function indexFilterText_KeyUp(readDataSource) {
         var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
 
-        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastLabOptionID").val() != $("#ShowLabOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val()) {
+        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastLabOptionID").val() != $("#ShowLabOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val() || $("#LastShelfLife").val() != $("#ShowShelfLife").val()) {
+
+            if ($("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val()) { $("#ShowShelfLife").data("kendoNumericTextBox").enable($("#ShowFilterOptionID").val() == 20 ? true : false); }
+
             $("#LastLabOptionID").val($("#ShowLabOptionID").val());
             $("#LastFilterOptionID").val($("#ShowFilterOptionID").val());
+            $("#LastShelfLife").val($("#ShowShelfLife").val());
+
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [

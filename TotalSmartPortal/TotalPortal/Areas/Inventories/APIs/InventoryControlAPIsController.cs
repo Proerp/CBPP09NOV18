@@ -34,9 +34,9 @@ namespace TotalPortal.Areas.Inventories.APIs
 
 
 
-        public JsonResult GetBlendingInstructions([DataSourceRequest] DataSourceRequest dataSourceRequest, bool? summaryOnly, int? labOptionID, int? filterOptionID, int? pendingOptionID, int? expiryDay)
+        public JsonResult GetBlendingInstructions([DataSourceRequest] DataSourceRequest dataSourceRequest, bool? summaryOnly, int? labOptionID, int? filterOptionID, int? pendingOptionID, int? shelfLife)
         {
-            var result = this.inventoryControlAPIRepository.GetInventoryControls(User.Identity.GetUserId(), summaryOnly, labOptionID, filterOptionID, pendingOptionID, expiryDay);
+            var result = this.inventoryControlAPIRepository.GetInventoryControls(User.Identity.GetUserId(), summaryOnly, labOptionID, filterOptionID, pendingOptionID, shelfLife);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
