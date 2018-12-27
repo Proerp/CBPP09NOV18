@@ -3,6 +3,7 @@
 <div>
     @Html.Hidden("LastLabOptionID", "1")
     @Html.Hidden("LastFilterOptionID", "10")
+    @Html.Hidden("LastPendingOptionID", "1")
     @Html.Hidden("SelectedFirmOrderID", "0")
 
     @(Html.Kendo().Grid<TotalModel.Models.InventoryControl>()
@@ -12,6 +13,7 @@
                 columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden();
                 columns.Bound(p => p.CategoryName).Title("CAT").Hidden();
                 columns.Bound(p => p.CommodityCode).Title("NVL").Hidden();
+                columns.Bound(p => p.Features).Title("NVL").Hidden();
 
                 columns.Bound(p => p.Barcode).Title("Mã vạch").Width(30).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).ClientTemplate("<a onclick='openData(#= GoodsArrivalID #, #= GoodsReceiptID #, #= WarehouseTransferID #, #= WarehouseAdjustmentID #, #= BlendingInstructionID #)'><span class='AAB'>#=Barcode#</span></a>");
                 columns.Bound(p => p.BinLocationCode).Title("Vị trí").Width(68);
@@ -44,6 +46,19 @@
                         <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 108px; " onkeyup="indexFilterText_KeyUp()" />
 
                         <span id="filterExtended">
+                            @(Html.Kendo().DropDownList()
+                                    .Name("ShowPendingOptionID")
+                                    .DataTextField("Text")
+                                    .DataValueField("Value")
+                                    .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
+                                    .BindTo(new List<SelectListItem>()
+                                      {
+                                          new SelectListItem { Text = "Tất cả", Value = "1"},
+                                          new SelectListItem { Text = "Không hiển thị BIS", Value = "0"}
+                                      })
+                                    .Events(e => e.Change("indexFilterText_KeyUp"))
+                            )
+
                             @(Html.Kendo().DropDownList()
                                     .Name("ShowFilterOptionID")
                                     .DataTextField("Text")
@@ -122,6 +137,7 @@
             summaryOnly: false,
             labOptionID: $("#ShowLabOptionID").val(),
             filterOptionID: $("#ShowFilterOptionID").val(),
+            pendingOptionID: $("#ShowPendingOptionID").val(),
             expiryDay: 80
         };
     }
@@ -200,9 +216,10 @@
     function indexFilterText_KeyUp(readDataSource) {
         var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
 
-        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastLabOptionID").val() != $("#ShowLabOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val()) {
+        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastLabOptionID").val() != $("#ShowLabOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val() || $("#LastPendingOptionID").val() != $("#ShowPendingOptionID").val()) {
             $("#LastLabOptionID").val($("#ShowLabOptionID").val());
             $("#LastFilterOptionID").val($("#ShowFilterOptionID").val());
+            $("#LastPendingOptionID").val($("#ShowPendingOptionID").val());
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [
