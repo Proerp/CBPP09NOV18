@@ -14,6 +14,8 @@ namespace TotalDTO.Productions
         public int BlendingInstructionDetailID { get; set; }
         public int BlendingInstructionID { get; set; }
 
+        public string Code { get; set; }
+
         [UIHint("AutoCompletes/CommodityBase")]
         public override string CommodityCode { get; set; }
 

@@ -1,8 +1,8 @@
 ﻿@using TotalPortal.Configuration
 
 <div>
-    @Html.Hidden("LastLabOptionID", "1")
-    @Html.Hidden("LastFilterOptionID", "10")
+    @Html.Hidden("LastLabOptionID", "0")
+    @Html.Hidden("LastFilterOptionID", "0")
     @Html.Hidden("SelectedFirmOrderID", "0")
 
     @(Html.Kendo().Grid<TotalModel.Models.InventoryControl>()
@@ -46,11 +46,9 @@
                                     .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
-                                            new SelectListItem { Text = "BIS cần pha chế", Value = "10"},
-                                            new SelectListItem { Text = "BIS cần pc [Chưa PC]", Value = "11"},
-                                            new SelectListItem { Text = "BIS cần pc [Đang PC]", Value = "12"},
-                                            new SelectListItem { Text = "BIS đã pc [Từ ... Đến]", Value = "20"},
-                                            new SelectListItem { Text = "Tất cả [Từ ... Đến]", Value = "0"},
+                                          new SelectListItem { Text = "Tất cả", Value = "0"},  
+                                          new SelectListItem { Text = "NVL còn tồn BIS", Value = "10"},
+                                          new SelectListItem { Text = "NVL sắp đến HSD", Value = "20"}
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )

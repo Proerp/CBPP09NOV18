@@ -11,17 +11,14 @@
             {
                 columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden();
                 columns.Bound(p => p.CategoryName).Title("CAT").Hidden();
-                columns.Bound(p => p.CommodityCode).Title("Mã NVL").Hidden();
-                columns.Bound(p => p.CommodityName).Title("Tên nguyên liệu").Width(168);
+                columns.Bound(p => p.CommodityCode).Title("NVL").Hidden();
 
-                columns.Bound(p => p.BinLocationCode).Title("Vị trí").Width(30);
-                columns.Bound(p => p.BatchCode).Title("Vị trí").Width(30);
-                columns.Bound(p => p.LabCode).Title("Vị trí").Width(30);
-                columns.Bound(p => p.Barcode).Title("Vị trí").Width(30);
+                columns.Bound(p => p.Barcode).Title("Mã vạch").Width(30).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).ClientTemplate("<a onclick='openData(#= GoodsArrivalID #, #= GoodsReceiptID #, #= WarehouseTransferID #, #= WarehouseAdjustmentID #, #= BlendingInstructionID #)'><span class='AAB'>#=Barcode#</span></a>");
+                columns.Bound(p => p.BinLocationCode).Title("Vị trí").Width(68);
+                columns.Bound(p => p.BatchCode).Title("Số lô").Width(30);
+                columns.Bound(p => p.LabCode).Title("Lab").Width(30);
 
-                columns.Bound(p => p.ProductionDate).Title("NSX").Format("{0:dd/MM/yyyy}");
-                columns.Bound(p => p.ExpiryDate).Title("HSD").Format("{0:dd/MM/yyyy}");
-                
+                columns.Bound(p => p.ExpiryDate).Title("HSD").Width(10).Format("{0:dd/MM/yyyy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
 
                 columns.Bound(p => p.BisQuantity).Title("SL Y/C").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 columns.Bound(p => p.BisQuantityIssued).Title("Đã xuất").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
@@ -32,7 +29,7 @@
                 columns.Bound(p => p.QuantityAvailableArrivals).Title("Mới về").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
-                
+
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
                     .ClientTemplate("<a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Void" }) + "/#= CommodityID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Delete" }) + "/#= CommodityID #'><span class='k-icon sbt-delete'></span></a>");
             })
@@ -54,11 +51,9 @@
                                     .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
-                                            new SelectListItem { Text = "BIS cần pha chế", Value = "10"},
-                                            new SelectListItem { Text = "BIS cần pc [Chưa PC]", Value = "11"},
-                                            new SelectListItem { Text = "BIS cần pc [Đang PC]", Value = "12"},
-                                            new SelectListItem { Text = "BIS đã pc [Từ ... Đến]", Value = "20"},
-                                            new SelectListItem { Text = "Tất cả [Từ ... Đến]", Value = "0"},
+                                          new SelectListItem { Text = "Tất cả", Value = "0"},
+                                          new SelectListItem { Text = "NVL còn tồn BIS", Value = "10"},
+                                          new SelectListItem { Text = "NVL sắp đến HSD", Value = "20"}
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
@@ -86,35 +81,35 @@
                     </div>
                 </text>);
             })
-                                            .Filterable(f => f.Enabled(false))
-                                            .Pageable()
-                                            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
-                                            .Selectable()
-                                            .Sortable()
-                                            .Events(e =>
-                                            {
-                                                e.DataBound("hightLightSelectedRow");
-                                            })
-                                            .DataSource(dataSource => dataSource
-                                                .Ajax()
-                                                .Group(group => group.Add(p => p.CategoryName))
-                                                                                .Read(read => read.Action("GetBlendingInstructions", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
-                                                .Sort(sort => { sort.Add(p => p.CommodityCode); })
-                                                .PageSize(20)
-                                                .Model(model =>
-                                                {
-                                                    model.Id(x => x.CommodityID);
-                                                    model.Field(m => m.CommodityID).DefaultValue(0);
-                                                })
-                                                .ServerOperation(true)
-                                                .Aggregates(a => a.Add(x => x.BisQuantity).Sum())
-                                                .Aggregates(a => a.Add(x => x.BisQuantityIssued).Sum())
-                                                .Aggregates(a => a.Add(x => x.BisQuantityRemains).Sum())
-                                                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation1).Sum())
-                                                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation2).Sum())
-                                                .Aggregates(a => a.Add(x => x.QuantityAvailableArrivals).Sum())
-                                                )
-                                            .HtmlAttributes(new { @class = "grid-class" }))
+                                                                                                                                            .Filterable(f => f.Enabled(false))
+                                                                                                                                            .Pageable()
+                                                                                                                                            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
+                                                                                                                                            .Selectable()
+                                                                                                                                            .Sortable()
+                                                                                                                                            .Events(e =>
+                                                                                                                                            {
+                                                                                                                                                e.DataBound("hightLightSelectedRow");
+                                                                                                                                            })
+                                                                                                                                            .DataSource(dataSource => dataSource
+                                                                                                                                                .Ajax()
+                                                                                                                                                .Group(group => group.Add(p => p.CategoryName)).Group(group => group.Add(p => p.Features))
+                                                                                                                                                .Read(read => read.Action("GetBlendingInstructions", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
+                                                                                                                                                .Sort(sort => { sort.Add(p => p.CommodityCode); })
+                                                                                                                                                .PageSize(20)
+                                                                                                                                                .Model(model =>
+                                                                                                                                                {
+                                                                                                                                                    model.Id(x => x.CommodityID);
+                                                                                                                                                    model.Field(m => m.CommodityID).DefaultValue(0);
+                                                                                                                                                })
+                                                                                                                                                .ServerOperation(true)
+                                                                                                                                                .Aggregates(a => a.Add(x => x.BisQuantity).Sum())
+                                                                                                                                                .Aggregates(a => a.Add(x => x.BisQuantityIssued).Sum())
+                                                                                                                                                .Aggregates(a => a.Add(x => x.BisQuantityRemains).Sum())
+                                                                                                                                                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation1).Sum())
+                                                                                                                                                .Aggregates(a => a.Add(x => x.QuantityAvailableLocation2).Sum())
+                                                                                                                                                .Aggregates(a => a.Add(x => x.QuantityAvailableArrivals).Sum())
+                                                                                                                                                )
+                                                                                                                                            .HtmlAttributes(new { @class = "grid-class" }))
 </div>
 
 
@@ -137,6 +132,30 @@
             kindexGridInstance.setSelectedRow("InventoryControlID", '@ViewBag.SelectedEntityID');
         });
     }
+
+
+    function openData(goodsArrivalID, goodsReceiptID, warehouseTransferID, warehouseAdjustmentID, blendingInstructionID) {
+        if (goodsArrivalID != null)
+            window.open('@Url.Action("Edit", "GoodsArrivals", new { area = "Purchases" })' + "/" + goodsArrivalID)
+        else {
+            if (goodsReceiptID != null)
+                window.open('@Url.Action("Edit", "MaterialReceipts", new { area = "Inventories" })' + "/" + goodsReceiptID)
+            else {
+                if (warehouseTransferID != null)
+                    window.open('@Url.Action("Edit", "MaterialTransfers", new { area = "Inventories" })' + "/" + warehouseTransferID)
+                else {
+                    if (warehouseAdjustmentID != null)
+                        window.open('@Url.Action("Edit", "MaterialAdjustments", new { area = "Inventories" })' + "/" + warehouseAdjustmentID)
+                    else {
+                        if (blendingInstructionID != null)
+                            window.open('@Url.Action("Edit", "BlendingInstructions", new { area = "Productions" })' + "/" + blendingInstructionID)
+                    }
+                }
+
+            }
+        }
+    }
+
 
     function createWizard() {
         require(["kpopupWindow"], function (kpopupWindow) {
@@ -200,3 +219,10 @@
     }
 
 </script>
+
+
+<style type="text/css">
+    .AAB {
+        cursor: pointer !important;
+    }
+</style>

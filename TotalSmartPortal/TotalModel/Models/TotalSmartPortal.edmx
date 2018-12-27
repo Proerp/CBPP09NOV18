@@ -21490,7 +21490,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="SalesUnit" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="LeadTime" Nullable="true" />
           <Property Type="String" Name="BinLocationCode" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="Code" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
@@ -21499,12 +21499,17 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           <Property Type="Boolean" Name="Approved" Nullable="false" />
-          <Property Type="Decimal" Name="BisQuantity" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="BisQuantityIssued" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="BisQuantityRemains" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="QuantityAvailableArrivals" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="QuantityAvailableLocation1" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="QuantityAvailableLocation2" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="BisQuantity" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="BisQuantityIssued" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="BisQuantityRemains" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailableArrivals" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailableLocation1" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailableLocation2" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="GoodsArrivalID" Nullable="true" />
+          <Property Type="Int32" Name="GoodsReceiptID" Nullable="true" />
+          <Property Type="Int32" Name="WarehouseTransferID" Nullable="true" />
+          <Property Type="Int32" Name="WarehouseAdjustmentID" Nullable="true" />
+          <Property Type="Int32" Name="BlendingInstructionID" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -27403,6 +27408,11 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="QuantityAvailableArrivals" ColumnName="QuantityAvailableArrivals" />
                 <ScalarProperty Name="QuantityAvailableLocation1" ColumnName="QuantityAvailableLocation1" />
                 <ScalarProperty Name="QuantityAvailableLocation2" ColumnName="QuantityAvailableLocation2" />
+                <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
+                <ScalarProperty Name="GoodsReceiptID" ColumnName="GoodsReceiptID" />
+                <ScalarProperty Name="WarehouseTransferID" ColumnName="WarehouseTransferID" />
+                <ScalarProperty Name="WarehouseAdjustmentID" ColumnName="WarehouseAdjustmentID" />
+                <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

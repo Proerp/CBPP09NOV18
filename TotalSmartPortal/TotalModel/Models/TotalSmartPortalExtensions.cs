@@ -243,6 +243,12 @@ namespace TotalModel.Models
     }
 
 
+    public partial class InventoryControl
+    {
+        public string Features { get { return "[" + this.CommodityCode + "] " + this.CommodityName; } }
+    }
+
+
     public partial class BlendingInstructionIndex
     {
         public string Features { get { return this.Reference + (this.Code != null ? " [" + this.Code + "]" : "") + " SP: " + this.ProductCode + " [" + this.ProductName + "]" + (this.Jobs != null ? " {" + this.Jobs + "}" : ""); } }

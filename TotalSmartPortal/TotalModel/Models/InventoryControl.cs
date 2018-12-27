@@ -20,7 +20,7 @@ namespace TotalModel.Models
         public string SalesUnit { get; set; }
         public Nullable<int> LeadTime { get; set; }
         public string BinLocationCode { get; set; }
-        public System.DateTime EntryDate { get; set; }
+        public Nullable<System.DateTime> EntryDate { get; set; }
         public string Code { get; set; }
         public string SealCode { get; set; }
         public string BatchCode { get; set; }
@@ -29,11 +29,16 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public bool Approved { get; set; }
-        public decimal BisQuantity { get; set; }
-        public decimal BisQuantityIssued { get; set; }
-        public decimal BisQuantityRemains { get; set; }
-        public decimal QuantityAvailableArrivals { get; set; }
-        public decimal QuantityAvailableLocation1 { get; set; }
-        public decimal QuantityAvailableLocation2 { get; set; }
+        public Nullable<decimal> BisQuantity { get; set; }
+        public Nullable<decimal> BisQuantityIssued { get; set; }
+        public Nullable<decimal> BisQuantityRemains { get; set; }
+        public Nullable<decimal> QuantityAvailableArrivals { get; set; }
+        public Nullable<decimal> QuantityAvailableLocation1 { get; set; }
+        public Nullable<decimal> QuantityAvailableLocation2 { get; set; }
+        public Nullable<int> GoodsArrivalID { get; set; }
+        public Nullable<int> GoodsReceiptID { get; set; }
+        public Nullable<int> WarehouseTransferID { get; set; }
+        public Nullable<int> WarehouseAdjustmentID { get; set; }
+        public Nullable<int> BlendingInstructionID { get; set; }
     }
 }
