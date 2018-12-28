@@ -41,5 +41,9 @@ namespace TotalModel.Models
         public Nullable<int> WarehouseAdjustmentID { get; set; }
         public Nullable<int> BlendingInstructionID { get; set; }
         public bool LabApproved { get; set; }
+        public Nullable<int> PurchaseOrderID { get; set; }
+        public Nullable<int> TransferOrderID { get; set; }
+        public Nullable<decimal> QuantityPurchaseOrders { get; set; }
+        public Nullable<decimal> QuantityTransferOrders { get; set; }
     }
 }

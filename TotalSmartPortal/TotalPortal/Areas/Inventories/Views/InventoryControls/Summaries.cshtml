@@ -18,7 +18,6 @@
                         {
                             g.Bound(p => p.CommodityCode).Title("Mã").Width(118).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/InventoryControls", action = "Details" }) + "/#= CommodityID #' target='_blank'>#=CommodityCode#</a>");
                             g.Bound(p => p.CommodityName).Title("Tên").Width(168);
-                            g.Bound(p => p.LeadTime).Title("LeadTime").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);
                             g.Bound(p => p.ExpiryDate).Title("HSD").Format("{0:dd/MM/yyyy}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                         }
                     ));
@@ -48,8 +47,15 @@
                             g.Bound(p => p.BisQuantityRemainsVsLocation12).Title("PC & NVL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                             g.Bound(p => p.BisQuantityRemainsVsLocation12A).Title("Toàn bộ").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                         }
-                    ));                
-
+                    ));
+                columns.Group(gr => gr
+                    .Title("Tồn Đặt hàng & VCNB").HeaderHtmlAttributes(new { style = "text-align:center" })
+                    .Columns(g =>
+                        {
+                            g.Bound(p => p.QuantityPurchaseOrders).Title("Đặt hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            g.Bound(p => p.QuantityTransferOrders).Title("VCNB").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                        }
+                    ));
                 
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
                     .ClientTemplate("<a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Void" }) + "/#= CommodityID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Delete" }) + "/#= CommodityID #'><span class='k-icon sbt-delete'></span></a>");
@@ -131,6 +137,11 @@
                 .Aggregates(a => a.Add(x => x.QuantityAvailableLocation1).Sum())
                 .Aggregates(a => a.Add(x => x.QuantityAvailableLocation2).Sum())
                 .Aggregates(a => a.Add(x => x.QuantityAvailableArrivals).Sum())
+                .Aggregates(a => a.Add(x => x.BisQuantityRemainsVsLocation2).Sum())
+                .Aggregates(a => a.Add(x => x.BisQuantityRemainsVsLocation12).Sum())
+                .Aggregates(a => a.Add(x => x.BisQuantityRemainsVsLocation12A).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityPurchaseOrders).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityTransferOrders).Sum())
                 )
             .HtmlAttributes(new { @class = "grid-class" }))
 </div>

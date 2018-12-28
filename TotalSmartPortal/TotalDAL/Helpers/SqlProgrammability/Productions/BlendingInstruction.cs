@@ -175,6 +175,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
+            queryString = queryString + "       IF (@SaveRelativeOption = 1) ";
+            queryString = queryString + "           BEGIN ";
+            queryString = queryString + "               UPDATE          BlendingInstructionDetails " + "\r\n";
+            queryString = queryString + "               SET             BlendingInstructionDetails.Reference = BlendingInstructions.Reference " + "\r\n";
+            queryString = queryString + "               FROM            BlendingInstructions INNER JOIN BlendingInstructionDetails ON BlendingInstructions.BlendingInstructionID = @EntityID AND BlendingInstructions.BlendingInstructionID = BlendingInstructionDetails.BlendingInstructionID " + "\r\n";
+            queryString = queryString + "           END ";
+
             queryString = queryString + "       IF ((SELECT Approved FROM BlendingInstructions WHERE BlendingInstructionID = @EntityID AND Approved = 1) = 1) " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
             queryString = queryString + "               UPDATE      BlendingInstructions  SET Approved = 0 WHERE BlendingInstructionID = @EntityID AND Approved = 1" + "\r\n"; //CLEAR APPROVE BEFORE CALL BlendingInstructionToggleApproved

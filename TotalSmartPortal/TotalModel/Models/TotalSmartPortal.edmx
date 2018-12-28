@@ -1689,6 +1689,7 @@
           <Property Name="PurchaseOrderDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PurchaseOrderID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="TransporterID" Type="int" Nullable="false" />
@@ -20067,6 +20068,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_VoidTypes" FromRole="PurchaseOrderDetail" ToRole="VoidType" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities" FromRole="PurchaseOrderDetail" ToRole="Commodity" />
           <NavigationProperty Name="GoodsArrivalPackages" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_PurchaseOrderDetails" FromRole="PurchaseOrderDetail" ToRole="GoodsArrivalPackage" />
+          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -21513,6 +21515,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Int32" Name="WarehouseAdjustmentID" Nullable="true" />
           <Property Type="Int32" Name="BlendingInstructionID" Nullable="true" />
           <Property Type="Boolean" Name="LabApproved" Nullable="false" />
+          <Property Type="Int32" Name="PurchaseOrderID" Nullable="true" />
+          <Property Type="Int32" Name="TransferOrderID" Nullable="true" />
+          <Property Type="Decimal" Name="QuantityPurchaseOrders" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityTransferOrders" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -26794,6 +26800,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySetMapping Name="PurchaseOrderDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.PurchaseOrderDetail">
               <MappingFragment StoreEntitySet="PurchaseOrderDetails">
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
@@ -27417,6 +27424,10 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="WarehouseAdjustmentID" ColumnName="WarehouseAdjustmentID" />
                 <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
                 <ScalarProperty Name="LabApproved" ColumnName="LabApproved" />
+                <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
+                <ScalarProperty Name="TransferOrderID" ColumnName="TransferOrderID" />
+                <ScalarProperty Name="QuantityPurchaseOrders" ColumnName="QuantityPurchaseOrders" />
+                <ScalarProperty Name="QuantityTransferOrders" ColumnName="QuantityTransferOrders" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

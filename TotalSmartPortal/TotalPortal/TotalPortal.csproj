@@ -697,6 +697,8 @@
     <Content Include="Content\Images\Mains\Check-32-m16.png" />
     <Content Include="Content\Images\Mains\Check-32-O.png" />
     <Content Include="Content\Images\Mains\Click_here_blue.png" />
+    <Content Include="Content\Images\Mains\cloud-32-NoCheck.png" />
+    <Content Include="Content\Images\Mains\cloud-32-NoCheckG.png" />
     <Content Include="Content\Images\Mains\cloud-check-32.png" />
     <Content Include="Content\Images\Mains\contacts-icon-32.png" />
     <Content Include="Content\Images\Mains\Cross-icon-cancel32.png" />
@@ -710,9 +712,11 @@
     <Content Include="Content\Images\Mains\data-add-icon-32.png" />
     <Content Include="Content\Images\Mains\Ecommerce-Sale-icon-32.png" />
     <Content Include="Content\Images\Mains\folder-documents-icon-32.png" />
+    <Content Include="Content\Images\Mains\Gray-32-Nocheck.png" />
     <Content Include="Content\Images\Mains\gray-no-checkbox-32.png" />
     <Content Include="Content\Images\Mains\iSync-icon32.png" />
     <Content Include="Content\Images\Mains\iSync-icon64.png" />
+    <Content Include="Content\Images\Mains\Light-32-Nocheck.png" />
     <Content Include="Content\Images\Mains\Navigate-right.png" />
     <Content Include="Content\Images\Mains\Next-right.png" />
     <Content Include="Content\Images\Mains\Next-view.png" />
@@ -726,6 +730,7 @@
     <Content Include="Content\Images\Mains\Sale-Discount.png" />
     <Content Include="Content\Images\Mains\Sale-icon.png" />
     <Content Include="Content\Images\Mains\select-by-color-icon-32.png" />
+    <Content Include="Content\Images\Mains\Sign-NoCheck-32.png" />
     <Content Include="Content\Images\Mains\Size12\add-12-fill-r.png" />
     <Content Include="Content\Images\Mains\Size12\add-12-fill.png" />
     <Content Include="Content\Images\Mains\Size12\add-12-ok.png" />

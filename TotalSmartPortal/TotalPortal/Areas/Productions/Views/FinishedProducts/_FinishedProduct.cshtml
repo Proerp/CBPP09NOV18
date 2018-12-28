@@ -298,7 +298,7 @@
             {
                 if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
                 {
-                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "FinishedProducts", new {id = @Model.FinishedProductID })'"> <img src="~/Content/Images/Mains/cashier-nocheck-32.png" /> Hủy duyệt phiếu </button>
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "FinishedProducts", new {id = @Model.FinishedProductID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt phiếu </button>
                 }
             }
         </div>

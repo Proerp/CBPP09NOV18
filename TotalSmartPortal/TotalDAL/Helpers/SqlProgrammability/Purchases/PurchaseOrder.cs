@@ -86,6 +86,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             string queryString = " @EntityID int, @SaveRelativeOption int " + "\r\n"; //SaveRelativeOption: 1: Update, -1:Undo
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "       BEGIN " + "\r\n";
+            queryString = queryString + "           IF (@SaveRelativeOption = 1) ";
+            queryString = queryString + "               BEGIN ";
+            queryString = queryString + "                   UPDATE          PurchaseOrderDetails " + "\r\n";
+            queryString = queryString + "                   SET             PurchaseOrderDetails.Reference = PurchaseOrders.Reference " + "\r\n";
+            queryString = queryString + "                   FROM            PurchaseOrders INNER JOIN PurchaseOrderDetails ON PurchaseOrders.PurchaseOrderID = @EntityID AND PurchaseOrders.PurchaseOrderID = PurchaseOrderDetails.PurchaseOrderID " + "\r\n";
+            queryString = queryString + "               END ";
+            queryString = queryString + "       END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("PurchaseOrderSaveRelative", queryString);
         }
