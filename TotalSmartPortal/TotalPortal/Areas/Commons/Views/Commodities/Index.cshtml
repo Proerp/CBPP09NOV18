@@ -11,7 +11,7 @@
 
             columns.Bound(p => p.CommodityCategoryName1).Title("ROOT").Hidden();
             columns.Bound(p => p.CommodityCategoryName2).Title("CAT").Hidden();
-            columns.Bound(p => p.CodePartA).Title("Mã").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(39).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/" + Model.ControllerName, action = "Edit" }) + "/#= CommodityID #'>#=CodePartA#</a>").Hidden(@Model.IsItem ? true : false);
+            columns.Bound(p => p.CodePartA).Title("Mã").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(39).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/" + Model.ControllerName, action = "Edit" }) + "/#= CommodityID #'>#=CodePartA#</a>").Hidden(@Model.IsItem ? true : false);
             columns.Bound(p => p.CodePartB).Title("Phân loại").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(25).ClientTemplate(@Model.IsItem ? "<a href='" + Url.RouteUrl("Default", new { controller = "Commons/" + Model.ControllerName, action = "Edit" }) + "/#= CommodityID #'>#=CodePartB#</a>" : "");
             columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
             columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(@Model.IsMaterial ? true : false);

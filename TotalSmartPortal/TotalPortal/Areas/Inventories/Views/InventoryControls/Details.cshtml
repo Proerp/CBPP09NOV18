@@ -6,7 +6,7 @@
     @Html.HiddenFor(m => m.CommodityID);
     @Html.HiddenFor(m => m.CommodityCode);
 
-    @Html.Hidden("LastLabOptionID", "1")
+    @Html.Hidden("LastLabOptionID", "99")
     @Html.Hidden("LastFilterOptionID", "0")
     @Html.Hidden("LastPendingOptionID", "1")
     @Html.Hidden("LastShelfLife", "80")
@@ -21,7 +21,7 @@
                 columns.Bound(p => p.CommodityCode).Title("NVL").Hidden();
                 columns.Bound(p => p.Features).Title("NVL").Hidden();
 
-                columns.Bound(p => p.Barcode).Title("Mã vạch").Width(30).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).ClientTemplate("<a onclick='openData(#= GoodsArrivalID #, #= GoodsReceiptID #, #= WarehouseTransferID #, #= WarehouseAdjustmentID #, #= BlendingInstructionID #)'><span class='AAB'>#=Barcode#</span></a>");
+                columns.Bound(p => p.Barcode).Title("Mã vạch").Width(30).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).ClientTemplate("<a onclick='openData(#= GoodsArrivalID #, #= GoodsReceiptID #, #= WarehouseTransferID #, #= WarehouseAdjustmentID #, #= BlendingInstructionID #)'><span class='index-nav-column'>#=Barcode#</span></a>");
                 columns.Bound(p => p.BinLocationCode).Title("Vị trí").Width(68);
                 columns.Bound(p => p.BatchCode).Title("Số lô").Width(30);
                 columns.Bound(p => p.LabCode).Title("Lab").Width(30);
@@ -86,11 +86,12 @@
                                     .Name("ShowLabOptionID")
                                     .DataTextField("Text")
                                     .DataValueField("Value")
-                                    .HtmlAttributes(new { @style = "width: 118px; text-align: center; " })
+                                    .HtmlAttributes(new { @style = "width: 138px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
-                                            new SelectListItem { Text = "Đã kiểm định", Value = "1"},
-                                            new SelectListItem { Text = "BG chưa QC", Value = "0"}
+                                          new SelectListItem { Text = "Tất cả", Value = "99"}, 
+                                          new SelectListItem { Text = "Đã kiểm định", Value = "1"},
+                                          new SelectListItem { Text = "Chưa kiểm định", Value = "0"}
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
@@ -257,10 +258,3 @@
     }
 
 </script>
-
-
-<style type="text/css">
-    .AAB {
-        cursor: pointer !important;
-    }
-</style>

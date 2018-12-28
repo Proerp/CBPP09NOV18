@@ -1,7 +1,7 @@
 ﻿@using TotalPortal.Configuration
 
 <div>
-    @Html.Hidden("LastLabOptionID", "0")
+    @Html.Hidden("LastLabOptionID", "99")
     @Html.Hidden("LastFilterOptionID", "0")
     @Html.Hidden("SelectedFirmOrderID", "0")
     @Html.Hidden("LastShelfLife", "80")
@@ -12,9 +12,9 @@
             {
                 columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden();
                 columns.Bound(p => p.CategoryName).Title("CAT").Hidden();
-                columns.Bound(p => p.CommodityCode).Title("Mã NVL").Hidden();
+                columns.Bound(p => p.CommodityCode).Title("Mã NVL").Width(118).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/InventoryControls", action = "Details" }) + "/#= CommodityID #' target='_blank'>#=CommodityCode#</a>");
                 columns.Bound(p => p.CommodityName).Title("Tên nguyên liệu").Width(168);
-
+                
                 columns.Bound(p => p.ExpiryDate).Title("HSD").Format("{0:dd/MM/yyyy}");
                 columns.Bound(p => p.LeadTime).Title("LeadTime").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);
                 
@@ -60,11 +60,12 @@
                                     .Name("ShowLabOptionID")
                                     .DataTextField("Text")
                                     .DataValueField("Value")
-                                    .HtmlAttributes(new { @style = "width: 118px; text-align: center; " })
+                                    .HtmlAttributes(new { @style = "width: 138px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
-                                            new SelectListItem { Text = "Đã kiểm định", Value = "1"},
-                                            new SelectListItem { Text = "BG chưa QC", Value = "0"}
+                                          new SelectListItem { Text = "Tất cả", Value = "99"}, 
+                                          new SelectListItem { Text = "Đã kiểm định", Value = "1"},
+                                          new SelectListItem { Text = "Chưa kiểm định", Value = "0"}
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
@@ -92,7 +93,6 @@
                 .Ajax()
                 .Group(group => group.Add(p => p.CategoryName))
                                                 .Read(read => read.Action("GetBlendingInstructions", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
-                .Sort(sort => { sort.Add(p => p.CommodityCode); })
                 .PageSize(20)
                 .Model(model =>
                 {
@@ -199,44 +199,3 @@
     }
 
 </script>
-
-
-
-
-
-<style>
-    #kendoGridIndex.k-grid *, #kendoGridTaskIndex.k-grid *, #kendoGridUserReportControl.k-grid * { /*BORDER ONLY*/
-        /*border: 0 !important;*/
-    }
-    /*#kendoGridIndex.k-grid, #kendoGridTaskIndex.k-grid * {  ALL GRID LINE (BORDER + INNER)
-        background: white !important;
-        border: 0 !important;
-    }*/
-
-
-    #kendoGridIndex.k-grid .k-header, #kendoGridTaskIndex.k-grid .k-header, #kendoGridUserReportControl.k-grid .k-header {
-        /*display: none;-------------*/
-    }
-
-    #kendoGridIndex td.k-group-cell, #kendoGridTaskIndex td.k-group-cell, #kendoGridUserReportControl td.k-group-cell {
-        /*background-color: white;----------------*/
-    }
-
-    .k-pager-wrap {
-        display: none;
-    }
-
-
-    .first-panel {
-        float: left;
-        width: 22%;
-        box-sizing: border-box;
-    }
-
-    .second-panel {
-        float: left;
-        width: 78%;
-        padding-left: 1px;
-        box-sizing: border-box;
-    }
-</style>

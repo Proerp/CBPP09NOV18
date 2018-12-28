@@ -9,7 +9,7 @@
         {
             columns.Bound(p => p.GoodsIssueID).DisplayNameTitle().Hidden();            
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(20);
-            columns.Bound(p => p.Reference).Title("PXK").Width(20).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/GoodsIssues", action = "Edit" }) + "/#= GoodsIssueID #'>#=Reference#</a>");
+            columns.Bound(p => p.Reference).Title("PXK").Width(20).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/GoodsIssues", action = "Edit" }) + "/#= GoodsIssueID #'>#=Reference#</a>");
             columns.Bound(p => p.DeliveryAdviceReferences).Title("ĐNGH").Width(60);
             columns.Bound(p => p.GoodsIssueCode).Title("ĐH").Width(60);
             columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(250);

@@ -1183,6 +1183,12 @@ ul.k-panelbar .k-link {
 
 
 
+
+.index-nav-column {   
+    color: #337ab7;
+    cursor: pointer !important;    
+}
+
 .SBT-Hidden {
     display: none;
 }

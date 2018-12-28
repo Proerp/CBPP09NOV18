@@ -13,7 +13,7 @@
             columns.Bound(p => p.WarehouseAdjustmentID).DisplayNameTitle().Hidden();                
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
 
-            columns.Bound(p => p.Reference).Title("Số phiếu").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= WarehouseAdjustmentID #'>#=Reference#</a>");
+            columns.Bound(p => p.Reference).Title("Số phiếu").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= WarehouseAdjustmentID #'>#=Reference#</a>");
             columns.Bound(p => p.WarehouseAdjustmentTypeName).Title("Phân loại").Width(107).Filterable(false);
             columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(227);
             columns.Bound(p => p.AdjustmentJobs).Title("Mục đích").Width(207);                

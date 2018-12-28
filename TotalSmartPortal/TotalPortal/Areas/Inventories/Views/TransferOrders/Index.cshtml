@@ -13,7 +13,7 @@
                 columns.Bound(p => p.TransferOrderID).DisplayNameTitle().Hidden();                
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
 
-                columns.Bound(p => p.Reference).Title("Phiếu").Width(1).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= TransferOrderID #'>#=Reference#</a>");
+                columns.Bound(p => p.Reference).Title("Phiếu").Width(1).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= TransferOrderID #'>#=Reference#</a>");
                 columns.Bound(p => p.TransferOrderTypeName).Title("PL").Width(10);
                 columns.Bound(p => p.Caption).Title("Mặt hàng").Width(368);
                 

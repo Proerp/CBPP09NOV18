@@ -10,7 +10,7 @@
             columns.Bound(p => p.AccountInvoiceID).DisplayNameTitle().Hidden();
             columns.Bound(p => p.LocationCode).Title("CN").Hidden().Width(10);
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(40);
-            columns.Bound(p => p.VATInvoiceNo).Title("HĐ").Width(45).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Accounts/AccountInvoices", action = "Edit" }) + "/#= AccountInvoiceID #'>#=VATInvoiceNo#</a>");
+            columns.Bound(p => p.VATInvoiceNo).Title("HĐ").Width(45).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Accounts/AccountInvoices", action = "Edit" }) + "/#= AccountInvoiceID #'>#=VATInvoiceNo#</a>");
             columns.Bound(p => p.VATInvoiceDate).Title("Ngày HĐ").Format("{0:dd/MM/yyyy}").Width(40);
             columns.Bound(p => p.CodeCustomerPO).Title("PO").Width(60);
             columns.Bound(p => p.GoodsIssueReferences).Title("PXK").Width(110);

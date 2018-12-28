@@ -10,7 +10,7 @@
             columns.Bound(p => p.FinishedProductID).DisplayNameTitle().Hidden();            
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
 
-            columns.Bound(p => p.Reference).Title("ĐG").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/FinishedProducts", action = "Edit" }) + "/#= FinishedProductID #'>#=Reference#</a>");
+            columns.Bound(p => p.Reference).Title("ĐG").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/FinishedProducts", action = "Edit" }) + "/#= FinishedProductID #'>#=Reference#</a>");
 
             columns.Bound(p => p.FirmOrderReference).Title("KHSX").Width(30);
             columns.Bound(p => p.FirmOrderCode).Title("Số CT").Width(30);

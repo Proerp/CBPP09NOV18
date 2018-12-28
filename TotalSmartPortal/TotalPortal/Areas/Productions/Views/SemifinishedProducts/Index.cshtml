@@ -10,7 +10,7 @@
             columns.Bound(p => p.SemifinishedProductID).DisplayNameTitle().Hidden();
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
 
-            columns.Bound(p => p.Reference).Title("Phiếu").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedProducts", action = "Edit" }) + "/#= SemifinishedProductID #'>#=Reference#</a>");
+            columns.Bound(p => p.Reference).Title("Phiếu").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedProducts", action = "Edit" }) + "/#= SemifinishedProductID #'>#=Reference#</a>");
             columns.Bound(p => p.FirmOrdersCode).Title("Số CT").Width(15);
 
             columns.Bound(p => p.CustomerName).Title("Tên KH").Width(127);

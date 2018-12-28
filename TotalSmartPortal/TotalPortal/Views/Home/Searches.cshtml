@@ -14,7 +14,7 @@
 
                 columns.Bound(p => p.WarehouseCode).Title("Kho").Hidden().Width(10);
 
-                columns.Bound(p => p.Reference).Title("PXK").Width(10).Filterable(false).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/GoodsIssues", action = "Edit" }) + "/#= GoodsIssueID #' target='_blank'>#=Reference#</a>");
+                columns.Bound(p => p.Reference).Title("PXK").Width(10).Filterable(false).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/GoodsIssues", action = "Edit" }) + "/#= GoodsIssueID #' target='_blank'>#=Reference#</a>");
                 columns.Bound(p => p.DeliveryAdviceReferences).Title("ĐNGH").Width(128).Filterable(false);
                 columns.Bound(p => p.CustomerCode).Title("Mã KH").Width(60);
                 columns.Bound(p => p.CustomerName).Title("Tên KH").Width(218);

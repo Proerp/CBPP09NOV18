@@ -10,7 +10,7 @@
                 columns.Bound(p => p.SemifinishedHandoverID).DisplayNameTitle().Hidden();                
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
 
-                columns.Bound(p => p.Reference).Title("Số phiếu").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedHandovers", action = "Edit" }) + "/#= SemifinishedHandoverID #'>#=Reference#</a>");
+                columns.Bound(p => p.Reference).Title("Số phiếu").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedHandovers", action = "Edit" }) + "/#= SemifinishedHandoverID #'>#=Reference#</a>");
                 columns.Bound(p => p.WorkshiftCode).Title("Ca SX").HtmlAttributes(new { @class = "grid-column-center" }).Width(10);
                 columns.Bound(p => p.WorkshiftEntryDate).Title("Ngày SX").Format("{0:dd/MM/yyyy}").HtmlAttributes(new { @class = "grid-column-center" }).Width(90);
                 columns.Bound(p => p.CustomerDescription).Title("Diễn giải").Width(320);

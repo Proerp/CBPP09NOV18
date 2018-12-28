@@ -11,7 +11,7 @@
             columns.Bound(p => p.LocationCode).Title("CN").Hidden().Width(10);
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(40).Hidden();
             columns.Bound(p => p.CustomerDescription).Title("KH").Width(410).Hidden();
-            columns.Bound(p => p.GoodsIssueReferences).Title("Phiếu xuất kho").Width(230).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/HandlingUnits", action = "Edit" }) + "/#= HandlingUnitID #'>#=GoodsIssueReferences#</a>");
+            columns.Bound(p => p.GoodsIssueReferences).Title("Phiếu xuất kho").Width(230).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/HandlingUnits", action = "Edit" }) + "/#= HandlingUnitID #'>#=GoodsIssueReferences#</a>");
             columns.Bound(p => p.Code).Title("Đơn hàng").Width(80);
             columns.Bound(p => p.LotNo).Title("Lô").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Filterable(false).Width(115).Width(20).Sortable(false);
             columns.Bound(p => p.PackingMaterialCode).Title("BB").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(50);

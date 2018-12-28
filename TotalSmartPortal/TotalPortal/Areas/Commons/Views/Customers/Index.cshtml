@@ -9,7 +9,7 @@
         {
             columns.Bound(p => p.CustomerID).DisplayNameTitle().Hidden();
 
-            columns.Bound(p => p.Code).Title("Mã KH").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/Customers", action = "Edit" }) + "/#= CustomerID #'>#=Code#</a>");
+            columns.Bound(p => p.Code).Title("Mã KH").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/Customers", action = "Edit" }) + "/#= CustomerID #'>#=Code#</a>");
             columns.Bound(p => p.OfficialName).Title("Tên khách hàng").Width(300);
             columns.Bound(p => p.PriceCategoryCode).Title("Giá bán").Width(20);
             columns.Bound(p => p.PaymentTermName).Title("PTTT").Width(80);

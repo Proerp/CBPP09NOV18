@@ -9,7 +9,7 @@
             {
                 columns.Bound(p => p.CreditNoteID).DisplayNameTitle().Hidden();                
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(50).Filterable(false).Sortable(false);
-                columns.Bound(p => p.Reference).Title("#").Width(30).Filterable(false).Sortable(false).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Accounts/CreditNotes", action = "Edit" }) + "/#= CreditNoteID #'>#=Reference#</a>");
+                columns.Bound(p => p.Reference).Title("#").Width(30).Filterable(false).Sortable(false).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Accounts/CreditNotes", action = "Edit" }) + "/#= CreditNoteID #'>#=Reference#</a>");
                 columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(220).Sortable(false);
                 columns.Bound(p => p.MemoCode).Title("CTCK").Width(50).Filterable(false).Sortable(false);
                 columns.Bound(p => p.PromotionCode).Title("Tên CTKM").Width(50).Filterable(false).Sortable(false);

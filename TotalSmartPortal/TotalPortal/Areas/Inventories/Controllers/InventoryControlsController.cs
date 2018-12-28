@@ -21,6 +21,7 @@ using TotalCore.Repositories.Inventories;
 
 namespace TotalPortal.Areas.Inventories.Controllers
 {
+    [Authorize]
     public class InventoryControlsController : CoreController
     {
         private IInventoryControlAPIRepository inventoryControlAPIRepository;
@@ -32,13 +33,34 @@ namespace TotalPortal.Areas.Inventories.Controllers
 
         public ActionResult Summaries()
         {
+            this.AddRequireJsOptions(6668805);
             return View();
         }
 
-        public ActionResult Details()
+        public ActionResult Details(int? id)
         {
-            InventoryControlViewModel InventoryControlViewModel = new InventoryControlViewModel() { CommodityID = 9, CommodityCode = "107A BM 07" };
-            return View(InventoryControlViewModel);
+            this.AddRequireJsOptions(6668809);
+
+            InventoryControlViewModel inventoryControlViewModel = new InventoryControlViewModel();
+
+            if (id != null)
+            {
+                Commodity commodity = this.inventoryControlAPIRepository.TotalSmartPortalEntities.Commodities.Where(w => w.CommodityID == id).FirstOrDefault();
+                if (commodity != null) { inventoryControlViewModel.CommodityID = commodity.CommodityID; inventoryControlViewModel.CommodityCode = commodity.Code; }
+            }
+
+            return View(inventoryControlViewModel);
+        }
+
+        //FOR SIMPLICITY, AT NOW (JUST FOR HIGHTLIGHT MENUONLY): JUST CALL THIS. BUT LATER, WE CAN INHERIT FROM BaseController
+        public virtual void AddRequireJsOptions(int nmvnTaskID)
+        {
+            MenuSession.SetModuleID(this.HttpContext, 3);
+            MenuSession.SetModuleDetailID(this.HttpContext, nmvnTaskID);
+
+            RequireJsOptions.Add("ModuleID", 3, RequireJsOptionsScope.Page);
+            RequireJsOptions.Add("ModuleDetailID", nmvnTaskID, RequireJsOptionsScope.Page);
+            RequireJsOptions.Add("NmvnTaskID", nmvnTaskID, RequireJsOptionsScope.Page);
         }
     }
 }

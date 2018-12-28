@@ -10,7 +10,7 @@
         {
             columns.Bound(p => p.ReceiptID).DisplayNameTitle().Hidden();
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(20);
-            columns.Bound(p => p.Reference).Title("#").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Accounts/Receipts", action = "Edit" }) + "/#= ReceiptID #'>#=Reference#</a>");
+            columns.Bound(p => p.Reference).Title("#").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Accounts/Receipts", action = "Edit" }) + "/#= ReceiptID #'>#=Reference#</a>");
             columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(180);
             columns.Bound(p => p.GoodsIssueReferences).Title("PXK").Width(160);
             columns.Bound(p => p.DebitAccountType).Title("TM/CK").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);

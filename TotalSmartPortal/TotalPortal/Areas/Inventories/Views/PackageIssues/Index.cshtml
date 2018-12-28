@@ -11,7 +11,7 @@
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
             columns.Bound(p => p.WorkshiftName).Title("Ca SX").Hidden();
             
-            columns.Bound(p => p.Reference).Title("Phiếu").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/PackageIssues", action = "Edit" }) + "/#= PackageIssueID #'>#=Reference#</a>");
+            columns.Bound(p => p.Reference).Title("Phiếu").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/PackageIssues", action = "Edit" }) + "/#= PackageIssueID #'>#=Reference#</a>");
             columns.Bound(p => p.BlendingInstructionsReference).Title("Số BIS").Width(10);
             columns.Bound(p => p.BlendingInstructionsCode).Title("Số CT").Width(10);
             columns.Bound(p => p.BlendingInstructionEntryDate).Title("Ngày BIS").Format("{0:dd/MM/yyyy}").Width(10);

@@ -10,7 +10,7 @@
                 columns.Bound(p => p.ProductionOrderID).DisplayNameTitle().Hidden();                
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
 
-                columns.Bound(p => p.Reference).Title("#").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/ProductionOrders", action = "Edit" }) + "/#= ProductionOrderID #'>#=Reference#</a>");
+                columns.Bound(p => p.Reference).Title("#").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/ProductionOrders", action = "Edit" }) + "/#= ProductionOrderID #'>#=Reference#</a>");
                 columns.Bound(p => p.PlannedOrderReference).Title("Số KHSX").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
                 columns.Bound(p => p.PlannedOrderCode).Title("Số CT").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
                 columns.Bound(p => p.PlannedOrderDeliveryDate).Title("G/H").Format("{0:dd/MM/yyyy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(5);

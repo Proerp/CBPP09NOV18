@@ -9,7 +9,7 @@
         {
             columns.Bound(p => p.PromotionID).DisplayNameTitle().Hidden();
 
-            columns.Bound(p => p.Code).Title("Mã KM").Width(150).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/Promotions", action = "Edit" }) + "/#= PromotionID #'>#=Code#</a>");
+            columns.Bound(p => p.Code).Title("Mã KM").Width(150).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/Promotions", action = "Edit" }) + "/#= PromotionID #'>#=Code#</a>");
 
             columns.Bound(p => p.StartDate).Title("Ngày bắt đầu").Width(12).Format("{0:" + Settings.DateTimeFormat + "}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
             columns.Bound(p => p.EndDate).Title("Ngày kết thúc").Width(12).Format("{0:" + Settings.DateTimeFormat + "}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });

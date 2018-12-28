@@ -10,7 +10,7 @@
             columns.Bound(p => p.MaterialIssueID).DisplayNameTitle().Hidden();            
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
 
-            columns.Bound(p => p.Reference).Title("Phiếu").Width(10).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/MaterialIssues", action = "Edit" }) + "/#= MaterialIssueID #'>#=Reference#</a>");
+            columns.Bound(p => p.Reference).Title("Phiếu").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/MaterialIssues", action = "Edit" }) + "/#= MaterialIssueID #'>#=Reference#</a>");
             columns.Bound(p => p.FirmOrdersCode).Title("Số CT").Width(10);
             columns.Bound(p => p.WorkshiftName).Title("Ca SX").Hidden();
             columns.Bound(p => p.ProductionLinesCode).Title("Máy").Width(10);

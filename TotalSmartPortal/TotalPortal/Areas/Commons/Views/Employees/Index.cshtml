@@ -9,7 +9,7 @@
         {
             columns.Bound(p => p.EmployeeID).DisplayNameTitle().Hidden();
 
-            columns.Bound(p => p.Code).Title("Mã NV").Width(5).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/Employees", action = "Edit" }) + "/#= EmployeeID #'>#=Code#</a>");
+            columns.Bound(p => p.Code).Title("Mã NV").Width(5).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/Employees", action = "Edit" }) + "/#= EmployeeID #'>#=Code#</a>");
             columns.Bound(p => p.Name).Title("Tên nhân viên").Width(100);
             columns.Bound(p => p.Birthday).Title("Ngày sinh").Format("{0:dd/MM/yyyy}").Width(10);
             columns.Bound(p => p.Telephone).Title("Điện thoại").Width(20);
