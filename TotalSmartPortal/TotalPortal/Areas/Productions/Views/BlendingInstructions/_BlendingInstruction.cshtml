@@ -52,29 +52,31 @@
     <div class="right-panel">
 
         <div class="right-top-panel right-top-panel-H2">
+
             @Html.EditorFor(d => d.Commodity, new { CommodityDescriptionHidden = "false", CommodityDisplayName = @Model.GetDisplayName(m => m.Commodity) })
 
-            <div class="form-group">
-                <div class="right-panel-label right-panel-label-whole-width">
-                    @Html.LabelFor(model => model.Purposes)
+            
+                <div class="form-group">
+                    <div class="right-panel-label right-panel-label-whole-width">
+                        @Html.LabelFor(model => model.Purposes)
+                    </div>
+                    <div class="div-input">
+                        @Html.Kendo().MaskedTextBoxFor(model => model.Purposes).HtmlAttributes(new { @class = "right-panel-input" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => model.Purposes, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => model.Purposes).HtmlAttributes(new { @class = "right-panel-input" })
-                </div>
-                <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => model.Purposes, "", new { @class = "text-danger" })
-                </div>
-            </div>
+            
 
-
-            <div id="show-current-PriceCategory" style="float: right; margin-top: -120px; text-align: center; width: 110px; height: 110px; " title="Kho hàng">
+            <div id="show-current-PriceCategory" style="float: right; margin-top: -101px; text-align: center; width: 110px; height: 110px; " title="Kho hàng">
                 <div style="height: 90px; padding-left: 22px; padding-right: 22px; padding-top: 32px;">
-                    <span style="color:blue;" id="">KHSX</span>
-                    <span style="color:blue;" id="">KHAY</span>
+                    <span style="color:blue;" id="">LSX</span>
+                    <span style="color:blue;" id="">BIS</span>
                 </div>
             </div>
-        </div>
 
+        </div>
 
         <div class="div-k-grid-detail">
             @(Html.Kendo().Grid(Model.BlendingInstructionViewDetails)
@@ -96,7 +98,7 @@
                                 "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
                     columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(327).HtmlAttributes(new { style = "" })
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
-                    
+
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
@@ -162,22 +164,22 @@
                         </text>);
                         events.Edit("kendoGridDetailsEdit");
                     }).DataSource(dataSource => dataSource
-                    .Ajax()
-                    .Batch(true)
-                    .ServerOperation(false)
-                    .Model(model =>
-                    {
-                        model.Id(x => x.BlendingInstructionDetailID);
-                        model.Field(m => m.BlendingInstructionDetailID).DefaultValue(0);
-                        model.Field(m => m.BlendingInstructionID).DefaultValue(@Model.BlendingInstructionID);
-                    })
-                    .Events(events =>
-                    {
-                        events.Error("kendGrid_ErrorHandler");
-                    })
-                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                )
+                                                                    .Ajax()
+                                                                    .Batch(true)
+                                                                    .ServerOperation(false)
+                                                                    .Model(model =>
+                                                                    {
+                                                                        model.Id(x => x.BlendingInstructionDetailID);
+                                                                        model.Field(m => m.BlendingInstructionDetailID).DefaultValue(0);
+                                                                        model.Field(m => m.BlendingInstructionID).DefaultValue(@Model.BlendingInstructionID);
+                                                                    })
+                                                                    .Events(events =>
+                                                                    {
+                                                                        events.Error("kendGrid_ErrorHandler");
+                                                                    })
+                                                                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                                                                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                                                                )
             )
         </div>
 
