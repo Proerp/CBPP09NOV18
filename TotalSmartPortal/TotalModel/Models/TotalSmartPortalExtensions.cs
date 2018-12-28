@@ -246,6 +246,35 @@ namespace TotalModel.Models
     public partial class InventoryControl
     {
         public string Features { get { return "[" + this.CommodityCode + "] " + this.CommodityName; } }
+
+        public virtual decimal? BisQuantityRemainsVsLocation2
+        {
+            get
+            {
+                decimal quantityAvailableLocation2 = this.QuantityAvailableLocation2 == null ? 0 : (decimal)this.QuantityAvailableLocation2;
+                return calculateRemainsVsAvailable(quantityAvailableLocation2);
+            }
+        }
+
+        public virtual decimal? BisQuantityRemainsVsLocation12
+        {
+            get
+            {
+                decimal quantityAvailableLocation12 = (this.QuantityAvailableLocation1 == null ? 0 : (decimal)this.QuantityAvailableLocation1) + (this.QuantityAvailableLocation2 == null ? 0 : (decimal)this.QuantityAvailableLocation2);
+                return calculateRemainsVsAvailable(quantityAvailableLocation12);
+            }
+        }
+
+        public virtual decimal? BisQuantityRemainsVsLocation12A
+        {
+            get
+            {
+                decimal quantityAvailableLocation12A = (this.QuantityAvailableLocation1 == null ? 0 : (decimal)this.QuantityAvailableLocation1) + (this.QuantityAvailableLocation2 == null ? 0 : (decimal)this.QuantityAvailableLocation2) + (this.QuantityAvailableArrivals == null ? 0 : (decimal)this.QuantityAvailableArrivals);
+                return calculateRemainsVsAvailable(quantityAvailableLocation12A);
+            }
+        }
+
+        private decimal? calculateRemainsVsAvailable(decimal quantityAvailable) { decimal quantityRemains = this.BisQuantityRemains == null ? 0 : (decimal)this.BisQuantityRemains; return quantityRemains == 0 || quantityRemains <= quantityAvailable ? (decimal?)null : quantityRemains - quantityAvailable; }
     }
 
 

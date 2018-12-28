@@ -12,19 +12,44 @@
             {
                 columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden();
                 columns.Bound(p => p.CategoryName).Title("CAT").Hidden();
-                columns.Bound(p => p.CommodityCode).Title("Mã NVL").Width(118).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/InventoryControls", action = "Details" }) + "/#= CommodityID #' target='_blank'>#=CommodityCode#</a>");
-                columns.Bound(p => p.CommodityName).Title("Tên nguyên liệu").Width(168);
-                
-                columns.Bound(p => p.ExpiryDate).Title("HSD").Format("{0:dd/MM/yyyy}");
-                columns.Bound(p => p.LeadTime).Title("LeadTime").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);
-                
-                columns.Bound(p => p.BisQuantity).Title("SL Y/C").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                columns.Bound(p => p.BisQuantityIssued).Title("Đã xuất").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                columns.Bound(p => p.BisQuantityRemains).Title("Tồn BIS").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Group(gr => gr
+                    .Title("Nguyên liệu").HeaderHtmlAttributes(new { style = "text-align:center" })
+                    .Columns(g =>
+                        {
+                            g.Bound(p => p.CommodityCode).Title("Mã").Width(118).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/InventoryControls", action = "Details" }) + "/#= CommodityID #' target='_blank'>#=CommodityCode#</a>");
+                            g.Bound(p => p.CommodityName).Title("Tên").Width(168);
+                            g.Bound(p => p.LeadTime).Title("LeadTime").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);
+                            g.Bound(p => p.ExpiryDate).Title("HSD").Format("{0:dd/MM/yyyy}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+                        }
+                    ));
+                columns.Group(gr => gr
+                    .Title("Tồn lệnh (BIS)").HeaderHtmlAttributes(new { style = "text-align:center" })
+                    .Columns(g =>
+                        {
+                            g.Bound(p => p.BisQuantity).Title("SL Y/C").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            g.Bound(p => p.BisQuantityIssued).Title("Đã xuất").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            g.Bound(p => p.BisQuantityRemains).Title("Còn lại").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                        }
+                    ));
+                columns.Group(gr => gr
+                    .Title("Tồn kho").HeaderHtmlAttributes(new { style = "text-align:center" })
+                    .Columns(g =>
+                        {
+                            g.Bound(p => p.QuantityAvailableLocation2).Title("Kho PC").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            g.Bound(p => p.QuantityAvailableLocation1).Title("Kho NVL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            g.Bound(p => p.QuantityAvailableArrivals).Title("Mới về").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });                        
+                        }
+                    ));
+                columns.Group(gr => gr
+                    .Title("Tồn BIS / Tồn kho").HeaderHtmlAttributes(new { style = "text-align:center" })
+                    .Columns(g =>
+                        {
+                            g.Bound(p => p.BisQuantityRemainsVsLocation2).Title("PC").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            g.Bound(p => p.BisQuantityRemainsVsLocation12).Title("PC & NVL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            g.Bound(p => p.BisQuantityRemainsVsLocation12A).Title("Toàn bộ").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                        }
+                    ));                
 
-                columns.Bound(p => p.QuantityAvailableLocation2).Title("Kho PC").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                columns.Bound(p => p.QuantityAvailableLocation1).Title("Kho NVL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                columns.Bound(p => p.QuantityAvailableArrivals).Title("Mới về").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
                     .ClientTemplate("<a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Void" }) + "/#= CommodityID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Delete" }) + "/#= CommodityID #'><span class='k-icon sbt-delete'></span></a>");
