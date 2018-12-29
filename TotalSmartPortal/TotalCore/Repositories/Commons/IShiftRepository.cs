@@ -7,5 +7,6 @@ namespace TotalCore.Repositories.Commons
     public interface IShiftRepository
     {
         IList<Shift> GetAllShifts();
+        IList<Shift> GetAllShifts(bool withNull);
     }
 }
