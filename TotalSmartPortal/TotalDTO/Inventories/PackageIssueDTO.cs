@@ -32,6 +32,7 @@ namespace TotalDTO.Inventories
         [Display(Name = "Diễn giải")]
         public string BlendingInstructionDescription { get; set; }
 
+        public virtual int CommodityID { get; set; }
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
 
@@ -62,6 +63,11 @@ namespace TotalDTO.Inventories
         [Display(Name = "Kho hàng")]
         [UIHint("AutoCompletes/WarehouseBase")]
         public WarehouseBaseDTO Warehouse { get; set; }
+
+        public override int CommodityID { get { return (this.Commodity != null ? this.Commodity.CommodityID : 0); } }
+        [Display(Name = "Thành phẩm")]
+        [UIHint("Commons/Commodity")]
+        public CommodityBaseDTO Commodity { get; set; }
 
         public override int ProductionLineID { get { return (this.ProductionLine != null ? this.ProductionLine.ProductionLineID : 0); } }
         [Display(Name = "Mã số máy")]

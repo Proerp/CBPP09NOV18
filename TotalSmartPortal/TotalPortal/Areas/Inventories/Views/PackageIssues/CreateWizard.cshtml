@@ -18,6 +18,10 @@
     @Html.HiddenFor(model => model.BlendingInstructionReference)
     @Html.HiddenFor(model => model.BlendingInstructionEntryDate)
 
+    @Html.HiddenFor(model => model.Commodity.CommodityID)
+    @Html.HiddenFor(model => model.Commodity.Code)
+    @Html.HiddenFor(model => model.Commodity.Name)
+    
     @Html.HiddenFor(model => model.Warehouse.WarehouseID)
     @Html.HiddenFor(model => model.Warehouse.Code)
     @Html.HiddenFor(model => model.Warehouse.Name)
@@ -111,6 +115,10 @@
             $("#BlendingInstructionCode").val(selectedDataItem === undefined || selectedDataItem.BlendingInstructionCode === undefined ? null : selectedDataItem.BlendingInstructionCode);
             $("#BlendingInstructionReference").val(selectedDataItem === undefined || selectedDataItem.BlendingInstructionReference === undefined ? null : selectedDataItem.BlendingInstructionReference);
             $("#BlendingInstructionEntryDate").val(selectedDataItem === undefined || selectedDataItem.BlendingInstructionEntryDate === undefined ? null : kendo.toString(selectedDataItem.BlendingInstructionEntryDate, Settings.DateTimeFormat));
+
+            $("#Commodity_CommodityID").val(selectedDataItem === undefined || selectedDataItem.CommodityID === undefined ? null : selectedDataItem.CommodityID);
+            $("#Commodity_Code").val(selectedDataItem === undefined || selectedDataItem.CommodityCode === undefined ? null : selectedDataItem.CommodityCode);
+            $("#Commodity_Name").val(selectedDataItem === undefined || selectedDataItem.CommodityName === undefined ? null : selectedDataItem.CommodityName);
 
             $("#Warehouse_WarehouseID").val(selectedDataItem === undefined || selectedDataItem.WarehouseID === undefined ? null : selectedDataItem.WarehouseID);
             $("#Warehouse_Code").val(selectedDataItem === undefined || selectedDataItem.WarehouseCode === undefined ? null : selectedDataItem.WarehouseCode);

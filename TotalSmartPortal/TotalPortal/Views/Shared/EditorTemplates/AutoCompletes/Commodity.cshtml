@@ -28,8 +28,8 @@
                         "<span class=\"k-state-default\"><p>#: data.Code #</p></span>" +
                         "<span class=\"k-state-default\"><p>#: data.Name #</p></span>" +
                         "</div>")
-                
-                                
+
+
                 .DataSource(source =>
                 {
                     source.Read(read =>
@@ -37,20 +37,20 @@
                         read.Action("SearchCommodities", "CommodityAPIs", new { area = "Commons" }).Data(@<text>
                             function(e) {
                             return {
-                                searchText: e.filter.filters[0].value,
-                                commodityTypeIDList: requireConfig.pageOptions.masterCommodityTypeIDs,
-                                isOnlyAlphaNumericString: false
+                            searchText: e.filter.filters[0].value,
+                            commodityTypeIDList: requireConfig.pageOptions.masterCommodityTypeIDs,
+                            isOnlyAlphaNumericString: false
                             };}
                         </text>);//Send parameter to controller search action
                     })
                     .ServerFiltering(true);
                 })
-                .Events(e =>
-                {
-                    e.Select("commodity_Select");
-                    e.DataBound("commodity_DataBound");
-                })
-                .HtmlAttributes(new { @class = "CommodityBase_AutoComplete right-panel-input" })
+                        .Events(e =>
+                        {
+                            e.Select("commodity_Select");
+                            e.DataBound("commodity_DataBound");
+                        })
+                        .HtmlAttributes(new { @class = "CommodityBase_AutoComplete right-panel-input" })
             )
         </div>
 
@@ -65,9 +65,7 @@
 <div class="right-second-panel right-second-panel-small">
     <div class="form-group">
         <div style="float:left; padding-top: 2px; padding-right: 2px;">
-            @if (ViewData["NullCommodity"] == null && (Model == null || (Model.Name != null && Model.Name != "")))
-            {
-                <img src="~/Content/Images/Mains/Size24/Phone-icon-24.png" title="Tên thành phẩm" />}
+            <img src="~/Content/Images/Mains/Size24/Phone-icon-24.png" title="Tên thành phẩm" />
         </div>
         <div class="right-panel-label right-panel-label-larger-width"> <span id="@(modelFullHtmlFieldName + "_label_Name")"> @Html.DisplayFor(a => a.Name) </span> </div>
     </div>

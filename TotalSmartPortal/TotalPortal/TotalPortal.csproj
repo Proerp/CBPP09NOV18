@@ -2943,6 +2943,7 @@
     <Content Include="Views\Shared\EditorTemplates\DropDowns\TransferOrderType.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AutoCompletes\BinLocationBase.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AutoCompletes\Commodity.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Commons\Commodity.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
