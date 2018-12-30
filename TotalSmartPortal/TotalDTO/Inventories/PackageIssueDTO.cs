@@ -42,10 +42,10 @@ namespace TotalDTO.Inventories
         public virtual int StorekeeperID { get; set; }
         public virtual int CrucialWorkerID { get; set; }
 
+        [Display(Name = "Mã số cân")]
         public string AspNetUserFirstName { get; set; }
+        [Display(Name = "Người thực hiện")]
         public string AspNetUserLastName { get; set; }
-        [Display(Name = "Cân, người thực hiện")]
-        public string AspNetUserName { get { return this.AspNetUserFirstName != null && this.AspNetUserLastName != null ? this.AspNetUserFirstName + "      [" + this.AspNetUserLastName + "] " : ""; } }
 
         [Display(Name = "Lệnh pha chế")]
         public override string Caption { get { return this.BlendingInstructionCode + " [" + this.BlendingInstructionReference + "] " + this.BlendingInstructionEntryDate.ToShortDateString(); } }
