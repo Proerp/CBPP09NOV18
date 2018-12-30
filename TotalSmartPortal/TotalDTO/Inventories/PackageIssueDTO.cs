@@ -42,6 +42,14 @@ namespace TotalDTO.Inventories
         public virtual int StorekeeperID { get; set; }
         public virtual int CrucialWorkerID { get; set; }
 
+        public string AspNetUserFirstName { get; set; }
+        public string AspNetUserLastName { get; set; }
+        [Display(Name = "Cân, người thực hiện")]
+        public string AspNetUserName { get { return this.AspNetUserFirstName != null && this.AspNetUserLastName != null ? this.AspNetUserFirstName + "      [" + this.AspNetUserLastName + "] " : ""; } }
+
+        [Display(Name = "Lệnh pha chế")]
+        public override string Caption { get { return this.BlendingInstructionCode + " [" + this.BlendingInstructionReference + "] " + this.BlendingInstructionEntryDate.ToShortDateString(); } }
+
         public override void PerformPresaveRule()
         {
             base.PerformPresaveRule();
