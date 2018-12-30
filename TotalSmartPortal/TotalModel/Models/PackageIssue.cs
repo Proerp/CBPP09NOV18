@@ -46,6 +46,7 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public int ProductionLineID { get; set; }
+        public int CommodityID { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual Employee Employee1 { get; set; }
@@ -57,5 +58,6 @@ namespace TotalModel.Models
         public virtual Workshift Workshift { get; set; }
         public virtual BlendingInstruction BlendingInstruction { get; set; }
         public virtual ProductionLine ProductionLine { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }

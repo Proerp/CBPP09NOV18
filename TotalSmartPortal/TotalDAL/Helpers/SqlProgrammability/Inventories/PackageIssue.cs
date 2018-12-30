@@ -101,10 +101,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "       SELECT          BlendingInstructions.BlendingInstructionID, BlendingInstructions.Code AS BlendingInstructionCode, BlendingInstructions.Reference AS BlendingInstructionReference, BlendingInstructions.EntryDate AS BlendingInstructionEntryDate, BlendingInstructions.Description, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, BlendingInstructions.TotalQuantity, BlendingInstructionRemains.TotalQuantityRemains " + "\r\n";
+            queryString = queryString + "       SELECT          BlendingInstructions.BlendingInstructionID, BlendingInstructions.Code AS BlendingInstructionCode, BlendingInstructions.Reference AS BlendingInstructionReference, BlendingInstructions.EntryDate AS BlendingInstructionEntryDate, BlendingInstructions.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BlendingInstructions.Description, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, BlendingInstructions.TotalQuantity, BlendingInstructionRemains.TotalQuantityRemains " + "\r\n";
 
             queryString = queryString + "       FROM           (SELECT BlendingInstructionID, ROUND(SUM(Quantity - QuantityIssued), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM BlendingInstructionDetails WHERE Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND (@BlendingInstructionID IS NULL OR BlendingInstructionID = @BlendingInstructionID) AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY BlendingInstructionID) AS BlendingInstructionRemains " + "\r\n";
             queryString = queryString + "                       INNER JOIN BlendingInstructions ON BlendingInstructionRemains.BlendingInstructionID = BlendingInstructions.BlendingInstructionID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Commodities ON BlendingInstructions.CommodityID = Commodities.CommodityID " + "\r\n";
 
             queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = 6 " + "\r\n";
 

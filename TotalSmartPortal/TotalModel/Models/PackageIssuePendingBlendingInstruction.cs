@@ -23,5 +23,8 @@ namespace TotalModel.Models
         public string WarehouseName { get; set; }
         public decimal TotalQuantity { get; set; }
         public Nullable<decimal> TotalQuantityRemains { get; set; }
+        public int CommodityID { get; set; }
+        public string CommodityCode { get; set; }
+        public string CommodityName { get; set; }
     }
 }
