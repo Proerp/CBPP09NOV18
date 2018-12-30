@@ -21,13 +21,15 @@ namespace TotalDTO.Productions
 
         public int BlendingInstructionID { get; set; }
 
-        [Display(Name = "Số chứng từ")]
+        [Display(Name = "Số lô, batch number")]
+        [Required(ErrorMessage = "Vui lòng nhập số lô")]
         public string Code { get; set; }
 
         [Display(Name = "Ngày chứng từ")]
+        [Required(ErrorMessage = "Vui lòng nhập ngày chứng từ")]
         public Nullable<System.DateTime> VoucherDate { get; set; }
 
-        [Display(Name = "Mục đích")]
+        [Display(Name = "Mô tả lệnh pha chế")]
         public string Purposes { get; set; }
 
         public virtual int CommodityID { get; set; }
@@ -50,6 +52,7 @@ namespace TotalDTO.Productions
         }
 
         public override int CommodityID { get { return (this.Commodity != null ? this.Commodity.CommodityID : 0); } }
+        [Display(Name = "Thành phẩm")]
         [UIHint("AutoCompletes/Commodity")]
         public CommodityBaseDTO Commodity { get; set; }
 

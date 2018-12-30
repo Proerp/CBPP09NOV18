@@ -159,7 +159,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "       SELECT      BlendingInstructionDetails.BlendingInstructionDetailID, BlendingInstructionDetails.BlendingInstructionID, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BlendingInstructionDetails.CommodityTypeID, " + "\r\n";
             queryString = queryString + "                   VoidTypes.VoidTypeID, VoidTypes.Code AS VoidTypeCode, VoidTypes.Name AS VoidTypeName, VoidTypes.VoidClassID, " + "\r\n";
-            queryString = queryString + "                   BlendingInstructionDetails.Quantity, BlendingInstructionDetails.InActivePartial, BlendingInstructionDetails.InActivePartialDate, BlendingInstructionDetails.Remarks " + "\r\n";
+            queryString = queryString + "                   BlendingInstructionDetails.Quantity, BlendingInstructionDetails.QuantityIssued, BlendingInstructionDetails.InActivePartial, BlendingInstructionDetails.InActivePartialDate, BlendingInstructionDetails.Remarks " + "\r\n";
             queryString = queryString + "       FROM        BlendingInstructionDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON BlendingInstructionDetails.BlendingInstructionID = @BlendingInstructionID AND BlendingInstructionDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN VoidTypes ON BlendingInstructionDetails.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";

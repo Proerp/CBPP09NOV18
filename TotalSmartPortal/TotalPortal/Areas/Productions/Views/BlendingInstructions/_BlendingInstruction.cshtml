@@ -51,31 +51,22 @@
 
     <div class="right-panel">
 
-        <div class="right-top-panel right-top-panel-H2">
+        <div class="right-top-panel right-top-panel-H3">
 
-            @Html.EditorFor(d => d.Commodity, new { CommodityDescriptionHidden = "false", CommodityDisplayName = @Model.GetDisplayName(m => m.Commodity) })
+            @Html.EditorFor(d => d.Commodity, new { CommodityDescriptionHidden = "false", CommodityDisplayCode = @Model.GetDisplayName(m => m.Commodity) })
 
-            
-                <div class="form-group">
-                    <div class="right-panel-label right-panel-label-whole-width">
-                        @Html.LabelFor(model => model.Purposes)
-                    </div>
-                    <div class="div-input">
-                        @Html.Kendo().MaskedTextBoxFor(model => model.Purposes).HtmlAttributes(new { @class = "right-panel-input" })
-                    </div>
-                    <div class="div-validation-message">
-                        @Html.ValidationMessageFor(model => model.Purposes, "", new { @class = "text-danger" })
-                    </div>
+
+            <div class="form-group">
+                <div class="right-panel-label right-panel-label-whole-width">
+                    @Html.LabelFor(model => model.Purposes)
                 </div>
-            
-
-            <div id="show-current-PriceCategory" style="float: right; margin-top: -101px; text-align: center; width: 110px; height: 110px; " title="Kho hàng">
-                <div style="height: 90px; padding-left: 22px; padding-right: 22px; padding-top: 32px;">
-                    <span style="color:blue;" id="">LSX</span>
-                    <span style="color:blue;" id="">BIS</span>
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => model.Purposes).HtmlAttributes(new { @class = "right-panel-input right-panel-input-whole-width" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.Purposes, "", new { @class = "text-danger" })
                 </div>
             </div>
-
         </div>
 
         <div class="div-k-grid-detail">
@@ -92,23 +83,32 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(168)
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118)
                         .ClientTemplate("<div> #= CommodityCode #</div>" +
                                 "<div> #= (VoidTypeName == null)? '' : VoidTypeName #</div>" +
                                 "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(327).HtmlAttributes(new { style = "" })
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(288).HtmlAttributes(new { style = "" })
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
-                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(70)
+                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(70)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
 
+                    columns.Bound(p => p.QuantityIssued).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(70)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityIssued) #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].QuantityIssued' value='#= QuantityIssued #' />");
 
-                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(168)
+                    columns.Bound(p => p.QuantityRemains).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(70)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
+
+                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(207)
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
                     columns.Bound(p => p.InActivePartial).DisplayNameTitle().Hidden()
@@ -127,7 +127,7 @@
                         if (Model.Editable)
                         {
                             toolbar.Template(@<text>
-                                <button type="button" class="k-button" onclick="$('#kendoGridDetails').data('kendoGrid').addRow()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm mặt hàng </button>
+                                <button type="button" class="k-button" onclick="$('#kendoGridDetails').data('kendoGrid').addRow()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm NVL </button>
 
                                 <span style="float:right">
                                     @Html.Partial("~/Views/Helpers/Commons/_Import.cshtml")
@@ -164,22 +164,25 @@
                         </text>);
                         events.Edit("kendoGridDetailsEdit");
                     }).DataSource(dataSource => dataSource
-                                                                    .Ajax()
-                                                                    .Batch(true)
-                                                                    .ServerOperation(false)
-                                                                    .Model(model =>
-                                                                    {
-                                                                        model.Id(x => x.BlendingInstructionDetailID);
-                                                                        model.Field(m => m.BlendingInstructionDetailID).DefaultValue(0);
-                                                                        model.Field(m => m.BlendingInstructionID).DefaultValue(@Model.BlendingInstructionID);
-                                                                    })
-                                                                    .Events(events =>
-                                                                    {
-                                                                        events.Error("kendGrid_ErrorHandler");
-                                                                    })
-                                                                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                                                                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                                                                )
+                                            .Ajax()
+                                            .Batch(true)
+                                            .ServerOperation(false)
+                                            .Model(model =>
+                                            {
+                                                model.Id(x => x.BlendingInstructionDetailID);
+                                                model.Field(m => m.BlendingInstructionDetailID).DefaultValue(0);
+                                                model.Field(m => m.BlendingInstructionID).DefaultValue(@Model.BlendingInstructionID);
+                                            })
+                                            .Events(events =>
+                                            {
+                                                events.Change("dataSourceChange");
+                                                events.Error("kendGrid_ErrorHandler");
+                                            })
+                                            .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                                            .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                                            .Aggregates(a => a.Add(x => x.QuantityIssued).Sum())
+                                            .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                                        )
             )
         </div>
 
@@ -262,4 +265,10 @@
         window.moldCommodityID = e.model.CommodityID;
     }
 
+    dataSourceChange = function (e) {
+        if (e.field === "Quantity") {
+            var dataRow = e.items[0];
+            dataRow.set("QuantityRemains", DoRound(dataRow.Quantity - dataRow.QuantityIssued, requireConfig.websiteOptions.rndQuantity));
+        }
+    }
 </script>
