@@ -2265,6 +2265,17 @@
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="60" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" />
+        </EntityType>
         <EntityType Name="Vehicles">
           <Key>
             <PropertyRef Name="VehicleID" />
@@ -4753,15 +4764,6 @@ warning 6035: The relationship 'FK_OrganizationalUnitIUsers_AspNetUsers' has col
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_PackageIssues_AspNetUsers' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_PackageIssues_AspNetUsers" />-->
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_PackageIssues_AspNetUsers1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_PackageIssues_AspNetUsers1" />-->
-        <!--Errors Found During Generation:
-warning 6035: The relationship 'FK_PackageIssues_AspNetUsers2' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
-        <Association Name="FK_PackageIssues_AspNetUsers2" />-->
         <Association Name="FK_PackageIssues_BlendingInstructions">
           <End Role="BlendingInstructions" Type="Self.BlendingInstructions" Multiplicity="1" />
           <End Role="PackageIssues" Type="Self.PackageIssues" Multiplicity="*" />
@@ -4843,6 +4845,42 @@ warning 6035: The relationship 'FK_PackageIssues_AspNetUsers2' has columns that 
             </Principal>
             <Dependent Role="PackageIssues">
               <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Users">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="PackageIssues" Type="Self.PackageIssues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PackageIssues">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Users1">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="PackageIssues" Type="Self.PackageIssues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PackageIssues">
+              <PropertyRef Name="PreparedPersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Users2">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="PackageIssues" Type="Self.PackageIssues" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PackageIssues">
+              <PropertyRef Name="ApproverID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7952,6 +7990,7 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <EntitySet Name="TransferOrderDetails" EntityType="Self.TransferOrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransferOrders" EntityType="Self.TransferOrders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransferOrderTypes" EntityType="Self.TransferOrderTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vehicles" EntityType="Self.Vehicles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VoidTypes" EntityType="Self.VoidTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseAdjustmentDetails" EntityType="Self.WarehouseAdjustmentDetails" Schema="dbo" store:Type="Tables" />
@@ -8723,6 +8762,18 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           </AssociationSet>
           <AssociationSet Name="FK_PackageIssues_Shifts" Association="Self.FK_PackageIssues_Shifts">
             <End Role="Shifts" EntitySet="Shifts" />
+            <End Role="PackageIssues" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Users" Association="Self.FK_PackageIssues_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PackageIssues" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Users1" Association="Self.FK_PackageIssues_Users1">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="PackageIssues" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Users2" Association="Self.FK_PackageIssues_Users2">
+            <End Role="Users" EntitySet="Users" />
             <End Role="PackageIssues" EntitySet="PackageIssues" />
           </AssociationSet>
           <AssociationSet Name="FK_PackageIssues_Warehouses" Association="Self.FK_PackageIssues_Warehouses">
@@ -9737,9 +9788,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="FinishedHandovers1" Relationship="TotalSmartPortalModel.FK_FinishedHandovers_Employees1" FromRole="Employee" ToRole="FinishedHandover" />
           <NavigationProperty Name="WarehouseTransfers" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Employees" FromRole="Employee" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="GoodsArrivals" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_Employees" FromRole="Employee" ToRole="GoodsArrival" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Employees" FromRole="Employee" ToRole="PackageIssue" />
           <NavigationProperty Name="PackageIssues1" Relationship="TotalSmartPortalModel.FK_PackageIssues_Employees1" FromRole="Employee" ToRole="PackageIssue" />
-          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           </EntityType>
         <EntityType Name="EntireTerritory">
           <Key>
@@ -10042,9 +10093,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="WarehouseTransfers1" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Locations1" FromRole="Location" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="WarehouseTransfers2" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Locations2" FromRole="Location" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="GoodsArrivals" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_Locations" FromRole="Location" ToRole="GoodsArrival" />
-          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Locations" FromRole="Location" ToRole="PackageIssue" />
           <NavigationProperty Name="PurchaseOrders" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_Locations" FromRole="Location" ToRole="PurchaseOrder" />
           <NavigationProperty Name="BlendingInstructions" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_Locations" FromRole="Location" ToRole="BlendingInstruction" />
+          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Locations" FromRole="Location" ToRole="PackageIssue" />
         </EntityType>
         <EntityType Name="Module">
           <Key>
@@ -13938,23 +13989,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="Approved" Mode="In" Type="Boolean" />
           </FunctionImport>
           <EntitySet Name="PackageIssueDetails" EntityType="TotalSmartPortalModel.PackageIssueDetail" />
-          <EntitySet Name="PackageIssues" EntityType="TotalSmartPortalModel.PackageIssue" />
-          <AssociationSet Name="FK_PackageIssues_Employees" Association="TotalSmartPortalModel.FK_PackageIssues_Employees">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="PackageIssue" EntitySet="PackageIssues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PackageIssues_Employees1" Association="TotalSmartPortalModel.FK_PackageIssues_Employees1">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="PackageIssue" EntitySet="PackageIssues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PackageIssues_Locations" Association="TotalSmartPortalModel.FK_PackageIssues_Locations">
-            <End Role="Location" EntitySet="Locations" />
-            <End Role="PackageIssue" EntitySet="PackageIssues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PackageIssueDetails_PackageIssues" Association="TotalSmartPortalModel.FK_PackageIssueDetails_PackageIssues">
-            <End Role="PackageIssue" EntitySet="PackageIssues" />
-            <End Role="PackageIssueDetail" EntitySet="PackageIssueDetails" />
-          </AssociationSet>
           <AssociationSet Name="FK_PackageIssueDetails_Shifts" Association="TotalSmartPortalModel.FK_PackageIssueDetails_Shifts">
             <End Role="Shift" EntitySet="Shifts" />
             <End Role="PackageIssueDetail" EntitySet="PackageIssueDetails" />
@@ -13962,18 +13996,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <AssociationSet Name="FK_PackageIssueDetails_Workshifts" Association="TotalSmartPortalModel.FK_PackageIssueDetails_Workshifts">
             <End Role="Workshift" EntitySet="Workshifts" />
             <End Role="PackageIssueDetail" EntitySet="PackageIssueDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PackageIssues_Shifts" Association="TotalSmartPortalModel.FK_PackageIssues_Shifts">
-            <End Role="Shift" EntitySet="Shifts" />
-            <End Role="PackageIssue" EntitySet="PackageIssues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PackageIssues_Warehouses" Association="TotalSmartPortalModel.FK_PackageIssues_Warehouses">
-            <End Role="Warehouse" EntitySet="Warehouses" />
-            <End Role="PackageIssue" EntitySet="PackageIssues" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PackageIssues_Workshifts" Association="TotalSmartPortalModel.FK_PackageIssues_Workshifts">
-            <End Role="Workshift" EntitySet="Workshifts" />
-            <End Role="PackageIssue" EntitySet="PackageIssues" />
           </AssociationSet>
           <FunctionImport Name="GetPurchaseOrderIndexes" ReturnType="Collection(TotalSmartPortalModel.PurchaseOrderIndex)">
             <Parameter Name="AspUserID" Mode="In" Type="String" />
@@ -14291,10 +14313,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <End Role="BlendingInstruction" EntitySet="BlendingInstructions" />
             <End Role="PackageIssueDetail" EntitySet="PackageIssueDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_PackageIssues_BlendingInstructions" Association="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions">
-            <End Role="BlendingInstruction" EntitySet="BlendingInstructions" />
-            <End Role="PackageIssue" EntitySet="PackageIssues" />
-          </AssociationSet>
           <AssociationSet Name="FK_BlendingInstructions_Commodities" Association="TotalSmartPortalModel.FK_BlendingInstructions_Commodities">
             <End Role="Commodity" EntitySet="Commodities" />
             <End Role="BlendingInstruction" EntitySet="BlendingInstructions" />
@@ -14302,10 +14320,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <AssociationSet Name="FK_PackageIssueDetails_ProductionLines" Association="TotalSmartPortalModel.FK_PackageIssueDetails_ProductionLines">
             <End Role="ProductionLine" EntitySet="ProductionLines" />
             <End Role="PackageIssueDetail" EntitySet="PackageIssueDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PackageIssues_ProductionLines" Association="TotalSmartPortalModel.FK_PackageIssues_ProductionLines">
-            <End Role="ProductionLine" EntitySet="ProductionLines" />
-            <End Role="PackageIssue" EntitySet="PackageIssues" />
           </AssociationSet>
           <FunctionImport Name="BlendingInstructionApproved" ReturnType="Collection(String)">
           <Parameter Name="EntityID" Mode="In" Type="Int32" />
@@ -14420,8 +14434,58 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             <Parameter Name="PendingOptionID" Mode="In" Type="Int32" />
             <Parameter Name="ShelfLife" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="Users" EntityType="TotalSmartPortalModel.User" />
+          <EntitySet Name="PackageIssues" EntityType="TotalSmartPortalModel.PackageIssue" />
+          <AssociationSet Name="FK_PackageIssues_BlendingInstructions" Association="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions">
+            <End Role="BlendingInstruction" EntitySet="BlendingInstructions" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
           <AssociationSet Name="FK_PackageIssues_Commodities" Association="TotalSmartPortalModel.FK_PackageIssues_Commodities">
             <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Employees" Association="TotalSmartPortalModel.FK_PackageIssues_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Employees1" Association="TotalSmartPortalModel.FK_PackageIssues_Employees1">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Locations" Association="TotalSmartPortalModel.FK_PackageIssues_Locations">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssueDetails_PackageIssues" Association="TotalSmartPortalModel.FK_PackageIssueDetails_PackageIssues">
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+            <End Role="PackageIssueDetail" EntitySet="PackageIssueDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_ProductionLines" Association="TotalSmartPortalModel.FK_PackageIssues_ProductionLines">
+            <End Role="ProductionLine" EntitySet="ProductionLines" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Shifts" Association="TotalSmartPortalModel.FK_PackageIssues_Shifts">
+            <End Role="Shift" EntitySet="Shifts" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Users" Association="TotalSmartPortalModel.FK_PackageIssues_Users">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Users1" Association="TotalSmartPortalModel.FK_PackageIssues_Users1">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Users2" Association="TotalSmartPortalModel.FK_PackageIssues_Users2">
+            <End Role="User" EntitySet="Users" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Warehouses" Association="TotalSmartPortalModel.FK_PackageIssues_Warehouses">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="PackageIssue" EntitySet="PackageIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PackageIssues_Workshifts" Association="TotalSmartPortalModel.FK_PackageIssues_Workshifts">
+            <End Role="Workshift" EntitySet="Workshifts" />
             <End Role="PackageIssue" EntitySet="PackageIssues" />
           </AssociationSet>
           </EntityContainer>
@@ -15722,9 +15786,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="FinishedProducts" Relationship="TotalSmartPortalModel.FK_FinishedProducts_Workshifts" FromRole="Workshift" ToRole="FinishedProduct" />
           <NavigationProperty Name="FinishedHandovers" Relationship="TotalSmartPortalModel.FK_FinishedHandovers_Workshifts" FromRole="Workshift" ToRole="FinishedHandover" />
           <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Workshifts" FromRole="Workshift" ToRole="PackageIssueDetail" />
-          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Workshifts" FromRole="Workshift" ToRole="PackageIssue" />
           <NavigationProperty Name="FinishedProductDetails" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Workshifts" FromRole="Workshift" ToRole="FinishedProductDetail" />
           <NavigationProperty Name="FinishedProductPackages" Relationship="TotalSmartPortalModel.FK_FinishedProductPackages_Workshifts" FromRole="Workshift" ToRole="FinishedProductPackage" />
+          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Workshifts" FromRole="Workshift" ToRole="PackageIssue" />
         </EntityType>
         <ComplexType Name="MaterialIssueIndex">
           <Property Type="Int32" Name="MaterialIssueID" Nullable="false" />
@@ -16064,8 +16128,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="WarehouseTransfers1" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Warehouses1" FromRole="Warehouse" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="GoodsArrivals" Relationship="TotalSmartPortalModel.FK_GoodsArrivals_Warehouses" FromRole="Warehouse" ToRole="GoodsArrival" />
           <NavigationProperty Name="BinLocations" Relationship="TotalSmartPortalModel.FK_BinLocations_Warehouses" FromRole="Warehouse" ToRole="BinLocation" />
-          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Warehouses" FromRole="Warehouse" ToRole="PackageIssue" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_Warehouses" FromRole="Warehouse" ToRole="GoodsReceiptDetail" />
+          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Warehouses" FromRole="Warehouse" ToRole="PackageIssue" />
           </EntityType>
         <Association Name="FK_DeliveryAdvices_Warehouses">
           <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
@@ -16559,9 +16623,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="SemifinishedProducts" Relationship="TotalSmartPortalModel.FK_SemifinishedProducts_Shifts" FromRole="Shift" ToRole="SemifinishedProduct" />
           <NavigationProperty Name="FinishedProducts" Relationship="TotalSmartPortalModel.FK_FinishedProducts_Shifts" FromRole="Shift" ToRole="FinishedProduct" />
           <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Shifts" FromRole="Shift" ToRole="PackageIssueDetail" />
-          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Shifts" FromRole="Shift" ToRole="PackageIssue" />
           <NavigationProperty Name="FinishedProductDetails" Relationship="TotalSmartPortalModel.FK_FinishedProductDetails_Shifts" FromRole="Shift" ToRole="FinishedProductDetail" />
           <NavigationProperty Name="FinishedProductPackages" Relationship="TotalSmartPortalModel.FK_FinishedProductPackages_Shifts" FromRole="Shift" ToRole="FinishedProductPackage" />
+          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Shifts" FromRole="Shift" ToRole="PackageIssue" />
         </EntityType>
         <Association Name="FK_Workshifts_Shifts">
           <End Type="TotalSmartPortalModel.Shift" Role="Shift" Multiplicity="1" />
@@ -19870,7 +19934,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Name="QuantityLoss" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="PackageIssue" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_PackageIssues" FromRole="PackageIssueDetail" ToRole="PackageIssue" />
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Shifts" FromRole="PackageIssueDetail" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Workshifts" FromRole="PackageIssueDetail" ToRole="Workshift" />
           <Property Name="BinLocationID" Type="Int32" Nullable="false" />
@@ -19884,97 +19947,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="BlendingInstruction" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructions" FromRole="PackageIssueDetail" ToRole="BlendingInstruction" />
           <Property Name="ProductionLineID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="ProductionLine" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_ProductionLines" FromRole="PackageIssueDetail" ToRole="ProductionLine" />
+          <NavigationProperty Name="PackageIssue" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_PackageIssues" FromRole="PackageIssueDetail" ToRole="PackageIssue" />
         </EntityType>
-        <EntityType Name="PackageIssue">
-          <Key>
-            <PropertyRef Name="PackageIssueID" />
-          </Key>
-          <Property Name="PackageIssueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="ShiftID" Type="Int32" Nullable="false" />
-          <Property Name="WorkshiftID" Type="Int32" Nullable="false" />
-          <Property Name="BlendingInstructionID" Type="Int32" Nullable="false" />
-          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
-          <Property Name="CrucialWorkerID" Type="Int32" Nullable="false" />
-          <Property Name="StorekeeperID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="PreparedPersonID" Type="Int32" Nullable="false" />
-          <Property Name="OrganizationalUnitID" Type="Int32" Nullable="false" />
-          <Property Name="LocationID" Type="Int32" Nullable="false" />
-          <Property Name="ApproverID" Type="Int32" Nullable="false" />
-          <Property Name="TotalQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="TotalQuantitySemifinished" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="TotalQuantityFailure" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="TotalQuantityReceipted" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="TotalQuantityLoss" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EditedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Approved" Type="Boolean" Nullable="false" />
-          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="TotalSmartPortalModel.FK_PackageIssues_Employees" FromRole="PackageIssue" ToRole="Employee" />
-          <NavigationProperty Name="Employee1" Relationship="TotalSmartPortalModel.FK_PackageIssues_Employees1" FromRole="PackageIssue" ToRole="Employee" />
-          <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_PackageIssues_Locations" FromRole="PackageIssue" ToRole="Location" />
-          <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_PackageIssues" FromRole="PackageIssue" ToRole="PackageIssueDetail" />
-          <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_PackageIssues_Shifts" FromRole="PackageIssue" ToRole="Shift" />
-          <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_PackageIssues_Warehouses" FromRole="PackageIssue" ToRole="Warehouse" />
-          <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_PackageIssues_Workshifts" FromRole="PackageIssue" ToRole="Workshift" />
-          <NavigationProperty Name="BlendingInstruction" Relationship="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" FromRole="PackageIssue" ToRole="BlendingInstruction" />
-          <Property Name="ProductionLineID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="ProductionLine" Relationship="TotalSmartPortalModel.FK_PackageIssues_ProductionLines" FromRole="PackageIssue" ToRole="ProductionLine" />
-          <Property Name="CommodityID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PackageIssues_Commodities" FromRole="PackageIssue" ToRole="Commodity" />
-        </EntityType>
-        <Association Name="FK_PackageIssues_Employees">
-          <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="PackageIssue">
-              <PropertyRef Name="StorekeeperID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PackageIssues_Employees1">
-          <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="PackageIssue">
-              <PropertyRef Name="CrucialWorkerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PackageIssues_Locations">
-          <End Type="TotalSmartPortalModel.Location" Role="Location" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Location">
-              <PropertyRef Name="LocationID" />
-            </Principal>
-            <Dependent Role="PackageIssue">
-              <PropertyRef Name="LocationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PackageIssueDetails_PackageIssues">
-          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PackageIssueDetail" Role="PackageIssueDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PackageIssue">
-              <PropertyRef Name="PackageIssueID" />
-            </Principal>
-            <Dependent Role="PackageIssueDetail">
-              <PropertyRef Name="PackageIssueID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_PackageIssueDetails_Shifts">
           <End Type="TotalSmartPortalModel.Shift" Role="Shift" Multiplicity="1" />
           <End Type="TotalSmartPortalModel.PackageIssueDetail" Role="PackageIssueDetail" Multiplicity="*" />
@@ -19995,42 +19969,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               <PropertyRef Name="WorkshiftID" />
             </Principal>
             <Dependent Role="PackageIssueDetail">
-              <PropertyRef Name="WorkshiftID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PackageIssues_Shifts">
-          <End Type="TotalSmartPortalModel.Shift" Role="Shift" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shift">
-              <PropertyRef Name="ShiftID" />
-            </Principal>
-            <Dependent Role="PackageIssue">
-              <PropertyRef Name="ShiftID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PackageIssues_Warehouses">
-          <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="WarehouseID" />
-            </Principal>
-            <Dependent Role="PackageIssue">
-              <PropertyRef Name="WarehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PackageIssues_Workshifts">
-          <End Type="TotalSmartPortalModel.Workshift" Role="Workshift" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Workshift">
-              <PropertyRef Name="WorkshiftID" />
-            </Principal>
-            <Dependent Role="PackageIssue">
               <PropertyRef Name="WorkshiftID" />
             </Dependent>
           </ReferentialConstraint>
@@ -21100,9 +21038,9 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_Locations" FromRole="BlendingInstruction" ToRole="Location" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_VoidTypes" FromRole="BlendingInstruction" ToRole="VoidType" />
           <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructions" FromRole="BlendingInstruction" ToRole="PackageIssueDetail" />
-          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" FromRole="BlendingInstruction" ToRole="PackageIssue" />
           <Property Name="VoucherDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_Commodities" FromRole="BlendingInstruction" ToRole="Commodity" />
+          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" FromRole="BlendingInstruction" ToRole="PackageIssue" />
         </EntityType>
         <Association Name="FK_BlendingInstructionDetails_BlendingInstructions">
           <End Type="TotalSmartPortalModel.BlendingInstruction" Role="BlendingInstruction" Multiplicity="1" />
@@ -21176,18 +21114,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PackageIssues_BlendingInstructions">
-          <End Type="TotalSmartPortalModel.BlendingInstruction" Role="BlendingInstruction" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BlendingInstruction">
-              <PropertyRef Name="BlendingInstructionID" />
-            </Principal>
-            <Dependent Role="PackageIssue">
-              <PropertyRef Name="BlendingInstructionID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_BlendingInstructions_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
           <End Type="TotalSmartPortalModel.BlendingInstruction" Role="BlendingInstruction" Multiplicity="*" />
@@ -21208,18 +21134,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               <PropertyRef Name="ProductionLineID" />
             </Principal>
             <Dependent Role="PackageIssueDetail">
-              <PropertyRef Name="ProductionLineID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PackageIssues_ProductionLines">
-          <End Type="TotalSmartPortalModel.ProductionLine" Role="ProductionLine" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductionLine">
-              <PropertyRef Name="ProductionLineID" />
-            </Principal>
-            <Dependent Role="PackageIssue">
               <PropertyRef Name="ProductionLineID" />
             </Dependent>
           </ReferentialConstraint>
@@ -21548,6 +21462,77 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="Decimal" Name="QuantityPurchaseOrders" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityTransferOrders" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Users" FromRole="User" ToRole="PackageIssue" />
+          <NavigationProperty Name="PackageIssues1" Relationship="TotalSmartPortalModel.FK_PackageIssues_Users1" FromRole="User" ToRole="PackageIssue" />
+          <NavigationProperty Name="PackageIssues2" Relationship="TotalSmartPortalModel.FK_PackageIssues_Users2" FromRole="User" ToRole="PackageIssue" />
+        </EntityType>
+        <EntityType Name="PackageIssue">
+          <Key>
+            <PropertyRef Name="PackageIssueID" />
+          </Key>
+          <Property Name="PackageIssueID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="WorkshiftID" Type="Int32" Nullable="false" />
+          <Property Name="BlendingInstructionID" Type="Int32" Nullable="false" />
+          <Property Name="CommodityID" Type="Int32" Nullable="false" />
+          <Property Name="ProductionLineID" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
+          <Property Name="CrucialWorkerID" Type="Int32" Nullable="false" />
+          <Property Name="StorekeeperID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="PreparedPersonID" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationalUnitID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="ApproverID" Type="Int32" Nullable="false" />
+          <Property Name="TotalQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalQuantitySemifinished" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalQuantityFailure" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalQuantityReceipted" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalQuantityLoss" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EditedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="BlendingInstruction" Relationship="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" FromRole="PackageIssue" ToRole="BlendingInstruction" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PackageIssues_Commodities" FromRole="PackageIssue" ToRole="Commodity" />
+          <NavigationProperty Name="Employee" Relationship="TotalSmartPortalModel.FK_PackageIssues_Employees" FromRole="PackageIssue" ToRole="Employee" />
+          <NavigationProperty Name="Employee1" Relationship="TotalSmartPortalModel.FK_PackageIssues_Employees1" FromRole="PackageIssue" ToRole="Employee" />
+          <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_PackageIssues_Locations" FromRole="PackageIssue" ToRole="Location" />
+          <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_PackageIssues" FromRole="PackageIssue" ToRole="PackageIssueDetail" />
+          <NavigationProperty Name="ProductionLine" Relationship="TotalSmartPortalModel.FK_PackageIssues_ProductionLines" FromRole="PackageIssue" ToRole="ProductionLine" />
+          <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_PackageIssues_Shifts" FromRole="PackageIssue" ToRole="Shift" />
+          <NavigationProperty Name="User" Relationship="TotalSmartPortalModel.FK_PackageIssues_Users" FromRole="PackageIssue" ToRole="User" />
+          <NavigationProperty Name="User1" Relationship="TotalSmartPortalModel.FK_PackageIssues_Users1" FromRole="PackageIssue" ToRole="User" />
+          <NavigationProperty Name="User2" Relationship="TotalSmartPortalModel.FK_PackageIssues_Users2" FromRole="PackageIssue" ToRole="User" />
+          <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_PackageIssues_Warehouses" FromRole="PackageIssue" ToRole="Warehouse" />
+          <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_PackageIssues_Workshifts" FromRole="PackageIssue" ToRole="Workshift" />
+        </EntityType>
+        <Association Name="FK_PackageIssues_BlendingInstructions">
+          <End Type="TotalSmartPortalModel.BlendingInstruction" Role="BlendingInstruction" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BlendingInstruction">
+              <PropertyRef Name="BlendingInstructionID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="BlendingInstructionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_PackageIssues_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
           <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
@@ -21557,6 +21542,138 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
             </Principal>
             <Dependent Role="PackageIssue">
               <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Employees">
+          <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="StorekeeperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Employees1">
+          <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="CrucialWorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Locations">
+          <End Type="TotalSmartPortalModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssueDetails_PackageIssues">
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssueDetail" Role="PackageIssueDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PackageIssue">
+              <PropertyRef Name="PackageIssueID" />
+            </Principal>
+            <Dependent Role="PackageIssueDetail">
+              <PropertyRef Name="PackageIssueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_ProductionLines">
+          <End Type="TotalSmartPortalModel.ProductionLine" Role="ProductionLine" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionLine">
+              <PropertyRef Name="ProductionLineID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="ProductionLineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Shifts">
+          <End Type="TotalSmartPortalModel.Shift" Role="Shift" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shift">
+              <PropertyRef Name="ShiftID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Users">
+          <End Type="TotalSmartPortalModel.User" Role="User" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Users1">
+          <End Type="TotalSmartPortalModel.User" Role="User" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="PreparedPersonID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Users2">
+          <End Type="TotalSmartPortalModel.User" Role="User" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="ApproverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Warehouses">
+          <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PackageIssues_Workshifts">
+          <End Type="TotalSmartPortalModel.Workshift" Role="Workshift" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PackageIssue" Role="PackageIssue" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshift">
+              <PropertyRef Name="WorkshiftID" />
+            </Principal>
+            <Dependent Role="PackageIssue">
+              <PropertyRef Name="WorkshiftID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -26759,39 +26876,6 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PackageIssues">
-            <EntityTypeMapping TypeName="TotalSmartPortalModel.PackageIssue">
-              <MappingFragment StoreEntitySet="PackageIssues">
-                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
-                <ScalarProperty Name="ProductionLineID" ColumnName="ProductionLineID" />
-                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
-                <ScalarProperty Name="Approved" ColumnName="Approved" />
-                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="TotalQuantityLoss" ColumnName="TotalQuantityLoss" />
-                <ScalarProperty Name="TotalQuantityReceipted" ColumnName="TotalQuantityReceipted" />
-                <ScalarProperty Name="TotalQuantityFailure" ColumnName="TotalQuantityFailure" />
-                <ScalarProperty Name="TotalQuantitySemifinished" ColumnName="TotalQuantitySemifinished" />
-                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
-                <ScalarProperty Name="ApproverID" ColumnName="ApproverID" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="OrganizationalUnitID" ColumnName="OrganizationalUnitID" />
-                <ScalarProperty Name="PreparedPersonID" ColumnName="PreparedPersonID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="StorekeeperID" ColumnName="StorekeeperID" />
-                <ScalarProperty Name="CrucialWorkerID" ColumnName="CrucialWorkerID" />
-                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
-                <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
-                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
-                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
-                <ScalarProperty Name="Reference" ColumnName="Reference" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="PackageIssueID" ColumnName="PackageIssueID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="GetPurchaseOrderIndexes" FunctionName="TotalSmartPortalModel.Store.GetPurchaseOrderIndexes">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.PurchaseOrderIndex">
@@ -27476,6 +27560,51 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PackageIssues">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.PackageIssue">
+              <MappingFragment StoreEntitySet="PackageIssues">
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TotalQuantityLoss" ColumnName="TotalQuantityLoss" />
+                <ScalarProperty Name="TotalQuantityReceipted" ColumnName="TotalQuantityReceipted" />
+                <ScalarProperty Name="TotalQuantityFailure" ColumnName="TotalQuantityFailure" />
+                <ScalarProperty Name="TotalQuantitySemifinished" ColumnName="TotalQuantitySemifinished" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="ApproverID" ColumnName="ApproverID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="OrganizationalUnitID" ColumnName="OrganizationalUnitID" />
+                <ScalarProperty Name="PreparedPersonID" ColumnName="PreparedPersonID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="StorekeeperID" ColumnName="StorekeeperID" />
+                <ScalarProperty Name="CrucialWorkerID" ColumnName="CrucialWorkerID" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="ProductionLineID" ColumnName="ProductionLineID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
+                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="PackageIssueID" ColumnName="PackageIssueID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

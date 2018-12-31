@@ -26,6 +26,8 @@ namespace TotalModel.Models
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
         public int BlendingInstructionID { get; set; }
+        public int CommodityID { get; set; }
+        public int ProductionLineID { get; set; }
         public int WarehouseID { get; set; }
         public int CrucialWorkerID { get; set; }
         public int StorekeeperID { get; set; }
@@ -45,19 +47,20 @@ namespace TotalModel.Models
         public System.DateTime EditedDate { get; set; }
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
-        public int ProductionLineID { get; set; }
-        public int CommodityID { get; set; }
     
+        public virtual BlendingInstruction BlendingInstruction { get; set; }
+        public virtual Commodity Commodity { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual Employee Employee1 { get; set; }
         public virtual Location Location { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PackageIssueDetail> PackageIssueDetails { get; set; }
+        public virtual ProductionLine ProductionLine { get; set; }
         public virtual Shift Shift { get; set; }
+        public virtual User User { get; set; }
+        public virtual User User1 { get; set; }
+        public virtual User User2 { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Workshift Workshift { get; set; }
-        public virtual BlendingInstruction BlendingInstruction { get; set; }
-        public virtual ProductionLine ProductionLine { get; set; }
-        public virtual Commodity Commodity { get; set; }
     }
 }

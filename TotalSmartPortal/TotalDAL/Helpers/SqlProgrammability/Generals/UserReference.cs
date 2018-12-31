@@ -124,6 +124,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Generals
             //--->KHI ĐÓ: UserToggleVoid: CẦN PHẢI XEM XÉT LẠI --> NHẰM ĐẢM BẢO RẰNG: NẾU ĐÃ CÓ 1 InActive THÌ SẼ KHÔNG THỂ ENABLE CÙNG 1 USER-LOCATION
             //--->TỨC LÀ: CÓ THỂ CẢI TIẾN --> CHO PHÉP TRÙNG USER-LOCATION, TUY NHIÊN: PHẢI ĐẢM BẢO CHỈ CÓ 1 USER-LOCATION LÀ InActive = 0
             //--->NHU CẦU ĐĂMG KÝ TRÙNG USER-LOCATION LÀ CÓ: NÓ GIẢI QUYẾT VẤN ĐỀ CẤP LẠI OrganizationalUnits CHO USER TRONG CÙNG LOCATION (VÍ DỤ: CẦN CHIA OrganizationalUnits => DO ĐÓ: PHẢI ĐĂNG KÝ LẠI USER-LOCATION CHO MỘT OrganizationalUnits KHÁC)
+
+
+            queryString = queryString + "           INSERT INTO     Users (UserID, FirstName, LastName, UserName, Email, PhoneNumber) " + "\r\n";
+            queryString = queryString + "           SELECT          UserID, FirstName, LastName, UserName, Email, PhoneNumber FROM AspNetUsers WHERE UserID = @UserID; " + "\r\n";
+            
             queryString = queryString + "           INSERT INTO     OrganizationalUnitUsers (OrganizationalUnitID, UserID, InActive, InActiveDate) VALUES (@OrganizationalUnitID, @UserID, 0, NULL); " + "\r\n";
 
             queryString = queryString + "           INSERT INTO     AccessControls (UserID, NMVNTaskID, OrganizationalUnitID, AccessLevel, ApprovalPermitted, UnApprovalPermitted, VoidablePermitted, UnVoidablePermitted, ShowDiscount, InActive) " + "\r\n";
@@ -154,6 +159,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Generals
             queryString = queryString + "                   DELETE FROM     AccessControls WHERE UserID = @UserID " + "\r\n";
             queryString = queryString + "                   DELETE FROM     OrganizationalUnitUsers WHERE UserID = @UserID " + "\r\n";
             queryString = queryString + "                   DELETE FROM     ReportControls WHERE UserID = @UserID " + "\r\n";
+            queryString = queryString + "                   DELETE FROM     Users WHERE UserID = @UserID " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
 
             queryString = queryString + "           ELSE " + "\r\n";

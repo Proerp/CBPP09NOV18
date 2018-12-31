@@ -330,16 +330,8 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandovers_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandovers_PlannedOrders" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.PackageIssueDetail" Width="1.5" PointX="66.875" PointY="19.75" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.PackageIssue" Width="1.5" PointX="55" PointY="17.125" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Employees" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Employees1" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Locations" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_PackageIssues" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_Workshifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Shifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Warehouses" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Workshifts" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.PurchaseOrderDetail" Width="1.5" PointX="28.5" PointY="40" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.PurchaseOrder" Width="1.5" PointX="26.25" PointY="36.375" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PurchaseOrders_Customers" />
@@ -403,10 +395,8 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_Locations" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_VoidTypes" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructions" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructions_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_ProductionLines" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_ProductionLines" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedProductDetail" Width="1.5" PointX="49.375" PointY="20.25" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedProductPackage" Width="1.5" PointX="21.25" PointY="4.875" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProductDetails_Commodities" />
@@ -419,7 +409,21 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProductPackages_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedProductPackages" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_BinLocations" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.User" Width="1.5" PointX="7.375" PointY="1" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.PackageIssue" Width="1.5" PointX="47.625" PointY="9.875" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Commodities" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Employees" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Employees1" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Locations" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_PackageIssues" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_ProductionLines" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Shifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Users" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Users1" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Users2" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Warehouses" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Workshifts" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

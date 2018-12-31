@@ -44,9 +44,9 @@ namespace TotalModel.Models
             this.WarehouseTransfers1 = new HashSet<WarehouseTransfer>();
             this.WarehouseTransfers2 = new HashSet<WarehouseTransfer>();
             this.GoodsArrivals = new HashSet<GoodsArrival>();
-            this.PackageIssues = new HashSet<PackageIssue>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.BlendingInstructions = new HashSet<BlendingInstruction>();
+            this.PackageIssues = new HashSet<PackageIssue>();
         }
     
         public int LocationID { get; set; }
@@ -116,10 +116,10 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrival> GoodsArrivals { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PackageIssue> PackageIssues { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BlendingInstruction> BlendingInstructions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PackageIssue> PackageIssues { get; set; }
     }
 }

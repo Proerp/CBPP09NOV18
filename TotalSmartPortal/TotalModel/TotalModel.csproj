@@ -701,6 +701,9 @@
     <Compile Include="Models\TransferOrderViewDetail.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\User.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserAccessControl.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

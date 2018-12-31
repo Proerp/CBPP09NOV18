@@ -37,8 +37,8 @@ namespace TotalModel.Models
             this.WarehouseTransfers1 = new HashSet<WarehouseTransfer>();
             this.GoodsArrivals = new HashSet<GoodsArrival>();
             this.BinLocations = new HashSet<BinLocation>();
-            this.PackageIssues = new HashSet<PackageIssue>();
             this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
+            this.PackageIssues = new HashSet<PackageIssue>();
         }
     
         public int WarehouseID { get; set; }
@@ -94,8 +94,8 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BinLocation> BinLocations { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PackageIssue> PackageIssues { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PackageIssue> PackageIssues { get; set; }
     }
 }
