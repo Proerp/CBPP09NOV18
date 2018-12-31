@@ -19865,6 +19865,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="BinLocationCode" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="BinLocationID" Nullable="true" />
+          <Property Type="Decimal" Name="QuantityBIS" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="PackageIssuePendingBlendingInstruction">
           <Property Type="Int32" Name="BlendingInstructionID" Nullable="false" />
@@ -19906,6 +19908,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
           <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="QuantityBIS" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
         </ComplexType>
         <EntityType Name="PackageIssueDetail">
           <Key>
@@ -26784,6 +26788,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
                 <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
                 <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
+                <ScalarProperty Name="QuantityBIS" ColumnName="QuantityBIS" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -26833,6 +26839,8 @@ warning 6035: The relationship 'FK_WarehouseTransfers_AspNetUsers2' has columns 
                 <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
                 <ScalarProperty Name="SealCode" ColumnName="SealCode" />
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
+                <ScalarProperty Name="QuantityBIS" ColumnName="QuantityBIS" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

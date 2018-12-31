@@ -39,14 +39,23 @@ namespace TotalDTO.Inventories
         [Display(Name = "Ngày NK")]
         [UIHint("DateTimeReadonly")]
         public Nullable<System.DateTime> GoodsReceiptEntryDate { get; set; }
+        [Display(Name = "HSD")]
+        [UIHint("DateTimeReadonly")]
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
 
         public int BatchID { get; set; }
         [Display(Name = "Ngày lô hàng")]
         [UIHint("DateTimeReadonly")]
         public System.DateTime BatchEntryDate { get; set; }
 
+
+        [Display(Name = "Mã NVL")]
         [UIHint("StringReadonly")]
         public override string CommodityCode { get; set; }
+
+        [Display(Name = "Tên NVL")]
+        [UIHint("StringReadonly")]
+        public override string CommodityName { get; set; }       
 
         [Display(Name = "Mã vạch")]
         [UIHint("StringReadonly")]
@@ -57,7 +66,7 @@ namespace TotalDTO.Inventories
         [Display(Name = "Số lô")]
         [UIHint("StringReadonly")]
         public string BatchCode { get; set; }
-        [Display(Name = "Mã Lab")]
+        [Display(Name = "Mã lab")]
         [UIHint("StringReadonly")]
         public string LabCode { get; set; }
 
@@ -67,6 +76,10 @@ namespace TotalDTO.Inventories
         public string BinLocationCode { get; set; }
 
 
+        [Display(Name = "SL Y/C")]
+        [UIHint("QuantityReadonly")]
+        public decimal QuantityBIS { get; set; }
+
         [Display(Name = "Tồn BIS")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
@@ -74,7 +87,8 @@ namespace TotalDTO.Inventories
         [Display(Name = "Tồn kho")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityAvailables { get; set; }
-        
+
+        [Display(Name = "SL X/K")]
         [UIHint("Quantity")]
         public override decimal Quantity { get; set; }
 

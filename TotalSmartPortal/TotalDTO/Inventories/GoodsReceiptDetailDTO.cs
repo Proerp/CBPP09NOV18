@@ -147,7 +147,7 @@ namespace TotalDTO.Inventories
         [Display(Name = "Số lô")]
         [UIHint("StringReadonly")]
         public string BatchCode { get; set; }
-        [Display(Name = "Mã Lab")]
+        [Display(Name = "Mã lab")]
         [UIHint("StringReadonly")]
         public string LabCode { get; set; }
 

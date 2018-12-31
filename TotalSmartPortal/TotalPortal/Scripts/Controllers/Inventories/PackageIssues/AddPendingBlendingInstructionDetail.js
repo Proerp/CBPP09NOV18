@@ -58,6 +58,7 @@ function handleOKEvent(packageIssueGridDataSource, pendingProductionOrderDetailG
         dataRow.GoodsReceiptCode = productionOrderGridDataItem.GoodsReceiptCode;
         dataRow.GoodsReceiptReference = productionOrderGridDataItem.GoodsReceiptReference;
         dataRow.GoodsReceiptEntryDate = productionOrderGridDataItem.GoodsReceiptEntryDate;
+        dataRow.ExpiryDate = productionOrderGridDataItem.ExpiryDate;
 
         dataRow.Barcode = productionOrderGridDataItem.Barcode;
         dataRow.BatchCode = productionOrderGridDataItem.BatchCode;
@@ -67,6 +68,7 @@ function handleOKEvent(packageIssueGridDataSource, pendingProductionOrderDetailG
         dataRow.BinLocationID = productionOrderGridDataItem.BinLocationID;
         dataRow.BinLocationCode = productionOrderGridDataItem.BinLocationCode;
 
+        dataRow.QuantityBIS = productionOrderGridDataItem.QuantityBIS;
         dataRow.QuantityAvailables = productionOrderGridDataItem.QuantityAvailables;
         dataRow.QuantityRemains = productionOrderGridDataItem.QuantityRemains;
         dataRow.Quantity = productionOrderGridDataItem.QuantityAvailables;

@@ -36,5 +36,7 @@ namespace TotalModel.Models
         public string Barcode { get; set; }
         public string BinLocationCode { get; set; }
         public Nullable<int> BinLocationID { get; set; }
+        public decimal QuantityBIS { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     }
 }

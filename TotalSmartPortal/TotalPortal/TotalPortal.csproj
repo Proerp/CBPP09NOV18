@@ -713,6 +713,10 @@
     <Content Include="Content\Images\Mains\data-add-icon-32.png" />
     <Content Include="Content\Images\Mains\Ecommerce-Sale-icon-32.png" />
     <Content Include="Content\Images\Mains\folder-documents-icon-32.png" />
+    <Content Include="Content\Images\Mains\Gas-24.png" />
+    <Content Include="Content\Images\Mains\Gas-24N.png" />
+    <Content Include="Content\Images\Mains\Gas-32.png" />
+    <Content Include="Content\Images\Mains\Gas-32N.png" />
     <Content Include="Content\Images\Mains\Gray-32-Nocheck.png" />
     <Content Include="Content\Images\Mains\gray-no-checkbox-32.png" />
     <Content Include="Content\Images\Mains\iSync-icon32.png" />
@@ -721,6 +725,12 @@
     <Content Include="Content\Images\Mains\Navigate-right.png" />
     <Content Include="Content\Images\Mains\Next-right.png" />
     <Content Include="Content\Images\Mains\Next-view.png" />
+    <Content Include="Content\Images\Mains\Oil-industry-24.png" />
+    <Content Include="Content\Images\Mains\Oil-industry-24N.png" />
+    <Content Include="Content\Images\Mains\Oil-industry-32.png" />
+    <Content Include="Content\Images\Mains\Oil-refinery-24.png" />
+    <Content Include="Content\Images\Mains\Oil-refinery-32.png" />
+    <Content Include="Content\Images\Mains\oil-tanker-24.png" />
     <Content Include="Content\Images\Mains\RectangleBlue.jpg" />
     <Content Include="Content\Images\Mains\RectangleGray.jpg" />
     <Content Include="Content\Images\Mains\RectangleOrange.jpg" />

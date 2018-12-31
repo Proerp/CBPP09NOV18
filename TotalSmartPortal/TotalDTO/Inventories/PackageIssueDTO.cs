@@ -43,11 +43,11 @@ namespace TotalDTO.Inventories
         public virtual int CrucialWorkerID { get; set; }
 
         [Display(Name = "Mã số cân")]
-        public string AspNetUserFirstName { get; set; }
+        public string UserFirstName { get; set; }
         [Display(Name = "Người thực hiện")]
-        public string AspNetUserLastName { get; set; }
+        public string UserLastName { get; set; }
 
-        [Display(Name = "Lệnh pha chế")]
+        [Display(Name = "Số, ngày lệnh pha chế")]
         public override string Caption { get { return this.BlendingInstructionCode + " [" + this.BlendingInstructionReference + "] " + this.BlendingInstructionEntryDate.ToShortDateString(); } }
 
         public override void PerformPresaveRule()

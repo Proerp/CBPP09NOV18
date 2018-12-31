@@ -29,7 +29,7 @@ namespace TotalDTO.Productions
         [UIHint("Quantity")]
         public override decimal Quantity { get; set; }
 
-        [Display(Name = "Đã xuất")]
+        [Display(Name = "Đã X/K")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityIssued { get; set; }
 
