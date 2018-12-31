@@ -47,5 +47,6 @@ namespace TotalModel.Models
         public Nullable<int> LabID { get; set; }
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public decimal QuantityTO { get; set; }
     }
 }

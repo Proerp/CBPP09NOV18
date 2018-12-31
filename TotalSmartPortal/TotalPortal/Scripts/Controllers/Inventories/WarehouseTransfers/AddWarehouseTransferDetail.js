@@ -75,6 +75,7 @@ function handleOKEvent(warehouseTransferGridDataSource, goodsReceiptDetailAvaila
         dataRow.BinLocationID = window.$("#CBPP").val() == 'True'? null : 0;
         dataRow.BinLocationCode = window.$("#CBPP").val() == 'True'? null : "#";
 
+        dataRow.QuantityTO = warehouseTransferGridDataItem.QuantityTO === undefined ? 0 : warehouseTransferGridDataItem.QuantityTO;
         dataRow.TransferOrderRemains = warehouseTransferGridDataItem.TransferOrderRemains === undefined ? 0 : warehouseTransferGridDataItem.TransferOrderRemains;
         dataRow.QuantityRemains = warehouseTransferGridDataItem.QuantityRemains;
         dataRow.QuantityAvailables = warehouseTransferGridDataItem.QuantityAvailables;

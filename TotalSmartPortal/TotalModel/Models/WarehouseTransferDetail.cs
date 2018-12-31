@@ -24,13 +24,20 @@ namespace TotalModel.Models
         public int WarehouseTransferID { get; set; }
         public System.DateTime EntryDate { get; set; }
         public int NMVNTaskID { get; set; }
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; }
+        public bool OneStep { get; set; }
+        public bool HasTransferOrder { get; set; }
         public int LocationID { get; set; }
         public Nullable<int> TransferOrderID { get; set; }
         public Nullable<int> TransferOrderDetailID { get; set; }
         public int WarehouseID { get; set; }
+        public int LocationIssuedID { get; set; }
         public int WarehouseReceiptID { get; set; }
+        public int LocationReceiptID { get; set; }
         public int GoodsReceiptID { get; set; }
         public int GoodsReceiptDetailID { get; set; }
+        public int BinLocationID { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public int BatchID { get; set; }
@@ -39,19 +46,16 @@ namespace TotalModel.Models
         public decimal QuantityReceipted { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
-        public bool HasTransferOrder { get; set; }
-        public int LocationReceiptID { get; set; }
-        public int LocationIssuedID { get; set; }
-        public int BinLocationID { get; set; }
-        public bool OneStep { get; set; }
     
-        public virtual TransferOrderDetail TransferOrderDetail { get; set; }
-        public virtual TransferOrder TransferOrder { get; set; }
-        public virtual WarehouseTransfer WarehouseTransfer { get; set; }
+        public virtual BinLocation BinLocation { get; set; }
         public virtual Commodity Commodity { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         public virtual GoodsReceiptDetail GoodsReceiptDetail { get; set; }
-        public virtual BinLocation BinLocation { get; set; }
+        public virtual Shift Shift { get; set; }
+        public virtual TransferOrderDetail TransferOrderDetail { get; set; }
+        public virtual TransferOrder TransferOrder { get; set; }
+        public virtual WarehouseTransfer WarehouseTransfer { get; set; }
+        public virtual Workshift Workshift { get; set; }
     }
 }

@@ -40,13 +40,13 @@ namespace TotalModel.Models
             this.TransferOrders = new HashSet<TransferOrder>();
             this.TransferOrders1 = new HashSet<TransferOrder>();
             this.TransferOrders2 = new HashSet<TransferOrder>();
-            this.WarehouseTransfers = new HashSet<WarehouseTransfer>();
-            this.WarehouseTransfers1 = new HashSet<WarehouseTransfer>();
-            this.WarehouseTransfers2 = new HashSet<WarehouseTransfer>();
             this.GoodsArrivals = new HashSet<GoodsArrival>();
             this.PurchaseOrders = new HashSet<PurchaseOrder>();
             this.BlendingInstructions = new HashSet<BlendingInstruction>();
             this.PackageIssues = new HashSet<PackageIssue>();
+            this.WarehouseTransfers = new HashSet<WarehouseTransfer>();
+            this.WarehouseTransfers1 = new HashSet<WarehouseTransfer>();
+            this.WarehouseTransfers2 = new HashSet<WarehouseTransfer>();
         }
     
         public int LocationID { get; set; }
@@ -108,12 +108,6 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TransferOrder> TransferOrders2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WarehouseTransfer> WarehouseTransfers { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WarehouseTransfer> WarehouseTransfers1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WarehouseTransfer> WarehouseTransfers2 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrival> GoodsArrivals { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
@@ -121,5 +115,11 @@ namespace TotalModel.Models
         public virtual ICollection<BlendingInstruction> BlendingInstructions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PackageIssue> PackageIssues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseTransfer> WarehouseTransfers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseTransfer> WarehouseTransfers1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseTransfer> WarehouseTransfers2 { get; set; }
     }
 }

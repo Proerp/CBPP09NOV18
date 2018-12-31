@@ -35,13 +35,13 @@ namespace TotalModel.Models
             this.SemifinishedProductDetails = new HashSet<SemifinishedProductDetail>();
             this.TransferOrderDetails = new HashSet<TransferOrderDetail>();
             this.WarehouseAdjustmentDetails = new HashSet<WarehouseAdjustmentDetail>();
-            this.WarehouseTransferDetails = new HashSet<WarehouseTransferDetail>();
             this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
             this.GoodsArrivalPackages = new HashSet<GoodsArrivalPackage>();
             this.BlendingInstructionDetails = new HashSet<BlendingInstructionDetail>();
             this.BlendingInstructions = new HashSet<BlendingInstruction>();
             this.FinishedProductDetails = new HashSet<FinishedProductDetail>();
             this.PackageIssues = new HashSet<PackageIssue>();
+            this.WarehouseTransferDetails = new HashSet<WarehouseTransferDetail>();
         }
     
         public int CommodityID { get; set; }
@@ -122,8 +122,6 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseAdjustmentDetail> WarehouseAdjustmentDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrivalPackage> GoodsArrivalPackages { get; set; }
@@ -135,5 +133,7 @@ namespace TotalModel.Models
         public virtual ICollection<FinishedProductDetail> FinishedProductDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PackageIssue> PackageIssues { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
     }
 }

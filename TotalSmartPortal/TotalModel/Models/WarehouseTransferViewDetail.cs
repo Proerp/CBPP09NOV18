@@ -43,5 +43,6 @@ namespace TotalModel.Models
         public string BatchCode { get; set; }
         public string SealCode { get; set; }
         public string LabCode { get; set; }
+        public decimal QuantityTO { get; set; }
     }
 }

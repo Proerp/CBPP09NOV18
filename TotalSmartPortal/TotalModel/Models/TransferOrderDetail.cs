@@ -46,9 +46,9 @@ namespace TotalModel.Models
     
         public virtual Warehouse Warehouse { get; set; }
         public virtual Warehouse Warehouse1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
         public virtual TransferOrder TransferOrder { get; set; }
         public virtual Commodity Commodity { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
     }
 }

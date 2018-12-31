@@ -74,7 +74,6 @@ namespace TotalModel.Models
         public virtual PurchaseRequisitionDetail PurchaseRequisitionDetail { get; set; }
         public virtual WarehouseAdjustmentDetail WarehouseAdjustmentDetail { get; set; }
         public virtual Warehouse Warehouse { get; set; }
-        public virtual WarehouseTransferDetail WarehouseTransferDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialIssueDetail> MaterialIssueDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -83,9 +82,10 @@ namespace TotalModel.Models
         public virtual ICollection<SemifinishedProduct> SemifinishedProducts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseAdjustmentDetail> WarehouseAdjustmentDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
         public virtual GoodsArrivalPackage GoodsArrivalPackage { get; set; }
         public virtual FinishedProductPackage FinishedProductPackage { get; set; }
+        public virtual WarehouseTransferDetail WarehouseTransferDetail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
     }
 }

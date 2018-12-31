@@ -20,6 +20,9 @@ namespace TotalModel.Models
             this.PackageIssues = new HashSet<PackageIssue>();
             this.PackageIssues1 = new HashSet<PackageIssue>();
             this.PackageIssues2 = new HashSet<PackageIssue>();
+            this.WarehouseTransfers = new HashSet<WarehouseTransfer>();
+            this.WarehouseTransfers1 = new HashSet<WarehouseTransfer>();
+            this.WarehouseTransfers2 = new HashSet<WarehouseTransfer>();
         }
     
         public int UserID { get; set; }
@@ -35,5 +38,11 @@ namespace TotalModel.Models
         public virtual ICollection<PackageIssue> PackageIssues1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PackageIssue> PackageIssues2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseTransfer> WarehouseTransfers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseTransfer> WarehouseTransfers1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WarehouseTransfer> WarehouseTransfers2 { get; set; }
     }
 }

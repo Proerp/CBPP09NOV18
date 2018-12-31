@@ -94,7 +94,6 @@ namespace TotalModel.Models
         public virtual DbSet<SemifinishedProduct> SemifinishedProducts { get; set; }
         public virtual DbSet<FinishedProduct> FinishedProducts { get; set; }
         public virtual DbSet<TransferOrderType> TransferOrderTypes { get; set; }
-        public virtual DbSet<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
         public virtual DbSet<GoodsReceipt> GoodsReceipts { get; set; }
         public virtual DbSet<SemifinishedHandover> SemifinishedHandovers { get; set; }
         public virtual DbSet<SemifinishedHandoverDetail> SemifinishedHandoverDetails { get; set; }
@@ -106,7 +105,6 @@ namespace TotalModel.Models
         public virtual DbSet<PlannedOrder> PlannedOrders { get; set; }
         public virtual DbSet<ProductionOrder> ProductionOrders { get; set; }
         public virtual DbSet<TransferOrder> TransferOrders { get; set; }
-        public virtual DbSet<WarehouseTransfer> WarehouseTransfers { get; set; }
         public virtual DbSet<FirmOrderDetail> FirmOrderDetails { get; set; }
         public virtual DbSet<GoodsArrival> GoodsArrivals { get; set; }
         public virtual DbSet<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }
@@ -123,6 +121,8 @@ namespace TotalModel.Models
         public virtual DbSet<FinishedProductPackage> FinishedProductPackages { get; set; }
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<PackageIssue> PackageIssues { get; set; }
+        public virtual DbSet<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
+        public virtual DbSet<WarehouseTransfer> WarehouseTransfers { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {
