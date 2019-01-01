@@ -53,6 +53,8 @@ namespace TotalService.Inventories
 
                     goodsReceiptDTO.GoodsReceiptTypeID = (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer;
                     goodsReceiptDTO.WarehouseTransferID = warehouseTransfer.WarehouseTransferID;
+
+                    goodsReceiptDTO.ShiftID = warehouseTransfer.ShiftID;
                     goodsReceiptDTO.OneStep = warehouseTransfer.OneStep;
 
                     goodsReceiptDTO.Warehouse = new TotalDTO.Commons.WarehouseBaseDTO() { WarehouseID = warehouseTransfer.WarehouseReceiptID };

@@ -105,9 +105,15 @@ namespace TotalDTO.Inventories
         
         List<WarehouseTransferDetailDTO> WarehouseTransferViewDetails { get; set; }
         List<WarehouseTransferDetailDTO> ViewDetails { get; set; }
-        
+
         [UIHint("AutoCompletes/VoidType")]
         VoidTypeBaseDTO VoidType { get; set; }
+
+
+        [Display(Name = "Mã số máy")]
+        string UserFirstName { get; set; }
+        [Display(Name = "Người thực hiện")]
+        string UserLastName { get; set; }
 
         string ControllerName { get; }
     }
@@ -140,6 +146,13 @@ namespace TotalDTO.Inventories
 
         public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }        
         public VoidTypeBaseDTO VoidType { get; set; }
+
+        
+        [Display(Name = "Mã số máy")]
+        public string UserFirstName { get; set; }
+        [Display(Name = "Người thực hiện")]
+        public string UserLastName { get; set; }
+
 
         public List<WarehouseTransferDetailDTO> WarehouseTransferViewDetails { get; set; }
         public List<WarehouseTransferDetailDTO> ViewDetails { get { return this.WarehouseTransferViewDetails; } set { this.WarehouseTransferViewDetails = value; } }

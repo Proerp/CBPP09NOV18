@@ -30,6 +30,23 @@
 
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Shift.cshtml")
 
+        <div @{if (!GlobalEnums.CBPP) { <text> class="SBT-Hidden" </text> }}>
+            <div class="form-group">
+                @Html.LabelFor(model => (model as IWarehouseTransferDTO).UserLastName)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IWarehouseTransferDTO).UserLastName).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => (model as IWarehouseTransferDTO).UserFirstName)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IWarehouseTransferDTO).UserFirstName).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+
+
         <div class="SBT-Hidden">
             <div class="form-group">
                 @Html.EditorFor(d => (d as IWarehouseTransferDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID), LeftPanelInput = "left-panel-input" })
@@ -38,10 +55,10 @@
             <div class="form-group">
                 @Html.EditorFor(d => (d as IWarehouseTransferDTO).WarehouseReceipt, new { WarehouseDisplayName = @Model.WarehouseReceipt.GetDisplayName(m => m.WarehouseID), LeftPanelInput = "left-panel-input" })
             </div>
+        </div>
 
-            <div class="form-group">
-                @Html.EditorFor(d => (d as IWarehouseTransferDTO).Storekeeper, new { EmployeeDisplayName = @Model.Storekeeper.GetDisplayName(m => m.EmployeeID) })
-            </div>
+        <div @{if (GlobalEnums.CBPP) { <text> class="SBT-Hidden" </text>} else { <text> class="form-group" </text>} }>
+            @Html.EditorFor(d => (d as IWarehouseTransferDTO).Storekeeper, new { EmployeeDisplayName = @Model.Storekeeper.GetDisplayName(m => m.EmployeeID) })
         </div>
 
         <div class="form-group">

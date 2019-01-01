@@ -48,6 +48,21 @@
 
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Shift.cshtml")
 
+        <div @{if (!GlobalEnums.CBPP) { <text> class="SBT-Hidden" </text>  }}>
+            <div class="form-group">
+                @Html.LabelFor(model => (model as IGoodsReceiptDTO).UserLastName)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsReceiptDTO).UserLastName).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => (model as IGoodsReceiptDTO).UserFirstName)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsReceiptDTO).UserFirstName).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
 
         @switch (Model.GoodsReceiptTypeID)
         {

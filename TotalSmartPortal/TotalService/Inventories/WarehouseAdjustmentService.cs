@@ -50,6 +50,7 @@ namespace TotalService.Inventories
                     IGoodsReceiptDTO goodsReceiptDTO = grHelperService.NewGoodsReceiptDTO();
 
                     goodsReceiptDTO.EntryDate = warehouseAdjustment.EntryDate;
+                    goodsReceiptDTO.ShiftID = 1; // warehouseAdjustment.ShiftID;
 
                     goodsReceiptDTO.GoodsReceiptTypeID = (int)GlobalEnums.GoodsReceiptTypeID.WarehouseAdjustments;
                     goodsReceiptDTO.WarehouseAdjustmentID = warehouseAdjustment.WarehouseAdjustmentID;

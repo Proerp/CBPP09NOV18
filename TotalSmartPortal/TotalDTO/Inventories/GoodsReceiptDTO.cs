@@ -206,6 +206,13 @@ namespace TotalDTO.Inventories
         [UIHint("AutoCompletes/EmployeeBase")]
         EmployeeBaseDTO Storekeeper { get; set; }
 
+
+        [Display(Name = "Mã số máy")]
+        string UserFirstName { get; set; }
+        [Display(Name = "Người thực hiện")]
+        string UserLastName { get; set; }
+
+
         List<GoodsReceiptDetailDTO> GoodsReceiptViewDetails { get; set; }
         List<GoodsReceiptDetailDTO> ViewDetails { get; set; }
 
@@ -245,6 +252,13 @@ namespace TotalDTO.Inventories
         [Display(Name = "Nhân viên kho")]
         [UIHint("AutoCompletes/EmployeeBase")]
         public EmployeeBaseDTO Storekeeper { get; set; }
+
+
+        [Display(Name = "Mã số máy")]
+        public string UserFirstName { get; set; }
+        [Display(Name = "Người thực hiện")]
+        public string UserLastName { get; set; }
+
 
         public List<GoodsReceiptDetailDTO> GoodsReceiptViewDetails { get; set; }
         public List<GoodsReceiptDetailDTO> ViewDetails { get { return this.GoodsReceiptViewDetails; } set { this.GoodsReceiptViewDetails = value; } }
