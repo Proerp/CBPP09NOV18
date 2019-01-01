@@ -230,8 +230,6 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   UPDATE          PackageIssueDetails  SET WorkshiftID = @WorkshiftID WHERE PackageIssueID = @EntityID " + "\r\n";
             #endregion UPDATE WorkshiftID
 
-
-
             queryString = queryString + "               END " + "\r\n";
 
 

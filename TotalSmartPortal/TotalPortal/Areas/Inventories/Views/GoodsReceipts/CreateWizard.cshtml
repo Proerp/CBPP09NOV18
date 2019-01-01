@@ -17,6 +17,7 @@
     @Html.Hidden("WarehouseTaskID", (int)@ViewBag.WarehouseTaskID);
     @Html.Hidden("WarehouseTaskIDList", (string)@ViewBag.WarehouseTaskIDList);
 
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).ShiftID);
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsReceiptTypeID)
 
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).Code);

@@ -261,6 +261,29 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "           DECLARE @msg NVARCHAR(300) ";
 
+
+            queryString = queryString + "           IF (@SaveRelativeOption = 1) " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+
+            #region UPDATE WorkshiftID
+            queryString = queryString + "                   DECLARE         @EntryDate Datetime, @ShiftID int, @WorkshiftID int " + "\r\n";
+            queryString = queryString + "                   SELECT          @EntryDate = CONVERT(date, EntryDate), @ShiftID = ShiftID FROM WarehouseTransfers WHERE WarehouseTransferID = @EntityID " + "\r\n";
+            queryString = queryString + "                   SET             @WorkshiftID = (SELECT TOP 1 WorkshiftID FROM Workshifts WHERE EntryDate = @EntryDate AND ShiftID = @ShiftID) " + "\r\n";
+
+            queryString = queryString + "                   IF             (@WorkshiftID IS NULL) " + "\r\n";
+            queryString = queryString + "                       BEGIN ";
+            queryString = queryString + "                           INSERT INTO     Workshifts(EntryDate, ShiftID, Code, Name, WorkingHours, Remarks) SELECT @EntryDate, ShiftID, Code, Name, WorkingHours, Remarks FROM Shifts WHERE ShiftID = @ShiftID " + "\r\n";
+            queryString = queryString + "                           SELECT          @WorkshiftID = SCOPE_IDENTITY(); " + "\r\n";
+            queryString = queryString + "                       END ";
+
+            queryString = queryString + "                   UPDATE          WarehouseTransfers        SET WorkshiftID = @WorkshiftID WHERE WarehouseTransferID = @EntityID " + "\r\n";
+            queryString = queryString + "                   UPDATE          WarehouseTransferDetails  SET WorkshiftID = @WorkshiftID WHERE WarehouseTransferID = @EntityID " + "\r\n";
+            #endregion UPDATE WorkshiftID
+
+            queryString = queryString + "               END " + "\r\n";
+
+
+
             queryString = queryString + "           DECLARE         @WarehouseTransferDetails TABLE (GoodsReceiptDetailID int NOT NULL PRIMARY KEY, Quantity decimal(18, 2) NOT NULL)" + "\r\n";
             queryString = queryString + "           INSERT INTO     @WarehouseTransferDetails (GoodsReceiptDetailID, Quantity) SELECT GoodsReceiptDetailID, SUM(Quantity) AS Quantity FROM WarehouseTransferDetails WHERE WarehouseTransferID = @EntityID GROUP BY GoodsReceiptDetailID " + "\r\n";
 

@@ -26,6 +26,9 @@ namespace TotalDTO.Inventories
         bool OneStep { get; set; }
         bool HasTransferOrder { get; set; }
 
+        int ShiftID { get; set; }
+        int WorkshiftID { get; set; }
+
         Nullable<int> WarehouseID { get; set; }
         Nullable<int> LocationIssuedID { get; set; }
         Nullable<int> WarehouseReceiptID { get; set; }
@@ -57,6 +60,9 @@ namespace TotalDTO.Inventories
         public bool OneStep { get; set; }
         public bool HasTransferOrder { get; set; }
 
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; }
+
         public virtual Nullable<int> WarehouseID { get; set; }
         public virtual Nullable<int> LocationIssuedID { get; set; }
         public virtual Nullable<int> WarehouseReceiptID { get; set; }
@@ -79,7 +85,7 @@ namespace TotalDTO.Inventories
             base.PerformPresaveRule();
 
             string caption = "";
-            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.WarehouseID = (int)this.WarehouseID; e.WarehouseReceiptID = this.WarehouseReceiptID; e.LocationIssuedID = this.LocationIssuedID; e.LocationReceiptID = this.LocationReceiptID; e.HasTransferOrder = this.HasTransferOrder; e.OneStep = this.OneStep; if (caption.IndexOf(e.CommodityCode) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityCode; });
+            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.WarehouseID = (int)this.WarehouseID; e.WarehouseReceiptID = this.WarehouseReceiptID; e.LocationIssuedID = this.LocationIssuedID; e.LocationReceiptID = this.LocationReceiptID; e.HasTransferOrder = this.HasTransferOrder; e.OneStep = this.OneStep; if (caption.IndexOf(e.CommodityCode) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityCode; });
             this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
 

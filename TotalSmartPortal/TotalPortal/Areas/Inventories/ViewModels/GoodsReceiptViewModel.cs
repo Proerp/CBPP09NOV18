@@ -10,22 +10,25 @@ using TotalPortal.Areas.Commons.ViewModels.Helpers;
 
 namespace TotalPortal.Areas.Inventories.ViewModels
 {
-    public interface IGoodsReceiptViewModel : IGoodsReceiptDTO, IA01SimpleViewModel, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel
+    public interface IGoodsReceiptViewModel : IGoodsReceiptDTO, IA01SimpleViewModel, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IShiftDropDownViewModel
     {
     }
 
-    public class MaterialReceiptViewModel : GoodsReceiptDTO<GROptionMaterial>, IViewDetailViewModel<GoodsReceiptDetailDTO>, IA01SimpleViewModel, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IGoodsReceiptViewModel
+    public class MaterialReceiptViewModel : GoodsReceiptDTO<GROptionMaterial>, IViewDetailViewModel<GoodsReceiptDetailDTO>, IA01SimpleViewModel, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IGoodsReceiptViewModel, IShiftDropDownViewModel
     {
         public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
+        public IEnumerable<SelectListItem> ShiftSelectList { get; set; }
     }
 
-    public class ItemReceiptViewModel : GoodsReceiptDTO<GROptionItem>, IViewDetailViewModel<GoodsReceiptDetailDTO>, IA01SimpleViewModel, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IGoodsReceiptViewModel
+    public class ItemReceiptViewModel : GoodsReceiptDTO<GROptionItem>, IViewDetailViewModel<GoodsReceiptDetailDTO>, IA01SimpleViewModel, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IGoodsReceiptViewModel, IShiftDropDownViewModel
     {
         public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
+        public IEnumerable<SelectListItem> ShiftSelectList { get; set; }
     }
 
-    public class ProductReceiptViewModel : GoodsReceiptDTO<GROptionProduct>, IViewDetailViewModel<GoodsReceiptDetailDTO>, IA01SimpleViewModel, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IGoodsReceiptViewModel
+    public class ProductReceiptViewModel : GoodsReceiptDTO<GROptionProduct>, IViewDetailViewModel<GoodsReceiptDetailDTO>, IA01SimpleViewModel, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IGoodsReceiptViewModel, IShiftDropDownViewModel
     {
         public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
+        public IEnumerable<SelectListItem> ShiftSelectList { get; set; }
     }
 }

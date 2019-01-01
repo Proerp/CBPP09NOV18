@@ -737,12 +737,30 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "       BEGIN " + "\r\n";
 
-            queryString = queryString + "           IF (@SaveRelativeOption = 1) ";
-            queryString = queryString + "               BEGIN ";
+            queryString = queryString + "           IF (@SaveRelativeOption = 1) " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+
             queryString = queryString + "                   UPDATE          GoodsReceiptDetails " + "\r\n";
             queryString = queryString + "                   SET             GoodsReceiptDetails.Reference = GoodsReceipts.Reference " + "\r\n";
             queryString = queryString + "                   FROM            GoodsReceipts INNER JOIN GoodsReceiptDetails ON GoodsReceipts.GoodsReceiptID = @EntityID AND GoodsReceipts.GoodsReceiptID = GoodsReceiptDetails.GoodsReceiptID " + "\r\n";
-            queryString = queryString + "               END ";
+
+            #region UPDATE WorkshiftID
+            queryString = queryString + "                   DECLARE         @EntryDate Datetime, @ShiftID int, @WorkshiftID int " + "\r\n";
+            queryString = queryString + "                   SELECT          @EntryDate = CONVERT(date, EntryDate), @ShiftID = ShiftID FROM GoodsReceipts WHERE GoodsReceiptID = @EntityID " + "\r\n";
+            queryString = queryString + "                   SET             @WorkshiftID = (SELECT TOP 1 WorkshiftID FROM Workshifts WHERE EntryDate = @EntryDate AND ShiftID = @ShiftID) " + "\r\n";
+
+            queryString = queryString + "                   IF             (@WorkshiftID IS NULL) " + "\r\n";
+            queryString = queryString + "                       BEGIN ";
+            queryString = queryString + "                           INSERT INTO     Workshifts(EntryDate, ShiftID, Code, Name, WorkingHours, Remarks) SELECT @EntryDate, ShiftID, Code, Name, WorkingHours, Remarks FROM Shifts WHERE ShiftID = @ShiftID " + "\r\n";
+            queryString = queryString + "                           SELECT          @WorkshiftID = SCOPE_IDENTITY(); " + "\r\n";
+            queryString = queryString + "                       END ";
+
+            queryString = queryString + "                   UPDATE          GoodsReceipts        SET WorkshiftID = @WorkshiftID WHERE GoodsReceiptID = @EntityID " + "\r\n";
+            queryString = queryString + "                   UPDATE          GoodsReceiptDetails  SET WorkshiftID = @WorkshiftID WHERE GoodsReceiptID = @EntityID " + "\r\n";
+            #endregion UPDATE WorkshiftID
+
+            queryString = queryString + "               END " + "\r\n";
+
 
             queryString = queryString + "           DECLARE @GoodsReceiptTypeID int, @AffectedROWCOUNT int ";
             queryString = queryString + "           SELECT  @GoodsReceiptTypeID = GoodsReceiptTypeID FROM GoodsReceipts WHERE GoodsReceiptID = @EntityID ";

@@ -19,6 +19,9 @@ namespace TotalDTO.Inventories
 
         public GlobalEnums.NmvnTaskID NMVNTaskID { get; set; }
 
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; }
+
         public bool OneStep { get; set; }
         public bool HasTransferOrder { get; set; }
 

@@ -16,10 +16,21 @@ namespace TotalPortal.Areas.Inventories.Builders
 
     public class WarehouseTransferViewModelSelectListBuilder<TWarehouseTransferViewModel> : A01ViewModelSelectListBuilder<TWarehouseTransferViewModel>, IWarehouseTransferViewModelSelectListBuilder<TWarehouseTransferViewModel>
         where TWarehouseTransferViewModel : IWarehouseTransferViewModel
-    {   
-        public WarehouseTransferViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository)
+    {
+        private readonly IShiftSelectListBuilder shiftSelectListBuilder;
+        private readonly IShiftRepository shiftRepository;
+
+        public WarehouseTransferViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository, IShiftSelectListBuilder shiftSelectListBuilder, IShiftRepository shiftRepository)
             : base(aspNetUserSelectListBuilder, aspNetUserRepository)
-        {         
+        {
+            this.shiftSelectListBuilder = shiftSelectListBuilder;
+            this.shiftRepository = shiftRepository;
+        }
+
+        public override void BuildSelectLists(TWarehouseTransferViewModel warehouseTransferViewModel)
+        {
+            base.BuildSelectLists(warehouseTransferViewModel);
+            warehouseTransferViewModel.ShiftSelectList = this.shiftSelectListBuilder.BuildSelectListItemsForShifts(this.shiftRepository.GetAllShifts());
         }
        
     }
@@ -36,8 +47,8 @@ namespace TotalPortal.Areas.Inventories.Builders
     }
     public class MaterialTransferViewModelSelectListBuilder : WarehouseTransferViewModelSelectListBuilder<MaterialTransferViewModel>, IMaterialTransferViewModelSelectListBuilder
     {
-        public MaterialTransferViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository)
-            : base(aspNetUserSelectListBuilder, aspNetUserRepository)
+        public MaterialTransferViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository, IShiftSelectListBuilder shiftSelectListBuilder, IShiftRepository shiftRepository)
+            : base(aspNetUserSelectListBuilder, aspNetUserRepository, shiftSelectListBuilder, shiftRepository)
         { }
     }
 
@@ -47,8 +58,8 @@ namespace TotalPortal.Areas.Inventories.Builders
     }
     public class ItemTransferViewModelSelectListBuilder : WarehouseTransferViewModelSelectListBuilder<ItemTransferViewModel>, IItemTransferViewModelSelectListBuilder
     {
-        public ItemTransferViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository)
-            : base(aspNetUserSelectListBuilder, aspNetUserRepository)
+        public ItemTransferViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository, IShiftSelectListBuilder shiftSelectListBuilder, IShiftRepository shiftRepository)
+            : base(aspNetUserSelectListBuilder, aspNetUserRepository, shiftSelectListBuilder, shiftRepository)
         { }
     }
 
@@ -58,8 +69,8 @@ namespace TotalPortal.Areas.Inventories.Builders
     }
     public class ProductTransferViewModelSelectListBuilder : WarehouseTransferViewModelSelectListBuilder<ProductTransferViewModel>, IProductTransferViewModelSelectListBuilder
     {
-        public ProductTransferViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository)
-            : base(aspNetUserSelectListBuilder, aspNetUserRepository)
+        public ProductTransferViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository, IShiftSelectListBuilder shiftSelectListBuilder, IShiftRepository shiftRepository)
+            : base(aspNetUserSelectListBuilder, aspNetUserRepository, shiftSelectListBuilder, shiftRepository)
         { }
     }
 }

@@ -22,6 +22,7 @@
     @Html.HiddenFor(model => model.Storekeeper.EmployeeID);
     @Html.HiddenFor(model => model.Storekeeper.Name);
 
+    @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).ShiftID);
     @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).HasTransferOrder)
     
     @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderID)

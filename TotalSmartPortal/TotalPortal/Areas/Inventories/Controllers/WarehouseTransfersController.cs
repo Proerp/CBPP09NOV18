@@ -16,6 +16,9 @@ using TotalCore.Services.Inventories;
 using TotalPortal.Controllers;
 using TotalPortal.Areas.Inventories.ViewModels;
 using TotalPortal.Areas.Inventories.Builders;
+using TotalPortal.Areas.Commons.Controllers.Sessions;
+using TotalPortal.Areas.Inventories.Controllers.Sessions;
+using TotalPortal.APIs.Sessions;
 
 namespace TotalPortal.Areas.Inventories.Controllers
 {
@@ -61,6 +64,39 @@ namespace TotalPortal.Areas.Inventories.Controllers
             this.AddRequireJsOptions();
             TViewDetailViewModel viewDetailViewModel = new TViewDetailViewModel();
             return View(this.InitViewModel(viewDetailViewModel));
+        }
+
+
+        protected override TViewDetailViewModel InitViewModelByDefault(TViewDetailViewModel simpleViewModel)
+        {
+            simpleViewModel = base.InitViewModelByDefault(simpleViewModel);
+
+            if (((IWarehouseTransferPrimitiveDTO)simpleViewModel).ShiftID == 0)
+            {
+                string shiftSession = ShiftSession.GetShift(this.HttpContext);
+                if (HomeSession.TryParseID(shiftSession) > 0) ((IWarehouseTransferPrimitiveDTO)simpleViewModel).ShiftID = (int)HomeSession.TryParseID(shiftSession);
+            }
+
+            if (simpleViewModel.Storekeeper == null)
+            {
+                string storekeeperSession = WarehouseTransferSession.GetStorekeeper(this.HttpContext);
+
+                if (HomeSession.TryParseID(storekeeperSession) > 0)
+                {
+                    simpleViewModel.Storekeeper = new TotalDTO.Commons.EmployeeBaseDTO();
+                    simpleViewModel.Storekeeper.EmployeeID = (int)HomeSession.TryParseID(storekeeperSession);
+                    simpleViewModel.Storekeeper.Name = HomeSession.TryParseName(storekeeperSession);
+                }
+            }
+
+            return simpleViewModel;
+        }
+
+        protected override void BackupViewModelToSession(TViewDetailViewModel simpleViewModel)
+        {
+            base.BackupViewModelToSession(simpleViewModel);
+            ShiftSession.SetShift(this.HttpContext, ((IWarehouseTransferPrimitiveDTO)simpleViewModel).ShiftID);
+            WarehouseTransferSession.SetStorekeeper(this.HttpContext, simpleViewModel.Storekeeper.EmployeeID, simpleViewModel.Storekeeper.Name);
         }
 
         protected override PrintViewModel InitPrintViewModel(int? id, int? detailID)

@@ -46,6 +46,8 @@
         @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferReference)
 
 
+        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Shift.cshtml")
+
 
         @switch (Model.GoodsReceiptTypeID)
         {

@@ -28,15 +28,17 @@
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml", @Model, new ViewDataDictionary { { "EntryDateReadonly", false } })
 
-        <div class="SBT-Hidden">
-            @Html.EditorFor(d => (d as IWarehouseTransferDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID), LeftPanelInput = "left-panel-input" })
-        </div>
+        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Shift.cshtml")
 
         <div class="SBT-Hidden">
-            @Html.EditorFor(d => (d as IWarehouseTransferDTO).WarehouseReceipt, new { WarehouseDisplayName = @Model.WarehouseReceipt.GetDisplayName(m => m.WarehouseID), LeftPanelInput = "left-panel-input" })
-        </div>
+            <div class="form-group">
+                @Html.EditorFor(d => (d as IWarehouseTransferDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID), LeftPanelInput = "left-panel-input" })
+            </div>
 
-        <div class="SBT-Hidden">
+            <div class="form-group">
+                @Html.EditorFor(d => (d as IWarehouseTransferDTO).WarehouseReceipt, new { WarehouseDisplayName = @Model.WarehouseReceipt.GetDisplayName(m => m.WarehouseID), LeftPanelInput = "left-panel-input" })
+            </div>
+
             <div class="form-group">
                 @Html.EditorFor(d => (d as IWarehouseTransferDTO).Storekeeper, new { EmployeeDisplayName = @Model.Storekeeper.GetDisplayName(m => m.EmployeeID) })
             </div>

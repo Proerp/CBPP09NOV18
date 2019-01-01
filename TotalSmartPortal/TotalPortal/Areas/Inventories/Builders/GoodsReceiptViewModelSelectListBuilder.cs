@@ -14,9 +14,20 @@ namespace TotalPortal.Areas.Inventories.Builders
     public class GoodsReceiptViewModelSelectListBuilder<TGoodsReceiptViewModel> : A01ViewModelSelectListBuilder<TGoodsReceiptViewModel>, IGoodsReceiptViewModelSelectListBuilder<TGoodsReceiptViewModel>
         where TGoodsReceiptViewModel : IGoodsReceiptViewModel
     {
-        public GoodsReceiptViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository)
+        private readonly IShiftSelectListBuilder shiftSelectListBuilder;
+        private readonly IShiftRepository shiftRepository;
+
+        public GoodsReceiptViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository, IShiftSelectListBuilder shiftSelectListBuilder, IShiftRepository shiftRepository)
             : base(aspNetUserSelectListBuilder, aspNetUserRepository)
         {
+            this.shiftSelectListBuilder = shiftSelectListBuilder;
+            this.shiftRepository = shiftRepository;
+        }
+
+        public override void BuildSelectLists(TGoodsReceiptViewModel goodsReceiptViewModel)
+        {
+            base.BuildSelectLists(goodsReceiptViewModel);
+            goodsReceiptViewModel.ShiftSelectList = this.shiftSelectListBuilder.BuildSelectListItemsForShifts(this.shiftRepository.GetAllShifts());
         }
     }
 
@@ -33,8 +44,8 @@ namespace TotalPortal.Areas.Inventories.Builders
     }
     public class MaterialReceiptViewModelSelectListBuilder : GoodsReceiptViewModelSelectListBuilder<MaterialReceiptViewModel>, IMaterialReceiptViewModelSelectListBuilder
     {
-        public MaterialReceiptViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository)
-            : base(aspNetUserSelectListBuilder, aspNetUserRepository)
+        public MaterialReceiptViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository, IShiftSelectListBuilder shiftSelectListBuilder, IShiftRepository shiftRepository)
+            : base(aspNetUserSelectListBuilder, aspNetUserRepository, shiftSelectListBuilder, shiftRepository)
         { }
     }
 
@@ -44,8 +55,8 @@ namespace TotalPortal.Areas.Inventories.Builders
     }
     public class ItemReceiptViewModelSelectListBuilder : GoodsReceiptViewModelSelectListBuilder<ItemReceiptViewModel>, IItemReceiptViewModelSelectListBuilder
     {
-        public ItemReceiptViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository)
-            : base(aspNetUserSelectListBuilder, aspNetUserRepository)
+        public ItemReceiptViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository, IShiftSelectListBuilder shiftSelectListBuilder, IShiftRepository shiftRepository)
+            : base(aspNetUserSelectListBuilder, aspNetUserRepository, shiftSelectListBuilder, shiftRepository)
         { }
     }
 
@@ -55,8 +66,8 @@ namespace TotalPortal.Areas.Inventories.Builders
     }
     public class ProductReceiptViewModelSelectListBuilder : GoodsReceiptViewModelSelectListBuilder<ProductReceiptViewModel>, IProductReceiptViewModelSelectListBuilder
     {
-        public ProductReceiptViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository)
-            : base(aspNetUserSelectListBuilder, aspNetUserRepository)
+        public ProductReceiptViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository, IShiftSelectListBuilder shiftSelectListBuilder, IShiftRepository shiftRepository)
+            : base(aspNetUserSelectListBuilder, aspNetUserRepository, shiftSelectListBuilder, shiftRepository)
         { }
     }
 }
