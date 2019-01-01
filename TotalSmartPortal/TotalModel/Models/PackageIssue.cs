@@ -57,10 +57,8 @@ namespace TotalModel.Models
         public virtual ICollection<PackageIssueDetail> PackageIssueDetails { get; set; }
         public virtual ProductionLine ProductionLine { get; set; }
         public virtual Shift Shift { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
-        public virtual User User2 { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual User User { get; set; }
     }
 }

@@ -114,7 +114,7 @@ namespace TotalPortal.Areas.Inventories.Controllers
         {
             base.BackupViewModelToSession(simpleViewModel);
             ShiftSession.SetShift(this.HttpContext, ((IGoodsReceiptPrimitiveDTO)simpleViewModel).ShiftID);
-            GoodsReceiptSession.SetStorekeeper(this.HttpContext, simpleViewModel.Storekeeper.EmployeeID, simpleViewModel.Storekeeper.Name);
+            if (simpleViewModel.Storekeeper != null) GoodsReceiptSession.SetStorekeeper(this.HttpContext, simpleViewModel.Storekeeper.EmployeeID, simpleViewModel.Storekeeper.Name);
         }
     }
 

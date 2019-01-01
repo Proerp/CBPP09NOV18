@@ -66,10 +66,11 @@ namespace TotalModel.Models
         public int LabID { get; set; }
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
         public virtual Commodity Commodity { get; set; }
-        public virtual GoodsReceipt GoodsReceipt { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }
         public virtual PurchaseRequisitionDetail PurchaseRequisitionDetail { get; set; }
         public virtual WarehouseAdjustmentDetail WarehouseAdjustmentDetail { get; set; }
@@ -87,5 +88,8 @@ namespace TotalModel.Models
         public virtual WarehouseTransferDetail WarehouseTransferDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
+        public virtual Shift Shift { get; set; }
+        public virtual Workshift Workshift { get; set; }
+        public virtual GoodsReceipt GoodsReceipt { get; set; }
     }
 }

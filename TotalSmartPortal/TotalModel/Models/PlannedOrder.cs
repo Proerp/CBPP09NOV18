@@ -17,12 +17,12 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PlannedOrder()
         {
-            this.GoodsReceipts = new HashSet<GoodsReceipt>();
             this.MaterialIssues = new HashSet<MaterialIssue>();
             this.PlannedOrderDetails = new HashSet<PlannedOrderDetail>();
             this.ProductionOrderDetails = new HashSet<ProductionOrderDetail>();
             this.ProductionOrders = new HashSet<ProductionOrder>();
             this.FinishedHandovers = new HashSet<FinishedHandover>();
+            this.GoodsReceipts = new HashSet<GoodsReceipt>();
         }
     
         public int PlannedOrderID { get; set; }
@@ -53,8 +53,6 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> InActiveDate { get; set; }
     
         public virtual Customer Customer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
         public virtual Location Location { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialIssue> MaterialIssues { get; set; }
@@ -67,5 +65,7 @@ namespace TotalModel.Models
         public virtual ICollection<ProductionOrder> ProductionOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedHandover> FinishedHandovers { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
     }
 }

@@ -55,7 +55,7 @@ namespace TotalModel.Models
         public virtual Shift Shift { get; set; }
         public virtual TransferOrderDetail TransferOrderDetail { get; set; }
         public virtual TransferOrder TransferOrder { get; set; }
-        public virtual WarehouseTransfer WarehouseTransfer { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual WarehouseTransfer WarehouseTransfer { get; set; }
     }
 }

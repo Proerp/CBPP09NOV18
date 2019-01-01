@@ -17,8 +17,8 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public WarehouseTransfer()
         {
-            this.GoodsReceipts = new HashSet<GoodsReceipt>();
             this.WarehouseTransferDetails = new HashSet<WarehouseTransferDetail>();
+            this.GoodsReceipts = new HashSet<GoodsReceipt>();
         }
     
         public int WarehouseTransferID { get; set; }
@@ -52,20 +52,18 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ApprovedDate { get; set; }
     
         public virtual Employee Employee { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
         public virtual Location Location { get; set; }
         public virtual Location Location1 { get; set; }
         public virtual Location Location2 { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual TransferOrder TransferOrder { get; set; }
-        public virtual User User { get; set; }
-        public virtual User User1 { get; set; }
-        public virtual User User2 { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Warehouse Warehouse1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
         public virtual Workshift Workshift { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
+        public virtual User User { get; set; }
     }
 }
