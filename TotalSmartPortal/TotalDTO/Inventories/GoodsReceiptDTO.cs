@@ -227,6 +227,8 @@ namespace TotalDTO.Inventories
         public GoodsReceiptDTO()
         {
             this.GoodsReceiptViewDetails = new List<GoodsReceiptDetailDTO>();
+
+            if (!GlobalEnums.CBPP) { this.ShiftID = 1; }
         }
 
         public override Nullable<int> CustomerID { get { int? customerID = null; if (this.Customer != null) customerID = this.Customer.CustomerID; return customerID; } }
