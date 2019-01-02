@@ -91,7 +91,7 @@
                 <div class="form-group">
                     <div class="right-panel-label">
                         @if (Model.TransferOrderID != null){
-                            <a style="color: blue; " href="@Url.Action("Edit", "MaterialTransferOrders", new { area = "Inventories", id = Model.TransferOrderID })" target="_blank"> Lệnh VCNB </a> }
+                            <a style="color: blue; " href="@Url.Action("Edit", Model.ControllerTransferOrder, new { area = "Inventories", id = Model.TransferOrderID })" target="_blank"> Lệnh VCNB </a> }
                         else{
                             @Html.LabelFor(model => (model as IWarehouseTransferDTO).Caption)}
                     </div>

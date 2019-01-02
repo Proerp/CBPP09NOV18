@@ -121,6 +121,7 @@ namespace TotalDTO.Inventories
         bool IsSameWarehouse { get; }
 
         string ControllerName { get; }
+        string ControllerTransferOrder { get; }
     }
 
     public class WarehouseTransferDTO<TWTOption> : WarehouseTransferPrimitiveDTO<TWTOption>, IBaseDetailEntity<WarehouseTransferDetailDTO>, IWarehouseTransferDTO
@@ -171,6 +172,7 @@ namespace TotalDTO.Inventories
         public override string Caption { get { return (this.TransferOrderID != null ? this.TransferOrderReference + " [" + ((DateTime)this.TransferOrderEntryDate).ToShortDateString() + "]" : (this.IsSameWarehouse ? "Chuyển vị trí tại kho " + this.Warehouse.Name + " (không có lệnh)" : "VCNB không có lệnh điều chuyển")); } }
 
         public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
+        public string ControllerTransferOrder { get { return this.IsMaterial ? "MaterialTransferOrders" : (this.IsItem ? "ItemTransferOrders" : "ProductTransferOrders"); } }
 
         public bool IsSameWarehouse { get { return this.WarehouseID == this.WarehouseReceiptID; } }
 
