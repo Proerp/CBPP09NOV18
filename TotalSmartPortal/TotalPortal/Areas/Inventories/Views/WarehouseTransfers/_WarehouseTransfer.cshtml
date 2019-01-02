@@ -23,14 +23,14 @@
     @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderID)
 
     @Html.HiddenFor(model => (model as IWarehouseTransferPrimitiveDTO).BinLocation_WarehouseID)
-    
+
     <div class="left-panel">
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml", @Model, new ViewDataDictionary { { "EntryDateReadonly", false } })
 
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Shift.cshtml")
 
-        <div @{if (!GlobalEnums.CBPP) { <text> class="SBT-Hidden" </text> }}>
+        <div @{if (!GlobalEnums.CBPP) { <text> class="SBT-Hidden" </text>  }}>
             <div class="form-group">
                 @Html.LabelFor(model => (model as IWarehouseTransferDTO).UserLastName)
                 <div class="div-input">
@@ -46,6 +46,9 @@
             </div>
         </div>
 
+        <div @{if (GlobalEnums.CBPP) { <text> class="SBT-Hidden" </text>  } else { <text> class="form-group" </text>  } }>
+            @Html.EditorFor(d => (d as IWarehouseTransferDTO).Storekeeper, new { EmployeeDisplayName = @Model.Storekeeper.GetDisplayName(m => m.EmployeeID) })
+        </div>
 
         <div class="SBT-Hidden">
             <div class="form-group">
@@ -55,59 +58,79 @@
             <div class="form-group">
                 @Html.EditorFor(d => (d as IWarehouseTransferDTO).WarehouseReceipt, new { WarehouseDisplayName = @Model.WarehouseReceipt.GetDisplayName(m => m.WarehouseID), LeftPanelInput = "left-panel-input" })
             </div>
-        </div>
 
-        <div @{if (GlobalEnums.CBPP) { <text> class="SBT-Hidden" </text>} else { <text> class="form-group" </text>} }>
-            @Html.EditorFor(d => (d as IWarehouseTransferDTO).Storekeeper, new { EmployeeDisplayName = @Model.Storekeeper.GetDisplayName(m => m.EmployeeID) })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderReference)
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderReference).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderReference, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        @if (Model.TransferOrderEntryDate != null)
-        {
             <div class="form-group">
-                @Html.LabelFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderEntryDate)
+                @Html.LabelFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderReference)
                 <div class="div-input">
-                    @Html.Kendo().DateTimePickerFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderReference).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                 </div>
                 <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderEntryDate, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderReference, "", new { @class = "text-danger" })
                 </div>
             </div>
-        }
+
+            @if (Model.TransferOrderEntryDate != null)
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderEntryDate)
+                    <div class="div-input">
+                        @Html.Kendo().DateTimePickerFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => (model as IWarehouseTransferPrimitiveDTO).TransferOrderEntryDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+        </div>
 
     </div>
 
     <div class="right-panel">
-        <div class="right-top-panel right-top-panel-H2">
+        <div class="right-top-panel right-top-panel-H3">
+            <div class="right-first-panel">
+                <div class="form-group">
+                    <div class="right-panel-label">
+                        @if (Model.TransferOrderID != null){
+                            <a style="color: blue; " href="@Url.Action("Edit", "MaterialTransferOrders", new { area = "Inventories", id = Model.TransferOrderID })" target="_blank"> Lệnh VCNB </a> }
+                        else{
+                            @Html.LabelFor(model => (model as IWarehouseTransferDTO).Caption)}
+                    </div>
+                    <div class="div-input">
+                        @Html.Kendo().MaskedTextBoxFor(model => (model as IWarehouseTransferDTO).Caption).HtmlAttributes(new { @class = "right-panel-input" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => (model as IWarehouseTransferDTO).Caption, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="right-second-panel">
+                <div class="form-group">
+                    <div style="float:left; padding-top: 4px; padding-right: 2px;">
+                        <img src="~/Content/Images/Mains/Size24/WH-24B.png" title="Kho xuất" />
+                    </div>
+                    <div @{if (Model.IsSameWarehouse) { <text> class="right-panel-label right-panel-label-88percent" </text>    } else { <text> class="right-panel-label right-panel-label-20percent" </text>    } }> <span> @(Model.IsSameWarehouse ? "Chuyển vị trí, kho" : "Xuất:")  @Model.Warehouse.Code </span> </div>
+                    @if (!Model.IsSameWarehouse)
+                    {
+                        <div style="float:left; padding-top: 4px; padding-right: 2px;">
+                            <img src="~/Content/Images/Mains/Size24/WH-24G.png" title="Kho nhập" />
+                        </div>
+                        <div class="right-panel-label right-panel-label-20percent"> <span> Nhập: @Model.WarehouseReceipt.Code </span> </div>
+                    }
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="right-panel-label right-panel-label-whole-width">
                     @Html.LabelFor(model => (model as IWarehouseTransferPrimitiveDTO).WarehouseTransferJobs)
                 </div>
                 <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => (model as IWarehouseTransferPrimitiveDTO).WarehouseTransferJobs).HtmlAttributes(new { @class = "right-panel-input" })
-                </div>
-                <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => (model as IWarehouseTransferPrimitiveDTO).WarehouseTransferJobs, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div id="show-current-PriceCategory" style="float: right; margin-top: -40px; text-align: center; width: 110px; height: 110px; " title="Kho hàng">
-                <div style="height: 90px; padding-left: 22px; padding-right: 22px; padding-top: 32px;">
-                    <span style="color:blue;" id="label_WarehouseCode"> @Html.Label(@Model.Warehouse.Code) </span>
-                    <span id="label_WarehouseReceiptCode" style="color:orange;"> @Html.Label(@Model.WarehouseReceipt.Code) </span>
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IWarehouseTransferPrimitiveDTO).WarehouseTransferJobs).HtmlAttributes(new { @class = "right-panel-input right-panel-input-whole-width", @readonly = "readonly" })
                 </div>
             </div>
         </div>
+
 
         <div class="div-k-grid-detail">
             @(Html.Kendo().Grid(Model.WarehouseTransferViewDetails)
@@ -127,12 +150,12 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118)                        
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118)
                         .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
                     columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(268).HtmlAttributes(new { style = "" })
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
-                        
+
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
@@ -178,7 +201,7 @@
                     columns.Bound(p => p.QuantityTO).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(!@Model.HasTransferOrder)
                         .Format(Settings.kfmQuantity)
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityTO) #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].QuantityTO' value='#= QuantityTO #' />");
-                    
+
                     columns.Bound(p => p.TransferOrderRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(!@Model.HasTransferOrder || GlobalEnums.CBPP)
                         .Format(Settings.kfmQuantity)
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', TransferOrderRemains) #" + "<input type='hidden' name='WarehouseTransferViewDetails[#= index(data) #].TransferOrderRemains' value='#= TransferOrderRemains #' />");
@@ -220,30 +243,30 @@
                         }
                     })
 
-                    .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
-                    .Selectable(settings =>
-                    {
-                        settings.Mode(GridSelectionMode.Multiple);
-                        settings.Type(GridSelectionType.Row);
-                    })
-                    .DataSource(dataSource => dataSource
-                    .Ajax()
-                    .Batch(true)
-                    .ServerOperation(false)
-                    .Model(model =>
-                    {
-                        model.Id(x => x.WarehouseTransferDetailID);
-                        model.Field(m => m.WarehouseTransferDetailID).DefaultValue(0);
-                        model.Field(m => m.WarehouseTransferID).DefaultValue(@Model.WarehouseTransferID);
-                    })
-                    .Events(events =>
-                    {
-                        events.Error("kendGrid_ErrorHandler");
-                    })
-                    .Aggregates(a => a.Add(x => x.CommodityName).Count())
-                    .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
-                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                )
+                                            .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
+                                            .Selectable(settings =>
+                                            {
+                                                settings.Mode(GridSelectionMode.Multiple);
+                                                settings.Type(GridSelectionType.Row);
+                                            })
+                                            .DataSource(dataSource => dataSource
+                                            .Ajax()
+                                            .Batch(true)
+                                            .ServerOperation(false)
+                                            .Model(model =>
+                                            {
+                                                model.Id(x => x.WarehouseTransferDetailID);
+                                                model.Field(m => m.WarehouseTransferDetailID).DefaultValue(0);
+                                                model.Field(m => m.WarehouseTransferID).DefaultValue(@Model.WarehouseTransferID);
+                                            })
+                                            .Events(events =>
+                                            {
+                                                events.Error("kendGrid_ErrorHandler");
+                                            })
+                                            .Aggregates(a => a.Add(x => x.CommodityName).Count())
+                                            .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
+                                            .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                                        )
             )
         </div>
 
@@ -325,3 +348,15 @@
         });
     }
 </script>
+
+<style>
+    .right-panel-label-20percent { /*this css should ALWAYS be combined with: right-panel-label*/
+        width: 20%;
+        text-align: left;
+    }
+
+    .right-panel-label-88percent { /*this css should ALWAYS be combined with: right-panel-label*/
+        width: 88%;
+        text-align: left;
+    }
+</style>

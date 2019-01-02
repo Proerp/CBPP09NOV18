@@ -134,7 +134,7 @@
         @if (true)
         {
             <div class="form-group">
-                <a style="color: blue; " href="@Url.Action("Edit", "PlannedOrders", new { area = "Productions", id = Model.PlannedOrderID })"> @Html.LabelFor(model => model.FirmOrderReference) </a>
+                <a style="color: blue; " href="@Url.Action("Edit", "PlannedOrders", new { area = "Productions", id = Model.PlannedOrderID })" target="_blank"> @Html.LabelFor(model => model.FirmOrderReference) </a>
                 
                 <div class="div-input">
                     @Html.Kendo().MaskedTextBoxFor(model => model.FirmOrderReference).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })

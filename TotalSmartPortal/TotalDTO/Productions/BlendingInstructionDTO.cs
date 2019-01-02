@@ -67,6 +67,12 @@ namespace TotalDTO.Productions
 
         protected override IEnumerable<BlendingInstructionDetailDTO> DtoDetails() { return this.BlendingInstructionViewDetails; }
 
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            foreach (var result in base.Validate(validationContext)) { yield return result; }
+            if (this.ViewDetails.Count == 0) yield return new ValidationResult("Vui lòng nhập chi tiết NVL.", new[] { "BOM" });
+        }
+
         public override void PrepareVoidDetail(int? detailID)
         {
             this.ViewDetails.RemoveAll(w => w.BlendingInstructionDetailID != detailID);

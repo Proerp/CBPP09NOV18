@@ -793,6 +793,8 @@
     <Content Include="Content\Images\Mains\Size24\Truck-icon-24.png" />
     <Content Include="Content\Images\Mains\Size24\Truck_Transportation-24.png" />
     <Content Include="Content\Images\Mains\Size24\Users-Exit-icon-24.png" />
+    <Content Include="Content\Images\Mains\Size24\WH-24B.png" />
+    <Content Include="Content\Images\Mains\Size24\WH-24G.png" />
     <Content Include="Content\Images\Mains\square-checkbox-32-ok.png" />
     <Content Include="Content\Images\Mains\Square-no-checkbox-32.png" />
     <Content Include="Content\Images\Mains\Square-no-checkbox-36.png" />
@@ -2956,6 +2958,7 @@
     <Content Include="Views\Shared\EditorTemplates\AutoCompletes\BinLocationBase.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AutoCompletes\Commodity.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Commons\Commodity.cshtml" />
+    <Content Include="Views\Helpers\Commons\_CommodityDescription.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

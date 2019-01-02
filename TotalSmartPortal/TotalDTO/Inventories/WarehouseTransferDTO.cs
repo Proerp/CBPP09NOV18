@@ -17,12 +17,12 @@ namespace TotalDTO.Inventories
 
     public class WTOptionMaterial : IWTOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.MaterialTransfer; } } }
     public class WTOptionItem : IWTOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemTransfer; } } }
-    public class WTOptionProduct : IWTOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ProductTransfer; } } }                        
+    public class WTOptionProduct : IWTOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ProductTransfer; } } }
 
     public interface IWarehouseTransferPrimitiveDTO : IQuantityDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
     {
         int WarehouseTransferID { get; set; }
-        
+
         bool OneStep { get; set; }
         bool HasTransferOrder { get; set; }
 
@@ -42,7 +42,7 @@ namespace TotalDTO.Inventories
         [Display(Name = "Ngày lệnh VCNB")]
         Nullable<System.DateTime> TransferOrderEntryDate { get; set; }
 
-        [Display(Name = "Mục đích")]
+        [Display(Name = "Mục đích điều chuyển")]
         string WarehouseTransferJobs { get; set; }
         int StorekeeperID { get; set; }
     }
@@ -102,7 +102,7 @@ namespace TotalDTO.Inventories
         [Display(Name = "Nhân viên kho")]
         [UIHint("AutoCompletes/EmployeeBase")]
         EmployeeBaseDTO Storekeeper { get; set; }
-        
+
         List<WarehouseTransferDetailDTO> WarehouseTransferViewDetails { get; set; }
         List<WarehouseTransferDetailDTO> ViewDetails { get; set; }
 
@@ -114,6 +114,11 @@ namespace TotalDTO.Inventories
         string UserFirstName { get; set; }
         [Display(Name = "Người thực hiện")]
         string UserLastName { get; set; }
+
+
+        [Display(Name = "Lệnh VCNB")]
+        string Caption { get; }
+        bool IsSameWarehouse { get; }
 
         string ControllerName { get; }
     }
@@ -144,10 +149,10 @@ namespace TotalDTO.Inventories
         public override int StorekeeperID { get { return (this.Storekeeper != null ? this.Storekeeper.EmployeeID : 0); } }
         public EmployeeBaseDTO Storekeeper { get; set; }
 
-        public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }        
+        public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }
         public VoidTypeBaseDTO VoidType { get; set; }
 
-        
+
         [Display(Name = "Mã số máy")]
         public string UserFirstName { get; set; }
         [Display(Name = "Người thực hiện")]
@@ -162,9 +167,12 @@ namespace TotalDTO.Inventories
         protected override IEnumerable<WarehouseTransferDetailDTO> DtoDetails() { return this.WarehouseTransferViewDetails; }
 
 
+        [Display(Name = "Lệnh VCNB")]
+        public override string Caption { get { return (this.TransferOrderID != null ? this.TransferOrderReference + " [" + ((DateTime)this.TransferOrderEntryDate).ToShortDateString() + "]" : (this.IsSameWarehouse ? "Chuyển vị trí tại kho " + this.Warehouse.Name + " (không có lệnh)" : "VCNB không có lệnh điều chuyển")); } }
 
         public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
 
+        public bool IsSameWarehouse { get { return this.WarehouseID == this.WarehouseReceiptID; } }
 
         public bool IsMaterial { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.MaterialTransfer; } }
         public bool IsItem { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.ItemTransfer; } }

@@ -1,9 +1,7 @@
-﻿@using TotalPortal.Configuration
-
-@model TotalDTO.Commons.ICommodityBaseDTO
+﻿@model TotalDTO.Commons.ICommodityBaseDTO
 
 @Html.HiddenFor(model => model.CommodityID)
-@Html.HiddenFor(model => model.Name)
+
 
 <div class="right-first-panel">
     <div class="form-group">
@@ -19,13 +17,4 @@
     </div>
 </div>
 
-@{var modelFullHtmlFieldName = @Html.ViewData.TemplateInfo.GetFullHtmlFieldName("Name"); modelFullHtmlFieldName = modelFullHtmlFieldName.Substring(0, modelFullHtmlFieldName.IndexOf("."));  }
-
-<div class="right-second-panel right-second-panel-small">
-    <div class="form-group">
-        <div style="float:left; padding-top: 4px; padding-right: 2px;">
-            <img src="~/Content/Images/Mains/Oil-industry-24.png" title="Tên thành phẩm" />
-        </div>
-        <div class="right-panel-label right-panel-label-larger-width"> <span id="@(modelFullHtmlFieldName + "_label_Name")"> @Html.DisplayFor(a => a.Name) </span> </div>
-    </div>
-</div>
+@Html.Partial("~/Views/Helpers/Commons/_CommodityDescription.cshtml")
