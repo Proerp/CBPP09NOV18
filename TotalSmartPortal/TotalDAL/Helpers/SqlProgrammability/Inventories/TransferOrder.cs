@@ -71,11 +71,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       DECLARE     @TransferOrderDetails TABLE (TransferOrderDetailID int NOT NULL, TransferOrderID int NOT NULL, CommodityID int NOT NULL, Quantity decimal(18, 2) NOT NULL, Remarks nvarchar(100) NULL, VoidTypeID int, InActivePartial bit) " + "\r\n";
-            queryString = queryString + "       INSERT INTO @TransferOrderDetails (TransferOrderDetailID, TransferOrderID, CommodityID, Quantity, Remarks, VoidTypeID, InActivePartial) SELECT TransferOrderDetailID, TransferOrderID, CommodityID, Quantity, Remarks, VoidTypeID, InActivePartial FROM TransferOrderDetails WHERE TransferOrderID = @TransferOrderID " + "\r\n";
+            queryString = queryString + "       DECLARE     @TransferOrderDetails TABLE (TransferOrderDetailID int NOT NULL, TransferOrderID int NOT NULL, CommodityID int NOT NULL, Quantity decimal(18, 2) NOT NULL, QuantityIssued decimal(18, 2) NOT NULL, Remarks nvarchar(100) NULL, VoidTypeID int, InActivePartial bit) " + "\r\n";
+            queryString = queryString + "       INSERT INTO @TransferOrderDetails (TransferOrderDetailID, TransferOrderID, CommodityID, Quantity, QuantityIssued, Remarks, VoidTypeID, InActivePartial) SELECT TransferOrderDetailID, TransferOrderID, CommodityID, Quantity, QuantityIssued, Remarks, VoidTypeID, InActivePartial FROM TransferOrderDetails WHERE TransferOrderID = @TransferOrderID " + "\r\n";
 
             queryString = queryString + "       SELECT      TransferOrderDetails.TransferOrderDetailID, TransferOrderDetails.TransferOrderID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
-            queryString = queryString + "                   ISNULL(CommoditiesAvailables.QuantityAvailables, 0) AS QuantityAvailables, TransferOrderDetails.Quantity, TransferOrderDetails.Remarks, " + "\r\n";
+            queryString = queryString + "                   ISNULL(CommoditiesAvailables.QuantityAvailables, 0) AS QuantityAvailables, TransferOrderDetails.Quantity, TransferOrderDetails.QuantityIssued, TransferOrderDetails.Remarks, " + "\r\n";
             queryString = queryString + "                   VoidTypes.VoidTypeID, VoidTypes.Code AS VoidTypeCode, VoidTypes.Name AS VoidTypeName, VoidTypes.VoidClassID, TransferOrderDetails.InActivePartial " + "\r\n";
             queryString = queryString + "       FROM        @TransferOrderDetails TransferOrderDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON TransferOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
@@ -99,7 +99,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       SELECT          Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, WarehouseReceipts.WarehouseID AS WarehouseReceiptID, WarehouseReceipts.Code AS WarehouseReceiptCode, WarehouseReceipts.Name AS WarehouseReceiptName, WarehouseReceipts.LocationID AS LocationReceiptID " + "\r\n";
             queryString = queryString + "       FROM            Warehouses  " + "\r\n";
             queryString = queryString + "                       INNER JOIN Warehouses AS WarehouseReceipts ON Warehouses.WarehouseID <> WarehouseReceipts.WarehouseID " + "\r\n";
-            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (" + (GlobalEnums.CBPP ? "1" : "2") + ") AND WarehouseReceipts.WarehouseID IN (6) " + "\r\n";
+            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (" + (GlobalEnums.CBPP ? "1, 6" : "2") + ") AND WarehouseReceipts.WarehouseID IN (" + (GlobalEnums.CBPP ? "1, 6" : "6") + ") " + "\r\n";
 
             queryString = queryString + "       ORDER BY        WarehouseID " + "\r\n";
 

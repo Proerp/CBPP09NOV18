@@ -29,9 +29,17 @@ namespace TotalDTO.Inventories
         [UIHint("QuantityReadonly")]
         public decimal QuantityAvailables { get; set; }
 
-        [Display(Name = "SL")]
+        [Display(Name = "SL Y/C")]
         [UIHint("QuantityWithMinus")]
         public override decimal Quantity { get; set; }
+
+        [Display(Name = "Đã C/K")]
+        [UIHint("QuantityReadonly")]
+        public decimal QuantityIssued { get; set; }
+
+        [Display(Name = "Còn lại")]
+        [UIHint("QuantityReadonly")]
+        public decimal QuantityRemains { get { return this.Quantity - QuantityIssued; } set { } }
 
         public string VoidTypeCode { get; set; }
         [Display(Name = "Lý do")]

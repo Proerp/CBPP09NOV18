@@ -43,23 +43,41 @@
     </div>
 
     <div class="right-panel">
-        <div class="right-top-panel right-top-panel-H2">
+        <div class="right-top-panel right-top-panel-H3">
+            <div class="right-first-panel">
+                <div class="form-group">
+                    <div class="right-panel-label">@Html.Label("Lệnh VCNB")</div>
+                    <div class="div-input">
+                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Caption).HtmlAttributes(new { @class = "right-panel-input", @readonly = "readonly" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => (model as IBaseModel).Caption, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-second-panel">
+                <div class="form-group">
+                    <div style="float:left; padding-top: 4px; padding-right: 2px;">
+                        <img src="~/Content/Images/Mains/Size24/WH-24B.png" title="Kho xuất" />
+                    </div>
+                    <div class="right-panel-label right-panel-label-20percent" }> <span> Xuất: @Model.Warehouse.Code </span> </div>
+                    <div style="float:left; padding-top: 4px; padding-right: 2px;">
+                        <img src="~/Content/Images/Mains/Size24/WH-24G.png" title="Kho nhập" />
+                    </div>
+                    <div class="right-panel-label right-panel-label-20percent"> <span> Nhập: @Model.WarehouseReceipt.Code </span> </div>
+                </div>
+            </div>
+
             <div class="form-group">
                 <div class="right-panel-label right-panel-label-whole-width">
                     @Html.LabelFor(model => (model as ITransferOrderPrimitiveDTO).TransferOrderJobs)
                 </div>
                 <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => (model as ITransferOrderPrimitiveDTO).TransferOrderJobs).HtmlAttributes(new { @class = "right-panel-input" })
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as ITransferOrderPrimitiveDTO).TransferOrderJobs).HtmlAttributes(new { @class = "right-panel-input right-panel-input-whole-width" })
                 </div>
                 <div class="div-validation-message">
                     @Html.ValidationMessageFor(model => (model as ITransferOrderPrimitiveDTO).TransferOrderJobs, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div id="show-current-PriceCategory" style="float: right; margin-top: -40px; text-align: center; width: 110px; height: 110px; " title="Kho hàng">
-                <div style="height: 90px; padding-left: 22px; padding-right: 22px; padding-top: 32px;">
-                    <span style="color:blue;" id="label_WarehouseCode"> @Html.Label(@Model.Warehouse.Code) </span>
-                    <span id="label_WarehouseReceiptCode" style="color:orange;"> @Html.Label(@Model.WarehouseReceipt.Code) </span>
                 </div>
             </div>
         </div>
@@ -70,37 +88,47 @@
                 .Columns(columns =>
                 {
 
-                    columns.Bound(p => p.TransferOrderDetailID).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.TransferOrderDetailID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= TransferOrderDetailID #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].TransferOrderDetailID' value='#= TransferOrderDetailID #' />");
-                    columns.Bound(p => p.TransferOrderID).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.TransferOrderID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= TransferOrderID #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].TransferOrderID' value='#= TransferOrderID #' />");
 
-                    columns.Bound(p => p.CommodityID).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Filterable(false).Width(226)
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118)
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)")
                         .ClientTemplate("<div> #= CommodityCode #</div>" +
                             "<div> #= (VoidTypeName == null)? '' : VoidTypeName #</div>" +
                             "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
 
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Filterable(false).Width(218).HtmlAttributes(new { style = "" })
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(260).HtmlAttributes(new { style = "" })
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
 
-                    columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Filterable(false).Hidden()
+                    columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
 
-                    columns.Bound(p => p.QuantityAvailables).DisplayNameTitle().Filterable(false).Width(88).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                    columns.Bound(p => p.QuantityAvailables).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                      .Format(Settings.kfmQuantity)
                      .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                      .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityAvailables) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].QuantityAvailables' value='#= QuantityAvailables #' />");
 
-                    columns.Bound(p => p.Quantity).DisplayNameTitle().Filterable(false).Width(88).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                    columns.Bound(p => p.Quantity).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
 
-                    columns.Bound(p => p.Remarks).DisplayNameTitle().Filterable(false)
+                    columns.Bound(p => p.QuantityIssued).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityIssued) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].QuantityIssued' value='#= QuantityIssued #' />");
+
+                    columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
+
+                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(227)
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
                     columns.Bound(p => p.InActivePartial).DisplayNameTitle().Hidden()
@@ -111,7 +139,7 @@
                     columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(50).Hidden(!@Model.Voidable && !@Model.UnVoidable)
                         .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' onclick='callVoidDetail(#= TransferOrderDetailID #)'><span class='k-icon sbt-void'></span></a>");
                 })
-                    .Filterable()
+                .Filterable(f => f.Enabled(false))
                     .Navigatable()
 
                     .ToolBar(toolbar =>
@@ -160,11 +188,14 @@
                     })
                     .Events(events =>
                     {
+                        events.Change("dataSourceChange");
                         events.Error("kendGrid_ErrorHandler");
                     })
                     .Aggregates(a => a.Add(x => x.CommodityCode).Count())
                     .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
                     .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityIssued).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
                 )
             )
         </div>
@@ -217,7 +248,6 @@
             {
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt</button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in PXK</button>
             }
             else
             {
@@ -266,6 +296,13 @@
             var voidDetailWindow = new kpopupWindow();
             voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", Model.ControllerName)" + "/" + $("#TransferOrderID").val() + "/" + transferOrderDetailID, "Hủy/ phục hồi một phần đề nghị giao hàng", @Settings.PopupWidthVoid,  @Settings.PopupHeightVoid);
         });
+    }
+
+    dataSourceChange = function (e) {
+        if (e.field === "Quantity") {
+            var dataRow = e.items[0];
+            dataRow.set("QuantityRemains", DoRound(dataRow.Quantity - dataRow.QuantityIssued, requireConfig.websiteOptions.rndQuantity));
+        }
     }
 
     window.urlCommoditiesApi = '@Url.Action("GetCommodityBasesImport", "CommodityAPIs", new { area = "Commons" })';

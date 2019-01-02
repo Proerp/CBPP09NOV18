@@ -92,14 +92,13 @@
                     <div class="right-panel-label">
                         @if (Model.TransferOrderID != null){
                             <a style="color: blue; " href="@Url.Action("Edit", Model.ControllerTransferOrder, new { area = "Inventories", id = Model.TransferOrderID })" target="_blank"> Lệnh VCNB </a> }
-                        else{
-                            @Html.LabelFor(model => (model as IWarehouseTransferDTO).Caption)}
+                        else{@Html.Label("VCNB")}
                     </div>
                     <div class="div-input">
-                        @Html.Kendo().MaskedTextBoxFor(model => (model as IWarehouseTransferDTO).Caption).HtmlAttributes(new { @class = "right-panel-input" })
+                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Caption).HtmlAttributes(new { @class = "right-panel-input", @readonly = "readonly" })
                     </div>
                     <div class="div-validation-message">
-                        @Html.ValidationMessageFor(model => (model as IWarehouseTransferDTO).Caption, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => (model as IBaseModel).Caption, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -126,7 +125,10 @@
                     @Html.LabelFor(model => (model as IWarehouseTransferPrimitiveDTO).WarehouseTransferJobs)
                 </div>
                 <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => (model as IWarehouseTransferPrimitiveDTO).WarehouseTransferJobs).HtmlAttributes(new { @class = "right-panel-input right-panel-input-whole-width", @readonly = "readonly" })
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IWarehouseTransferPrimitiveDTO).WarehouseTransferJobs).HtmlAttributes(new { @class = "right-panel-input right-panel-input-whole-width" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as IWarehouseTransferPrimitiveDTO).WarehouseTransferJobs, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
@@ -348,15 +350,3 @@
         });
     }
 </script>
-
-<style>
-    .right-panel-label-20percent { /*this css should ALWAYS be combined with: right-panel-label*/
-        width: 20%;
-        text-align: left;
-    }
-
-    .right-panel-label-88percent { /*this css should ALWAYS be combined with: right-panel-label*/
-        width: 88%;
-        text-align: left;
-    }
-</style>

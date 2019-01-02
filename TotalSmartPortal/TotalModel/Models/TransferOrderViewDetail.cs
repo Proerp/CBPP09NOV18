@@ -27,5 +27,6 @@ namespace TotalModel.Models
         public string VoidTypeName { get; set; }
         public Nullable<int> VoidClassID { get; set; }
         public Nullable<bool> InActivePartial { get; set; }
+        public decimal QuantityIssued { get; set; }
     }
 }

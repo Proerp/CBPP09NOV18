@@ -1172,6 +1172,16 @@ ul.k-panelbar .k-link {
     text-align: left;
 }
 
+.right-panel-label-20percent { /*this css should ALWAYS be combined with: right-panel-label*/
+    width: 20%;
+    text-align: left;
+}
+
+.right-panel-label-88percent { /*this css should ALWAYS be combined with: right-panel-label*/
+    width: 88%;
+    text-align: left;
+}
+
 .right-botton-panel {
     float: right;
     width: 100%;

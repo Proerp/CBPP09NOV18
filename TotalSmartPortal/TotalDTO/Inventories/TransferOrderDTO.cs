@@ -28,7 +28,7 @@ namespace TotalDTO.Inventories
         Nullable<int> WarehouseReceiptID { get; set; }
         Nullable<int> LocationReceiptID { get; set; }
 
-        [Display(Name = "Mục đích")]
+        [Display(Name = "Mục đích điều chuyển")]
         string TransferOrderJobs { get; set; }
         int StorekeeperID { get; set; }
     }
@@ -79,7 +79,7 @@ namespace TotalDTO.Inventories
 
         List<TransferOrderDetailDTO> TransferOrderViewDetails { get; set; }
         List<TransferOrderDetailDTO> ViewDetails { get; set; }
-        
+
         [UIHint("AutoCompletes/VoidType")]
         VoidTypeBaseDTO VoidType { get; set; }
 
@@ -109,7 +109,7 @@ namespace TotalDTO.Inventories
         public override int StorekeeperID { get { return (this.Storekeeper != null ? this.Storekeeper.EmployeeID : 0); } }
         public EmployeeBaseDTO Storekeeper { get; set; }
 
-        public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }        
+        public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }
         public VoidTypeBaseDTO VoidType { get; set; }
 
         public List<TransferOrderDetailDTO> TransferOrderViewDetails { get; set; }
@@ -127,8 +127,10 @@ namespace TotalDTO.Inventories
             base.PrepareVoidDetail(detailID);
         }
 
-        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
 
+        public override string Caption { get { return this.WarehouseReceiptID == 6 ? "Chuyển NVL về khu vực sản xuất" : "Chuyển trả NVL từ khu vực sản xuất về kho"; } }
+
+        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
 
         public bool IsMaterial { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.MaterialTransferOrder; } }
         public bool IsItem { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.ItemTransferOrder; } }

@@ -116,8 +116,6 @@ namespace TotalDTO.Inventories
         string UserLastName { get; set; }
 
 
-        [Display(Name = "Lệnh VCNB")]
-        string Caption { get; }
         bool IsSameWarehouse { get; }
 
         string ControllerName { get; }
