@@ -29,7 +29,7 @@ namespace TotalDTO.Inventories
         [UIHint("QuantityReadonly")]
         public decimal QuantityAvailables { get; set; }
 
-        [Display(Name = "SL Y/C")]
+        [Display(Name = "KL Y/C")]
         [UIHint("QuantityWithMinus")]
         public override decimal Quantity { get; set; }
 

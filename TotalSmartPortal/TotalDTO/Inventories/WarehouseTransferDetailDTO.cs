@@ -76,7 +76,7 @@ namespace TotalDTO.Inventories
         [UIHint("AutoCompletes/BinLocationBase")]
         public string BinLocationCode { get; set; }
 
-        [Display(Name = "SL Y/C")]
+        [Display(Name = "KL Y/C")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityTO { get; set; }
 
@@ -92,7 +92,7 @@ namespace TotalDTO.Inventories
         [UIHint("QuantityReadonly")]
         public decimal QuantityAvailables { get; set; }
 
-        [Display(Name = "SL V/C")]
+        [Display(Name = "KL V/C")]
         [UIHint("Quantity")]
         public override decimal Quantity { get; set; }
 

@@ -25,7 +25,7 @@ namespace TotalDTO.Productions
         [UIHint("StringReadonly")]
         public override string CommodityName { get; set; }
 
-        [Display(Name = "SL Y/C")]
+        [Display(Name = "KL Y/C")]
         [UIHint("Quantity")]
         public override decimal Quantity { get; set; }
 
