@@ -164,25 +164,25 @@
                         </text>);
                         events.Edit("kendoGridDetailsEdit");
                     }).DataSource(dataSource => dataSource
-                                            .Ajax()
-                                            .Batch(true)
-                                            .ServerOperation(false)
-                                            .Model(model =>
-                                            {
-                                                model.Id(x => x.BlendingInstructionDetailID);
-                                                model.Field(m => m.BlendingInstructionDetailID).DefaultValue(0);
-                                                model.Field(m => m.BlendingInstructionID).DefaultValue(@Model.BlendingInstructionID);
-                                            })
-                                            .Events(events =>
-                                            {
-                                                events.Change("dataSourceChange");
-                                                events.Error("kendGrid_ErrorHandler");
-                                            })
-                                            .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                                            .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                                            .Aggregates(a => a.Add(x => x.QuantityIssued).Sum())
-                                            .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
-                                        )
+                                                                    .Ajax()
+                                                                    .Batch(true)
+                                                                    .ServerOperation(false)
+                                                                    .Model(model =>
+                                                                    {
+                                                                        model.Id(x => x.BlendingInstructionDetailID);
+                                                                        model.Field(m => m.BlendingInstructionDetailID).DefaultValue(0);
+                                                                        model.Field(m => m.BlendingInstructionID).DefaultValue(@Model.BlendingInstructionID);
+                                                                    })
+                                                                    .Events(events =>
+                                                                    {
+                                                                        events.Change("dataSourceChange");
+                                                                        events.Error("kendGrid_ErrorHandler");
+                                                                    })
+                                                                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                                                                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                                                                    .Aggregates(a => a.Add(x => x.QuantityIssued).Sum())
+                                                                    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                                                                )
             )
         </div>
 
@@ -228,19 +228,23 @@
             )
         </div>
 
-        @*@Html.Partial("~/Views/Helpers/Commons/_BlendingInstructionLogs.cshtml")*@
-
-
         <div class="right-botton-panel">
             @if (Model.Editable)
             {
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "BlendingInstructions")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "BlendingInstructions")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "BlendingInstructions")" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in </button>
             }
-
-            @if (Model.BlendingInstructionID > 0 && !Model.Approvable && !Model.UnApprovable)
+            else
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "BlendingInstructions", new {id = @Model.BlendingInstructionID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
+                if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
+                {
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "BlendingInstructions", new {id = @Model.BlendingInstructionID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
+                }
+            }
+            @if (Model.BlendingInstructionID > 0)
+            {
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "BlendingInstructions", new { id = @Model.BlendingInstructionID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
             }
 
         </div>
