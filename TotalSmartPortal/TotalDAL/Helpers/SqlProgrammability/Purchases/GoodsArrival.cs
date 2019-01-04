@@ -428,11 +428,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "       SELECT          GoodsArrivals.GoodsArrivalID, GoodsArrivals.EntryDate, GoodsArrivals.Reference, GoodsArrivals.Code, GoodsArrivals.InvoiceDate, GoodsArrivals.Description, " + "\r\n";
             queryString = queryString + "                       GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivalPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, " + "\r\n";
-            queryString = queryString + "                       GoodsArrivalPackages.SealCode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.LabCode, GoodsArrivalPackages.Barcode, GoodsArrivalPackages.ProductionDate, GoodsArrivalPackages.ExpiryDate, GoodsArrivalPackages.Quantity " + "\r\n";
+            queryString = queryString + "                       GoodsArrivalPackages.SealCode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.LabCode, GoodsArrivalPackages.Barcode, GoodsArrivalPackages.ProductionDate, GoodsArrivalPackages.ExpiryDate, GoodsArrivalPackages.Quantity, GoodsArrivalMatrixes.DataMarix " + "\r\n";
 
             queryString = queryString + "       FROM            GoodsArrivals " + "\r\n";
             queryString = queryString + "                       INNER JOIN GoodsArrivalPackages ON GoodsArrivals.GoodsArrivalID = @LocalGoodsArrivalID AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON GoodsArrivalPackages.CommodityID = Commodities.CommodityID " + "\r\n";
+
+            queryString = queryString + "                       LEFT  JOIN GoodsArrivalMatrixes ON GoodsArrivalPackages.GoodsArrivalPackageID = GoodsArrivalMatrixes.GoodsArrivalPackageID " + "\r\n";
 
             queryString = queryString + "       ORDER BY        GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID " + "\r\n";
 
