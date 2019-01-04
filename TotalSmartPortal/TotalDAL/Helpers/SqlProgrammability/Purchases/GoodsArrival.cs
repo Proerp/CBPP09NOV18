@@ -235,6 +235,19 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             return queryString;
         }
 
+        private void GetBarcodes()
+        {
+            string queryString = " @GoodsArrivalID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       SELECT          BarcodeID, BarcodeTypeID, Code, Symbologies, GoodsArrivalID, GoodsArrivalDetailID, GoodsArrivalPackageID " + "\r\n";
+            queryString = queryString + "       FROM            Barcodes " + "\r\n";
+            queryString = queryString + "       WHERE           GoodsArrivalID = @GoodsArrivalID " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetBarcodes", queryString);
+        }
+
         #endregion Y
 
 
