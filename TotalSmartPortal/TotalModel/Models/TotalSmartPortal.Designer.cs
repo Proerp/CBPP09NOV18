@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\MVC PROJECTS\CBPP\Github091118\trunk\TotalSmartPortal\TotalModel\Models\TotalSmartPortal.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\MVC PROJECTS\CBPP\Github01JAN19\trunk\TotalSmartPortal\TotalModel\Models\TotalSmartPortal.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

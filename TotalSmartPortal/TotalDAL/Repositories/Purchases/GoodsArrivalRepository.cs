@@ -16,6 +16,20 @@ namespace TotalDAL.Repositories.Purchases
             : base(totalSmartPortalEntities, "GoodsArrivalEditable", "GoodsArrivalApproved")
         {
         }
+
+        public List<BarcodeBase> GetBarcodeBases(int? goodsArrivalID)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            List<BarcodeBase> barcodeBases = base.TotalSmartPortalEntities.GetBarcodeBases(goodsArrivalID).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return barcodeBases;
+        }
+
+        public void SetBarcodeSymbologies(int? barcodeID, string symbologies)
+        {
+            base.TotalSmartPortalEntities.SetBarcodeSymbologies(barcodeID, symbologies);
+        }
     }
 
 

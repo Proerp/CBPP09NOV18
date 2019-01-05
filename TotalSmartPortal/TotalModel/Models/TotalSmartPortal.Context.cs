@@ -4712,5 +4712,27 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InventoryControl>("GetInventoryControls", aspUserIDParameter, summaryOnlyParameter, labOptionIDParameter, filterOptionIDParameter, pendingOptionIDParameter, shelfLifeParameter);
         }
+    
+        public virtual ObjectResult<BarcodeBase> GetBarcodeBases(Nullable<int> goodsArrivalID)
+        {
+            var goodsArrivalIDParameter = goodsArrivalID.HasValue ?
+                new ObjectParameter("GoodsArrivalID", goodsArrivalID) :
+                new ObjectParameter("GoodsArrivalID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BarcodeBase>("GetBarcodeBases", goodsArrivalIDParameter);
+        }
+    
+        public virtual int SetBarcodeSymbologies(Nullable<int> barcodeID, string symbologies)
+        {
+            var barcodeIDParameter = barcodeID.HasValue ?
+                new ObjectParameter("BarcodeID", barcodeID) :
+                new ObjectParameter("BarcodeID", typeof(int));
+    
+            var symbologiesParameter = symbologies != null ?
+                new ObjectParameter("Symbologies", symbologies) :
+                new ObjectParameter("Symbologies", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SetBarcodeSymbologies", barcodeIDParameter, symbologiesParameter);
+        }
     }
 }

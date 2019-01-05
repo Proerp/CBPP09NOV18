@@ -75,6 +75,9 @@
     <Compile Include="Models\AspNetUser.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BarcodeBase.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BinLocation.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

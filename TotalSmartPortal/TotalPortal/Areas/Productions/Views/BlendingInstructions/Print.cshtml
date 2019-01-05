@@ -1,8 +1,4 @@
 ﻿@using MvcReportViewer;
-
 @model TotalPortal.ViewModels.Helpers.PrintViewModel
 
-
-@{Layout = null;}
-
-@Html.MvcReportViewerFluent("/TotalSmartPortal/BlendingInstructionSheet").ReportParameters(new { Id = @Model.Id, DetailID = (@Model.DetailID != null ? @Model.DetailID : -1), PrintOptionID = @Model.PrintOptionID, CurrentHost = HttpContext.Current.Request.Url.Host + (HttpContext.Current.Request.Url.IsDefaultPort ? "" : ":" + HttpContext.Current.Request.Url.Port), LocationID = @Model.LocationID }).Attributes(new { Height = 636, Width = 1310, style = "border: 1px solid #00688B" }).ControlSettings(new ControlSettings() { PromptAreaCollapsed = true, ShowParameterPrompts = true })
+@Html.MvcReportViewerFluent("/TotalSmartPortal/BlendingInstructionSheet").ReportParameters(new { Id = @Model.Id, CurrentHost = HttpContext.Current.Request.Url.Host }).Attributes(new { Height = 1100, Width = 1150, style = "border: none" }).ControlSettings(new ControlSettings() { ShowParameterPrompts = false })

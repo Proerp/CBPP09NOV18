@@ -6778,6 +6778,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="OrganizationalUnitID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetBarcodeBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetBinLocationBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
@@ -7891,6 +7894,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="SemifinishedProductToggleApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
           <Parameter Name="Approved" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="SetBarcodeSymbologies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BarcodeID" Type="int" Mode="In" />
+          <Parameter Name="Symbologies" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="TransferOrderApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
@@ -14638,6 +14645,13 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="User" EntitySet="Users" />
             <End Role="WarehouseTransfer" EntitySet="WarehouseTransfers" />
           </AssociationSet>
+          <FunctionImport Name="GetBarcodeBases" ReturnType="Collection(TotalSmartPortalModel.BarcodeBase)">
+          <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SetBarcodeSymbologies">
+            <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
+            <Parameter Name="Symbologies" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -21954,6 +21968,14 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="BarcodeBase">
+          <Property Type="Int32" Name="BarcodeID" Nullable="false" />
+          <Property Type="Int32" Name="BarcodeTypeID" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="GoodsArrivalID" Nullable="true" />
+          <Property Type="Int32" Name="GoodsArrivalDetailID" Nullable="true" />
+          <Property Type="Int32" Name="GoodsArrivalPackageID" Nullable="true" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -27897,6 +27919,19 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetBarcodeBases" FunctionName="TotalSmartPortalModel.Store.GetBarcodeBases">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BarcodeBase">
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="BarcodeTypeID" ColumnName="BarcodeTypeID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
+                <ScalarProperty Name="GoodsArrivalDetailID" ColumnName="GoodsArrivalDetailID" />
+                <ScalarProperty Name="GoodsArrivalPackageID" ColumnName="GoodsArrivalPackageID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SetBarcodeSymbologies" FunctionName="TotalSmartPortalModel.Store.SetBarcodeSymbologies" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

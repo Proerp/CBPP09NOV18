@@ -33,6 +33,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             this.GoodsArrivalToggleApproved();
 
+            this.GetBarcodeBases();
+            this.SetBarcodeSymbologies();
+
             this.GoodsArrivalInitReference();
 
             this.GoodsArrivalSheet();
@@ -235,19 +238,6 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             return queryString;
         }
 
-        private void GetBarcodes()
-        {
-            string queryString = " @GoodsArrivalID int " + "\r\n";
-            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
-            queryString = queryString + " AS " + "\r\n";
-
-            queryString = queryString + "       SELECT          BarcodeID, BarcodeTypeID, Code, Symbologies, GoodsArrivalID, GoodsArrivalDetailID, GoodsArrivalPackageID " + "\r\n";
-            queryString = queryString + "       FROM            Barcodes " + "\r\n";
-            queryString = queryString + "       WHERE           GoodsArrivalID = @GoodsArrivalID " + "\r\n";
-
-            this.totalSmartPortalEntities.CreateStoredProcedure("GetBarcodes", queryString);
-        }
-
         #endregion Y
 
 
@@ -429,6 +419,33 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             this.totalSmartPortalEntities.CreateStoredProcedure("GoodsArrivalToggleApproved", queryString);
         }
 
+        private void GetBarcodeBases()
+        {
+            string queryString = " @GoodsArrivalID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       SELECT          BarcodeID, BarcodeTypeID, Code, GoodsArrivalID, GoodsArrivalDetailID, GoodsArrivalPackageID " + "\r\n";
+            queryString = queryString + "       FROM            Barcodes " + "\r\n";
+            queryString = queryString + "       WHERE           GoodsArrivalID = @GoodsArrivalID " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetBarcodeBases", queryString);
+        }
+
+        private void SetBarcodeSymbologies()
+        {
+            string queryString = " @BarcodeID int, @Symbologies nvarchar(MAX) " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       UPDATE          Barcodes " + "\r\n";
+            queryString = queryString + "       SET             Symbologies = @Symbologies " + "\r\n";
+            queryString = queryString + "       WHERE           BarcodeID = @BarcodeID " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("SetBarcodeSymbologies", queryString);
+        }
+
+
         private void GoodsArrivalInitReference()
         {
             SimpleInitReference simpleInitReference = new SimpleInitReference("GoodsArrivals", "GoodsArrivalID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.GoodsArrival));
@@ -439,7 +456,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
         private void GoodsArrivalSheet()
         {
             string queryString = " @GoodsArrivalID int " + "\r\n";
-            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
@@ -447,13 +464,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "       SELECT          GoodsArrivals.GoodsArrivalID, GoodsArrivals.EntryDate, GoodsArrivals.Reference, GoodsArrivals.Code, GoodsArrivals.InvoiceDate, GoodsArrivals.Description, " + "\r\n";
             queryString = queryString + "                       GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivalPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, " + "\r\n";
-            queryString = queryString + "                       GoodsArrivalPackages.SealCode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.LabCode, GoodsArrivalPackages.Barcode, GoodsArrivalPackages.ProductionDate, GoodsArrivalPackages.ExpiryDate, GoodsArrivalPackages.Quantity, GoodsArrivalMatrixes.DataMarix " + "\r\n";
+            queryString = queryString + "                       GoodsArrivalPackages.SealCode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.LabCode, GoodsArrivalPackages.Barcode, Barcodes.Symbologies, GoodsArrivalPackages.ProductionDate, GoodsArrivalPackages.ExpiryDate, GoodsArrivalPackages.Quantity " + "\r\n";
 
             queryString = queryString + "       FROM            GoodsArrivals " + "\r\n";
             queryString = queryString + "                       INNER JOIN GoodsArrivalPackages ON GoodsArrivals.GoodsArrivalID = @LocalGoodsArrivalID AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON GoodsArrivalPackages.CommodityID = Commodities.CommodityID " + "\r\n";
 
-            queryString = queryString + "                       LEFT  JOIN GoodsArrivalMatrixes ON GoodsArrivalPackages.GoodsArrivalPackageID = GoodsArrivalMatrixes.GoodsArrivalPackageID " + "\r\n";
+            queryString = queryString + "                       LEFT  JOIN Barcodes ON GoodsArrivalPackages.GoodsArrivalPackageID = Barcodes.GoodsArrivalPackageID " + "\r\n";
 
             queryString = queryString + "       ORDER BY        GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID " + "\r\n";
 

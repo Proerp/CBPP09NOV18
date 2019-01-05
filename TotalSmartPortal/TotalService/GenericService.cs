@@ -386,7 +386,7 @@ namespace TotalService
             else throw new System.ArgumentException("Lỗi lưu dữ liệu", "Vui lòng chọn người lập.");
         }
 
-        private TEntity SaveThis(TDto dto)
+        protected virtual TEntity SaveThis(TDto dto)
         {
             this.PreSaveRoutines(dto);
 
