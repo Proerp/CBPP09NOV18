@@ -86,6 +86,11 @@ namespace TotalModel.Models
     }
 
 
+    public partial class Lab : IPrimitiveEntity, IBaseEntity
+    {
+        public int GetID() { return this.LabID; }
+    }
+
 
 
     public partial class GoodsReceipt : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<GoodsReceiptDetail>

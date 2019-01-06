@@ -17,6 +17,8 @@ namespace TotalBase
                     return "PO";
                 case GlobalEnums.NmvnTaskID.GoodsArrival:
                     return "GA";
+                case GlobalEnums.NmvnTaskID.Lab:
+                    return "LB";
 
                 case GlobalEnums.NmvnTaskID.PurchaseInvoice:
                     return "H";

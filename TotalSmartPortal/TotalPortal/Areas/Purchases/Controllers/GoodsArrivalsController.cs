@@ -44,21 +44,5 @@ namespace TotalPortal.Areas.Purchases.Controllers
             this.AddRequireJsOptions();
             return View();
         }
-
-
-
-
-
-        [OnResultExecutingFilterAttribute]
-        public virtual ActionResult Labs(int? id)
-        {
-            ViewBag.SelectedEntityID = id == null ? -1 : (int)id;
-            ViewBag.ShowDiscount = this.GenericService.GetShowDiscount();
-
-            GoodsArrivalViewModel simpleViewModel = new GoodsArrivalViewModel() { GlobalFromDate = HomeSession.GetGlobalFromDate(this.HttpContext), GlobalToDate = HomeSession.GetGlobalToDate(this.HttpContext) };
-
-            return View(this.InitViewModel(simpleViewModel));
-        }
-
     }
 }

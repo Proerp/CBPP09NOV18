@@ -1,6 +1,6 @@
 ﻿@using TotalPortal.Configuration
 
-@model TotalPortal.Areas.Purchases.ViewModels.GoodsArrivalViewModel
+@model TotalPortal.Areas.Purchases.ViewModels.LabViewModel
 
 <div id="popupWindow"></div>
 
@@ -13,14 +13,14 @@
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(90);
 
                 columns.Bound(p => p.GoodsArrivalReference).Title("#").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/GoodsArrivals", action = "Edit" }) + "/#= GoodsArrivalID #'>#=GoodsArrivalReference#</a>");
-                
+
                 columns.Bound(p => p.Code).Title("Số ĐH").Width(20);
                 columns.Bound(p => p.CommodityCodes).Title("Khách hàng").Width(190);
                 columns.Bound(p => p.CommodityNames).Title("Khách hàng").Width(190);
 
                 columns.Bound(p => p.SealCodes).Title("Khách hàng").Width(190);
                 columns.Bound(p => p.BatchCodes).Title("Khách hàng").Width(190);
-                
+
                 columns.Bound(p => p.Description).Title("Diễn giải").Width(130);
 
                 columns.Bound(p => p.TotalQuantity).Title("Đặt hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
@@ -40,33 +40,33 @@
                     </div>
                 </text>);
             })
-            .Filterable(f => f.Enabled(false))
-            .Pageable()
-            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
-            .Selectable()
-            .Sortable()
-            .Events(e =>
-            {
-                e.DataBound("hightLightSelectedRow");
-            })
-            .DataSource(dataSource => dataSource
-                .Ajax()
-                .Read(read => read.Action("GetLabIndexes", "GoodsArrivalAPIs", new { area = "Purchases" }))
-                .Sort(sort =>
+                    .Filterable(f => f.Enabled(false))
+                    .Pageable()
+                    .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
+                    .Selectable()
+                    .Sortable()
+                    .Events(e =>
                     {
-                        sort.Add(p => p.EntryDate).Descending();
-                        sort.Add(p => p.LabID).Descending();
+                        e.DataBound("hightLightSelectedRow");
                     })
-                .PageSize(20)
-                .Model(model =>
-                {
-                    model.Id(x => x.LabID);
-                    model.Field(m => m.LabID).DefaultValue(0);
-                })
-                .ServerOperation(true)
-                .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
-                )
-            .HtmlAttributes(new { @class = "grid-class" }))
+                    .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .Read(read => read.Action("GetLabIndexes", "LabAPIs", new { area = "Purchases" }))
+                        .Sort(sort =>
+                            {
+                                sort.Add(p => p.EntryDate).Descending();
+                                sort.Add(p => p.LabID).Descending();
+                            })
+                        .PageSize(20)
+                        .Model(model =>
+                        {
+                            model.Id(x => x.LabID);
+                            model.Field(m => m.LabID).DefaultValue(0);
+                        })
+                        .ServerOperation(true)
+                        .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
+                        )
+                    .HtmlAttributes(new { @class = "grid-class" }))
 </div>
 
 

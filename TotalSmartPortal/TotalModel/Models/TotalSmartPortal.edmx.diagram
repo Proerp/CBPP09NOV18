@@ -432,6 +432,14 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedProducts_GoodsReceipts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Users" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransfers_Users" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.Lab" Width="1.5" PointX="50" PointY="28.75" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_Labs" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalPackages_Labs" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_Labs_GoodsArrivals" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Labs" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_Labs_Locations" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_Labs_OrganizationalUnits" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_Labs" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

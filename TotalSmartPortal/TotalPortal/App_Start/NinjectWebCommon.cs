@@ -130,6 +130,11 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IGoodsArrivalViewModelSelectListBuilder>().To<GoodsArrivalViewModelSelectListBuilder>();
 
 
+                kernel.Bind<ILabService>().To<LabService>();
+                kernel.Bind<ILabRepository>().To<LabRepository>();
+                kernel.Bind<ILabAPIRepository>().To<LabAPIRepository>();
+                kernel.Bind<ILabSelectListBuilder>().To<LabSelectListBuilder>();
+
 
                 kernel.Bind<IGoodsReceiptRepository>().To<GoodsReceiptRepository>();
                 kernel.Bind<IGoodsReceiptAPIRepository>().To<GoodsReceiptAPIRepository>();

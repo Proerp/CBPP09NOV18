@@ -149,6 +149,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Purchases\GoodsArrivalDetailDTO.cs" />
     <Compile Include="Purchases\GoodsArrivalDTO.cs" />
+    <Compile Include="Purchases\LabDTO.cs" />
     <Compile Include="Purchases\PurchaseOrderDetailDTO.cs" />
     <Compile Include="Purchases\PurchaseOrderDTO.cs" />
     <Compile Include="Purchases\PurchaseRequisitionDetailDTO.cs" />

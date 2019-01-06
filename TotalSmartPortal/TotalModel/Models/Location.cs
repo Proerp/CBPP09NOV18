@@ -47,6 +47,7 @@ namespace TotalModel.Models
             this.WarehouseTransfers1 = new HashSet<WarehouseTransfer>();
             this.WarehouseTransfers2 = new HashSet<WarehouseTransfer>();
             this.GoodsReceipts = new HashSet<GoodsReceipt>();
+            this.Labs = new HashSet<Lab>();
         }
     
         public int LocationID { get; set; }
@@ -121,5 +122,7 @@ namespace TotalModel.Models
         public virtual ICollection<WarehouseTransfer> WarehouseTransfers2 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Lab> Labs { get; set; }
     }
 }

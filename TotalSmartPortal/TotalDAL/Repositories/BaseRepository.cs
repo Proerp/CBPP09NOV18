@@ -321,8 +321,12 @@ namespace TotalDAL.Repositories
 
 
         public void CreateStoredProcedure()
-        {
-            
+        {                       
+            //return;
+
+            Helpers.SqlProgrammability.Purchases.Lab lab = new Helpers.SqlProgrammability.Purchases.Lab(totalSmartPortalEntities);
+            lab.RestoreProcedure();
+
             //return;
 
             Helpers.SqlProgrammability.Inventories.InventoryControl inventoryControl = new Helpers.SqlProgrammability.Inventories.InventoryControl(totalSmartPortalEntities);

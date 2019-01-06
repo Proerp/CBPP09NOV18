@@ -80,6 +80,7 @@
     <Compile Include="Helpers\SqlProgrammability\Productions\SemifinishedHandover.cs" />
     <Compile Include="Helpers\SqlProgrammability\Productions\SemifinishedProduct.cs" />
     <Compile Include="Helpers\SqlProgrammability\Purchases\GoodsArrival.cs" />
+    <Compile Include="Helpers\SqlProgrammability\Purchases\Lab.cs" />
     <Compile Include="Helpers\SqlProgrammability\Purchases\PurchaseOrder.cs" />
     <Compile Include="Helpers\SqlProgrammability\Purchases\PurchaseRequisition.cs" />
     <Compile Include="Helpers\SqlProgrammability\Reports\InventoryReports.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Repositories\Productions\SemifinishedHandoverRepository.cs" />
     <Compile Include="Repositories\Productions\SemifinishedProductRepository.cs" />
     <Compile Include="Repositories\Purchases\GoodsArrivalRepository.cs" />
+    <Compile Include="Repositories\Purchases\LabRepository.cs" />
     <Compile Include="Repositories\Purchases\PurchaseOrderRepository.cs" />
     <Compile Include="Repositories\Purchases\PurchaseRequisitionRepository.cs" />
     <Compile Include="Repositories\Sales\SalesOrderRepository.cs" />

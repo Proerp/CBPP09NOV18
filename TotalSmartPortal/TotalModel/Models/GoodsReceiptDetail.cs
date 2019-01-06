@@ -91,5 +91,6 @@ namespace TotalModel.Models
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
         public virtual GoodsReceipt GoodsReceipt { get; set; }
+        public virtual Lab Lab { get; set; }
     }
 }
