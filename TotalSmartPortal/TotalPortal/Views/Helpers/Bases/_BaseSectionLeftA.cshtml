@@ -1,10 +1,6 @@
 ﻿@model TotalDTO.BaseDTO
 
-@Html.HiddenFor(model => model.Approved)
-@Html.HiddenFor(model => model.InActive)
-@Html.HiddenFor(model => model.InActiveDate)
-@Html.HiddenFor(model => model.InActivePartial)
-
+@Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeft.cshtml")
 
 <div class="form-group">
     @Html.LabelFor(model => model.Reference)

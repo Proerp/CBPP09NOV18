@@ -28,7 +28,7 @@
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
 
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(92)
-                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/Labs", action = "Print" }) + "/#= LabID #'><span class='k-icon sbt-printer'></span></a>  <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/Labs", action = "Delete" }) + "/#= LabID #'><span class='k-icon sbt-delete'></span></a>");
+                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/Labs", action = "Approve" }) + "/#= LabID #'><span class='k-icon sbt-printer'></span></a>  <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/Labs", action = "Delete" }) + "/#= LabID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>
             {

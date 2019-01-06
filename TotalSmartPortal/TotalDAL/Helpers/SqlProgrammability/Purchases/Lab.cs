@@ -19,7 +19,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
         public void RestoreProcedure()
         {
             this.GetLabIndexes();
-            this.LabInitReference();
+
+            this.LabApproved();
+            this.LabEditable();
+            this.LabDeletable();
+
+            this.LabToggleApproved();
         }
 
         private void GetLabIndexes()
@@ -40,10 +45,46 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             this.totalSmartPortalEntities.CreateStoredProcedure("GetLabIndexes", queryString);
         }
 
-        private void LabInitReference()
+        private void LabApproved()
         {
-            SimpleInitReference simpleInitReference = new SimpleInitReference("Labs", "LabID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.Lab));
-            this.totalSmartPortalEntities.CreateTrigger("LabInitReference", simpleInitReference.CreateQuery());
+            string[] queryArray = new string[1];
+
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = LabID FROM Labs WHERE LabID = @EntityID AND Approved = 1";
+
+            this.totalSmartPortalEntities.CreateProcedureToCheckExisting("LabApproved", queryArray);
+        }
+
+        private void LabEditable()
+        {
+            string[] queryArray = new string[0];
+
+            this.totalSmartPortalEntities.CreateProcedureToCheckExisting("LabEditable", queryArray);
+        }
+
+        private void LabDeletable()
+        {
+            string[] queryArray = new string[1];
+
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = LabID FROM Labs WHERE LabID = @EntityID "; //NEVER ALLOW TO DELETE
+
+            this.totalSmartPortalEntities.CreateProcedureToCheckExisting("LabDeletable", queryArray);
+        }
+
+        private void LabToggleApproved()
+        {
+            string queryString = " @EntityID int, @Approved bit " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       UPDATE      Labs  SET Approved = @Approved, ApprovedDate = GetDate(), InActive = 0, InActiveDate = NULL, VoidTypeID = NULL WHERE LabID = @EntityID AND Approved = ~@Approved" + "\r\n";
+
+            queryString = queryString + "       IF @@ROWCOUNT <> 1 " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               DECLARE     @msg NVARCHAR(300) = N'Dữ liệu không tồn tại hoặc đã ' + iif(@Approved = 0, N'hủy', '')  + N' duyệt' ; " + "\r\n";
+            queryString = queryString + "               THROW       61001,  @msg, 1; " + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("LabToggleApproved", queryString);
         }
     }
 }

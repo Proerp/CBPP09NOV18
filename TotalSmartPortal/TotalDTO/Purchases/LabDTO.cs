@@ -18,6 +18,18 @@ namespace TotalDTO.Purchases
         public void SetID(int id) { this.LabID = id; }
 
         public int LabID { get; set; }
+
+        [Display(Name = "Mã nhân viên")]
+        [Required(ErrorMessage = "Vui lòng nhập mã nhân viên")]
+        public string Code { get; set; }
+
+        public string GoodsArrivalReference { get; set; }
+        
+        public string SealCodes { get; set; }
+        public string BatchCodes { get; set; }
+
+        public string CommodityCodes { get; set; }
+        public string CommodityNames { get; set; }
     }
 
     public class LabDTO : LabPrimitiveDTO

@@ -1687,6 +1687,9 @@
     <Content Include="Areas\Inventories\Views\InventoryControls\Summaries.cshtml" />
     <Content Include="Areas\Inventories\Views\InventoryControls\Details.cshtml" />
     <Content Include="Areas\Purchases\Views\Labs\Index.cshtml" />
+    <Content Include="Areas\Purchases\Views\Labs\_Lab.cshtml" />
+    <Content Include="Areas\Purchases\Views\Labs\Edit.cshtml" />
+    <Content Include="Areas\Purchases\Views\Labs\Approve.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -2029,6 +2032,8 @@
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Index.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Open.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Print.js" />
+    <Content Include="Scripts\Controllers\Purchases\Labs\Approve.js" />
+    <Content Include="Scripts\Controllers\Purchases\Labs\Edit.js" />
     <Content Include="Scripts\Controllers\Purchases\Labs\Index.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Approve.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\CreateWizard.js" />
@@ -2965,6 +2970,7 @@
     <Content Include="Views\Shared\EditorTemplates\AutoCompletes\Commodity.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Commons\Commodity.cshtml" />
     <Content Include="Views\Helpers\Commons\_CommodityDescription.cshtml" />
+    <Content Include="Views\Helpers\Bases\_BaseSectionLeft.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
