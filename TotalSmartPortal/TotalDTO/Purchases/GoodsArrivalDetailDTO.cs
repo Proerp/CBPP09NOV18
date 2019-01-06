@@ -33,15 +33,19 @@ namespace TotalDTO.Purchases
         [UIHint("DateTimeReadonly")]
         public Nullable<System.DateTime> PurchaseOrderEntryDate { get; set; }
 
-        [Display(Name = "Ngày SX")]
-        [UIHint("Date")]
-        public Nullable<System.DateTime> ProductionDate { get; set; }
         [Display(Name = "Shelflife")]
         [UIHint("IntegerReadonly")]
         public Nullable<int> Shelflife { get; set; }
+        [Display(Name = "Ngày SX")]
+        [UIHint("Date")]
+        public Nullable<System.DateTime> ProductionDate { get; set; }
         [Display(Name = "HSD")]
         [UIHint("Date")]
         public Nullable<System.DateTime> ExpiryDate { get; set; }
+        [Display(Name = "# HSD")]
+        [UIHint("IntegerReadonly")]
+        public Nullable<int> Lifespan { get { return this.ExpiryDate != null && this.ProductionDate != null ? ((DateTime)this.ExpiryDate - (DateTime)this.ProductionDate).Days : (int?)null; } set { } }
+
 
         [UIHint("AutoCompletes/CommodityBase")]
         public override string CommodityCode { get; set; }
@@ -62,10 +66,11 @@ namespace TotalDTO.Purchases
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
 
+        [Display(Name = "KL")]
         [UIHint("Quantity")]
         public override decimal Quantity { get; set; }
 
-        [Display(Name = "Kg/ kiện")]
+        [Display(Name = "Kg/kiện")]
         [UIHint("Quantity")]
         public decimal UnitWeight { get; set; }
 

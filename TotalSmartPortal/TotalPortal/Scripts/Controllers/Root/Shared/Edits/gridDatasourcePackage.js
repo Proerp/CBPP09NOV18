@@ -50,16 +50,25 @@
 
 
 
-    definedExemplar.prototype._changeProductionDate = function (dataRow) {
-        this._updateExpiryDate(dataRow);
-    }
-
     definedExemplar.prototype._changeShelflife = function (dataRow) {
         this._updateExpiryDate(dataRow);
     }
 
+    definedExemplar.prototype._changeProductionDate = function (dataRow) {
+        this._updateLifespan(dataRow);
+        this._updateExpiryDate(dataRow);
+    }
+
+    definedExemplar.prototype._changeExpiryDate = function (dataRow) {
+        this._updateLifespan(dataRow);
+    }
+
+    definedExemplar.prototype._updateLifespan = function (dataRow) {
+        dataRow.set("Lifespan", dataRow.ExpiryDate != null && dataRow.ProductionDate != null ? Math.round(Math.abs((dataRow.ExpiryDate.getTime() - dataRow.ProductionDate.getTime()) / (24 * 60 * 60 * 1000))) : null);
+    }
+
     definedExemplar.prototype._updateExpiryDate = function (dataRow) {
-        dataRow.set("ExpiryDate", dataRow.ProductionDate != null && dataRow.Shelflife != null ? this._addMonths(dataRow.ProductionDate, dataRow.Shelflife) : null);
+        //dataRow.set("ExpiryDate", dataRow.ProductionDate != null && dataRow.Shelflife != null ? this._addMonths(dataRow.ProductionDate, dataRow.Shelflife) : null);
     }
 
 
