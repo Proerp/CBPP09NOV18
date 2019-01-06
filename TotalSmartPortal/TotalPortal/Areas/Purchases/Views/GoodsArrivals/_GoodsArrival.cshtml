@@ -73,28 +73,18 @@
             @Html.EditorFor(d => d.Code)
         }
 
-        <div class="form-group">
+        <div @{if (GlobalEnums.CBPP) { <text> class="SBT-Hidden" </text>   } else { <text> class="form-group" </text>   } }>
             @Html.EditorFor(d => d.Salesperson, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.Salesperson) })
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.PromotionVouchers)
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.PromotionVouchers).HtmlAttributes(new { @class = "left-panel-input" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.PromotionVouchers, "", new { @class = "text-danger" })
-            </div>
         </div>
 
     </div>
 
     <div class="right-panel">
 
-        <div class="right-top-panel right-top-panel-H2">
+        <div class="right-top-panel right-top-panel-H3">
 
             @Html.EditorFor(d => d.Customer, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
-            @Html.EditorFor(d => d.Transporter, new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
+            @Html.EditorFor(d => d.Transporter, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
 
             @Html.DisplayFor(d => d.Warehouse, "Commons/WarehouseBase")
         </div>

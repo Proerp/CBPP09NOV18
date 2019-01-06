@@ -162,13 +162,16 @@ namespace TotalDTO.Inventories
         [UIHint("AutoCompletes/BinLocationBase")]
         public string BinLocationCode { get; set; }
 
+        [Display(Name = "NSX")]
         public Nullable<System.DateTime> ProductionDate { get; set; }
+        [Display(Name = "HSD")]
         public Nullable<System.DateTime> ExpiryDate { get; set; }
 
         [Display(Name = "SL Tồn")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
 
+        [Display(Name = "KL N/K")]
         [UIHint("Quantity")]
         public override decimal Quantity { get; set; }
 

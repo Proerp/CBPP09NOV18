@@ -73,6 +73,7 @@ namespace TotalDTO.Purchases
         public GoodsArrivalDTO()
         {
             this.GoodsArrivalViewDetails = new List<GoodsArrivalDetailDTO>();
+            if (GlobalEnums.CBPP) { this.Salesperson = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; }
         }
 
         public override int CustomerID { get { return (this.Customer != null ? this.Customer.CustomerID : 0); } }

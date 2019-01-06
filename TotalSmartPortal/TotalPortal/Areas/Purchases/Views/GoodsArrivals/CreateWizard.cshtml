@@ -147,8 +147,8 @@
                 $("#Warehouse_Code").val(selectedDataItem === undefined || selectedDataItem.WarehouseCode === undefined ? null : selectedDataItem.WarehouseCode);
                 $("#Warehouse_Name").val(selectedDataItem === undefined || selectedDataItem.WarehouseName === undefined ? null : selectedDataItem.WarehouseName);
 
-                $("#Salesperson_EmployeeID").val(selectedDataItem === undefined || selectedDataItem.SalespersonID === undefined ? null : selectedDataItem.SalespersonID);
-                $("#Salesperson_Name").val(selectedDataItem === undefined || selectedDataItem.SalespersonName === undefined ? null : selectedDataItem.SalespersonName);
+                $("#Salesperson_EmployeeID").val(selectedDataItem === undefined || selectedDataItem.SalespersonID === undefined ? $("#Salesperson_EmployeeID").val() : selectedDataItem.SalespersonID);
+                $("#Salesperson_Name").val(selectedDataItem === undefined || selectedDataItem.SalespersonName === undefined ? $("#Salesperson_Name").val() : selectedDataItem.SalespersonName);
 
                 $("#Description").val(selectedDataItem === undefined || selectedDataItem.Description === undefined ? null : selectedDataItem.Description);
             }

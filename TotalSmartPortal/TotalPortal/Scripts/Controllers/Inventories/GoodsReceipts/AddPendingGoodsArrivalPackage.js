@@ -108,7 +108,7 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingGoodsArrivalPackageGri
         dataRow.ExpiryDate = goodsArrivalGridDataItem.ExpiryDate;
 
         dataRow.QuantityRemains = goodsArrivalGridDataItem.QuantityRemains;
-        dataRow.Quantity = goodsArrivalGridDataItem.Quantity;
+        dataRow.Quantity = goodsArrivalGridDataItem.QuantityRemains; //SET DEFAULT TOO!
 
         dataRow.Remarks = null;
 

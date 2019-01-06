@@ -1,0 +1,13 @@
+﻿@model TotalDTO.Helpers.Interfaces.IWarehouse
+
+@Html.HiddenFor(model => model.Warehouse.WarehouseID)
+@Html.HiddenFor(model => model.Warehouse.Code)
+
+<div class="right-second-panel">
+    <div class="form-group">
+        <div style="float:left; padding-top: 4px; padding-right: 2px;">
+            <img src="~/Content/Images/Mains/Size24/WH-24B.png" title="Kho nhập" />
+        </div>
+        <div class="right-panel-label right-panel-label-larger-width"> <span> @Html.DisplayFor(a => a.Warehouse.Name) </span> </div>
+    </div>
+</div>

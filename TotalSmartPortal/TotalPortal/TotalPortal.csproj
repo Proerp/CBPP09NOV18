@@ -2971,6 +2971,7 @@
     <Content Include="Views\Shared\EditorTemplates\Commons\Commodity.cshtml" />
     <Content Include="Views\Helpers\Commons\_CommodityDescription.cshtml" />
     <Content Include="Views\Helpers\Bases\_BaseSectionLeft.cshtml" />
+    <Content Include="Views\Helpers\Commons\_Warehouse2019.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

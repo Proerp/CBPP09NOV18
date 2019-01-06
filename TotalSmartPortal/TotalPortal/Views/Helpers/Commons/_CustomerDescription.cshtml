@@ -28,7 +28,7 @@
 
 @{var modelFullHtmlFieldName = @Html.ViewData.TemplateInfo.GetFullHtmlFieldName("Name"); modelFullHtmlFieldName = modelFullHtmlFieldName.Substring(0, modelFullHtmlFieldName.IndexOf("."));  }
 
-<div class="right-second-panel right-second-panel-small">
+<div class="right-second-panel right-second-panel-small" style="@(ViewData["CustomerTelephoneHidden"] == "true" ? "display: none" : "")">
     <div class="form-group">
         <div style="float:left; padding-top: 2px; padding-right: 2px;">
             @if (ViewData["NullCustomer"] == null && (Model == null || (Model.Telephone != null && Model.Telephone != "")))
