@@ -48,16 +48,18 @@ namespace TotalDAL.Repositories.Purchases
 
         protected override ObjectParameter[] GetEntityIndexParameters(string aspUserID, DateTime fromDate, DateTime toDate)
         {
+            if (this.RepositoryBag.ContainsKey("PendingOnly"))
+            {
 
-            ObjectParameter[] baseParameters = base.GetEntityIndexParameters(aspUserID, fromDate, toDate);
-            ObjectParameter[] objectParameters = new ObjectParameter[] { baseParameters[0], baseParameters[1], baseParameters[2], new ObjectParameter("PendingOnly", this.RepositoryBag.ContainsKey("PendingOnly") && this.RepositoryBag["PendingOnly"] != null ? this.RepositoryBag["PendingOnly"] : false) };
+                ObjectParameter[] baseParameters = base.GetEntityIndexParameters(aspUserID, fromDate, toDate);
+                ObjectParameter[] objectParameters = new ObjectParameter[] { baseParameters[0], baseParameters[1], baseParameters[2], new ObjectParameter("PendingOnly", this.RepositoryBag.ContainsKey("PendingOnly") && this.RepositoryBag["PendingOnly"] != null ? this.RepositoryBag["PendingOnly"] : false) };
 
-            this.RepositoryBag.Remove("PendingOnly");
+                this.RepositoryBag.Remove("PendingOnly");
 
-            return objectParameters;
-
-
-
+                return objectParameters;
+            }
+            else
+                return base.GetEntityIndexParameters(aspUserID, fromDate, toDate);
         }
 
         public IEnumerable<GoodsArrivalPendingCustomer> GetCustomers(int? locationID)

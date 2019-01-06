@@ -65,5 +65,20 @@ namespace TotalPortal.Areas.Purchases.APIs
             var result = this.goodsArrivalAPIRepository.GetPendingPurchaseOrderDetails(locationID, goodsArrivalID, purchaseOrderID, customerID, transporterID, purchaseOrderDetailIDs);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
+
+
+
+
+
+
+        public JsonResult GetLabIndexes([DataSourceRequest] DataSourceRequest request)
+        {
+            ICollection<LabIndex> goodsArrivalIndexes = this.goodsArrivalAPIRepository.GetEntityIndexes<LabIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext), "GetLabIndexes");
+
+            DataSourceResult response = goodsArrivalIndexes.ToDataSourceResult(request);
+
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
     }
 }

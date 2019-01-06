@@ -1682,6 +1682,7 @@
     <Content Include="App_Code\Commons\Toolbars.cshtml" />
     <Content Include="Areas\Inventories\Views\InventoryControls\Summaries.cshtml" />
     <Content Include="Areas\Inventories\Views\InventoryControls\Details.cshtml" />
+    <Content Include="Areas\Purchases\Views\GoodsArrivals\Labs.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -2022,6 +2023,7 @@
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Delete.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Edit.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Index.js" />
+    <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Labs.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Open.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\Print.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Approve.js" />

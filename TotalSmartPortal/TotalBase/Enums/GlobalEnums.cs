@@ -39,7 +39,7 @@ namespace TotalBase.Enums
             UnKnown = 0,
 
 
-
+            Lab = 2001,
             Customer = 8001,
 
             Material = 8002,

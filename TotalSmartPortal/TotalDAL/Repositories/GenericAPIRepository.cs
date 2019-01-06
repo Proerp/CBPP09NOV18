@@ -20,7 +20,12 @@ namespace TotalDAL.Repositories
 
         public virtual ICollection<TEntityIndex> GetEntityIndexes<TEntityIndex>(string aspUserID, DateTime fromDate, DateTime toDate)
         {
-            return base.ExecuteFunction<TEntityIndex>(this.functionNameGetEntityIndexes, this.GetEntityIndexParameters(aspUserID, fromDate, toDate));
+            return this.GetEntityIndexes<TEntityIndex>(aspUserID, fromDate, toDate, this.functionNameGetEntityIndexes);
+        }
+
+        public virtual ICollection<TEntityIndex> GetEntityIndexes<TEntityIndex>(string aspUserID, DateTime fromDate, DateTime toDate, string functionNameGetEntityIndexes)
+        {
+            return base.ExecuteFunction<TEntityIndex>(functionNameGetEntityIndexes, this.GetEntityIndexParameters(aspUserID, fromDate, toDate));
         }
 
         protected virtual ObjectParameter[] GetEntityIndexParameters(string aspUserID, DateTime fromDate, DateTime toDate)

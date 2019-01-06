@@ -7109,6 +7109,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="PendingOptionID" Type="int" Mode="In" />
           <Parameter Name="ShelfLife" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetLabIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
+          <Parameter Name="FromDate" Type="datetime" Mode="In" />
+          <Parameter Name="ToDate" Type="datetime" Mode="In" />
+        </Function>
         <Function Name="GetLocationOrganizationalUnits" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nothing" Type="int" Mode="In" />
         </Function>
@@ -14652,6 +14657,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
             <Parameter Name="Symbologies" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetLabIndexes" ReturnType="Collection(TotalSmartPortalModel.LabIndex)">
+            <Parameter Name="AspUserID" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -21976,6 +21986,21 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="GoodsArrivalDetailID" Nullable="true" />
           <Property Type="Int32" Name="GoodsArrivalPackageID" Nullable="true" />
         </ComplexType>
+        <ComplexType Name="LabIndex">
+          <Property Type="Int32" Name="LabID" Nullable="false" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Reference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Code" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="CommodityCodes" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="CommodityNames" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="SealCodes" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="BatchCodes" Nullable="true" MaxLength="1000" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="GoodsArrivalReference" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="GoodsArrivalID" Nullable="true" />
+          <Property Type="Boolean" Name="Approved" Nullable="false" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -27932,6 +27957,25 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SetBarcodeSymbologies" FunctionName="TotalSmartPortalModel.Store.SetBarcodeSymbologies" />
+          <FunctionImportMapping FunctionImportName="GetLabIndexes" FunctionName="TotalSmartPortalModel.Store.GetLabIndexes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.LabIndex">
+                <ScalarProperty Name="LabID" ColumnName="LabID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CommodityCodes" ColumnName="CommodityCodes" />
+                <ScalarProperty Name="CommodityNames" ColumnName="CommodityNames" />
+                <ScalarProperty Name="SealCodes" ColumnName="SealCodes" />
+                <ScalarProperty Name="BatchCodes" ColumnName="BatchCodes" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="GoodsArrivalReference" ColumnName="GoodsArrivalReference" />
+                <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
