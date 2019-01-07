@@ -6,16 +6,16 @@
 
     .Columns(columns =>
     {
-        columns.Bound(c => c.CustomerCode).Title("Mã NCC").Width(90);
+        columns.Bound(c => c.CustomerCode).Title("Mã NCC").Width(60);
         columns.Bound(c => c.CustomerName).Title("Nhà cung cấp").Width(190);
-        columns.Bound(c => c.TransporterCode).Title("Mã GH").Width(90);
+        columns.Bound(c => c.TransporterCode).Title("Mã GH").Width(60);
         columns.Bound(c => c.TransporterName).Title("Đơn vị giao hàng").Width(190);
     })
     .ToolBar(toolbar =>
     {
         toolbar.Template(@<text>
             <div class="toolbar" style="float: right;">
-                <label>Nhập mã, tên, MST, địa chỉ, địa bàn khách hàng, hoặc mã kho</label>
+                <label>Nhập mã, tên NCC hay đơn vị giao hàng</label>
                 <input id="goodsArrivalPendingCustomerFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="goodsArrivalPendingCustomerFilter_KeyUp()" />
             </div>
         </text>);
@@ -43,7 +43,9 @@
                 logic: "or",
                 filters: [
                     { field: "CustomerCode", operator: "contains", value: goodsArrivalPendingCustomerFilter },
-                    { field: "CustomerName", operator: "contains", value: goodsArrivalPendingCustomerFilter }
+                    { field: "CustomerName", operator: "contains", value: goodsArrivalPendingCustomerFilter },
+                    { field: "TransporterCode", operator: "contains", value: goodsArrivalPendingCustomerFilter },
+                    { field: "TransporterName", operator: "contains", value: goodsArrivalPendingCustomerFilter }
                 ]
             });
 
