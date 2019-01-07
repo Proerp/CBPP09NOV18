@@ -16,40 +16,44 @@
     @Html.HiddenFor(model => model.PurchaseOrderReference)
     @Html.HiddenFor(model => model.PurchaseOrderEntryDate)
 
-    @Html.HiddenFor(model => model.Warehouse.WarehouseID)
-    @Html.HiddenFor(model => model.Warehouse.Code)
-    @Html.HiddenFor(model => model.Warehouse.Name)
-    
     @Html.HiddenFor(model => model.Salesperson.EmployeeID);
     @Html.HiddenFor(model => model.Salesperson.Name);
 
     @Html.HiddenFor(model => model.Description);
 
     @(Html.Kendo().TabStrip()
-        .HtmlAttributes(new { @style = "height: 468px; margin-left: 0px; margin-right: 0px;" })
+        .HtmlAttributes(new { @style = "height: 377px; margin-left: 0px; margin-right: 0px;" })
         .Name("tabStrip")
         .Items(tabStrip =>
         {
-            tabStrip.Add().Text("Khách hàng không có đơn hàng")
+            tabStrip.Add().Text("Nhập hàng theo PO")
                 .Selected(true)
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Purchases/Views/GoodsArrivals/_GetPurchaseOrder.cshtml")
+                </text>);
+            tabStrip.Add().Text("Nhập hàng tổng hợp PO")
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Purchases/Views/GoodsArrivals/_GetCustomer.cshtml")
+                </text>);
+            @*tabStrip.Add().Text("Nhập hàng không có PO")
+                .Enabled(false)
+                .Visible(false)
                 .Content(@<text>
                     @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
                     @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID) })
                     @Html.EditorFor(d => d.Warehouse, new { WarehouseDisplayName = @Model.GetDisplayName(m => m.Warehouse) })
-                </text>);
-
-            tabStrip.Add().Text("Giao hàng theo đơn đặt hàng")
-                .Content(@<text>
-                    @Html.Partial("~/Areas/Purchases/Views/GoodsArrivals/_GetPurchaseOrder.cshtml")
-                </text>);
-            tabStrip.Add().Text("Giao hàng tổng hợp của nhiều đơn đặt hàng")
-                    .Content(@<text>
-                    @Html.Partial("~/Areas/Purchases/Views/GoodsArrivals/_GetCustomer.cshtml")
-                    </text>);
+                </text>);*@
         })
     )
 
+    <div class="SBT-Hidden"> @*WILL REMOVE, IF WE USE THE TAB ABOVE*@
+        @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+        @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID) })
+        @Html.EditorFor(d => d.Warehouse, new { WarehouseDisplayName = @Model.GetDisplayName(m => m.Warehouse) })
+    </div>
 
+    
+    
     <div class="background-bar" style="height: 45px;">
         <div class="popup-button-bar">
             <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "GoodsArrivals")" formtarget="_top" style="display:none" />
@@ -66,7 +70,7 @@
 
 <script type="text/javascript">
     function okButton_Click() {
-        if ($("#tabStrip").data("kendoTabStrip").select().index() === 0)
+        if ($("#tabStrip").data("kendoTabStrip").select().index() === 2)
             handleOKEvent($("#gridPromotion").data("kendoGrid"));
         else //BY PurchaseOrder
             handleOKEvent();
@@ -78,7 +82,7 @@
 
     function handleOKEvent(promotionGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
 
-        var hasPurchaseOrder = $("#tabStrip").data("kendoTabStrip").select().index() === 0 ? false : true;
+        var hasPurchaseOrder = $("#tabStrip").data("kendoTabStrip").select().index() === 2 ? false : true;
 
         if (hasPurchaseOrder == false) {
             if ($("#Customer_CustomerID").val() === null || $("#Customer_CustomerID").val() === "")
@@ -93,7 +97,7 @@
             _setModelInput();
         }
         else {
-            var selectedGrid = $($("#tabStrip").data("kendoTabStrip").select().index() === 1 ? "#goodsArrivalPendingPurchaseOrderGrid" : "#goodsArrivalPendingCustomerGrid").data("kendoGrid");
+            var selectedGrid = $($("#tabStrip").data("kendoTabStrip").select().index() === 0 ? "#goodsArrivalPendingPurchaseOrderGrid" : "#goodsArrivalPendingCustomerGrid").data("kendoGrid");
             var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
             if (selectedDataItem === undefined || selectedDataItem === null)
                 return false;
@@ -125,7 +129,7 @@
                 $("#Customer_ShippingAddress").val(selectedDataItem === undefined || selectedDataItem.CustomerShippingAddress === undefined ? null : selectedDataItem.CustomerShippingAddress);
                 $("#Customer_SalespersonID").val(selectedDataItem === undefined || selectedDataItem.CustomerSalespersonID === undefined ? null : selectedDataItem.CustomerSalespersonID);
                 $("#Customer_SalespersonName").val(selectedDataItem === undefined || selectedDataItem.CustomerSalespersonName === undefined ? null : selectedDataItem.CustomerSalespersonName);
-                
+
                 $("#Transporter_CustomerID").val(selectedDataItem === undefined || selectedDataItem.TransporterID === undefined ? null : selectedDataItem.TransporterID);
                 $("#Transporter_Code").val(selectedDataItem === undefined || selectedDataItem.TransporterCode === undefined ? null : selectedDataItem.TransporterCode);
                 $("#Transporter_Name").val(selectedDataItem === undefined || selectedDataItem.TransporterName === undefined ? null : selectedDataItem.TransporterName);
@@ -137,7 +141,7 @@
                 $("#Transporter_ShippingAddress").val(selectedDataItem === undefined || selectedDataItem.TransporterShippingAddress === undefined ? null : selectedDataItem.TransporterShippingAddress);
                 $("#Transporter_SalespersonID").val(selectedDataItem === undefined || selectedDataItem.TransporterSalespersonID === undefined ? null : selectedDataItem.TransporterSalespersonID);
                 $("#Transporter_SalespersonName").val(selectedDataItem === undefined || selectedDataItem.TransporterSalespersonName === undefined ? null : selectedDataItem.TransporterSalespersonName);
-                
+
                 $("#PurchaseOrderID").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderID === undefined ? null : selectedDataItem.PurchaseOrderID);
                 $("#PurchaseOrderCode").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderCode === undefined ? null : selectedDataItem.PurchaseOrderCode);
                 $("#PurchaseOrderReference").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderReference === undefined ? null : selectedDataItem.PurchaseOrderReference);

@@ -83,6 +83,8 @@ namespace TotalDTO.Inventories
         [UIHint("AutoCompletes/VoidType")]
         VoidTypeBaseDTO VoidType { get; set; }
 
+        string Features { get; }
+
         string ControllerName { get; }
 
         bool IsMaterial { get; }
@@ -128,7 +130,7 @@ namespace TotalDTO.Inventories
         }
 
 
-        public override string Caption { get { return this.WarehouseReceiptID == 6 ? "Chuyển NVL về khu vực sản xuất" : "Chuyển trả NVL từ khu vực sản xuất về kho"; } }
+        public string Features { get { return this.WarehouseReceiptID == 6 ? "Chuyển NVL về khu vực sản xuất" : "Chuyển trả NVL từ khu vực sản xuất về kho"; } }
 
         public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
 

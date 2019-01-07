@@ -6,10 +6,10 @@
 
     .Columns(columns =>
     {
-        columns.Bound(c => c.CustomerCode).Title("Mã khách hàng").Width(90);
-        columns.Bound(c => c.CustomerName).Title("Tên khách hàng").Width(190);
-        columns.Bound(c => c.TransporterCode).Title("Mã người giao").Width(190);
-        columns.Bound(c => c.TransporterName).Title("Tên người giao").Width(190);
+        columns.Bound(c => c.CustomerCode).Title("Mã NCC").Width(90);
+        columns.Bound(c => c.CustomerName).Title("Nhà cung cấp").Width(190);
+        columns.Bound(c => c.TransporterCode).Title("Mã GH").Width(90);
+        columns.Bound(c => c.TransporterName).Title("Đơn vị giao hàng").Width(190);
     })
     .ToolBar(toolbar =>
     {
@@ -20,7 +20,7 @@
             </div>
         </text>);
     })
-    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .Scrollable(s => s.Height(Settings.PopupContentHeightMedium))
     .DataSource(ds => ds.Ajax()
         .Read(read => read.Action("GetCustomers", "GoodsArrivalAPIs", new { area = "Purchases" }).Data("onAdditionalGetCustomers"))
         .ServerOperation(false)

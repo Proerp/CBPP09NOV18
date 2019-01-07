@@ -100,7 +100,7 @@
     function onGetGoodsArrivalIndexes(e) {
         var indexFilterText = $("#indexFilterText").val();
         return {
-            withExtendedSearch: indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght"? true: false,
+            withExtendedSearch: indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght" ? true : false,
             extendedFromDate: $("#ExtendedFromDate").val(),
             extendedToDate: $("#ExtendedToDate").val(),
             pendingOnly: $("#ShowPendingOnly").val() === "0" ? false : true
@@ -117,7 +117,7 @@
     function createWizard() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "GoodsArrivals")", "Chọn khách hàng, chương trình khuyến mãi áp dụng cho khách hàng", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "GoodsArrivals")", "Chọn phiếu đặt hàng", "@Settings.PopupWidthSmall", "@Settings.PopupHeightMedium");
         });
     }
 

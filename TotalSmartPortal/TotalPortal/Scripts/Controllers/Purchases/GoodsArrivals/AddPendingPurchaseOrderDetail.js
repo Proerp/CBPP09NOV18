@@ -72,6 +72,7 @@ function handleOKEvent(goodsArrivalGridDataSource, pendingPurchaseOrderDetailGri
 
         dataRow.ProductionDate = null;
         dataRow.ExpiryDate = null;
+        dataRow.Lifespan = null;
 
         dataRow.Remarks = null;
 
