@@ -10,10 +10,12 @@ namespace TotalDAL.Repositories.Commons
     public class BinLocationRepository : GenericRepository<BinLocation>, IBinLocationRepository
     {
         public BinLocationRepository(TotalSmartPortalEntities totalSmartPortalEntities)
-            : base(totalSmartPortalEntities)
+            : base(totalSmartPortalEntities, "BinLocationEditable", null, "BinLocationDeletable")
         {
         }
     }
+
+
 
 
 

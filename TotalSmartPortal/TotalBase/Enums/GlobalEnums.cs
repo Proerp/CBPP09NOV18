@@ -47,6 +47,7 @@ namespace TotalBase.Enums
             Product = 8002008,
 
             Mold = 8007,
+            BinLocation = 8008,
 
             Promotion = 8003,
             Employee = 8005,

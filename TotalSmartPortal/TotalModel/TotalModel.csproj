@@ -84,6 +84,9 @@
     <Compile Include="Models\BinLocationBase.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BinLocationIndex.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BlendingInstruction.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

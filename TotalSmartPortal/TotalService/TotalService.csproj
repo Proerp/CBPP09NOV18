@@ -61,6 +61,7 @@
     <Compile Include="Accounts\CreditNoteService.cs" />
     <Compile Include="Accounts\ReceiptService.cs" />
     <Compile Include="BaseService.cs" />
+    <Compile Include="Commons\BinLocationService.cs" />
     <Compile Include="Commons\CommodityPriceService.cs" />
     <Compile Include="Commons\CommodityService.cs" />
     <Compile Include="Commons\CustomerService.cs" />

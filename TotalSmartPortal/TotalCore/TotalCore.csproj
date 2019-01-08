@@ -121,6 +121,7 @@
     <Compile Include="Services\Accounts\IAccountInvoiceService.cs" />
     <Compile Include="Services\Accounts\ICreditNoteService.cs" />
     <Compile Include="Services\Accounts\IReceiptService.cs" />
+    <Compile Include="Services\Commons\IBinLocationService.cs" />
     <Compile Include="Services\Commons\ICommodityPriceService.cs" />
     <Compile Include="Services\Commons\ICommodityService.cs" />
     <Compile Include="Services\Commons\ICustomerService.cs" />
