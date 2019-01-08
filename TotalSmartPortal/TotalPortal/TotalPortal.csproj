@@ -269,6 +269,7 @@
     <Compile Include="Areas\Commons\APIs\VoidTypeAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\PromotionAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\WarehouseAPIsController.cs" />
+    <Compile Include="Areas\Commons\Builders\IBinLocationSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityBrandSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityCategorySelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityClassSelectListBuilder.cs" />
@@ -293,6 +294,7 @@
     <Compile Include="Areas\Commons\CommonsAreaRegistration.cs" />
     <Compile Include="Areas\Commons\Controllers\Apis\BinLocationsApiController.cs" />
     <Compile Include="Areas\Commons\Controllers\Apis\ShiftsApiController.cs" />
+    <Compile Include="Areas\Commons\Controllers\BinLocationsController.cs" />
     <Compile Include="Areas\Commons\Controllers\CommoditiesController.cs" />
     <Compile Include="Areas\Commons\Controllers\CommodityPricesController.cs" />
     <Compile Include="Areas\Commons\Controllers\CustomersController.cs" />
@@ -300,6 +302,7 @@
     <Compile Include="Areas\Commons\Controllers\MoldsController.cs" />
     <Compile Include="Areas\Commons\Controllers\PromotionsController.cs" />
     <Compile Include="Areas\Commons\Controllers\Sessions\ShiftSession.cs" />
+    <Compile Include="Areas\Commons\ViewModels\BinLocationViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\CommodityPriceViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\CommodityViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\CustomerViewModel.cs" />
@@ -1690,6 +1693,16 @@
     <Content Include="Areas\Purchases\Views\Labs\_Lab.cshtml" />
     <Content Include="Areas\Purchases\Views\Labs\Edit.cshtml" />
     <Content Include="Areas\Purchases\Views\Labs\Approve.cshtml" />
+    <Content Include="Areas\Commons\Views\BinLocations\Create.cshtml" />
+    <Content Include="Areas\Commons\Views\BinLocations\Edit.cshtml" />
+    <Content Include="Areas\Commons\Views\BinLocations\Index.cshtml" />
+    <Content Include="Areas\Commons\Views\BinLocations\_BinLocation.cshtml" />
+    <Content Include="Areas\Commons\Views\BinLocations\Delete.cshtml" />
+    <Content Include="Areas\Commons\Views\Customers\Delete.cshtml" />
+    <Content Include="Areas\Commons\Views\Commodities\Delete.cshtml" />
+    <Content Include="Areas\Commons\Views\Materials\Delete.cshtml" />
+    <Content Include="Areas\Commons\Views\Items\Delete.cshtml" />
+    <Content Include="Areas\Commons\Views\Products\Delete.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -1720,6 +1733,10 @@
     <Content Include="Scripts\Controllers\Accounts\Receipts\Edit.js" />
     <Content Include="Scripts\Controllers\Accounts\Receipts\Index.js" />
     <Content Include="Scripts\Controllers\Accounts\Receipts\Open.js" />
+    <Content Include="Scripts\Controllers\Commons\BinLocations\Create.js" />
+    <Content Include="Scripts\Controllers\Commons\BinLocations\Delete.js" />
+    <Content Include="Scripts\Controllers\Commons\BinLocations\Edit.js" />
+    <Content Include="Scripts\Controllers\Commons\BinLocations\Index.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Create.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Edit.js" />

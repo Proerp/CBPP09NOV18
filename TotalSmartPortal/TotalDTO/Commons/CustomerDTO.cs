@@ -43,17 +43,17 @@ namespace TotalDTO.Commons
     {
         public int CustomerID { get; set; }
 
-        [Display(Name = "Mã khách hàng")]
+        [Display(Name = "Mã KH, NCC")]
         [Required(ErrorMessage = "Vui lòng nhập mã khách hàng")]
         public string Code { get; set; }
 
-        [Display(Name = "Tên khách hàng")]
+        [Display(Name = "Tên khách hàng, NCC")]
         [Required(ErrorMessage = "Vui lòng nhập tên khách hàng")]
         public string Name { get; set; }
 
         public string CodeAndName { get { return this.Code + (this.Code != null && this.Code != "" && this.Name != null && this.Name != "" ? "  -  " : "") + this.Name; } }
 
-        [Display(Name = "Tên xuất hóa đơn")]
+        [Display(Name = "Tên giao dịch chính thức")]
         public virtual string OfficialName { get; set; }
 
         [Display(Name = "Ngày sinh nhật")]
@@ -65,7 +65,7 @@ namespace TotalDTO.Commons
         [Display(Name = "Điện thoại")]
         public virtual string Telephone { get; set; }
 
-        [Display(Name = "Địa chỉ xuất hóa đơn")]
+        [Display(Name = "Địa chỉ")]
         public virtual string BillingAddress { get; set; }
         [Display(Name = "Địa chỉ giao hàng")]
         public virtual string ShippingAddress { get; set; }
@@ -155,7 +155,7 @@ namespace TotalDTO.Commons
 
     public class CustomerDTO : CustomerPrimitiveDTO
     {
-        public CustomerDTO() { this.Salesperson = new EmployeeBaseDTO(); this.IsCustomer = true;}
+        public CustomerDTO() { this.Salesperson = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; this.IsCustomer = true; }
 
         public override int SalespersonID { get { return (this.Salesperson != null ? this.Salesperson.EmployeeID : 0); } }
         [Display(Name = "Nhân viên tiếp thị")]

@@ -33,15 +33,15 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
         {
             string queryString;
 
-            queryString = " @UserID Int, @FromDate DateTime, @ToDate DateTime " + "\r\n";
+            queryString = " @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      BinLocations.BinLocationID, BinLocations.Code AS BinLocationCode, BinLocations.Name AS BinLocationName, Locations.Name AS LocationName, BinLocations.InActive, BinLocations.Remarks " + "\r\n";
+            queryString = queryString + "       SELECT      BinLocations.BinLocationID, BinLocations.Code, BinLocations.Name, Warehouses.Name AS WarehouseName, BinLocations.InActive, BinLocations.Remarks " + "\r\n";
             queryString = queryString + "       FROM        BinLocations " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Locations ON BinLocations.OrganizationalUnitID IN (SELECT OrganizationalUnitID FROM AccessControls WHERE UserID = @UserID AND NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.BinLocation + " AND AccessControls.AccessLevel > 0) AND BinLocations.LocationID = Locations.LocationID " + "\r\n";
-            queryString = queryString + "       WHERE      (SELECT TOP 1 OrganizationalUnitID FROM AccessControls WHERE UserID = @UserID AND NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.BinLocation + " AND AccessControls.AccessLevel > 0) > 0 " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Warehouses ON BinLocations.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.BinLocation + " AND AccessControls.AccessLevel > 0) AND BinLocations.WarehouseID = Warehouses.WarehouseID " + "\r\n";
+            queryString = queryString + "       WHERE      (SELECT TOP 1 OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.BinLocation + " AND AccessControls.AccessLevel > 0) > 0 " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
@@ -75,18 +75,18 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
         {
             string[] queryArray = new string[0];
 
+
+
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("BinLocationEditable", queryArray);
         }
 
         private void BinLocationDeletable()
         {
-            string[] queryArray = new string[0];
+            string[] queryArray = new string[3];
 
-            //queryArray[0] = " SELECT TOP 1 @FoundEntity = BinLocationID FROM PickupDetails WHERE BinLocationID = @EntityID ";
-            //queryArray[1] = " SELECT TOP 1 @FoundEntity = BinLocationID FROM GoodsReceiptDetails WHERE BinLocationID = @EntityID ";
-            //queryArray[2] = " SELECT TOP 1 @FoundEntity = BinLocationID FROM GoodsIssueDetails WHERE BinLocationID = @EntityID ";
-            //queryArray[3] = " SELECT TOP 1 @FoundEntity = BinLocationID FROM GoodsIssueTransferDetails WHERE BinLocationID = @EntityID ";
-            //queryArray[4] = " SELECT TOP 1 @FoundEntity = BinLocationID FROM WarehouseAdjustmentDetails WHERE BinLocationID = @EntityID ";
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = CommodityID FROM GoodsReceiptDetails WHERE BinLocationID = @EntityID ";
+            queryArray[1] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PackageIssueDetails WHERE BinLocationID = @EntityID ";
+            queryArray[2] = " SELECT TOP 1 @FoundEntity = CommodityID FROM WarehouseTransferDetails WHERE BinLocationID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("BinLocationDeletable", queryArray);
         }

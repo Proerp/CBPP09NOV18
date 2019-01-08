@@ -14,10 +14,10 @@ namespace TotalModel.Models
     public partial class BinLocationIndex
     {
         public int BinLocationID { get; set; }
-        public string BinLocationCode { get; set; }
-        public string BinLocationName { get; set; }
-        public string LocationName { get; set; }
         public bool InActive { get; set; }
         public string Remarks { get; set; }
+        public string Code { get; set; }
+        public string Name { get; set; }
+        public string WarehouseName { get; set; }
     }
 }

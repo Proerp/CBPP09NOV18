@@ -50,14 +50,18 @@
 
 
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CustomerCategory.cshtml")
-        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PriceCategory.cshtml")
-        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PaymentTerm.cshtml", @Model, new ViewDataDictionary { { "SingleColumn", true } })
 
-        <div class="form-group">
-            @Html.EditorFor(d => d.Salesperson, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.Salesperson) })
+        <div class="SBT-Hidden">
+            @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PriceCategory.cshtml")
+            @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PaymentTerm.cshtml", @Model, new ViewDataDictionary { { "SingleColumn", true } })
+
+            <div class="form-group">
+                @Html.EditorFor(d => d.Salesperson, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.Salesperson) })
+            </div>
+
+            @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CustomerType.cshtml")
         </div>
-                
-        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CustomerType.cshtml")
+
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Territory.cshtml")
 
         <div class="form-group">
@@ -81,38 +85,39 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ShippingAddress)
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.ShippingAddress).HtmlAttributes(new { @class = "left-panel-input" })
+        <div class="SBT-Hidden">
+            <div class="form-group">
+                @Html.LabelFor(model => model.ShippingAddress)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => model.ShippingAddress).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.ShippingAddress, "", new { @class = "text-danger" })
+                </div>
             </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.ShippingAddress, "", new { @class = "text-danger" })
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VendorCode)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => model.VendorCode).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.VendorCode, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.VendorCategory)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => model.VendorCategory).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => model.VendorCategory, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.VendorCode)
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.VendorCode).HtmlAttributes(new { @class = "left-panel-input" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.VendorCode, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.VendorCategory)
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.VendorCategory).HtmlAttributes(new { @class = "left-panel-input" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.VendorCategory, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
 
         <div class="form-group">
             @Html.LabelFor(model => model.Telephone)
@@ -169,9 +174,9 @@
         </div>
 
         <div class="form-group">
-            @Html.CheckBoxFor(model => model.IsCustomer) @Html.LabelFor(model => model.IsCustomer)                    
+            @Html.CheckBoxFor(model => model.IsCustomer) @Html.LabelFor(model => model.IsCustomer)
         </div>
-        <div class="form-group">            
+        <div class="form-group">
             @Html.CheckBoxFor(model => model.IsSupplier) @Html.LabelFor(model => model.IsSupplier)
         </div>
 
@@ -181,12 +186,12 @@
         <div class="left-panel-input">
             @if (Model.Editable)
             {
-                <button type="submit" class="@(Model.CustomerID > 0 ? "k-button custom-button SubmitTypeOption-Closed" : "k-button custom-button SubmitTypeOption-Closed")" formaction="@Url.Action("Edit", "Customers")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu dữ liệu khách hàng </button>
+                <button type="submit" class="@(Model.CustomerID > 0 ? "k-button custom-button SubmitTypeOption-Closed" : "k-button custom-button SubmitTypeOption-Closed")" formaction="@Url.Action("Edit", "Customers")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
             }
             @if (Model.CustomerID > 0 && Model.ShowDiscount)
             {
                 <button type="button" class="k-button custom-button" onclick="ShowPromotions()"> <img src="~/Content/Images/New/2017/sale-off-icon-32.png" /> @(Model.Editable ? "Quản lý chiết khấu, khuyến mãi" : "Xem chiết khấu, khuyến mãi") </button>
-            } 
+            }
         </div>
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")

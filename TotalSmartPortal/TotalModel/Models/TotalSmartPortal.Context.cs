@@ -4833,11 +4833,11 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BinLocationSaveRelative", entityIDParameter, saveRelativeOptionParameter);
         }
     
-        public virtual ObjectResult<BinLocationIndex> GetBinLocationIndexes(Nullable<int> userID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        public virtual ObjectResult<BinLocationIndex> GetBinLocationIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
         {
-            var userIDParameter = userID.HasValue ?
-                new ObjectParameter("UserID", userID) :
-                new ObjectParameter("UserID", typeof(int));
+            var aspUserIDParameter = aspUserID != null ?
+                new ObjectParameter("AspUserID", aspUserID) :
+                new ObjectParameter("AspUserID", typeof(string));
     
             var fromDateParameter = fromDate.HasValue ?
                 new ObjectParameter("FromDate", fromDate) :
@@ -4847,7 +4847,16 @@ namespace TotalModel.Models
                 new ObjectParameter("ToDate", toDate) :
                 new ObjectParameter("ToDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BinLocationIndex>("GetBinLocationIndexes", userIDParameter, fromDateParameter, toDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BinLocationIndex>("GetBinLocationIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
+        }
+    
+        public virtual ObjectResult<string> CustomerDeletable(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("CustomerDeletable", entityIDParameter);
         }
     }
 }

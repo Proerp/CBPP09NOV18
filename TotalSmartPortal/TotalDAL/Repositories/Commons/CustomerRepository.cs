@@ -10,7 +10,7 @@ namespace TotalDAL.Repositories.Commons
     public class CustomerRepository : GenericRepository<Customer>, ICustomerRepository
     {
         public CustomerRepository(TotalSmartPortalEntities totalSmartPortalEntities)
-            : base(totalSmartPortalEntities)
+            : base(totalSmartPortalEntities, "CustomerEditable", null, "CustomerDeletable")
         {
         }
 

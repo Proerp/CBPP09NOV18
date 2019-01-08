@@ -6820,6 +6820,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="EntityID" Type="int" Mode="In" />
           <Parameter Name="Approved" Type="bit" Mode="In" />
         </Function>
+        <Function Name="CustomerDeletable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
         <Function Name="CustomerEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
@@ -6922,7 +6925,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetBinLocationIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="UserID" Type="int" Mode="In" />
+          <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
         </Function>
@@ -14890,22 +14893,25 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="BinLocationDeletable" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="BinLocationEditable" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="BinLocationPostSaveValidate" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="BinLocationSaveRelative">
             <Parameter Name="EntityID" Mode="In" Type="Int32" />
             <Parameter Name="SaveRelativeOption" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetBinLocationIndexes" ReturnType="Collection(TotalSmartPortalModel.BinLocationIndex)">
-            <Parameter Name="UserID" Mode="In" Type="Int32" />
+            <Parameter Name="AspUserID" Mode="In" Type="String" />
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="CustomerDeletable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -22375,11 +22381,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Association>
         <ComplexType Name="BinLocationIndex">
           <Property Type="Int32" Name="BinLocationID" Nullable="false" />
-          <Property Type="String" Name="BinLocationCode" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="BinLocationName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="LocationName" Nullable="false" MaxLength="50" />
           <Property Type="Boolean" Name="InActive" Nullable="false" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -28400,14 +28406,15 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <ResultMapping>
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.BinLocationIndex">
                 <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
-                <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
-                <ScalarProperty Name="BinLocationName" ColumnName="BinLocationName" />
-                <ScalarProperty Name="LocationName" ColumnName="LocationName" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="CustomerDeletable" FunctionName="TotalSmartPortalModel.Store.CustomerDeletable" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

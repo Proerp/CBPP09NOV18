@@ -401,10 +401,15 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IProductionLineAPIRepository>().To<ProductionLineAPIRepository>();
                 //kernel.Bind<IProductionLineSelectListBuilder>().To<ProductionLineSelectListBuilder>();
 
-                //kernel.Bind<IBinLocationService>().To<BinLocationService>();
+                kernel.Bind<IBinLocationService>().To<BinLocationService>();
                 kernel.Bind<IBinLocationRepository>().To<BinLocationRepository>();
                 kernel.Bind<IBinLocationAPIRepository>().To<BinLocationAPIRepository>();
-                //kernel.Bind<IBinLocationSelectListBuilder>().To<BinLocationSelectListBuilder>();
+                kernel.Bind<IBinLocationSelectListBuilder>().To<BinLocationSelectListBuilder>();
+
+                
+                
+                
+
 
 
                 RegisterServices(kernel);

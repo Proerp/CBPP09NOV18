@@ -20,7 +20,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
         {
             this.GetCustomerIndexes();
 
-            this.CustomerEditable(); //CÓ THỂ KHÔNG CẦN Editable/ NHƯNG CẦN PHẢI CÓ Deletable
+            this.CustomerEditable();
+            this.CustomerDeletable();
             this.CustomerSaveRelative();
         }
 
@@ -99,6 +100,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             //queryArray[1] = " SELECT TOP 1 @FoundEntity = CustomerID FROM GoodsIssueDetails WHERE CustomerID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("CustomerEditable", queryArray);
+        }
+
+        private void CustomerDeletable()
+        {
+            string[] queryArray = new string[1];
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = CustomerID FROM Customers WHERE CustomerID = @EntityID "; //DON'T ALLOW TO DELETE 
+
+            this.totalSmartPortalEntities.CreateProcedureToCheckExisting("CustomerDeletable", queryArray);
         }
 
     }

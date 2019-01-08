@@ -22,8 +22,9 @@ namespace TotalDTO.Commons
     public class BinLocationBaseDTO : BaseDTO, IBinLocationBaseDTO
     {
         public int BinLocationID { get; set; }
+        [Display(Name = "Vị trí")]
         public string Code { get; set; }
-        public string Name { get; set; }
+        public string Name { get { return this.Code; } set { this.Code = value; } }
     }
 
     public class BinLocationPrimitiveDTO : BinLocationBaseDTO, IPrimitiveEntity, IPrimitiveDTO
@@ -40,7 +41,7 @@ namespace TotalDTO.Commons
     }
 
 
-    public class BinLocationDTO
+    public class BinLocationDTO : BinLocationPrimitiveDTO
     {
     }
 }

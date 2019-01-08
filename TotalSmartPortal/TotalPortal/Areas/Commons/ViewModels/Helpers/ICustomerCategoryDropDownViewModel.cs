@@ -7,9 +7,9 @@ namespace TotalPortal.Areas.Commons.ViewModels.Helpers
 {
     public interface ICustomerCategoryDropDownViewModel
     {
-        [Display(Name = "Kênh khách hàng")]
+        [Display(Name = "Kênh KH, NCC")]
         Nullable<int> CustomerCategoryID { get; set; }
-        [Display(Name = "Kênh khách hàng")]
+        [Display(Name = "Kênh KH, NCC")]
         IEnumerable<SelectListItem> CustomerCategorySelectList { get; set; }
     }
 }
