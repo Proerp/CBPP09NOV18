@@ -262,7 +262,7 @@ namespace TotalDTO.Inventories
         [Display(Name = "Người thực hiện")]
         public string UserLastName { get; set; }
 
-        [Display(Name = "SốNgày lệnh pha chế")]
+        [Display(Name = "CT")]
         public string Features
         {
             get

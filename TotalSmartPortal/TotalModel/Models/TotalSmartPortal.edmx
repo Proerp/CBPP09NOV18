@@ -1510,6 +1510,7 @@
           <Property Name="TotalQuantityFailure" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantityLoss" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Caption" Type="nvarchar" MaxLength="100" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
@@ -14926,10 +14927,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="WarehouseTransferID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GoodsReceiptGetReference" ReturnType="Collection(String)">
-            <Parameter Name="GoodsReceiptID" Mode="In" Type="Int32" />
+          <Parameter Name="GoodsReceiptID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="PackageIssueGetReference" ReturnType="Collection(String)">
-            <Parameter Name="PackageIssueID" Mode="In" Type="Int32" />
+          <Parameter Name="PackageIssueID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -19932,6 +19933,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="BlendingInstructionsReference" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="BlendingInstructionsCode" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="BlendingInstructionEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="UserFirstName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="UserLastName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Caption" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="BlendingInstructionID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="PackageIssuePendingBlendingInstructionDetail">
           <Property Type="Int32" Name="BlendingInstructionDetailID" Nullable="false" />
@@ -21708,6 +21715,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_PackageIssues_Warehouses" FromRole="PackageIssue" ToRole="Warehouse" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_PackageIssues_Workshifts" FromRole="PackageIssue" ToRole="Workshift" />
           <NavigationProperty Name="User" Relationship="TotalSmartPortalModel.FK_PackageIssues_Users" FromRole="PackageIssue" ToRole="User" />
+          <Property Name="Caption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="WarehouseTransfer">
           <Key>
@@ -27385,6 +27393,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="BlendingInstructionsReference" ColumnName="BlendingInstructionsReference" />
                 <ScalarProperty Name="BlendingInstructionsCode" ColumnName="BlendingInstructionsCode" />
                 <ScalarProperty Name="BlendingInstructionEntryDate" ColumnName="BlendingInstructionEntryDate" />
+                <ScalarProperty Name="UserFirstName" ColumnName="UserFirstName" />
+                <ScalarProperty Name="UserLastName" ColumnName="UserLastName" />
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -28233,6 +28247,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="PackageIssues">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.PackageIssue">
               <MappingFragment StoreEntitySet="PackageIssues">
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />

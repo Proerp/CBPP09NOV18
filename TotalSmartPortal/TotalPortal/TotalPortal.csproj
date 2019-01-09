@@ -722,6 +722,7 @@
     <Content Include="Content\Images\Mains\data-add-icon-32.png" />
     <Content Include="Content\Images\Mains\Ecommerce-Sale-icon-32.png" />
     <Content Include="Content\Images\Mains\folder-documents-icon-32.png" />
+    <Content Include="Content\Images\Mains\Fuel-32.png" />
     <Content Include="Content\Images\Mains\Gas-24.png" />
     <Content Include="Content\Images\Mains\Gas-24N.png" />
     <Content Include="Content\Images\Mains\Gas-32.png" />
@@ -739,6 +740,7 @@
     <Content Include="Content\Images\Mains\Oil-industry-32.png" />
     <Content Include="Content\Images\Mains\Oil-refinery-24.png" />
     <Content Include="Content\Images\Mains\Oil-refinery-32.png" />
+    <Content Include="Content\Images\Mains\oil-tank.png" />
     <Content Include="Content\Images\Mains\oil-tanker-24.png" />
     <Content Include="Content\Images\Mains\RectangleBlue.jpg" />
     <Content Include="Content\Images\Mains\RectangleGray.jpg" />
@@ -762,9 +764,11 @@
     <Content Include="Content\Images\Mains\Size12\cancel-icon-12.png" />
     <Content Include="Content\Images\Mains\Size12\cancel-yellow-12-ok.png" />
     <Content Include="Content\Images\Mains\Size12\cross-icon-12-ok.png" />
+    <Content Include="Content\Images\Mains\Size12\Cute-Tick-12.png" />
     <Content Include="Content\Images\Mains\Size12\erase-12-ok.png" />
     <Content Include="Content\Images\Mains\Size12\printer-icon-12.png" />
     <Content Include="Content\Images\Mains\Size12\printer-icon-12x13.png" />
+    <Content Include="Content\Images\Mains\Size12\Tick-12.png" />
     <Content Include="Content\Images\Mains\Size16\printer-icon-16.png" />
     <Content Include="Content\Images\Mains\Size24\A-Check-24.png" />
     <Content Include="Content\Images\Mains\Size24\A-Checked-24.png" />
@@ -806,6 +810,8 @@
     <Content Include="Content\Images\Mains\Square-no-checkbox-32.png" />
     <Content Include="Content\Images\Mains\Square-no-checkbox-36.png" />
     <Content Include="Content\Images\Mains\square-Nocheckbox-32-ok.png" />
+    <Content Include="Content\Images\Mains\tank-wagon.png" />
+    <Content Include="Content\Images\Mains\tank.png" />
     <Content Include="Content\Images\Mains\Users-Exit-icon.png" />
     <Content Include="Content\Images\Menu\arrow-down-16.png" />
     <Content Include="Content\Images\Menu\arrow-up-16.png" />

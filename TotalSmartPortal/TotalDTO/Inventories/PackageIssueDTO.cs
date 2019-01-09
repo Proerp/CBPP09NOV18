@@ -48,13 +48,15 @@ namespace TotalDTO.Inventories
         public string UserLastName { get; set; }
 
         [Display(Name = "Số, ngày lệnh pha chế")]
-        public override string Caption { get { return this.BlendingInstructionCode + " [" + this.BlendingInstructionReference + "] " + this.BlendingInstructionEntryDate.ToShortDateString(); } }
+        public string BlendingInstructionBriefs { get { return this.BlendingInstructionCode + " [" + this.BlendingInstructionReference + "] " + this.BlendingInstructionEntryDate.ToShortDateString(); } }
 
         public override void PerformPresaveRule()
         {
             base.PerformPresaveRule();
 
-            this.DtoDetails().ToList().ForEach(e => { e.BlendingInstructionID = this.BlendingInstructionID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.ProductionLineID = this.ProductionLineID; e.CrucialWorkerID = this.CrucialWorkerID; e.WarehouseID = this.WarehouseID; });
+            string caption = "";
+            this.DtoDetails().ToList().ForEach(e => { e.BlendingInstructionID = this.BlendingInstructionID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.ProductionLineID = this.ProductionLineID; e.CrucialWorkerID = this.CrucialWorkerID; e.WarehouseID = this.WarehouseID; if (caption.IndexOf(e.CommodityCode) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityCode; });
+            this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
     }
 

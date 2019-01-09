@@ -159,6 +159,11 @@ namespace TotalModel.Models
     }
 
 
+    public partial class PackageIssueIndex
+    {
+        public string BlendingInstructionBriefs { get { return this.BlendingInstructionsCode + " [" + this.BlendingInstructionsReference + "] " + this.BlendingInstructionEntryDate.ToShortDateString() + " (TP: " + this.CommodityCode + ", " + this.CommodityName + ")"; } }
+    }
+
     public partial class PackageIssue : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<PackageIssueDetail>
     {
         public int GetID() { return this.PackageIssueID; }

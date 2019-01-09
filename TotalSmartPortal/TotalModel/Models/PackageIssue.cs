@@ -47,6 +47,7 @@ namespace TotalModel.Models
         public System.DateTime EditedDate { get; set; }
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
+        public string Caption { get; set; }
     
         public virtual BlendingInstruction BlendingInstruction { get; set; }
         public virtual Commodity Commodity { get; set; }

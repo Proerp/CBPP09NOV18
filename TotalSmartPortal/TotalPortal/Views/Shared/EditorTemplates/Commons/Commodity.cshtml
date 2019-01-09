@@ -5,9 +5,11 @@
 
 <div class="right-first-panel">
     <div class="form-group">
-        <div class="right-panel-label">
+        <div class="right-panel-label right-panel-label-icon-only" style="padding-top: 2px;"> <img src="~/Content/Images/Mains/tank.png" )" title="@(ViewData["CommodityDisplayCode"] != null ? ViewData["CommodityDisplayCode"] : "Tên mặt hàng")" />  </div>
+
+        @*<div class="right-panel-label">
             @Html.Label((ViewData["CommodityDisplayCode"] != null ? (ViewData["CommodityDisplayCode"]).ToString() : "Tên mặt hàng"))
-        </div>
+        </div>*@
         <div class="div-input">
             @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "right-panel-input", @readonly = "readonly" })
         </div>

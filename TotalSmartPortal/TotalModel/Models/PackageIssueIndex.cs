@@ -25,5 +25,11 @@ namespace TotalModel.Models
         public string BlendingInstructionsReference { get; set; }
         public string BlendingInstructionsCode { get; set; }
         public System.DateTime BlendingInstructionEntryDate { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
+        public string Caption { get; set; }
+        public string CommodityCode { get; set; }
+        public string CommodityName { get; set; }
+        public int BlendingInstructionID { get; set; }
     }
 }
