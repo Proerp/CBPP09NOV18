@@ -36,10 +36,7 @@
                         
                         @*<div style="text-align: right; margin-top: 4px;">*@
                         
-                            <span id="filterExtended">
-                                @Html.Kendo().DatePicker().Name("ExtendedFromDate").Value(Model.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" }) 
-                                @Html.Kendo().DatePicker().Name("ExtendedToDate").Value(Model.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" }) 
-
+                            <span id="filterExtended">                                
                                 @(Html.Kendo().DropDownList()
                                     .Name("ShowPendingOnly")
                                     .DataTextField("Text")
@@ -47,12 +44,14 @@
                                     .HtmlAttributes(new { @style = "width: 198px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
-                                            new SelectListItem { Text = "[Tất cả]", Value = "0"},
-                                            new SelectListItem { Text = "Hàng nhập chưa nhập kho", Value = "1"},
+                                            new SelectListItem { Text = "Tất cả [Từ ... Đến]", Value = "0"},
+                                            new SelectListItem { Text = "Hàng chưa nhập kho", Value = "1"},
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                                     //.HtmlAttributes(new { @style = "padding-right: 13px;" })
                                 )
+                                @Html.Kendo().DatePicker().Name("ExtendedFromDate").Value(Model.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                                @Html.Kendo().DatePicker().Name("ExtendedToDate").Value(Model.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
                             </span>
 
 
@@ -100,7 +99,7 @@
     function onGetGoodsArrivalIndexes(e) {
         var indexFilterText = $("#indexFilterText").val();
         return {
-            withExtendedSearch: indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght" ? true : false,
+            withExtendedSearch: true, @*indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght" ? true : false,*@
             extendedFromDate: $("#ExtendedFromDate").val(),
             extendedToDate: $("#ExtendedToDate").val(),
             pendingOnly: $("#ShowPendingOnly").val() === "0" ? false : true
@@ -143,7 +142,7 @@
     function indexFilterText_KeyUp() {
         var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
 
-        if ((indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") || $("#ShowPendingOnly").val() != "0") {
+        if ((indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght") || $("#ShowPendingOnly").val() != "0") {
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [

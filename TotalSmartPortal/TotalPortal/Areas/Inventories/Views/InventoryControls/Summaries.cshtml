@@ -22,7 +22,7 @@
                         }
                     ));
                 columns.Group(gr => gr
-                    .Title("Tồn lệnh (BIS)").HeaderHtmlAttributes(new { style = "text-align:center" })
+                    .Title("Tồn lệnh pha chế [BIS]").HeaderHtmlAttributes(new { style = "text-align:center" })
                     .Columns(g =>
                         {
                             g.Bound(p => p.BisQuantity).Title("SL Y/C").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
@@ -40,7 +40,7 @@
                         }
                     ));
                 columns.Group(gr => gr
-                    .Title("Tồn BIS / Tồn kho").HeaderHtmlAttributes(new { style = "text-align:center" })
+                    .Title("[Tồn BIS] - [Tồn kho]").HeaderHtmlAttributes(new { style = "text-align:center" })
                     .Columns(g =>
                         {
                             g.Bound(p => p.BisQuantityRemainsVsLocation2).Title("PC").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
@@ -55,17 +55,14 @@
                             g.Bound(p => p.QuantityPurchaseOrders).Title("Đặt hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                             g.Bound(p => p.QuantityTransferOrders).Title("VCNB").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                         }
-                    ));
-                
-                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
-                    .ClientTemplate("<a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Void" }) + "/#= CommodityID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/InventoryControls", action = "Delete" }) + "/#= CommodityID #'><span class='k-icon sbt-delete'></span></a>");
+                    ));                
             })
             .ToolBar(toolbar =>
             {
                 toolbar.Template(@<text>
-                    <button type="button" class="k-button" onclick="location.href = '@Url.Action("Create", "InventoryControls")'"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập lệnh pha chế </button>
                     <button type="button" title="Cập nhật số liệu sản xuất" class="k-button" onclick="indexFilterText_KeyUp(true)"> <img src="~/Content/Images/New/Refresh-icon.png" /> </button>
-                    <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> In </button>
+                    <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> In nhập xuất tồn </button>
+                    <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/printer-D-24.png" /> In thẻ kho </button>
                     <div class="toolbar" style="float: right;">
                         <label>Lọc theo số BIS, sản phẩm hoặc NVL</label>
                         <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 108px; " onkeyup="indexFilterText_KeyUp()" />
@@ -113,7 +110,7 @@
             })
             .Filterable(f => f.Enabled(false))
             .Pageable()
-            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
+            //.Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
             .Selectable()
             .Sortable()
             .Events(e =>

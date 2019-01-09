@@ -987,11 +987,17 @@
     <Content Include="Content\Images\New\person_icon.png" />
     <Content Include="Content\Images\New\pipe-line-icon.png" />
     <Content Include="Content\Images\New\Print-Gray-32.png" />
+    <Content Include="Content\Images\New\printer-A-24.png" />
+    <Content Include="Content\Images\New\Printer-Apps-24.png" />
     <Content Include="Content\Images\New\Printer-author-24.png" />
+    <Content Include="Content\Images\New\printer-B-24.png" />
     <Content Include="Content\Images\New\Printer-Boat-32-1.png" />
     <Content Include="Content\Images\New\Printer-Boat-32.png" />
+    <Content Include="Content\Images\New\printer-C-24.png" />
     <Content Include="Content\Images\New\printer-cashier-32.png" />
+    <Content Include="Content\Images\New\printer-D-24.png" />
     <Content Include="Content\Images\New\Printer-green-24.png" />
+    <Content Include="Content\Images\New\Printer-Preview-24.png" />
     <Content Include="Content\Images\New\Printer-vector-24.png" />
     <Content Include="Content\Images\New\Printer-vector-32.png" />
     <Content Include="Content\Images\New\Refresh-icon.png" />
