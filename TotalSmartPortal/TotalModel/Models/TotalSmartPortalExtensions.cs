@@ -58,6 +58,8 @@ namespace TotalModel.Models
     {
         public int GetID() { return this.PurchaseOrderID; }
 
+        public virtual Customer Transporter { get { return this.Customer1; } }
+
         public ICollection<PurchaseOrderDetail> GetDetails() { return this.PurchaseOrderDetails; }
     }
 

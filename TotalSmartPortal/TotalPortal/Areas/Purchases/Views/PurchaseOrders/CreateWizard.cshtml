@@ -1,70 +1,64 @@
 ﻿@using TotalPortal.Configuration;
 
-@using TotalDTO.Inventories
-@model TotalPortal.Areas.Purchases.ViewModels.PurchaseOrderViewModel
+@using TotalDTO.Purchases
+    @model TotalPortal.Areas.Purchases.ViewModels.PurchaseOrderViewModel
 
-@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+    @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+        @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
 
-    <div style="margin-top: 39px; margin-right: 18px;">
+        <div style="margin-top: 8px; margin-left: -60px; margin-right: 18px;">
+            @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
+            @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
+        </div> 
         
-        @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+        <div class="background-bar" style="height: 45px;">
+            <div class="popup-button-bar">
+                <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "PurchaseOrders")" formtarget="_top" style="display:none" />
 
-        @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID) })
-                      
-    </div> <div class="background-bar" style="height: 45px;">
-        <div class="popup-button-bar">
-            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "PurchaseOrders")" formtarget="_top" style="display:none" /> 
-
-            <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Next </button>
-            <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Exit </button>
+                <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Next </button>
+                <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Exit </button>
+            </div>
         </div>
-    </div>
 
-}
-
-<link href="@Url.Content("~/Content/CustomCss/GeneralPopup.css")" rel="stylesheet" type="text/css" />
-
-<script type="text/javascript">
-
-    function okButton_Click() {
-        handleOKEvent($($("#tabStrip").data("kendoTabStrip").select().index() === 0 ? "#gridPromotion" : "#gridXXXX_ReserveForLater").data("kendoGrid"));
     }
 
-    function okWOSelectButton_Click() {
-        handleOKEvent();
-    }
+    <link href="@Url.Content("~/Content/CustomCss/GeneralPopup.css")" rel="stylesheet" type="text/css" />
 
-    function handleOKEvent(selectedGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
+    <script type="text/javascript">
 
-        if ($("#Project_ProjectID").val() === null || $("#Project_ProjectID").val() === "")
-            return false;
+        function okButton_Click() {
+            handleOKEvent($($("#tabStrip").data("kendoTabStrip").select().index() === 0 ? "#gridPromotion" : "#gridXXXX_ReserveForLater").data("kendoGrid"));
+        }
 
-        if (selectedGrid === undefined)
-            _setModelInput();
-        else {
-            var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
-            if (selectedDataItem === undefined)
+        function okWOSelectButton_Click() {
+            handleOKEvent();
+        }
+
+        function handleOKEvent(selectedGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
+
+            if ($("#Project_ProjectID").val() === null || $("#Project_ProjectID").val() === "")
                 return false;
 
-            _setModelInput(selectedDataItem);
+            if (selectedGrid === undefined)
+                _setModelInput();
+            else {
+                var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
+                if (selectedDataItem === undefined)
+                    return false;
+
+                _setModelInput(selectedDataItem);
+            }
+            $("#submitCreateWizard").trigger("click");
+
+
+            function _setModelInput(selectedDataItem) {
+            }
         }
-        $("#submitCreateWizard").trigger("click");
 
-
-        function _setModelInput(selectedDataItem) {
-        }
-    }
-
-</script>
-
-
-
-
-
+    </script>

@@ -20,14 +20,23 @@ namespace TotalDTO.Purchases
         [UIHint("AutoCompletes/CommodityBase")]
         public override string CommodityCode { get; set; }
 
+        [Display(Name = "KL Đ/H")]
+        [UIHint("Quantity")]
+        [Range(0, 99999999999, ErrorMessage = "Số lượng không hợp lệ")]
+        public override decimal Quantity { get; set; }
+
+        [Display(Name = "Đã nhận")]
+        [UIHint("QuantityReadonly")]
+        public decimal QuantityArrived { get; set; }
+
+        [Display(Name = "Còn lại")]
+        [UIHint("QuantityReadonly")]
+        public decimal QuantityRemains { get { return this.Quantity - QuantityArrived; } set { } }
+
         public string VoidTypeCode { get; set; }
         [Display(Name = "Lý do")]
         [UIHint("AutoCompletes/VoidTypeBase")]
         public string VoidTypeName { get; set; }
         public Nullable<int> VoidClassID { get; set; }
-
-        [UIHint("Quantity")]
-        [Range(0, 99999999999, ErrorMessage = "Số lượng không hợp lệ")]
-        public override decimal Quantity { get; set; }
     }
 }

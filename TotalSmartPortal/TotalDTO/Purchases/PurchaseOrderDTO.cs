@@ -30,7 +30,7 @@ namespace TotalDTO.Purchases
         [Display(Name = "Mục đích")]
         public string Purposes { get; set; }
 
-        [Display(Name = "Ngày giao hàng")]
+        [Display(Name = "Ngày dự kiến giao hàng")]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
 
         public override void PerformPresaveRule()
@@ -51,10 +51,12 @@ namespace TotalDTO.Purchases
         }
 
         public override Nullable<int> CustomerID { get { return (this.Customer != null ? (this.Customer.CustomerID > 0 ? (Nullable<int>)this.Customer.CustomerID : null) : null); } }
+        [Display(Name = "Nhà cung cấp")]
         [UIHint("Commons/CustomerBase")]
         public CustomerBaseDTO Customer { get; set; }
 
         public override Nullable<int> TransporterID { get { return (this.Transporter != null ? (this.Transporter.CustomerID > 0 ? (Nullable<int>)this.Transporter.CustomerID : null) : null); } }
+        [Display(Name = "Đơn vị vận chuyển")]
         [UIHint("Commons/CustomerBase")]
         public CustomerBaseDTO Transporter { get; set; }
 

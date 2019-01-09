@@ -29,9 +29,9 @@
             .ToolBar(toolbar =>
             {
                 toolbar.Template(@<text>                    
-                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" />  Lập phiếu đề nghị mua hàng </button>
+                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" />  Lập phiếu đặt hàng </button>
                     <div class="toolbar" style="float: right;">
-                        <label>Nhập số đơn hàng, tên khách hàng, mục đích hoặc diễn giải để tìm</label>
+                        <label>Nhập số PO, tên NCC hoặc mặt hàng</label>
                         <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
                     </div>
                 </text>);
@@ -78,7 +78,7 @@
     function createWizard() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "PurchaseOrders")", "Chọn khách hàng", "@Settings.PopupWidth", "@Settings.PopupHeightSmall");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "PurchaseOrders")", "Chọn nhà cung cấp", "838", "330");
         });
     }
 
@@ -88,8 +88,7 @@
         if (elem.Approved == null || elem.Approved == false) {
             $('tr[data-uid="' + elem.uid + '"]').addClass("NotApproved");
         }
-        else
-        {
+        else {
             if (elem.InActive != null && elem.InActive == true) {
                 $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus");
             }
@@ -118,7 +117,7 @@
                     { field: "CustomerName", operator: "contains", value: indexFilterText },
                     { field: "Purposes", operator: "contains", value: indexFilterText },
                     { field: "Description", operator: "contains", value: indexFilterText },
-                    { field: "VoidTypeName", operator: "contains", value: indexFilterText }                    
+                    { field: "VoidTypeName", operator: "contains", value: indexFilterText }
                 ]
             });
 
