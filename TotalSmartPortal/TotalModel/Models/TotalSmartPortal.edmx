@@ -7706,6 +7706,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="GoodsReceiptEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GoodsReceiptGetReference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="GoodsReceiptID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GoodsReceiptPostSaveValidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
@@ -7768,6 +7771,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="PackageIssueEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="PackageIssueGetReference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PackageIssueID" Type="int" Mode="In" />
         </Function>
         <Function Name="PackageIssuePostSaveValidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
@@ -14918,6 +14924,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </FunctionImport>
           <FunctionImport Name="WarehouseTransferGetReference" ReturnType="Collection(String)">
           <Parameter Name="WarehouseTransferID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GoodsReceiptGetReference" ReturnType="Collection(String)">
+            <Parameter Name="GoodsReceiptID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="PackageIssueGetReference" ReturnType="Collection(String)">
+            <Parameter Name="PackageIssueID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -28422,6 +28434,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="CustomerDeletable" FunctionName="TotalSmartPortalModel.Store.CustomerDeletable" />
           <FunctionImportMapping FunctionImportName="WarehouseTransferGetReference" FunctionName="TotalSmartPortalModel.Store.WarehouseTransferGetReference" />
+          <FunctionImportMapping FunctionImportName="GoodsReceiptGetReference" FunctionName="TotalSmartPortalModel.Store.GoodsReceiptGetReference" />
+          <FunctionImportMapping FunctionImportName="PackageIssueGetReference" FunctionName="TotalSmartPortalModel.Store.PackageIssueGetReference" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

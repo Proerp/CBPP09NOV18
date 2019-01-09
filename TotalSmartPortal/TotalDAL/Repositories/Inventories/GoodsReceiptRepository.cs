@@ -43,6 +43,11 @@ namespace TotalDAL.Repositories.Inventories
             return objectParameters;
         }
 
+        public string GetReference(int goodsReceiptID)
+        {
+            return base.TotalSmartPortalEntities.GoodsReceiptGetReference(goodsReceiptID).FirstOrDefault();
+        }
+
         public IEnumerable<GoodsReceiptPendingCustomer> GetCustomers(int? locationID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;

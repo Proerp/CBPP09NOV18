@@ -4867,5 +4867,23 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("WarehouseTransferGetReference", warehouseTransferIDParameter);
         }
+    
+        public virtual ObjectResult<string> GoodsReceiptGetReference(Nullable<int> goodsReceiptID)
+        {
+            var goodsReceiptIDParameter = goodsReceiptID.HasValue ?
+                new ObjectParameter("GoodsReceiptID", goodsReceiptID) :
+                new ObjectParameter("GoodsReceiptID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GoodsReceiptGetReference", goodsReceiptIDParameter);
+        }
+    
+        public virtual ObjectResult<string> PackageIssueGetReference(Nullable<int> packageIssueID)
+        {
+            var packageIssueIDParameter = packageIssueID.HasValue ?
+                new ObjectParameter("PackageIssueID", packageIssueID) :
+                new ObjectParameter("PackageIssueID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PackageIssueGetReference", packageIssueIDParameter);
+        }
     }
 }

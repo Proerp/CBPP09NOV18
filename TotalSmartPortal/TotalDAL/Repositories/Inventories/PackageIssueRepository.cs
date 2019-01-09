@@ -32,6 +32,11 @@ namespace TotalDAL.Repositories.Inventories
         {
         }
 
+        public string GetReference(int packageIssueID)
+        {
+            return base.TotalSmartPortalEntities.PackageIssueGetReference(packageIssueID).FirstOrDefault();
+        }
+
         public IEnumerable<PackageIssuePendingBlendingInstruction> GetBlendingInstructions(int? locationID, int? blendingInstructionID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;

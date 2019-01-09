@@ -333,6 +333,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             SimpleInitReference simpleInitReference = new SimpleInitReference("PackageIssues", "PackageIssueID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.PackageIssue));
             this.totalSmartPortalEntities.CreateTrigger("PackageIssueInitReference", simpleInitReference.CreateQuery());
+
+            string queryString = " @PackageIssueID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "       SELECT TOP 1 Reference FROM PackageIssues WHERE PackageIssueID = @PackageIssueID " + "\r\n";
+            this.totalSmartPortalEntities.CreateStoredProcedure("PackageIssueGetReference", queryString);
         }
 
         private void PackageIssueSheet()

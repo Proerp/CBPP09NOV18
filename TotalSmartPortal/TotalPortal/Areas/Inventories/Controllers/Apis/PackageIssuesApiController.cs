@@ -39,6 +39,15 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             this.packageIssueAPIRepository = packageIssueAPIRepository;
         }
 
+        protected override void ReloadAfterSave(PackageIssueViewModel simpleViewModel)
+        {
+            if (simpleViewModel.Reference == null)
+            {
+                simpleViewModel.Reference = this.packageIssueAPIRepository.GetReference(simpleViewModel.PackageIssueID);
+            }
+            base.ReloadAfterSave(simpleViewModel);
+        }
+
         [HttpGet]
         [Route("GetPackageIssueIndexes/{fromDay}/{fromMonth}/{fromYear}/{toDay}/{toMonth}/{toYear}")]
         public ICollection<PackageIssueIndex> GetPackageIssueIndexes(int fromDay, int fromMonth, int fromYear, int toDay, int toMonth, int toYear)

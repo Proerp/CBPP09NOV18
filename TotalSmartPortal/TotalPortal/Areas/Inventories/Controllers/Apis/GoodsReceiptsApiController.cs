@@ -43,6 +43,15 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             this.goodsReceiptAPIRepository = goodsReceiptAPIRepository;
         }
 
+        protected override void ReloadAfterSave(TViewDetailViewModel simpleViewModel)
+        {
+            if (simpleViewModel.Reference == null)
+            {
+                simpleViewModel.Reference = this.goodsReceiptAPIRepository.GetReference(simpleViewModel.GoodsReceiptID);
+            }
+            base.ReloadAfterSave(simpleViewModel);
+        }
+
         [HttpGet]
         [Route("GetGoodsReceiptIndexes/{nmvnTaskID}/{fromDay}/{fromMonth}/{fromYear}/{toDay}/{toMonth}/{toYear}")]
         public ICollection<GoodsReceiptIndex> GetGoodsReceiptIndexes(string nmvnTaskID, int fromDay, int fromMonth, int fromYear, int toDay, int toMonth, int toYear)

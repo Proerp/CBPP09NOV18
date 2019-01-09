@@ -929,6 +929,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             SimpleInitReference simpleInitReference = new SimpleInitReference("GoodsReceipts", "GoodsReceiptID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.GoodsReceipt));
             this.totalSmartPortalEntities.CreateTrigger("GoodsReceiptInitReference", simpleInitReference.CreateQuery());
+
+            string queryString = " @GoodsReceiptID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "       SELECT TOP 1 Reference FROM GoodsReceipts WHERE GoodsReceiptID = @GoodsReceiptID " + "\r\n";
+            this.totalSmartPortalEntities.CreateStoredProcedure("GoodsReceiptGetReference", queryString);
         }
 
 
