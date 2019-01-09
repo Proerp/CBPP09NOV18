@@ -43,6 +43,15 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             this.warehouseTransferAPIRepository = warehouseTransferAPIRepository;
         }
 
+        protected override void ReloadAfterSave(TViewDetailViewModel simpleViewModel)
+        {
+            if (simpleViewModel.Reference == null)
+            {
+                simpleViewModel.Reference = this.warehouseTransferAPIRepository.GetReference(simpleViewModel.WarehouseTransferID);
+            }
+            base.ReloadAfterSave(simpleViewModel);
+        }
+
         [HttpGet]
         [Route("GetWarehouseTransferIndexes/{nmvnTaskID}/{fromDay}/{fromMonth}/{fromYear}/{toDay}/{toMonth}/{toYear}")]
         public ICollection<WarehouseTransferIndex> GetWarehouseTransferIndexes(string nmvnTaskID, int fromDay, int fromMonth, int fromYear, int toDay, int toMonth, int toYear)

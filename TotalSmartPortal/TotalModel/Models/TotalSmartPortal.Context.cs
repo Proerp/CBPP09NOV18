@@ -4858,5 +4858,14 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("CustomerDeletable", entityIDParameter);
         }
+    
+        public virtual ObjectResult<string> WarehouseTransferGetReference(Nullable<int> warehouseTransferID)
+        {
+            var warehouseTransferIDParameter = warehouseTransferID.HasValue ?
+                new ObjectParameter("WarehouseTransferID", warehouseTransferID) :
+                new ObjectParameter("WarehouseTransferID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("WarehouseTransferGetReference", warehouseTransferIDParameter);
+        }
     }
 }

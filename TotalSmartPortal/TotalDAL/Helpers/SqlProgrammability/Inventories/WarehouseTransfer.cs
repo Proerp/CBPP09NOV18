@@ -409,6 +409,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             SimpleInitReference simpleInitReference = new SimpleInitReference("WarehouseTransfers", "WarehouseTransferID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.WarehouseTransfer));
             this.totalSmartPortalEntities.CreateTrigger("WarehouseTransferInitReference", simpleInitReference.CreateQuery());
+
+            string queryString = " @WarehouseTransferID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "       SELECT TOP 1 Reference FROM WarehouseTransfers WHERE WarehouseTransferID = @WarehouseTransferID " + "\r\n";
+            this.totalSmartPortalEntities.CreateStoredProcedure("WarehouseTransferGetReference", queryString);
         }
 
 

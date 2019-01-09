@@ -213,9 +213,11 @@ namespace TotalPortal.Controllers.Apis
 
 
 
+        protected virtual void ReloadAfterSave(TSimpleViewModel simpleViewModel){}
 
         public virtual IHttpActionResult RedirectAfterSave(TSimpleViewModel simpleViewModel)
         {
+            this.ReloadAfterSave(simpleViewModel);
             return Ok(simpleViewModel); //WEB API: RETURN OK FOR ALL USE CASE
 
 

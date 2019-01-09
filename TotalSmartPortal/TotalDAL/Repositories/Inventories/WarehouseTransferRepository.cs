@@ -42,6 +42,11 @@ namespace TotalDAL.Repositories.Inventories
         }
 
 
+        public string GetReference(int warehouseTransferID)
+        {
+            return base.TotalSmartPortalEntities.WarehouseTransferGetReference(warehouseTransferID).FirstOrDefault();
+        }
+
         public IEnumerable<WarehouseTransferAvailableWarehouse> GetAvailableWarehouses(int? locationID, int? nmvnTaskID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
