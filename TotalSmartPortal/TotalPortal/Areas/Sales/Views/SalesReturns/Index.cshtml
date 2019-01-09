@@ -8,7 +8,7 @@
             .Columns(columns =>
             {
                 columns.Bound(p => p.SalesReturnID).DisplayNameTitle().Hidden();                
-                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(10).Filterable(false);
+                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(10).Filterable(false);
 
                 columns.Bound(p => p.Reference).Title("#").Width(10).Filterable(false).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Sales/SalesReturns", action = "Edit" }) + "/#= SalesReturnID #'>#=Reference#</a>");
                 columns.Bound(p => p.GoodsIssueReferences).Title("PXK").Width(100).Filterable(false);

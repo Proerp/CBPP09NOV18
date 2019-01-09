@@ -9,7 +9,7 @@
         {
             columns.Bound(p => p.GoodsDeliveryID).DisplayNameTitle().Hidden();
             columns.Bound(p => p.LocationCode).Title("CN").Hidden().Width(10);
-            columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(30);
+            columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(30);
             columns.Bound(p => p.ReceiverDescription).Title("Khách hàng").Width(296);
             columns.Bound(p => p.VehicleName).Title("Xe").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(100).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/GoodsDeliveries", action = "Edit" }) + "/#= GoodsDeliveryID #'>#=VehicleName#</a>"); ;
             columns.Bound(p => p.CollectorName).Title("NV giao hàng").Width(165);

@@ -178,10 +178,10 @@
                             //toolbar.Create().HtmlAttributes(new { @class = "fa fa-map-marker" }).Text("Add new aa le ea1");
                             if (Model.HasPurchaseOrder == true)
                                 toolbar.Template(@<text>
-                                    <button type="button" class="k-button" onclick="GetPendingGoodsIssueDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng từ đơn đặt hàng </button>
-                                    <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Giao hàng toàn bộ đơn hàng </button>
+                                    <button type="button" class="k-button" onclick="GetPendingGoodsIssueDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng từ PO </button>
+                                    <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Nhập toàn bộ </button>
 
-                                    <button type="button" class="k-button" onclick="duplicate()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Duplicate </button>
+                                    <button type="button" class="k-button" onclick="duplicate()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" />  </button>
                                 </text>);
                             else
                                 toolbar.Template(@<text>
@@ -240,6 +240,16 @@
                                     </div>
                                     <div class="div-validation-message">
                                         @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Remarks, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => model.Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>

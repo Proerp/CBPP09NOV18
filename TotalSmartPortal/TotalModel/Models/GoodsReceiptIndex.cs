@@ -23,5 +23,8 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public string Caption { get; set; }
         public string GoodsReceiptTypeCaption { get; set; }
+        public string WorkshiftName { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
     }
 }

@@ -10,32 +10,30 @@
             .Columns(columns =>
             {
                 columns.Bound(p => p.LabID).DisplayNameTitle().Hidden();
-                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Width(90);
+                columns.Bound(p => p.EntryMonth).Title("Tháng").Hidden();
+                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(50).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
 
-                columns.Bound(p => p.GoodsArrivalReference).Title("#").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/GoodsArrivals", action = "Edit" }) + "/#= GoodsArrivalID #'>#=GoodsArrivalReference#</a>");
+                columns.Bound(p => p.GoodsArrivalReference).Title("PNH").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/GoodsArrivals", action = "Edit" }) + "/#= GoodsArrivalID #'>#=GoodsArrivalReference#</a>");
 
-                columns.Bound(p => p.Code).Title("Số ĐH").Width(20);
-                columns.Bound(p => p.CommodityCodes).Title("Khách hàng").Width(190);
-                columns.Bound(p => p.CommodityNames).Title("Khách hàng").Width(190);
+                columns.Bound(p => p.Code).Title("Lab code").Width(20);
+                columns.Bound(p => p.CommodityCodes).Title("Mã hàng").Width(190);
+                columns.Bound(p => p.CommodityNames).Title("Tên hàng").Width(290);
 
-                columns.Bound(p => p.SealCodes).Title("Khách hàng").Width(190);
-                columns.Bound(p => p.BatchCodes).Title("Khách hàng").Width(190);
+                columns.Bound(p => p.SealCodes).Title("Số cont").Width(80);
+                columns.Bound(p => p.BatchCodes).Title("Số lô").Width(80);
 
-                columns.Bound(p => p.Description).Title("Diễn giải").Width(130);
-
-                columns.Bound(p => p.TotalQuantity).Title("Đặt hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.TotalQuantity).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
 
-                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(92)
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(50)
                     .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/Labs", action = "Approve" }) + "/#= LabID #'><span class='k-icon sbt-tick'></span></a>  <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/Labs", action = "Void" }) + "/#= LabID #'><span class='k-icon sbt-void'></span></a>");
             })
             .ToolBar(toolbar =>
             {
                 toolbar.Template(@<text>
-                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập đề nghị giao hàng </button>
                     <div class="toolbar" style="float: right;">
-                        <label>Nhập số phiếu, số đơn hàng hoặc tên KH</label>
+                        <label>Nhập số phiếu nhập hàng, lab code, số cont, số lô, mã hoặc tên hàng</label>
                         <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
                     </div>
                 </text>);
@@ -51,6 +49,7 @@
                     })
                     .DataSource(dataSource => dataSource
                         .Ajax()
+                        .Group(group => group.AddDescending(p => p.EntryMonth))
                         .Read(read => read.Action("GetLabIndexes", "LabAPIs", new { area = "Purchases" }))
                         .Sort(sort =>
                             {
@@ -112,9 +111,15 @@
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [
-                    { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "GoodsArrivalReference", operator: "contains", value: indexFilterText },
                     { field: "Code", operator: "contains", value: indexFilterText },
-                    { field: "CustomerName", operator: "contains", value: indexFilterText }
+                    { field: "CommodityCodes", operator: "contains", value: indexFilterText },
+                    { field: "CommodityNames", operator: "contains", value: indexFilterText },
+
+                    { field: "SealCodes", operator: "contains", value: indexFilterText },
+                    { field: "BatchCodes", operator: "contains", value: indexFilterText },
+
+                    { field: "ApprovedStatus", operator: "contains", value: indexFilterText }
                 ]
             });
 

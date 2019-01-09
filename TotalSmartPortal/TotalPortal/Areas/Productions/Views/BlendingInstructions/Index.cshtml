@@ -14,7 +14,7 @@
             .Columns(columns =>
             {
                 columns.Bound(p => p.BlendingInstructionID).DisplayNameTitle().Hidden();
-                columns.Bound(p => p.EntryDate).Title("Ngày lập").Format("{0:dd/MM/yyyy}").Hidden();
+                columns.Bound(p => p.EntryDate).Title("Ngày lập").Format("{0:dd/MM/yy}").Hidden();
                 columns.Bound(p => p.Features).Title("BIS").Hidden();
 
                 columns.Bound(p => p.CommodityCode).Title("Mã NVL").Width(96).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Edit" }) + "/#= BlendingInstructionID #'>#=CommodityCode#</a>");

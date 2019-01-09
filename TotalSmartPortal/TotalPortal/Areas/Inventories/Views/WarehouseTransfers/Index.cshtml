@@ -12,9 +12,13 @@
             .Columns(columns =>
             {
                 columns.Bound(p => p.WarehouseTransferID).DisplayNameTitle().Hidden();                
-                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
+                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
+                columns.Bound(p => p.WorkshiftName).Title("SX").Hidden();
 
-                columns.Bound(p => p.Reference).Title("Số phiếu").Width(50).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= WarehouseTransferID #'>#=Reference#</a>");                
+                columns.Bound(p => p.Reference).Title("Số phiếu").Width(50).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= WarehouseTransferID #'>#=Reference#</a>");
+                columns.Bound(p => p.UserLastName).Title("MSCN").Width(10);
+                columns.Bound(p => p.UserFirstName).Title("Mã máy").Width(10);
+                
                 columns.Bound(p => p.WarehouseCode).Title("Kho xuất").Width(30);
                 columns.Bound(p => p.WarehouseReceiptCode).Title("Kho nhập").Width(30);
                 columns.Bound(p => p.Caption).Title("Mặt hàng").Width(396);
@@ -24,8 +28,8 @@
 
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
-                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(68)
-                    .ClientTemplate("<a class='k-button' title='In' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Print" }) + "/#= WarehouseTransferID #' target='_blank'><span class='k-icon sbt-printer'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= WarehouseTransferID #'><span class='k-icon sbt-delete'></span></a>");
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(30)
+                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= WarehouseTransferID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>
             {
@@ -48,7 +52,7 @@
             })
             .DataSource(dataSource => dataSource
                 .Ajax()
-                .Group(group => group.AddDescending(p => p.EntryDate))
+                .Group(group => group.AddDescending(p => p.EntryDate)).Group(group => group.Add(p => p.WorkshiftName))
                 .Read(read => read.Action("GetWarehouseTransferIndexes", "WarehouseTransferAPIs", new { area = "Inventories" }).Data("onWarehouseTransferIndexes"))
                 .Sort(sort =>
                     {

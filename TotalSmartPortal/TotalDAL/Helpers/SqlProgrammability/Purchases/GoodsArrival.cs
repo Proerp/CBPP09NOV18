@@ -65,11 +65,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      GoodsArrivals.GoodsArrivalID, CAST(GoodsArrivals.EntryDate AS DATE) AS EntryDate, GoodsArrivals.Reference, GoodsArrivals.Code, Locations.Code AS LocationCode, Customers.Name AS CustomerName, Transporters.Name AS TransporterName, GoodsArrivals.Description, GoodsArrivals.TotalQuantity, GoodsArrivals.TotalQuantityReceipted, GoodsArrivals.TotalPackages, GoodsArrivals.Approved " + "\r\n";
+            queryString = queryString + "       SELECT      GoodsArrivals.GoodsArrivalID, CAST(GoodsArrivals.EntryDate AS DATE) AS EntryDate, GoodsArrivals.Reference, GoodsArrivals.Code, GoodsArrivals.PurchaseOrderID, GoodsArrivals.PurchaseOrderCodes, GoodsArrivals.PurchaseOrderReferences, PurchaseOrders.EntryDate AS PurchaseOrderEntryDate, Locations.Code AS LocationCode, Customers.Name AS CustomerName, Transporters.Name AS TransporterName, GoodsArrivals.Description, GoodsArrivals.TotalQuantity, GoodsArrivals.TotalQuantityReceipted, GoodsArrivals.TotalPackages, GoodsArrivals.Approved " + "\r\n";
             queryString = queryString + "       FROM        GoodsArrivals " + "\r\n";
             queryString = queryString + "                   INNER JOIN Locations ON " + (pendingOnly ? "GoodsArrivals.GoodsArrivalID IN (SELECT GoodsArrivalID FROM GoodsArrivalDetails WHERE ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0)" : "GoodsArrivals.EntryDate >= @FromDate AND GoodsArrivals.EntryDate <= @ToDate") + " AND GoodsArrivals.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.GoodsArrival + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = GoodsArrivals.LocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON GoodsArrivals.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers Transporters ON GoodsArrivals.TransporterID = Transporters.CustomerID " + "\r\n";
+            queryString = queryString + "                   LEFT  JOIN PurchaseOrders ON GoodsArrivals.PurchaseOrderID = PurchaseOrders.PurchaseOrderID " + "\r\n";
 
             return queryString;
         }

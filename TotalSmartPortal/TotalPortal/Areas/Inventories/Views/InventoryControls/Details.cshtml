@@ -25,7 +25,7 @@
                 columns.Bound(p => p.BinLocationCode).Title("Vị trí").Width(68);
                 columns.Bound(p => p.LabCode).Title("Lab").Width(30);
 
-                columns.Bound(p => p.ExpiryDate).Title("HSD").Width(10).Format("{0:dd/MM/yyyy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+                columns.Bound(p => p.ExpiryDate).Title("HSD").Width(10).Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
 
                 columns.Bound(p => p.BisQuantity).Title("SL Y/C").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 columns.Bound(p => p.BisQuantityIssued).Title("Đã xuất").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });

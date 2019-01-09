@@ -45,11 +45,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      PurchaseOrders.PurchaseOrderID, CAST(PurchaseOrders.EntryDate AS DATE) AS EntryDate, PurchaseOrders.Reference, PurchaseOrders.Code, Locations.Code AS LocationCode, Customers.Name AS CustomerName, ISNULL(VoidTypes.Name, CASE PurchaseOrders.InActivePartial WHEN 1 THEN N'Hủy một phần đh' ELSE N'' END) AS VoidTypeName, PurchaseOrders.DeliveryDate, PurchaseOrders.Purposes, PurchaseOrders.Description, PurchaseOrders.TotalQuantity, PurchaseOrders.TotalQuantityArrived, PurchaseOrders.Approved, PurchaseOrders.InActive, PurchaseOrders.InActivePartial " + "\r\n";
+            queryString = queryString + "       SELECT      PurchaseOrders.PurchaseOrderID, CAST(PurchaseOrders.EntryDate AS DATE) AS EntryDate, PurchaseOrders.Reference, PurchaseOrders.Code, Locations.Code AS LocationCode, Customers.Name AS CustomerName, ISNULL(VoidTypeDetails.Name, VoidTypes.Name) AS VoidTypeName, PurchaseOrders.DeliveryDate, PurchaseOrders.Purposes, PurchaseOrders.Description, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, PurchaseOrderDetails.Quantity, PurchaseOrderDetails.QuantityArrived, PurchaseOrderDetails.Quantity - PurchaseOrderDetails.QuantityArrived AS QuantityRemains, PurchaseOrders.TotalQuantity, PurchaseOrders.TotalQuantityArrived, PurchaseOrders.Approved, PurchaseOrders.InActive, PurchaseOrders.InActivePartial " + "\r\n";
             queryString = queryString + "       FROM        PurchaseOrders " + "\r\n";
             queryString = queryString + "                   INNER JOIN Locations ON PurchaseOrders.EntryDate >= @FromDate AND PurchaseOrders.EntryDate <= @ToDate AND PurchaseOrders.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.PurchaseOrder + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = PurchaseOrders.LocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON PurchaseOrders.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN PurchaseOrderDetails ON PurchaseOrders.PurchaseOrderID = PurchaseOrderDetails.PurchaseOrderID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON PurchaseOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN VoidTypes ON PurchaseOrders.VoidTypeID = VoidTypes.VoidTypeID" + "\r\n";
+            queryString = queryString + "                   LEFT JOIN VoidTypes VoidTypeDetails ON PurchaseOrderDetails.VoidTypeID = VoidTypeDetails.VoidTypeID" + "\r\n";
             queryString = queryString + "       " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";

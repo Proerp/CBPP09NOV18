@@ -25,5 +25,9 @@ namespace TotalModel.Models
         public decimal TotalQuantityReceipted { get; set; }
         public bool Approved { get; set; }
         public decimal TotalPackages { get; set; }
+        public Nullable<System.DateTime> PurchaseOrderEntryDate { get; set; }
+        public Nullable<int> PurchaseOrderID { get; set; }
+        public string PurchaseOrderCodes { get; set; }
+        public string PurchaseOrderReferences { get; set; }
     }
 }

@@ -53,6 +53,13 @@ namespace TotalModel.Models
         public int GetID() { return this.PurchaseRequisitionDetailID; }
     }
 
+    public partial class PurchaseOrderIndex
+    {
+        public string EntryMonth { get { return ((DateTime)this.EntryDate).ToString("yyyy/MM"); } }
+        public string ApprovedStatus { get { return this.Approved ? "đã duyệt" : "chưa duyệt"; } }
+
+        public string Features { get { return this.Reference + (this.Code != null ? " [" + this.Code + "]" : "") + " Ngày: " + ((DateTime)this.EntryDate).ToString("dd/MM/yy") + ", NCC: " + this.CustomerName + (this.DeliveryDate != null ? ", Ngày GH: " + ((DateTime)this.DeliveryDate).ToString("dd/MM/yyyy") : ""); } }
+    }
 
     public partial class PurchaseOrder : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<PurchaseOrderDetail>
     {
@@ -70,6 +77,11 @@ namespace TotalModel.Models
     }
 
 
+    public partial class GoodsArrivalIndex
+    {
+        public string EntryMonth { get { return ((DateTime)this.EntryDate).ToString("yyyy/MM"); } }
+        public string ApprovedStatus { get { return this.Approved ? "đã duyệt" : "chưa duyệt"; } }
+    }
 
     public partial class GoodsArrival : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<GoodsArrivalDetail>
     {
@@ -87,6 +99,11 @@ namespace TotalModel.Models
         public int GetID() { return this.GoodsArrivalDetailID; }
     }
 
+    public partial class LabIndex
+    {
+        public string EntryMonth { get { return this.EntryDate.ToString("yyyy/MM"); } }
+        public string ApprovedStatus { get { return this.Approved ? "đã duyệt" : "chưa duyệt"; } }
+    }
 
     public partial class Lab : IPrimitiveEntity, IBaseEntity
     {

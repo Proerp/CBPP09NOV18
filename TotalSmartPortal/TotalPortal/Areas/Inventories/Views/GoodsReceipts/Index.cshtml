@@ -10,19 +10,25 @@
         .Columns(columns =>
         {
             columns.Bound(p => p.GoodsReceiptID).DisplayNameTitle().Hidden();            
-            columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yyyy}").Hidden();
+            columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
+            columns.Bound(p => p.WorkshiftName).Title("SX").Hidden();
 
             columns.Bound(p => p.Reference).Title("PNK").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= GoodsReceiptID #'>#=Reference#</a>");
-            columns.Bound(p => p.CustomerName).Title("K/H").Width(108);
-            columns.Bound(p => p.GoodsReceiptTypeCaption).Title("Nguồn hàng").Width(168);
-            columns.Bound(p => p.Caption).Title("Mặt hàng").Width(196);
+            columns.Bound(p => p.UserLastName).Title("MSCN").Width(10);
+            columns.Bound(p => p.UserFirstName).Title("Mã máy").Width(10);
+
+            columns.Bound(p => p.CustomerName).Title("NCC").Width(108);
+            //columns.Bound(p => p.GoodsReceiptTypeCaption).Title("Nguồn hàng").Width(168);
+            
+            columns.Bound(p => p.Caption).Title("Mặt hàng").Width(296);
             columns.Bound(p => p.Description).Title("Diễn giải").Width(207);
-            columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+            
+            columns.Bound(p => p.TotalQuantity).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
             columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
             
-            columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(68)
-                .ClientTemplate("<a class='k-button' title='In' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Print" }) + "/#= GoodsReceiptID #'><span class='k-icon sbt-printer'></span></a> <a class='k-button' title='Xóa chứng từ' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= GoodsReceiptID #'><span class='k-icon sbt-delete'></span></a>");
+            columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(30)
+                .ClientTemplate("<a class='k-button' title='Xóa chứng từ' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= GoodsReceiptID #'><span class='k-icon sbt-delete'></span></a>");
         })
         .ToolBar(toolbar =>
         {
@@ -45,7 +51,7 @@
             })
             .DataSource(dataSource => dataSource
             .Ajax()
-                .Group(group => group.AddDescending(p => p.EntryDate))
+                .Group(group => group.AddDescending(p => p.EntryDate)).Group(group => group.Add(p => p.WorkshiftName))
                 .Read(read => read.Action("GetGoodsReceiptIndexes", "GoodsReceiptAPIs", new { area = "Inventories" }).Data("onGoodsReceiptIndexes"))
             .Sort(sort =>
                 {

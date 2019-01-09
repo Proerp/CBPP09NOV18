@@ -28,5 +28,10 @@ namespace TotalModel.Models
         public bool InActive { get; set; }
         public bool InActivePartial { get; set; }
         public decimal TotalQuantityArrived { get; set; }
+        public string CommodityCode { get; set; }
+        public string CommodityName { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal QuantityArrived { get; set; }
+        public Nullable<decimal> QuantityRemains { get; set; }
     }
 }

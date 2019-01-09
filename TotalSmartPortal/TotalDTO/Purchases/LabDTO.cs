@@ -19,17 +19,24 @@ namespace TotalDTO.Purchases
 
         public int LabID { get; set; }
 
-        [Display(Name = "Mã nhân viên")]
-        [Required(ErrorMessage = "Vui lòng nhập mã nhân viên")]
+        [Display(Name = "Lab code")]
         public string Code { get; set; }
 
+        [Display(Name = "Phiếu nhập hàng")]
         public string GoodsArrivalReference { get; set; }
-        
+
+        [Display(Name = "Lab cont")]
         public string SealCodes { get; set; }
+        [Display(Name = "Số lô")]
         public string BatchCodes { get; set; }
 
+        [Display(Name = "Mã hàng")]
         public string CommodityCodes { get; set; }
+        [Display(Name = "Tên hàng")]
         public string CommodityNames { get; set; }
+
+        [Display(Name = "Khối lượng")]
+        public decimal TotalQuantity { get; set; }
     }
 
     public class LabDTO : LabPrimitiveDTO
