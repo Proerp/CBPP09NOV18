@@ -18608,6 +18608,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Boolean" Name="InActivePartial" Nullable="false" />
           <Property Type="String" Name="Caption" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="TransferOrderJobs" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="WarehouseReceiptCode" Nullable="false" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="TransferOrderViewDetail">
           <Property Type="Int32" Name="TransferOrderDetailID" Nullable="false" />
@@ -26697,6 +26699,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="TransferOrderJobs" ColumnName="TransferOrderJobs" />
+                <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
+                <ScalarProperty Name="WarehouseReceiptCode" ColumnName="WarehouseReceiptCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

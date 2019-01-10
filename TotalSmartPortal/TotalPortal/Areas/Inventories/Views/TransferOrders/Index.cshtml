@@ -14,7 +14,10 @@
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
 
                 columns.Bound(p => p.Reference).Title("Phiếu").Width(1).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= TransferOrderID #'>#=Reference#</a>");
-                columns.Bound(p => p.TransferOrderTypeName).Title("PL").Width(10);
+                columns.Bound(p => p.TransferOrderTypeName).Title("PL").Width(10).Hidden();
+
+                columns.Bound(p => p.WarehouseCode).Title("Kho xuất").Width(30);
+                columns.Bound(p => p.WarehouseReceiptCode).Title("Kho nhập").Width(30);
                 columns.Bound(p => p.Caption).Title("Mặt hàng").Width(368);
                 
                 columns.Bound(p => p.TransferOrderJobs).Title("Mục đích").Width(127);
@@ -122,7 +125,9 @@
                 filters: [
                     { field: "TransferOrderTypeName", operator: "contains", value: indexFilterText },
                     { field: "Reference", operator: "contains", value: indexFilterText },
-                    { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "WarehouseCode", operator: "contains", value: indexFilterText },
+                    { field: "WarehouseReceiptCode", operator: "contains", value: indexFilterText },
+                    { field: "Caption", operator: "contains", value: indexFilterText },
                     { field: "Description", operator: "contains", value: indexFilterText }
                 ]
             });

@@ -27,5 +27,7 @@ namespace TotalModel.Models
         public bool InActivePartial { get; set; }
         public string Caption { get; set; }
         public string TransferOrderJobs { get; set; }
+        public string WarehouseCode { get; set; }
+        public string WarehouseReceiptCode { get; set; }
     }
 }
