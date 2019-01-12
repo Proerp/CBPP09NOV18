@@ -2054,6 +2054,14 @@
     <Content Include="Scripts\Controllers\Productions\PlannedOrders\Open.js" />
     <Content Include="Scripts\Controllers\Productions\PlannedOrders\Print.js" />
     <Content Include="Scripts\Controllers\Productions\PlannedOrders\Void.js" />
+    <Content Include="Scripts\Controllers\Productions\PlannedProducts\Approve.js" />
+    <Content Include="Scripts\Controllers\Productions\PlannedProducts\CreateWizard.js" />
+    <Content Include="Scripts\Controllers\Productions\PlannedProducts\Delete.js" />
+    <Content Include="Scripts\Controllers\Productions\PlannedProducts\Edit.js" />
+    <Content Include="Scripts\Controllers\Productions\PlannedProducts\Index.js" />
+    <Content Include="Scripts\Controllers\Productions\PlannedProducts\Open.js" />
+    <Content Include="Scripts\Controllers\Productions\PlannedProducts\Print.js" />
+    <Content Include="Scripts\Controllers\Productions\PlannedProducts\Void.js" />
     <Content Include="Scripts\Controllers\Productions\ProductionOrders\AddPendingFirmOrder.js" />
     <Content Include="Scripts\Controllers\Productions\ProductionOrders\Approve.js" />
     <Content Include="Scripts\Controllers\Productions\ProductionOrders\CreateWizard.js" />
