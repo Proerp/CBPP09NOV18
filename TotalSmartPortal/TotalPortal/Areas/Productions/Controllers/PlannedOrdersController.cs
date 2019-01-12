@@ -34,8 +34,10 @@ namespace TotalPortal.Areas.Productions.Controllers
         {
             base.AddRequireJsOptions();
 
+            TViewDetailViewModel viewDetailViewModel = new TViewDetailViewModel();
+
             StringBuilder commodityTypeIDList = new StringBuilder();
-            commodityTypeIDList.Append((int)GlobalEnums.CommodityTypeID.Products);
+            commodityTypeIDList.Append((int)(viewDetailViewModel.IsItem ? GlobalEnums.CommodityTypeID.Items : (viewDetailViewModel.IsProduct ? GlobalEnums.CommodityTypeID.Products : GlobalEnums.CommodityTypeID.Unknown)));
 
             RequireJsOptions.Add("commodityTypeIDList", commodityTypeIDList.ToString(), RequireJsOptionsScope.Page);
         }
