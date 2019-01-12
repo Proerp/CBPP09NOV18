@@ -14,6 +14,7 @@ namespace TotalDTO.Productions
         public int PlannedOrderDetailID { get; set; }
         public int PlannedOrderID { get; set; }
 
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get; set; }
         public int CustomerID { get; set; }
 
         public int MoldID { get; set; }

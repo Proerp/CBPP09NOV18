@@ -12,9 +12,15 @@ using TotalDTO.Commons;
 
 namespace TotalDTO.Productions
 {
-    public class PlannedOrderPrimitiveDTO : QuantityDTO<PlannedOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+    public interface IPlannedOption { GlobalEnums.NmvnTaskID NMVNTaskID { get; } }
+
+    public class PlannedOptionItem : IPlannedOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PlannedItem; } } }
+    public class PlannedOptionProduct : IPlannedOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PlannedProduct; } } }
+
+    public class PlannedOrderPrimitiveDTO<TPlannedOption> : QuantityDTO<PlannedOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+        where TPlannedOption : IPlannedOption, new()
     {
-        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PlannedProduct; } }
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return new TPlannedOption().NMVNTaskID; } }
 
         public int GetID() { return this.PlannedOrderID; }
         public void SetID(int id) { this.PlannedOrderID = id; }
@@ -54,7 +60,8 @@ namespace TotalDTO.Productions
         }
     }
 
-    public class PlannedOrderDTO : PlannedOrderPrimitiveDTO, IBaseDetailEntity<PlannedOrderDetailDTO>
+    public class PlannedOrderDTO<TPlannedOption> : PlannedOrderPrimitiveDTO<TPlannedOption>, IBaseDetailEntity<PlannedOrderDetailDTO>
+        where TPlannedOption : IPlannedOption, new()
     {
         public PlannedOrderDTO()
         {
@@ -83,6 +90,12 @@ namespace TotalDTO.Productions
                 this.VoidType = new VoidTypeBaseDTO() { VoidTypeID = this.ViewDetails[0].VoidTypeID, Code = this.ViewDetails[0].VoidTypeCode, Name = this.ViewDetails[0].VoidTypeName, VoidClassID = this.ViewDetails[0].VoidClassID };
             base.PrepareVoidDetail(detailID);
         }
+
+
+        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
+
+        public bool IsItem { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.PlannedItem; } }
+        public bool IsProduct { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.PlannedProduct; } }
     }
 
 }
