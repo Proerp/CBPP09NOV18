@@ -1,6 +1,7 @@
-﻿@using TotalPortal.Configuration
+﻿@using TotalDTO;
+@using TotalPortal.Configuration
 
-@model TotalPortal.Areas.Productions.ViewModels.PlannedOrderViewModel
+@model TotalPortal.Areas.Productions.ViewModels.IPlannedOrderViewModel
 
 <div id="popupWindow"></div>
 
@@ -16,7 +17,7 @@
                 columns.Bound(p => p.PlannedOrderID).DisplayNameTitle().Hidden();
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
 
-                columns.Bound(p => p.Reference).Title("KHSX").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/PlannedOrders", action = "Edit" }) + "/#= PlannedOrderID #'>#=Reference#</a>");
+                columns.Bound(p => p.Reference).Title("KHSX").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Edit" }) + "/#= PlannedOrderID #'>#=Reference#</a>");
                 columns.Bound(p => p.Code).Title("Số CT").Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                 columns.Bound(p => p.DisplayDate).Title("ĐH/GH").Format("{0:dd/MM}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                 columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(108);
@@ -35,7 +36,7 @@
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(111)
-                    .ClientTemplate("<a class='k-button' title='Cấp màng cho đơn hàng này' style='padding-left:0px; padding-right:0px;' onclick='createMaterialIssue(#= FirmOrderID #)'><span class='k-icon sbt-add'></span></a> <a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/PlannedOrders", action = "Void" }) + "/#= PlannedOrderID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/PlannedOrders", action = "Delete" }) + "/#= PlannedOrderID #'><span class='k-icon sbt-delete'></span></a>");
+                    .ClientTemplate("<a class='k-button' title='Cấp màng cho đơn hàng này' style='padding-left:0px; padding-right:0px;' onclick='createMaterialIssue(#= FirmOrderID #)'><span class='k-icon sbt-add'></span></a> <a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Void" }) + "/#= PlannedOrderID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Delete" }) + "/#= PlannedOrderID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>
             {
@@ -77,8 +78,8 @@
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
 
-                            @Html.Kendo().DatePickerFor(m => m.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
-                            @Html.Kendo().DatePickerFor(m => m.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                            @Html.Kendo().DatePickerFor(m => (m as IBaseDTO).GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                            @Html.Kendo().DatePickerFor(m => (m as IBaseDTO).GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
                         </span>
 
 
@@ -152,7 +153,7 @@
     function createWizard() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "PlannedOrders")", "Lập đơn hàng sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", Model.ControllerName)", "Lập đơn hàng sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
         });
     }
 
@@ -165,7 +166,7 @@
     }
 
     function callPrint() {
-        window.open('@Url.Action("Print", "PlannedOrders", new { area = "Productions" })' + "/" + $("#ShowDateOptionID").val() + "/" + $("#ShowFilterOptionID").val())
+        window.open('@Url.Action("Print", Model.ControllerName, new { area = "Productions" })' + "/" + $("#ShowDateOptionID").val() + "/" + $("#ShowFilterOptionID").val())
     }
 
     decoratingKindex = function (idx, elem) {

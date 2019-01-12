@@ -24,8 +24,8 @@ namespace TotalDTO.Productions
         Nullable<System.DateTime> VoucherDate { get; set; }
         Nullable<System.DateTime> DeliveryDate { get; set; }
         string Purposes { get; set; }
-        virtual int CustomerID { get; set; }
-        virtual bool CheckBomID { get; }
+        int CustomerID { get; set; }
+        bool CheckBomID { get; }
     }
 
     public class PlannedOrderPrimitiveDTO<TPlannedOption> : QuantityDTO<PlannedOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO

@@ -7,10 +7,12 @@ using TotalPortal.Areas.Productions.ViewModels;
 namespace TotalPortal.Areas.Productions.Builders
 {
     public interface IPlannedOrderViewModelSelectListBuilder<TPlannedOrderViewModel> : IViewModelSelectListBuilder<TPlannedOrderViewModel>
+        where TPlannedOrderViewModel : IPlannedOrderViewModel
     {
     }
 
     public class PlannedOrderViewModelSelectListBuilder<TPlannedOrderViewModel> : A01ViewModelSelectListBuilder<TPlannedOrderViewModel>, IPlannedOrderViewModelSelectListBuilder<TPlannedOrderViewModel>
+        where TPlannedOrderViewModel : IPlannedOrderViewModel
     {
         public PlannedOrderViewModelSelectListBuilder(IAspNetUserSelectListBuilder aspNetUserSelectListBuilder, IAspNetUserRepository aspNetUserRepository)
             : base(aspNetUserSelectListBuilder, aspNetUserRepository)
