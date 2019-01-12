@@ -60,7 +60,10 @@ namespace TotalBase.Enums
             GoodsArrival = 8026,
 
             BlendingInstruction = 6800160,
-            PlannedOrder = 680016,
+            
+            PlannedProduct = 680016,
+            PlannedItem = 680016008,
+
             ProductionOrder = 680018,
             SemifinishedProduct = 680020,
             SemifinishedHandover = 680026,

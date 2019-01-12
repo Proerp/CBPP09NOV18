@@ -26,8 +26,9 @@ namespace TotalPortal.Areas.Productions.APIs
         }
 
 
-        public JsonResult GetPlannedOrderIndexes([DataSourceRequest] DataSourceRequest request, bool withExtendedSearch, DateTime extendedFromDate, DateTime extendedToDate, int dateOptionID, int filterOptionID)
+        public JsonResult GetPlannedOrderIndexes([DataSourceRequest] DataSourceRequest request, string nmvnTaskID, bool withExtendedSearch, DateTime extendedFromDate, DateTime extendedToDate, int dateOptionID, int filterOptionID)
         {
+            this.plannedOrderAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
             this.plannedOrderAPIRepository.RepositoryBag["DateOptionID"] = dateOptionID;
             this.plannedOrderAPIRepository.RepositoryBag["FilterOptionID"] = filterOptionID;
             ICollection<PlannedOrderIndex> plannedOrderIndexes = this.plannedOrderAPIRepository.GetEntityIndexes<PlannedOrderIndex>(User.Identity.GetUserId(), (withExtendedSearch ? extendedFromDate : HomeSession.GetGlobalFromDate(this.HttpContext)), (withExtendedSearch ? extendedToDate : HomeSession.GetGlobalToDate(this.HttpContext)));

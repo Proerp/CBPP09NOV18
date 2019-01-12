@@ -14,7 +14,7 @@ namespace TotalDTO.Productions
 {
     public class PlannedOrderPrimitiveDTO : QuantityDTO<PlannedOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
     {
-        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PlannedOrder; } }
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PlannedProduct; } }
 
         public int GetID() { return this.PlannedOrderID; }
         public void SetID(int id) { this.PlannedOrderID = id; }

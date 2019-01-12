@@ -42,7 +42,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime, @DateOptionID int, @FilterOptionID int " + "\r\n";
+            queryString = " @NMVNTaskID int, @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime, @DateOptionID int, @FilterOptionID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
@@ -127,7 +127,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                   FirmOrderDetails.QuantitySemifinished, FirmOrderDetails.QuantityFinished, FirmOrderDetails.QuantityExcess, FirmOrderDetails.QuantityShortage, FirmOrderDetails.QuantityFailure, FirmOrderDetails.Swarfs " + "\r\n";
 
             queryString = queryString + "       FROM        PlannedOrders " + "\r\n";
-            queryString = queryString + "                   INNER JOIN  Customers ON " + (filterOptionID == 0 || filterOptionID == 20 ? this.SQLDateOption(dateOptionID) + " >= @LocalFromDate AND " + this.SQLDateOption(dateOptionID) + " <= @LocalToDate AND" : "") + " PlannedOrders.OrganizationalUnitID IN (SELECT DISTINCT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @LocalAspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.PlannedOrder + " AND AccessControls.AccessLevel > 0) AND PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN  Customers ON PlannedOrders.NMVNTaskID = @NMVNTaskID AND " + (filterOptionID == 0 || filterOptionID == 20 ? this.SQLDateOption(dateOptionID) + " >= @LocalFromDate AND " + this.SQLDateOption(dateOptionID) + " <= @LocalToDate AND" : "") + " PlannedOrders.OrganizationalUnitID IN (SELECT DISTINCT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @LocalAspUserID AND AccessControls.NMVNTaskID = @NMVNTaskID AND AccessControls.AccessLevel > 0) AND PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                   INNER JOIN  PlannedOrderDetails ON PlannedOrders.PlannedOrderID = PlannedOrderDetails.PlannedOrderID " + "\r\n";
             queryString = queryString + "                   INNER JOIN  Commodities ON PlannedOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN  FirmOrderDetails ON " + this.SQLPendingVsFinished(filterOptionID) + " PlannedOrderDetails.PlannedOrderDetailID = FirmOrderDetails.PlannedOrderDetailID " + "\r\n";
@@ -161,7 +161,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
                 queryString = queryString + "               NULL AS QuantitySemifinished, NULL AS QuantityFinished, NULL AS QuantityExcess, NULL AS QuantityShortage, NULL AS QuantityFailure, NULL AS Swarfs " + "\r\n";
 
                 queryString = queryString + "   FROM        PlannedOrders " + "\r\n"; //(PlannedOrders.Approved = 0 OR Caption IS NULL): (NOT APPROVED || NO DETAIL ROWS)
-                queryString = queryString + "               INNER JOIN  Customers ON " + (filterOptionID == 0 || filterOptionID == 20 ? this.SQLDateOption(dateOptionID) + " >= @LocalFromDate AND " + this.SQLDateOption(dateOptionID) + " <= @LocalToDate AND" : "") + " (PlannedOrders.Approved = 0 OR Caption IS NULL) AND PlannedOrders.OrganizationalUnitID IN (SELECT DISTINCT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @LocalAspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.PlannedOrder + " AND AccessControls.AccessLevel > 0) AND PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
+                queryString = queryString + "               INNER JOIN  Customers ON PlannedOrders.NMVNTaskID = @NMVNTaskID AND " + (filterOptionID == 0 || filterOptionID == 20 ? this.SQLDateOption(dateOptionID) + " >= @LocalFromDate AND " + this.SQLDateOption(dateOptionID) + " <= @LocalToDate AND" : "") + " (PlannedOrders.Approved = 0 OR Caption IS NULL) AND PlannedOrders.OrganizationalUnitID IN (SELECT DISTINCT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @LocalAspUserID AND AccessControls.NMVNTaskID = @NMVNTaskID AND AccessControls.AccessLevel > 0) AND PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
                 queryString = queryString + "               LEFT JOIN   PlannedOrderDetails ON PlannedOrders.PlannedOrderID = PlannedOrderDetails.PlannedOrderID " + "\r\n";
                 queryString = queryString + "               LEFT JOIN   Commodities ON PlannedOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
                 queryString = queryString + "               LEFT JOIN   VoidTypes ON PlannedOrders.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
@@ -395,7 +395,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void PlannedOrderInitReference()
         {
-            SimpleInitReference simpleInitReference = new SimpleInitReference("PlannedOrders", "PlannedOrderID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.PlannedOrder));
+            SimpleInitReference simpleInitReference = new SimpleInitReference("PlannedOrders", "PlannedOrderID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.PlannedProduct));
             this.totalSmartPortalEntities.CreateTrigger("PlannedOrderInitReference", simpleInitReference.CreateQuery());
         }
 

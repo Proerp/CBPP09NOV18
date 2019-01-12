@@ -2579,8 +2579,12 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("MaterialIssueToggleApproved", entityIDParameter, approvedParameter);
         }
     
-        public virtual ObjectResult<PlannedOrderIndex> GetPlannedOrderIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<int> dateOptionID, Nullable<int> filterOptionID)
+        public virtual ObjectResult<PlannedOrderIndex> GetPlannedOrderIndexes(Nullable<int> nMVNTaskID, string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<int> dateOptionID, Nullable<int> filterOptionID)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var aspUserIDParameter = aspUserID != null ?
                 new ObjectParameter("AspUserID", aspUserID) :
                 new ObjectParameter("AspUserID", typeof(string));
@@ -2601,7 +2605,7 @@ namespace TotalModel.Models
                 new ObjectParameter("FilterOptionID", filterOptionID) :
                 new ObjectParameter("FilterOptionID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PlannedOrderIndex>("GetPlannedOrderIndexes", aspUserIDParameter, fromDateParameter, toDateParameter, dateOptionIDParameter, filterOptionIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PlannedOrderIndex>("GetPlannedOrderIndexes", nMVNTaskIDParameter, aspUserIDParameter, fromDateParameter, toDateParameter, dateOptionIDParameter, filterOptionIDParameter);
         }
     
         public virtual ObjectResult<PlannedOrderViewDetail> GetPlannedOrderViewDetails(Nullable<int> plannedOrderID)

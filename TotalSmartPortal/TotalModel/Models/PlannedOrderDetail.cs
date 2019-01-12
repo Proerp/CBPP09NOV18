@@ -47,6 +47,7 @@ namespace TotalModel.Models
         public decimal QuantityRequested { get; set; }
         public decimal QuantityOnhand { get; set; }
         public string Specs { get; set; }
+        public int NMVNTaskID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual VoidType VoidType { get; set; }
