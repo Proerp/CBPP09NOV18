@@ -10,7 +10,7 @@ using TotalPortal.Areas.Commons.ViewModels.Helpers;
 
 namespace TotalPortal.Areas.Productions.ViewModels
 {
-    public class IPlannedOrderViewModel : IPlannedOrderDTO, IViewDetailViewModel<PlannedOrderDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
+    public interface IPlannedOrderViewModel : IPlannedOrderDTO, IViewDetailViewModel<PlannedOrderDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
     {
     }
 

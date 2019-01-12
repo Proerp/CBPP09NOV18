@@ -1715,6 +1715,15 @@
     <Content Include="Areas\Commons\Views\Materials\Delete.cshtml" />
     <Content Include="Areas\Commons\Views\Items\Delete.cshtml" />
     <Content Include="Areas\Commons\Views\Products\Delete.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedItems\Approve.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedItems\CreateWizard.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedItems\Delete.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedItems\Edit.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedItems\Index.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedItems\Print.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedItems\Void.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedItems\VoidDetail.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedItems\VoidDetailSuccess.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
