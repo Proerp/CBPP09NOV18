@@ -220,10 +220,14 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IBlendingInstructionAPIRepository>().To<BlendingInstructionAPIRepository>();
                 kernel.Bind<IBlendingInstructionViewModelSelectListBuilder>().To<BlendingInstructionViewModelSelectListBuilder>();
 
-                kernel.Bind<IPlannedOrderService>().To<PlannedOrderService>();
                 kernel.Bind<IPlannedOrderRepository>().To<PlannedOrderRepository>();
                 kernel.Bind<IPlannedOrderAPIRepository>().To<PlannedOrderAPIRepository>();
-                kernel.Bind<IPlannedOrderViewModelSelectListBuilder>().To<PlannedOrderViewModelSelectListBuilder>();
+
+                kernel.Bind<IPlannedItemService>().To<PlannedItemService>();
+                kernel.Bind<IPlannedItemViewModelSelectListBuilder>().To<PlannedItemViewModelSelectListBuilder>();
+                kernel.Bind<IPlannedProductService>().To<PlannedProductService>();
+                kernel.Bind<IPlannedProductViewModelSelectListBuilder>().To<PlannedProductViewModelSelectListBuilder>();
+
 
                 kernel.Bind<IProductionOrderService>().To<ProductionOrderService>();
                 kernel.Bind<IProductionOrderRepository>().To<ProductionOrderRepository>();

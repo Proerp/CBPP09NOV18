@@ -10,9 +10,17 @@ using TotalPortal.Areas.Commons.ViewModels.Helpers;
 
 namespace TotalPortal.Areas.Productions.ViewModels
 {
-    public class PlannedOrderViewModel : PlannedOrderDTO, IViewDetailViewModel<PlannedOrderDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
+    public class IPlannedOrderViewModel : IPlannedOrderDTO, IViewDetailViewModel<PlannedOrderDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
+    {
+    }
+
+    public class PlannedItemViewModel : PlannedOrderDTO<PlannedOptionItem>, IViewDetailViewModel<PlannedOrderDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IPlannedOrderViewModel
     {
         public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
     }
 
+    public class PlannedProductViewModel : PlannedOrderDTO<PlannedOptionProduct>, IViewDetailViewModel<PlannedOrderDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IPlannedOrderViewModel
+    {
+        public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
+    }   
 }

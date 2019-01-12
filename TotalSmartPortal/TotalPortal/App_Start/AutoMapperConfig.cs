@@ -180,11 +180,18 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<BlendingInstructionViewDetail, BlendingInstructionDetailDTO>();
                 cfg.CreateMap<BlendingInstructionDetailDTO, BlendingInstructionDetail>();
 
-                cfg.CreateMap<PlannedOrder, PlannedOrderViewModel>();
-                cfg.CreateMap<PlannedOrder, PlannedOrderDTO>();
-                cfg.CreateMap<PlannedOrderPrimitiveDTO, PlannedOrder>();
+                cfg.CreateMap<PlannedOrder, PlannedOrderDTO<PlannedOptionItem>>();
+                cfg.CreateMap<PlannedOrder, PlannedOrderDTO<PlannedOptionProduct>>();
+
+                cfg.CreateMap<PlannedOrderPrimitiveDTO<PlannedOptionItem>, PlannedOrder>();
+                cfg.CreateMap<PlannedOrderPrimitiveDTO<PlannedOptionProduct>, PlannedOrder>();
+
                 cfg.CreateMap<PlannedOrderViewDetail, PlannedOrderDetailDTO>();
                 cfg.CreateMap<PlannedOrderDetailDTO, PlannedOrderDetail>();
+
+                cfg.CreateMap<PlannedOrder, PlannedItemViewModel>();
+                cfg.CreateMap<PlannedOrder, PlannedProductViewModel>();
+
 
                 cfg.CreateMap<ProductionOrder, ProductionOrderViewModel>();
                 cfg.CreateMap<ProductionOrder, ProductionOrderDTO>();
