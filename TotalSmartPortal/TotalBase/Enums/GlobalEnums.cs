@@ -38,7 +38,7 @@ namespace TotalBase.Enums
         {
             UnKnown = 0,
 
-
+            Bom = 2002,
             Lab = 2001,
             Customer = 8001,
 

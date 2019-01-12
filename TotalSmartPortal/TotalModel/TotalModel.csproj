@@ -111,6 +111,12 @@
     <Compile Include="Models\BomDetail.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BomIndex.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BomViewDetail.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Commodity.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

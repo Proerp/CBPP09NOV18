@@ -18,6 +18,18 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
         public void RestoreProcedure()
         {
+            this.GetBomIndexes();
+
+            this.GetBomViewDetails();
+            this.BomSaveRelative();
+            this.BomPostSaveValidate();
+
+            this.BomEditable();
+            this.BomDeletable();
+
+
+
+
             this.GetCommodityBoms();
 
             this.AddCommodityBom();
@@ -27,6 +39,90 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
             this.GetBomBases();
         }
+
+        #region BOM
+
+        private void GetBomIndexes()
+        {
+            string queryString;
+
+            queryString = " @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "    BEGIN " + "\r\n";
+
+            queryString = queryString + "       SELECT      Boms.BomID, CAST(Boms.EntryDate AS DATE) AS EntryDate, Boms.Reference, Boms.Code, Boms.Name, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Customers.Name AS CustomerName, Boms.EffectiveDate, Materials.Code AS MaterialCode, Materials.Name AS MaterialName, BomDetails.BlockUnit, BomDetails.BlockQuantity " + "\r\n";
+            queryString = queryString + "       FROM        Boms " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON Boms.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Customers ON Boms.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN BomDetails ON Boms.BomID = BomDetails.BomID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities Materials ON BomDetails.MaterialID = Materials.CommodityID " + "\r\n";            
+            queryString = queryString + "       WHERE      (SELECT TOP 1 OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.Bom + " AND AccessControls.AccessLevel > 0) > 0 " + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetBomIndexes", queryString);
+        }
+
+
+        private void GetBomViewDetails()
+        {
+            string queryString;
+
+            queryString = " @BomID Int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "    BEGIN " + "\r\n";
+
+            queryString = queryString + "       SELECT      BomDetails.BomDetailID, BomDetails.BomID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BomDetails.BlockUnit, BomDetails.BlockQuantity, BomDetails.Remarks " + "\r\n";
+            queryString = queryString + "       FROM        BomDetails " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON BomDetails.BomID = @BomID AND BomDetails.MaterialID = Commodities.CommodityID " + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetBomViewDetails", queryString);
+        }
+
+        private void BomSaveRelative()
+        {
+            string queryString = " @EntityID int, @SaveRelativeOption int " + "\r\n"; //SaveRelativeOption: 1: Update, -1:Undo
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("BomSaveRelative", queryString);
+        }
+
+        private void BomPostSaveValidate()
+        {
+            string[] queryArray = new string[0];
+
+            //queryArray[0] = " SELECT TOP 1 @FoundEntity = 'TEST Date: ' + CAST(EntryDate AS nvarchar) FROM Boms WHERE BomID = @EntityID "; //FOR TEST TO BREAK OUT WHEN SAVE -> CHECK ROLL BACK OF TRANSACTION
+            //queryArray[0] = " SELECT TOP 1 @FoundEntity = 'Service Date: ' + CAST(ServiceInvoices.EntryDate AS nvarchar) FROM Boms INNER JOIN Boms AS ServiceInvoices ON Boms.BomID = @EntityID AND Boms.ServiceInvoiceID = ServiceInvoices.BomID AND Boms.EntryDate < ServiceInvoices.EntryDate ";
+
+            this.totalSmartPortalEntities.CreateProcedureToCheckExisting("BomPostSaveValidate", queryArray);
+        }
+
+
+        private void BomEditable()
+        {
+            string[] queryArray = new string[0];
+
+            this.totalSmartPortalEntities.CreateProcedureToCheckExisting("BomEditable", queryArray);
+        }
+
+        private void BomDeletable()
+        {
+            string[] queryArray = new string[1];
+
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = BomID FROM Boms WHERE BomID = @EntityID ";
+
+            this.totalSmartPortalEntities.CreateProcedureToCheckExisting("BomDeletable", queryArray);
+        }
+
+        #endregion BOM
+
+
+
 
 
         private void GetCommodityBoms()

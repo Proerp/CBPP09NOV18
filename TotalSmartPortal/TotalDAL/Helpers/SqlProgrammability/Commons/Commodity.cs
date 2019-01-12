@@ -61,8 +61,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + "       BEGIN " + "\r\n";
             queryString = queryString + "           IF (SELECT COUNT(*) FROM Boms WHERE CustomerID = @EntityID) = 0  " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   INSERT INTO     Boms (EntryDate, Reference, Code, Name, OfficialCode, CommodityCategoryID, CommodityClassID, CommodityLineID, CustomerID, Remarks, InActive) " + "\r\n";
-            queryString = queryString + "                   SELECT          GetDate() AS  EntryDate, '####000', Code, Name, OfficialCode, CommodityCategoryID, CommodityClassID, CommodityLineID, CommodityID AS CustomerID, Remarks, 0 AS InActive " + "\r\n";
+            queryString = queryString + "                   INSERT INTO     Boms (EntryDate, Reference, Code, Name, OfficialCode, CommodityID, CommodityTypeID, CommodityCategoryID, CommodityClassID, CommodityLineID, CustomerID, Remarks, InActive) " + "\r\n";
+            queryString = queryString + "                   SELECT          GetDate() AS  EntryDate, '####000', Code, Name, OfficialCode, NULL, " + (int)GlobalEnums.CommodityTypeID.Products + ", CommodityCategoryID, CommodityClassID, CommodityLineID, CommodityID AS CustomerID, Remarks, 0 AS InActive " + "\r\n";
             queryString = queryString + "                   FROM            Commodities WHERE CommodityID = @EntityID " + "\r\n";
 
             queryString = queryString + "                   INSERT INTO     BomDetails (BomID, MaterialID, BlockUnit, BlockQuantity, Remarks, InActive) " + "\r\n";

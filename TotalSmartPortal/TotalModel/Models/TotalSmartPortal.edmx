@@ -219,10 +219,13 @@
           </Key>
           <Property Name="BomID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="EffectiveDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="OfficialCode" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="CommodityID" Type="int" />
+          <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="CommodityCategoryID" Type="int" Nullable="false" />
           <Property Name="CommodityClassID" Type="int" Nullable="false" />
           <Property Name="CommodityLineID" Type="int" Nullable="false" />
@@ -6796,6 +6799,19 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="BlendingInstructionVoidable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
+        <Function Name="BomDeletable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="BomEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="BomPostSaveValidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="BomSaveRelative" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="SaveRelativeOption" Type="int" Mode="In" />
+        </Function>
         <Function Name="CommodityDeletable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
@@ -6951,6 +6967,14 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="CommodityCategoryID" Type="int" Mode="In" />
           <Parameter Name="CommodityClassID" Type="int" Mode="In" />
           <Parameter Name="CommodityLineID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetBomIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
+          <Parameter Name="FromDate" Type="datetime" Mode="In" />
+          <Parameter Name="ToDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="GetBomViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BomID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetCommodityAvailables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -14936,6 +14960,27 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImport Name="PackageIssueGetReference" ReturnType="Collection(String)">
           <Parameter Name="PackageIssueID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="BomDeletable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="BomEditable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="BomPostSaveValidate" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="BomSaveRelative">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="SaveRelativeOption" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetBomIndexes" ReturnType="Collection(TotalSmartPortalModel.BomIndex)">
+            <Parameter Name="AspUserID" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetBomViewDetails" ReturnType="Collection(TotalSmartPortalModel.BomViewDetail)">
+            <Parameter Name="BomID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -17368,6 +17413,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="OfficialCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ProductionOrderDetails" Relationship="TotalSmartPortalModel.FK_ProductionOrderDetails_Boms" FromRole="Bom" ToRole="ProductionOrderDetail" />
           <NavigationProperty Name="FirmOrderDetails" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Boms" FromRole="Bom" ToRole="FirmOrderDetail" />
+          <Property Name="EffectiveDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CommodityID" Type="Int32" />
+          <Property Name="CommodityTypeID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_BomDetails_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -22436,6 +22484,31 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
         </ComplexType>
+        <ComplexType Name="BomIndex">
+          <Property Type="Int32" Name="BomID" Nullable="false" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="true" />
+          <Property Type="String" Name="Reference" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="EffectiveDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="MaterialCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="MaterialName" Nullable="false" MaxLength="200" />
+          <Property Type="Decimal" Name="BlockUnit" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="BlockQuantity" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="BomViewDetail">
+          <Property Type="Int32" Name="BomDetailID" Nullable="false" />
+          <Property Type="Int32" Name="BomID" Nullable="false" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Decimal" Name="BlockUnit" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="BlockQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -25961,6 +26034,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="Boms">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.Bom">
               <MappingFragment StoreEntitySet="Boms">
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
                 <ScalarProperty Name="OfficialCode" ColumnName="OfficialCode" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
@@ -28493,6 +28569,43 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImportMapping FunctionImportName="WarehouseTransferGetReference" FunctionName="TotalSmartPortalModel.Store.WarehouseTransferGetReference" />
           <FunctionImportMapping FunctionImportName="GoodsReceiptGetReference" FunctionName="TotalSmartPortalModel.Store.GoodsReceiptGetReference" />
           <FunctionImportMapping FunctionImportName="PackageIssueGetReference" FunctionName="TotalSmartPortalModel.Store.PackageIssueGetReference" />
+          <FunctionImportMapping FunctionImportName="BomDeletable" FunctionName="TotalSmartPortalModel.Store.BomDeletable" />
+          <FunctionImportMapping FunctionImportName="BomEditable" FunctionName="TotalSmartPortalModel.Store.BomEditable" />
+          <FunctionImportMapping FunctionImportName="BomPostSaveValidate" FunctionName="TotalSmartPortalModel.Store.BomPostSaveValidate" />
+          <FunctionImportMapping FunctionImportName="BomSaveRelative" FunctionName="TotalSmartPortalModel.Store.BomSaveRelative" />
+          <FunctionImportMapping FunctionImportName="GetBomIndexes" FunctionName="TotalSmartPortalModel.Store.GetBomIndexes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BomIndex">
+                <ScalarProperty Name="BomID" ColumnName="BomID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
+                <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
+                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
+                <ScalarProperty Name="BlockUnit" ColumnName="BlockUnit" />
+                <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBomViewDetails" FunctionName="TotalSmartPortalModel.Store.GetBomViewDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BomViewDetail">
+                <ScalarProperty Name="BomDetailID" ColumnName="BomDetailID" />
+                <ScalarProperty Name="BomID" ColumnName="BomID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="BlockUnit" ColumnName="BlockUnit" />
+                <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
