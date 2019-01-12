@@ -17,6 +17,17 @@ namespace TotalDTO.Productions
     public class PlannedOptionItem : IPlannedOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PlannedItem; } } }
     public class PlannedOptionProduct : IPlannedOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PlannedProduct; } } }
 
+    public interface IPlannedOrderPrimitiveDTO : IQuantityDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
+    {
+        int PlannedOrderID { get; set; }
+        string Code { get; set; }
+        Nullable<System.DateTime> VoucherDate { get; set; }
+        Nullable<System.DateTime> DeliveryDate { get; set; }
+        string Purposes { get; set; }
+        virtual int CustomerID { get; set; }
+        virtual bool CheckBomID { get; }
+    }
+
     public class PlannedOrderPrimitiveDTO<TPlannedOption> : QuantityDTO<PlannedOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
         where TPlannedOption : IPlannedOption, new()
     {
@@ -60,7 +71,25 @@ namespace TotalDTO.Productions
         }
     }
 
-    public class PlannedOrderDTO<TPlannedOption> : PlannedOrderPrimitiveDTO<TPlannedOption>, IBaseDetailEntity<PlannedOrderDetailDTO>
+    public interface IPlannedOrderDTO : IPlannedOrderPrimitiveDTO
+    {
+        [Display(Name = "Khách hàng")]
+        [UIHint("Commons/CustomerBase")]
+        CustomerBaseDTO Customer { get; set; }
+
+        [UIHint("AutoCompletes/VoidType")]
+        VoidTypeBaseDTO VoidType { get; set; }
+
+        List<PlannedOrderDetailDTO> PlannedOrderViewDetails { get; set; }
+        List<PlannedOrderDetailDTO> ViewDetails { get; set; }
+
+        string ControllerName { get; }
+
+        bool IsItem { get; }
+        bool IsProduct { get; }
+    }
+
+    public class PlannedOrderDTO<TPlannedOption> : PlannedOrderPrimitiveDTO<TPlannedOption>, IBaseDetailEntity<PlannedOrderDetailDTO>, IPlannedOrderDTO
         where TPlannedOption : IPlannedOption, new()
     {
         public PlannedOrderDTO()
