@@ -86,7 +86,7 @@
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='BomViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />")
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #");
 
-                    columns.Bound(p => p.LayerCode).DisplayNameTitle().Width(36)
+                    columns.Bound(p => p.LayerCode).DisplayNameTitle().Width(36).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
                         .ClientTemplate("#= (LayerCode == null)? '' : LayerCode #" + "<input type='hidden' name='BomViewDetails[#= index(data) #].LayerCode' value='#= (LayerCode == null) ? '' : LayerCode #' />");
 
                     columns.Bound(p => p.BlockUnit).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
@@ -190,7 +190,7 @@
 
 
 <script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
-<script src="@Url.Content("~/Scripts/Controllers/Purchases/Boms/Import.js")"></script>
+<script src="@Url.Content("~/Scripts/Controllers/Commons/Boms/Import.js")"></script>
 
 <script type="text/javascript">
 

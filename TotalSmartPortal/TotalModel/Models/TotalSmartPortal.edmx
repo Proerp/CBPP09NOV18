@@ -211,6 +211,7 @@
           <Property Name="LayerCode" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="BlockUnit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BlockQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
           <Property Name="InActive" Type="bit" Nullable="false" />
         </EntityType>
@@ -231,6 +232,7 @@
           <Property Name="CommodityCategoryID" Type="int" Nullable="false" />
           <Property Name="CommodityClassID" Type="int" Nullable="false" />
           <Property Name="CommodityLineID" Type="int" Nullable="false" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
           <Property Name="InActive" Type="bit" Nullable="false" />
@@ -2734,30 +2736,6 @@ warning 6035: The relationship 'FK_AccountInvoices_AspNetUsers2' has columns tha
             </Principal>
             <Dependent Role="BomDetails">
               <PropertyRef Name="MaterialID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Boms_Commodities">
-          <End Role="Commodities" Type="Self.Commodities" Multiplicity="0..1" />
-          <End Role="Boms" Type="Self.Boms" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodities">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="Boms">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Boms_Customers">
-          <End Role="Customers" Type="Self.Customers" Multiplicity="0..1" />
-          <End Role="Boms" Type="Self.Boms" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customers">
-              <PropertyRef Name="CustomerID" />
-            </Principal>
-            <Dependent Role="Boms">
-              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8394,14 +8372,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_BomDetails_Materials" Association="Self.FK_BomDetails_Materials">
             <End Role="Commodities" EntitySet="Commodities" />
             <End Role="BomDetails" EntitySet="BomDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Boms_Commodities" Association="Self.FK_Boms_Commodities">
-            <End Role="Commodities" EntitySet="Commodities" />
-            <End Role="Boms" EntitySet="Boms" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Boms_Customers" Association="Self.FK_Boms_Customers">
-            <End Role="Customers" EntitySet="Customers" />
-            <End Role="Boms" EntitySet="Boms" />
           </AssociationSet>
           <AssociationSet Name="FK_Commodities_CommodityBrands" Association="Self.FK_Commodities_CommodityBrands">
             <End Role="CommodityBrands" EntitySet="CommodityBrands" />
@@ -17434,6 +17404,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Bom" Relationship="TotalSmartPortalModel.FK_BomDetails_Boms" FromRole="BomDetail" ToRole="Bom" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BomDetails_Materials" FromRole="BomDetail" ToRole="Commodity" />
           <Property Name="LayerCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
+          <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Bom">
           <Key>
@@ -17463,6 +17434,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="MaterialID" Type="Int32" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_Boms_Commodities" FromRole="Bom" ToRole="Commodity" />
           <NavigationProperty Name="Customer" Relationship="TotalSmartPortalModel.FK_Boms_Customers" FromRole="Bom" ToRole="Customer" />
+          <Property Name="TotalQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_BomDetails_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -26096,6 +26068,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="BomDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.BomDetail">
               <MappingFragment StoreEntitySet="BomDetails">
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="LayerCode" ColumnName="LayerCode" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
@@ -26110,6 +26083,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="Boms">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.Bom">
               <MappingFragment StoreEntitySet="Boms">
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
                 <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
                 <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
                 <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />

@@ -17,14 +17,15 @@ namespace TotalDTO.Commons
 
         [Required(ErrorMessage = "Nhập TV")]
         [Display(Name = "Trục")]
-        public string LayerCode { get; set; }
+        public string LayerCode { get { return this.layerCode; } set { this.layerCode = (value != null ? value.ToUpper() : value); } }
+        private string layerCode;
 
         [Display(Name = "Mã NVL")]
         [UIHint("AutoCompletes/CommodityBase")]
         public override string CommodityCode { get; set; }
         [Display(Name = "Tên NVL")]
         public override string CommodityName { get; set; }
-        
+
 
         [Display(Name = "KL")]
         [UIHint("Quantity")]

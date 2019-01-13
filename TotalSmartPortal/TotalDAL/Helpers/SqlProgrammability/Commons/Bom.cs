@@ -74,7 +74,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      BomDetails.BomDetailID, BomDetails.BomID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, BomDetails.BlockQuantity AS Quantity, BomDetails.BlockQuantity, BomDetails.LayerCode, BomDetails.BlockUnit, BomDetails.Remarks " + "\r\n";
+            queryString = queryString + "       SELECT      BomDetails.BomDetailID, BomDetails.BomID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, BomDetails.Quantity, BomDetails.BlockQuantity, BomDetails.LayerCode, BomDetails.BlockUnit, BomDetails.Remarks " + "\r\n";
             queryString = queryString + "       FROM        BomDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON BomDetails.BomID = @BomID AND BomDetails.MaterialID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "       ORDER BY    BomDetails.LayerCode, BomDetails.BomDetailID " + "\r\n";
@@ -150,7 +150,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
         {
             string queryString;
 
-            queryString = " @CommodityID int, @BomID int " + "\r\n";
+            queryString = " @BomID int, @CommodityID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";

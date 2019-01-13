@@ -41,6 +41,7 @@ namespace TotalModel.Models
         public Nullable<int> CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public Nullable<int> MaterialID { get; set; }
+        public decimal TotalQuantity { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BomDetail> BomDetails { get; set; }

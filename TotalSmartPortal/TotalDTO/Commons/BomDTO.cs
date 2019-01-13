@@ -58,6 +58,16 @@ namespace TotalDTO.Commons
 
         public override string Reference { get { return "####000"; } }
         public override int PreparedPersonID { get { return 1; } }
+
+        public bool CheckBlockUnit { get { bool checkBomID = false; this.DtoDetails().ToList().ForEach(e => { if (checkBomID == false && this.DtoDetails().Where(w => w.LayerCode == e.LayerCode && w.BlockUnit != e.BlockUnit).Count() > 0) checkBomID = true; }); return checkBomID; } }
+        public bool CheckBlockUnitTotal { get { return this.DtoDetails().GroupBy(g => g.LayerCode).Select(s => new { gBlockUnit = s.First().BlockUnit }).Select(o => o.gBlockUnit).Sum() != 100; } }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            foreach (var result in base.Validate(validationContext)) { yield return result; }
+            if (this.CheckBlockUnit) yield return new ValidationResult("Lỗi tỷ lệ %. Lưu ý: cùng một trục phải cùng tỷ lệ %", new[] { "BOM" });
+            if (this.CheckBlockUnitTotal) yield return new ValidationResult("Lỗi tổng tỷ lệ %. Lưu ý: tổng tỷ lệ các trục phải bằng 100", new[] { "BOM" });
+        }
     }
 
     public class BomDTO : BomPrimitiveDTO, IBaseDetailEntity<BomDetailDTO>
