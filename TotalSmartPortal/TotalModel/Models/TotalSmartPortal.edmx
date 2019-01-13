@@ -232,11 +232,11 @@
           <Property Name="CommodityCategoryID" Type="int" Nullable="false" />
           <Property Name="CommodityClassID" Type="int" Nullable="false" />
           <Property Name="CommodityLineID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" />
           <Property Name="LayerCount" Type="int" Nullable="false" />
           <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="CustomerID" Type="int" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="InActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Commodities">
@@ -17421,7 +17421,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="CommodityClassID" Type="Int32" Nullable="false" />
           <Property Name="CommodityLineID" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" />
-          <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="InActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="BomDetails" Relationship="TotalSmartPortalModel.FK_BomDetails_Boms" FromRole="Bom" ToRole="BomDetail" />
           <NavigationProperty Name="FirmOrders" Relationship="TotalSmartPortalModel.FK_FirmOrders_Boms" FromRole="Bom" ToRole="FirmOrder" />
