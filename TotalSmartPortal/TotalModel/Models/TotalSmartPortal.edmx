@@ -208,6 +208,7 @@
           <Property Name="BomDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BomID" Type="int" Nullable="false" />
           <Property Name="MaterialID" Type="int" Nullable="false" />
+          <Property Name="LayerCode" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="BlockUnit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BlockQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
@@ -17432,6 +17433,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="InActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Bom" Relationship="TotalSmartPortalModel.FK_BomDetails_Boms" FromRole="BomDetail" ToRole="Bom" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BomDetails_Materials" FromRole="BomDetail" ToRole="Commodity" />
+          <Property Name="LayerCode" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Bom">
           <Key>
@@ -22540,10 +22542,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
           <Property Type="DateTime" Name="EffectiveDate" Nullable="false" Precision="23" />
-          <Property Type="String" Name="MaterialCode" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="MaterialName" Nullable="false" MaxLength="200" />
-          <Property Type="Decimal" Name="BlockUnit" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="BlockQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="MaterialCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MaterialName" Nullable="true" MaxLength="200" />
+          <Property Type="Decimal" Name="BlockUnit" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="BlockQuantity" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="BomViewDetail">
           <Property Type="Int32" Name="BomDetailID" Nullable="false" />
@@ -22555,6 +22557,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="BlockQuantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="LayerCode" Nullable="false" MaxLength="5" />
         </ComplexType>
         <Association Name="FK_Boms_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="0..1" />
@@ -26092,6 +26096,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="BomDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.BomDetail">
               <MappingFragment StoreEntitySet="BomDetails">
+                <ScalarProperty Name="LayerCode" ColumnName="LayerCode" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />
@@ -28676,6 +28681,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="LayerCode" ColumnName="LayerCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

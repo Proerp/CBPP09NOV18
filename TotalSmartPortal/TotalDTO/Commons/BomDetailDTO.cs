@@ -15,21 +15,27 @@ namespace TotalDTO.Commons
 
         public int MaterialID { get { return this.CommodityID; } }
 
-        //[Display(Name = "Mã CK")]
+        [Required(ErrorMessage = "Nhập TV")]
+        [Display(Name = "Trục")]
+        public string LayerCode { get; set; }
+
+        [Display(Name = "Mã NVL")]
         [UIHint("AutoCompletes/CommodityBase")]
         public override string CommodityCode { get; set; }
+        [Display(Name = "Tên NVL")]
+        public override string CommodityName { get; set; }
+        
 
-        [Display(Name = "KL Đ/H")]
+        [Display(Name = "KL")]
         [UIHint("Quantity")]
         [Range(0, 99999999999, ErrorMessage = "Số lượng không hợp lệ")]
         public override decimal Quantity { get; set; }
 
-        [UIHint("QuantityReadonly")]
         public decimal BlockQuantity { get { return this.Quantity; } set { } }
 
-        [Display(Name = "KL Đ/H")]
-        [UIHint("Quantity")]
-        [Range(0, 99999999999, ErrorMessage = "Số lượng không hợp lệ")]
+        [Display(Name = "%")]
+        [UIHint("DecimalN0")]
+        [Range(1, 100, ErrorMessage = "Vui lòng nhập %")]
         public decimal BlockUnit { get; set; }
     }
 }

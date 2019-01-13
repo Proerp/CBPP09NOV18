@@ -24,7 +24,7 @@ namespace TotalModel.Models
         public System.DateTime EffectiveDate { get; set; }
         public string MaterialCode { get; set; }
         public string MaterialName { get; set; }
-        public decimal BlockUnit { get; set; }
-        public decimal BlockQuantity { get; set; }
+        public Nullable<decimal> BlockUnit { get; set; }
+        public Nullable<decimal> BlockQuantity { get; set; }
     }
 }

@@ -1779,7 +1779,6 @@
     <Content Include="Scripts\Controllers\Commons\BinLocations\Edit.js" />
     <Content Include="Scripts\Controllers\Commons\BinLocations\Index.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Create.js" />
-    <Content Include="Scripts\Controllers\Commons\Boms\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Edit.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Import.js" />

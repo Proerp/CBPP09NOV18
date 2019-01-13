@@ -25,6 +25,7 @@ namespace TotalDTO.Commons
     public class BomBaseDTO : BaseDTO, IBomBaseDTO
     {
         public Nullable<int> BomID { get; set; }
+        [Required(ErrorMessage = "Vui lòng nhập MCT")]
         public string Code { get; set; }
         public string Name { get; set; }
     }
@@ -67,11 +68,12 @@ namespace TotalDTO.Commons
         }
 
         public override Nullable<int> CustomerID { get { return (this.Customer != null ? (this.Customer.CustomerID > 0 ? (Nullable<int>)this.Customer.CustomerID : null) : null); } }
-        [Display(Name = "Nhà cung cấp")]
+        [Display(Name = "Khách hàng")]
         [UIHint("AutoCompletes/CustomerBase")]
         public CustomerBaseDTO Customer { get; set; }
 
         public override Nullable<int> CommodityID { get { return (this.Commodity != null ? (this.Commodity.CommodityID > 0 ? (Nullable<int>)this.Commodity.CommodityID : null) : null); } }
+        [Display(Name = "Mã màng")]
         [UIHint("AutoCompletes/Commodity")]
         public CommodityBaseDTO Commodity { get; set; }
 

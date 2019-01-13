@@ -961,6 +961,17 @@ a[class^='info-bar'] {
 
 
 
+.Color-A {
+    color: black;
+}
+
+.Color-B {
+    color: orange;
+}
+
+.Color-C {
+    color: blueviolet;
+}
 
 
 
@@ -1208,6 +1219,9 @@ ul.k-panelbar .k-link {
     display: none;
 }
 
+.default-display-none{
+    display: none;
+}
 
 
 

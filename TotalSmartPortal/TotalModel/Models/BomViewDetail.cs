@@ -22,5 +22,7 @@ namespace TotalModel.Models
         public decimal BlockQuantity { get; set; }
         public string Remarks { get; set; }
         public int CommodityTypeID { get; set; }
+        public decimal Quantity { get; set; }
+        public string LayerCode { get; set; }
     }
 }

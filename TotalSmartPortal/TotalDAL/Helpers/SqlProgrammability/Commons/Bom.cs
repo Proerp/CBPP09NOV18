@@ -55,8 +55,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + "       FROM        Boms " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON Boms.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON Boms.CustomerID = Customers.CustomerID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN BomDetails ON Boms.BomID = BomDetails.BomID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Commodities Materials ON BomDetails.MaterialID = Materials.CommodityID " + "\r\n";            
+            queryString = queryString + "                   LEFT  JOIN BomDetails ON Boms.BomID = BomDetails.BomID " + "\r\n";
+            queryString = queryString + "                   LEFT  JOIN Commodities Materials ON BomDetails.MaterialID = Materials.CommodityID " + "\r\n";            
             queryString = queryString + "       WHERE      (SELECT TOP 1 OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.Bom + " AND AccessControls.AccessLevel > 0) > 0 " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
@@ -74,9 +74,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      BomDetails.BomDetailID, BomDetails.BomID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, BomDetails.BlockUnit, BomDetails.BlockQuantity, BomDetails.Remarks " + "\r\n";
+            queryString = queryString + "       SELECT      BomDetails.BomDetailID, BomDetails.BomID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, BomDetails.BlockQuantity AS Quantity, BomDetails.BlockQuantity, BomDetails.LayerCode, BomDetails.BlockUnit, BomDetails.Remarks " + "\r\n";
             queryString = queryString + "       FROM        BomDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON BomDetails.BomID = @BomID AND BomDetails.MaterialID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "       ORDER BY    BomDetails.LayerCode, BomDetails.BomDetailID " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
