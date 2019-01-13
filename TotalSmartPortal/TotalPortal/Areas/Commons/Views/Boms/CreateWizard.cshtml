@@ -1,7 +1,7 @@
 ﻿@using TotalPortal.Configuration;
 
 @using TotalDTO.Purchases
-    @model TotalPortal.Areas.Purchases.ViewModels.PurchaseOrderViewModel
+    @model TotalPortal.Areas.Commons.ViewModels.BomViewModel
 
     @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
@@ -14,12 +14,12 @@
 
         <div style="margin-top: 8px; margin-left: -60px; margin-right: 18px;">
             @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
-            @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
+            @*@Html.EditorFor(d => d.Commodity, "AutoCompletes/Commodity", new { CommodityDescriptionHidden = "false", CommodityDisplayCode = @Model.GetDisplayName(m => m.Commodity) })*@
         </div> 
         
         <div class="background-bar" style="height: 45px;">
             <div class="popup-button-bar">
-                <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "PurchaseOrders")" formtarget="_top" style="display:none" />
+                <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "Boms")" formtarget="_top" style="display:none" />
 
                 <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Next </button>
                 <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Exit </button>

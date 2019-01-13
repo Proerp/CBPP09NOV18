@@ -12,7 +12,7 @@ namespace TotalPortal.Areas.Commons.Builders
 
     public class BomViewModelSelectListBuilder : IBomViewModelSelectListBuilder
     {
-        public virtual void BuildSelectLists(BinLocationViewModel binLocationViewModel)
+        public virtual void BuildSelectLists(BomViewModel bomViewModel)
         {
         }
     }

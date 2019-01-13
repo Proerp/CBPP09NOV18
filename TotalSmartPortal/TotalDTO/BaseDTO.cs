@@ -63,7 +63,7 @@ namespace TotalDTO
 
         
         [Display(Name = "Số phiếu")]
-        public string Reference { get; set; }
+        public virtual string Reference { get; set; }
 
 
 

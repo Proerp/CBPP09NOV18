@@ -1742,9 +1742,6 @@
     <Content Include="Areas\Commons\Views\Boms\Edit.cshtml" />
     <Content Include="Areas\Commons\Views\Boms\Index.cshtml" />
     <Content Include="Areas\Commons\Views\Boms\Print.cshtml" />
-    <Content Include="Areas\Commons\Views\Boms\Void.cshtml" />
-    <Content Include="Areas\Commons\Views\Boms\VoidDetail.cshtml" />
-    <Content Include="Areas\Commons\Views\Boms\VoidDetailSuccess.cshtml" />
     <Content Include="Areas\Commons\Views\Boms\_Bom.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
@@ -1788,7 +1785,6 @@
     <Content Include="Scripts\Controllers\Commons\Boms\Index.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Open.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Print.js" />
-    <Content Include="Scripts\Controllers\Commons\Boms\Void.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Create.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Edit.js" />

@@ -29,7 +29,7 @@ namespace TotalDTO.Commons
         public string Name { get; set; }
     }
 
-    
+
 
 
 
@@ -47,12 +47,16 @@ namespace TotalDTO.Commons
 
         [Display(Name = "Mã công thức")]
         public string Code { get; set; }
+        public string OfficialCode { get { return this.Code; } }
 
         [Display(Name = "Tên hỗn hợp")]
         public string Name { get; set; }
 
         [Display(Name = "Ngày hiệu lực")]
         public Nullable<System.DateTime> EffectiveDate { get; set; }
+
+        public override string Reference { get { return "####000"; } }
+        public override int PreparedPersonID { get { return 1; } }
     }
 
     public class BomDTO : BomPrimitiveDTO, IBaseDetailEntity<BomDetailDTO>

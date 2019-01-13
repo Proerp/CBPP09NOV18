@@ -40,6 +40,7 @@ namespace TotalModel.Models
         public System.DateTime EffectiveDate { get; set; }
         public Nullable<int> CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
+        public Nullable<int> MaterialID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BomDetail> BomDetails { get; set; }
@@ -53,5 +54,7 @@ namespace TotalModel.Models
         public virtual ICollection<ProductionOrderDetail> ProductionOrderDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FirmOrderDetail> FirmOrderDetails { get; set; }
+        public virtual Commodity Commodity { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

@@ -812,7 +812,12 @@ namespace TotalModel.Models
         public System.DateTime EditedDate { get; set; }
     }
 
-    public partial class Bom : IPrimitiveEntity, IBaseEntity
+    public partial class BomIndex
+    {
+        public string Features { get { return this.Code + (this.Name != null ? " [" + this.Name + "]" : "") + " Ngày: " + ((DateTime)this.EffectiveDate).ToString("dd/MM/yy") + ", NCC: " + this.CustomerName + ", MH: " + this.CommodityCode + " - " + this.CommodityName; } }
+    }
+
+    public partial class Bom : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<BomDetail>
     {
         public int GetID() { return this.BomID; }
 
@@ -823,7 +828,19 @@ namespace TotalModel.Models
 
         public System.DateTime CreatedDate { get; set; }
         public System.DateTime EditedDate { get; set; }
+
+        public ICollection<BomDetail> GetDetails() { return this.BomDetails; }
     }
+
+
+    public partial class BomDetail : IPrimitiveEntity, IHelperCommodityID, IHelperCommodityTypeID
+    {
+        public int GetID() { return this.BomDetailID; }
+
+        public int CommodityID { get; set; }
+        public int CommodityTypeID { get; set; }
+    }
+
 
     public partial class ProductionLine : IPrimitiveEntity, IBaseEntity
     {

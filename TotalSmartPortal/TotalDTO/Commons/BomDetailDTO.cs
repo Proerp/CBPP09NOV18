@@ -13,6 +13,7 @@ namespace TotalDTO.Commons
         public int BomDetailID { get; set; }
         public int BomID { get; set; }
 
+        public int MaterialID { get { return this.CommodityID; } }
 
         //[Display(Name = "Mã CK")]
         [UIHint("AutoCompletes/CommodityBase")]

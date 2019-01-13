@@ -59,20 +59,20 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             //Boms: SHOULD CHECK AND MODIFY TO MEET REQUIRELEMENT
             queryString = queryString + "   IF (SELECT COUNT(*) FROM Commodities WHERE CommodityID = @EntityID AND CommodityTypeID = " + (int)GlobalEnums.CommodityTypeID.Items + ") = 1 " + "\r\n";
             queryString = queryString + "       BEGIN " + "\r\n";
-            queryString = queryString + "           IF (SELECT COUNT(*) FROM Boms WHERE CustomerID = @EntityID) = 0  " + "\r\n";
+            queryString = queryString + "           IF (SELECT COUNT(*) FROM Boms WHERE MaterialID = @EntityID) = 0  " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   INSERT INTO     Boms (EntryDate, Reference, Code, Name, OfficialCode, CommodityID, CommodityTypeID, CommodityCategoryID, CommodityClassID, CommodityLineID, CustomerID, Remarks, InActive) " + "\r\n";
-            queryString = queryString + "                   SELECT          GetDate() AS  EntryDate, '####000', Code, Name, OfficialCode, NULL, " + (int)GlobalEnums.CommodityTypeID.Products + ", CommodityCategoryID, CommodityClassID, CommodityLineID, CommodityID AS CustomerID, Remarks, 0 AS InActive " + "\r\n";
+            queryString = queryString + "                   INSERT INTO     Boms (EntryDate, Reference, Code, Name, OfficialCode, CommodityID, MaterialID, CommodityTypeID, CommodityCategoryID, CommodityClassID, CommodityLineID, CustomerID, Remarks, InActive) " + "\r\n";
+            queryString = queryString + "                   SELECT          GetDate() AS  EntryDate, '####000', Code, Name, OfficialCode, NULL AS CommodityID, CommodityID AS MaterialID, " + (int)GlobalEnums.CommodityTypeID.Products + ", CommodityCategoryID, CommodityClassID, CommodityLineID, NULL AS CustomerID, Remarks, 0 AS InActive " + "\r\n";
             queryString = queryString + "                   FROM            Commodities WHERE CommodityID = @EntityID " + "\r\n";
 
             queryString = queryString + "                   INSERT INTO     BomDetails (BomID, MaterialID, BlockUnit, BlockQuantity, Remarks, InActive) " + "\r\n";
-            queryString = queryString + "                   SELECT          BomID, CustomerID AS MaterialID, 1 AS BlockUnit, 1 AS BlockQuantity, Remarks, InActive " + "\r\n";
+            queryString = queryString + "                   SELECT          BomID, MaterialID, 1 AS BlockUnit, 1 AS BlockQuantity, Remarks, InActive " + "\r\n";
             queryString = queryString + "                   FROM            Boms WHERE BomID = SCOPE_IDENTITY() " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "           ELSE " + "\r\n";
             queryString = queryString + "                   UPDATE          Boms " + "\r\n"; //Boms.BomID = 1: DEFAULT NULL Boms: FOR INIT SOME WHERE ONLY
             queryString = queryString + "                   SET             Boms.Code = Commodities.Code, Boms.OfficialCode = Commodities.OfficialCode, Boms.Name = Commodities.Name, Boms.CommodityCategoryID = Commodities.CommodityCategoryID, Boms.CommodityClassID = Commodities.CommodityClassID, Boms.CommodityLineID = Commodities.CommodityLineID " + "\r\n";
-            queryString = queryString + "                   FROM            Boms INNER JOIN Commodities ON Boms.BomID <> 1 AND Boms.CustomerID = @EntityID AND Boms.CustomerID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   FROM            Boms INNER JOIN Commodities ON Boms.BomID <> 1 AND Boms.MaterialID = @EntityID AND Boms.MaterialID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "       END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("CommoditySaveRelative", queryString);
