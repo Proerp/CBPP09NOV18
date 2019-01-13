@@ -8,10 +8,10 @@ using TotalCore.Repositories.Commons;
 
 namespace TotalDAL.Repositories.Commons
 {
-    public class BomRepository : GenericRepository<Bom>, IBomRepository
+    public class BomRepository : GenericWithDetailRepository<Bom, BomDetail>, IBomRepository
     {
         public BomRepository(TotalSmartPortalEntities totalSmartPortalEntities)
-            : base(totalSmartPortalEntities)
+            : base(totalSmartPortalEntities, "BomEditable", null, "BomDeletable")
         {
         }
     }

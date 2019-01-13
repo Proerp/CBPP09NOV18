@@ -269,6 +269,7 @@
     <Compile Include="Areas\Commons\APIs\VoidTypeAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\PromotionAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\WarehouseAPIsController.cs" />
+    <Compile Include="Areas\Commons\Builders\BomViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\IBinLocationSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityBrandSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityCategorySelectListBuilder.cs" />
@@ -295,6 +296,7 @@
     <Compile Include="Areas\Commons\Controllers\Apis\BinLocationsApiController.cs" />
     <Compile Include="Areas\Commons\Controllers\Apis\ShiftsApiController.cs" />
     <Compile Include="Areas\Commons\Controllers\BinLocationsController.cs" />
+    <Compile Include="Areas\Commons\Controllers\BomsController.cs" />
     <Compile Include="Areas\Commons\Controllers\CommoditiesController.cs" />
     <Compile Include="Areas\Commons\Controllers\CommodityPricesController.cs" />
     <Compile Include="Areas\Commons\Controllers\CustomersController.cs" />
@@ -303,6 +305,7 @@
     <Compile Include="Areas\Commons\Controllers\PromotionsController.cs" />
     <Compile Include="Areas\Commons\Controllers\Sessions\ShiftSession.cs" />
     <Compile Include="Areas\Commons\ViewModels\BinLocationViewModel.cs" />
+    <Compile Include="Areas\Commons\ViewModels\BomViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\CommodityPriceViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\CommodityViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\CustomerViewModel.cs" />
@@ -1733,6 +1736,16 @@
     <Content Include="Areas\Productions\Views\PlannedProducts\Void.cshtml" />
     <Content Include="Areas\Productions\Views\PlannedProducts\VoidDetail.cshtml" />
     <Content Include="Areas\Productions\Views\PlannedProducts\VoidDetailSuccess.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\Approve.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\CreateWizard.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\Delete.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\Edit.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\Index.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\Print.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\Void.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\VoidDetail.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\VoidDetailSuccess.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\_Bom.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -1767,6 +1780,15 @@
     <Content Include="Scripts\Controllers\Commons\BinLocations\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\BinLocations\Edit.js" />
     <Content Include="Scripts\Controllers\Commons\BinLocations\Index.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\Approve.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\CreateWizard.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\Delete.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\Edit.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\Import.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\Index.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\Open.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\Print.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\Void.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Create.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Edit.js" />

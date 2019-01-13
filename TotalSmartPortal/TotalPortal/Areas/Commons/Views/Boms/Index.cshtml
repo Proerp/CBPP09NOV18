@@ -1,0 +1,140 @@
+﻿@using TotalPortal.Configuration
+
+<div id="popupWindow"></div>
+
+<div>
+    @(Html.Kendo().Grid<TotalModel.Models.PurchaseOrderIndex>()
+            .Name("kendoGridIndex")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.PurchaseOrderID).DisplayNameTitle().Hidden();
+                columns.Bound(p => p.EntryMonth).Title("Tháng").Hidden();
+                columns.Bound(p => p.Features).Title("PO").Hidden();
+                
+                columns.Bound(p => p.Reference).Title("PĐH").Width(10).Filterable(false).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseOrders", action = "Edit" }) + "/#= PurchaseOrderID #'>#=Reference#</a>");
+                columns.Bound(p => p.CommodityCode).Title("Mã hàng").Width(190);
+                columns.Bound(p => p.CommodityName).Title("Mặt hàng").Width(290);
+
+                columns.Bound(p => p.VoidTypeName).Title("Hủy đh").Width(190);
+
+                columns.Bound(p => p.Quantity).Title("Đặt hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantityArrived).Title("Đã nhận").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantityRemains).Title("Còn lại").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+
+                columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
+                
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
+                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseOrders", action = "Void" }) + "/#= PurchaseOrderID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseOrders", action = "Delete" }) + "/#= PurchaseOrderID #'><span class='k-icon sbt-delete'></span></a>");
+            })
+            .ToolBar(toolbar =>
+            {
+                toolbar.Template(@<text>                    
+                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" />  Lập phiếu đặt hàng </button>
+                    <div class="toolbar" style="float: right;">
+                        <label>Nhập số PO, tên NCC hoặc mặt hàng</label>
+                        <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                    </div>
+                </text>            );
+            })
+                    .Pageable()
+                    .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
+                    .Selectable()
+                    .Sortable()
+                    .Events(e =>
+                    {
+                        e.DataBound("hightLightSelectedRow");
+                    })
+                    .DataSource(dataSource => dataSource
+                        .Ajax()
+                        .Group(group => group.AddDescending(p => p.EntryMonth)).Group(group => group.Add(p => p.Features))
+                        .Read(read => read.Action("GetPurchaseOrderIndexes", "PurchaseOrderAPIs", new { area = "Purchases" }))
+                        .Sort(sort =>
+                            {
+                                sort.Add(p => p.EntryDate).Descending();
+                                sort.Add(p => p.PurchaseOrderID).Descending();
+                            })
+                        .PageSize(20)
+                        .Model(model =>
+                        {
+                            model.Id(x => x.PurchaseOrderID);
+                            model.Field(m => m.PurchaseOrderID).DefaultValue(0);
+                        })
+                        .ServerOperation(true)
+                        .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                        .Aggregates(a => a.Add(x => x.QuantityArrived).Sum())
+                        .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                        .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
+                        .Aggregates(a => a.Add(x => x.TotalQuantityArrived).Sum())
+                        )
+                    .HtmlAttributes(new { @class = "grid-class" }))
+</div>
+
+
+
+<script type="text/javascript">
+    function hightLightSelectedRow(e) {
+        require(["kindexGrid"], function (kindexGrid) {
+            var kindexGridInstance = new kindexGrid("kendoGridIndex");
+            kindexGridInstance.setSelectedRow("PurchaseOrderID", '@ViewBag.SelectedEntityID');
+        });
+    }
+
+    function createWizard() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "PurchaseOrders")", "Chọn nhà cung cấp", "838", "330");
+        });
+    }
+
+
+    decoratingKindex = function (idx, elem) {
+
+        if (elem.Approved == null || elem.Approved == false) {
+            $('tr[data-uid="' + elem.uid + '"]').addClass("NotApproved");
+        }
+        else {
+            if (elem.InActive != null && elem.InActive == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus");
+            }
+
+            if (elem.InActivePartial != null && elem.InActivePartial == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus1");
+            }
+        }
+
+    }
+
+
+
+
+
+
+    function indexFilterText_KeyUp() {
+        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+        
+        if (indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "Code", operator: "contains", value: indexFilterText },
+                    { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "CommodityCode", operator: "contains", value: indexFilterText },
+                    { field: "CommodityName", operator: "contains", value: indexFilterText },
+                    { field: "Purposes", operator: "contains", value: indexFilterText },
+                    { field: "Description", operator: "contains", value: indexFilterText },
+                    { field: "VoidTypeName", operator: "contains", value: indexFilterText }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+</script>
+
+
+

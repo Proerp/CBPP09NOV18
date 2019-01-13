@@ -26,6 +26,16 @@ namespace TotalPortal.Areas.Commons.APIs
             this.bomAPIRepository = bomAPIRepository;
         }
 
+        public JsonResult GetBomIndexes([DataSourceRequest] DataSourceRequest request)
+        {
+            ICollection<BomIndex> bomIndexes = this.bomAPIRepository.GetEntityIndexes<BomIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext));
+
+            DataSourceResult response = bomIndexes.ToDataSourceResult(request);
+
+            return Json(response, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         public JsonResult GetBomBases(string searchText, int commodityID, int commodityCategoryID, int commodityClassID, int commodityLineID)
         {

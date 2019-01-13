@@ -4,7 +4,7 @@ using TotalModel.Models;
 
 namespace TotalCore.Repositories.Commons
 {
-    public interface IBomRepository : IGenericRepository<Bom>
+    public interface IBomRepository : IGenericWithDetailRepository<Bom, BomDetail>
     {
     }
 

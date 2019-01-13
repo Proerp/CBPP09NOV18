@@ -52,6 +52,13 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<GoodsArrivalDetailDTO, GoodsArrivalDetail>();
 
 
+                cfg.CreateMap<Bom, BomViewModel>();
+                cfg.CreateMap<Bom, BomDTO>();
+                cfg.CreateMap<BomPrimitiveDTO, Bom>();
+                cfg.CreateMap<BomViewDetail, BomDetailDTO>();
+                cfg.CreateMap<BomDetailDTO, BomDetail>();
+
+
                 cfg.CreateMap<Lab, LabViewModel>();
                 cfg.CreateMap<Lab, LabDTO>();
                 cfg.CreateMap<LabPrimitiveDTO, Lab>();

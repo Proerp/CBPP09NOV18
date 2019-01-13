@@ -395,10 +395,10 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IMoldSelectListBuilder>().To<MoldSelectListBuilder>();
 
 
-                //kernel.Bind<IBomService>().To<BomService>();
+                kernel.Bind<IBomService>().To<BomService>();
                 kernel.Bind<IBomRepository>().To<BomRepository>();
                 kernel.Bind<IBomAPIRepository>().To<BomAPIRepository>();
-                //kernel.Bind<IBomSelectListBuilder>().To<BomSelectListBuilder>();
+                kernel.Bind<IBomViewModelSelectListBuilder>().To<BomViewModelSelectListBuilder>();
 
                 //kernel.Bind<IProductionLineService>().To<ProductionLineService>();
                 kernel.Bind<IProductionLineRepository>().To<ProductionLineRepository>();
