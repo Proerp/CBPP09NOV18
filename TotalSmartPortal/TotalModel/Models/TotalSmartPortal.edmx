@@ -22554,6 +22554,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="BlockUnit" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="BlockQuantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
         </ComplexType>
         <Association Name="FK_Boms_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="0..1" />
@@ -28674,6 +28675,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="BlockUnit" ColumnName="BlockUnit" />
                 <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

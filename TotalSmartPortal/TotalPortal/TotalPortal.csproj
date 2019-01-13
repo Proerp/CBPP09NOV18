@@ -1743,6 +1743,7 @@
     <Content Include="Areas\Commons\Views\Boms\Index.cshtml" />
     <Content Include="Areas\Commons\Views\Boms\Print.cshtml" />
     <Content Include="Areas\Commons\Views\Boms\_Bom.cshtml" />
+    <Content Include="Areas\Commons\Views\Boms\Create.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -1777,14 +1778,12 @@
     <Content Include="Scripts\Controllers\Commons\BinLocations\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\BinLocations\Edit.js" />
     <Content Include="Scripts\Controllers\Commons\BinLocations\Index.js" />
-    <Content Include="Scripts\Controllers\Commons\Boms\Approve.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\Create.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Edit.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Import.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Index.js" />
-    <Content Include="Scripts\Controllers\Commons\Boms\Open.js" />
-    <Content Include="Scripts\Controllers\Commons\Boms\Print.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Create.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\Commodities\Edit.js" />

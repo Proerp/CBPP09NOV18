@@ -68,7 +68,7 @@ namespace TotalDTO.Commons
 
         public override Nullable<int> CustomerID { get { return (this.Customer != null ? (this.Customer.CustomerID > 0 ? (Nullable<int>)this.Customer.CustomerID : null) : null); } }
         [Display(Name = "Nhà cung cấp")]
-        [UIHint("Commons/CustomerBase")]
+        [UIHint("AutoCompletes/CustomerBase")]
         public CustomerBaseDTO Customer { get; set; }
 
         public override Nullable<int> CommodityID { get { return (this.Commodity != null ? (this.Commodity.CommodityID > 0 ? (Nullable<int>)this.Commodity.CommodityID : null) : null); } }

@@ -19,7 +19,7 @@ namespace TotalPortal.Areas.Commons.Controllers
     public class BomsController : GenericViewDetailController<Bom, BomDetail, BomViewDetail, BomDTO, BomPrimitiveDTO, BomDetailDTO, BomViewModel>
     {
         public BomsController(IBomService bomService, IBomViewModelSelectListBuilder bomViewModelSelectListBuilder)
-            : base(bomService, bomViewModelSelectListBuilder, true)
+            : base(bomService, bomViewModelSelectListBuilder)
         {
         }
 

@@ -21,5 +21,6 @@ namespace TotalModel.Models
         public decimal BlockUnit { get; set; }
         public decimal BlockQuantity { get; set; }
         public string Remarks { get; set; }
+        public int CommodityTypeID { get; set; }
     }
 }
