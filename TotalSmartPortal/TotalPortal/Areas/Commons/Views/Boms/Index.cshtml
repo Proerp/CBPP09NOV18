@@ -3,59 +3,60 @@
 <div id="popupWindow"></div>
 
 <div>
-    @(Html.Kendo().Grid<TotalModel.Models.BomIndex>()
+        @(Html.Kendo().Grid<TotalModel.Models.BomIndex>()
             .Name("kendoGridIndex")
             .Columns(columns =>
             {
                 columns.Bound(p => p.BomID).DisplayNameTitle().Hidden();
-                columns.Bound(p => p.Features).Title("PO").Hidden();
-                
-                columns.Bound(p => p.Reference).Title("PĐH").Width(10).Filterable(false).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/Boms", action = "Edit" }) + "/#= BomID #'>#=Reference#</a>");
-                columns.Bound(p => p.CommodityCode).Title("Mã hàng").Width(190);
-                columns.Bound(p => p.CommodityName).Title("Mặt hàng").Width(290);
+                columns.Bound(p => p.CustomerName).Title("KH").Hidden();
 
-                columns.Bound(p => p.BlockUnit).Title("Đặt hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(60);
-                columns.Bound(p => p.BlockQuantity).Title("Đã nhận").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(60);
+                columns.Bound(p => p.Code).Title("MCT").Width(118).Filterable(false).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/Boms", action = "Edit" }) + "/#= BomID #'>#=Code#</a>");
+                columns.Bound(p => p.EffectiveDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(30).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+                columns.Bound(p => p.Name).Title("Tên hỗn hợp").Width(160);
+                columns.Bound(p => p.CommodityCode).Title("Mã màng").Width(250);
+                columns.Bound(p => p.CommodityName).Title("Tên màng").Width(180);
+                columns.Bound(p => p.LayerCount).Title("Số Trục").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+                columns.Bound(p => p.Description).Title("Ghi chú").Width(190);
 
-                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(10)
                     .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Commons/Boms", action = "Delete" }) + "/#= BomID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>
             {
                 toolbar.Template(@<text>                    
-                    <button type="button" class="k-button" onclick="location.href='@Url.Action("Create", "Boms")'"> <img src="~/Content/Images/Mains/Customer Orange 24.png" /> Thêm công thức </button>                
+                    <button type="button" class="k-button" onclick="location.href='@Url.Action("Create", "Boms")'"> <img src="~/Content/Images/Mains/Size24/settings-icon-24.png" /> Thêm công thức </button>                
                     <div class="toolbar" style="float: right;">
-                        <label>Nhập số PO, tên NCC hoặc mặt hàng</label>
+                        <label>Nhập số MCT, tên hỗn hợp hoặc khách hàng</label>
                         <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
                     </div>
                 </text>            );
             })
             .Filterable(e => e.Enabled(false))        
             .Pageable()
-                    .Selectable()
-                    .Sortable()
-                    .Events(e =>
+            .Selectable()
+            .Sortable()
+            .Events(e =>
+            {
+                e.DataBound("hightLightSelectedRow");
+            })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Group(group => group.Add(p => p.CustomerName))
+                .Read(read => read.Action("GetBomIndexes", "BomAPIs", new { area = "Commons" }))
+                .Sort(sort =>
                     {
-                        e.DataBound("hightLightSelectedRow");
+                        sort.Add(p => p.EntryDate).Descending();
+                        sort.Add(p => p.BomID).Descending();
                     })
-                    .DataSource(dataSource => dataSource
-                        .Ajax()
-                        .Group(group => group.Add(p => p.Features))
-                        .Read(read => read.Action("GetBomIndexes", "BomAPIs", new { area = "Commons" }))
-                        .Sort(sort =>
-                            {
-                                sort.Add(p => p.EntryDate).Descending();
-                                sort.Add(p => p.BomID).Descending();
-                            })
-                        .PageSize(20)
-                        .Model(model =>
-                        {
-                            model.Id(x => x.BomID);
-                            model.Field(m => m.BomID).DefaultValue(0);
-                        })
-                        .ServerOperation(true)
-                        )
-                    .HtmlAttributes(new { @class = "grid-class" }))
+                .PageSize(20)
+                .Model(model =>
+                {
+                    model.Id(x => x.BomID);
+                    model.Field(m => m.BomID).DefaultValue(0);
+                })
+                .ServerOperation(true)
+                )
+            .HtmlAttributes(new { @class = "grid-class" }))
 </div>
 
 
@@ -106,11 +107,12 @@
                 logic: "or",
                 filters: [
                     { field: "Code", operator: "contains", value: indexFilterText },
+                    { field: "Name", operator: "contains", value: indexFilterText },
                     { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "CustomerCode", operator: "contains", value: indexFilterText },
                     { field: "CustomerName", operator: "contains", value: indexFilterText },
                     { field: "CommodityCode", operator: "contains", value: indexFilterText },
                     { field: "CommodityName", operator: "contains", value: indexFilterText },
-                    { field: "Purposes", operator: "contains", value: indexFilterText },
                     { field: "Description", operator: "contains", value: indexFilterText }
                 ]
             });

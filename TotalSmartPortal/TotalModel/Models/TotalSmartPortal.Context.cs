@@ -3091,17 +3091,17 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedProductPendingMaterialIssueDetail>("GetSemifinishedProductPendingMaterialIssueDetails", locationIDParameter);
         }
     
-        public virtual int AddCommodityBom(Nullable<int> commodityID, Nullable<int> bomID)
+        public virtual int AddCommodityBom(Nullable<int> bomID, Nullable<int> commodityID)
         {
-            var commodityIDParameter = commodityID.HasValue ?
-                new ObjectParameter("CommodityID", commodityID) :
-                new ObjectParameter("CommodityID", typeof(int));
-    
             var bomIDParameter = bomID.HasValue ?
                 new ObjectParameter("BomID", bomID) :
                 new ObjectParameter("BomID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddCommodityBom", commodityIDParameter, bomIDParameter);
+            var commodityIDParameter = commodityID.HasValue ?
+                new ObjectParameter("CommodityID", commodityID) :
+                new ObjectParameter("CommodityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddCommodityBom", bomIDParameter, commodityIDParameter);
         }
     
         public virtual ObjectResult<CommodityBom> GetCommodityBoms(Nullable<int> commodityID)

@@ -812,10 +812,6 @@ namespace TotalModel.Models
         public System.DateTime EditedDate { get; set; }
     }
 
-    public partial class BomIndex
-    {
-        public string Features { get { return this.Code + (this.Name != null ? " [" + this.Name + "]" : "") + " Ngày: " + ((DateTime)this.EffectiveDate).ToString("dd/MM/yy") + ", NCC: " + this.CustomerName + ", MH: " + this.CommodityCode + " - " + this.CommodityName; } }
-    }
 
     public partial class Bom : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<BomDetail>
     {

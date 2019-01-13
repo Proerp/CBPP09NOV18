@@ -51,12 +51,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      Boms.BomID, CAST(Boms.EntryDate AS DATE) AS EntryDate, Boms.Reference, Boms.Code, Boms.Name, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Customers.Name AS CustomerName, Boms.EffectiveDate, Materials.Code AS MaterialCode, Materials.Name AS MaterialName, BomDetails.BlockUnit, BomDetails.BlockQuantity " + "\r\n";
+            queryString = queryString + "       SELECT      Boms.BomID, CAST(Boms.EntryDate AS DATE) AS EntryDate, Boms.Reference, Boms.Code, Boms.Name, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Boms.EffectiveDate, Boms.LayerCount, ISNULL(Boms.Description, '') + ' ' + ISNULL(Boms.Remarks, '') AS Description " + "\r\n";
             queryString = queryString + "       FROM        Boms " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON Boms.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON Boms.CustomerID = Customers.CustomerID " + "\r\n";
-            queryString = queryString + "                   LEFT  JOIN BomDetails ON Boms.BomID = BomDetails.BomID " + "\r\n";
-            queryString = queryString + "                   LEFT  JOIN Commodities Materials ON BomDetails.MaterialID = Materials.CommodityID " + "\r\n";            
             queryString = queryString + "       WHERE      (SELECT TOP 1 OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.Bom + " AND AccessControls.AccessLevel > 0) > 0 " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
@@ -89,6 +87,23 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             string queryString = " @EntityID int, @SaveRelativeOption int " + "\r\n"; //SaveRelativeOption: 1: Update, -1:Undo
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       DECLARE @CommodityID int, @CommodityBomID int " + "\r\n";
+
+            queryString = queryString + "       SET @CommodityID = (SELECT CommodityID FROM Boms WHERE BomID = @EntityID) " + "\r\n";
+            queryString = queryString + "       IF (NOT @CommodityID IS NULL) " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               IF (@SaveRelativeOption = 1) " + "\r\n";
+            queryString = queryString + "                   EXEC AddCommodityBom @EntityID, @CommodityID " + "\r\n";
+            queryString = queryString + "               ELSE " + "\r\n";
+            queryString = queryString + "                   BEGIN " + "\r\n";
+            queryString = queryString + "                       SET @CommodityBomID = (SELECT TOP 1 CommodityBomID FROM CommodityBoms WHERE BomID = @EntityID AND CommodityID = @CommodityID) " + "\r\n";
+            queryString = queryString + "                       IF (NOT @CommodityBomID IS NULL) EXEC RemoveCommodityBom @CommodityBomID " + "\r\n";
+            queryString = queryString + "                   END " + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("BomSaveRelative", queryString);
         }

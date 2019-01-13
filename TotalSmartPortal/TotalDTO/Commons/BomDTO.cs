@@ -47,17 +47,22 @@ namespace TotalDTO.Commons
         public virtual Nullable<int> CommodityID { get; set; }
 
         [Display(Name = "Mã công thức")]
+        [Required(ErrorMessage = "Vui lòng nhập MCT")]
         public string Code { get; set; }
         public string OfficialCode { get { return this.Code; } }
 
         [Display(Name = "Tên hỗn hợp")]
+        [Required(ErrorMessage = "Vui lòng nhập tên hỗn hợp")]
         public string Name { get; set; }
 
         [Display(Name = "Ngày hiệu lực")]
+        [Required(ErrorMessage = "Vui lòng nhập ngày hiệu lực")]
         public Nullable<System.DateTime> EffectiveDate { get; set; }
 
         public override string Reference { get { return "####000"; } }
         public override int PreparedPersonID { get { return 1; } }
+
+        public int LayerCount { get { return this.DtoDetails().GroupBy(g => g.LayerCode).Count(); } }
 
         public bool CheckBlockUnit { get { bool checkBomID = false; this.DtoDetails().ToList().ForEach(e => { if (checkBomID == false && this.DtoDetails().Where(w => w.LayerCode == e.LayerCode && w.BlockUnit != e.BlockUnit).Count() > 0) checkBomID = true; }); return checkBomID; } }
         public bool CheckBlockUnitTotal { get { return this.DtoDetails().GroupBy(g => g.LayerCode).Select(s => new { gBlockUnit = s.First().BlockUnit }).Select(o => o.gBlockUnit).Sum() != 100; } }

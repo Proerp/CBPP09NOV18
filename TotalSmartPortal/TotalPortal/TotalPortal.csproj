@@ -803,6 +803,7 @@
     <Content Include="Content\Images\Mains\Size24\Ok-1.png" />
     <Content Include="Content\Images\Mains\Size24\Phone-icon-24.png" />
     <Content Include="Content\Images\Mains\Size24\select-by-color-icon-24.png" />
+    <Content Include="Content\Images\Mains\Size24\settings-icon-24.png" />
     <Content Include="Content\Images\Mains\Size24\truck-24.png" />
     <Content Include="Content\Images\Mains\Size24\Truck-icon-24.png" />
     <Content Include="Content\Images\Mains\Size24\Truck_Transportation-24.png" />

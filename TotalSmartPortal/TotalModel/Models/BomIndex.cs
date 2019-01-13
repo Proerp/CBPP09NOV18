@@ -22,9 +22,8 @@ namespace TotalModel.Models
         public string CommodityName { get; set; }
         public string CustomerName { get; set; }
         public System.DateTime EffectiveDate { get; set; }
-        public string MaterialCode { get; set; }
-        public string MaterialName { get; set; }
-        public Nullable<decimal> BlockUnit { get; set; }
-        public Nullable<decimal> BlockQuantity { get; set; }
+        public string Description { get; set; }
+        public string CustomerCode { get; set; }
+        public int LayerCount { get; set; }
     }
 }

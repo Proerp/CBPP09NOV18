@@ -232,8 +232,10 @@
           <Property Name="CommodityCategoryID" Type="int" Nullable="false" />
           <Property Name="CommodityClassID" Type="int" Nullable="false" />
           <Property Name="CommodityLineID" Type="int" Nullable="false" />
+          <Property Name="LayerCount" Type="int" Nullable="false" />
           <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
           <Property Name="InActive" Type="bit" Nullable="false" />
         </EntityType>
@@ -6743,8 +6745,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="SaveRelativeOption" Type="int" Mode="In" />
         </Function>
         <Function Name="AddCommodityBom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CommodityID" Type="int" Mode="In" />
           <Parameter Name="BomID" Type="int" Mode="In" />
+          <Parameter Name="CommodityID" Type="int" Mode="In" />
         </Function>
         <Function Name="AddCommodityMold" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CommodityID" Type="int" Mode="In" />
@@ -13520,8 +13522,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="PlannedOrderDetail" EntitySet="PlannedOrderDetails" />
           </AssociationSet>
           <FunctionImport Name="AddCommodityBom">
-            <Parameter Name="CommodityID" Mode="In" Type="Int32" />
             <Parameter Name="BomID" Mode="In" Type="Int32" />
+            <Parameter Name="CommodityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetCommodityBoms" ReturnType="Collection(TotalSmartPortalModel.CommodityBom)">
           <Parameter Name="CommodityID" Mode="In" Type="Int32" />
@@ -17435,6 +17437,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_Boms_Commodities" FromRole="Bom" ToRole="Commodity" />
           <NavigationProperty Name="Customer" Relationship="TotalSmartPortalModel.FK_Boms_Customers" FromRole="Bom" ToRole="Customer" />
           <Property Name="TotalQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="LayerCount" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_BomDetails_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -22514,11 +22518,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
           <Property Type="DateTime" Name="EffectiveDate" Nullable="false" Precision="23" />
-          <Property Type="String" Name="MaterialCode" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="MaterialName" Nullable="true" MaxLength="200" />
-          <Property Type="Decimal" Name="BlockUnit" Nullable="true" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="BlockQuantity" Nullable="true" Precision="18" Scale="2" />
-        </ComplexType>
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="151" />
+          <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="LayerCount" Nullable="false" />
+          </ComplexType>
         <ComplexType Name="BomViewDetail">
           <Property Type="Int32" Name="BomDetailID" Nullable="false" />
           <Property Type="Int32" Name="BomID" Nullable="false" />
@@ -26083,6 +26086,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="Boms">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.Bom">
               <MappingFragment StoreEntitySet="Boms">
+                <ScalarProperty Name="LayerCount" ColumnName="LayerCount" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
                 <ScalarProperty Name="MaterialID" ColumnName="MaterialID" />
                 <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
@@ -28636,11 +28641,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="EffectiveDate" ColumnName="EffectiveDate" />
-                <ScalarProperty Name="MaterialCode" ColumnName="MaterialCode" />
-                <ScalarProperty Name="MaterialName" ColumnName="MaterialName" />
-                <ScalarProperty Name="BlockUnit" ColumnName="BlockUnit" />
-                <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="LayerCount" ColumnName="LayerCount" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetBomViewDetails" FunctionName="TotalSmartPortalModel.Store.GetBomViewDetails">

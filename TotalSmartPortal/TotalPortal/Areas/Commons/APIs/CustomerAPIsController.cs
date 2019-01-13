@@ -44,6 +44,25 @@ namespace TotalPortal.Areas.Commons.APIs
         }
 
 
+        /// <summary>
+        /// This function is designed to use by import function only
+        /// Never to use by orther area
+        /// </summary>
+        /// <param name="searchText"></param>
+        /// <param name="warehouseTaskID"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public JsonResult GetCustomerBasesImport(string searchText, int warehouseTaskID)
+        {
+            var customerResult = new { CustomerID = 0, Code = "", Name = "", OfficialName = "", CodeAndName = "", TerritoryID = 0, SalespersonID = 0, PaymentTermID = 0, PriceCategoryID = 0, WarehouseID = 0, ShowDiscount = false };
+
+            var result = customerRepository.GetCustomerBases(searchText, warehouseTaskID);
+            if (result.Count() > 0)
+                customerResult = new { CustomerID = result.First().CustomerID, Code = result.First().Code, Name = result.First().Name, OfficialName = result.First().OfficialName, CodeAndName = result.First().CodeAndName, TerritoryID = result.First().TerritoryID, SalespersonID = result.First().SalespersonID, PaymentTermID = result.First().PaymentTermID, PriceCategoryID = result.First().PriceCategoryID, WarehouseID = result.First().WarehouseID, ShowDiscount = result.First().ShowDiscount };
+
+            return Json(customerResult, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetCustomerBases(string searchText, int warehouseTaskID)
         {
             var result = customerRepository.GetCustomerBases(searchText, warehouseTaskID);
