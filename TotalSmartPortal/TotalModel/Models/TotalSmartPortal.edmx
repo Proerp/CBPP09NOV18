@@ -18784,6 +18784,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="LocationReceiptID" Nullable="false" />
           <Property Type="Int32" Name="LocationIssuedID" Nullable="false" />
           <Property Type="String" Name="TransferOrderJobs" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Caption" Nullable="true" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="WarehouseTransferViewDetail">
           <Property Type="Int32" Name="WarehouseTransferDetailID" Nullable="false" />
@@ -26949,6 +26950,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="LocationReceiptID" ColumnName="LocationReceiptID" />
                 <ScalarProperty Name="LocationIssuedID" ColumnName="LocationIssuedID" />
                 <ScalarProperty Name="TransferOrderJobs" ColumnName="TransferOrderJobs" />
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -121,7 +121,7 @@
                     columns.Bound(p => p.CombineIndex).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(50).Hidden(Model.IsProduct ? false : true)
                         .ClientTemplate("#= (CombineIndex == null)? '' : CombineIndex #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].CombineIndex' value='#= (CombineIndex == null) ? '' : CombineIndex #' />");
 
-                    columns.Bound(p => p.MoldID).DisplayNameTitle().Hidden(Model.IsProduct ? false : true)
+                    columns.Bound(p => p.MoldID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= MoldID #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].MoldID' value='#= MoldID #' />");
                     columns.Bound(p => p.MoldCode).DisplayNameTitle().Width(60).Hidden(Model.IsProduct ? false : true)
                         .ClientTemplate("#= (MoldCode == null)? '' : MoldCode #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].MoldCode' value='#= (MoldCode == null) ? '' : MoldCode #' />");

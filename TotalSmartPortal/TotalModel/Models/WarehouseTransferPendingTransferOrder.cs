@@ -26,5 +26,6 @@ namespace TotalModel.Models
         public int LocationReceiptID { get; set; }
         public int LocationIssuedID { get; set; }
         public string TransferOrderJobs { get; set; }
+        public string Caption { get; set; }
     }
 }

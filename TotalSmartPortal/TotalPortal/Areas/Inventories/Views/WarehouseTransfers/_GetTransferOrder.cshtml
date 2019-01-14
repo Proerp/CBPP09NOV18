@@ -9,7 +9,8 @@
         columns.Bound(c => c.TransferOrderEntryDate).Title("Ngày ĐH").Width(35).Format("{0:" + Settings.DateFormat + "}");        
         columns.Bound(c => c.WarehouseCode).Title("Kho xuất").Width(30);
         columns.Bound(c => c.WarehouseReceiptCode).Title("Kho nhập").Width(30);
-        columns.Bound(c => c.TransferOrderJobs).Title("Mục đích").Width(168);
+        columns.Bound(c => c.Caption).Title("Mặt hàng").Width(127);
+        columns.Bound(c => c.TransferOrderJobs).Title("Mục đích").Width(60);
     })    
     .ToolBar(toolbar =>
     {
