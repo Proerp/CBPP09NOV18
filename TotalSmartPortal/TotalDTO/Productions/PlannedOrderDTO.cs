@@ -20,9 +20,14 @@ namespace TotalDTO.Productions
     public interface IPlannedOrderPrimitiveDTO : IQuantityDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
     {
         int PlannedOrderID { get; set; }
+        [Display(Name = "Số chứng từ")]
         string Code { get; set; }
+        [Display(Name = "Ngày chứng từ")]
         Nullable<System.DateTime> VoucherDate { get; set; }
+        [Display(Name = "Ngày giao hàng")]
+        [Required(ErrorMessage = "Vui lòng nhập ngày giao hàng")]
         Nullable<System.DateTime> DeliveryDate { get; set; }
+        [Display(Name = "Mục đích")]
         string Purposes { get; set; }
         int CustomerID { get; set; }
         bool CheckBomID { get; }
