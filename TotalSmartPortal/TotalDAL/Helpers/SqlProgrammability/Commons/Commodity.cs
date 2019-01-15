@@ -70,9 +70,16 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + "                   FROM            Boms WHERE BomID = SCOPE_IDENTITY() " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "           ELSE " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
             queryString = queryString + "                   UPDATE          Boms " + "\r\n"; //Boms.BomID = 1: DEFAULT NULL Boms: FOR INIT SOME WHERE ONLY
             queryString = queryString + "                   SET             Boms.Code = Commodities.Code, Boms.OfficialCode = Commodities.OfficialCode, Boms.Name = Commodities.Name, Boms.CommodityCategoryID = Commodities.CommodityCategoryID, Boms.CommodityClassID = Commodities.CommodityClassID, Boms.CommodityLineID = Commodities.CommodityLineID " + "\r\n";
             queryString = queryString + "                   FROM            Boms INNER JOIN Commodities ON Boms.BomID <> 1 AND Boms.MaterialID = @EntityID AND Boms.MaterialID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
+
+
+            queryString = queryString + "           IF (SELECT COUNT(*) FROM CommodityMolds WHERE CommodityID = @EntityID) = 0  " + "\r\n";
+            queryString = queryString + "               INSERT INTO     CommodityMolds (CommodityID, MoldID, EntryDate, Quantity, Remarks, IsDefault, InActive) " + "\r\n";
+            queryString = queryString + "               VALUES                         (@EntityID, 0, GETDATE(), 1, NULL, 1, 0) " + "\r\n";
             queryString = queryString + "       END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("CommoditySaveRelative", queryString);

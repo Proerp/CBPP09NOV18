@@ -72,6 +72,7 @@ namespace TotalDTO.Commons
         [Display(Name = "Nhà cung cấp")]
         int SupplierID { get; }
 
+        [Display(Name = "Số cái của 1 đơn vị sản phẩm")]
         int PiecePerPack { get; set; }
         int QuantityAlert { get; set; }
         decimal ListedPrice { get; set; }
@@ -177,6 +178,12 @@ namespace TotalDTO.Commons
             if (this.NMVNTaskID != GlobalEnums.NmvnTaskID.Item && (String.IsNullOrWhiteSpace(this.CodePartA) || this.CodePartA != TotalBase.CommonExpressions.AlphaNumericString(this.CodePartA))) yield return new ValidationResult("Vui lòng kiểm tra mã", new[] { "CodePartA" });
             if (this.NMVNTaskID == GlobalEnums.NmvnTaskID.Item && !decimal.TryParse(this.CodePartE, out decimalValidate)) yield return new ValidationResult("Lỗi độ dày phải là số", new[] { "CodePartE" });
             if (this.NMVNTaskID == GlobalEnums.NmvnTaskID.Item && !decimal.TryParse(this.CodePartF, out decimalValidate)) yield return new ValidationResult("Lỗi chiều rộng phải là số", new[] { "CodePartF" });
+        }
+
+        public override void PerformPresaveRule()
+        {
+            base.PerformPresaveRule();
+            if (this.IsItem) this.PiecePerPack = 1;
         }
     }
 
