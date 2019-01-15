@@ -131,7 +131,7 @@
 
                     columns.Bound(p => p.BomID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= BomID #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].BomID' value='#= BomID #' />");
-                    columns.Bound(p => p.BomCode).DisplayNameTitle().Width(196)
+                    columns.Bound(p => p.BomCode).Title(Model.IsProduct ? "Mã màng": "Công thức trộn").Width(196)
                         .ClientTemplate("#= (BomCode == null)? '' : BomCode #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].BomCode' value='#= BomCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
                     columns.Bound(p => p.BlockUnit).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
