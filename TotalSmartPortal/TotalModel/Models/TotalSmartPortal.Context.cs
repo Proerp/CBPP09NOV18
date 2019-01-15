@@ -2721,22 +2721,30 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PlannedOrderVoidable", entityIDParameter);
         }
     
-        public virtual ObjectResult<ProductionOrderPendingCustomer> GetProductionOrderPendingCustomers(Nullable<int> locationID)
+        public virtual ObjectResult<ProductionOrderPendingCustomer> GetProductionOrderPendingCustomers(Nullable<int> locationID, Nullable<int> nMVNTaskID)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductionOrderPendingCustomer>("GetProductionOrderPendingCustomers", locationIDParameter);
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductionOrderPendingCustomer>("GetProductionOrderPendingCustomers", locationIDParameter, nMVNTaskIDParameter);
         }
     
-        public virtual ObjectResult<ProductionOrderPendingPlannedOrder> GetProductionOrderPendingPlannedOrders(Nullable<int> locationID)
+        public virtual ObjectResult<ProductionOrderPendingPlannedOrder> GetProductionOrderPendingPlannedOrders(Nullable<int> locationID, Nullable<int> nMVNTaskID)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductionOrderPendingPlannedOrder>("GetProductionOrderPendingPlannedOrders", locationIDParameter);
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductionOrderPendingPlannedOrder>("GetProductionOrderPendingPlannedOrders", locationIDParameter, nMVNTaskIDParameter);
         }
     
         public virtual ObjectResult<WarehouseAdjustmentIndex> GetWarehouseAdjustmentIndexes(Nullable<int> nMVNTaskID, string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
@@ -2943,11 +2951,15 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BomBase>("GetBomBases", searchTextParameter, commodityIDParameter, commodityCategoryIDParameter, commodityClassIDParameter, commodityLineIDParameter);
         }
     
-        public virtual ObjectResult<ProductionOrderPendingFirmOrder> GetProductionOrderPendingFirmOrders(Nullable<int> locationID, Nullable<int> productionOrderID, Nullable<int> plannedOrderID, Nullable<int> customerID, string firmOrderIDs, Nullable<bool> isReadonly)
+        public virtual ObjectResult<ProductionOrderPendingFirmOrder> GetProductionOrderPendingFirmOrders(Nullable<int> locationID, Nullable<int> nMVNTaskID, Nullable<int> productionOrderID, Nullable<int> plannedOrderID, Nullable<int> customerID, string firmOrderIDs, Nullable<bool> isReadonly)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
+    
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
     
             var productionOrderIDParameter = productionOrderID.HasValue ?
                 new ObjectParameter("ProductionOrderID", productionOrderID) :
@@ -2969,7 +2981,7 @@ namespace TotalModel.Models
                 new ObjectParameter("IsReadonly", isReadonly) :
                 new ObjectParameter("IsReadonly", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductionOrderPendingFirmOrder>("GetProductionOrderPendingFirmOrders", locationIDParameter, productionOrderIDParameter, plannedOrderIDParameter, customerIDParameter, firmOrderIDsParameter, isReadonlyParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductionOrderPendingFirmOrder>("GetProductionOrderPendingFirmOrders", locationIDParameter, nMVNTaskIDParameter, productionOrderIDParameter, plannedOrderIDParameter, customerIDParameter, firmOrderIDsParameter, isReadonlyParameter);
         }
     
         public virtual ObjectResult<ProductionOrderViewDetail> GetProductionOrderViewDetails(Nullable<int> productionOrderID)

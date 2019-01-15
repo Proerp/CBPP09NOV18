@@ -11,9 +11,9 @@ namespace TotalCore.Repositories.Productions
 
     public interface IProductionOrderAPIRepository : IGenericAPIRepository
     {
-        IEnumerable<ProductionOrderPendingCustomer> GetCustomers(int? locationID);
-        IEnumerable<ProductionOrderPendingPlannedOrder> GetPlannedOrders(int? locationID);
+        IEnumerable<ProductionOrderPendingCustomer> GetCustomers(int? locationID, int? nmvnTaskID);
+        IEnumerable<ProductionOrderPendingPlannedOrder> GetPlannedOrders(int? locationID, int? nmvnTaskID);
 
-        IEnumerable<ProductionOrderPendingFirmOrder> GetPendingFirmOrders(int? locationID, int? productionOrderID, int? plannedOrderID, int? customerID, string firmOrderIDs, bool isReadonly);
+        IEnumerable<ProductionOrderPendingFirmOrder> GetPendingFirmOrders(int? locationID, int? nmvnTaskID, int? productionOrderID, int? plannedOrderID, int? customerID, string firmOrderIDs, bool isReadonly);
     }
 }

@@ -12,7 +12,7 @@ using TotalCore.Services.Productions;
 namespace TotalService.Productions
 {
     public class ProductionOrderService<TDto, TPrimitiveDto, TDtoDetail> : GenericWithViewDetailService<ProductionOrder, ProductionOrderDetail, ProductionOrderViewDetail, TDto, TPrimitiveDto, TDtoDetail>, IProductionOrderService<TDto, TPrimitiveDto, TDtoDetail>
-        where TDto : TPrimitiveDto, IBaseDetailEntity<TDtoDetail>, IPlannedOrderDTO
+        where TDto : TPrimitiveDto, IBaseDetailEntity<TDtoDetail>, IProductionOrderDTO
         where TPrimitiveDto : BaseDTO, IPrimitiveEntity, IPrimitiveDTO, new()
         where TDtoDetail : class, IPrimitiveEntity
     {

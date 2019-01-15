@@ -37,6 +37,7 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> InActivePartialDate { get; set; }
         public decimal BlockUnit { get; set; }
         public decimal BlockQuantity { get; set; }
+        public int NMVNTaskID { get; set; }
     
         public virtual Bom Bom { get; set; }
         public virtual Customer Customer { get; set; }

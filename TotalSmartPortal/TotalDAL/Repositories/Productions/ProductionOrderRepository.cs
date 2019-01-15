@@ -42,28 +42,28 @@ namespace TotalDAL.Repositories.Productions
             return objectParameters;
         }
 
-        public IEnumerable<ProductionOrderPendingCustomer> GetCustomers(int? locationID)
+        public IEnumerable<ProductionOrderPendingCustomer> GetCustomers(int? locationID, int? nmvnTaskID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<ProductionOrderPendingCustomer> pendingPlannedOrderCustomers = base.TotalSmartPortalEntities.GetProductionOrderPendingCustomers(locationID).ToList();
+            IEnumerable<ProductionOrderPendingCustomer> pendingPlannedOrderCustomers = base.TotalSmartPortalEntities.GetProductionOrderPendingCustomers(locationID, nmvnTaskID).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingPlannedOrderCustomers;
         }
 
-        public IEnumerable<ProductionOrderPendingPlannedOrder> GetPlannedOrders(int? locationID)
+        public IEnumerable<ProductionOrderPendingPlannedOrder> GetPlannedOrders(int? locationID, int? nmvnTaskID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<ProductionOrderPendingPlannedOrder> pendingPlannedOrders = base.TotalSmartPortalEntities.GetProductionOrderPendingPlannedOrders(locationID).ToList();
+            IEnumerable<ProductionOrderPendingPlannedOrder> pendingPlannedOrders = base.TotalSmartPortalEntities.GetProductionOrderPendingPlannedOrders(locationID, nmvnTaskID).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingPlannedOrders;
         }
 
-        public IEnumerable<ProductionOrderPendingFirmOrder> GetPendingFirmOrders(int? locationID, int? productionOrderID, int? plannedOrderID, int? customerID, string firmOrderIDs, bool isReadonly)
+        public IEnumerable<ProductionOrderPendingFirmOrder> GetPendingFirmOrders(int? locationID, int? nmvnTaskID, int? productionOrderID, int? plannedOrderID, int? customerID, string firmOrderIDs, bool isReadonly)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<ProductionOrderPendingFirmOrder> pendingPlannedOrderDetails = base.TotalSmartPortalEntities.GetProductionOrderPendingFirmOrders(locationID, productionOrderID, plannedOrderID, customerID, firmOrderIDs, isReadonly).ToList();
+            IEnumerable<ProductionOrderPendingFirmOrder> pendingPlannedOrderDetails = base.TotalSmartPortalEntities.GetProductionOrderPendingFirmOrders(locationID, nmvnTaskID, productionOrderID, plannedOrderID, customerID, firmOrderIDs, isReadonly).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingPlannedOrderDetails;

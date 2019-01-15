@@ -58,6 +58,7 @@ namespace TotalModel.Models
         public decimal BlockUnit { get; set; }
         public decimal BlockQuantity { get; set; }
         public string Specs { get; set; }
+        public int NMVNTaskID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Location Location { get; set; }

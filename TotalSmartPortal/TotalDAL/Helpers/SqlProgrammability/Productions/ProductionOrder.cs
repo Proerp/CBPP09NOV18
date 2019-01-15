@@ -96,7 +96,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void GetProductionOrderPendingPlannedOrders()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @LocationID int, @NMVNTaskID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -104,7 +104,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                       PlannedOrders.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Customers.OfficialName AS CustomerOfficialName, Customers.VATCode AS CustomerVATCode, Customers.AttentionName AS CustomerAttentionName, Customers.TerritoryID AS CustomerTerritoryID, CustomerEntireTerritories.EntireName AS CustomerEntireTerritoryEntireName " + "\r\n";
 
             queryString = queryString + "       FROM            PlannedOrders " + "\r\n";
-            queryString = queryString + "                       INNER JOIN Customers ON PlannedOrders.PlannedOrderID IN (SELECT PlannedOrderID FROM FirmOrderDetails WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantitySemifinished, " + (int)GlobalEnums.rndQuantity + ") > 0) AND PlannedOrders.PlannedOrderID IN (SELECT PlannedOrderID FROM FirmOrders WHERE FirmOrderID NOT IN (SELECT FirmOrderID FROM ProductionOrderDetails WHERE InActive = 0 AND InActivePartial = 0)) AND PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Customers ON PlannedOrders.PlannedOrderID IN (SELECT PlannedOrderID FROM FirmOrderDetails WHERE LocationID = @LocationID AND NMVNTaskID = @NMVNTaskID - 2 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantitySemifinished, " + (int)GlobalEnums.rndQuantity + ") > 0) AND PlannedOrders.PlannedOrderID IN (SELECT PlannedOrderID FROM FirmOrders WHERE FirmOrderID NOT IN (SELECT FirmOrderID FROM ProductionOrderDetails WHERE InActive = 0 AND InActivePartial = 0)) AND PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN EntireTerritories CustomerEntireTerritories ON Customers.TerritoryID = CustomerEntireTerritories.TerritoryID " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetProductionOrderPendingPlannedOrders", queryString);
@@ -112,13 +112,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void GetProductionOrderPendingCustomers()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @LocationID int, @NMVNTaskID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "       SELECT          Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Customers.OfficialName AS CustomerOfficialName, Customers.VATCode AS CustomerVATCode, Customers.AttentionName AS CustomerAttentionName, Customers.TerritoryID AS CustomerTerritoryID, CustomerEntireTerritories.EntireName AS CustomerEntireTerritoryEntireName " + "\r\n";
 
-            queryString = queryString + "       FROM           (SELECT DISTINCT CustomerID FROM FirmOrders WHERE FirmOrderID IN (SELECT FirmOrderID FROM FirmOrderDetails WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantitySemifinished, " + (int)GlobalEnums.rndQuantity + ") > 0) AND FirmOrderID NOT IN (SELECT FirmOrderID FROM ProductionOrderDetails WHERE InActive = 0 AND InActivePartial = 0)) CustomerPENDING " + "\r\n";
+            queryString = queryString + "       FROM           (SELECT DISTINCT CustomerID FROM FirmOrders WHERE FirmOrderID IN (SELECT FirmOrderID FROM FirmOrderDetails WHERE LocationID = @LocationID AND NMVNTaskID = @NMVNTaskID - 2 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantitySemifinished, " + (int)GlobalEnums.rndQuantity + ") > 0) AND FirmOrderID NOT IN (SELECT FirmOrderID FROM ProductionOrderDetails WHERE InActive = 0 AND InActivePartial = 0)) CustomerPENDING " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON CustomerPENDING.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN EntireTerritories CustomerEntireTerritories ON Customers.TerritoryID = CustomerEntireTerritories.TerritoryID " + "\r\n";
             queryString = queryString + "                       INNER JOIN CustomerCategories ON Customers.CustomerCategoryID = CustomerCategories.CustomerCategoryID " + "\r\n";
@@ -134,7 +134,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             SqlProgrammability.Inventories.Inventories inventories = new SqlProgrammability.Inventories.Inventories(this.totalSmartPortalEntities);
 
-            queryString = " @LocationID Int, @ProductionOrderID Int, @PlannedOrderID Int, @CustomerID Int, @FirmOrderIDs varchar(3999), @IsReadonly bit " + "\r\n";
+            queryString = " @LocationID Int, @NMVNTaskID int, @ProductionOrderID Int, @PlannedOrderID Int, @CustomerID Int, @FirmOrderIDs varchar(3999), @IsReadonly bit " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -219,7 +219,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                   FirmOrders.Description, FirmOrders.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        FirmOrders " + "\r\n";
-            queryString = queryString + "                   INNER JOIN (SELECT FirmOrderID, SUM(Quantity - QuantitySemifinished) AS QuantityRemains FROM FirmOrderDetails WHERE Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantitySemifinished, " + (int)GlobalEnums.rndQuantity + ") > 0 AND FirmOrderID NOT IN (SELECT FirmOrderID FROM ProductionOrderDetails WHERE InActive = 0 AND InActivePartial = 0) GROUP BY FirmOrderID) FirmOrderDetails ON " + (isPlannedOrderID ? " FirmOrders.PlannedOrderID = @PlannedOrderID " : (isCustomerID ? " FirmOrders.LocationID = @LocationID AND FirmOrders.CustomerID = @CustomerID " : "FirmOrders.LocationID = @LocationID")) + " AND FirmOrders.FirmOrderID = FirmOrderDetails.FirmOrderID" + (isFirmOrderIDs ? " AND FirmOrders.FirmOrderID NOT IN (SELECT Id FROM dbo.SplitToIntList (@FirmOrderIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN (SELECT FirmOrderID, SUM(Quantity - QuantitySemifinished) AS QuantityRemains FROM FirmOrderDetails WHERE NMVNTaskID = @NMVNTaskID - 2 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantitySemifinished, " + (int)GlobalEnums.rndQuantity + ") > 0 AND FirmOrderID NOT IN (SELECT FirmOrderID FROM ProductionOrderDetails WHERE InActive = 0 AND InActivePartial = 0) GROUP BY FirmOrderID) FirmOrderDetails ON " + (isPlannedOrderID ? " FirmOrders.PlannedOrderID = @PlannedOrderID " : (isCustomerID ? " FirmOrders.LocationID = @LocationID AND FirmOrders.CustomerID = @CustomerID " : "FirmOrders.LocationID = @LocationID")) + " AND FirmOrders.FirmOrderID = FirmOrderDetails.FirmOrderID" + (isFirmOrderIDs ? " AND FirmOrders.FirmOrderID NOT IN (SELECT Id FROM dbo.SplitToIntList (@FirmOrderIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON FirmOrders.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Boms ON FirmOrders.BomID = Boms.BomID " + "\r\n";
 

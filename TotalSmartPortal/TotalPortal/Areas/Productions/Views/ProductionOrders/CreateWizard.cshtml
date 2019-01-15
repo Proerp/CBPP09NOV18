@@ -1,9 +1,14 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration;
 
-@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Productions
+@using TotalPortal.Areas.Productions.ViewModels
 
-@model TotalPortal.Areas.Productions.ViewModels.ProductionOrderViewModel
+@model IProductionOrderViewModel
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
 @using (Html.BeginForm())
 {
@@ -11,28 +16,28 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
 
-    @Html.HiddenFor(model => model.PlannedOrderID)
-    @Html.HiddenFor(model => model.PlannedOrderCode)
-    @Html.HiddenFor(model => model.PlannedOrderReference)
-    @Html.HiddenFor(model => model.PlannedOrderEntryDate)
-    @Html.HiddenFor(model => model.PlannedOrderDeliveryDate)
+    @Html.HiddenFor(model => (model as IProductionOrderPrimitiveDTO).PlannedOrderID)
+    @Html.HiddenFor(model => (model as IProductionOrderPrimitiveDTO).PlannedOrderCode)
+    @Html.HiddenFor(model => (model as IProductionOrderPrimitiveDTO).PlannedOrderReference)
+    @Html.HiddenFor(model => (model as IProductionOrderPrimitiveDTO).PlannedOrderEntryDate)
+    @Html.HiddenFor(model => (model as IProductionOrderPrimitiveDTO).PlannedOrderDeliveryDate)
 
-    @Html.HiddenFor(model => model.CustomerID)
+    @Html.HiddenFor(model => (model as IProductionOrderPrimitiveDTO).CustomerID)
     
-    @Html.HiddenFor(model => model.Customer.CustomerID)
-    @Html.HiddenFor(model => model.Customer.Code)
-    @Html.HiddenFor(model => model.Customer.Name)
-    @Html.HiddenFor(model => model.Customer.VATCode)
-    @Html.HiddenFor(model => model.Customer.Telephone)
-    @Html.HiddenFor(model => model.Customer.BillingAddress)
-    @Html.HiddenFor(model => model.Customer.EntireTerritoryEntireName)
-    @Html.HiddenFor(model => model.Customer.SalespersonID)
-    @Html.HiddenFor(model => model.Customer.SalespersonName)
-    @Html.HiddenFor(model => model.Customer.PaymentTermID)
-    @Html.HiddenFor(model => model.Customer.PriceCategoryID)
-    @Html.HiddenFor(model => model.Customer.PriceCategoryCode)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.CustomerID)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.Code)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.Name)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.VATCode)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.Telephone)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.BillingAddress)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.EntireTerritoryEntireName)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.SalespersonID)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.SalespersonName)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.PaymentTermID)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.PriceCategoryID)
+    @Html.HiddenFor(model => (model as IProductionOrderDTO).Customer.PriceCategoryCode)
 
-    @Html.HiddenFor(model => model.Description);
+    @Html.HiddenFor(model => (model as IBaseDTO).Description);
 
     @(Html.Kendo().TabStrip()
         .HtmlAttributes(new { @style = "height: 468px; margin-left: 0px; margin-right: 0px;" })
@@ -53,7 +58,7 @@
 
     <div class="background-bar" style="height: 45px;">
         <div class="popup-button-bar">
-            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "ProductionOrders")" formtarget="_top" style="display:none" />
+            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", Model.ControllerName)" formtarget="_top" style="display:none" />
             
             <button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Ok-1.png" /> Áp dụng khách hàng/KHSX đang chọn </button>
             <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Lập lệnh sản xuất tổng hợp </button>

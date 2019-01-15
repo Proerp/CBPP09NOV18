@@ -1763,6 +1763,8 @@
     <Content Include="Areas\Productions\Views\ProductOrders\Void.cshtml" />
     <Content Include="Areas\Productions\Views\ProductOrders\VoidDetail.cshtml" />
     <Content Include="Areas\Productions\Views\ProductOrders\VoidDetailSuccess.cshtml" />
+    <Content Include="Areas\Productions\Views\ProductOrders\GetPendingFirmOrders.cshtml" />
+    <Content Include="Areas\Productions\Views\ItemOrders\GetPendingFirmOrders.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">

@@ -27,6 +27,6 @@ namespace TotalModel.Models
         public string CustomerAttentionName { get; set; }
         public int CustomerTerritoryID { get; set; }
         public string CustomerEntireTerritoryEntireName { get; set; }
-        public Nullable<System.DateTime> PlannedOrderDeliveryDate { get; set; }
+        public System.DateTime PlannedOrderDeliveryDate { get; set; }
     }
 }

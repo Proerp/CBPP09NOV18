@@ -20,8 +20,8 @@
                 columns.Bound(p => p.Reference).Title("KHSX").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Edit" }) + "/#= PlannedOrderID #'>#=Reference#</a>");
                 columns.Bound(p => p.Code).Title("Số CT").Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                 columns.Bound(p => p.DisplayDate).Title("ĐH/GH").Format("{0:dd/MM}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
-                columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(108);
-                columns.Bound(p => p.CommodityName).Title("Mặt hàng").Width(193);
+                columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(118);
+                columns.Bound(p => p.CommodityName).Title("Mặt hàng").Width(208);
                                 
                 columns.Bound(p => p.QuantityRequested).Title("SL Y/C").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 columns.Bound(p => p.Quantity).Title("Phải SX").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
@@ -35,7 +35,7 @@
 
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
-                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(111)
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(88)
                     .ClientTemplate("<a class='k-button' title='Cấp màng cho đơn hàng này' style='padding-left:0px; padding-right:0px;' onclick='createMaterialIssue(#= FirmOrderID #)'><span class='k-icon sbt-add'></span></a> <a class='k-button' title='Hủy' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Void" }) + "/#= PlannedOrderID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' title='Xóa' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Delete" }) + "/#= PlannedOrderID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>

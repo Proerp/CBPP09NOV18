@@ -36,21 +36,21 @@ namespace TotalPortal.Areas.Productions.APIs
         }
 
 
-        public JsonResult GetCustomers([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetCustomers([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
         {
-            var result = this.productionOrderAPIRepository.GetCustomers(locationID);
+            var result = this.productionOrderAPIRepository.GetCustomers(locationID, nmvnTaskID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPlannedOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetPlannedOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
         {
-            var result = this.productionOrderAPIRepository.GetPlannedOrders(locationID);
+            var result = this.productionOrderAPIRepository.GetPlannedOrders(locationID, nmvnTaskID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPendingFirmOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? productionOrderID, int? plannedOrderID, int? customerID, string plannedOrderDetailIDs, bool isReadonly)
+        public JsonResult GetPendingFirmOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID, int? productionOrderID, int? plannedOrderID, int? customerID, string plannedOrderDetailIDs, bool isReadonly)
         {
-            var result = this.productionOrderAPIRepository.GetPendingFirmOrders(locationID, productionOrderID, plannedOrderID, customerID, plannedOrderDetailIDs, false);
+            var result = this.productionOrderAPIRepository.GetPendingFirmOrders(locationID, nmvnTaskID, productionOrderID, plannedOrderID, customerID, plannedOrderDetailIDs, false);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 

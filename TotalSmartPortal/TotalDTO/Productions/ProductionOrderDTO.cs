@@ -15,8 +15,8 @@ namespace TotalDTO.Productions
 {
     public interface IProrderOption { GlobalEnums.NmvnTaskID NMVNTaskID { get; } }
 
-    public class ProrderOptionItem : IProrderOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ProductOrder; } } }
-    public class ProrderOptionProduct : IProrderOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemOrder; } } }
+    public class ProrderOptionItem : IProrderOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemOrder; } } }
+    public class ProrderOptionProduct : IProrderOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ProductOrder; } } }
 
     public interface IProductionOrderPrimitiveDTO : IQuantityDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
     {

@@ -10,19 +10,19 @@
                 columns.Bound(p => p.ProductionOrderID).DisplayNameTitle().Hidden();                
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
 
-                columns.Bound(p => p.Reference).Title("#").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/ProductionOrders", action = "Edit" }) + "/#= ProductionOrderID #'>#=Reference#</a>");
+                columns.Bound(p => p.Reference).Title("#").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Edit" }) + "/#= ProductionOrderID #'>#=Reference#</a>");
                 columns.Bound(p => p.PlannedOrderReference).Title("Số KHSX").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
                 columns.Bound(p => p.PlannedOrderCode).Title("Số CT").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
                 columns.Bound(p => p.PlannedOrderDeliveryDate).Title("G/H").Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(5);
                 columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(138);
-                columns.Bound(p => p.Caption).Title("Mặt hàng").Width(218);
+                columns.Bound(p => p.Caption).Title("Mặt hàng").Width(288);
                 columns.Bound(p => p.Description).Title("Diễn giải").Width(196);
                 columns.Bound(p => p.VoidTypeName).Title("Hủy").Width(60);
 
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
 
-                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(68)
-                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/ProductionOrders", action = "Void" }) + "/#= ProductionOrderID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/ProductionOrders", action = "Delete" }) + "/#= ProductionOrderID #'><span class='k-icon sbt-delete'></span></a>");
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
+                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Void" }) + "/#= ProductionOrderID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Delete" }) + "/#= ProductionOrderID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>
             {
@@ -82,7 +82,7 @@
     function createWizard() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "ProductionOrders")", "Chọn khách hàng, lệnh sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", Model.ControllerName)", "Chọn khách hàng, lệnh sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
         });
     }
 
