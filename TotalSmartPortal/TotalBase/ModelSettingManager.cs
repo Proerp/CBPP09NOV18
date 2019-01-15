@@ -28,7 +28,7 @@ namespace TotalBase
                     return "FT";
                 case GlobalEnums.NmvnTaskID.PlannedProduct:
                     return "PL";
-                case GlobalEnums.NmvnTaskID.ProductionOrder:
+                case GlobalEnums.NmvnTaskID.ProductOrder:
                     return "PO";
 
                 case GlobalEnums.NmvnTaskID.MaterialIssue:

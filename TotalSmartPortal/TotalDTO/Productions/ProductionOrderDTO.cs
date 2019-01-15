@@ -13,9 +13,36 @@ using TotalDTO.Helpers.Interfaces;
 
 namespace TotalDTO.Productions
 {
-    public class ProductionOrderPrimitiveDTO : QuantityDTO<ProductionOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+    public interface IProrderOption { GlobalEnums.NmvnTaskID NMVNTaskID { get; } }
+
+    public class ProrderOptionItem : IProrderOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ProductOrder; } } }
+    public class ProrderOptionProduct : IProrderOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemOrder; } } }
+
+    public interface IProductionOrderPrimitiveDTO : IQuantityDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
     {
-        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ProductionOrder; } }
+        int ProductionOrderID { get; set; }
+        Nullable<int> CustomerID { get; set; }
+        Nullable<int> PlannedOrderID { get; set; }
+        string PlannedOrderReference { get; set; }
+        string PlannedOrderReferences { get; set; }
+        string PlannedOrderCode { get; set; }
+        string PlannedOrderCodes { get; set; }
+        [Display(Name = "Phiếu đặt hàng")]
+        string PlannedOrderReferenceNote { get; }
+        [Display(Name = "Số đơn hàng")]
+        string PlannedOrderCodeNote { get; }
+        [Display(Name = "Ngày đặt hàng")]
+        Nullable<System.DateTime> PlannedOrderEntryDate { get; set; }
+        [Display(Name = "Ngày giao hàng")]
+        Nullable<System.DateTime> PlannedOrderDeliveryDate { get; set; }
+        [Display(Name = "Chứng từ")]
+        string Code { get; set; }
+    }
+
+    public class ProductionOrderPrimitiveDTO<TProrderOption> : QuantityDTO<ProductionOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+        where TProrderOption : IProrderOption, new()
+    {
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return new TProrderOption().NMVNTaskID; } }
 
         public int GetID() { return this.ProductionOrderID; }
         public void SetID(int id) { this.ProductionOrderID = id; }
@@ -51,7 +78,26 @@ namespace TotalDTO.Productions
         }
     }
 
-    public class ProductionOrderDTO : ProductionOrderPrimitiveDTO, IBaseDetailEntity<ProductionOrderDetailDTO>, ISearchCustomer, IPriceCategory
+    public interface IProductionOrderDTO : IProductionOrderPrimitiveDTO
+    {
+        [Display(Name = "Khách hàng")]
+        [UIHint("Commons/CustomerBase")]
+        CustomerBaseDTO Customer { get; set; }
+
+        [UIHint("AutoCompletes/VoidType")]
+        VoidTypeBaseDTO VoidType { get; set; }
+
+        List<ProductionOrderDetailDTO> ProductionOrderViewDetails { get; set; }
+        List<ProductionOrderDetailDTO> ViewDetails { get; set; }
+
+        string ControllerName { get; }
+
+        bool IsItem { get; }
+        bool IsProduct { get; }
+    }
+
+    public class ProductionOrderDTO<TProrderOption> : ProductionOrderPrimitiveDTO<TProrderOption>, IBaseDetailEntity<ProductionOrderDetailDTO>, ISearchCustomer, IPriceCategory, IProductionOrderDTO
+        where TProrderOption : IProrderOption, new()
     {
         public ProductionOrderDTO()
         {
@@ -85,6 +131,11 @@ namespace TotalDTO.Productions
 
 
 
+
+        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
+
+        public bool IsItem { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.ItemOrder; } }
+        public bool IsProduct { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.ProductOrder; } }
 
         #region implement ISearchCustomer only
 

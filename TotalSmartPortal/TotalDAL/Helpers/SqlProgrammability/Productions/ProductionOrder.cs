@@ -380,7 +380,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void ProductionOrderInitReference()
         {
-            SimpleInitReference simpleInitReference = new SimpleInitReference("ProductionOrders", "ProductionOrderID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.ProductionOrder));
+            SimpleInitReference simpleInitReference = new SimpleInitReference("ProductionOrders", "ProductionOrderID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.ProductOrder));
             this.totalSmartPortalEntities.CreateTrigger("ProductionOrderInitReference", simpleInitReference.CreateQuery());
         }
 
