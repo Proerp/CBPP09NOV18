@@ -33,6 +33,7 @@ namespace TotalDTO.Commons
         public override decimal Quantity { get; set; }
 
         public decimal BlockQuantity { get { return this.Quantity; } set { } }
+        public decimal LayerQuantity { get; set; }
 
         [Display(Name = "%")]
         [UIHint("DecimalN0")]

@@ -65,8 +65,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + "                   SELECT          GetDate() AS EntryDate, GetDate() AS EffectiveDate, '####000', Code, Name, OfficialCode, NULL AS CommodityID, CommodityID AS MaterialID, " + (int)GlobalEnums.CommodityTypeID.Products + ", CommodityCategoryID, CommodityClassID, CommodityLineID, NULL AS CustomerID, 1 AS LayerCount, 1 AS TotalQuantity, Remarks, 0 AS InActive " + "\r\n";
             queryString = queryString + "                   FROM            Commodities WHERE CommodityID = @EntityID " + "\r\n";
 
-            queryString = queryString + "                   INSERT INTO     BomDetails (BomID, MaterialID, LayerCode, BlockUnit, BlockQuantity, Quantity, Remarks, InActive) " + "\r\n";
-            queryString = queryString + "                   SELECT          BomID, MaterialID, 'A' AS LayerCode, 1 AS BlockUnit, 1 AS BlockQuantity, 1 AS Quantity, Remarks, InActive " + "\r\n";
+            queryString = queryString + "                   INSERT INTO     BomDetails (BomID, MaterialID, LayerCode, LayerQuantity, BlockUnit, BlockQuantity, Quantity, Remarks, InActive) " + "\r\n";
+            queryString = queryString + "                   SELECT          BomID, MaterialID, 'A' AS LayerCode, 1 AS LayerQuantity, 1 AS BlockUnit, 1 AS BlockQuantity, 1 AS Quantity, Remarks, InActive " + "\r\n";
             queryString = queryString + "                   FROM            Boms WHERE BomID = SCOPE_IDENTITY() " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "           ELSE " + "\r\n";

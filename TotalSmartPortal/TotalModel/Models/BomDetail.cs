@@ -23,6 +23,7 @@ namespace TotalModel.Models
         public bool InActive { get; set; }
         public string LayerCode { get; set; }
         public decimal Quantity { get; set; }
+        public decimal LayerQuantity { get; set; }
     
         public virtual Bom Bom { get; set; }
         public virtual Commodity Commodity { get; set; }

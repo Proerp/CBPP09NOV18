@@ -73,6 +73,12 @@ namespace TotalDTO.Commons
             if (this.CheckBlockUnit) yield return new ValidationResult("Lỗi tỷ lệ %. Lưu ý: cùng một trục phải cùng tỷ lệ %", new[] { "BOM" });
             if (this.CheckBlockUnitTotal) yield return new ValidationResult("Lỗi tổng tỷ lệ %. Lưu ý: tổng tỷ lệ các trục phải bằng 100", new[] { "BOM" });
         }
+
+        public override void PerformPresaveRule()
+        {
+            base.PerformPresaveRule();
+            this.DtoDetails().ToList().ForEach(e => { e.LayerQuantity = this.DtoDetails().Where(w => w.LayerCode == e.LayerCode).Select(o => o.Quantity).Sum(); });
+        }
     }
 
     public class BomDTO : BomPrimitiveDTO, IBaseDetailEntity<BomDetailDTO>
