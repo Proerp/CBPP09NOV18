@@ -65,6 +65,8 @@ namespace TotalBase.Enums
             PlannedItem = 680016008,
 
             ProductionOrder = 680018,
+
+
             SemifinishedProduct = 680020,
             SemifinishedHandover = 680026,
 

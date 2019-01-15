@@ -46,14 +46,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime " + "\r\n";
+            queryString = " @NMVNTaskID int, @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
             queryString = queryString + "       SELECT      ProductionOrders.ProductionOrderID, CAST(ProductionOrders.EntryDate AS DATE) AS EntryDate, ProductionOrders.Reference, ProductionOrders.Code, ProductionOrders.Caption, Locations.Code AS LocationCode, ISNULL(PlannedOrders.Reference, ProductionOrders.PlannedOrderReferences) AS PlannedOrderReference, ISNULL(PlannedOrders.Code, ProductionOrders.PlannedOrderReferences) AS PlannedOrderCode, PlannedOrders.VoucherDate AS PlannedOrderVoucherDate, PlannedOrders.DeliveryDate AS PlannedOrderDeliveryDate, ISNULL(Customers.Name, N'LSX tổng hợp') AS CustomerName, ISNULL(VoidTypes.Name, CASE ProductionOrders.InActivePartial WHEN 1 THEN N'Hủy một phần đh' ELSE N'' END) AS VoidTypeName, ProductionOrders.Description, ProductionOrders.Approved, ProductionOrders.InActive, ProductionOrders.InActivePartial " + "\r\n";
             queryString = queryString + "       FROM        ProductionOrders " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Locations ON ProductionOrders.EntryDate >= @FromDate AND ProductionOrders.EntryDate <= @ToDate AND ProductionOrders.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.ProductionOrder + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = ProductionOrders.LocationID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Locations ON ProductionOrders.NMVNTaskID = @NMVNTaskID AND ProductionOrders.EntryDate >= @FromDate AND ProductionOrders.EntryDate <= @ToDate AND ProductionOrders.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = @NMVNTaskID AND AccessControls.AccessLevel > 0) AND Locations.LocationID = ProductionOrders.LocationID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN Customers ON ProductionOrders.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN PlannedOrders ON ProductionOrders.PlannedOrderID = PlannedOrders.PlannedOrderID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN VoidTypes ON ProductionOrders.VoidTypeID = VoidTypes.VoidTypeID" + "\r\n";

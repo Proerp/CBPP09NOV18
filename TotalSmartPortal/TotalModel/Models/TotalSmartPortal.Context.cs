@@ -2361,8 +2361,12 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GoodsReceiptToggleApproved", entityIDParameter, approvedParameter);
         }
     
-        public virtual ObjectResult<ProductionOrderIndex> GetProductionOrderIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        public virtual ObjectResult<ProductionOrderIndex> GetProductionOrderIndexes(Nullable<int> nMVNTaskID, string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var aspUserIDParameter = aspUserID != null ?
                 new ObjectParameter("AspUserID", aspUserID) :
                 new ObjectParameter("AspUserID", typeof(string));
@@ -2375,7 +2379,7 @@ namespace TotalModel.Models
                 new ObjectParameter("ToDate", toDate) :
                 new ObjectParameter("ToDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductionOrderIndex>("GetProductionOrderIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductionOrderIndex>("GetProductionOrderIndexes", nMVNTaskIDParameter, aspUserIDParameter, fromDateParameter, toDateParameter);
         }
     
         public virtual ObjectResult<string> ProductionOrderApproved(Nullable<int> entityID)
