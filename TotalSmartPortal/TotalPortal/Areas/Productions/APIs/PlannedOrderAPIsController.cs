@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Data.Entity;
 using System.Collections.Generic;
 
@@ -11,7 +12,6 @@ using TotalModel.Models;
 using TotalCore.Repositories.Productions;
 
 using TotalPortal.APIs.Sessions;
-using System;
 
 namespace TotalPortal.Areas.Productions.APIs
 {
