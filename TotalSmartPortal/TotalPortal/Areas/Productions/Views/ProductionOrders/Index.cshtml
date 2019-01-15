@@ -46,7 +46,7 @@
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .Group(group => group.AddDescending(p => p.EntryDate))
-                .Read(read => read.Action("GetProductionOrderIndexes", "ProductionOrderAPIs", new { area = "Productions" }))
+                .Read(read => read.Action("GetProductionOrderIndexes", "ProductionOrderAPIs", new { area = "Productions" }).Data("onProductionOrderIndexes"))
                 .Sort(sort =>
                     {
                         sort.Add(p => p.EntryDate).Descending();
@@ -66,6 +66,12 @@
 
 
 <script type="text/javascript">
+    function onProductionOrderIndexes(e) {
+        return {
+            nmvnTaskID: requireConfig.pageOptions.NmvnTaskID
+        };
+    }
+
     function hightLightSelectedRow(e) {
         require(["kindexGrid"], function (kindexGrid) {
             var kindexGridInstance = new kindexGrid("kendoGridIndex");
