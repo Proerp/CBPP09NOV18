@@ -200,11 +200,20 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<PlannedOrder, PlannedProductViewModel>();
 
 
-                cfg.CreateMap<ProductionOrder, ProductionOrderViewModel>();
-                cfg.CreateMap<ProductionOrder, ProductionOrderDTO>();
-                cfg.CreateMap<ProductionOrderPrimitiveDTO, ProductionOrder>();
+                cfg.CreateMap<ProductionOrder, ProductionOrderDTO<ProrderOptionItem>>();
+                cfg.CreateMap<ProductionOrder, ProductionOrderDTO<ProrderOptionProduct>>();
+
+                cfg.CreateMap<ProductionOrderPrimitiveDTO<ProrderOptionItem>, ProductionOrder>();
+                cfg.CreateMap<ProductionOrderPrimitiveDTO<ProrderOptionProduct>, ProductionOrder>();
+
                 cfg.CreateMap<ProductionOrderViewDetail, ProductionOrderDetailDTO>();
                 cfg.CreateMap<ProductionOrderDetailDTO, ProductionOrderDetail>();
+
+                cfg.CreateMap<ProductionOrder, ItemOrderViewModel>();
+                cfg.CreateMap<ProductionOrder, ProductOrderViewModel>();
+
+
+                
 
                 cfg.CreateMap<SemifinishedProduct, SemifinishedProductViewModel>();
                 cfg.CreateMap<SemifinishedProduct, SemifinishedProductDTO>();
