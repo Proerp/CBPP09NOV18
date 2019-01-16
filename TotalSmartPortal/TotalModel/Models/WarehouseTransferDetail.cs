@@ -48,7 +48,6 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
-        public virtual Commodity Commodity { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         public virtual GoodsReceiptDetail GoodsReceiptDetail { get; set; }
@@ -57,5 +56,6 @@ namespace TotalModel.Models
         public virtual TransferOrder TransferOrder { get; set; }
         public virtual Workshift Workshift { get; set; }
         public virtual WarehouseTransfer WarehouseTransfer { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }

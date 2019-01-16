@@ -70,7 +70,6 @@ namespace TotalModel.Models
         public int WorkshiftID { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
-        public virtual Commodity Commodity { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }
         public virtual PurchaseRequisitionDetail PurchaseRequisitionDetail { get; set; }
         public virtual WarehouseAdjustmentDetail WarehouseAdjustmentDetail { get; set; }
@@ -92,5 +91,6 @@ namespace TotalModel.Models
         public virtual Workshift Workshift { get; set; }
         public virtual GoodsReceipt GoodsReceipt { get; set; }
         public virtual Lab Lab { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace TotalPortal.ViewModels.Helpers
+﻿using TotalBase.Enums;
+
+namespace TotalPortal.ViewModels.Helpers
 {
     public class PrintViewModel
     {
@@ -8,6 +10,7 @@
         public int? FilterID { get; set; }
 
         public int LocationID { get; set; }
+        public GlobalEnums.NmvnTaskID NmvnTaskID { get; set; }
 
         public string ServerName { get { return "DATA-SERVER"; } }
         public string CatalogName { get { return "TotalSmartPortal"; } }

@@ -50,7 +50,7 @@
             </div>        
 
             <div class="form-group">                
-                @Html.EditorFor(d => d.VoidType)
+                @Html.EditorFor(d => (d as IPlannedOrderDTO).VoidType)
             </div>
 
 

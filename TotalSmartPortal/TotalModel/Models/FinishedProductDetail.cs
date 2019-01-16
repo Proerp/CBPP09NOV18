@@ -45,10 +45,10 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public bool HandoverApproved { get; set; }
     
-        public virtual Commodity Commodity { get; set; }
         public virtual FinishedProductPackage FinishedProductPackage { get; set; }
         public virtual FinishedProduct FinishedProduct { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual Commodity Commodity { get; set; }
     }
 }
