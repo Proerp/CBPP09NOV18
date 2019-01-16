@@ -13,9 +13,61 @@ using TotalDTO.Helpers.Interfaces;
 
 namespace TotalDTO.Inventories
 {
-    public class MaterialIssuePrimitiveDTO : QuantityDTO<MaterialIssueDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+    public interface IMIOption { GlobalEnums.NmvnTaskID NMVNTaskID { get; } }
+
+    public class MIOptionMaterial : IMIOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.MaterialStaging; } } }
+    public class MIOptionItem : IMIOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemStaging; } } }
+    public class MIOptionProduct : IMIOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ProductStaging; } } }
+
+    public interface IMaterialIssuePrimitiveDTO : IQuantityDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
     {
-        public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemStaging; } }
+        int MaterialIssueID { get; set; }
+
+        int MaterialIssueTypeID { get; set; }
+
+        Nullable<int> CustomerID { get; set; }
+
+        int ProductionOrderID { get; set; }
+        int ProductionOrderDetailID { get; set; }
+
+        int PlannedOrderID { get; set; }
+
+        int FirmOrderID { get; set; }
+        [Display(Name = "Số KHSX")]
+        string FirmOrderReference { get; set; }
+        [Display(Name = "Mã chứng từ")]
+        string FirmOrderCode { get; set; }
+        [Display(Name = "Ngày KHSX")]
+        DateTime FirmOrderEntryDate { get; set; }
+        [Display(Name = "Tên thành phẩm")]
+        string FirmOrderSpecs { get; set; }
+        [Display(Name = "Mã thành phẩm")]
+        string FirmOrderSpecification { get; set; }
+        [Display(Name = "Thành phẩm")]
+        string FirmOrderSpecificationSpecs { get; }
+
+        [Display(Name = "Thông số máy")]
+        [Required(ErrorMessage = "Vui lòng nhập thông số máy")]
+        string Code { get; set; }
+
+        int ShiftID { get; set; }
+        int WorkshiftID { get; set; } // WHEN ADD NEW: THIS WILL BE ZERO. THEN, THE REAL VALUE OF WorkshiftID WILL BE UPDATE BY MaterialIssueSaveRelative
+
+        int ProductionLineID { get; set; }
+
+        [Display(Name = "Mã số máy, ca sx")]
+        override string Caption { get; }
+
+        Nullable<int> WarehouseID { get; set; }
+        int StorekeeperID { get; set; }
+        int CrucialWorkerID { get; set; }
+    }
+
+
+    public class MaterialIssuePrimitiveDTO<TMIOption> : QuantityDTO<MaterialIssueDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+        where TMIOption : IMIOption, new()
+    {
+        public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return new TMIOption().NMVNTaskID; } }
 
         public int GetID() { return this.MaterialIssueID; }
         public void SetID(int id) { this.MaterialIssueID = id; }
@@ -51,8 +103,8 @@ namespace TotalDTO.Inventories
 
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; } // WHEN ADD NEW: THIS WILL BE ZERO. THEN, THE REAL VALUE OF WorkshiftID WILL BE UPDATE BY MaterialIssueSaveRelative
-        
-        public virtual int ProductionLineID { get; set; }        
+
+        public virtual int ProductionLineID { get; set; }
 
         [Display(Name = "Mã số máy, ca sx")]
         public override string Caption { get { return ""; } }
@@ -71,7 +123,34 @@ namespace TotalDTO.Inventories
     }
 
 
-    public class MaterialIssueDTO : MaterialIssuePrimitiveDTO, IBaseDetailEntity<MaterialIssueDetailDTO>
+    public interface IMaterialIssueDTO : IMaterialIssuePrimitiveDTO, IMaterialItemProduct
+    {
+        [Display(Name = "Khách hàng")]
+        [UIHint("Commons/CustomerBase")]
+        CustomerBaseDTO Customer { get; set; }
+
+        [Display(Name = "Kho hàng")]
+        [UIHint("AutoCompletes/WarehouseBase")]
+        WarehouseBaseDTO Warehouse { get; set; }
+
+        [Display(Name = "Mã số máy")]
+        [UIHint("AutoCompletes/ProductionLine")]
+        ProductionLineBaseDTO ProductionLine { get; set; }
+
+        [Display(Name = "Nhân viên kho")]
+        [UIHint("AutoCompletes/EmployeeBase")]
+        EmployeeBaseDTO Storekeeper { get; set; }
+
+        [Display(Name = "Công nhân ĐHCK")]
+        [UIHint("AutoCompletes/EmployeeBase")]
+        EmployeeBaseDTO CrucialWorker { get; set; }
+
+        List<MaterialIssueDetailDTO> MaterialIssueViewDetails { get; set; }
+        List<MaterialIssueDetailDTO> ViewDetails { get; set; }
+    }
+
+    public class MaterialIssueDTO<TMIOption> : MaterialIssuePrimitiveDTO<TMIOption>, IBaseDetailEntity<MaterialIssueDetailDTO>, IMaterialIssueDTO
+        where TMIOption : IMIOption, new()
     {
         public MaterialIssueDTO()
         {

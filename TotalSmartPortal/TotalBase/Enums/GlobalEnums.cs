@@ -81,6 +81,7 @@ namespace TotalBase.Enums
             
             ItemStaging = 8039,
             MaterialStaging = 680687985,
+            ProductStaging = 68068798599,//RESERVER ONLY
 
             PackageIssue = 8008039,
             WarehouseAdjustment = 8036,
