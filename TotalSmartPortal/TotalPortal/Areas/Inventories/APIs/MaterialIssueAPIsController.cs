@@ -33,8 +33,9 @@ namespace TotalPortal.Areas.Inventories.APIs
         }
 
 
-        public JsonResult GetMaterialIssueIndexes([DataSourceRequest] DataSourceRequest request)
+        public JsonResult GetMaterialIssueIndexes([DataSourceRequest] DataSourceRequest request, string nmvnTaskID)
         {
+            this.materialIssueAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
             ICollection<MaterialIssueIndex> materialIssueIndexes = this.materialIssueAPIRepository.GetEntityIndexes<MaterialIssueIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext));
 
             DataSourceResult response = materialIssueIndexes.ToDataSourceResult(request);
@@ -46,9 +47,9 @@ namespace TotalPortal.Areas.Inventories.APIs
 
 
 
-        public JsonResult GetFirmOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? firmOrderID)
+        public JsonResult GetFirmOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID, int? firmOrderID)
         {
-            var result = this.materialIssueAPIRepository.GetFirmOrders(locationID, firmOrderID);
+            var result = this.materialIssueAPIRepository.GetFirmOrders(locationID, nmvnTaskID, firmOrderID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 

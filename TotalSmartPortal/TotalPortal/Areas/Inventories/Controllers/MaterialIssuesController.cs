@@ -6,13 +6,16 @@ using AutoMapper;
 using RequireJsNet;
 
 using TotalBase.Enums;
-
+using TotalModel;
+using TotalDTO;
 using TotalModel.Models;
 
 using TotalCore.Services.Inventories;
 using TotalCore.Repositories.Commons;
 
 using TotalDTO.Inventories;
+
+using TotalPortal.ViewModels.Helpers;
 
 using TotalPortal.Controllers;
 using TotalPortal.APIs.Sessions;
@@ -23,9 +26,13 @@ using TotalPortal.Areas.Commons.Controllers.Sessions;
 
 namespace TotalPortal.Areas.Inventories.Controllers
 {
-    public class MaterialIssuesController : GenericViewDetailController<MaterialIssue, MaterialIssueDetail, MaterialIssueViewDetail, MaterialIssueDTO, MaterialIssuePrimitiveDTO, MaterialIssueDetailDTO, MaterialIssueViewModel>
+    public class MaterialIssuesController<TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel> : GenericViewDetailController<MaterialIssue, MaterialIssueDetail, MaterialIssueViewDetail, TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel>
+        where TDto : TPrimitiveDto, IBaseDetailEntity<TDtoDetail>
+        where TPrimitiveDto : BaseDTO, IPrimitiveEntity, IPrimitiveDTO, new()
+        where TDtoDetail : class, IPrimitiveEntity
+        where TViewDetailViewModel : TDto, IViewDetailViewModel<TDtoDetail>, IMaterialIssueViewModel, new()
     {
-        public MaterialIssuesController(IMaterialIssueService materialIssueService, IMaterialIssueViewModelSelectListBuilder materialIssueViewModelSelectListBuilder)
+        public MaterialIssuesController(IMaterialIssueService<TDto, TPrimitiveDto, TDtoDetail> materialIssueService, IMaterialIssueViewModelSelectListBuilder<TViewDetailViewModel> materialIssueViewModelSelectListBuilder)
             : base(materialIssueService, materialIssueViewModelSelectListBuilder, true)
         {
         }
@@ -54,14 +61,14 @@ namespace TotalPortal.Areas.Inventories.Controllers
             return View();
         }
 
-        protected override MaterialIssueViewModel InitViewModelByDefault(MaterialIssueViewModel simpleViewModel)
+        protected override TViewDetailViewModel InitViewModelByDefault(TViewDetailViewModel simpleViewModel)
         {
             simpleViewModel = base.InitViewModelByDefault(simpleViewModel);
 
-            if (simpleViewModel.ShiftID == 0)
+            if (((IMaterialIssuePrimitiveDTO)simpleViewModel).ShiftID == 0)
             {
                 string shiftSession = ShiftSession.GetShift(this.HttpContext);
-                if (HomeSession.TryParseID(shiftSession) > 0) simpleViewModel.ShiftID = (int)HomeSession.TryParseID(shiftSession);
+                if (HomeSession.TryParseID(shiftSession) > 0) ((IMaterialIssuePrimitiveDTO)simpleViewModel).ShiftID = (int)HomeSession.TryParseID(shiftSession);
             }
 
             if (simpleViewModel.Storekeeper == null)
@@ -91,13 +98,41 @@ namespace TotalPortal.Areas.Inventories.Controllers
             return simpleViewModel;
         }
 
-        protected override void BackupViewModelToSession(MaterialIssueViewModel simpleViewModel)
+        protected override void BackupViewModelToSession(TViewDetailViewModel simpleViewModel)
         {
             base.BackupViewModelToSession(simpleViewModel);
-            ShiftSession.SetShift(this.HttpContext, simpleViewModel.ShiftID);
+            ShiftSession.SetShift(this.HttpContext, ((IMaterialIssuePrimitiveDTO)simpleViewModel).ShiftID);
             MaterialIssueSession.SetStorekeeper(this.HttpContext, simpleViewModel.Storekeeper.EmployeeID, simpleViewModel.Storekeeper.Name);
             MaterialIssueSession.SetCrucialWorker(this.HttpContext, simpleViewModel.CrucialWorker.EmployeeID, simpleViewModel.CrucialWorker.Name);
         }
     }
 
+
+
+
+
+    public class MaterialStagingsController : MaterialIssuesController<MaterialIssueDTO<MIOptionMaterial>, MaterialIssuePrimitiveDTO<MIOptionMaterial>, MaterialIssueDetailDTO, MaterialStagingViewModel>
+    {
+        public MaterialStagingsController(IMaterialStagingService materialStagingService, IMaterialStagingViewModelSelectListBuilder materialStagingViewModelSelectListBuilder)
+            : base(materialStagingService, materialStagingViewModelSelectListBuilder)
+        {
+        }
+    }
+
+    public class ItemStagingsController : MaterialIssuesController<MaterialIssueDTO<MIOptionItem>, MaterialIssuePrimitiveDTO<MIOptionItem>, MaterialIssueDetailDTO, ItemStagingViewModel>
+    {
+        public ItemStagingsController(IItemStagingService itemStagingService, IItemStagingViewModelSelectListBuilder itemStagingViewModelSelectListBuilder)
+            : base(itemStagingService, itemStagingViewModelSelectListBuilder)
+        {
+        }
+    }
+
+
+    public class ProductStagingsController : MaterialIssuesController<MaterialIssueDTO<MIOptionProduct>, MaterialIssuePrimitiveDTO<MIOptionProduct>, MaterialIssueDetailDTO, ProductStagingViewModel>
+    {
+        public ProductStagingsController(IProductStagingService productStagingService, IProductStagingViewModelSelectListBuilder productStagingViewModelSelectListBuilder)
+            : base(productStagingService, productStagingViewModelSelectListBuilder)
+        {
+        }
+    }
 }

@@ -10,7 +10,23 @@ using TotalPortal.Areas.Commons.ViewModels.Helpers;
 
 namespace TotalPortal.Areas.Inventories.ViewModels
 {
-    public class MaterialIssueViewModel : MaterialIssueDTO, IViewDetailViewModel<MaterialIssueDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IShiftDropDownViewModel
+    public interface IMaterialIssueViewModel : IMaterialIssueDTO, IViewDetailViewModel<MaterialIssueDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IShiftDropDownViewModel
+    {
+    }
+
+    public class MaterialStagingViewModel : MaterialIssueDTO<MIOptionMaterial>, IViewDetailViewModel<MaterialIssueDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IMaterialIssueViewModel, IShiftDropDownViewModel
+    {
+        public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
+        public IEnumerable<SelectListItem> ShiftSelectList { get; set; }
+    }
+
+    public class ItemStagingViewModel : MaterialIssueDTO<MIOptionItem>, IViewDetailViewModel<MaterialIssueDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IMaterialIssueViewModel, IShiftDropDownViewModel
+    {
+        public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
+        public IEnumerable<SelectListItem> ShiftSelectList { get; set; }
+    }
+
+    public class ProductStagingViewModel : MaterialIssueDTO<MIOptionProduct>, IViewDetailViewModel<MaterialIssueDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IMaterialIssueViewModel, IShiftDropDownViewModel
     {
         public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
         public IEnumerable<SelectListItem> ShiftSelectList { get; set; }

@@ -155,10 +155,17 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IPackageIssueViewModelSelectListBuilder>().To<PackageIssueViewModelSelectListBuilder>();
 
 
-                kernel.Bind<IMaterialIssueService>().To<MaterialIssueService>();
+                
                 kernel.Bind<IMaterialIssueRepository>().To<MaterialIssueRepository>();
                 kernel.Bind<IMaterialIssueAPIRepository>().To<MaterialIssueAPIRepository>();
-                kernel.Bind<IMaterialIssueViewModelSelectListBuilder>().To<MaterialIssueViewModelSelectListBuilder>();
+
+                kernel.Bind<IMaterialStagingService>().To<MaterialStagingService>();
+                kernel.Bind<IMaterialStagingViewModelSelectListBuilder>().To<MaterialStagingViewModelSelectListBuilder>();
+                kernel.Bind<IItemStagingService>().To<ItemStagingService>();
+                kernel.Bind<IItemStagingViewModelSelectListBuilder>().To<ItemStagingViewModelSelectListBuilder>();
+                kernel.Bind<IProductStagingService>().To<ProductStagingService>();
+                kernel.Bind<IProductStagingViewModelSelectListBuilder>().To<ProductStagingViewModelSelectListBuilder>();
+
 
 
                 

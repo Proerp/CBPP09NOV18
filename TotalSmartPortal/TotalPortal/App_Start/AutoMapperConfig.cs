@@ -95,11 +95,26 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<PackageIssueDetailDTO, PackageIssueDetail>();
 
 
-                cfg.CreateMap<MaterialIssue, MaterialIssueViewModel>();
-                cfg.CreateMap<MaterialIssue, MaterialIssueDTO>();
-                cfg.CreateMap<MaterialIssuePrimitiveDTO, MaterialIssue>();
+
+
+                cfg.CreateMap<MaterialIssue, MaterialIssueDTO<MIOptionMaterial>>();
+                cfg.CreateMap<MaterialIssue, MaterialIssueDTO<MIOptionItem>>();
+                cfg.CreateMap<MaterialIssue, MaterialIssueDTO<MIOptionProduct>>();
+
+                cfg.CreateMap<MaterialIssuePrimitiveDTO<MIOptionMaterial>, MaterialIssue>();
+                cfg.CreateMap<MaterialIssuePrimitiveDTO<MIOptionItem>, MaterialIssue>();
+                cfg.CreateMap<MaterialIssuePrimitiveDTO<MIOptionProduct>, MaterialIssue>();
+
                 cfg.CreateMap<MaterialIssueViewDetail, MaterialIssueDetailDTO>();
                 cfg.CreateMap<MaterialIssueDetailDTO, MaterialIssueDetail>();
+
+                cfg.CreateMap<MaterialIssue, MaterialStagingViewModel>();
+                cfg.CreateMap<MaterialIssue, ItemStagingViewModel>();
+                cfg.CreateMap<MaterialIssue, ProductStagingViewModel>();
+
+                
+
+
 
                 cfg.CreateMap<WarehouseAdjustment, WarehouseAdjustmentDTO<WAOptionMtlRct>>();
                 cfg.CreateMap<WarehouseAdjustment, WarehouseAdjustmentDTO<WAOptionMtlIss>>();
