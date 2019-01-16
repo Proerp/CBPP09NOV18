@@ -1302,6 +1302,7 @@
           <Property Name="MaterialIssueID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="NMVNTaskID" Type="int" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="MaterialIssueTypeID" Type="int" Nullable="false" />
           <Property Name="ShiftID" Type="int" Nullable="false" />
@@ -1344,6 +1345,7 @@
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="NMVNTaskID" Type="int" />
           <Property Name="MaterialIssueTypeID" Type="int" Nullable="false" />
           <Property Name="ShiftID" Type="int" Nullable="false" />
           <Property Name="WorkshiftID" Type="int" Nullable="false" />
@@ -7301,6 +7303,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="Nothing" Type="int" Mode="In" />
         </Function>
         <Function Name="GetMaterialIssueIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
@@ -7315,6 +7318,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="GetMaterialIssuePendingFirmOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="FirmOrderID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetMaterialIssueViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -13216,6 +13220,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySet Name="ProductionLines" EntityType="TotalSmartPortalModel.ProductionLine" />
           <EntitySet Name="Workshifts" EntityType="TotalSmartPortalModel.Workshift" />
           <FunctionImport Name="GetMaterialIssueIndexes" ReturnType="Collection(TotalSmartPortalModel.MaterialIssueIndex)">
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="AspUserID" Mode="In" Type="String" />
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
@@ -13516,6 +13521,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </FunctionImport>
           <FunctionImport Name="GetMaterialIssuePendingFirmOrders" ReturnType="Collection(TotalSmartPortalModel.MaterialIssuePendingFirmOrder)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="FirmOrderID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSemifinishedProductPendingMaterialIssueDetails" ReturnType="Collection(TotalSmartPortalModel.SemifinishedProductPendingMaterialIssueDetail)">
@@ -16404,6 +16410,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="DisplayDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="PiecePerPack" Nullable="true" />
           <Property Type="Decimal" Name="MoldWeight" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ItemWeight" Nullable="true" Precision="18" Scale="2" />
           </ComplexType>
         <ComplexType Name="PlannedOrderViewDetail">
           <Property Type="Int32" Name="PlannedOrderDetailID" Nullable="false" />
@@ -18033,6 +18040,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Lab" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Labs" FromRole="MaterialIssueDetail" ToRole="Lab" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Commodities" FromRole="MaterialIssueDetail" ToRole="Commodity" />
+          <Property Name="NMVNTaskID" Type="Int32" />
         </EntityType>
         <EntityType Name="MaterialIssue">
           <Key>
@@ -18084,6 +18092,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="SemifinishedProductDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_MaterialIssues" FromRole="MaterialIssue" ToRole="SemifinishedProductDetail" />
           <NavigationProperty Name="PlannedOrder" Relationship="TotalSmartPortalModel.FK_MaterialIssues_PlannedOrders" FromRole="MaterialIssue" ToRole="PlannedOrder" />
           <NavigationProperty Name="ProductionOrder" Relationship="TotalSmartPortalModel.FK_MaterialIssues_ProductionOrders" FromRole="MaterialIssue" ToRole="ProductionOrder" />
+          <Property Name="NMVNTaskID" Type="Int32" />
         </EntityType>
         <EntityType Name="SemifinishedProductDetail">
           <Key>
@@ -25386,6 +25395,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="DisplayDate" ColumnName="DisplayDate" />
                 <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
                 <ScalarProperty Name="MoldWeight" ColumnName="MoldWeight" />
+                <ScalarProperty Name="ItemWeight" ColumnName="ItemWeight" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -26613,6 +26623,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="MaterialIssueDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.MaterialIssueDetail">
               <MappingFragment StoreEntitySet="MaterialIssueDetails">
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
@@ -26656,6 +26667,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="MaterialIssues">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.MaterialIssue">
               <MappingFragment StoreEntitySet="MaterialIssues">
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />

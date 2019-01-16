@@ -31,7 +31,7 @@ namespace TotalBase
                 case GlobalEnums.NmvnTaskID.ProductOrder:
                     return "PO";
 
-                case GlobalEnums.NmvnTaskID.MaterialIssue:
+                case GlobalEnums.NmvnTaskID.ItemStaging:
                     return "MI";
 
 

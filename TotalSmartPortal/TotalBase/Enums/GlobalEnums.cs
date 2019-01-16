@@ -78,7 +78,10 @@ namespace TotalBase.Enums
             SalesOrder = 8032,
             DeliveryAdvice = 8035,
             GoodsIssue = 8037,
-            MaterialIssue = 8039,
+            
+            ItemStaging = 8039,
+            MaterialStaging = 680687985,
+
             PackageIssue = 8008039,
             WarehouseAdjustment = 8036,
 

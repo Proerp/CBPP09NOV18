@@ -56,5 +56,6 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> DisplayDate { get; set; }
         public Nullable<int> PiecePerPack { get; set; }
         public Nullable<decimal> MoldWeight { get; set; }
+        public Nullable<decimal> ItemWeight { get; set; }
     }
 }

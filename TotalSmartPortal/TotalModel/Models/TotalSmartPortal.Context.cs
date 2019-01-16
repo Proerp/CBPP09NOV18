@@ -2504,8 +2504,12 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ProductionLineBase>("GetProductionLineBases", searchTextParameter);
         }
     
-        public virtual ObjectResult<MaterialIssueIndex> GetMaterialIssueIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        public virtual ObjectResult<MaterialIssueIndex> GetMaterialIssueIndexes(Nullable<int> nMVNTaskID, string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var aspUserIDParameter = aspUserID != null ?
                 new ObjectParameter("AspUserID", aspUserID) :
                 new ObjectParameter("AspUserID", typeof(string));
@@ -2518,7 +2522,7 @@ namespace TotalModel.Models
                 new ObjectParameter("ToDate", toDate) :
                 new ObjectParameter("ToDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaterialIssueIndex>("GetMaterialIssueIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaterialIssueIndex>("GetMaterialIssueIndexes", nMVNTaskIDParameter, aspUserIDParameter, fromDateParameter, toDateParameter);
         }
     
         public virtual ObjectResult<MaterialIssueViewDetail> GetMaterialIssueViewDetails(Nullable<int> materialIssueID)
@@ -3085,17 +3089,21 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SemifinishedProductToggleApproved", entityIDParameter, approvedParameter);
         }
     
-        public virtual ObjectResult<MaterialIssuePendingFirmOrder> GetMaterialIssuePendingFirmOrders(Nullable<int> locationID, Nullable<int> firmOrderID)
+        public virtual ObjectResult<MaterialIssuePendingFirmOrder> GetMaterialIssuePendingFirmOrders(Nullable<int> locationID, Nullable<int> nMVNTaskID, Nullable<int> firmOrderID)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var firmOrderIDParameter = firmOrderID.HasValue ?
                 new ObjectParameter("FirmOrderID", firmOrderID) :
                 new ObjectParameter("FirmOrderID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaterialIssuePendingFirmOrder>("GetMaterialIssuePendingFirmOrders", locationIDParameter, firmOrderIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaterialIssuePendingFirmOrder>("GetMaterialIssuePendingFirmOrders", locationIDParameter, nMVNTaskIDParameter, firmOrderIDParameter);
         }
     
         public virtual ObjectResult<SemifinishedProductPendingMaterialIssueDetail> GetSemifinishedProductPendingMaterialIssueDetails(Nullable<int> locationID)

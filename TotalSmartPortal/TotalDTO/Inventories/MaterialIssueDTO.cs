@@ -15,7 +15,7 @@ namespace TotalDTO.Inventories
 {
     public class MaterialIssuePrimitiveDTO : QuantityDTO<MaterialIssueDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
     {
-        public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.MaterialIssue; } }
+        public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemStaging; } }
 
         public int GetID() { return this.MaterialIssueID; }
         public void SetID(int id) { this.MaterialIssueID = id; }
