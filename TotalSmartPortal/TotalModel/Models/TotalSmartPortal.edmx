@@ -1673,8 +1673,8 @@
           <Property Name="PlannedOrderID" Type="int" />
           <Property Name="PlannedOrderCodes" Type="nvarchar" MaxLength="200" />
           <Property Name="PlannedOrderReferences" Type="nvarchar" MaxLength="200" />
-          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="PreparedPersonID" Type="int" Nullable="false" />
           <Property Name="OrganizationalUnitID" Type="int" Nullable="false" />
