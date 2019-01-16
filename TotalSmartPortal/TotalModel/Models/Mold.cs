@@ -17,8 +17,8 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Mold()
         {
-            this.PlannedOrderDetails = new HashSet<PlannedOrderDetail>();
             this.FirmOrderDetails = new HashSet<FirmOrderDetail>();
+            this.PlannedOrderDetails = new HashSet<PlannedOrderDetail>();
         }
     
         public int MoldID { get; set; }
@@ -39,8 +39,8 @@ namespace TotalModel.Models
         public bool InActive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PlannedOrderDetail> PlannedOrderDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FirmOrderDetail> FirmOrderDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<PlannedOrderDetail> PlannedOrderDetails { get; set; }
     }
 }

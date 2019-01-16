@@ -86,7 +86,6 @@ namespace TotalModel.Models
         public virtual DbSet<BomDetail> BomDetails { get; set; }
         public virtual DbSet<Bom> Boms { get; set; }
         public virtual DbSet<FirmOrderMaterial> FirmOrderMaterials { get; set; }
-        public virtual DbSet<Mold> Molds { get; set; }
         public virtual DbSet<ProductionOrderDetail> ProductionOrderDetails { get; set; }
         public virtual DbSet<MaterialIssueDetail> MaterialIssueDetails { get; set; }
         public virtual DbSet<MaterialIssue> MaterialIssues { get; set; }
@@ -124,6 +123,7 @@ namespace TotalModel.Models
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<Lab> Labs { get; set; }
         public virtual DbSet<Commodity> Commodities { get; set; }
+        public virtual DbSet<Mold> Molds { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {

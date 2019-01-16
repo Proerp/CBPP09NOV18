@@ -192,8 +192,6 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderMaterials_Customers" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderMaterials_FirmOrders" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderMaterials_VoidTypes" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.Mold" Width="1.5" PointX="3.375" PointY="5" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PlannedOrderDetails_Molds" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.ProductionOrderDetail" Width="1.5" PointX="40.125" PointY="33.375" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_ProductionOrderDetails_Boms" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_ProductionOrderDetails_Customers" />
@@ -287,7 +285,6 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderDetails_Boms" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderDetails_Customers" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderDetails_FirmOrders" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderDetails_Molds" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderDetails_VoidTypes" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedProductDetails_FirmOrderDetails" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.GoodsArrival" Width="1.5" PointX="42.75" PointY="35.5" />
@@ -441,6 +438,9 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_TransferOrderDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.Mold" Width="1.5" PointX="3.375" PointY="5" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FirmOrderDetails_Molds" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PlannedOrderDetails_Molds" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

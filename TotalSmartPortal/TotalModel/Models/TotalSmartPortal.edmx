@@ -13632,11 +13632,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="Remarks" Mode="In" Type="String" />
             <Parameter Name="IsDefault" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <EntitySet Name="Molds" EntityType="TotalSmartPortalModel.Mold" />
-          <AssociationSet Name="FK_PlannedOrderDetails_Molds" Association="TotalSmartPortalModel.FK_PlannedOrderDetails_Molds">
-            <End Role="Mold" EntitySet="Molds" />
-            <End Role="PlannedOrderDetail" EntitySet="PlannedOrderDetails" />
-          </AssociationSet>
           <FunctionImport Name="FinishedProductApproved" ReturnType="Collection(String)">
           <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -14163,10 +14158,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </AssociationSet>
           <AssociationSet Name="FK_FirmOrderDetails_FirmOrders" Association="TotalSmartPortalModel.FK_FirmOrderDetails_FirmOrders">
             <End Role="FirmOrder" EntitySet="FirmOrders" />
-            <End Role="FirmOrderDetail" EntitySet="FirmOrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_FirmOrderDetails_Molds" Association="TotalSmartPortalModel.FK_FirmOrderDetails_Molds">
-            <End Role="Mold" EntitySet="Molds" />
             <End Role="FirmOrderDetail" EntitySet="FirmOrderDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_FirmOrderDetails_VoidTypes" Association="TotalSmartPortalModel.FK_FirmOrderDetails_VoidTypes">
@@ -15005,6 +14996,15 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_WarehouseTransferDetails_Commodities" Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities">
             <End Role="Commodity" EntitySet="Commodities" />
             <End Role="WarehouseTransferDetail" EntitySet="WarehouseTransferDetails" />
+          </AssociationSet>
+          <EntitySet Name="Molds" EntityType="TotalSmartPortalModel.Mold" />
+          <AssociationSet Name="FK_FirmOrderDetails_Molds" Association="TotalSmartPortalModel.FK_FirmOrderDetails_Molds">
+            <End Role="Mold" EntitySet="Molds" />
+            <End Role="FirmOrderDetail" EntitySet="FirmOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PlannedOrderDetails_Molds" Association="TotalSmartPortalModel.FK_PlannedOrderDetails_Molds">
+            <End Role="Mold" EntitySet="Molds" />
+            <End Role="PlannedOrderDetail" EntitySet="PlannedOrderDetails" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -16403,6 +16403,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="ItemEntryDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="DisplayDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="PiecePerPack" Nullable="true" />
+          <Property Type="Decimal" Name="MoldWeight" Nullable="true" Precision="18" Scale="2" />
           </ComplexType>
         <ComplexType Name="PlannedOrderViewDetail">
           <Property Type="Int32" Name="PlannedOrderDetailID" Nullable="false" />
@@ -17248,7 +17249,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="BlockUnit" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="BlockQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="MoldQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <NavigationProperty Name="Mold" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Molds" FromRole="PlannedOrderDetail" ToRole="Mold" />
           <NavigationProperty Name="SemifinishedProductDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_PlannedOrderDetails" FromRole="PlannedOrderDetail" ToRole="SemifinishedProductDetail" />
           <Property Name="PiecePerPack" Type="Int32" Nullable="false" />
           <Property Name="QuantityRequested" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
@@ -17257,6 +17257,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="PlannedOrder" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_PlannedOrders" FromRole="PlannedOrderDetail" ToRole="PlannedOrder" />
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Commodities" FromRole="PlannedOrderDetail" ToRole="Commodity" />
+          <NavigationProperty Name="Mold" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Molds" FromRole="PlannedOrderDetail" ToRole="Mold" />
         </EntityType>
         <Association Name="FK_FirmOrders_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -17687,41 +17688,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
         </ComplexType>
-        <EntityType Name="Mold">
-          <Key>
-            <PropertyRef Name="MoldID" />
-          </Key>
-          <Property Name="MoldID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Reference" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="OfficialCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Weight" Type="Decimal" Precision="18" Scale="3" />
-          <Property Name="CyclePerHours" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="MoldWidth" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="MoldLength" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ItemWidth" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ItemLength" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="ItemHigh" Type="Decimal" Precision="18" Scale="2" />
-          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="InActive" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="PlannedOrderDetails" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Molds" FromRole="Mold" ToRole="PlannedOrderDetail" />
-          <NavigationProperty Name="FirmOrderDetails" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Molds" FromRole="Mold" ToRole="FirmOrderDetail" />
-        </EntityType>
-        <Association Name="FK_PlannedOrderDetails_Molds">
-          <End Type="TotalSmartPortalModel.Mold" Role="Mold" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.PlannedOrderDetail" Role="PlannedOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Mold">
-              <PropertyRef Name="MoldID" />
-            </Principal>
-            <Dependent Role="PlannedOrderDetail">
-              <PropertyRef Name="MoldID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <ComplexType Name="FinishedProductIndex">
           <Property Type="Int32" Name="FinishedProductID" Nullable="false" />
           <Property Type="DateTime" Name="EntryDate" Nullable="true" />
@@ -19656,12 +19622,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Bom" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Boms" FromRole="FirmOrderDetail" ToRole="Bom" />
           <NavigationProperty Name="Customer" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Customers" FromRole="FirmOrderDetail" ToRole="Customer" />
           <NavigationProperty Name="FirmOrder" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_FirmOrders" FromRole="FirmOrderDetail" ToRole="FirmOrder" />
-          <NavigationProperty Name="Mold" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Molds" FromRole="FirmOrderDetail" ToRole="Mold" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_VoidTypes" FromRole="FirmOrderDetail" ToRole="VoidType" />
           <NavigationProperty Name="SemifinishedProductDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_FirmOrderDetails" FromRole="FirmOrderDetail" ToRole="SemifinishedProductDetail" />
           <Property Name="HasProductionOrders" Type="Int32" />
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Commodities" FromRole="FirmOrderDetail" ToRole="Commodity" />
+          <NavigationProperty Name="Mold" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Molds" FromRole="FirmOrderDetail" ToRole="Mold" />
         </EntityType>
         <Association Name="FK_FirmOrderDetails_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -19696,18 +19662,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Principal>
             <Dependent Role="FirmOrderDetail">
               <PropertyRef Name="FirmOrderID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_FirmOrderDetails_Molds">
-          <End Type="TotalSmartPortalModel.Mold" Role="Mold" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.FirmOrderDetail" Role="FirmOrderDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Mold">
-              <PropertyRef Name="MoldID" />
-            </Principal>
-            <Dependent Role="FirmOrderDetail">
-              <PropertyRef Name="MoldID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -22563,6 +22517,53 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Mold">
+          <Key>
+            <PropertyRef Name="MoldID" />
+          </Key>
+          <Property Name="MoldID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reference" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OfficialCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Weight" Type="Decimal" Precision="18" Scale="3" />
+          <Property Name="CyclePerHours" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MoldWidth" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="MoldLength" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ItemWidth" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ItemLength" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="ItemHigh" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="InActive" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="FirmOrderDetails" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Molds" FromRole="Mold" ToRole="FirmOrderDetail" />
+          <NavigationProperty Name="PlannedOrderDetails" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Molds" FromRole="Mold" ToRole="PlannedOrderDetail" />
+        </EntityType>
+        <Association Name="FK_FirmOrderDetails_Molds">
+          <End Type="TotalSmartPortalModel.Mold" Role="Mold" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.FirmOrderDetail" Role="FirmOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mold">
+              <PropertyRef Name="MoldID" />
+            </Principal>
+            <Dependent Role="FirmOrderDetail">
+              <PropertyRef Name="MoldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PlannedOrderDetails_Molds">
+          <End Type="TotalSmartPortalModel.Mold" Role="Mold" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.PlannedOrderDetail" Role="PlannedOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mold">
+              <PropertyRef Name="MoldID" />
+            </Principal>
+            <Dependent Role="PlannedOrderDetail">
+              <PropertyRef Name="MoldID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -25384,6 +25385,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="ItemEntryDate" ColumnName="ItemEntryDate" />
                 <ScalarProperty Name="DisplayDate" ColumnName="DisplayDate" />
                 <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
+                <ScalarProperty Name="MoldWeight" ColumnName="MoldWeight" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -26307,28 +26309,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="UpdateCommodityBom" FunctionName="TotalSmartPortalModel.Store.UpdateCommodityBom" />
-          <EntitySetMapping Name="Molds">
-            <EntityTypeMapping TypeName="TotalSmartPortalModel.Mold">
-              <MappingFragment StoreEntitySet="Molds">
-                <ScalarProperty Name="InActive" ColumnName="InActive" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="ItemHigh" ColumnName="ItemHigh" />
-                <ScalarProperty Name="ItemLength" ColumnName="ItemLength" />
-                <ScalarProperty Name="ItemWidth" ColumnName="ItemWidth" />
-                <ScalarProperty Name="MoldLength" ColumnName="MoldLength" />
-                <ScalarProperty Name="MoldWidth" ColumnName="MoldWidth" />
-                <ScalarProperty Name="CyclePerHours" ColumnName="CyclePerHours" />
-                <ScalarProperty Name="Weight" ColumnName="Weight" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="OfficialCode" ColumnName="OfficialCode" />
-                <ScalarProperty Name="Code" ColumnName="Code" />
-                <ScalarProperty Name="Reference" ColumnName="Reference" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="MoldID" ColumnName="MoldID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <FunctionImportMapping FunctionImportName="FinishedProductApproved" FunctionName="TotalSmartPortalModel.Store.FinishedProductApproved" />
           <FunctionImportMapping FunctionImportName="FinishedProductEditable" FunctionName="TotalSmartPortalModel.Store.FinishedProductEditable" />
           <FunctionImportMapping FunctionImportName="FinishedProductPostSaveValidate" FunctionName="TotalSmartPortalModel.Store.FinishedProductPostSaveValidate" />
@@ -28673,6 +28653,28 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Molds">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.Mold">
+              <MappingFragment StoreEntitySet="Molds">
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="ItemHigh" ColumnName="ItemHigh" />
+                <ScalarProperty Name="ItemLength" ColumnName="ItemLength" />
+                <ScalarProperty Name="ItemWidth" ColumnName="ItemWidth" />
+                <ScalarProperty Name="MoldLength" ColumnName="MoldLength" />
+                <ScalarProperty Name="MoldWidth" ColumnName="MoldWidth" />
+                <ScalarProperty Name="CyclePerHours" ColumnName="CyclePerHours" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="OfficialCode" ColumnName="OfficialCode" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="MoldID" ColumnName="MoldID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
