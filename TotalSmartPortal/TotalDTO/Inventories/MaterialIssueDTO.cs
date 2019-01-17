@@ -56,7 +56,7 @@ namespace TotalDTO.Inventories
         int ProductionLineID { get; set; }
 
         [Display(Name = "Mã số máy, ca sx")]
-        override string Caption { get; }
+        string Caption { get; }
 
         Nullable<int> WarehouseID { get; set; }
         int StorekeeperID { get; set; }
@@ -147,6 +147,8 @@ namespace TotalDTO.Inventories
 
         List<MaterialIssueDetailDTO> MaterialIssueViewDetails { get; set; }
         List<MaterialIssueDetailDTO> ViewDetails { get; set; }
+
+        string ControllerName { get; }
     }
 
     public class MaterialIssueDTO<TMIOption> : MaterialIssuePrimitiveDTO<TMIOption>, IBaseDetailEntity<MaterialIssueDetailDTO>, IMaterialIssueDTO
@@ -188,5 +190,11 @@ namespace TotalDTO.Inventories
         public ICollection<MaterialIssueDetailDTO> GetDetails() { return this.MaterialIssueViewDetails; }
 
         protected override IEnumerable<MaterialIssueDetailDTO> DtoDetails() { return this.MaterialIssueViewDetails; }
+
+        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
+
+        public bool IsMaterial { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.MaterialStaging; } }
+        public bool IsItem { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.ItemStaging; } }
+        public bool IsProduct { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.ProductStaging; } }
     }
 }

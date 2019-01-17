@@ -1,7 +1,12 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration
 
-@model TotalPortal.Areas.Inventories.ViewModels.MaterialIssueViewModel
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Inventories
+@using TotalPortal.Areas.Inventories.ViewModels
+
+@model IMaterialIssueViewModel
 
 <div id="popupWindow"></div>
 
@@ -15,78 +20,78 @@
     @Html.Hidden("WarehouseTaskID", (int)@ViewBag.WarehouseTaskID);
     @Html.Hidden("WarehouseTaskIDList", (string)@ViewBag.WarehouseTaskIDList);
 
-    @Html.HiddenFor(model => model.MaterialIssueID)
-    @Html.HiddenFor(model => model.MaterialIssueTypeID)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).MaterialIssueID)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).MaterialIssueTypeID)
 
     <div class="left-panel">
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
 
-        @Html.HiddenFor(model => model.ProductionOrderID)
-        @Html.HiddenFor(model => model.ProductionOrderDetailID)
+        @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).ProductionOrderID)
+        @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).ProductionOrderDetailID)
 
-        @Html.HiddenFor(model => model.PlannedOrderID)
-        @Html.HiddenFor(model => model.FirmOrderID)
+        @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).PlannedOrderID)
+        @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderID)
 
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Shift.cshtml")
         
         <div class="SBT-Hidden">
-            @Html.EditorFor(d => d.Warehouse, new { WarehouseDisplayName = @Model.GetDisplayName(m => m.Warehouse) })
+            @Html.EditorFor(d => (d as IMaterialIssueDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID) })
         </div>
         
 
         @if (Model.MaterialIssueTypeID == (int)GlobalEnums.MaterialIssueTypeID.FirmOrders)
         {
             <div class="form-group">
-                @Html.LabelFor(model => model.FirmOrderReference)
+                @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderReference)
                 <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => model.FirmOrderReference).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderReference).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                 </div>
                 <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => model.FirmOrderReference, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderReference, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.FirmOrderCode)
+                @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderCode)
                 <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => model.FirmOrderCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                 </div>
                 <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => model.FirmOrderCode, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderCode, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.FirmOrderEntryDate)
+                @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderEntryDate)
                 <div class="div-input">
-                    @Html.Kendo().DateTimePickerFor(model => model.FirmOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    @Html.Kendo().DateTimePickerFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                 </div>
                 <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => model.FirmOrderEntryDate, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderEntryDate, "", new { @class = "text-danger" })
                 </div>
             </div>                   
         }
 
         <div class="form-group">
-            @Html.EditorFor(d => d.ProductionLine)
+            @Html.EditorFor(d => (d as IMaterialIssueDTO).ProductionLine)
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Code)
+            @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).Code)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).Code).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).Code, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.EditorFor(d => d.CrucialWorker, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.CrucialWorker) })
+            @Html.EditorFor(d => (d as IMaterialIssueDTO).CrucialWorker, new { EmployeeDisplayName = @Model.CrucialWorker.GetDisplayName(m => m.EmployeeID) })
         </div>
         <div class="form-group">
-            @Html.EditorFor(d => d.Storekeeper, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.Storekeeper) })
+            @Html.EditorFor(d => (d as IMaterialIssueDTO).Storekeeper, new { EmployeeDisplayName = @Model.Storekeeper.GetDisplayName(m => m.EmployeeID) })
         </div>
     </div>
 
@@ -94,19 +99,19 @@
 
         <div class="right-top-panel right-top-panel-H2">
 
-            @Html.EditorFor(d => d.Customer, new { CustomerDisplayName = @Model.GetDisplayName(m => m.Customer), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Lệnh sản xuất tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
+            @Html.EditorFor(d => (d as IMaterialIssueDTO).Customer, new { CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Lệnh sản xuất tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
 
-            @Html.HiddenFor(model => model.FirmOrderSpecs)
-            @Html.HiddenFor(model => model.FirmOrderSpecification)
+            @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecs)
+            @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecification)
             <div class="form-group">
                 <div class="right-panel-label right-panel-label-whole-width">
-                    @Html.LabelFor(model => model.FirmOrderSpecificationSpecs)
+                    @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecificationSpecs)
                 </div>
                 <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => model.FirmOrderSpecificationSpecs).HtmlAttributes(new { @class = "right-panel-input", @readonly = "readonly" })
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecificationSpecs).HtmlAttributes(new { @class = "right-panel-input", @readonly = "readonly" })
                 </div>
                 <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => model.FirmOrderSpecificationSpecs, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecificationSpecs, "", new { @class = "text-danger" })
                 </div>
             </div>      
             
@@ -292,21 +297,21 @@
                         .Content(@<text>
                             <div class="right-first-panel">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Description, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseDTO).Description, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Description).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Remarks, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseModel).Remarks, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Remarks).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseModel).Remarks, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
