@@ -1302,7 +1302,7 @@
           <Property Name="MaterialIssueID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
-          <Property Name="NMVNTaskID" Type="int" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="MaterialIssueTypeID" Type="int" Nullable="false" />
           <Property Name="ShiftID" Type="int" Nullable="false" />
@@ -1345,7 +1345,7 @@
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
-          <Property Name="NMVNTaskID" Type="int" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="MaterialIssueTypeID" Type="int" Nullable="false" />
           <Property Name="ShiftID" Type="int" Nullable="false" />
           <Property Name="WorkshiftID" Type="int" Nullable="false" />
@@ -18040,7 +18040,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Lab" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Labs" FromRole="MaterialIssueDetail" ToRole="Lab" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Commodities" FromRole="MaterialIssueDetail" ToRole="Commodity" />
-          <Property Name="NMVNTaskID" Type="Int32" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="MaterialIssue">
           <Key>
@@ -18092,7 +18092,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="SemifinishedProductDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedProductDetails_MaterialIssues" FromRole="MaterialIssue" ToRole="SemifinishedProductDetail" />
           <NavigationProperty Name="PlannedOrder" Relationship="TotalSmartPortalModel.FK_MaterialIssues_PlannedOrders" FromRole="MaterialIssue" ToRole="PlannedOrder" />
           <NavigationProperty Name="ProductionOrder" Relationship="TotalSmartPortalModel.FK_MaterialIssues_ProductionOrders" FromRole="MaterialIssue" ToRole="ProductionOrder" />
-          <Property Name="NMVNTaskID" Type="Int32" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="SemifinishedProductDetail">
           <Key>

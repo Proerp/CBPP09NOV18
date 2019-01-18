@@ -59,7 +59,7 @@ namespace TotalModel.Models
         public string Barcode { get; set; }
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
-        public Nullable<int> NMVNTaskID { get; set; }
+        public int NMVNTaskID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual FirmOrderMaterial FirmOrderMaterial { get; set; }
