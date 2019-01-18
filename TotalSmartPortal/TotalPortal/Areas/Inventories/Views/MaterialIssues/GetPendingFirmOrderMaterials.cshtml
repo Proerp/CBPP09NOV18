@@ -1,6 +1,8 @@
 ﻿@using TotalModel.Models;
 @using TotalPortal.Configuration;
 
+@model TotalPortal.Areas.Inventories.ViewModels.IMaterialIssueViewModel
+
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
 
@@ -8,13 +10,14 @@
     .Name("gridPendingFirmOrderMaterials")
     .Columns(columns =>
     {
-        columns.Bound(c => c.CommodityCode).Title("Mã").Width(30).Hidden();
+        columns.Bound(p => p.CodePartA).Title("Mã").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(20).Hidden(@Model.IsItem ? true : false);
         columns.Bound(p => p.CodePartB).Title("Phân loại").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(11);
         columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
-        columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12);
-        columns.Bound(p => p.CodePartA).Title("Công thức").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12);
-        columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
-        columns.Bound(p => p.CodePartF).Title("Chiều rộng").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12);
+        columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsMaterial ? true : false);
+        columns.Bound(p => p.CodePartA).Title("Công thức").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsItem ? false : true);
+        columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
+        columns.Bound(p => p.CodePartF).Title("Chiều rộng").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(!@Model.IsItem ? true : false);
+        columns.Bound(c => c.CommodityName).Title("Tên hàng").Width(45).Hidden(@Model.IsItem ? true : false);
         columns.Bound(c => c.GoodsReceiptReference).Title("Lô").Width(15);
         columns.Bound(c => c.GoodsReceiptEntryDate).Title("Ngày").Width(15).Format("{0:" + Settings.DateFormat + "}");
         columns.Bound(c => c.BatchEntryDate).Title("Ngày lô hàng").Width(15).Format("{0:" + Settings.DateFormat + "}");

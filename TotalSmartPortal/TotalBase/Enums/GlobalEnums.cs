@@ -60,9 +60,11 @@ namespace TotalBase.Enums
             GoodsArrival = 8026,
 
             BlendingInstruction = 6800160,
-            
-            PlannedProduct = 680016,
+
+
             PlannedItem = 680016008,
+            PlannedProduct = 680016,
+            
 
             ProductOrder = 680018,
             ItemOrder = 680016010,
@@ -78,9 +80,10 @@ namespace TotalBase.Enums
             SalesOrder = 8032,
             DeliveryAdvice = 8035,
             GoodsIssue = 8037,
-            
+
+
+            MaterialStaging = 679344031,
             ItemStaging = 8039,
-            MaterialStaging = 680687985,
             ProductStaging = 680687987,//RESERVER ONLY
 
             PackageIssue = 8008039,

@@ -41,9 +41,10 @@ namespace TotalPortal.Areas.Inventories.Controllers
         {
             base.AddRequireJsOptions();
 
+            TViewDetailViewModel viewDetailViewModel = new TViewDetailViewModel();
+
             StringBuilder commodityTypeIDList = new StringBuilder();
-            commodityTypeIDList.Append((int)GlobalEnums.CommodityTypeID.Items);
-            commodityTypeIDList.Append(","); commodityTypeIDList.Append((int)GlobalEnums.CommodityTypeID.Consumables);
+            commodityTypeIDList.Append((int)(viewDetailViewModel.IsMaterial ? GlobalEnums.CommodityTypeID.Materials : (viewDetailViewModel.IsItem ? GlobalEnums.CommodityTypeID.Items : (viewDetailViewModel.IsProduct ? GlobalEnums.CommodityTypeID.Products : GlobalEnums.CommodityTypeID.Unknown))));
 
             RequireJsOptions.Add("commodityTypeIDList", commodityTypeIDList.ToString(), RequireJsOptionsScope.Page);
 
@@ -58,7 +59,8 @@ namespace TotalPortal.Areas.Inventories.Controllers
         public virtual ActionResult GetPendingFirmOrderMaterials()
         {
             this.AddRequireJsOptions();
-            return View();
+            TViewDetailViewModel viewDetailViewModel = new TViewDetailViewModel();
+            return View(this.InitViewModel(viewDetailViewModel));
         }
 
         protected override TViewDetailViewModel InitViewModelByDefault(TViewDetailViewModel simpleViewModel)
