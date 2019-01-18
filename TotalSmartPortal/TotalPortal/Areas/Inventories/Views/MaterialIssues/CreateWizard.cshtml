@@ -1,11 +1,15 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration;
-@using TotalModel.Models;
 
+@using TotalDTO;
+@using TotalModel
+@using TotalModel.Models
+@using TotalDTO.Inventories
+@using TotalPortal.Areas.Inventories.ViewModels
 
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
-@model TotalPortal.Areas.Inventories.ViewModels.MaterialIssueViewModel
+@model IMaterialIssueViewModel
 
 @using (Html.BeginForm())
 {
@@ -13,52 +17,52 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
 
-    @Html.HiddenFor(model => model.MaterialIssueTypeID)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).MaterialIssueTypeID)
 
-    @Html.HiddenFor(model => model.ProductionOrderID)
-    @Html.HiddenFor(model => model.ProductionOrderDetailID)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).ProductionOrderID)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).ProductionOrderDetailID)
 
-    @Html.HiddenFor(model => model.PlannedOrderID)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).PlannedOrderID)
 
-    @Html.HiddenFor(model => model.FirmOrderID)
-    @Html.HiddenFor(model => model.FirmOrderCode)
-    @Html.HiddenFor(model => model.FirmOrderReference)
-    @Html.HiddenFor(model => model.FirmOrderEntryDate)
-    @Html.HiddenFor(model => model.FirmOrderSpecs)
-    @Html.HiddenFor(model => model.FirmOrderSpecification)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderID)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderCode)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderReference)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderEntryDate)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecs)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecification)
 
 
-    @Html.HiddenFor(model => model.CustomerID)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).CustomerID)
 
-    @Html.HiddenFor(model => model.Customer.CustomerID)
-    @Html.HiddenFor(model => model.Customer.Code)
-    @Html.HiddenFor(model => model.Customer.Name)
-    @Html.HiddenFor(model => model.Customer.VATCode)
-    @Html.HiddenFor(model => model.Customer.Telephone)
-    @Html.HiddenFor(model => model.Customer.BillingAddress)
-    @Html.HiddenFor(model => model.Customer.EntireTerritoryEntireName)
-    @Html.HiddenFor(model => model.Customer.SalespersonID)
-    @Html.HiddenFor(model => model.Customer.SalespersonName)
-    @Html.HiddenFor(model => model.Customer.PaymentTermID)
-    @Html.HiddenFor(model => model.Customer.PriceCategoryID)
-    @Html.HiddenFor(model => model.Customer.PriceCategoryCode)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.CustomerID)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.Code)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.Name)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.VATCode)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.Telephone)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.BillingAddress)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.EntireTerritoryEntireName)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.SalespersonID)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.SalespersonName)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.PaymentTermID)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.PriceCategoryID)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.PriceCategoryCode)
 
-    @Html.HiddenFor(model => model.ProductionLine.ProductionLineID);
-    @Html.HiddenFor(model => model.ProductionLine.Name);
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).ProductionLine.ProductionLineID);
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).ProductionLine.Name);
     
-    @Html.HiddenFor(model => model.Warehouse.WarehouseID)
-    @Html.HiddenFor(model => model.Warehouse.Code)
-    @Html.HiddenFor(model => model.Warehouse.Name)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Warehouse.WarehouseID)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Warehouse.Code)
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Warehouse.Name)
 
-    @Html.HiddenFor(model => model.ShiftID);
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).ShiftID);
     
-    @Html.HiddenFor(model => model.CrucialWorker.EmployeeID);
-    @Html.HiddenFor(model => model.CrucialWorker.Name);
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).CrucialWorker.EmployeeID);
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).CrucialWorker.Name);
     
-    @Html.HiddenFor(model => model.Storekeeper.EmployeeID);
-    @Html.HiddenFor(model => model.Storekeeper.Name);
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Storekeeper.EmployeeID);
+    @Html.HiddenFor(model => (model as IMaterialIssueDTO).Storekeeper.Name);
     
-    @Html.HiddenFor(model => model.Description);
+    @Html.HiddenFor(model => (model as IBaseDTO).Description);
 
     @(Html.Kendo().Grid<MaterialIssuePendingFirmOrder>()
         .Name("materialIssuePendingFirmOrderGrid")
@@ -88,6 +92,7 @@
                 function (e) {
                     return {
                         locationID: window.parent.requireConfig.pageOptions.LocationID,
+                        nmvnTaskID: window.parent.requireConfig.pageOptions.NmvnTaskID,
                         firmOrderID: window.parent.$("#SelectedFirmOrderID") != undefined && window.parent.$("#SelectedFirmOrderID").val() != 0? window.parent.$("#SelectedFirmOrderID").val(): null
                     };
                 }
@@ -100,7 +105,7 @@
 
     <div class="background-bar" style="height: 45px;">
         <div class="popup-button-bar">
-            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "MaterialIssues")" formtarget="_top" style="display:none" />
+            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", Model.ControllerName)" formtarget="_top" style="display:none" />
 
             <button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Xuất kho </button>
             <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Thoát </button>

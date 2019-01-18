@@ -73,7 +73,7 @@ namespace TotalDTO.Productions
             base.PerformPresaveRule();
 
             string plannedOrderReferences = ""; string plannedOrderCodes = ""; string caption = "";
-            this.DtoDetails().ToList().ForEach(e => { if (plannedOrderReferences.IndexOf(e.FirmOrderReference) < 0) plannedOrderReferences = plannedOrderReferences + (plannedOrderReferences != "" ? ", " : "") + e.FirmOrderReference; if (e.FirmOrderCode != null && plannedOrderCodes.IndexOf(e.FirmOrderCode) < 0) plannedOrderCodes = plannedOrderCodes + (plannedOrderCodes != "" ? ", " : "") + e.FirmOrderCode; if (e.Specs != null && caption.IndexOf(e.Specs) < 0) caption = caption + (caption != "" ? ", " : "") + e.Specs; });
+            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; if (plannedOrderReferences.IndexOf(e.FirmOrderReference) < 0) plannedOrderReferences = plannedOrderReferences + (plannedOrderReferences != "" ? ", " : "") + e.FirmOrderReference; if (e.FirmOrderCode != null && plannedOrderCodes.IndexOf(e.FirmOrderCode) < 0) plannedOrderCodes = plannedOrderCodes + (plannedOrderCodes != "" ? ", " : "") + e.FirmOrderCode; if (e.Specs != null && caption.IndexOf(e.Specs) < 0) caption = caption + (caption != "" ? ", " : "") + e.Specs; });
             this.PlannedOrderReferences = plannedOrderReferences; this.PlannedOrderCodes = plannedOrderCodes != "" ? plannedOrderCodes : null; this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) : caption) : null;
         }
     }

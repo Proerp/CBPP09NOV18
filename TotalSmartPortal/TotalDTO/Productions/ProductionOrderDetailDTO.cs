@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using TotalModel;
+using TotalBase.Enums;
 using TotalDTO.Helpers;
 
 namespace TotalDTO.Productions
@@ -13,6 +14,7 @@ namespace TotalDTO.Productions
         public int ProductionOrderDetailID { get; set; }
         public int ProductionOrderID { get; set; }
 
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get; set; }
         public Nullable<int> PlannedOrderID { get; set; }
         public Nullable<int> FirmOrderID { get; set; }
 

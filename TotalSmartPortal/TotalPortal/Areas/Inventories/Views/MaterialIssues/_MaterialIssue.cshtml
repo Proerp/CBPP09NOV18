@@ -332,21 +332,21 @@
         <div class="right-botton-panel">
             @if (Model.Editable)
             {
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "MaterialIssues")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "MaterialIssues")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "MaterialIssues")" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in </button>
             }
             else
             {
                 if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
                 {
-                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "MaterialIssues", new {id = @Model.MaterialIssueID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt </button>
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.MaterialIssueID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt </button>
                 }
             }
 
             @if (Model.MaterialIssueID > 0)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "MaterialIssues", new { id = @Model.MaterialIssueID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", Model.ControllerName, new { id = @Model.MaterialIssueID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
             }
         </div>
 
@@ -363,14 +363,14 @@
     function GetPendingFirmOrderMaterials() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingFirmOrderMaterials", "MaterialIssues", new { area = "Inventories" })", "Xuất kho", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingFirmOrderMaterials", Model.ControllerName, new { area = "Inventories" })", "Xuất kho", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
     }
 
     function callVoidDetail(materialIssueDetailID) {
         require(["kpopupWindow"], function (kpopupWindow) {
             var voidDetailWindow = new kpopupWindow();
-            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", "MaterialIssues")" + "/" + $("#MaterialIssueID").val() + "/" + materialIssueDetailID, "Hủy/ phục hồi một phần phiếu xuất", @Settings.PopupWidthVoid,  @Settings.PopupHeightVoid);
+            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", Model.ControllerName)" + "/" + $("#MaterialIssueID").val() + "/" + materialIssueDetailID, "Hủy/ phục hồi một phần phiếu xuất", @Settings.PopupWidthVoid,  @Settings.PopupHeightVoid);
         });
     }
 </script>
