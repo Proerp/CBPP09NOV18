@@ -138,7 +138,9 @@
                     columns.Bound(p => p.FirmOrderMaterialID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (FirmOrderMaterialID == null)? '' : FirmOrderMaterialID #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].FirmOrderMaterialID' value='#= (FirmOrderMaterialID == null) ? '' : FirmOrderMaterialID #' />");
 
-
+                    columns.Bound(p => p.LayerCode).DisplayNameTitle().Width(20).Hidden(GlobalEnums.CBPP || @Model.IsItem)
+                        .ClientTemplate("#= (LayerCode == null)? '' : LayerCode #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].LayerCode' value='#= (LayerCode == null) ? '' : LayerCode #' />");
+                    
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");                    
                     columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(200).EditorTemplateName(Model.MaterialIssueTypeID == (int)GlobalEnums.MaterialIssueTypeID.FirmOrders ? "StringReadonly" : "AutoCompletes/CommodityAvailable")
@@ -227,7 +229,7 @@
                         {
                             if (Model.MaterialIssueTypeID == (int)GlobalEnums.MaterialIssueTypeID.FirmOrders)
                                 toolbar.Template(@<text>
-                                    <button type="button" class="k-button" onclick="GetPendingFirmOrderMaterials()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Xuất màng từ tồn kho </button>
+                                    <button type="button" class="k-button" onclick="GetPendingFirmOrderMaterials()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Xuất từ tồn kho </button>
                                     <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Xuất nguyên cuộn </button>
                                 </text>);
                             else

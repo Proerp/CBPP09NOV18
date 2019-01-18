@@ -28,6 +28,10 @@ namespace TotalDTO.Inventories
 
         public string Code { get; set; }
 
+        [Display(Name = "Trục")]
+        [UIHint("StringReadonly")]
+        public string LayerCode { get; set; }
+
         public Nullable<int> CustomerID { get; set; }
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }

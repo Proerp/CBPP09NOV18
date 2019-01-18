@@ -43,5 +43,6 @@ namespace TotalModel.Models
         public string LabCode { get; set; }
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public string LayerCode { get; set; }
     }
 }

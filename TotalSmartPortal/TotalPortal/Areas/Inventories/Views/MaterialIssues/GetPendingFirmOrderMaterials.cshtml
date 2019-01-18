@@ -10,9 +10,10 @@
     .Name("gridPendingFirmOrderMaterials")
     .Columns(columns =>
     {
+        columns.Bound(p => p.LayerCode).Title("Trục").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(8).Hidden(@Model.IsItem ? true : false);
         columns.Bound(p => p.CodePartA).Title("Mã").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(20).Hidden(@Model.IsItem ? true : false);
-        columns.Bound(p => p.CodePartB).Title("Phân loại").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(11);
-        columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
+        columns.Bound(p => p.CodePartB).Title("PL").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(11);
+        columns.Bound(p => p.CodePartC).Title("Màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
         columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsMaterial ? true : false);
         columns.Bound(p => p.CodePartA).Title("Công thức").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsItem ? false : true);
         columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
@@ -22,7 +23,7 @@
         columns.Bound(c => c.GoodsReceiptEntryDate).Title("Ngày").Width(15).Format("{0:" + Settings.DateFormat + "}");
         columns.Bound(c => c.BatchEntryDate).Title("Ngày lô hàng").Width(15).Format("{0:" + Settings.DateFormat + "}");
         columns.Bound(c => c.WorkshiftFirmOrderRemains).Title("Tồn LSX").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
-        columns.Bound(c => c.QuantityAvailables).Title("Tồn kho").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.QuantityAvailables).Title("Tồn kho").Format(Settings.kfmQuantity).Width(12).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
 
         columns.Template(t => { }).Title("&nbsp;").ClientTemplate("<input class='IsSelected' #= IsSelected ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center" }).Width(5);
     })
