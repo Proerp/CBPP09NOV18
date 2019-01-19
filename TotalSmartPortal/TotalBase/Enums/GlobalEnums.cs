@@ -69,7 +69,7 @@ namespace TotalBase.Enums
             ProductOrder = 680018,
             ItemOrder = 680016010,
 
-
+            SemifinishedItem = 680022,
             SemifinishedProduct = 680020,
             SemifinishedHandover = 680026,
 
