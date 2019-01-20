@@ -35,6 +35,9 @@ namespace TotalDTO.Productions
         public int ProductionLineID { get; set; }
         public int CrucialWorkerID { get; set; }
 
+        [UIHint("IntegerReadonly")]
+        public override int PiecePerPack { get; set; }
+
         [Display(Name = "Cái/ tấm")]
         [UIHint("QuantityReadonly")]
         public decimal MoldQuantity { get; set; }
