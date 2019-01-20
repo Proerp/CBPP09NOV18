@@ -56,6 +56,7 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public bool HandoverApproved { get; set; }
+        public int BomID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
@@ -66,5 +67,6 @@ namespace TotalModel.Models
         public virtual ICollection<SemifinishedItemDetail> SemifinishedItemDetails { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual Bom Bom { get; set; }
     }
 }

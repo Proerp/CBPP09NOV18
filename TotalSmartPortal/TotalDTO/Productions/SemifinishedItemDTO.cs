@@ -38,6 +38,8 @@ namespace TotalDTO.Productions
         public string FirmOrderSpecification { get; set; }
 
 
+        public int BomID { get; set; }
+        [Display(Name = "Mã công thức")]
         public string BomCode { get; set; }
 
 

@@ -44,6 +44,7 @@
     @Html.HiddenFor(model => model.ProductionLineID)
     @Html.HiddenFor(model => model.ProductionLineCode)
 
+    @Html.HiddenFor(model => model.BomID)
     @Html.HiddenFor(model => model.BomCode)
     @Html.HiddenFor(model => model.MaterialQuantity)
     @Html.HiddenFor(model => model.MaterialQuantityRemains)
@@ -164,6 +165,7 @@
             $("#ProductionLineID").val(selectedDataItem === undefined || selectedDataItem.ProductionLineID === undefined ? null : selectedDataItem.ProductionLineID);
             $("#ProductionLineCode").val(selectedDataItem === undefined || selectedDataItem.ProductionLineCode === undefined ? null : selectedDataItem.ProductionLineCode);
 
+            $("#BomID").val(selectedDataItem === undefined || selectedDataItem.BomID === undefined ? null : selectedDataItem.BomID);
             $("#BomCode").val(selectedDataItem === undefined || selectedDataItem.BomCode === undefined ? null : selectedDataItem.BomCode);
             $("#MaterialQuantity").val(selectedDataItem === undefined || selectedDataItem.MaterialQuantity === undefined ? null : selectedDataItem.MaterialQuantity);
             $("#MaterialQuantityRemains").val(selectedDataItem === undefined || selectedDataItem.MaterialQuantityRemains === undefined ? null : selectedDataItem.MaterialQuantityRemains);

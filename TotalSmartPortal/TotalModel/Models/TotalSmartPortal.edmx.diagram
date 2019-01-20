@@ -456,6 +456,7 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItemDetails_SemifinishedItems" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItems_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItems_Workshifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItems_Boms" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -2195,6 +2195,7 @@
           <Property Name="MaterialIssueID" Type="int" Nullable="false" />
           <Property Name="PlannedOrderID" Type="int" Nullable="false" />
           <Property Name="FirmOrderID" Type="int" Nullable="false" />
+          <Property Name="BomID" Type="int" Nullable="false" />
           <Property Name="ShiftID" Type="int" Nullable="false" />
           <Property Name="WorkshiftID" Type="int" Nullable="false" />
           <Property Name="ProductionLineID" Type="int" Nullable="false" />
@@ -6192,6 +6193,18 @@ warning 6035: The relationship 'FK_SemifinishedItems_AspNetUsers1' has columns t
         <!--Errors Found During Generation:
 warning 6035: The relationship 'FK_SemifinishedItems_AspNetUsers2' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
         <Association Name="FK_SemifinishedItems_AspNetUsers2" />-->
+        <Association Name="FK_SemifinishedItems_Boms">
+          <End Role="Boms" Type="Self.Boms" Multiplicity="1" />
+          <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Boms">
+              <PropertyRef Name="BomID" />
+            </Principal>
+            <Dependent Role="SemifinishedItems">
+              <PropertyRef Name="BomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SemifinishedItems_Customers">
           <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
           <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="*" />
@@ -9723,6 +9736,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_SemifinishedItemDetails_SemifinishedItems" Association="Self.FK_SemifinishedItemDetails_SemifinishedItems">
             <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
             <End Role="SemifinishedItemDetails" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Boms" Association="Self.FK_SemifinishedItems_Boms">
+            <End Role="Boms" EntitySet="Boms" />
+            <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
           </AssociationSet>
           <AssociationSet Name="FK_SemifinishedItems_Customers" Association="Self.FK_SemifinishedItems_Customers">
             <End Role="Customers" EntitySet="Customers" />
@@ -15394,20 +15411,20 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="GetSemifinishedItemPendingMaterialIssues" ReturnType="Collection(TotalSmartPortalModel.SemifinishedItemPendingMaterialIssue)">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSemifinishedItemViewDetails" ReturnType="Collection(TotalSmartPortalModel.SemifinishedItemViewDetail)">
             <Parameter Name="SemifinishedItemID" Mode="In" Type="Int32" />
             <Parameter Name="FirmOrderID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SemifinishedItemApproved" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SemifinishedItemEditable" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SemifinishedItemPostSaveValidate" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SemifinishedItemSaveRelative">
             <Parameter Name="EntityID" Mode="In" Type="Int32" />
@@ -15417,6 +15434,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="EntityID" Mode="In" Type="Int32" />
             <Parameter Name="Approved" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <AssociationSet Name="FK_SemifinishedItems_Boms" Association="TotalSmartPortalModel.FK_SemifinishedItems_Boms">
+            <End Role="Bom" EntitySet="Boms" />
+            <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -17871,6 +17892,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="TotalQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="LayerCount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Boms" FromRole="Bom" ToRole="SemifinishedItem" />
         </EntityType>
         <Association Name="FK_BomDetails_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -23073,6 +23095,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_SemifinishedItems" FromRole="SemifinishedItem" ToRole="SemifinishedItemDetail" />
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Shifts" FromRole="SemifinishedItem" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Workshifts" FromRole="SemifinishedItem" ToRole="Workshift" />
+          <Property Name="BomID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Bom" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Boms" FromRole="SemifinishedItem" ToRole="Bom" />
         </EntityType>
         <Association Name="FK_SemifinishedItemDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -23272,6 +23296,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CrucialWorkerName" Nullable="false" MaxLength="50" />
           <Property Type="Decimal" Name="MaterialTotalQuantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="MaterialQuantityRemains" Nullable="true" Precision="22" Scale="2" />
+          <Property Type="Int32" Name="BomID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SemifinishedItemViewDetail">
           <Property Type="Int32" Name="SemifinishedItemDetailID" Nullable="false" />
@@ -23289,6 +23314,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
         </ComplexType>
+        <Association Name="FK_SemifinishedItems_Boms">
+          <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItem" Role="SemifinishedItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bom">
+              <PropertyRef Name="BomID" />
+            </Principal>
+            <Dependent Role="SemifinishedItem">
+              <PropertyRef Name="BomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -29442,6 +29479,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="SemifinishedItems">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedItem">
               <MappingFragment StoreEntitySet="SemifinishedItems">
+                <ScalarProperty Name="BomID" ColumnName="BomID" />
                 <ScalarProperty Name="HandoverApproved" ColumnName="HandoverApproved" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
@@ -29529,6 +29567,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="CrucialWorkerName" ColumnName="CrucialWorkerName" />
                 <ScalarProperty Name="MaterialTotalQuantity" ColumnName="MaterialTotalQuantity" />
                 <ScalarProperty Name="MaterialQuantityRemains" ColumnName="MaterialQuantityRemains" />
+                <ScalarProperty Name="BomID" ColumnName="BomID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
