@@ -60,6 +60,8 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public int NMVNTaskID { get; set; }
+        public int BomID { get; set; }
+        public int BomDetailID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual FirmOrderMaterial FirmOrderMaterial { get; set; }
@@ -77,5 +79,7 @@ namespace TotalModel.Models
         public virtual GoodsReceiptDetail GoodsReceiptDetail { get; set; }
         public virtual Lab Lab { get; set; }
         public virtual Commodity Commodity { get; set; }
+        public virtual BomDetail BomDetail { get; set; }
+        public virtual Bom Bom { get; set; }
     }
 }

@@ -31,7 +31,7 @@
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecs)
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecification)
 
-
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).BomID)
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).CustomerID)
 
     @Html.HiddenFor(model => (model as IMaterialIssueDTO).Customer.CustomerID)
@@ -154,6 +154,8 @@
             $("#FirmOrderEntryDate").val(selectedDataItem === undefined || selectedDataItem.FirmOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.FirmOrderEntryDate, Settings.DateTimeFormat));
             $("#FirmOrderSpecs").val(selectedDataItem === undefined || selectedDataItem.FirmOrderSpecs === undefined ? null : selectedDataItem.FirmOrderSpecs);
             $("#FirmOrderSpecification").val(selectedDataItem === undefined || selectedDataItem.FirmOrderSpecification === undefined ? null : selectedDataItem.FirmOrderSpecification);
+
+            $("#BomID").val(selectedDataItem === undefined || selectedDataItem.BomID === undefined ? null : selectedDataItem.BomID);
 
             $("#Customer_CustomerID").val(selectedDataItem === undefined || selectedDataItem.CustomerID === undefined ? null : selectedDataItem.CustomerID);
             $("#Customer_Code").val(selectedDataItem === undefined || selectedDataItem.CustomerCode === undefined ? null : selectedDataItem.CustomerCode);

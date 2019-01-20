@@ -14,6 +14,12 @@ namespace TotalModel.Models
     
     public partial class BomDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BomDetail()
+        {
+            this.MaterialIssueDetails = new HashSet<MaterialIssueDetail>();
+        }
+    
         public int BomDetailID { get; set; }
         public int BomID { get; set; }
         public int MaterialID { get; set; }
@@ -27,5 +33,7 @@ namespace TotalModel.Models
     
         public virtual Bom Bom { get; set; }
         public virtual Commodity Commodity { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MaterialIssueDetail> MaterialIssueDetails { get; set; }
     }
 }

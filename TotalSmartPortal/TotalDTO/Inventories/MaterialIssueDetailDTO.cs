@@ -28,6 +28,8 @@ namespace TotalDTO.Inventories
 
         public string Code { get; set; }
 
+        public int BomID { get; set; }
+        public int BomDetailID { get; set; }
         [Display(Name = "Trục")]
         [UIHint("StringReadonly")]
         public string LayerCode { get; set; }

@@ -48,6 +48,8 @@ function handleOKEvent(materialIssueGridDataSource, pendingProductionOrderDetail
 
         dataRow.FirmOrderMaterialID = productionOrderGridDataItem.FirmOrderMaterialID;
 
+        dataRow.BomID = productionOrderGridDataItem.BomID;
+        dataRow.BomDetailID = productionOrderGridDataItem.BomDetailID;
         dataRow.LayerCode = productionOrderGridDataItem.LayerCode;
 
         dataRow.CommodityID = productionOrderGridDataItem.CommodityID;

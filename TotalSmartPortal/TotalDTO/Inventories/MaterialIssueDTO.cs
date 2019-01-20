@@ -46,6 +46,8 @@ namespace TotalDTO.Inventories
         [Display(Name = "Thành phẩm")]
         string FirmOrderSpecificationSpecs { get; }
 
+        int BomID { get; set; }
+
         [Display(Name = "Thông số máy")]
         [Required(ErrorMessage = "Vui lòng nhập thông số máy")]
         string Code { get; set; }
@@ -96,6 +98,8 @@ namespace TotalDTO.Inventories
         public string FirmOrderSpecification { get; set; }
         [Display(Name = "Thành phẩm")]
         public string FirmOrderSpecificationSpecs { get { return this.FirmOrderSpecs + " (" + this.FirmOrderSpecification + ")"; } }
+
+        public int BomID { get; set; }
 
         [Display(Name = "Thông số máy")]
         [Required(ErrorMessage = "Vui lòng nhập thông số máy")]

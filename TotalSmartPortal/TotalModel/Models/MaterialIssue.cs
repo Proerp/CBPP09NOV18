@@ -55,6 +55,7 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public int NMVNTaskID { get; set; }
+        public int BomID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
@@ -74,5 +75,6 @@ namespace TotalModel.Models
         public virtual ProductionOrder ProductionOrder { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedItemDetail> SemifinishedItemDetails { get; set; }
+        public virtual Bom Bom { get; set; }
     }
 }
