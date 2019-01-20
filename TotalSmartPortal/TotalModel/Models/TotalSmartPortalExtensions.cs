@@ -358,6 +358,21 @@ namespace TotalModel.Models
     }
 
 
+    public partial class SemifinishedItem : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<SemifinishedItemDetail>
+    {
+        public int GetID() { return this.SemifinishedItemID; }
+
+        public virtual Employee CrucialWorker { get { return this.Employee; } }
+
+        public ICollection<SemifinishedItemDetail> GetDetails() { return this.SemifinishedItemDetails; }
+    }
+
+
+    public partial class SemifinishedItemDetail : IPrimitiveEntity, IHelperEntryDate, IHelperCommodityID, IHelperCommodityTypeID
+    {
+        public int GetID() { return this.SemifinishedItemDetailID; }
+    }
+
     public partial class SemifinishedProduct : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<SemifinishedProductDetail>
     {
         public int GetID() { return this.SemifinishedProductID; }

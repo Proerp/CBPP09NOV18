@@ -124,6 +124,8 @@ namespace TotalModel.Models
         public virtual DbSet<Lab> Labs { get; set; }
         public virtual DbSet<Commodity> Commodities { get; set; }
         public virtual DbSet<Mold> Molds { get; set; }
+        public virtual DbSet<SemifinishedItemDetail> SemifinishedItemDetails { get; set; }
+        public virtual DbSet<SemifinishedItem> SemifinishedItems { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {
@@ -4978,6 +4980,98 @@ namespace TotalModel.Models
                 new ObjectParameter("BomID", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BomViewDetail>("GetBomViewDetails", bomIDParameter);
+        }
+    
+        public virtual ObjectResult<SemifinishedItemIndex> GetSemifinishedItemIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var aspUserIDParameter = aspUserID != null ?
+                new ObjectParameter("AspUserID", aspUserID) :
+                new ObjectParameter("AspUserID", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedItemIndex>("GetSemifinishedItemIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
+        }
+    
+        public virtual ObjectResult<SemifinishedItemPendingMaterialIssue> GetSemifinishedItemPendingMaterialIssues(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedItemPendingMaterialIssue>("GetSemifinishedItemPendingMaterialIssues", locationIDParameter);
+        }
+    
+        public virtual ObjectResult<SemifinishedItemViewDetail> GetSemifinishedItemViewDetails(Nullable<int> semifinishedItemID, Nullable<int> firmOrderID)
+        {
+            var semifinishedItemIDParameter = semifinishedItemID.HasValue ?
+                new ObjectParameter("SemifinishedItemID", semifinishedItemID) :
+                new ObjectParameter("SemifinishedItemID", typeof(int));
+    
+            var firmOrderIDParameter = firmOrderID.HasValue ?
+                new ObjectParameter("FirmOrderID", firmOrderID) :
+                new ObjectParameter("FirmOrderID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedItemViewDetail>("GetSemifinishedItemViewDetails", semifinishedItemIDParameter, firmOrderIDParameter);
+        }
+    
+        public virtual ObjectResult<string> SemifinishedItemApproved(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SemifinishedItemApproved", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> SemifinishedItemEditable(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SemifinishedItemEditable", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> SemifinishedItemPostSaveValidate(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SemifinishedItemPostSaveValidate", entityIDParameter);
+        }
+    
+        public virtual int SemifinishedItemSaveRelative(Nullable<int> entityID, Nullable<int> saveRelativeOption)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var saveRelativeOptionParameter = saveRelativeOption.HasValue ?
+                new ObjectParameter("SaveRelativeOption", saveRelativeOption) :
+                new ObjectParameter("SaveRelativeOption", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SemifinishedItemSaveRelative", entityIDParameter, saveRelativeOptionParameter);
+        }
+    
+        public virtual int SemifinishedItemToggleApproved(Nullable<int> entityID, Nullable<bool> approved)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var approvedParameter = approved.HasValue ?
+                new ObjectParameter("Approved", approved) :
+                new ObjectParameter("Approved", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SemifinishedItemToggleApproved", entityIDParameter, approvedParameter);
         }
     }
 }

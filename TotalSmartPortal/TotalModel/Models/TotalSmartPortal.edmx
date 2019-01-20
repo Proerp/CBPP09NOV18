@@ -2155,6 +2155,76 @@
           <Property Name="Approved" Type="bit" Nullable="false" />
           <Property Name="ApprovedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="SemifinishedItemDetails">
+          <Key>
+            <PropertyRef Name="SemifinishedItemDetailID" />
+          </Key>
+          <Property Name="SemifinishedItemDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SemifinishedItemID" Type="int" Nullable="false" />
+          <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="MaterialIssueID" Type="int" Nullable="false" />
+          <Property Name="FirmOrderID" Type="int" Nullable="false" />
+          <Property Name="FirmOrderDetailID" Type="int" Nullable="false" />
+          <Property Name="PlannedOrderID" Type="int" Nullable="false" />
+          <Property Name="PlannedOrderDetailID" Type="int" Nullable="false" />
+          <Property Name="ShiftID" Type="int" Nullable="false" />
+          <Property Name="WorkshiftID" Type="int" Nullable="false" />
+          <Property Name="ProductionLineID" Type="int" Nullable="false" />
+          <Property Name="CrucialWorkerID" Type="int" Nullable="false" />
+          <Property Name="SemifinishedHandoverID" Type="int" />
+          <Property Name="CommodityID" Type="int" Nullable="false" />
+          <Property Name="CommodityTypeID" Type="int" Nullable="false" />
+          <Property Name="PiecePerPack" Type="int" Nullable="false" />
+          <Property Name="MoldQuantity" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="QuantityFinished" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="HandoverApproved" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SemifinishedItems">
+          <Key>
+            <PropertyRef Name="SemifinishedItemID" />
+          </Key>
+          <Property Name="SemifinishedItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="10" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="MaterialIssueID" Type="int" Nullable="false" />
+          <Property Name="PlannedOrderID" Type="int" Nullable="false" />
+          <Property Name="FirmOrderID" Type="int" Nullable="false" />
+          <Property Name="ShiftID" Type="int" Nullable="false" />
+          <Property Name="WorkshiftID" Type="int" Nullable="false" />
+          <Property Name="ProductionLineID" Type="int" Nullable="false" />
+          <Property Name="CrucialWorkerID" Type="int" Nullable="false" />
+          <Property Name="SemifinishedHandoverID" Type="int" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="PreparedPersonID" Type="int" Nullable="false" />
+          <Property Name="OrganizationalUnitID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="ApproverID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="StopDate" Type="datetime" />
+          <Property Name="StartSequenceNo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="StopSequenceNo" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FoilCounts" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FoilUnitCounts" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FoilUnitWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FoilWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="FailureWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalQuantityFinished" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Caption" Type="nvarchar" MaxLength="800" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="EditedDate" Type="datetime" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="ApprovedDate" Type="datetime" />
+          <Property Name="HandoverApproved" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="SemifinishedProductDetails">
           <Key>
             <PropertyRef Name="SemifinishedProductDetailID" />
@@ -6041,6 +6111,171 @@ warning 6035: The relationship 'FK_SemifinishedHandovers_AspNetUsers2' has colum
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SemifinishedItemDetails_Commodities">
+          <End Role="Commodities" Type="Self.Commodities" Multiplicity="1" />
+          <End Role="SemifinishedItemDetails" Type="Self.SemifinishedItemDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodities">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetails">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItemDetails_FirmOrderDetails">
+          <End Role="FirmOrderDetails" Type="Self.FirmOrderDetails" Multiplicity="1" />
+          <End Role="SemifinishedItemDetails" Type="Self.SemifinishedItemDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmOrderDetails">
+              <PropertyRef Name="FirmOrderDetailID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetails">
+              <PropertyRef Name="FirmOrderDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItemDetails_FirmOrders">
+          <End Role="FirmOrders" Type="Self.FirmOrders" Multiplicity="1" />
+          <End Role="SemifinishedItemDetails" Type="Self.SemifinishedItemDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmOrders">
+              <PropertyRef Name="FirmOrderID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetails">
+              <PropertyRef Name="FirmOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItemDetails_MaterialIssues">
+          <End Role="MaterialIssues" Type="Self.MaterialIssues" Multiplicity="1" />
+          <End Role="SemifinishedItemDetails" Type="Self.SemifinishedItemDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialIssues">
+              <PropertyRef Name="MaterialIssueID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetails">
+              <PropertyRef Name="MaterialIssueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItemDetails_PlannedOrderDetails">
+          <End Role="PlannedOrderDetails" Type="Self.PlannedOrderDetails" Multiplicity="1" />
+          <End Role="SemifinishedItemDetails" Type="Self.SemifinishedItemDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlannedOrderDetails">
+              <PropertyRef Name="PlannedOrderDetailID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetails">
+              <PropertyRef Name="PlannedOrderDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItemDetails_SemifinishedItems">
+          <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="1" />
+          <End Role="SemifinishedItemDetails" Type="Self.SemifinishedItemDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SemifinishedItems">
+              <PropertyRef Name="SemifinishedItemID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetails">
+              <PropertyRef Name="SemifinishedItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_SemifinishedItems_AspNetUsers' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_SemifinishedItems_AspNetUsers" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_SemifinishedItems_AspNetUsers1' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_SemifinishedItems_AspNetUsers1" />-->
+        <!--Errors Found During Generation:
+warning 6035: The relationship 'FK_SemifinishedItems_AspNetUsers2' has columns that are not part of the key of the table on the primary side of the relationship. The relationship was excluded.
+        <Association Name="FK_SemifinishedItems_AspNetUsers2" />-->
+        <Association Name="FK_SemifinishedItems_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="SemifinishedItems">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="SemifinishedItems">
+              <PropertyRef Name="CrucialWorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_FirmOrders">
+          <End Role="FirmOrders" Type="Self.FirmOrders" Multiplicity="1" />
+          <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmOrders">
+              <PropertyRef Name="FirmOrderID" />
+            </Principal>
+            <Dependent Role="SemifinishedItems">
+              <PropertyRef Name="FirmOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_Locations">
+          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
+          <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locations">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="SemifinishedItems">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_ProductionLines">
+          <End Role="ProductionLines" Type="Self.ProductionLines" Multiplicity="1" />
+          <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionLines">
+              <PropertyRef Name="ProductionLineID" />
+            </Principal>
+            <Dependent Role="SemifinishedItems">
+              <PropertyRef Name="ProductionLineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_Shifts">
+          <End Role="Shifts" Type="Self.Shifts" Multiplicity="1" />
+          <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shifts">
+              <PropertyRef Name="ShiftID" />
+            </Principal>
+            <Dependent Role="SemifinishedItems">
+              <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_Workshifts">
+          <End Role="Workshifts" Type="Self.Workshifts" Multiplicity="1" />
+          <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshifts">
+              <PropertyRef Name="WorkshiftID" />
+            </Principal>
+            <Dependent Role="SemifinishedItems">
+              <PropertyRef Name="WorkshiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SemifinishedProductDetails_Commodities">
           <End Role="Commodities" Type="Self.Commodities" Multiplicity="1" />
           <End Role="SemifinishedProductDetails" Type="Self.SemifinishedProductDetails" Multiplicity="*" />
@@ -7578,6 +7813,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="GetSemifinishedHandoverViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SemifinishedHandoverID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetSemifinishedItemIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
+          <Parameter Name="FromDate" Type="datetime" Mode="In" />
+          <Parameter Name="ToDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="GetSemifinishedItemPendingMaterialIssues" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetSemifinishedItemViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SemifinishedItemID" Type="int" Mode="In" />
+          <Parameter Name="FirmOrderID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetSemifinishedProductIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
@@ -8095,6 +8342,23 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="EntityID" Type="int" Mode="In" />
           <Parameter Name="Approved" Type="bit" Mode="In" />
         </Function>
+        <Function Name="SemifinishedItemApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SemifinishedItemEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SemifinishedItemPostSaveValidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SemifinishedItemSaveRelative" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="SaveRelativeOption" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SemifinishedItemToggleApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="Approved" Type="bit" Mode="In" />
+        </Function>
         <Function Name="SemifinishedProductApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
@@ -8297,6 +8561,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySet Name="SalesReturns" EntityType="Self.SalesReturns" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SemifinishedHandoverDetails" EntityType="Self.SemifinishedHandoverDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SemifinishedHandovers" EntityType="Self.SemifinishedHandovers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SemifinishedItemDetails" EntityType="Self.SemifinishedItemDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SemifinishedItems" EntityType="Self.SemifinishedItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SemifinishedProductDetails" EntityType="Self.SemifinishedProductDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SemifinishedProducts" EntityType="Self.SemifinishedProducts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shifts" EntityType="Self.Shifts" Schema="dbo" store:Type="Tables" />
@@ -9434,6 +9700,58 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Workshifts" EntitySet="Workshifts" />
             <End Role="SemifinishedHandovers" EntitySet="SemifinishedHandovers" />
           </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_Commodities" Association="Self.FK_SemifinishedItemDetails_Commodities">
+            <End Role="Commodities" EntitySet="Commodities" />
+            <End Role="SemifinishedItemDetails" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_FirmOrderDetails" Association="Self.FK_SemifinishedItemDetails_FirmOrderDetails">
+            <End Role="FirmOrderDetails" EntitySet="FirmOrderDetails" />
+            <End Role="SemifinishedItemDetails" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_FirmOrders" Association="Self.FK_SemifinishedItemDetails_FirmOrders">
+            <End Role="FirmOrders" EntitySet="FirmOrders" />
+            <End Role="SemifinishedItemDetails" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_MaterialIssues" Association="Self.FK_SemifinishedItemDetails_MaterialIssues">
+            <End Role="MaterialIssues" EntitySet="MaterialIssues" />
+            <End Role="SemifinishedItemDetails" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_PlannedOrderDetails" Association="Self.FK_SemifinishedItemDetails_PlannedOrderDetails">
+            <End Role="PlannedOrderDetails" EntitySet="PlannedOrderDetails" />
+            <End Role="SemifinishedItemDetails" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_SemifinishedItems" Association="Self.FK_SemifinishedItemDetails_SemifinishedItems">
+            <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
+            <End Role="SemifinishedItemDetails" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Customers" Association="Self.FK_SemifinishedItems_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Employees" Association="Self.FK_SemifinishedItems_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_FirmOrders" Association="Self.FK_SemifinishedItems_FirmOrders">
+            <End Role="FirmOrders" EntitySet="FirmOrders" />
+            <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Locations" Association="Self.FK_SemifinishedItems_Locations">
+            <End Role="Locations" EntitySet="Locations" />
+            <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_ProductionLines" Association="Self.FK_SemifinishedItems_ProductionLines">
+            <End Role="ProductionLines" EntitySet="ProductionLines" />
+            <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Shifts" Association="Self.FK_SemifinishedItems_Shifts">
+            <End Role="Shifts" EntitySet="Shifts" />
+            <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Workshifts" Association="Self.FK_SemifinishedItems_Workshifts">
+            <End Role="Workshifts" EntitySet="Workshifts" />
+            <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
+          </AssociationSet>
           <AssociationSet Name="FK_SemifinishedProductDetails_Commodities" Association="Self.FK_SemifinishedProductDetails_Commodities">
             <End Role="Commodities" EntitySet="Commodities" />
             <End Role="SemifinishedProductDetails" EntitySet="SemifinishedProductDetails" />
@@ -9990,6 +10308,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="PurchaseOrders1" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_Customers1" FromRole="Customer" ToRole="PurchaseOrder" />
           <NavigationProperty Name="GoodsReceipts" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_Customers" FromRole="Customer" ToRole="GoodsReceipt" />
           <NavigationProperty Name="Boms" Relationship="TotalSmartPortalModel.FK_Boms_Customers" FromRole="Customer" ToRole="Bom" />
+          <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Customers" FromRole="Customer" ToRole="SemifinishedItem" />
         </EntityType>
         <EntityType Name="CustomerType">
           <Key>
@@ -10166,6 +10485,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Employees" FromRole="Employee" ToRole="PackageIssue" />
           <NavigationProperty Name="PackageIssues1" Relationship="TotalSmartPortalModel.FK_PackageIssues_Employees1" FromRole="Employee" ToRole="PackageIssue" />
           <NavigationProperty Name="WarehouseTransfers" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Employees" FromRole="Employee" ToRole="WarehouseTransfer" />
+          <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Employees" FromRole="Employee" ToRole="SemifinishedItem" />
           </EntityType>
         <EntityType Name="EntireTerritory">
           <Key>
@@ -10472,6 +10792,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="WarehouseTransfers2" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Locations2" FromRole="Location" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="GoodsReceipts" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_Locations" FromRole="Location" ToRole="GoodsReceipt" />
           <NavigationProperty Name="Labs" Relationship="TotalSmartPortalModel.FK_Labs_Locations" FromRole="Location" ToRole="Lab" />
+          <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Locations" FromRole="Location" ToRole="SemifinishedItem" />
         </EntityType>
         <EntityType Name="Module">
           <Key>
@@ -15013,6 +15334,89 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Mold" EntitySet="Molds" />
             <End Role="PlannedOrderDetail" EntitySet="PlannedOrderDetails" />
           </AssociationSet>
+          <EntitySet Name="SemifinishedItemDetails" EntityType="TotalSmartPortalModel.SemifinishedItemDetail" />
+          <EntitySet Name="SemifinishedItems" EntityType="TotalSmartPortalModel.SemifinishedItem" />
+          <AssociationSet Name="FK_SemifinishedItemDetails_Commodities" Association="TotalSmartPortalModel.FK_SemifinishedItemDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="SemifinishedItemDetail" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Customers" Association="TotalSmartPortalModel.FK_SemifinishedItems_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Employees" Association="TotalSmartPortalModel.FK_SemifinishedItems_Employees">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_FirmOrderDetails" Association="TotalSmartPortalModel.FK_SemifinishedItemDetails_FirmOrderDetails">
+            <End Role="FirmOrderDetail" EntitySet="FirmOrderDetails" />
+            <End Role="SemifinishedItemDetail" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_FirmOrders" Association="TotalSmartPortalModel.FK_SemifinishedItemDetails_FirmOrders">
+            <End Role="FirmOrder" EntitySet="FirmOrders" />
+            <End Role="SemifinishedItemDetail" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_FirmOrders" Association="TotalSmartPortalModel.FK_SemifinishedItems_FirmOrders">
+            <End Role="FirmOrder" EntitySet="FirmOrders" />
+            <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Locations" Association="TotalSmartPortalModel.FK_SemifinishedItems_Locations">
+            <End Role="Location" EntitySet="Locations" />
+            <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_MaterialIssues" Association="TotalSmartPortalModel.FK_SemifinishedItemDetails_MaterialIssues">
+            <End Role="MaterialIssue" EntitySet="MaterialIssues" />
+            <End Role="SemifinishedItemDetail" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_PlannedOrderDetails" Association="TotalSmartPortalModel.FK_SemifinishedItemDetails_PlannedOrderDetails">
+            <End Role="PlannedOrderDetail" EntitySet="PlannedOrderDetails" />
+            <End Role="SemifinishedItemDetail" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_ProductionLines" Association="TotalSmartPortalModel.FK_SemifinishedItems_ProductionLines">
+            <End Role="ProductionLine" EntitySet="ProductionLines" />
+            <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItemDetails_SemifinishedItems" Association="TotalSmartPortalModel.FK_SemifinishedItemDetails_SemifinishedItems">
+            <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
+            <End Role="SemifinishedItemDetail" EntitySet="SemifinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Shifts" Association="TotalSmartPortalModel.FK_SemifinishedItems_Shifts">
+            <End Role="Shift" EntitySet="Shifts" />
+            <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedItems_Workshifts" Association="TotalSmartPortalModel.FK_SemifinishedItems_Workshifts">
+            <End Role="Workshift" EntitySet="Workshifts" />
+            <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
+          </AssociationSet>
+          <FunctionImport Name="GetSemifinishedItemIndexes" ReturnType="Collection(TotalSmartPortalModel.SemifinishedItemIndex)">
+            <Parameter Name="AspUserID" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetSemifinishedItemPendingMaterialIssues" ReturnType="Collection(TotalSmartPortalModel.SemifinishedItemPendingMaterialIssue)">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetSemifinishedItemViewDetails" ReturnType="Collection(TotalSmartPortalModel.SemifinishedItemViewDetail)">
+            <Parameter Name="SemifinishedItemID" Mode="In" Type="Int32" />
+            <Parameter Name="FirmOrderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SemifinishedItemApproved" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SemifinishedItemEditable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SemifinishedItemPostSaveValidate" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SemifinishedItemSaveRelative">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="SaveRelativeOption" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SemifinishedItemToggleApproved">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="Approved" Mode="In" Type="Boolean" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -16294,6 +16698,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="SemifinishedProducts" Relationship="TotalSmartPortalModel.FK_SemifinishedProducts_ProductionLines" FromRole="ProductionLine" ToRole="SemifinishedProduct" />
           <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_ProductionLines" FromRole="ProductionLine" ToRole="PackageIssueDetail" />
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_ProductionLines" FromRole="ProductionLine" ToRole="PackageIssue" />
+          <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_ProductionLines" FromRole="ProductionLine" ToRole="SemifinishedItem" />
         </EntityType>
         <EntityType Name="Workshift">
           <Key>
@@ -16321,6 +16726,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Workshifts" FromRole="Workshift" ToRole="PackageIssue" />
           <NavigationProperty Name="WarehouseTransfers" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Workshifts" FromRole="Workshift" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="GoodsReceipts" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_Workshifts" FromRole="Workshift" ToRole="GoodsReceipt" />
+          <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Workshifts" FromRole="Workshift" ToRole="SemifinishedItem" />
         </EntityType>
         <ComplexType Name="MaterialIssueIndex">
           <Property Type="Int32" Name="MaterialIssueID" Nullable="false" />
@@ -17166,6 +17572,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Shifts" FromRole="Shift" ToRole="PackageIssue" />
           <NavigationProperty Name="WarehouseTransfers" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Shifts" FromRole="Shift" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="GoodsReceipts" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_Shifts" FromRole="Shift" ToRole="GoodsReceipt" />
+          <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Shifts" FromRole="Shift" ToRole="SemifinishedItem" />
         </EntityType>
         <Association Name="FK_Workshifts_Shifts">
           <End Type="TotalSmartPortalModel.Shift" Role="Shift" Multiplicity="1" />
@@ -17227,6 +17634,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="Specs" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="FirmOrderDetails" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_FirmOrders" FromRole="FirmOrder" ToRole="FirmOrderDetail" />
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_FirmOrders" FromRole="FirmOrder" ToRole="SemifinishedItemDetail" />
+          <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_FirmOrders" FromRole="FirmOrder" ToRole="SemifinishedItem" />
         </EntityType>
         <EntityType Name="PlannedOrderDetail">
           <Key>
@@ -17267,6 +17676,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Commodities" FromRole="PlannedOrderDetail" ToRole="Commodity" />
           <NavigationProperty Name="Mold" Relationship="TotalSmartPortalModel.FK_PlannedOrderDetails_Molds" FromRole="PlannedOrderDetail" ToRole="Mold" />
+          <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_PlannedOrderDetails" FromRole="PlannedOrderDetail" ToRole="SemifinishedItemDetail" />
         </EntityType>
         <Association Name="FK_FirmOrders_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -18097,6 +18507,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="PlannedOrder" Relationship="TotalSmartPortalModel.FK_MaterialIssues_PlannedOrders" FromRole="MaterialIssue" ToRole="PlannedOrder" />
           <NavigationProperty Name="ProductionOrder" Relationship="TotalSmartPortalModel.FK_MaterialIssues_ProductionOrders" FromRole="MaterialIssue" ToRole="ProductionOrder" />
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_MaterialIssues" FromRole="MaterialIssue" ToRole="SemifinishedItemDetail" />
         </EntityType>
         <EntityType Name="SemifinishedProductDetail">
           <Key>
@@ -19641,6 +20052,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Commodities" FromRole="FirmOrderDetail" ToRole="Commodity" />
           <NavigationProperty Name="Mold" Relationship="TotalSmartPortalModel.FK_FirmOrderDetails_Molds" FromRole="FirmOrderDetail" ToRole="Mold" />
+          <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_FirmOrderDetails" FromRole="FirmOrderDetail" ToRole="SemifinishedItemDetail" />
         </EntityType>
         <Association Name="FK_FirmOrderDetails_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -22169,6 +22581,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="TransferOrderDetails" Relationship="TotalSmartPortalModel.FK_TransferOrderDetails_Commodities" FromRole="Commodity" ToRole="TransferOrderDetail" />
           <NavigationProperty Name="WarehouseAdjustmentDetails" Relationship="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_Commodities" FromRole="Commodity" ToRole="WarehouseAdjustmentDetail" />
           <NavigationProperty Name="WarehouseTransferDetails" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities" FromRole="Commodity" ToRole="WarehouseTransferDetail" />
+          <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_Commodities" FromRole="Commodity" ToRole="SemifinishedItemDetail" />
         </EntityType>
         <Association Name="FK_AccountInvoiceDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -22577,6 +22990,305 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SemifinishedItemDetail">
+          <Key>
+            <PropertyRef Name="SemifinishedItemDetailID" />
+          </Key>
+          <Property Name="SemifinishedItemDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SemifinishedItemID" Type="Int32" Nullable="false" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="MaterialIssueID" Type="Int32" Nullable="false" />
+          <Property Name="FirmOrderID" Type="Int32" Nullable="false" />
+          <Property Name="FirmOrderDetailID" Type="Int32" Nullable="false" />
+          <Property Name="PlannedOrderID" Type="Int32" Nullable="false" />
+          <Property Name="PlannedOrderDetailID" Type="Int32" Nullable="false" />
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="WorkshiftID" Type="Int32" Nullable="false" />
+          <Property Name="ProductionLineID" Type="Int32" Nullable="false" />
+          <Property Name="CrucialWorkerID" Type="Int32" Nullable="false" />
+          <Property Name="SemifinishedHandoverID" Type="Int32" />
+          <Property Name="CommodityID" Type="Int32" Nullable="false" />
+          <Property Name="CommodityTypeID" Type="Int32" Nullable="false" />
+          <Property Name="PiecePerPack" Type="Int32" Nullable="false" />
+          <Property Name="MoldQuantity" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="QuantityFinished" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="HandoverApproved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_Commodities" FromRole="SemifinishedItemDetail" ToRole="Commodity" />
+          <NavigationProperty Name="FirmOrderDetail" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_FirmOrderDetails" FromRole="SemifinishedItemDetail" ToRole="FirmOrderDetail" />
+          <NavigationProperty Name="FirmOrder" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_FirmOrders" FromRole="SemifinishedItemDetail" ToRole="FirmOrder" />
+          <NavigationProperty Name="MaterialIssue" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_MaterialIssues" FromRole="SemifinishedItemDetail" ToRole="MaterialIssue" />
+          <NavigationProperty Name="PlannedOrderDetail" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_PlannedOrderDetails" FromRole="SemifinishedItemDetail" ToRole="PlannedOrderDetail" />
+          <NavigationProperty Name="SemifinishedItem" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_SemifinishedItems" FromRole="SemifinishedItemDetail" ToRole="SemifinishedItem" />
+        </EntityType>
+        <EntityType Name="SemifinishedItem">
+          <Key>
+            <PropertyRef Name="SemifinishedItemID" />
+          </Key>
+          <Property Name="SemifinishedItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="MaterialIssueID" Type="Int32" Nullable="false" />
+          <Property Name="PlannedOrderID" Type="Int32" Nullable="false" />
+          <Property Name="FirmOrderID" Type="Int32" Nullable="false" />
+          <Property Name="ShiftID" Type="Int32" Nullable="false" />
+          <Property Name="WorkshiftID" Type="Int32" Nullable="false" />
+          <Property Name="ProductionLineID" Type="Int32" Nullable="false" />
+          <Property Name="CrucialWorkerID" Type="Int32" Nullable="false" />
+          <Property Name="SemifinishedHandoverID" Type="Int32" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="PreparedPersonID" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationalUnitID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="ApproverID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="StopDate" Type="DateTime" Precision="3" />
+          <Property Name="StartSequenceNo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="StopSequenceNo" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FoilCounts" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FoilUnitCounts" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FoilUnitWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FoilWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="FailureWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalQuantityFinished" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Caption" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EditedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <Property Name="HandoverApproved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Customers" FromRole="SemifinishedItem" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Employees" FromRole="SemifinishedItem" ToRole="Employee" />
+          <NavigationProperty Name="FirmOrder" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_FirmOrders" FromRole="SemifinishedItem" ToRole="FirmOrder" />
+          <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Locations" FromRole="SemifinishedItem" ToRole="Location" />
+          <NavigationProperty Name="ProductionLine" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_ProductionLines" FromRole="SemifinishedItem" ToRole="ProductionLine" />
+          <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_SemifinishedItems" FromRole="SemifinishedItem" ToRole="SemifinishedItemDetail" />
+          <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Shifts" FromRole="SemifinishedItem" ToRole="Shift" />
+          <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Workshifts" FromRole="SemifinishedItem" ToRole="Workshift" />
+        </EntityType>
+        <Association Name="FK_SemifinishedItemDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItemDetail" Role="SemifinishedItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_Customers">
+          <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItem" Role="SemifinishedItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="SemifinishedItem">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_Employees">
+          <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItem" Role="SemifinishedItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="SemifinishedItem">
+              <PropertyRef Name="CrucialWorkerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItemDetails_FirmOrderDetails">
+          <End Type="TotalSmartPortalModel.FirmOrderDetail" Role="FirmOrderDetail" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItemDetail" Role="SemifinishedItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmOrderDetail">
+              <PropertyRef Name="FirmOrderDetailID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetail">
+              <PropertyRef Name="FirmOrderDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItemDetails_FirmOrders">
+          <End Type="TotalSmartPortalModel.FirmOrder" Role="FirmOrder" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItemDetail" Role="SemifinishedItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmOrder">
+              <PropertyRef Name="FirmOrderID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetail">
+              <PropertyRef Name="FirmOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_FirmOrders">
+          <End Type="TotalSmartPortalModel.FirmOrder" Role="FirmOrder" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItem" Role="SemifinishedItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmOrder">
+              <PropertyRef Name="FirmOrderID" />
+            </Principal>
+            <Dependent Role="SemifinishedItem">
+              <PropertyRef Name="FirmOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_Locations">
+          <End Type="TotalSmartPortalModel.Location" Role="Location" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItem" Role="SemifinishedItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Location">
+              <PropertyRef Name="LocationID" />
+            </Principal>
+            <Dependent Role="SemifinishedItem">
+              <PropertyRef Name="LocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItemDetails_MaterialIssues">
+          <End Type="TotalSmartPortalModel.MaterialIssue" Role="MaterialIssue" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItemDetail" Role="SemifinishedItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MaterialIssue">
+              <PropertyRef Name="MaterialIssueID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetail">
+              <PropertyRef Name="MaterialIssueID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItemDetails_PlannedOrderDetails">
+          <End Type="TotalSmartPortalModel.PlannedOrderDetail" Role="PlannedOrderDetail" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItemDetail" Role="SemifinishedItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PlannedOrderDetail">
+              <PropertyRef Name="PlannedOrderDetailID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetail">
+              <PropertyRef Name="PlannedOrderDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_ProductionLines">
+          <End Type="TotalSmartPortalModel.ProductionLine" Role="ProductionLine" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItem" Role="SemifinishedItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductionLine">
+              <PropertyRef Name="ProductionLineID" />
+            </Principal>
+            <Dependent Role="SemifinishedItem">
+              <PropertyRef Name="ProductionLineID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItemDetails_SemifinishedItems">
+          <End Type="TotalSmartPortalModel.SemifinishedItem" Role="SemifinishedItem" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItemDetail" Role="SemifinishedItemDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SemifinishedItem">
+              <PropertyRef Name="SemifinishedItemID" />
+            </Principal>
+            <Dependent Role="SemifinishedItemDetail">
+              <PropertyRef Name="SemifinishedItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_Shifts">
+          <End Type="TotalSmartPortalModel.Shift" Role="Shift" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItem" Role="SemifinishedItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shift">
+              <PropertyRef Name="ShiftID" />
+            </Principal>
+            <Dependent Role="SemifinishedItem">
+              <PropertyRef Name="ShiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedItems_Workshifts">
+          <End Type="TotalSmartPortalModel.Workshift" Role="Workshift" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedItem" Role="SemifinishedItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workshift">
+              <PropertyRef Name="WorkshiftID" />
+            </Principal>
+            <Dependent Role="SemifinishedItem">
+              <PropertyRef Name="WorkshiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="SemifinishedItemIndex">
+          <Property Type="Int32" Name="SemifinishedItemID" Nullable="false" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="true" />
+          <Property Type="String" Name="Reference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="LocationCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="ProductionLineCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
+          <Property Type="DateTime" Name="WorkshiftEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="FirmOrdersReference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FirmOrdersCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Specification" Nullable="true" MaxLength="800" />
+          <Property Type="Decimal" Name="StartSequenceNo" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="StopSequenceNo" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="Approved" Nullable="false" />
+        </ComplexType>
+        <ComplexType Name="SemifinishedItemPendingMaterialIssue">
+          <Property Type="Int32" Name="MaterialIssueID" Nullable="false" />
+          <Property Type="Int32" Name="PlannedOrderID" Nullable="false" />
+          <Property Type="Int32" Name="FirmOrderID" Nullable="false" />
+          <Property Type="DateTime" Name="FirmOrderEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="FirmOrderReference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FirmOrderCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FirmOrderSpecification" Nullable="true" MaxLength="800" />
+          <Property Type="String" Name="BomCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="MaterialIssueWorkshiftID" Nullable="false" />
+          <Property Type="DateTime" Name="MaterialIssueWorkshiftEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="MaterialIssueWorkshiftCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="ProductionLineID" Nullable="false" />
+          <Property Type="String" Name="ProductionLineCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="CrucialWorkerID" Nullable="false" />
+          <Property Type="String" Name="CrucialWorkerCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CrucialWorkerName" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="MaterialTotalQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="MaterialQuantityRemains" Nullable="true" Precision="22" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="SemifinishedItemViewDetail">
+          <Property Type="Int32" Name="SemifinishedItemDetailID" Nullable="false" />
+          <Property Type="Int32" Name="SemifinishedItemID" Nullable="false" />
+          <Property Type="Int32" Name="FirmOrderDetailID" Nullable="false" />
+          <Property Type="Int32" Name="PlannedOrderID" Nullable="false" />
+          <Property Type="Int32" Name="PlannedOrderDetailID" Nullable="false" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
+          <Property Type="Int32" Name="PiecePerPack" Nullable="false" />
+          <Property Type="Decimal" Name="MoldQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="23" Scale="2" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -28697,6 +29409,154 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SemifinishedItemDetails">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedItemDetail">
+              <MappingFragment StoreEntitySet="SemifinishedItemDetails">
+                <ScalarProperty Name="HandoverApproved" ColumnName="HandoverApproved" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="QuantityFinished" ColumnName="QuantityFinished" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="MoldQuantity" ColumnName="MoldQuantity" />
+                <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="SemifinishedHandoverID" ColumnName="SemifinishedHandoverID" />
+                <ScalarProperty Name="CrucialWorkerID" ColumnName="CrucialWorkerID" />
+                <ScalarProperty Name="ProductionLineID" ColumnName="ProductionLineID" />
+                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="PlannedOrderDetailID" ColumnName="PlannedOrderDetailID" />
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
+                <ScalarProperty Name="FirmOrderDetailID" ColumnName="FirmOrderDetailID" />
+                <ScalarProperty Name="FirmOrderID" ColumnName="FirmOrderID" />
+                <ScalarProperty Name="MaterialIssueID" ColumnName="MaterialIssueID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
+                <ScalarProperty Name="SemifinishedItemDetailID" ColumnName="SemifinishedItemDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SemifinishedItems">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedItem">
+              <MappingFragment StoreEntitySet="SemifinishedItems">
+                <ScalarProperty Name="HandoverApproved" ColumnName="HandoverApproved" />
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
+                <ScalarProperty Name="TotalQuantityFinished" ColumnName="TotalQuantityFinished" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="FailureWeights" ColumnName="FailureWeights" />
+                <ScalarProperty Name="FoilWeights" ColumnName="FoilWeights" />
+                <ScalarProperty Name="FoilUnitWeights" ColumnName="FoilUnitWeights" />
+                <ScalarProperty Name="FoilUnitCounts" ColumnName="FoilUnitCounts" />
+                <ScalarProperty Name="FoilCounts" ColumnName="FoilCounts" />
+                <ScalarProperty Name="StopSequenceNo" ColumnName="StopSequenceNo" />
+                <ScalarProperty Name="StartSequenceNo" ColumnName="StartSequenceNo" />
+                <ScalarProperty Name="StopDate" ColumnName="StopDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ApproverID" ColumnName="ApproverID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="OrganizationalUnitID" ColumnName="OrganizationalUnitID" />
+                <ScalarProperty Name="PreparedPersonID" ColumnName="PreparedPersonID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SemifinishedHandoverID" ColumnName="SemifinishedHandoverID" />
+                <ScalarProperty Name="CrucialWorkerID" ColumnName="CrucialWorkerID" />
+                <ScalarProperty Name="ProductionLineID" ColumnName="ProductionLineID" />
+                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="FirmOrderID" ColumnName="FirmOrderID" />
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
+                <ScalarProperty Name="MaterialIssueID" ColumnName="MaterialIssueID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetSemifinishedItemIndexes" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedItemIndexes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedItemIndex">
+                <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="ProductionLineCode" ColumnName="ProductionLineCode" />
+                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
+                <ScalarProperty Name="WorkshiftEntryDate" ColumnName="WorkshiftEntryDate" />
+                <ScalarProperty Name="WorkshiftCode" ColumnName="WorkshiftCode" />
+                <ScalarProperty Name="FirmOrdersReference" ColumnName="FirmOrdersReference" />
+                <ScalarProperty Name="FirmOrdersCode" ColumnName="FirmOrdersCode" />
+                <ScalarProperty Name="Specification" ColumnName="Specification" />
+                <ScalarProperty Name="StartSequenceNo" ColumnName="StartSequenceNo" />
+                <ScalarProperty Name="StopSequenceNo" ColumnName="StopSequenceNo" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSemifinishedItemPendingMaterialIssues" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedItemPendingMaterialIssues">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedItemPendingMaterialIssue">
+                <ScalarProperty Name="MaterialIssueID" ColumnName="MaterialIssueID" />
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
+                <ScalarProperty Name="FirmOrderID" ColumnName="FirmOrderID" />
+                <ScalarProperty Name="FirmOrderEntryDate" ColumnName="FirmOrderEntryDate" />
+                <ScalarProperty Name="FirmOrderReference" ColumnName="FirmOrderReference" />
+                <ScalarProperty Name="FirmOrderCode" ColumnName="FirmOrderCode" />
+                <ScalarProperty Name="FirmOrderSpecification" ColumnName="FirmOrderSpecification" />
+                <ScalarProperty Name="BomCode" ColumnName="BomCode" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="MaterialIssueWorkshiftID" ColumnName="MaterialIssueWorkshiftID" />
+                <ScalarProperty Name="MaterialIssueWorkshiftEntryDate" ColumnName="MaterialIssueWorkshiftEntryDate" />
+                <ScalarProperty Name="MaterialIssueWorkshiftCode" ColumnName="MaterialIssueWorkshiftCode" />
+                <ScalarProperty Name="ProductionLineID" ColumnName="ProductionLineID" />
+                <ScalarProperty Name="ProductionLineCode" ColumnName="ProductionLineCode" />
+                <ScalarProperty Name="CrucialWorkerID" ColumnName="CrucialWorkerID" />
+                <ScalarProperty Name="CrucialWorkerCode" ColumnName="CrucialWorkerCode" />
+                <ScalarProperty Name="CrucialWorkerName" ColumnName="CrucialWorkerName" />
+                <ScalarProperty Name="MaterialTotalQuantity" ColumnName="MaterialTotalQuantity" />
+                <ScalarProperty Name="MaterialQuantityRemains" ColumnName="MaterialQuantityRemains" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetSemifinishedItemViewDetails" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedItemViewDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedItemViewDetail">
+                <ScalarProperty Name="SemifinishedItemDetailID" ColumnName="SemifinishedItemDetailID" />
+                <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
+                <ScalarProperty Name="FirmOrderDetailID" ColumnName="FirmOrderDetailID" />
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
+                <ScalarProperty Name="PlannedOrderDetailID" ColumnName="PlannedOrderDetailID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
+                <ScalarProperty Name="MoldQuantity" ColumnName="MoldQuantity" />
+                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SemifinishedItemApproved" FunctionName="TotalSmartPortalModel.Store.SemifinishedItemApproved" />
+          <FunctionImportMapping FunctionImportName="SemifinishedItemEditable" FunctionName="TotalSmartPortalModel.Store.SemifinishedItemEditable" />
+          <FunctionImportMapping FunctionImportName="SemifinishedItemPostSaveValidate" FunctionName="TotalSmartPortalModel.Store.SemifinishedItemPostSaveValidate" />
+          <FunctionImportMapping FunctionImportName="SemifinishedItemSaveRelative" FunctionName="TotalSmartPortalModel.Store.SemifinishedItemSaveRelative" />
+          <FunctionImportMapping FunctionImportName="SemifinishedItemToggleApproved" FunctionName="TotalSmartPortalModel.Store.SemifinishedItemToggleApproved" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
