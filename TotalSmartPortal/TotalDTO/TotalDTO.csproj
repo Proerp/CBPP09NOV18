@@ -145,6 +145,8 @@
     <Compile Include="Productions\ProductionOrderDTO.cs" />
     <Compile Include="Productions\SemifinishedHandoverDetailDTO.cs" />
     <Compile Include="Productions\SemifinishedHandoverDTO.cs" />
+    <Compile Include="Productions\SemifinishedItemDetailDTO.cs" />
+    <Compile Include="Productions\SemifinishedItemDTO.cs" />
     <Compile Include="Productions\SemifinishedProductDetailDTO.cs" />
     <Compile Include="Productions\SemifinishedProductDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
