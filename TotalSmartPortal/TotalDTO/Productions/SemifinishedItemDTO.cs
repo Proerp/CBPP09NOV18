@@ -38,8 +38,7 @@ namespace TotalDTO.Productions
         public string FirmOrderSpecification { get; set; }
 
 
-        public string MaterialCode { get; set; }
-        public string MaterialName { get; set; }
+        public string BomCode { get; set; }
 
 
         public decimal MaterialQuantity { get; set; }

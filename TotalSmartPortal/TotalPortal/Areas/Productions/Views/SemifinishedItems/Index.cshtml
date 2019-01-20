@@ -1,0 +1,137 @@
+﻿@using TotalPortal.Configuration
+
+<div id="popupWindow"></div>
+
+<div>
+    @(Html.Kendo().Grid<TotalModel.Models.SemifinishedItemIndex>()
+        .Name("kendoGridIndex")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.SemifinishedItemID).DisplayNameTitle().Hidden();
+            columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
+
+            columns.Bound(p => p.Reference).Title("Phiếu").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedItems", action = "Edit" }) + "/#= SemifinishedItemID #'>#=Reference#</a>");
+            columns.Bound(p => p.FirmOrdersCode).Title("Số CT").Width(15);
+
+            columns.Bound(p => p.CustomerName).Title("Tên KH").Width(127);
+            columns.Bound(p => p.WorkshiftEntryDate).Title("Ngày SX").Format("{0:dd/MM/yy}").Width(10);
+            columns.Bound(p => p.WorkshiftCode).Title("Ca SX").Hidden();
+            columns.Bound(p => p.ProductionLineCode).Title("Máy").Width(10);
+            columns.Bound(p => p.Specification).Title("Thành phẩm").Width(238);
+
+            columns.Bound(p => p.StartSequenceNo).Title("BĐ").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
+            columns.Bound(p => p.StopSequenceNo).Title("KT").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
+
+            columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
+
+            columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
+            
+            columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(68)
+                .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedItems", action = "Print" }) + "/#= SemifinishedItemID #' target='_blank'><span class='k-icon sbt-printer'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedItems", action = "Delete" }) + "/#= SemifinishedItemID #'><span class='k-icon sbt-delete'></span></a>");
+        })
+        .ToolBar(toolbar =>
+        {
+            toolbar.Template(@<text>
+                <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu nhập bán thành phẩm </button>
+                <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> In </button>
+                <div class="toolbar" style="float: right;">
+                    <label>Nhập số phiếu, tên KH, ca sx, thành phẩm hoặc diễn giải </label>
+                    <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                </div>
+            </text>);
+        })
+        .Filterable(f => f.Enabled(false))    
+        .Pageable()
+            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))            
+            .Selectable()
+            .Sortable()
+            .Events(e =>
+            {
+                e.DataBound("hightLightSelectedRow");
+            })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Group(group => group.AddDescending(p => p.EntryDate)).Group(group => group.Add(p => p.WorkshiftCode))
+                .Read(read => read.Action("GetSemifinishedItemIndexes", "SemifinishedItemAPIs", new { area = "Productions" }))
+                .Sort(sort =>
+                    {
+                        sort.Add(p => p.EntryDate).Descending();
+                        sort.Add(p => p.SemifinishedItemID).Descending();
+                    })
+                .PageSize(20)
+                .Model(model =>
+                {
+                    model.Id(x => x.SemifinishedItemID);
+                    model.Field(m => m.SemifinishedItemID).DefaultValue(0);
+                })
+                .ServerOperation(true)
+                .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
+                )
+            .HtmlAttributes(new { @class = "grid-class" })
+    )
+</div>
+
+
+
+<script type="text/javascript">
+
+    function hightLightSelectedRow(e) {
+        require(["kindexGrid"], function (kindexGrid) {
+            var kindexGridInstance = new kindexGrid("kendoGridIndex");
+            kindexGridInstance.setSelectedRow("SemifinishedItemID", '@ViewBag.SelectedEntityID');
+        });
+    }
+
+    function createWizard() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "SemifinishedItems")", "Chọn máy, cuộn màng nhập phôi định hình", "@Settings.PopupWidth", "@Settings.PopupHeight");
+        });
+    }
+
+    function callPrint() {
+        var grid = $("#kendoGridIndex").data("kendoGrid");
+        var selectedItem = grid.dataItem(grid.select());
+        if (selectedItem != undefined && selectedItem.WorkshiftID != undefined) {
+            window.open('@Url.Action("Print", "SemifinishedItems", new { area = "Productions" })' + "/0/" + selectedItem.WorkshiftID)
+        }
+    }
+
+    decoratingKindex = function (idx, elem) {
+        if (elem.Approved == null || elem.Approved == false) {
+            $('tr[data-uid="' + elem.uid + '"]').addClass("NotApproved");
+        }
+    }
+
+
+
+
+
+
+    function indexFilterText_KeyUp() {
+        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+        if ((indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") || $("#ShowPendingOnly").val() != "0") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "Reference", operator: "contains", value: indexFilterText },                    
+                    { field: "Description", operator: "contains", value: indexFilterText },
+                    { field: "FirmOrdersCode", operator: "contains", value: indexFilterText },
+                    { field: "WorkshiftCode", operator: "contains", value: indexFilterText },
+                    { field: "ProductionLineCode", operator: "contains", value: indexFilterText },                    
+                    { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "Specification", operator: "contains", value: indexFilterText }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+</script>
+
+

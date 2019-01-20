@@ -381,6 +381,7 @@
     <Compile Include="Areas\Productions\APIs\PlannedOrderAPIsController.cs" />
     <Compile Include="Areas\Productions\APIs\ProductionOrderAPIsController.cs" />
     <Compile Include="Areas\Productions\APIs\SemifinishedHandoverAPIsController.cs" />
+    <Compile Include="Areas\Productions\APIs\SemifinishedItemAPIsController.cs" />
     <Compile Include="Areas\Productions\APIs\SemifinishedProductAPIsController.cs" />
     <Compile Include="Areas\Productions\Builders\BlendingInstructionViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Productions\Builders\FinishedHandoverViewModelSelectListBuilder.cs" />
@@ -388,6 +389,7 @@
     <Compile Include="Areas\Productions\Builders\SemifinishedHandoverViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Productions\Builders\PlannedOrderViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Productions\Builders\ProductionOrderViewModelSelectListBuilder.cs" />
+    <Compile Include="Areas\Productions\Builders\SemifinishedItemViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Productions\Builders\SemifinishedProductViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Productions\Controllers\BlendingInstructionsController.cs" />
     <Compile Include="Areas\Productions\Controllers\FinishedHandoversController.cs" />
@@ -395,6 +397,7 @@
     <Compile Include="Areas\Productions\Controllers\PlannedOrdersController.cs" />
     <Compile Include="Areas\Productions\Controllers\ProductionOrdersController.cs" />
     <Compile Include="Areas\Productions\Controllers\SemifinishedHandoversController.cs" />
+    <Compile Include="Areas\Productions\Controllers\SemifinishedItemsController.cs" />
     <Compile Include="Areas\Productions\Controllers\SemifinishedProductsController.cs" />
     <Compile Include="Areas\Productions\Controllers\Sessions\FinishedProductSession.cs" />
     <Compile Include="Areas\Productions\ProductionsAreaRegistration.cs" />
@@ -404,6 +407,7 @@
     <Compile Include="Areas\Productions\ViewModels\PlannedOrderViewModel.cs" />
     <Compile Include="Areas\Productions\ViewModels\ProductionOrderViewModel.cs" />
     <Compile Include="Areas\Productions\ViewModels\SemifinishedHandoverViewModel.cs" />
+    <Compile Include="Areas\Productions\ViewModels\SemifinishedItemViewModel.cs" />
     <Compile Include="Areas\Productions\ViewModels\SemifinishedProductViewModel.cs" />
     <Compile Include="Areas\Purchases\APIs\GoodsArrivalAPIsController.cs" />
     <Compile Include="Areas\Purchases\APIs\LabAPIsController.cs" />
@@ -1786,6 +1790,13 @@
     <Content Include="Areas\Inventories\Views\ItemStagings\GetPendingFirmOrderMaterials.cshtml" />
     <Content Include="Areas\Inventories\Views\ItemStagings\Index.cshtml" />
     <Content Include="Areas\Inventories\Views\ItemStagings\Print.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedItems\Approve.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedItems\CreateWizard.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedItems\Delete.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedItems\Edit.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedItems\Index.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedItems\Print.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedItems\_SemifinishedItem.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -2160,6 +2171,13 @@
     <Content Include="Scripts\Controllers\Productions\SemifinishedHandovers\Index.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedHandovers\Open.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedHandovers\Print.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedItems\Approve.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedItems\CreateWizard.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedItems\Delete.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedItems\Edit.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedItems\Index.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedItems\Open.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedItems\Print.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\AddPendingMaterialIssueDetail.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\Approve.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\CreateWizard.js" />
