@@ -24,7 +24,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             this.GetSemifinishedItemViewDetails();
 
-            //this.SemifinishedItemSaveRelative();
+            this.SemifinishedItemSaveRelative();
             this.SemifinishedItemPostSaveValidate();
 
             this.SemifinishedItemApproved();
@@ -107,7 +107,36 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void SemifinishedItemSaveRelative()
         {
-            string queryString = " @EntityID int, @SaveRelativeOption int " + "\r\n"; //SaveRelativeOption: 1: Update, -1:Undo
+            string queryString = " @EntityID int, @MaterialIssueID int, @BomID int, @BomDetailID int, @MaterialID int, @Quantity decimal(18, 2) OUTPUT  " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "   BEGIN  " + "\r\n";
+            queryString = queryString + "       DECLARE         @MaterialIssueDetailID int, @QuantityRemains decimal(18, 2), @QuantitySemifinished decimal(18, 2); " + "\r\n";
+
+            queryString = queryString + "       DECLARE         CURSORMaterialIssueDetails CURSOR LOCAL FOR  SELECT MaterialIssueDetailID, ROUND(Quantity - QuantitySemifinished - QuantityFailure - QuantityReceipted - QuantityLoss, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains FROM MaterialIssueDetails WHERE MaterialIssueID = @MaterialIssueID AND BomDetailID = @BomDetailID AND ROUND(Quantity - QuantitySemifinished - QuantityFailure - QuantityReceipted - QuantityLoss, " + (int)GlobalEnums.rndQuantity + ") > 0; " + "\r\n";
+            queryString = queryString + "       OPEN            CURSORMaterialIssueDetails; " + "\r\n";
+            queryString = queryString + "       FETCH NEXT FROM CURSORMaterialIssueDetails INTO @MaterialIssueDetailID, @QuantityRemains; " + "\r\n";
+
+            queryString = queryString + "       WHILE @@FETCH_STATUS = 0   " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               SET @QuantitySemifinished = IIF(@Quantity > @QuantityRemains, @QuantityRemains, @Quantity) " + "\r\n";
+
+            queryString = queryString + "               INSERT INTO     SemifinishedItemMaterials   (SemifinishedItemID, MaterialIssueID, MaterialIssueDetailID, BomID, BomDetailID, MaterialID, Quantity) " + "\r\n";
+            queryString = queryString + "               VALUES                                      (@EntityID, @MaterialIssueID, @MaterialIssueDetailID, @BomID, @BomDetailID, @MaterialID, @QuantitySemifinished); " + "\r\n";
+
+            queryString = queryString + "               SET @Quantity = ROUND(@Quantity - @QuantitySemifinished, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";
+            queryString = queryString + "               IF (@Quantity = 0) BREAK " + "\r\n";
+
+            queryString = queryString + "               FETCH NEXT FROM CURSORMaterialIssueDetails INTO @MaterialIssueDetailID, @QuantityRemains; " + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
+            queryString = queryString + "   END " + "\r\n";
+
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("SemifinishedItemSaveMaterials", queryString);
+
+
+            queryString = " @EntityID int, @SaveRelativeOption int " + "\r\n"; //SaveRelativeOption: 1: Update, -1:Undo
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -160,47 +189,32 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
 
             #region INIT FirmOrders
-            queryString = queryString + "       IF (@SaveRelativeOption = 1) " + "\r\n";
+            queryString = queryString + "       IF (@SaveRelativeOption = 1) " + "\r\n"; //Update
             queryString = queryString + "           BEGIN " + "\r\n";
-            queryString = queryString + "               DECLARE         @MaterialIssueID int, @MaterialIssueDetailID int, @BomID int, @BomDetailID int, @MaterialID int, @TotalQuantity decimal(18, 2), @Quantity decimal(18, 2), @QuantityRemains decimal(18, 2), @QuantitySemifinished decimal(18, 2); " + "\r\n";
+            queryString = queryString + "               DECLARE         @MaterialIssueID int, @BomID int, @TotalQuantity decimal(18, 2); " + "\r\n";
+            queryString = queryString + "               DECLARE         @BomDetailID int, @MaterialID int, @MaterialQuantity decimal(18, 2); " + "\r\n";
 
             queryString = queryString + "               SELECT          @MaterialIssueID = MaterialIssueID, @BomID = BomID, @TotalQuantity = TotalQuantity FROM SemifinishedItems WHERE SemifinishedItemID = @EntityID " + "\r\n";
 
-
-            queryString = queryString + "               DECLARE         CURSORSemifinishedItems CURSOR LOCAL FOR  SELECT BomDetailID, MaterialID, ROUND(((@TotalQuantity * BlockUnit)/ 100) * (BlockQuantity/ LayerQuantity), " + (int)GlobalEnums.rndQuantity + ") AS Quantity FROM BomDetails ON BomID = @BomID; " + "\r\n";
+            queryString = queryString + "               DECLARE         CURSORSemifinishedItems CURSOR LOCAL FOR  SELECT BomDetailID, MaterialID, ROUND(((@TotalQuantity * BlockUnit)/ 100) * (BlockQuantity/ LayerQuantity), " + (int)GlobalEnums.rndQuantity + ") AS MaterialQuantity FROM BomDetails WHERE BomID = @BomID; " + "\r\n";
             queryString = queryString + "               OPEN            CURSORSemifinishedItems; " + "\r\n";
-            queryString = queryString + "               FETCH NEXT FROM CURSORSemifinishedItems INTO @BomDetailID, @MaterialID, @Quantity; " + "\r\n";
+            queryString = queryString + "               FETCH NEXT FROM CURSORSemifinishedItems INTO @BomDetailID, @MaterialID, @MaterialQuantity; " + "\r\n";
 
             queryString = queryString + "               WHILE @@FETCH_STATUS = 0   " + "\r\n";
             queryString = queryString + "                   BEGIN " + "\r\n";
+            queryString = queryString + "                       EXECUTE SemifinishedItemSaveMaterials @EntityID, @MaterialIssueID, @BomID, @BomDetailID, @MaterialID, @Quantity = @MaterialQuantity OUTPUT;" + "\r\n";
 
-            queryString = queryString + "                       DECLARE         CURSORMaterialIssueDetails CURSOR LOCAL FOR  SELECT MaterialIssueDetailID, ROUND(Quantity - QuantitySemifinished - QuantityFailure - QuantityReceipted - QuantityLoss, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains FROM SemifinishedItemMaterials WHERE MaterialIssueID = @MaterialIssueID AND BomDetailID = @BomDetailID AND ROUND(Quantity - QuantitySemifinished - QuantityFailure - QuantityReceipted - QuantityLoss, " + (int)GlobalEnums.rndQuantity + ") > 0; " + "\r\n";
-            queryString = queryString + "                       OPEN            CURSORMaterialIssueDetails; " + "\r\n";
-            queryString = queryString + "                       FETCH NEXT FROM CURSORMaterialIssueDetails INTO @MaterialIssueDetailID, @QuantityRemains; " + "\r\n";
+            queryString = queryString + "                           " + "\r\n"; //KIỂM TRA @MaterialQuantity !!!!!!!!!!!!!!!!VỀ NGUYÊN TẮT: @MaterialQuantity PHẢI = 0, NẾU KHÔNG SẼ BÁO LỖI
 
-            queryString = queryString + "                       WHILE @@FETCH_STATUS = 0   " + "\r\n";
-            queryString = queryString + "                           BEGIN " + "\r\n";
-            queryString = queryString + "                               SET @QuantitySemifinished = IIF(@Quantity > @QuantityRemains, @QuantityRemains, @Quantity) " + "\r\n";
-
-            queryString = queryString + "                               INSERT INTO     SemifinishedItemMaterials   (SemifinishedItemID, MaterialIssueID, MaterialIssueDetailID, BomID, BomDetailID, MaterialID, Quantity) " + "\r\n";
-            queryString = queryString + "                               VALUE                                       (@EntityID, @MaterialIssueID, @MaterialIssueDetailID, @BomID, @BomDetailID, @MaterialID, @QuantitySemifinished); " + "\r\n";
-
-            queryString = queryString + "                               SET @Quantity = ROUND(@Quantity - @QuantitySemifinished, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";
-            queryString = queryString + "                               IF (@Quantity = 0) BREAK " + "\r\n";
-            queryString = queryString + "                           END " + "\r\n";
-
-            queryString = queryString + "                           " + "\r\n"; //!!!!!!!!!!!!!!!!VỀ NGUYÊN TẮT: @Quantity PHẢI = 0, NẾU KHÔNG SẼ BÁO LỖI
-
-            queryString = queryString + "                       FETCH NEXT FROM CURSORSemifinishedItems INTO @BomDetailID, @Quantity; " + "\r\n";
+            queryString = queryString + "                       FETCH NEXT FROM CURSORSemifinishedItems INTO @BomDetailID, @MaterialID, @MaterialQuantity; " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
-
             queryString = queryString + "           END " + "\r\n";
 
 
             queryString = queryString + "       UPDATE          MaterialIssueDetails " + "\r\n";
-            queryString = queryString + "       SET             MaterialIssueDetails.QuantitySemifinished = ROUND(MaterialIssueDetails.QuantitySemifinished + SemifinishedItemMaterials.Quantity, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n"; //, MaterialIssueDetails.QuantityFailure = ROUND(MaterialIssueDetails.QuantityFailure + SemifinishedItems.FailureWeights * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") 
+            queryString = queryString + "       SET             MaterialIssueDetails.QuantitySemifinished = ROUND(MaterialIssueDetails.QuantitySemifinished + SemifinishedItemMaterials.Quantity * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n"; //, MaterialIssueDetails.QuantityFailure = ROUND(MaterialIssueDetails.QuantityFailure + SemifinishedItems.FailureWeights * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") 
             queryString = queryString + "       FROM            MaterialIssueDetails " + "\r\n";
-            queryString = queryString + "                       INNER JOIN SemifinishedItemMaterials ON SemifinishedItemMaterials.SemifinishedItemID = @EntityID AND MaterialIssueDetails.MaterialIssueDetailID = SemifinishedItemMaterials.MaterialIssueDetailID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT MaterialIssueDetailID, SUM(Quantity) AS Quantity FROM SemifinishedItemMaterials WHERE SemifinishedItemID = @EntityID GROUP BY MaterialIssueDetailID) SemifinishedItemMaterials ON MaterialIssueDetails.MaterialIssueDetailID = SemifinishedItemMaterials.MaterialIssueDetailID " + "\r\n";
 
 
             //queryString = queryString + "       IF @@ROWCOUNT <> 1 " + "\r\n";
@@ -209,7 +223,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             //queryString = queryString + "               THROW       61001,  @msg, 1; " + "\r\n";
             //queryString = queryString + "           END " + "\r\n";
 
-            queryString = queryString + "       IF (@SaveRelativeOption = 0) " + "\r\n";
+            queryString = queryString + "       IF (@SaveRelativeOption <> 1) " + "\r\n"; //Undo
             queryString = queryString + "           BEGIN " + "\r\n";
             queryString = queryString + "               DELETE FROM     SemifinishedItemMaterials WHERE SemifinishedItemID = @EntityID ; " + "\r\n";
             queryString = queryString + "           END " + "\r\n";
