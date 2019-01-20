@@ -369,6 +369,8 @@
 <script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
 
 <script type="text/javascript">
+    $(document.body).keydown(function (e) { if (e.keyCode === 45) { cloneSelectedItem(); } });
+    function tailorClonedItem(clonedItem) { clonedItem.SemifinishedItemDetailID = 0; clonedItem.Quantity = 0; }
 
     function updateFoilCounts() {
         var foilCounts = DoRound($("#StopSequenceNo").val() - $("#StartSequenceNo").val() + 1, requireConfig.websiteOptions.rndN0);
