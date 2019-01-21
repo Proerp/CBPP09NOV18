@@ -153,7 +153,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      CommodityBoms.CommodityBomID, CommodityBoms.BomID, Boms.Code AS BomCode, Boms.Name AS BomName, CommodityBoms.EntryDate, CommodityBoms.Remarks, CommodityBoms.BlockUnit, CommodityBoms.BlockQuantity, CommodityBoms.IsDefault, CommodityBoms.InActive " + "\r\n";
+            queryString = queryString + "       SELECT      CommodityBoms.CommodityBomID, CommodityBoms.CommodityID, CommodityBoms.BomID, Boms.Code AS BomCode, Boms.Name AS BomName, CommodityBoms.EntryDate, CommodityBoms.Remarks, CommodityBoms.BlockUnit, CommodityBoms.BlockQuantity, CommodityBoms.IsDefault, CommodityBoms.InActive " + "\r\n";
             queryString = queryString + "       FROM        CommodityBoms INNER JOIN Boms ON CommodityBoms.CommodityID = @CommodityID AND CommodityBoms.BomID = Boms.BomID " + "\r\n";
             queryString = queryString + "       ORDER BY    CommodityBoms.EntryDate, CommodityBoms.CommodityBomID " + "\r\n";
 

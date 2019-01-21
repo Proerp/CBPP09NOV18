@@ -23,5 +23,6 @@ namespace TotalModel.Models
         public string BomName { get; set; }
         public decimal BlockUnit { get; set; }
         public decimal BlockQuantity { get; set; }
+        public int CommodityID { get; set; }
     }
 }

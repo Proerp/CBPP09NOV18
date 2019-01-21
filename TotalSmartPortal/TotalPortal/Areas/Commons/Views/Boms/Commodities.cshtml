@@ -133,7 +133,7 @@
 
         return $.ajax({
             url: '@Url.Action("AddCommodityBom", "BomAPIs", new { area = "Commons" })',
-            data: JSON.stringify({ "bomID": $("#Bom_BomID").val(), "commodityID": $("#CommodityID").val() }),
+            data: JSON.stringify({ "bomID": $("#BomID").val(), "commodityID": $("#CommodityAddBomOnly_CommodityID").val() }),
 
             type: 'POST',
             contentType: 'application/json;',
@@ -176,7 +176,7 @@
 
     function SaveCommodityBom(e) {
         if (e.values.BlockUnit != undefined || e.values.BlockQuantity != undefined || e.values.Remarks != undefined)
-            UpdateCommodityBom(e.model.CommodityBomID, $("#CommodityID").val(), e.values.BlockUnit != undefined ? e.values.BlockUnit : e.model.BlockUnit, e.values.BlockQuantity != undefined ? e.values.BlockQuantity : e.model.BlockQuantity, e.values.Remarks != undefined ? e.values.Remarks : e.model.Remarks, e.model.IsDefault)
+            UpdateCommodityBom(e.model.CommodityBomID, e.model.CommodityID, e.values.BlockUnit != undefined ? e.values.BlockUnit : e.model.BlockUnit, e.values.BlockQuantity != undefined ? e.values.BlockQuantity : e.model.BlockQuantity, e.values.Remarks != undefined ? e.values.Remarks : e.model.Remarks, e.model.IsDefault)
     }
 
     $('#gridBoms').on('click', '.GridCheckbox', function () {
