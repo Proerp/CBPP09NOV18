@@ -148,13 +148,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
         {
             string queryString;
 
-            queryString = " @CommodityID int " + "\r\n";
+            queryString = " @BomID int, @CommodityID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      CommodityBoms.CommodityBomID, CommodityBoms.CommodityID, CommodityBoms.BomID, Boms.Code AS BomCode, Boms.Name AS BomName, CommodityBoms.EntryDate, CommodityBoms.Remarks, CommodityBoms.BlockUnit, CommodityBoms.BlockQuantity, CommodityBoms.IsDefault, CommodityBoms.InActive " + "\r\n";
-            queryString = queryString + "       FROM        CommodityBoms INNER JOIN Boms ON CommodityBoms.CommodityID = @CommodityID AND CommodityBoms.BomID = Boms.BomID " + "\r\n";
+            queryString = queryString + "       SELECT      CommodityBoms.CommodityBomID, CommodityBoms.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, CommodityBoms.BomID, Boms.Code AS BomCode, Boms.Name AS BomName, CommodityBoms.EntryDate, CommodityBoms.Remarks, CommodityBoms.BlockUnit, CommodityBoms.BlockQuantity, CommodityBoms.IsDefault, CommodityBoms.InActive " + "\r\n";
+            queryString = queryString + "       FROM        CommodityBoms INNER JOIN Boms ON (CommodityBoms.BomID = @BomID OR CommodityBoms.CommodityID = @CommodityID) AND CommodityBoms.BomID = Boms.BomID INNER JOIN Commodities ON CommodityBoms.CommodityID = Commodities.CommodityID" + "\r\n";
             queryString = queryString + "       ORDER BY    CommodityBoms.EntryDate, CommodityBoms.CommodityBomID " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";

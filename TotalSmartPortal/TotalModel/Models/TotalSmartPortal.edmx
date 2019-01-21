@@ -7308,6 +7308,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
         </Function>
         <Function Name="GetCommodityBoms" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BomID" Type="int" Mode="In" />
           <Parameter Name="CommodityID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetCommodityCodePartA" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -13954,7 +13955,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="CommodityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetCommodityBoms" ReturnType="Collection(TotalSmartPortalModel.CommodityBom)">
-          <Parameter Name="CommodityID" Mode="In" Type="Int32" />
+            <Parameter Name="BomID" Mode="In" Type="Int32" />
+            <Parameter Name="CommodityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="RemoveCommodityBom">
           <Parameter Name="CommodityBomID" Mode="In" Type="Int32" />
@@ -18034,6 +18036,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="BlockUnit" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="BlockQuantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
         </ComplexType>
         <EntityType Name="FirmOrderMaterial">
           <Key>
@@ -27049,6 +27053,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="BlockUnit" ColumnName="BlockUnit" />
                 <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />
                 <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

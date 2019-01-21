@@ -81,8 +81,8 @@
     {
         columns.Bound(c => c.CommodityBomID).Hidden();
         columns.Bound(c => c.BomID).Hidden();
-        columns.Bound(c => c.BomCode).Title("Mã").Width(82).HtmlAttributes(new { @readonly = "readonly" }).EditorTemplateName("StringReadonly");
-        columns.Bound(c => c.BomName).Title("Tên").Width(96).HtmlAttributes(new { @readonly = "readonly" }).EditorTemplateName("StringReadonly");
+        columns.Bound(c => c.CommodityCode).Title("Mã").Width(82).HtmlAttributes(new { @readonly = "readonly" }).EditorTemplateName("StringReadonly");
+        columns.Bound(c => c.CommodityName).Title("Tên").Width(96).HtmlAttributes(new { @readonly = "readonly" }).EditorTemplateName("StringReadonly");
 
         columns.Bound(c => c.EntryDate).Title("Ngày thêm").Width(60).Format("{0:" + Settings.DateTimeFormat + "}").HtmlAttributes(new { @class = "grid-column-center", @readonly = "readonly" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).EditorTemplateName("DateTimeReadonly");
 
@@ -108,13 +108,14 @@
         .Read(read => read.Action("GetCommodityBoms", "BomAPIs", new { area = "Commons" }).Data(@<text>
             function (e) {
             return {
-            commodityID: $("#CommodityID").val()
+                bomID: $("#BomID").val(),
+                commodityID: null
             };}
         </text>))
-                                                .ServerOperation(true))
-                                                .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell); })
-                                                .Selectable()
-                                                .Events(events => { events.Save("SaveCommodityBom"); })
+        .ServerOperation(true))
+        .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell); })
+        .Selectable()
+        .Events(events => { events.Save("SaveCommodityBom"); })
     )
 
 </div>
@@ -185,7 +186,7 @@
 
         var checked = $(this).is(':checked');
 
-        UpdateCommodityBom(dataItem.CommodityBomID, $("#CommodityID").val(), dataItem.BlockUnit, dataItem.BlockQuantity, dataItem.Remarks, (this.id === "IsDefault" ? checked : dataItem.IsDefault))
+        UpdateCommodityBom(dataItem.CommodityBomID, dataItem.CommodityID, dataItem.BlockUnit, dataItem.BlockQuantity, dataItem.Remarks, (this.id === "IsDefault" ? checked : dataItem.IsDefault))
     })
 
     function UpdateCommodityBom(commodityBomID, commodityID, blockUnit, blockQuantity, remarks, isDefault) {

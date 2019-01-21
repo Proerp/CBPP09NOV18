@@ -44,11 +44,11 @@ namespace TotalPortal.Areas.Commons.APIs
         }
 
         [OutputCache(NoStore = true, Duration = 0, VaryByParam = "*")]
-        public JsonResult GetCommodityBoms([DataSourceRequest] DataSourceRequest dataSourceRequest, int? commodityID)
+        public JsonResult GetCommodityBoms([DataSourceRequest] DataSourceRequest dataSourceRequest, int? bomID, int? commodityID)
         {
-            if (commodityID == null) return Json(null);
+            if (bomID == null && commodityID == null) return Json(null);
 
-            var result = bomAPIRepository.GetCommodityBoms((int)commodityID); 
+            var result = bomAPIRepository.GetCommodityBoms(bomID, commodityID); 
             
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }

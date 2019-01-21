@@ -99,7 +99,8 @@
         .Read(read => read.Action("GetCommodityBoms", "BomAPIs", new { area = "Commons" }).Data(@<text>
             function (e) {
             return {
-            commodityID: $("#CommodityID").val()
+                bomID: null,
+                commodityID: $("#CommodityID").val()
             };}
         </text>))
         .ServerOperation(true))
@@ -176,7 +177,7 @@
 
         var checked = $(this).is(':checked');
 
-        UpdateCommodityBom(dataItem.CommodityBomID, $("#CommodityID").val(), dataItem.BlockUnit, dataItem.BlockQuantity, dataItem.Remarks, (this.id === "IsDefault" ? checked : dataItem.IsDefault))
+        UpdateCommodityBom(dataItem.CommodityBomID, dataItem.CommodityID, dataItem.BlockUnit, dataItem.BlockQuantity, dataItem.Remarks, (this.id === "IsDefault" ? checked : dataItem.IsDefault))
     })
 
     function UpdateCommodityBom(commodityBomID, commodityID, blockUnit, blockQuantity, remarks, isDefault) {

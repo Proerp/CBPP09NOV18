@@ -3134,13 +3134,17 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AddCommodityBom", bomIDParameter, commodityIDParameter);
         }
     
-        public virtual ObjectResult<CommodityBom> GetCommodityBoms(Nullable<int> commodityID)
+        public virtual ObjectResult<CommodityBom> GetCommodityBoms(Nullable<int> bomID, Nullable<int> commodityID)
         {
+            var bomIDParameter = bomID.HasValue ?
+                new ObjectParameter("BomID", bomID) :
+                new ObjectParameter("BomID", typeof(int));
+    
             var commodityIDParameter = commodityID.HasValue ?
                 new ObjectParameter("CommodityID", commodityID) :
                 new ObjectParameter("CommodityID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CommodityBom>("GetCommodityBoms", commodityIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<CommodityBom>("GetCommodityBoms", bomIDParameter, commodityIDParameter);
         }
     
         public virtual int RemoveCommodityBom(Nullable<int> commodityBomID)
