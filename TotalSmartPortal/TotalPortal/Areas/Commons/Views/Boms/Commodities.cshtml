@@ -66,7 +66,7 @@
         <div class="form-group">
             @Html.Label(" ")
             <div class="div-input">
-                <button type="button" class="k-button left-panel-input" onclick="AddCommodityBom()"> <img src="~/Content/Images/New/2017/bom-24.png" /> Thêm vào: @(@Model.Code.Length <= 38 ? @Model.Code : @Model.Code.Substring(0, 37)) </button>
+                <button type="button" class="k-button left-panel-input" onclick="CallAddCommodityBom()"> <img src="~/Content/Images/New/2017/bom-24.png" /> Thêm vào: @(@Model.Code.Length <= 38 ? @Model.Code : @Model.Code.Substring(0, 37)) </button>
             </div>
         </div>
     </div>
@@ -86,17 +86,17 @@
 
         columns.Bound(c => c.EntryDate).Title("Ngày thêm").Width(60).Format("{0:" + Settings.DateTimeFormat + "}").HtmlAttributes(new { @class = "grid-column-center", @readonly = "readonly" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).EditorTemplateName("DateTimeReadonly");
 
-        columns.Bound(c => c.BlockUnit).Title("SL").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(27)
+        columns.Bound(c => c.BlockUnit).Title("SL").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(27).Hidden()
             .Format(Settings.kfmN0)
             .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', BlockUnit) #" + "<input type='hidden' name='CommodityBom.BlockUnit' value='#= BlockUnit #' />")
             .EditorTemplateName("Quantity");
-        columns.Bound(c => c.BlockQuantity).Title("TL").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(27)
+        columns.Bound(c => c.BlockQuantity).Title("TL").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(27).Hidden()
             .Format(Settings.kfmQuantity)
             .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', BlockQuantity) #" + "<input type='hidden' name='CommodityBom.BlockQuantity' value='#= BlockQuantity #' />")
             .EditorTemplateName("Quantity");
 
-        columns.Bound(c => c.Remarks).Title("Ghi chú").Width(60);
-        columns.Template(t => { }).Title("Mặc định").ClientTemplate("<input id = 'IsDefault' class='GridCheckbox' #= IsDefault ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center", @readonly = "readonly" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(30);
+        columns.Bound(c => c.Remarks).Title("Ghi chú").Width(160);
+        columns.Template(t => { }).Title("Mặc định").ClientTemplate("<input id = 'IsDefault' class='GridCheckbox' #= IsDefault ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center", @readonly = "readonly" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(39);
 
         columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(20)
             .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' onclick='RemoveCommodityBom(#=CommodityBomID#)'><span class='k-icon sbt-delete'></span></a>");
@@ -127,92 +127,16 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    function AddCommodityBom(e) {
-        if ($("#Editable").val() != 'True')
-            return;
+<script src="@Url.Content("~/Scripts/Controllers/Commons/Commodities/CommodityBom.js")"></script>
 
-        return $.ajax({
-            url: '@Url.Action("AddCommodityBom", "BomAPIs", new { area = "Commons" })',
-            data: JSON.stringify({ "bomID": $("#BomID").val(), "commodityID": $("#CommodityAddBomOnly_CommodityID").val() }),
-
-            type: 'POST',
-            contentType: 'application/json;',
-            dataType: 'json',
-            success: function (result) {
-                if (result.AddResult == "Successfully") {
-                    $("#gridBoms").data("kendoGrid").dataSource.read();
-                }
-                else
-                    alert(result.AddResult);
-            },
-            error: function (jqXHR, textStatus) {
-                alert(textStatus);
-            }
-        });
+<script type="text/javascript">    
+    function CallAddCommodityBom(e) {
+        AddCommodityBom($("#BomID").val(), $("#CommodityAddBomOnly_CommodityID").val());
     }
 
-    function RemoveCommodityBom(commodityBomID) {
-        if ($("#Editable").val() != 'True')
-            return;
-        return $.ajax({
-            url: '@Url.Action("RemoveCommodityBom", "BomAPIs", new { area = "Commons" })',
-            data: JSON.stringify({ "commodityBomID": commodityBomID }),
-
-            type: 'POST',
-            contentType: 'application/json;',
-            dataType: 'json',
-            success: function (result) {
-                if (result.RemoveResult == "Successfully") {
-                    $("#gridBoms").data("kendoGrid").dataSource.read();
-                }
-                else
-                    alert(result.RemoveResult);
-            },
-            error: function (jqXHR, textStatus) {
-                alert(textStatus);
-            }
-        });
-    }
-
-    function SaveCommodityBom(e) {
-        if (e.values.BlockUnit != undefined || e.values.BlockQuantity != undefined || e.values.Remarks != undefined)
-            UpdateCommodityBom(e.model.CommodityBomID, e.model.CommodityID, e.values.BlockUnit != undefined ? e.values.BlockUnit : e.model.BlockUnit, e.values.BlockQuantity != undefined ? e.values.BlockQuantity : e.model.BlockQuantity, e.values.Remarks != undefined ? e.values.Remarks : e.model.Remarks, e.model.IsDefault)
-    }
-
-    $('#gridBoms').on('click', '.GridCheckbox', function () {
-        var grid = $('#gridBoms').data().kendoGrid;
-        var dataItem = grid.dataItem($(this).closest('tr'));
-
-        var checked = $(this).is(':checked');
-
-        UpdateCommodityBom(dataItem.CommodityBomID, dataItem.CommodityID, dataItem.BlockUnit, dataItem.BlockQuantity, dataItem.Remarks, (this.id === "IsDefault" ? checked : dataItem.IsDefault))
-    })
-
-    function UpdateCommodityBom(commodityBomID, commodityID, blockUnit, blockQuantity, remarks, isDefault) {
-        if ($("#Editable").val() != 'True')
-            return;
-
-        return $.ajax({
-            url: '@Url.Action("UpdateCommodityBom", "BomAPIs", new { area = "Commons" })',
-            data: JSON.stringify({ "commodityBomID": commodityBomID, "commodityID": commodityID, "blockUnit": blockUnit, "blockQuantity": blockQuantity, "remarks": remarks, "isDefault": isDefault }),
-
-            type: 'POST',
-            contentType: 'application/json;',
-            dataType: 'json',
-            success: function (result) {
-                if (result.SetResult == "Successfully") {
-                    $("#gridBoms").data("kendoGrid").dataSource.read();
-                }
-                else
-                    alert(result.SetResult);
-            },
-            error: function (jqXHR, textStatus) {
-                alert(textStatus);
-            }
-        });
-    }
-
+    window.urlAddCommodityBom = '@Url.Action("AddCommodityBom", "BomAPIs", new { area = "Commons" })';
+    window.urlRemoveCommodityBom = '@Url.Action("RemoveCommodityBom", "BomAPIs", new { area = "Commons" })';
+    window.urlUpdateCommodityBom = '@Url.Action("UpdateCommodityBom", "BomAPIs", new { area = "Commons" })';
 </script>
 
 <style>
