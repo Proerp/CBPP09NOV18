@@ -45,6 +45,7 @@ namespace TotalDTO.Commons
 
         public virtual Nullable<int> CustomerID { get; set; }
         public virtual Nullable<int> CommodityID { get; set; }
+        public virtual Nullable<int> CommodityTypeID { get; set; }
 
         [Display(Name = "Mã công thức")]
         [Required(ErrorMessage = "Vui lòng nhập MCT")]
@@ -97,6 +98,10 @@ namespace TotalDTO.Commons
         [Display(Name = "Mã màng")]
         [UIHint("AutoCompletes/Commodity")]
         public CommodityBaseDTO Commodity { get; set; }
+
+        [Display(Name = "Mã màng")]
+        [UIHint("AutoCompletes/Commodity")]
+        public CommodityBaseDTO CommodityAddBomOnly { get; set; }
 
         public List<BomDetailDTO> BomViewDetails { get; set; }
         public List<BomDetailDTO> ViewDetails { get { return this.BomViewDetails; } set { this.BomViewDetails = value; } }

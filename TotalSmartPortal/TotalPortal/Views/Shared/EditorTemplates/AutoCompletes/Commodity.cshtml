@@ -20,7 +20,7 @@
                 .DataTextField("Code")
                 .Filter("contains")
                 .MinLength(Settings.AutoCompleteMinLenght)
-                .Placeholder("Vui lòng chọn " + (ViewData["CommodityDisplayName"] != null ? (ViewData["CommodityDisplayName"]).ToString().ToLower() : "mặt hàng"))
+                .Placeholder("Vui lòng chọn " + (ViewData["CommodityDisplayCode"] != null ? (ViewData["CommodityDisplayCode"]).ToString().ToLower() : "mặt hàng"))
                 .HeaderTemplate("<div class=\"dropdown-header general-custom-header commodity-custom-header\">" +
                         "<span class=\"k-widget k-header\">Mã</span>" +
                         "<span class=\"k-widget k-header\">Tên</span>" +
@@ -39,7 +39,7 @@
                             function(e) {
                             return {
                             searchText: e.filter.filters[0].value,
-                            commodityTypeIDList: requireConfig.pageOptions.masterCommodityTypeIDs,
+                            commodityTypeIDList: typeof requireConfig !== 'undefined' ? requireConfig.pageOptions.masterCommodityTypeIDs : ($("#CommodityTypeID").val() != undefined ? $("#CommodityTypeID").val() : '0'),
                             isOnlyAlphaNumericString: false
                             };}
                         </text>);//Send parameter to controller search action

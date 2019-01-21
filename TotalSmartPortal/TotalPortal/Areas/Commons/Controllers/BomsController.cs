@@ -34,6 +34,14 @@ namespace TotalPortal.Areas.Commons.Controllers
 
             RequireJsOptions.Add("masterCommodityTypeIDs", ((int)GlobalEnums.CommodityTypeID.Items).ToString(), RequireJsOptionsScope.Page);
         }
+
+        public virtual ActionResult Commodities(int id)
+        {
+            BomViewModel bomViewModel = this.GetViewModel(id, GlobalEnums.AccessLevel.Readable);
+            if (bomViewModel == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return View(bomViewModel);
+        }
     }
 
 }
