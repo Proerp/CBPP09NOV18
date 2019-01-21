@@ -1797,6 +1797,8 @@
     <Content Include="Areas\Productions\Views\SemifinishedItems\Index.cshtml" />
     <Content Include="Areas\Productions\Views\SemifinishedItems\Print.cshtml" />
     <Content Include="Areas\Productions\Views\SemifinishedItems\_SemifinishedItem.cshtml" />
+    <Content Include="Areas\Commons\Views\Commodities\Boms.cshtml" />
+    <Content Include="Areas\Commons\Views\Items\Boms.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
