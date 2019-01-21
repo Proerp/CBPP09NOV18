@@ -2932,7 +2932,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("CommodityEditable", entityIDParameter);
         }
     
-        public virtual ObjectResult<BomBase> GetBomBases(string searchText, Nullable<int> commodityID, Nullable<int> commodityCategoryID, Nullable<int> commodityClassID, Nullable<int> commodityLineID)
+        public virtual ObjectResult<BomBase> GetBomBases(string searchText, Nullable<int> commodityID, Nullable<int> commodityTypeID, Nullable<int> commodityCategoryID, Nullable<int> commodityClassID, Nullable<int> commodityLineID)
         {
             var searchTextParameter = searchText != null ?
                 new ObjectParameter("SearchText", searchText) :
@@ -2941,6 +2941,10 @@ namespace TotalModel.Models
             var commodityIDParameter = commodityID.HasValue ?
                 new ObjectParameter("CommodityID", commodityID) :
                 new ObjectParameter("CommodityID", typeof(int));
+    
+            var commodityTypeIDParameter = commodityTypeID.HasValue ?
+                new ObjectParameter("CommodityTypeID", commodityTypeID) :
+                new ObjectParameter("CommodityTypeID", typeof(int));
     
             var commodityCategoryIDParameter = commodityCategoryID.HasValue ?
                 new ObjectParameter("CommodityCategoryID", commodityCategoryID) :
@@ -2954,7 +2958,7 @@ namespace TotalModel.Models
                 new ObjectParameter("CommodityLineID", commodityLineID) :
                 new ObjectParameter("CommodityLineID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BomBase>("GetBomBases", searchTextParameter, commodityIDParameter, commodityCategoryIDParameter, commodityClassIDParameter, commodityLineIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BomBase>("GetBomBases", searchTextParameter, commodityIDParameter, commodityTypeIDParameter, commodityCategoryIDParameter, commodityClassIDParameter, commodityLineIDParameter);
         }
     
         public virtual ObjectResult<ProductionOrderPendingFirmOrder> GetProductionOrderPendingFirmOrders(Nullable<int> locationID, Nullable<int> nMVNTaskID, Nullable<int> productionOrderID, Nullable<int> plannedOrderID, Nullable<int> customerID, string firmOrderIDs, Nullable<bool> isReadonly)

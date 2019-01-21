@@ -37,9 +37,9 @@ namespace TotalPortal.Areas.Commons.APIs
 
 
 
-        public JsonResult GetBomBases(string searchText, int commodityID, int commodityCategoryID, int commodityClassID, int commodityLineID)
+        public JsonResult GetBomBases(string searchText, int commodityID, int commodityTypeID, int commodityCategoryID, int commodityClassID, int commodityLineID)
         {
-            var result = this.bomAPIRepository.GetBomBases(searchText, commodityID, commodityCategoryID, commodityClassID, commodityLineID);
+            var result = this.bomAPIRepository.GetBomBases(searchText, commodityID, commodityTypeID, commodityCategoryID, commodityClassID, commodityLineID);
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 

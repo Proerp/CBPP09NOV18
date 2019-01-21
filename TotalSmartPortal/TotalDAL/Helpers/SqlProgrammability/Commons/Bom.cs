@@ -95,7 +95,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + "       IF (NOT @CommodityID IS NULL) " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
             queryString = queryString + "               IF (@SaveRelativeOption = 1) " + "\r\n";
-            queryString = queryString + "                   EXEC AddCommodityBom @EntityID, @CommodityID " + "\r\n";
+            queryString = queryString + "                   BEGIN " + "\r\n";
+            queryString = queryString + "                       UPDATE  Boms SET Boms.CommodityTypeID = " + (int)GlobalEnums.CommodityTypeID.Items + ", Boms.CommodityCategoryID = Commodities.CommodityCategoryID, Boms.CommodityClassID = Commodities.CommodityClassID, Boms.CommodityLineID = Commodities.CommodityLineID FROM Boms INNER JOIN Commodities ON Boms.BomID = @EntityID AND Boms.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                       EXEC    AddCommodityBom @EntityID, @CommodityID " + "\r\n";
+            queryString = queryString + "                   END " + "\r\n";
             queryString = queryString + "               ELSE " + "\r\n";
             queryString = queryString + "                   BEGIN " + "\r\n";
             queryString = queryString + "                       SET @CommodityBomID = (SELECT TOP 1 CommodityBomID FROM CommodityBoms WHERE BomID = @EntityID AND CommodityID = @CommodityID) " + "\r\n";
@@ -229,7 +232,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             string queryFROM = "                FROM        Boms " + "\r\n";
             string queryWHERE = "               WHERE       Boms.InActive = 0 AND (@SearchText = '' OR Boms.Code LIKE '%' + @SearchText + '%' OR Boms.OfficialCode LIKE '%' + @SearchText + '%' OR Boms.Name LIKE '%' + @SearchText + '%' OR Boms.Reference LIKE '%' + @SearchText + '%') " + "\r\n";
 
-            queryString = " @SearchText nvarchar(60), @CommodityID int, @CommodityCategoryID int, @CommodityClassID int, @CommodityLineID int " + "\r\n";
+            queryString = " @SearchText nvarchar(60), @CommodityID int, @CommodityTypeID int, @CommodityCategoryID int, @CommodityClassID int, @CommodityLineID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
@@ -241,7 +244,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + "       ELSE " + "\r\n"; //GET ALL BOMS BY @CommodityCategoryID AND @CommodityClassID AND @CommodityLineID
             queryString = queryString + "           " + querySELECT + ", 0.0 AS BlockUnit, 0.0 AS BlockQuantity " + "\r\n";
             queryString = queryString + "           " + queryFROM + "\r\n";
-            queryString = queryString + "           " + queryWHERE + " AND CommodityLineID = @CommodityLineID " + "\r\n"; //AND CommodityCategoryID = @CommodityCategoryID AND CommodityClassID = @CommodityClassID 
+            queryString = queryString + "           " + queryWHERE + " AND CommodityTypeID = @CommodityTypeID AND CommodityLineID = @CommodityLineID " + "\r\n"; //AND CommodityCategoryID = @CommodityCategoryID AND CommodityClassID = @CommodityClassID 
             queryString = queryString + "    END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetBomBases", queryString);

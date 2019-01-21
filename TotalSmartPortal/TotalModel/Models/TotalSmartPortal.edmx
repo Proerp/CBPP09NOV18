@@ -2824,6 +2824,18 @@ warning 6035: The relationship 'FK_AccountInvoices_AspNetUsers2' has columns tha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Boms_Commodities">
+          <End Role="Commodities" Type="Self.Commodities" Multiplicity="0..1" />
+          <End Role="Boms" Type="Self.Boms" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodities">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="Boms">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Commodities_CommodityBrands">
           <End Role="CommodityBrands" Type="Self.CommodityBrands" Multiplicity="1" />
           <End Role="Commodities" Type="Self.Commodities" Multiplicity="*" />
@@ -7266,6 +7278,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="GetBomBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
           <Parameter Name="CommodityID" Type="int" Mode="In" />
+          <Parameter Name="CommodityTypeID" Type="int" Mode="In" />
           <Parameter Name="CommodityCategoryID" Type="int" Mode="In" />
           <Parameter Name="CommodityClassID" Type="int" Mode="In" />
           <Parameter Name="CommodityLineID" Type="int" Mode="In" />
@@ -8707,6 +8720,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_BomDetails_Materials" Association="Self.FK_BomDetails_Materials">
             <End Role="Commodities" EntitySet="Commodities" />
             <End Role="BomDetails" EntitySet="BomDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Boms_Commodities" Association="Self.FK_Boms_Commodities">
+            <End Role="Commodities" EntitySet="Commodities" />
+            <End Role="Boms" EntitySet="Boms" />
           </AssociationSet>
           <AssociationSet Name="FK_Commodities_CommodityBrands" Association="Self.FK_Commodities_CommodityBrands">
             <End Role="CommodityBrands" EntitySet="CommodityBrands" />
@@ -13837,6 +13854,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImport Name="GetBomBases" ReturnType="Collection(TotalSmartPortalModel.BomBase)">
             <Parameter Name="SearchText" Mode="In" Type="String" />
             <Parameter Name="CommodityID" Mode="In" Type="Int32" />
+            <Parameter Name="CommodityTypeID" Mode="In" Type="Int32" />
             <Parameter Name="CommodityCategoryID" Mode="In" Type="Int32" />
             <Parameter Name="CommodityClassID" Mode="In" Type="Int32" />
             <Parameter Name="CommodityLineID" Mode="In" Type="Int32" />
@@ -15500,6 +15518,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_MaterialIssues_Boms" Association="TotalSmartPortalModel.FK_MaterialIssues_Boms">
             <End Role="Bom" EntitySet="Boms" />
             <End Role="MaterialIssue" EntitySet="MaterialIssues" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Boms_Commodities" Association="TotalSmartPortalModel.FK_Boms_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="Bom" EntitySet="Boms" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -17962,6 +17984,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Boms" FromRole="Bom" ToRole="SemifinishedItem" />
           <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Boms" FromRole="Bom" ToRole="MaterialIssueDetail" />
           <NavigationProperty Name="MaterialIssues" Relationship="TotalSmartPortalModel.FK_MaterialIssues_Boms" FromRole="Bom" ToRole="MaterialIssue" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_Boms_Commodities" FromRole="Bom" ToRole="Commodity" />
         </EntityType>
         <Association Name="FK_BomDetails_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -22681,6 +22704,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="WarehouseAdjustmentDetails" Relationship="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_Commodities" FromRole="Commodity" ToRole="WarehouseAdjustmentDetail" />
           <NavigationProperty Name="WarehouseTransferDetails" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities" FromRole="Commodity" ToRole="WarehouseTransferDetail" />
           <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_Commodities" FromRole="Commodity" ToRole="SemifinishedItemDetail" />
+          <NavigationProperty Name="Boms" Relationship="TotalSmartPortalModel.FK_Boms_Commodities" FromRole="Commodity" ToRole="Bom" />
         </EntityType>
         <Association Name="FK_AccountInvoiceDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -23436,6 +23460,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Principal>
             <Dependent Role="MaterialIssue">
               <PropertyRef Name="BomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Boms_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="Bom">
+              <PropertyRef Name="CommodityID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

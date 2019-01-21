@@ -460,6 +460,7 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_BomDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_Boms" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssues_Boms" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_Boms_Commodities" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
