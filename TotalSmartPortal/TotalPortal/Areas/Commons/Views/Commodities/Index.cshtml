@@ -19,9 +19,9 @@
             columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
             columns.Bound(p => p.CodePartF).Title("Chiều rộng").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
 
-            columns.Bound(p => p.Name).Title("Tên thường gọi").Width(200);
-            
-            columns.Bound(p => p.BomCode).Title("Mã màng").Width(126).Hidden(!@Model.IsProduct);
+            columns.Bound(p => p.Name).Title("Tên thường gọi").Width(180);
+
+            columns.Bound(p => p.BomCode).Title(@Model.IsItem ? "Mã công thức" : "Mã màng").Width(126).Hidden(!@Model.IsItem && !@Model.IsProduct);
             columns.Bound(p => p.MoldCode).Title("M").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(20).Hidden(!@Model.IsProduct);
             columns.Bound(p => p.MoldQuantity).Title("P/M").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(10).Hidden(!@Model.IsProduct);
 

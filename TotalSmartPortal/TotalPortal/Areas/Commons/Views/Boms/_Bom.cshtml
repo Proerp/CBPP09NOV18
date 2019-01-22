@@ -181,10 +181,14 @@
 
         <div class="left-panel-input">
             @if (Model.Editable)
-            {<button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "Boms")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>}
+            {                
+                
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "Boms")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
+    <button type="submit" class="k-button custom-button SubmitTypeOption-Save" formaction="@Url.Action("Edit", "Boms")"> <img src="~/Content/Images/New/Save-Slide.png" /> Lưu & nhập ds màng </button>
+            }
                                                                                                                                                                                                     
             @if (Model.CommodityID > 0)
-            {<button type="button" class="k-button custom-button" onclick="ShowBoms()"> <img src="~/Content/Images/New/2017/bom-32.png" /> Danh mục màng </button>}
+            {<button type="button" class="k-button custom-button" onclick="ShowBoms()"> <img src="~/Content/Images/New/2017/bom-32.png" /> Danh sách màng </button>}
         </div>
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
@@ -199,7 +203,7 @@
     function ShowBoms() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("Commodities", "Boms", new { area = "Commons", id = Model.BomID })", "Danh mục màng", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("Commodities", "Boms", new { area = "Commons", id = Model.BomID })", "Danh sách màng", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
         });
     }
 
