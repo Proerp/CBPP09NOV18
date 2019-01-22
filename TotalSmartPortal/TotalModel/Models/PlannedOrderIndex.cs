@@ -57,5 +57,7 @@ namespace TotalModel.Models
         public Nullable<int> PiecePerPack { get; set; }
         public Nullable<decimal> MoldWeight { get; set; }
         public Nullable<decimal> ItemWeight { get; set; }
+        public Nullable<decimal> MoldQuantity { get; set; }
+        public Nullable<decimal> ItemQuantityEstimated { get; set; }
     }
 }

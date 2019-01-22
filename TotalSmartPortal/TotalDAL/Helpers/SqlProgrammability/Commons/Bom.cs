@@ -131,9 +131,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
         private void BomDeletable()
         {
-            string[] queryArray = new string[1];
+            string[] queryArray = new string[0];
 
-            queryArray[0] = " SELECT TOP 1 @FoundEntity = BomID FROM Boms WHERE BomID = @EntityID ";
+            //queryArray[0] = " SELECT TOP 1 @FoundEntity = BomID FROM Boms WHERE BomID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("BomDeletable", queryArray);
         }

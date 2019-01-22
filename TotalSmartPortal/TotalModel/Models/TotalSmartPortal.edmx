@@ -16929,6 +16929,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="PiecePerPack" Nullable="true" />
           <Property Type="Decimal" Name="MoldWeight" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="ItemWeight" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="MoldQuantity" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="ItemQuantityEstimated" Nullable="true" Precision="38" Scale="6" />
           </ComplexType>
         <ComplexType Name="PlannedOrderViewDetail">
           <Property Type="Int32" Name="PlannedOrderDetailID" Nullable="false" />
@@ -26306,6 +26308,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
                 <ScalarProperty Name="MoldWeight" ColumnName="MoldWeight" />
                 <ScalarProperty Name="ItemWeight" ColumnName="ItemWeight" />
+                <ScalarProperty Name="MoldQuantity" ColumnName="MoldQuantity" />
+                <ScalarProperty Name="ItemQuantityEstimated" ColumnName="ItemQuantityEstimated" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
