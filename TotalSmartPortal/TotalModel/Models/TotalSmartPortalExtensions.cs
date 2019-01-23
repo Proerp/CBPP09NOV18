@@ -731,6 +731,11 @@ namespace TotalModel.Models
         public System.DateTime EditedDate { get; set; }
     }
 
+    public partial class BinLocationIndex
+    {
+        public string Features { get { return this.WarehouseName + " [" + this.BinTypeName + "]"; } }
+    }
+
     public partial class Employee : IPrimitiveEntity, IBaseEntity
     {
         public int GetID() { return this.EmployeeID; }

@@ -8,8 +8,7 @@
             columns.Bound(p => p.BinLocationID).Hidden();
 
             columns.Bound(p => p.Code).Title("Mã vị trí").Width(96).HtmlAttributes(new { @class = "index-nav-column grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/BinLocations", action = "Edit" }) + "/#= BinLocationID #'>#=Code#</a>");
-            columns.Bound(p => p.WarehouseName).Title("Kho").Width(80).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Hidden();
-            columns.Bound(p => p.BinTypeName).Title("Khu vực").Width(108);
+            columns.Bound(p => p.Features).Title("Kho").Hidden();
             columns.Bound(p => p.Description).Title("Diễn giải").Width(200);
             columns.Bound(p => p.Caption).Title("Cảnh báo").Width(450);
             columns.Bound(p => p.Remarks).Title("Ghi chú").Width(200);
@@ -39,7 +38,7 @@
         })
         .DataSource(dataSource => dataSource
             .Ajax()
-            .Group(group => group.Add(p => p.WarehouseName))
+            .Group(group => group.Add(p => p.Features))
             .Read(read => read.Action("GetBinLocationIndexes", "BinLocationAPIs", new { area = "Commons" }))
             .Sort(sort =>
                 {
@@ -74,8 +73,7 @@
                 logic: "or",
                 filters: [
                     { field: "Code", operator: "contains", value: indexFilterText },
-                    { field: "WarehouseName", operator: "contains", value: indexFilterText },
-                    { field: "BinTypeName", operator: "contains", value: indexFilterText },
+                    { field: "Features", operator: "contains", value: indexFilterText },
                     { field: "Description", operator: "contains", value: indexFilterText },
                     { field: "Caption", operator: "contains", value: indexFilterText },
                     { field: "Remarks", operator: "contains", value: indexFilterText }
