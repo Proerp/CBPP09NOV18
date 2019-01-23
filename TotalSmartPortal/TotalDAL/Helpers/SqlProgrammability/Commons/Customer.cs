@@ -104,8 +104,35 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
         private void CustomerDeletable()
         {
-            string[] queryArray = new string[1];
-            queryArray[0] = " SELECT TOP 1 @FoundEntity = CustomerID FROM Customers WHERE CustomerID = @EntityID "; //DON'T ALLOW TO DELETE 
+            string[] queryArray = new string[27];
+
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = CustomerID FROM PurchaseOrders WHERE CustomerID = @EntityID OR TransporterID = @EntityID";
+            queryArray[1] = " SELECT TOP 1 @FoundEntity = CustomerID FROM PlannedOrders WHERE CustomerID = @EntityID";
+            queryArray[2] = " SELECT TOP 1 @FoundEntity = CustomerID FROM DeliveryAdvices WHERE CustomerID = @EntityID OR ReceiverID = @EntityID";
+            queryArray[3] = " SELECT TOP 1 @FoundEntity = CustomerID FROM WarehouseAdjustments WHERE CustomerID = @EntityID";
+            queryArray[4] = " SELECT TOP 1 @FoundEntity = CustomerID FROM AccountInvoices WHERE CustomerID = @EntityID OR ReceiverID = @EntityID OR ConsumerID = @EntityID";
+            queryArray[5] = " SELECT TOP 1 @FoundEntity = CustomerID FROM Boms WHERE CustomerID = @EntityID";
+            queryArray[6] = " SELECT TOP 1 @FoundEntity = CustomerID FROM CreditNotes WHERE CustomerID = @EntityID";
+            queryArray[7] = " SELECT TOP 1 @FoundEntity = CustomerID FROM FinishedHandovers WHERE CustomerID = @EntityID";
+            queryArray[8] = " SELECT TOP 1 @FoundEntity = CustomerID FROM FinishedProducts WHERE CustomerID = @EntityID";
+            queryArray[9] = " SELECT TOP 1 @FoundEntity = CustomerID FROM FirmOrders WHERE CustomerID = @EntityID";
+            queryArray[10] = " SELECT TOP 1 @FoundEntity = CustomerID FROM GoodsArrivals WHERE CustomerID = @EntityID OR TransporterID = @EntityID";
+            queryArray[11] = " SELECT TOP 1 @FoundEntity = ReceiverID FROM GoodsDeliveries WHERE ReceiverID = @EntityID";
+            queryArray[12] = " SELECT TOP 1 @FoundEntity = CustomerID FROM GoodsDeliveryDetails WHERE CustomerID = @EntityID OR ReceiverID = @EntityID";
+            queryArray[13] = " SELECT TOP 1 @FoundEntity = CustomerID FROM GoodsIssues WHERE CustomerID = @EntityID OR ReceiverID = @EntityID";
+            queryArray[14] = " SELECT TOP 1 @FoundEntity = CustomerID FROM GoodsReceipts WHERE CustomerID = @EntityID";
+            queryArray[15] = " SELECT TOP 1 @FoundEntity = CustomerID FROM HandlingUnits WHERE CustomerID = @EntityID OR ReceiverID = @EntityID";
+            queryArray[16] = " SELECT TOP 1 @FoundEntity = CustomerID FROM MaterialIssues WHERE CustomerID = @EntityID";
+            queryArray[17] = " SELECT TOP 1 @FoundEntity = CustomerID FROM ProductionOrders WHERE CustomerID = @EntityID";
+            queryArray[18] = " SELECT TOP 1 @FoundEntity = CustomerID FROM PromotionCustomers WHERE CustomerID = @EntityID";
+            queryArray[19] = " SELECT TOP 1 @FoundEntity = CustomerID FROM PurchaseRequisitions WHERE CustomerID = @EntityID";
+            queryArray[20] = " SELECT TOP 1 @FoundEntity = CustomerID FROM Quotations WHERE CustomerID = @EntityID OR ReceiverID = @EntityID";
+            queryArray[21] = " SELECT TOP 1 @FoundEntity = CustomerID FROM Receipts WHERE CustomerID = @EntityID";
+            queryArray[22] = " SELECT TOP 1 @FoundEntity = CustomerID FROM SalesOrders WHERE CustomerID = @EntityID OR ReceiverID = @EntityID";
+            queryArray[23] = " SELECT TOP 1 @FoundEntity = CustomerID FROM SalesReturns WHERE CustomerID = @EntityID OR ReceiverID = @EntityID";
+            queryArray[24] = " SELECT TOP 1 @FoundEntity = CustomerID FROM SemifinishedHandovers WHERE CustomerID = @EntityID";
+            queryArray[25] = " SELECT TOP 1 @FoundEntity = CustomerID FROM SemifinishedItems WHERE CustomerID = @EntityID";
+            queryArray[26] = " SELECT TOP 1 @FoundEntity = CustomerID FROM SemifinishedProducts WHERE CustomerID = @EntityID"; 
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("CustomerDeletable", queryArray);
         }

@@ -87,9 +87,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
         private void CommodityEditable()
         {
-            string[] queryArray = new string[1];
+            string[] queryArray = new string[0];
 
-            queryArray[0] = " SELECT TOP 1 @FoundEntity = CommodityID FROM Commodities WHERE @EntityID = 1"; //AT TUE VIET ONLY: Don't allow edit default mold, because it is related to Customers
+            //queryArray[0] = " SELECT TOP 1 @FoundEntity = CommodityID FROM Commodities WHERE @EntityID = 1"; //AT TUE VIET ONLY: Don't allow edit default mold, because it is related to Customers
 
             //queryArray[0] = " SELECT TOP 1 @FoundEntity = CommodityID FROM Commodities WHERE CommodityID = @EntityID AND (InActive = 1 OR InActivePartial = 1)"; //Don't allow approve after void
             //queryArray[1] = " SELECT TOP 1 @FoundEntity = CommodityID FROM GoodsIssueDetails WHERE CommodityID = @EntityID ";
@@ -99,8 +99,53 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
         private void CommodityDeletable()
         {
-            string[] queryArray = new string[1];
-            queryArray[0] = " SELECT TOP 1 @FoundEntity = CommodityID FROM Commodities WHERE CommodityID = @EntityID "; //DON'T ALLOW TO DELETE 
+            string[] queryArray;
+
+            if (!GlobalEnums.CBPP)
+            {
+                queryArray = new string[1];
+                queryArray[0] = " SELECT TOP 1 @FoundEntity = CommodityID FROM Commodities WHERE CommodityID = @EntityID "; //DON'T ALLOW TO DELETE 
+            }
+            else
+            {
+                queryArray = new string[35];
+
+                queryArray[0] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PurchaseOrderDetails WHERE CommodityID = @EntityID ";
+                queryArray[1] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PurchaseRequisitionDetails WHERE CommodityID = @EntityID ";
+                queryArray[2] = " SELECT TOP 1 @FoundEntity = CommodityID FROM GoodsReceiptDetails WHERE CommodityID = @EntityID ";
+                queryArray[3] = " SELECT TOP 1 @FoundEntity = CommodityID FROM GoodsIssueDetails WHERE CommodityID = @EntityID ";
+                queryArray[4] = " SELECT TOP 1 @FoundEntity = CommodityID FROM WarehouseAdjustmentDetails WHERE CommodityID = @EntityID ";
+                queryArray[5] = " SELECT TOP 1 @FoundEntity = CommodityID FROM SalesOrderDetails WHERE CommodityID = @EntityID ";
+                queryArray[6] = " SELECT TOP 1 @FoundEntity = CommodityID FROM QuotationDetails WHERE CommodityID = @EntityID ";
+                queryArray[7] = " SELECT TOP 1 @FoundEntity = CommodityID FROM SalesReturnDetails WHERE CommodityID = @EntityID ";
+                queryArray[8] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PlannedOrderDetails WHERE CommodityID = @EntityID ";
+                queryArray[9] = " SELECT TOP 1 @FoundEntity = CommodityID FROM BlendingInstructionDetails WHERE CommodityID = @EntityID ";
+                queryArray[10] = " SELECT TOP 1 @FoundEntity = CommodityID FROM BlendingInstructions WHERE CommodityID = @EntityID ";
+                queryArray[11] = " SELECT TOP 1 @FoundEntity = CommodityID FROM TransferOrderDetails WHERE CommodityID = @EntityID ";
+                queryArray[12] = " SELECT TOP 1 @FoundEntity = CommodityID FROM MaterialIssueDetails WHERE CommodityID = @EntityID ";
+                queryArray[13] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PackageIssueDetails WHERE CommodityID = @EntityID ";
+                queryArray[14] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PackageIssues WHERE CommodityID = @EntityID ";
+                queryArray[15] = " SELECT TOP 1 @FoundEntity = CommodityID FROM WarehouseTransferDetails WHERE CommodityID = @EntityID ";
+                queryArray[16] = " SELECT TOP 1 @FoundEntity = CommodityID FROM CreditNoteDetails WHERE CommodityID = @EntityID ";
+                queryArray[17] = " SELECT TOP 1 @FoundEntity = CommodityID FROM DeliveryAdviceDetails WHERE CommodityID = @EntityID ";
+                queryArray[18] = " SELECT TOP 1 @FoundEntity = CommodityID FROM FinishedHandoverDetails WHERE CommodityID = @EntityID ";
+                queryArray[19] = " SELECT TOP 1 @FoundEntity = CommodityID FROM FinishedProductDetails WHERE CommodityID = @EntityID ";
+                queryArray[20] = " SELECT TOP 1 @FoundEntity = CommodityID FROM FinishedProductPackages WHERE CommodityID = @EntityID ";
+                queryArray[21] = " SELECT TOP 1 @FoundEntity = CommodityID FROM FirmOrderDetails WHERE CommodityID = @EntityID ";
+                queryArray[22] = " SELECT TOP 1 @FoundEntity = MaterialID FROM FirmOrderMaterials WHERE MaterialID = @EntityID ";
+                queryArray[23] = " SELECT TOP 1 @FoundEntity = CommodityID FROM GoodsArrivalDetails WHERE CommodityID = @EntityID ";
+                queryArray[24] = " SELECT TOP 1 @FoundEntity = CommodityID FROM GoodsArrivalPackages WHERE CommodityID = @EntityID ";
+                queryArray[25] = " SELECT TOP 1 @FoundEntity = CommodityID FROM SemifinishedItemDetails WHERE CommodityID = @EntityID ";
+                queryArray[26] = " SELECT TOP 1 @FoundEntity = MaterialID FROM SemifinishedItemMaterials WHERE MaterialID = @EntityID ";
+                queryArray[27] = " SELECT TOP 1 @FoundEntity = CommodityID FROM SemifinishedProductDetails WHERE CommodityID = @EntityID ";
+                queryArray[28] = " SELECT TOP 1 @FoundEntity = CommodityID FROM AccountInvoiceDetails WHERE CommodityID = @EntityID ";
+                queryArray[29] = " SELECT TOP 1 @FoundEntity = MaterialID FROM BomDetails WHERE MaterialID = @EntityID ";
+                queryArray[30] = " SELECT TOP 1 @FoundEntity = CommodityID FROM Boms WHERE CommodityID = @EntityID OR MaterialID = @EntityID ";
+                queryArray[31] = " SELECT TOP 1 @FoundEntity = CommodityID FROM Batches WHERE CommodityID = @EntityID ";
+                queryArray[32] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PromotionCommodities WHERE CommodityID = @EntityID ";
+                queryArray[33] = " SELECT TOP 1 @FoundEntity = CommodityID FROM CommodityBoms WHERE CommodityID = @EntityID ";
+                queryArray[34] = " SELECT TOP 1 @FoundEntity = CommodityID FROM CommodityMolds WHERE CommodityID = @EntityID  ";
+            }
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("CommodityDeletable", queryArray);
         }
@@ -126,7 +171,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + "                       LEFT JOIN (SELECT CommodityMolds.CommodityID, CommodityMolds.MoldID, Molds.Code, Molds.Name, CommodityMolds.Quantity FROM CommodityMolds INNER JOIN Molds ON CommodityMolds.CommodityID IN (SELECT CommodityID FROM @Commodities) AND CommodityMolds.IsDefault = 1 AND CommodityMolds.MoldID = Molds.MoldID) CommodityMolds ON Commodities.CommodityID = CommodityMolds.CommodityID " + "\r\n";
             queryString = queryString + "       ELSE " + " \r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
-            
+
             querySELECT = querySELECT + "               " + ", NULL AS BomID, NULL AS BomCode, NULL AS BomName, NULL AS BlockUnit, NULL AS BlockQuantity, NULL AS MoldID, NULL AS MoldCode, NULL AS MoldName, NULL AS MoldQuantity " + "\r\n";
 
             queryString = queryString + "               IF (@WarehouseID > 0) " + "\r\n";

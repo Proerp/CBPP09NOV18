@@ -25,6 +25,18 @@
             </div>
         </div>
 
+        @Html.EditorFor(d => d.Warehouse, new { WarehouseDescriptionHidden = "true", WarehouseDisplayName = @Model.GetDisplayName(m => m.Warehouse) })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Description)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.Description).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         <div class="form-group">
             @Html.LabelFor(model => model.Remarks)
             <div class="div-input">
@@ -53,3 +65,14 @@
     </div>
 }
 
+
+<style>
+    .right-panel-label
+    {
+        padding-top: 0px;
+        text-align: left;
+    }
+    .right-panel-input {
+        width: 91%;
+    }
+</style>

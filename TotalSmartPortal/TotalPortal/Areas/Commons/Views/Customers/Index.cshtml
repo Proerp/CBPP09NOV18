@@ -45,10 +45,7 @@
             .Ajax()
             .Group(group => group.AddDescending(p => p.Category))
             .Read(read => read.Action("GetCustomerIndexes", "CustomerAPIs", new { area = "Commons" }))
-            //.Sort(sort =>
-            //    {
-            //        sort.Add(p => p.Code).Descending();
-            //    })
+            .Sort(sort => {sort.Add(p => p.Code); })
             .PageSize(20)
             .Model(model =>
             {
