@@ -271,6 +271,7 @@
     <Compile Include="Areas\Commons\APIs\WarehouseAPIsController.cs" />
     <Compile Include="Areas\Commons\Builders\BomViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\IBinLocationSelectListBuilder.cs" />
+    <Compile Include="Areas\Commons\Builders\IBinTypeSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityBrandSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityCategorySelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityClassSelectListBuilder.cs" />
@@ -310,6 +311,7 @@
     <Compile Include="Areas\Commons\ViewModels\CommodityViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\CustomerViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\EmployeeViewModel.cs" />
+    <Compile Include="Areas\Commons\ViewModels\Helpers\IBinTypeDropDownViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\Helpers\ICommodityBrandDropDownViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\Helpers\ICommodityClassDropDownViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\Helpers\ICommodityLineDropDownViewModel.cs" />
@@ -3138,6 +3140,7 @@
     <Content Include="Views\Helpers\Commons\_CommodityDescription.cshtml" />
     <Content Include="Views\Helpers\Bases\_BaseSectionLeft.cshtml" />
     <Content Include="Views\Helpers\Commons\_Warehouse2019.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DropDowns\BinType.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

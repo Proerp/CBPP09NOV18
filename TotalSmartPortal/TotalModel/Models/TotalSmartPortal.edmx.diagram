@@ -461,6 +461,8 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_Boms" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssues_Boms" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_Boms_Commodities" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.BinType" Width="1.5" PointX="7.375" PointY="0.875" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_BinLocations_BinTypes" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

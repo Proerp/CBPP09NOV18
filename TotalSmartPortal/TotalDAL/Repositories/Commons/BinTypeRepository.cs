@@ -5,18 +5,18 @@ using TotalModel.Models;
 using TotalCore.Repositories.Commons;
 namespace TotalDAL.Repositories.Commons
 {
-    public class CommodityTypeRepository : ICommodityTypeRepository
+    public class BinTypeRepository : IBinTypeRepository
     {
         private readonly TotalSmartPortalEntities totalSmartPortalEntities;
 
-        public CommodityTypeRepository(TotalSmartPortalEntities totalSmartPortalEntities)
+        public BinTypeRepository(TotalSmartPortalEntities totalSmartPortalEntities)
         {
             this.totalSmartPortalEntities = totalSmartPortalEntities;
         }
 
-        public IList<CommodityType> GetAllCommodityTypes()
+        public IList<BinType> GetAllBinTypes()
         {
-            return this.totalSmartPortalEntities.CommodityTypes.ToList();
+            return this.totalSmartPortalEntities.BinTypes.ToList();
         }
     }
 }

@@ -126,6 +126,7 @@ namespace TotalModel.Models
         public virtual DbSet<Mold> Molds { get; set; }
         public virtual DbSet<SemifinishedItemDetail> SemifinishedItemDetails { get; set; }
         public virtual DbSet<SemifinishedItem> SemifinishedItems { get; set; }
+        public virtual DbSet<BinType> BinTypes { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {

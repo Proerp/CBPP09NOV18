@@ -357,6 +357,7 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IPriceCategorySelectListBuilder>().To<PriceCategorySelectListBuilder>();
                 kernel.Bind<ICustomerCategorySelectListBuilder>().To<CustomerCategorySelectListBuilder>();
                 kernel.Bind<ICustomerTypeSelectListBuilder>().To<CustomerTypeSelectListBuilder>();
+                kernel.Bind<IBinTypeSelectListBuilder>().To<BinTypeSelectListBuilder>();
                 kernel.Bind<ITerritorySelectListBuilder>().To<TerritorySelectListBuilder>();                
                 kernel.Bind<IPackingMaterialSelectListBuilder>().To<PackingMaterialSelectListBuilder>();
                 kernel.Bind<IVehicleSelectListBuilder>().To<VehicleSelectListBuilder>();
@@ -391,6 +392,7 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IPriceCategoryRepository>().To<PriceCategoryRepository>();
                 kernel.Bind<ICustomerCategoryRepository>().To<CustomerCategoryRepository>();
                 kernel.Bind<ICustomerTypeRepository>().To<CustomerTypeRepository>();
+                kernel.Bind<IBinTypeRepository>().To<BinTypeRepository>();
                 kernel.Bind<ITerritoryRepository>().To<TerritoryRepository>();
                 kernel.Bind<IPackingMaterialRepository>().To<PackingMaterialRepository>();
                 kernel.Bind<IVehicleRepository>().To<VehicleRepository>();

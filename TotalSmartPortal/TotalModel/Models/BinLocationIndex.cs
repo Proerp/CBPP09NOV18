@@ -19,5 +19,8 @@ namespace TotalModel.Models
         public string Code { get; set; }
         public string Name { get; set; }
         public string WarehouseName { get; set; }
+        public string BinTypeName { get; set; }
+        public string Caption { get; set; }
+        public string Description { get; set; }
     }
 }

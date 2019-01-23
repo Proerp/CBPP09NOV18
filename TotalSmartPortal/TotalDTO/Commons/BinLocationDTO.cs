@@ -34,7 +34,14 @@ namespace TotalDTO.Commons
         public int GetID() { return this.BinLocationID; }
         public void SetID(int id) { this.BinLocationID = id; }
 
+        [Display(Name = "Phân loại vị trí")]
+        [Required(ErrorMessage = "Vui lòng nhập loại vị trí")]
+        public Nullable<int> BinTypeID { get; set; }
+
         public virtual Nullable<int> WarehouseID { get; set; }
+
+        [Display(Name = "Cảnh báo")]
+        public override string Caption { get; set; }
 
         public override int PreparedPersonID { get { return 1; } }
     }
@@ -43,7 +50,7 @@ namespace TotalDTO.Commons
     public class BinLocationDTO : BinLocationPrimitiveDTO
     {
         public override Nullable<int> WarehouseID { get { return (this.Warehouse != null ? (this.Warehouse.WarehouseID > 0 ? (Nullable<int>)this.Warehouse.WarehouseID : null) : null); } }
-        [Display(Name = "Khách hàng")]
+        [Display(Name = "Kho hàng")]
         [UIHint("AutoCompletes/WarehouseBase")]
         public WarehouseBaseDTO Warehouse { get; set; }
     }

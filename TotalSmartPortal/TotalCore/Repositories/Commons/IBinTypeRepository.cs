@@ -4,8 +4,8 @@ using TotalModel.Models;
 
 namespace TotalCore.Repositories.Commons
 {
-    public interface ICommodityTypeRepository
+    public interface IBinTypeRepository
     {
-        IList<CommodityType> GetAllCommodityTypes();
+        IList<BinType> GetAllBinTypes();
     }
 }

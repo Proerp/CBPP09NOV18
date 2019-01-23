@@ -5,8 +5,7 @@ using System.Collections.Generic;
 using TotalModel.Models;
 
 namespace TotalPortal.Areas.Commons.Builders
-{   
-
+{
     public interface ICommodityTypeSelectListBuilder
     {
         IEnumerable<SelectListItem> BuildSelectListItemsForCommodityTypes(IEnumerable<CommodityType> CommodityTypes);

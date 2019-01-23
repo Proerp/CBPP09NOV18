@@ -142,13 +142,25 @@
           <Property Name="BinLocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BinTypeID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="PreparedPersonID" Type="int" Nullable="false" />
           <Property Name="OrganizationalUnitID" Type="int" Nullable="false" />
+          <Property Name="Caption" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="InActive" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="BinTypes">
+          <Key>
+            <PropertyRef Name="BinTypeID" />
+          </Key>
+          <Property Name="BinTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="BlendingInstructionDetails">
           <Key>
@@ -2725,6 +2737,18 @@ warning 6035: The relationship 'FK_AccountInvoices_AspNetUsers2' has columns tha
             </Principal>
             <Dependent Role="AccountInvoices">
               <PropertyRef Name="TradePromotionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BinLocations_BinTypes">
+          <End Role="BinTypes" Type="Self.BinTypes" Multiplicity="1" />
+          <End Role="BinLocations" Type="Self.BinLocations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BinTypes">
+              <PropertyRef Name="BinTypeID" />
+            </Principal>
+            <Dependent Role="BinLocations">
+              <PropertyRef Name="BinTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8552,6 +8576,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySet Name="AccountInvoices" EntityType="Self.AccountInvoices" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BinLocations" EntityType="Self.BinLocations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BinTypes" EntityType="Self.BinTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlendingInstructionDetails" EntityType="Self.BlendingInstructionDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BlendingInstructions" EntityType="Self.BlendingInstructions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BomDetails" EntityType="Self.BomDetails" Schema="dbo" store:Type="Tables" />
@@ -8689,6 +8714,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_AccountInvoices_TradePromotions" Association="Self.FK_AccountInvoices_TradePromotions">
             <End Role="Promotions" EntitySet="Promotions" />
             <End Role="AccountInvoices" EntitySet="AccountInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BinLocations_BinTypes" Association="Self.FK_BinLocations_BinTypes">
+            <End Role="BinTypes" EntitySet="BinTypes" />
+            <End Role="BinLocations" EntitySet="BinLocations" />
           </AssociationSet>
           <AssociationSet Name="FK_BinLocations_Warehouses" Association="Self.FK_BinLocations_Warehouses">
             <End Role="Warehouses" EntitySet="Warehouses" />
@@ -15525,6 +15554,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Commodity" EntitySet="Commodities" />
             <End Role="Bom" EntitySet="Boms" />
           </AssociationSet>
+          <EntitySet Name="BinTypes" EntityType="TotalSmartPortalModel.BinType" />
+          <AssociationSet Name="FK_BinLocations_BinTypes" Association="TotalSmartPortalModel.FK_BinLocations_BinTypes">
+            <End Role="BinType" EntitySet="BinTypes" />
+            <End Role="BinLocation" EntitySet="BinLocations" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -20464,6 +20498,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_BinLocations_Warehouses" FromRole="BinLocation" ToRole="Warehouse" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations" FromRole="BinLocation" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="WarehouseTransferDetails" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_BinLocations" FromRole="BinLocation" ToRole="WarehouseTransferDetail" />
+          <Property Name="BinTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BinType" Relationship="TotalSmartPortalModel.FK_BinLocations_BinTypes" FromRole="BinLocation" ToRole="BinType" />
+          <Property Name="Caption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_BinLocations_Warehouses">
           <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
@@ -22601,6 +22639,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Code" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
           <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="BinTypeName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Caption" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="BomIndex">
           <Property Type="Int32" Name="BomID" Nullable="false" />
@@ -23479,6 +23520,28 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Principal>
             <Dependent Role="Bom">
               <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="BinType">
+          <Key>
+            <PropertyRef Name="BinTypeID" />
+          </Key>
+          <Property Name="BinTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BinLocations" Relationship="TotalSmartPortalModel.FK_BinLocations_BinTypes" FromRole="BinType" ToRole="BinLocation" />
+        </EntityType>
+        <Association Name="FK_BinLocations_BinTypes">
+          <End Type="TotalSmartPortalModel.BinType" Role="BinType" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.BinLocation" Role="BinLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BinType">
+              <PropertyRef Name="BinTypeID" />
+            </Principal>
+            <Dependent Role="BinLocation">
+              <PropertyRef Name="BinTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -28450,6 +28513,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="BinLocations">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.BinLocation">
               <MappingFragment StoreEntitySet="BinLocations">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
+                <ScalarProperty Name="BinTypeID" ColumnName="BinTypeID" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="OrganizationalUnitID" ColumnName="OrganizationalUnitID" />
@@ -29506,6 +29572,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="BinTypeName" ColumnName="BinTypeName" />
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -29765,6 +29834,16 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImportMapping FunctionImportName="SemifinishedItemPostSaveValidate" FunctionName="TotalSmartPortalModel.Store.SemifinishedItemPostSaveValidate" />
           <FunctionImportMapping FunctionImportName="SemifinishedItemSaveRelative" FunctionName="TotalSmartPortalModel.Store.SemifinishedItemSaveRelative" />
           <FunctionImportMapping FunctionImportName="SemifinishedItemToggleApproved" FunctionName="TotalSmartPortalModel.Store.SemifinishedItemToggleApproved" />
+          <EntitySetMapping Name="BinTypes">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.BinType">
+              <MappingFragment StoreEntitySet="BinTypes">
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="BinTypeID" ColumnName="BinTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

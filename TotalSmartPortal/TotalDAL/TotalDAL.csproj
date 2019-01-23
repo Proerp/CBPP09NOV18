@@ -92,6 +92,7 @@
     <Compile Include="Repositories\Accounts\CreditNoteRepository.cs" />
     <Compile Include="Repositories\Analysis\ReportRepository.cs" />
     <Compile Include="Repositories\Commons\BinLocationRepository.cs" />
+    <Compile Include="Repositories\Commons\BinTypeRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityBrandRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityCategoryRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityClassRepository.cs" />

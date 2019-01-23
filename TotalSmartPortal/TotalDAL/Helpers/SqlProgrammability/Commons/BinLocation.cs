@@ -38,9 +38,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      BinLocations.BinLocationID, BinLocations.Code, BinLocations.Name, Warehouses.Name AS WarehouseName, BinLocations.InActive, BinLocations.Remarks " + "\r\n";
+            queryString = queryString + "       SELECT      BinLocations.BinLocationID, BinLocations.Code, BinLocations.Name, BinTypes.Name AS BinTypeName, Warehouses.Name AS WarehouseName, BinLocations.Caption, BinLocations.Description, BinLocations.Remarks, BinLocations.InActive " + "\r\n";
             queryString = queryString + "       FROM        BinLocations " + "\r\n";
             queryString = queryString + "                   INNER JOIN Warehouses ON BinLocations.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.BinLocation + " AND AccessControls.AccessLevel > 0) AND BinLocations.WarehouseID = Warehouses.WarehouseID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN BinTypes ON BinLocations.BinTypeID = BinTypes.BinTypeID " + "\r\n";
             queryString = queryString + "       WHERE      (SELECT TOP 1 OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.BinLocation + " AND AccessControls.AccessLevel > 0) > 0 " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";

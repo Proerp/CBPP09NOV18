@@ -1,0 +1,13 @@
+﻿@model TotalPortal.Areas.Commons.ViewModels.Helpers.IBinTypeDropDownViewModel
+
+<div class="form-group">
+    @Html.LabelFor(model => model.BinTypeID)
+    <div class="div-input">
+        @Html.Kendo().DropDownListFor(m => m.BinTypeID).BindTo(Model.BinTypeSelectList).HtmlAttributes(new { @class = "left-panel-input" })
+    </div>
+    <div class="div-validation-message">
+        @Html.ValidationMessageFor(model => model.BinTypeID, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+

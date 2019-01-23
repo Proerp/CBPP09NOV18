@@ -54,6 +54,7 @@
     <Compile Include="Repositories\Accounts\ICreditNoteRepository.cs" />
     <Compile Include="Repositories\Analysis\IReportRepository.cs" />
     <Compile Include="Repositories\Commons\IBinLocationRepository.cs" />
+    <Compile Include="Repositories\Commons\IBinTypeRepository.cs" />
     <Compile Include="Repositories\Commons\ICommodityBrandRepository.cs" />
     <Compile Include="Repositories\Commons\ICommodityCategoryRepository.cs" />
     <Compile Include="Repositories\Commons\IBomRepository.cs" />
