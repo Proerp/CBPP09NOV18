@@ -81,9 +81,12 @@ namespace TotalDTO.Commons
         [Display(Name = "ĐVT")]
         [Required(ErrorMessage = "Vui lòng nhập ĐVT")]
         string SalesUnit { get; set; }
+
+        [Display(Name = "Định dạng, quy cách")]
         string Packing { get; set; }
         string Origin { get; set; }
 
+        [Display(Name = "Hs TL (net)")]
         double Weight { get; set; }
         double LeadTime { get; set; }
 
@@ -97,6 +100,10 @@ namespace TotalDTO.Commons
         MoldBaseDTO Mold { get; set; }
 
         string HSCode { get; set; }
+        [Display(Name = "Qui định tồn trữ, bảo quản")]
+        string Specification { get; set; }
+        [Display(Name = "Điều kiện tồn trữ, bảo quản")]
+        string Description { get; set; }
 
         bool IsMaterial { get; }
         bool IsItem { get; }
@@ -163,6 +170,7 @@ namespace TotalDTO.Commons
         public MoldBaseDTO Mold { get; set; }
 
         public string HSCode { get; set; }
+        public string Specification { get; set; }
 
         public override int PreparedPersonID { get { return 1; } }
 

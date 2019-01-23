@@ -38,9 +38,12 @@
             </div>
         }
 
-        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityCategory.cshtml")
-        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityLine.cshtml")
-        <div @{if (Model.IsMaterial) { <text> style="display:none;" </text>      } }>
+        <div @{if (GlobalEnums.CBPP) { <text> div class="SBT-Hidden" </text>         } }>
+            @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityCategory.cshtml")
+            @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityLine.cshtml")
+        </div>
+
+        <div @{if (Model.IsMaterial) { <text> style="display:none;" </text>       } }>
             @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityClass.cshtml")
         </div>
 
@@ -57,7 +60,7 @@
             </div>
         }
 
-        <div class="form-group" @{if (!Model.IsItem) { <text> style="display:none;" </text>     } }>
+        <div class="form-group" @{if (!Model.IsItem) { <text> style="display:none;" </text>      } }>
             @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).CodePartE)
             <div class="div-input">
                 @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).CodePartE).HtmlAttributes(new { @class = "left-panel-input" })
@@ -67,7 +70,7 @@
             </div>
         </div>
 
-        <div class="form-group" @{if (!Model.IsItem) { <text> style="display:none;" </text>     } }>
+        <div class="form-group" @{if (!Model.IsItem) { <text> style="display:none;" </text>      } }>
             @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).CodePartF)
             <div class="div-input">
                 @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).CodePartF).HtmlAttributes(new { @class = "left-panel-input" })
@@ -124,23 +127,13 @@
             </div>
         </div>
 
-        <div class="form-group" @{if (!Model.IsProduct) { <text> style="display:none;" </text>      } }>
+        <div class="form-group" @{if (!Model.IsProduct) { <text> style="display:none;" </text>       } }>
             @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).PiecePerPack)
             <div class="div-input">
                 @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).PiecePerPack).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
                 @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).PiecePerPack, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group SBT-Hidden">
-            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Packing)
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Packing).HtmlAttributes(new { @class = "left-panel-input" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Packing, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -154,17 +147,27 @@
             </div>
         </div>
 
-        @*<div class="form-group">
-                @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Weight)
-                <div class="div-input">
-                    @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).Weight).HtmlAttributes(new { @class = "left-panel-input" })
-                </div>
-                <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Weight, "", new { @class = "text-danger" })
-                </div>
+        <div class="form-group">
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Weight)
+            <div class="div-input">
+                @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).Weight).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Weight, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
-            <div class="form-group">
+        <div class="form-group">
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Packing)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Packing).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Packing, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
                 @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).LeadTime)
                 <div class="div-input">
                     @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).LeadTime).HtmlAttributes(new { @class = "left-panel-input" })
@@ -173,6 +176,36 @@
                     @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).LeadTime, "", new { @class = "text-danger" })
                 </div>
             </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Specification)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Specification).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Specification, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Điều kiện tồn trữ, bảo quản")
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Cảnh báo")
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Caption).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as IBaseModel).Caption, "", new { @class = "text-danger" })
+            </div>
+        </div>
 
         <div class="form-group">
             @Html.LabelFor(model => (model as IBaseModel).Remarks)
@@ -202,8 +235,10 @@
             }
             @if (Model.CommodityID > 0)
             {
-                if (Model.IsProduct) {<button type="button" class="k-button custom-button" onclick="ShowMolds()"> <img src="~/Content/Images/New/2017/mold-32.png" /> Danh mục khuôn sx khay </button>}
-                if (Model.IsProduct || Model.IsItem) {<button type="button" class="k-button custom-button" onclick="ShowBoms()"> <img src="~/Content/Images/New/2017/bom-32.png" /> @(Model.IsProduct? "Danh mục màng sx khay" : "Mã công thức") </button>}
+                if (Model.IsProduct)
+                {<button type="button" class="k-button custom-button" onclick="ShowMolds()"> <img src="~/Content/Images/New/2017/mold-32.png" /> Danh mục khuôn sx khay </button>}
+                if (Model.IsProduct || Model.IsItem)
+                {<button type="button" class="k-button custom-button" onclick="ShowBoms()"> <img src="~/Content/Images/New/2017/bom-32.png" /> @(Model.IsProduct ? "Danh mục màng sx khay" : "Mã công thức") </button>}
             }
         </div>
 

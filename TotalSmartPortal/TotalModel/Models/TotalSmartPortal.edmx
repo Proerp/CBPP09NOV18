@@ -289,7 +289,10 @@
           <Property Name="LeadTime" Type="int" />
           <Property Name="HSCode" Type="nvarchar" MaxLength="20" />
           <Property Name="Discontinue" Type="bit" Nullable="false" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="200" />
+          <Property Name="Specification" Type="nvarchar" MaxLength="100" />
+          <Property Name="Caption" Type="nvarchar" MaxLength="100" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="InActive" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="CommodityBrands">
@@ -22719,7 +22722,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="LeadTime" Type="Int32" />
           <Property Name="HSCode" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Discontinue" Type="Boolean" Nullable="false" />
-          <Property Name="Remarks" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="InActive" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AccountInvoiceDetails" Relationship="TotalSmartPortalModel.FK_AccountInvoiceDetails_Commodities" FromRole="Commodity" ToRole="AccountInvoiceDetail" />
           <NavigationProperty Name="BlendingInstructionDetails" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" FromRole="Commodity" ToRole="BlendingInstructionDetail" />
@@ -22753,6 +22756,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="WarehouseTransferDetails" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities" FromRole="Commodity" ToRole="WarehouseTransferDetail" />
           <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_Commodities" FromRole="Commodity" ToRole="SemifinishedItemDetail" />
           <NavigationProperty Name="Boms" Relationship="TotalSmartPortalModel.FK_Boms_Commodities" FromRole="Commodity" ToRole="Bom" />
+          <Property Name="Specification" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Caption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_AccountInvoiceDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -29624,6 +29630,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="Commodities">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.Commodity">
               <MappingFragment StoreEntitySet="Commodities">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
+                <ScalarProperty Name="Specification" ColumnName="Specification" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="Discontinue" ColumnName="Discontinue" />
