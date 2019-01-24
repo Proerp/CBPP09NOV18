@@ -12,8 +12,8 @@
                 columns.Bound(p => p.Features).Title("PO").Hidden();
                 
                 columns.Bound(p => p.Reference).Title("PĐH").Width(10).Filterable(false).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseOrders", action = "Edit" }) + "/#= PurchaseOrderID #'>#=Reference#</a>");
+                columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                 columns.Bound(p => p.Code).Title("PO").Width(20);
-                columns.Bound(p => p.EntryDate).Title("Ngày PO").Format("{0:dd/MM/yy}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                 
                 columns.Bound(p => p.CommodityCode).Title("Mã hàng").Width(108);
                 columns.Bound(p => p.CommodityName).Title("Mặt hàng").Width(290);

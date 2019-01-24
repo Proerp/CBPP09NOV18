@@ -5,12 +5,11 @@
     .Name("goodsArrivalPendingPurchaseOrderGrid")
     .Columns(columns =>
     {
-        columns.Bound(c => c.PurchaseOrderReference).Title("Số ĐH").Width(38);
-        columns.Bound(c => c.PurchaseOrderEntryDate).Title("Ngày ĐH").Width(55).Format("{0:" + Settings.DateFormat + "}");
-        columns.Bound(c => c.PurchaseOrderCode).Title("Số PO").Width(38);
-        columns.Bound(c => c.CustomerName).Title("Nhà cung cấp").Width(108);
-        columns.Bound(c => c.TransporterCode).Title("Đơn vị giao hàng").Width(88);
-        columns.Bound(c => c.Caption).Title("Mặt hàng").Width(108);
+        columns.Bound(c => c.PurchaseOrderReference).Title("Số ĐH").Width(30);
+        columns.Bound(c => c.PurchaseOrderEntryDate).Title("Ngày ĐH").Width(42).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.PurchaseOrderCode).Title("Số PO").Width(39);
+        columns.Bound(c => c.CustomerCode).Title("NCC").Width(30);
+        columns.Bound(c => c.Caption).Title("Mặt hàng").Width(238);
     })
     .ToolBar(toolbar =>
     {
