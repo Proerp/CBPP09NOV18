@@ -35,13 +35,19 @@ namespace TotalDTO.Purchases
         [Display(Name = "Số đơn hàng")]
         public string PurchaseOrderCodeNote { get { return this.PurchaseOrderID != null ? this.PurchaseOrderCode : (this.PurchaseOrderCodes != "" ? this.PurchaseOrderCodes : ""); } }
         [Display(Name = "Ngày đặt hàng")]
-        public Nullable<System.DateTime> PurchaseOrderEntryDate { get; set; }
+        public Nullable<System.DateTime> PurchaseOrderVoucherDate { get; set; }
 
         [Display(Name = "Số hóa đơn")]
         [UIHint("Commons/SOCode")]
         public string Code { get; set; }
-        [Display(Name = "Chứng từ khuyến mãi")]
-        public string PromotionVouchers { get; set; }
+        [Display(Name = "Số packing list")]
+        public string PackingList { get; set; }
+        [Display(Name = "Số tờ khai hải quan")]
+        public string CustomsDeclaration { get; set; }
+        [Display(Name = "Ngày chứng từ")]
+        public Nullable<System.DateTime> CustomsDeclarationDate { get; set; }
+        [Display(Name = "Ngày dự kiến giao hàng")]
+        public Nullable<System.DateTime> DeliveryDate { get; set; }
 
         public virtual int SalespersonID { get; set; }
 
@@ -63,7 +69,7 @@ namespace TotalDTO.Purchases
 
             string purchaseOrderReferences = ""; string purchaseOrderCodes = ""; int serialID = 0;
             this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.TransporterID = this.TransporterID; e.WarehouseID = this.WarehouseID; e.SalespersonID = this.SalespersonID; e.SerialID = ++serialID; if (this.HasPurchaseOrder && purchaseOrderReferences.IndexOf(e.PurchaseOrderReference) < 0) purchaseOrderReferences = purchaseOrderReferences + (purchaseOrderReferences != "" ? ", " : "") + e.PurchaseOrderReference; if (this.HasPurchaseOrder && e.PurchaseOrderCode != null && purchaseOrderCodes.IndexOf(e.PurchaseOrderCode) < 0) purchaseOrderCodes = purchaseOrderCodes + (purchaseOrderCodes != "" ? ", " : "") + e.PurchaseOrderCode; });
-            this.PurchaseOrderReferences = purchaseOrderReferences; this.PurchaseOrderCodes = purchaseOrderCodes != "" ? purchaseOrderCodes : null; if (this.HasPurchaseOrder) this.Code = this.PurchaseOrderCodes;
+            this.PurchaseOrderReferences = purchaseOrderReferences; this.PurchaseOrderCodes = purchaseOrderCodes != "" ? purchaseOrderCodes : null; //if (this.HasPurchaseOrder) this.Code = this.PurchaseOrderCodes;
         }
     }
 

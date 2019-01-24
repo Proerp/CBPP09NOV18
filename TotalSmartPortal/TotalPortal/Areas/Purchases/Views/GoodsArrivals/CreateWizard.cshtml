@@ -14,8 +14,9 @@
     @Html.HiddenFor(model => model.PurchaseOrderID)
     @Html.HiddenFor(model => model.PurchaseOrderCode)
     @Html.HiddenFor(model => model.PurchaseOrderReference)
-    @Html.HiddenFor(model => model.PurchaseOrderEntryDate)
-
+    @Html.HiddenFor(model => model.PurchaseOrderVoucherDate)
+    @Html.HiddenFor(model => model.DeliveryDate)
+    
     @Html.HiddenFor(model => model.Salesperson.EmployeeID);
     @Html.HiddenFor(model => model.Salesperson.Name);
 
@@ -145,7 +146,8 @@
                 $("#PurchaseOrderID").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderID === undefined ? null : selectedDataItem.PurchaseOrderID);
                 $("#PurchaseOrderCode").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderCode === undefined ? null : selectedDataItem.PurchaseOrderCode);
                 $("#PurchaseOrderReference").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderReference === undefined ? null : selectedDataItem.PurchaseOrderReference);
-                $("#PurchaseOrderEntryDate").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.PurchaseOrderEntryDate, Settings.DateTimeFormat));
+                $("#PurchaseOrderVoucherDate").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderVoucherDate === undefined ? null : kendo.toString(selectedDataItem.PurchaseOrderVoucherDate, Settings.DateTimeFormat));
+                $("#DeliveryDate").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderDeliveryDate === undefined || selectedDataItem.PurchaseOrderDeliveryDate === null ? null : kendo.toString(selectedDataItem.PurchaseOrderDeliveryDate, Settings.DateTimeFormat));
 
                 $("#Warehouse_WarehouseID").val(selectedDataItem === undefined || selectedDataItem.WarehouseID === undefined ? null : selectedDataItem.WarehouseID);
                 $("#Warehouse_Code").val(selectedDataItem === undefined || selectedDataItem.WarehouseCode === undefined ? null : selectedDataItem.WarehouseCode);

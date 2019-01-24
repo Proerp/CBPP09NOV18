@@ -43,5 +43,7 @@ namespace TotalModel.Models
         public string WarehouseCode { get; set; }
         public string WarehouseName { get; set; }
         public string Caption { get; set; }
+        public Nullable<System.DateTime> PurchaseOrderVoucherDate { get; set; }
+        public Nullable<System.DateTime> PurchaseOrderDeliveryDate { get; set; }
     }
 }

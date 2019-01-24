@@ -944,7 +944,11 @@
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="60" />
+          <Property Name="PackingList" Type="nvarchar" MaxLength="60" />
+          <Property Name="CustomsDeclaration" Type="nvarchar" MaxLength="60" />
+          <Property Name="CustomsDeclarationDate" Type="datetime" />
           <Property Name="InvoiceDate" Type="datetime" />
+          <Property Name="DeliveryDate" Type="datetime" />
           <Property Name="HasPurchaseOrder" Type="bit" Nullable="false" />
           <Property Name="PurchaseOrderID" Type="int" />
           <Property Name="PurchaseOrderCodes" Type="nvarchar" MaxLength="200" />
@@ -20332,6 +20336,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="GoodsArrivalPackages" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_GoodsArrivals" FromRole="GoodsArrival" ToRole="GoodsArrivalPackage" />
           <NavigationProperty Name="GoodsReceipts" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_GoodsArrivals" FromRole="GoodsArrival" ToRole="GoodsReceipt" />
           <NavigationProperty Name="Labs" Relationship="TotalSmartPortalModel.FK_Labs_GoodsArrivals" FromRole="GoodsArrival" ToRole="Lab" />
+          <Property Name="PackingList" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="CustomsDeclaration" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="CustomsDeclarationDate" Type="DateTime" Precision="3" />
+          <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_GoodsArrivals_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -21027,6 +21035,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
           <Property Type="String" Name="Caption" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="PurchaseOrderVoucherDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="PurchaseOrderDeliveryDate" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="GoodsArrivalViewDetail">
           <Property Type="Int32" Name="GoodsArrivalDetailID" Nullable="false" />
@@ -28430,6 +28440,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsArrivals">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrival">
               <MappingFragment StoreEntitySet="GoodsArrivals">
+                <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
+                <ScalarProperty Name="CustomsDeclarationDate" ColumnName="CustomsDeclarationDate" />
+                <ScalarProperty Name="CustomsDeclaration" ColumnName="CustomsDeclaration" />
+                <ScalarProperty Name="PackingList" ColumnName="PackingList" />
                 <ScalarProperty Name="TotalPackages" ColumnName="TotalPackages" />
                 <ScalarProperty Name="InActiveDate" ColumnName="InActiveDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
@@ -28922,6 +28936,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
+                <ScalarProperty Name="PurchaseOrderVoucherDate" ColumnName="PurchaseOrderVoucherDate" />
+                <ScalarProperty Name="PurchaseOrderDeliveryDate" ColumnName="PurchaseOrderDeliveryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

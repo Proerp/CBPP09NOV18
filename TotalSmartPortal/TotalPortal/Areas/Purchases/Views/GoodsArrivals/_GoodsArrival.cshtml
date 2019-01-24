@@ -30,6 +30,46 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.PackingList)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.PackingList).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.PackingList, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomsDeclaration)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.CustomsDeclaration).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.CustomsDeclaration, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CustomsDeclarationDate)
+            <div class="div-input">
+                @Html.Kendo().DateTimePickerFor(model => model.CustomsDeclarationDate).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.CustomsDeclarationDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.DeliveryDate)
+            <div class="div-input">
+                @Html.Kendo().DateTimePickerFor(model => model.DeliveryDate).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
         @Html.HiddenFor(model => model.PurchaseOrderID)
         @Html.HiddenFor(model => model.PurchaseOrderCode)
         @Html.HiddenFor(model => model.PurchaseOrderReference)
@@ -55,15 +95,15 @@
                 </div>
             </div>
 
-            if (Model.PurchaseOrderEntryDate != null)
+            if (Model.PurchaseOrderVoucherDate != null)
             {
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PurchaseOrderEntryDate)
+                    @Html.LabelFor(model => model.PurchaseOrderVoucherDate)
                     <div class="div-input">
-                        @Html.Kendo().DateTimePickerFor(model => model.PurchaseOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                        @Html.Kendo().DateTimePickerFor(model => model.PurchaseOrderVoucherDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                     </div>
                     <div class="div-validation-message">
-                        @Html.ValidationMessageFor(model => model.PurchaseOrderEntryDate, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => model.PurchaseOrderVoucherDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
             }
@@ -120,7 +160,7 @@
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
                     columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(227).EditorTemplateName(@Model.HasPurchaseOrder ? "StringReadonly" : "AutoCompletes/CommodityAvailable")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)")
-                        .ClientTemplate("<div> #= CommodityCode #</div>" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
+                        .ClientTemplate("<div> #= CommodityCode #</div>" + "<div> #= CommodityName #</div>" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");

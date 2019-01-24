@@ -54,6 +54,10 @@ namespace TotalModel.Models
         public bool InActivePartial { get; set; }
         public Nullable<System.DateTime> InActiveDate { get; set; }
         public decimal TotalPackages { get; set; }
+        public string PackingList { get; set; }
+        public string CustomsDeclaration { get; set; }
+        public Nullable<System.DateTime> CustomsDeclarationDate { get; set; }
+        public Nullable<System.DateTime> DeliveryDate { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Customer Customer1 { get; set; }
