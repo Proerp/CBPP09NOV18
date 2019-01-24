@@ -1802,6 +1802,7 @@
     <Content Include="Areas\Commons\Views\Commodities\Boms.cshtml" />
     <Content Include="Areas\Commons\Views\Items\Boms.cshtml" />
     <Content Include="Areas\Commons\Views\Boms\Commodities.cshtml" />
+    <Content Include="Areas\Purchases\Views\PurchaseOrders\Create.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -2204,6 +2205,7 @@
     <Content Include="Scripts\Controllers\Purchases\Labs\Edit.js" />
     <Content Include="Scripts\Controllers\Purchases\Labs\Index.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Approve.js" />
+    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Create.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Delete.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Edit.js" />

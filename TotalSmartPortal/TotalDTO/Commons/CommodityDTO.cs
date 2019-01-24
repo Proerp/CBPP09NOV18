@@ -21,7 +21,7 @@ namespace TotalDTO.Commons
         int CommodityID { get; set; }
         [Display(Name = "Mã")]
         string Code { get; set; }
-        [Display(Name = "Tên rút gọn")]
+        [Display(Name = "Tên")]
         [Required(ErrorMessage = "Vui lòng nhập tên sp")]
         string Name { get; set; }
     }
@@ -52,6 +52,7 @@ namespace TotalDTO.Commons
         [Display(Name = "Tên chính thức")]
         [Required(ErrorMessage = "Vui lòng nhập tên chính thức")]
         string OfficialName { get; set; }
+        [Display(Name = "Tên rút gọn")]
         string OriginalName { get; }
 
         int CommodityBrandID { get; set; }
@@ -130,7 +131,7 @@ namespace TotalDTO.Commons
         public string CodePartF { get; set; }
 
         public string OfficialName { get; set; }
-        public string OriginalName { get { return this.OfficialName; } }
+        public string OriginalName { get; set; }
 
         public int CommodityBrandID { get; set; }
         public string CommodityBrandName { get; set; }
@@ -193,6 +194,8 @@ namespace TotalDTO.Commons
         {
             base.PerformPresaveRule();
             if (this.IsItem) this.PiecePerPack = 1;
+
+            if (this.OriginalName == null || this.OriginalName == "") this.OriginalName = this.OfficialName;
         }
     }
 

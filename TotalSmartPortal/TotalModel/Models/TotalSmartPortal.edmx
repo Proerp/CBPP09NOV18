@@ -17491,7 +17491,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <ComplexType Name="CommodityIndex">
           <Property Type="String" Name="Code" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="302" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="201" />
           <Property Type="String" Name="CodePartA" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="CodePartB" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="CodePartC" Nullable="true" MaxLength="20" />
@@ -17515,9 +17515,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="MoldName" Nullable="true" MaxLength="100" />
           <Property Type="Decimal" Name="MoldQuantity" Nullable="true" Precision="18" Scale="2" />
           <Property Type="String" Name="OfficialName" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="Specification" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="Specification" Nullable="true" MaxLength="201" />
           <Property Type="Decimal" Name="Weight" Nullable="true" Precision="18" Scale="3" />
           <Property Type="String" Name="Packing" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="OriginalName" Nullable="false" MaxLength="200" />
         </ComplexType>
         <Association Name="FK_WarehouseAdjustments_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -20738,7 +20739,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Code" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="LocationCode" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
-          <Property Type="String" Name="VoidTypeName" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="VoidTypeName" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="DeliveryDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="Purposes" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
@@ -20747,10 +20748,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Boolean" Name="InActive" Nullable="false" />
           <Property Type="Boolean" Name="InActivePartial" Nullable="false" />
           <Property Type="Decimal" Name="TotalQuantityArrived" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
-          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="QuantityArrived" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="CommodityCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="true" MaxLength="200" />
+          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityArrived" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="19" Scale="2" />
         </ComplexType>
         <ComplexType Name="PurchaseOrderViewDetail">
@@ -26735,6 +26736,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Specification" ColumnName="Specification" />
                 <ScalarProperty Name="Weight" ColumnName="Weight" />
                 <ScalarProperty Name="Packing" ColumnName="Packing" />
+                <ScalarProperty Name="OriginalName" ColumnName="OriginalName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

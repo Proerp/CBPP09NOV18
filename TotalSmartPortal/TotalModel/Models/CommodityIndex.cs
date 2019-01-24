@@ -42,5 +42,6 @@ namespace TotalModel.Models
         public string Specification { get; set; }
         public Nullable<decimal> Weight { get; set; }
         public string Packing { get; set; }
+        public string OriginalName { get; set; }
     }
 }

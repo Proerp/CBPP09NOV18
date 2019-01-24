@@ -49,8 +49,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "       FROM        PurchaseOrders " + "\r\n";
             queryString = queryString + "                   INNER JOIN Locations ON PurchaseOrders.EntryDate >= @FromDate AND PurchaseOrders.EntryDate <= @ToDate AND PurchaseOrders.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.PurchaseOrder + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = PurchaseOrders.LocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON PurchaseOrders.CustomerID = Customers.CustomerID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN PurchaseOrderDetails ON PurchaseOrders.PurchaseOrderID = PurchaseOrderDetails.PurchaseOrderID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Commodities ON PurchaseOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   LEFT JOIN PurchaseOrderDetails ON PurchaseOrders.PurchaseOrderID = PurchaseOrderDetails.PurchaseOrderID " + "\r\n";
+            queryString = queryString + "                   LEFT JOIN Commodities ON PurchaseOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN VoidTypes ON PurchaseOrders.VoidTypeID = VoidTypes.VoidTypeID" + "\r\n";
             queryString = queryString + "                   LEFT JOIN VoidTypes VoidTypeDetails ON PurchaseOrderDetails.VoidTypeID = VoidTypeDetails.VoidTypeID" + "\r\n";
             queryString = queryString + "       " + "\r\n";

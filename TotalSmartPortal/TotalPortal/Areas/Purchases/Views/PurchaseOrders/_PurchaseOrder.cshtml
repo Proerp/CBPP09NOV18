@@ -50,9 +50,15 @@
 
     <div class="right-panel">
 
-        <div class="right-top-panel right-top-panel-H3">
-            @Html.EditorFor(d => d.Customer, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
-            @Html.EditorFor(d => d.Transporter, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
+        <div class="right-top-panel right-top-panel-H3">            
+            @*
+                THIS IS USED FOR CREATEWIZARD. JUST ONLY HERE: REMOVE TEMPLATE: "AutoCompletes/CustomerBase" ==> TO USE THE DEFAULT UIHINT
+                @Html.EditorFor(d => d.Customer, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
+                @Html.EditorFor(d => d.Transporter, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
+            *@
+
+            @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
+            @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
         </div>
 
 
