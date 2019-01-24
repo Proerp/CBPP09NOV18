@@ -30,6 +30,8 @@ namespace TotalDTO.Purchases
         [Display(Name = "Mục đích")]
         public string Purposes { get; set; }
 
+        [Display(Name = "Ngày chứng từ")]
+        public Nullable<System.DateTime> VoucherDate { get; set; }
         [Display(Name = "Ngày dự kiến giao hàng")]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
 

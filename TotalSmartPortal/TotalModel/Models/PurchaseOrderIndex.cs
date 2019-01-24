@@ -33,5 +33,6 @@ namespace TotalModel.Models
         public Nullable<decimal> Quantity { get; set; }
         public Nullable<decimal> QuantityArrived { get; set; }
         public Nullable<decimal> QuantityRemains { get; set; }
+        public Nullable<System.DateTime> VoucherDate { get; set; }
     }
 }

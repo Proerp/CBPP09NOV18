@@ -1788,6 +1788,7 @@
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="TransporterID" Type="int" Nullable="false" />
+          <Property Name="VoucherDate" Type="datetime" />
           <Property Name="DeliveryDate" Type="datetime" />
           <Property Name="Purposes" Type="nvarchar" MaxLength="100" />
           <Property Name="UserID" Type="int" Nullable="false" />
@@ -20753,6 +20754,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityArrived" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="DateTime" Name="VoucherDate" Nullable="true" Precision="23" />
         </ComplexType>
         <ComplexType Name="PurchaseOrderViewDetail">
           <Property Type="Int32" Name="PurchaseOrderDetailID" Nullable="false" />
@@ -20834,6 +20836,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="PurchaseOrderDetails" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_PurchaseOrders" FromRole="PurchaseOrder" ToRole="PurchaseOrderDetail" />
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_VoidTypes" FromRole="PurchaseOrder" ToRole="VoidType" />
           <Property Name="Caption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="VoucherDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_PurchaseOrders_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -28723,6 +28726,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="QuantityArrived" ColumnName="QuantityArrived" />
                 <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
+                <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -28781,6 +28785,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="PurchaseOrders">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.PurchaseOrder">
               <MappingFragment StoreEntitySet="PurchaseOrders">
+                <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="InActiveDate" ColumnName="InActiveDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
