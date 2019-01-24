@@ -1,4 +1,5 @@
-﻿@using TotalPortal.Configuration
+﻿@using TotalBase.Enums
+@using TotalPortal.Configuration
 
 @model TotalPortal.Areas.Commons.ViewModels.ICommodityViewModel
 
@@ -11,20 +12,25 @@
 
             columns.Bound(p => p.CommodityCategoryName1).Title("ROOT").Hidden();
             columns.Bound(p => p.CommodityCategoryName2).Title("CAT").Hidden();
-            columns.Bound(p => p.CodePartA).Title("Mã").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(39).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/" + Model.ControllerName, action = "Edit" }) + "/#= CommodityID #'>#=CodePartA#</a>").Hidden(@Model.IsItem ? true : false);
-            columns.Bound(p => p.CodePartB).Title("Phân loại").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(25).ClientTemplate(@Model.IsItem ? "<a href='" + Url.RouteUrl("Default", new { controller = "Commons/" + Model.ControllerName, action = "Edit" }) + "/#= CommodityID #'>#=CodePartB#</a>" : "");
-            columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
-            columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(@Model.IsMaterial ? true : false);
-            columns.Bound(p => p.CodePartA).Title("Công thức").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(@Model.IsItem ? false : true);
-            columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
-            columns.Bound(p => p.CodePartF).Title("Chiều rộng").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
+            columns.Bound(p => p.CodePartA).Title("Mã").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(25).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/" + Model.ControllerName, action = "Edit" }) + "/#= CommodityID #'>#=CodePartA#</a>").Hidden(@Model.IsItem);
+            columns.Bound(p => p.CodePartB).Title("Phân loại").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(25).ClientTemplate(@Model.IsItem ? "<a href='" + Url.RouteUrl("Default", new { controller = "Commons/" + Model.ControllerName, action = "Edit" }) + "/#= CommodityID #'>#=CodePartB#</a>" : "").Hidden(GlobalEnums.CBPP);
+            columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(GlobalEnums.CBPP);
+            columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(@Model.IsMaterial || GlobalEnums.CBPP);
+            columns.Bound(p => p.CodePartA).Title("Công thức").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem || GlobalEnums.CBPP);
+            columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem || GlobalEnums.CBPP);
+            columns.Bound(p => p.CodePartF).Title("Chiều rộng").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem || GlobalEnums.CBPP);
 
-            columns.Bound(p => p.Name).Title("Tên thường gọi").Width(180);
+            columns.Bound(p => p.Name).Title("Tên").Width(GlobalEnums.CBPP ? 10 : 180);
+            columns.Bound(p => p.OfficialName).Title("Tên chính thức").Width(180).Hidden(!GlobalEnums.CBPP);
 
             columns.Bound(p => p.BomCode).Title(@Model.IsItem ? "Mã công thức" : "Mã màng").Width(126).Hidden(!@Model.IsItem && !@Model.IsProduct);
             columns.Bound(p => p.MoldCode).Title("M").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(20).Hidden(!@Model.IsProduct);
             columns.Bound(p => p.MoldQuantity).Title("P/M").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(10).Hidden(!@Model.IsProduct);
 
+            columns.Bound(p => p.Weight).Title("TL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).Hidden(!GlobalEnums.CBPP);
+            columns.Bound(p => p.Packing).Title("ĐD").Width(10).Hidden(!GlobalEnums.CBPP);
+            
+            columns.Bound(p => p.Specification).Title("Tồn trữ, bảo quản").Width(138).Hidden(@Model.IsProduct || !GlobalEnums.CBPP);
             columns.Bound(p => p.Remarks).Title("Ghi chú").Width(127).Hidden(@Model.IsProduct);
 
             columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(10)
@@ -40,28 +46,28 @@
                 </div>
             </text>);
         })
-                    .Pageable()
+                            .Pageable()
             //.Groupable()
             //.Filterable()
-                    .Selectable()
-                    .Sortable()
-                    .Events(e =>
-                    {
-                        e.DataBound("hightLightSelectedRow");
-                    })
-                    .DataSource(dataSource => dataSource
-                        .Ajax()
-                        .Read(read => read.Action("GetCommodityIndexes", "CommodityAPIs", new { area = "Commons" }).Data("onCommodityIndexes"))
-                        .Group(group => group.Add(p => p.CommodityCategoryName1)).Group(group => group.Add(p => p.CommodityCategoryName2))
-                        .PageSize(20)
-                        .Model(model =>
-                        {
-                            model.Id(x => x.CommodityID);
-                            model.Field(m => m.CommodityID).DefaultValue(0);
-                        })
-                        .ServerOperation(true)
-                    )
-                    .HtmlAttributes(new { @class = "grid-class" }))
+                            .Selectable()
+                            .Sortable()
+                            .Events(e =>
+                            {
+                                e.DataBound("hightLightSelectedRow");
+                            })
+                            .DataSource(dataSource => dataSource
+                                .Ajax()
+                                .Read(read => read.Action("GetCommodityIndexes", "CommodityAPIs", new { area = "Commons" }).Data("onCommodityIndexes"))
+                                .Group(group => group.Add(p => p.CommodityCategoryName1)).Group(group => group.Add(p => p.CommodityCategoryName2))
+                                .PageSize(20)
+                                .Model(model =>
+                                {
+                                    model.Id(x => x.CommodityID);
+                                    model.Field(m => m.CommodityID).DefaultValue(0);
+                                })
+                                .ServerOperation(true)
+                            )
+                            .HtmlAttributes(new { @class = "grid-class" }))
 </div>
 
 
@@ -109,7 +115,13 @@
     .k-grid td {
         border-width: 0;
         /*background-color: #f5f5f5;*/
+        /*white-space: pre-line;
+        word-wrap: initial;*/
+        /*white-space: nowrap;
+        text-overflow: ellipsis;
+        table-layout: fixed;*/
     }
+
     .k-grid {
         background: #f5f5f5;
     }

@@ -289,8 +289,8 @@
           <Property Name="LeadTime" Type="int" />
           <Property Name="HSCode" Type="nvarchar" MaxLength="20" />
           <Property Name="Discontinue" Type="bit" Nullable="false" />
-          <Property Name="Specification" Type="nvarchar" MaxLength="100" />
           <Property Name="Caption" Type="nvarchar" MaxLength="100" />
+          <Property Name="Specification" Type="nvarchar" MaxLength="100" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="InActive" Type="bit" Nullable="false" />
@@ -17491,7 +17491,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <ComplexType Name="CommodityIndex">
           <Property Type="String" Name="Code" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="200" />
-          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="302" />
           <Property Type="String" Name="CodePartA" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="CodePartB" Nullable="true" MaxLength="20" />
           <Property Type="String" Name="CodePartC" Nullable="true" MaxLength="20" />
@@ -17512,8 +17512,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="BlockQuantity" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Int32" Name="MoldID" Nullable="true" />
           <Property Type="String" Name="MoldCode" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="MoldName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="MoldName" Nullable="true" MaxLength="100" />
           <Property Type="Decimal" Name="MoldQuantity" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="OfficialName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Specification" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="String" Name="Packing" Nullable="true" MaxLength="60" />
         </ComplexType>
         <Association Name="FK_WarehouseAdjustments_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -26727,6 +26731,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="MoldCode" ColumnName="MoldCode" />
                 <ScalarProperty Name="MoldName" ColumnName="MoldName" />
                 <ScalarProperty Name="MoldQuantity" ColumnName="MoldQuantity" />
+                <ScalarProperty Name="OfficialName" ColumnName="OfficialName" />
+                <ScalarProperty Name="Specification" ColumnName="Specification" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Packing" ColumnName="Packing" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

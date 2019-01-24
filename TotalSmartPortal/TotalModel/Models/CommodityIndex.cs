@@ -38,5 +38,9 @@ namespace TotalModel.Models
         public string MoldCode { get; set; }
         public string MoldName { get; set; }
         public Nullable<decimal> MoldQuantity { get; set; }
+        public string OfficialName { get; set; }
+        public string Specification { get; set; }
+        public Nullable<decimal> Weight { get; set; }
+        public string Packing { get; set; }
     }
 }

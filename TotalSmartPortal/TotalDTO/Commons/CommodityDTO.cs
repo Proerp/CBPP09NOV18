@@ -21,7 +21,7 @@ namespace TotalDTO.Commons
         int CommodityID { get; set; }
         [Display(Name = "Mã")]
         string Code { get; set; }
-        [Display(Name = "Tên sp")]
+        [Display(Name = "Tên rút gọn")]
         [Required(ErrorMessage = "Vui lòng nhập tên sp")]
         string Name { get; set; }
     }
@@ -48,7 +48,7 @@ namespace TotalDTO.Commons
         [Display(Name = "Chiều rộng")]
         string CodePartF { get; set; }
 
-        
+
         [Display(Name = "Tên chính thức")]
         [Required(ErrorMessage = "Vui lòng nhập tên chính thức")]
         string OfficialName { get; set; }
@@ -87,8 +87,9 @@ namespace TotalDTO.Commons
         string Origin { get; set; }
 
         [Display(Name = "Hs TL (net)")]
-        double Weight { get; set; }
-        double LeadTime { get; set; }
+        [UIHint("Weight")]
+        Nullable<decimal> Weight { get; set; }
+        int LeadTime { get; set; }
 
         bool IsRegularCheckUps { get; set; }
         bool Discontinue { get; set; }
@@ -119,7 +120,7 @@ namespace TotalDTO.Commons
         public void SetID(int id) { this.CommodityID = id; }
 
         public int CommodityID { get; set; }
-        public override string Code { get { return ((this.CommodityTypeID != (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartB) ? this.CodePartB + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartC) ? this.CodePartC + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartD) ? this.CodePartD + " " : "") + (this.CommodityTypeID == (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartE) ? this.CodePartE + " x " : "") + (!String.IsNullOrWhiteSpace(this.CodePartF) ? this.CodePartF : "")).Trim(); } }
+        public override string Code { get { return GlobalEnums.CBPP ? this.CodePartA : ((this.CommodityTypeID != (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartB) ? this.CodePartB + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartC) ? this.CodePartC + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartD) ? this.CodePartD + " " : "") + (this.CommodityTypeID == (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartE) ? this.CodePartE + " x " : "") + (!String.IsNullOrWhiteSpace(this.CodePartF) ? this.CodePartF : "")).Trim(); } }
         public string OfficialCode { get { return TotalBase.CommonExpressions.AlphaNumericString(this.Code); } }
         public string CodePartA { get; set; }
         public string CodePartB { get { return this.CommodityCategoryName.IndexOf("[") >= 0 ? this.CommodityCategoryName.Remove(this.CommodityCategoryName.IndexOf("[")).Trim() : this.CommodityCategoryName; } }
@@ -157,8 +158,8 @@ namespace TotalDTO.Commons
         public string Packing { get; set; }
         public string Origin { get; set; }
 
-        public double Weight { get; set; }
-        public double LeadTime { get; set; }
+        public Nullable<decimal> Weight { get; set; }
+        public int LeadTime { get; set; }
 
         public bool IsRegularCheckUps { get; set; }
         public bool Discontinue { get; set; }

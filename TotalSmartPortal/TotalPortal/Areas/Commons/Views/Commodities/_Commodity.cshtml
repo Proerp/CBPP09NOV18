@@ -38,8 +38,8 @@
             </div>
         }
 
-        <div @{if (GlobalEnums.CBPP) { <text> div class="SBT-Hidden" </text>         } }>
-            @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityCategory.cshtml")
+        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityCategory.cshtml")
+        <div @{if (GlobalEnums.CBPP) { <text> div class="SBT-Hidden" </text>         } }>            
             @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityLine.cshtml")
         </div>
 
@@ -150,7 +150,7 @@
         <div class="form-group">
             @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Weight)
             <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).Weight).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).Weight).Format("{0:n3}").HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
                 @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Weight, "", new { @class = "text-danger" })
