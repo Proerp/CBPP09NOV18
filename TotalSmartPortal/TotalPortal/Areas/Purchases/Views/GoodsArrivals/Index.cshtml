@@ -14,13 +14,15 @@
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(30).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
 
                 columns.Bound(p => p.Reference).Title("PNH").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/GoodsArrivals", action = "Edit" }) + "/#= GoodsArrivalID #'>#=Reference#</a>");
-                columns.Bound(p => p.Code).Title("Hóa đơn").Width(50);
+                columns.Bound(p => p.Code).Title("Hóa đơn").Width(30);
+                columns.Bound(p => p.PackingList).Title("PL").Width(30);
+                columns.Bound(p => p.CustomsDeclaration).Title("TKHQ").Width(30);
 
                 columns.Bound(p => p.PurchaseOrderReferences).Title("PO").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseOrders", action = "Edit" }) + "/#= PurchaseOrderID #' target='_blank'>#=PurchaseOrderReferences#</a>");
                 columns.Bound(p => p.PurchaseOrderCodes).Title("Số PO").Width(50);
                 columns.Bound(p => p.PurchaseOrderEntryDate).Title("Ngày ĐH").Format("{0:dd/MM/yy}").Width(30).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
 
-                columns.Bound(p => p.CustomerName).Title("Nhà cung cấp").Width(290);
+                columns.Bound(p => p.CustomerName).Title("Nhà cung cấp").Width(230);
                 columns.Bound(p => p.Description).Title("Diễn giải").Width(190);
 
                 columns.Bound(p => p.TotalQuantity).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
@@ -154,6 +156,8 @@
                 filters: [
                     { field: "Reference", operator: "contains", value: indexFilterText },
                     { field: "Code", operator: "contains", value: indexFilterText },
+                    { field: "PackingList", operator: "contains", value: indexFilterText },
+                    { field: "CustomsDeclaration", operator: "contains", value: indexFilterText },
 
                     { field: "CustomerName", operator: "contains", value: indexFilterText },
                     { field: "Description", operator: "contains", value: indexFilterText },

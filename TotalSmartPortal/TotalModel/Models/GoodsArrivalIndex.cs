@@ -29,5 +29,7 @@ namespace TotalModel.Models
         public Nullable<int> PurchaseOrderID { get; set; }
         public string PurchaseOrderCodes { get; set; }
         public string PurchaseOrderReferences { get; set; }
+        public string PackingList { get; set; }
+        public string CustomsDeclaration { get; set; }
     }
 }

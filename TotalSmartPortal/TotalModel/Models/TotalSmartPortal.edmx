@@ -20959,6 +20959,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="PurchaseOrderID" Nullable="true" />
           <Property Type="String" Name="PurchaseOrderCodes" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="PurchaseOrderReferences" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="PackingList" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="CustomsDeclaration" Nullable="true" MaxLength="60" />
         </ComplexType>
         <ComplexType Name="GoodsArrivalPendingCustomer">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
@@ -28848,6 +28850,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="PurchaseOrderID" ColumnName="PurchaseOrderID" />
                 <ScalarProperty Name="PurchaseOrderCodes" ColumnName="PurchaseOrderCodes" />
                 <ScalarProperty Name="PurchaseOrderReferences" ColumnName="PurchaseOrderReferences" />
+                <ScalarProperty Name="PackingList" ColumnName="PackingList" />
+                <ScalarProperty Name="CustomsDeclaration" ColumnName="CustomsDeclaration" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
