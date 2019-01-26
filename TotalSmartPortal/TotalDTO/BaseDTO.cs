@@ -126,6 +126,9 @@ namespace TotalDTO
         [Display(Name = "Lọc dữ liệu đến ngày")]
         public DateTime GlobalToDate { get; set; }
 
+        public DateTime ExtendedFromDate { get { return this.GlobalFromDate; } }
+        public DateTime ExtendedToDate { get { return this.GlobalToDate; } }
+
         public virtual int PrintOptionID { get; set; }
     }
 }

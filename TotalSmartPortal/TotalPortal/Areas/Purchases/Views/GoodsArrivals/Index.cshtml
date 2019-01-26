@@ -57,8 +57,11 @@
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                                     //.HtmlAttributes(new { @style = "padding-right: 13px;" })
                                 )
-                                @Html.Kendo().DatePicker().Name("ExtendedFromDate").Value(Model.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
-                                @Html.Kendo().DatePicker().Name("ExtendedToDate").Value(Model.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                                @*@Html.Kendo().DatePicker().Name("ExtendedFromDate").Value(Model.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                                @Html.Kendo().DatePicker().Name("ExtendedToDate").Value(Model.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })*@
+
+                                @Html.Kendo().DateTimePickerFor(model => model.ExtendedFromDate).Format(Settings.DateFormat).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:146px" })
+                                @Html.Kendo().DateTimePickerFor(model => model.ExtendedToDate).Format(Settings.DateFormat).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:146px" })
                             </span>
 
 
