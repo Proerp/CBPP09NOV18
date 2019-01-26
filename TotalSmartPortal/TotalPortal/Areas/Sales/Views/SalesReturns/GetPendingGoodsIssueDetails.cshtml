@@ -25,8 +25,8 @@
                 <input id="filterText" class="k-textbox" style="text-align: center; " onkeyup="filterText_KeyUp()" />
 
                 <span id="filterExtended" style="display: none;">
-                    @Html.Kendo().DatePicker().Name("FromDate").Value(DateTime.Today).Events(e => e.Change("reReadGetPendingGoodsIssueDetails")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
-                    @Html.Kendo().DatePicker().Name("ToDate").Value(DateTime.Today).Events(e => e.Change("reReadGetPendingGoodsIssueDetails")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                    @Html.Kendo().DatePicker().Name("FromDate").Value(DateTime.Today).Events(e => e.Change("reReadGetPendingGoodsIssueDetails")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                    @Html.Kendo().DatePicker().Name("ToDate").Value(DateTime.Today).Events(e => e.Change("reReadGetPendingGoodsIssueDetails")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
                 </span>
             </div>
         </text>);

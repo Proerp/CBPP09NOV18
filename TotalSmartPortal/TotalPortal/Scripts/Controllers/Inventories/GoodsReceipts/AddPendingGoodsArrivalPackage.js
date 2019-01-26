@@ -102,7 +102,7 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingGoodsArrivalPackageGri
         dataRow.LabCode = goodsArrivalGridDataItem.LabCode;
 
         dataRow.BinLocationID = 1;
-        dataRow.BinLocationCode = "A01";
+        dataRow.BinLocationCode = "DEFAULT";
 
         dataRow.ProductionDate = goodsArrivalGridDataItem.ProductionDate;
         dataRow.ExpiryDate = goodsArrivalGridDataItem.ExpiryDate;

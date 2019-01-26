@@ -25,8 +25,8 @@
                 <label>Nhập PXK/ hoặc mã, tên khách hàng, đơn vị nhận/ hoặc mã hàng hóa</label>
                 <input id="filterText" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="filterText_KeyUp()" />
                 <span id="filterExtended" style="display: none;" >
-                    @Html.Kendo().DatePicker().Name("FromDate").Value(DateTime.Today).Events(e => e.Change("reReadPendingGoodsIssueDetails")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
-                    @Html.Kendo().DatePicker().Name("ToDate").Value(DateTime.Today).Events(e => e.Change("reReadPendingGoodsIssueDetails")).HtmlAttributes(new { @class = "input-class", style = "text-align: center; width:118px" })
+                    @Html.Kendo().DatePicker().Name("FromDate").Value(DateTime.Today).Events(e => e.Change("reReadPendingGoodsIssueDetails")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                    @Html.Kendo().DatePicker().Name("ToDate").Value(DateTime.Today).Events(e => e.Change("reReadPendingGoodsIssueDetails")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
 
                     @(Html.Kendo().DropDownList()
                     .Name("CommodityTypeID")
