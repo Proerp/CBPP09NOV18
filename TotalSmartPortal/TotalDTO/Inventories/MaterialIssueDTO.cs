@@ -46,6 +46,7 @@ namespace TotalDTO.Inventories
         [Display(Name = "Thành phẩm")]
         string FirmOrderSpecificationSpecs { get; }
 
+        [Display(Name = "KL cần xuất")]
         decimal QuantityMaterialEstimated { get; set; }
 
         int BomID { get; set; }
@@ -101,7 +102,6 @@ namespace TotalDTO.Inventories
         [Display(Name = "Thành phẩm")]
         public string FirmOrderSpecificationSpecs { get { return this.FirmOrderSpecs + " (" + this.FirmOrderSpecification + ")"; } }
 
-        [Display(Name = "Tổng lượng NVL cần xuất")]
         public decimal QuantityMaterialEstimated { get; set; }
 
         public int BomID { get; set; }
@@ -150,7 +150,7 @@ namespace TotalDTO.Inventories
         [UIHint("AutoCompletes/EmployeeBase")]
         EmployeeBaseDTO Storekeeper { get; set; }
 
-        [Display(Name = "Công nhân ĐHCK")]
+        [Display(Name = "Công nhân thực hiện")]
         [UIHint("AutoCompletes/EmployeeBase")]
         EmployeeBaseDTO CrucialWorker { get; set; }
 
@@ -189,7 +189,7 @@ namespace TotalDTO.Inventories
         public EmployeeBaseDTO Storekeeper { get; set; }
 
         public override int CrucialWorkerID { get { return (this.CrucialWorker != null ? this.CrucialWorker.EmployeeID : 0); } }
-        [Display(Name = "Công nhân ĐHCK")]
+        [Display(Name = "Công nhân thực hiện")]
         [UIHint("AutoCompletes/EmployeeBase")]
         public EmployeeBaseDTO CrucialWorker { get; set; }
 

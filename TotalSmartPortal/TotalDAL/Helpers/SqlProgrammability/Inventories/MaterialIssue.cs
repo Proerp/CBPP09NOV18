@@ -31,7 +31,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.MaterialIssueApproved();
             this.MaterialIssueEditable();
 
-            this.MaterialIssueToggleApproved();
+            //DO NOT ALLOW MaterialIssueToggleApproved DEPENDENTLY. BECAUSE: WE NEED TO RUN CHECK BOM MaterialIssueSaveRelative
+            //IMPORTANT: 'CHECK BOM' AT: MaterialIssueSaveRelative: MUST RUN BEFORE CALL SAVE UPDATE TO FirmOrderMaterials ==> IN ORDER TO GET SQL_FirmOrderRemains CORRECTLY
+            this.MaterialIssueToggleApproved(); 
 
             this.MaterialIssueInitReference();
 
@@ -117,7 +119,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "       FROM           (SELECT FirmOrderID, ROUND(SUM(Quantity - (QuantitySemifinished - QuantityShortage - QuantityFailure + QuantityExcess)), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM FirmOrderDetails WHERE NMVNTaskID = @NMVNTaskID + 671977 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND (@FirmOrderID IS NULL OR FirmOrderID = @FirmOrderID) AND ROUND(Quantity - (QuantitySemifinished - QuantityShortage - QuantityFailure + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY FirmOrderID) AS FirmOrderRemains " + "\r\n";
             queryString = queryString + "                       INNER JOIN ProductionOrderDetails ON ProductionOrderDetails.Approved = 1 AND ProductionOrderDetails.InActive = 0 AND ProductionOrderDetails.InActivePartial = 0 AND FirmOrderRemains.FirmOrderID = ProductionOrderDetails.FirmOrderID " + "\r\n";//LocationID = @LocationID AND 
-            queryString = queryString + "                       INNER JOIN FirmOrders ON FirmOrderRemains.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN FirmOrders ON (@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemStaging + " OR ROUND(FirmOrders.QuantityMaterialEstimated - FirmOrders.QuantityMaterialEstimatedIssued, " + (int)GlobalEnums.rndQuantity + ") >0) AND FirmOrderRemains.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
 
             //ProductionOrderDetails.FirmOrderID IN 
             queryString = queryString + "                       INNER JOIN Customers ON ProductionOrderDetails.CustomerID = Customers.CustomerID " + "\r\n";
@@ -221,7 +223,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "       BEGIN  " + "\r\n";
 
-            queryString = queryString + "           DECLARE @msg NVARCHAR(300) ";
+            queryString = queryString + "           DECLARE @msg NVARCHAR(300) = '' ";
 
             queryString = queryString + "           IF (@SaveRelativeOption = 1) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
@@ -233,7 +235,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
 
             #region CHECK BOM
-            queryString = queryString + "                   IF ((SELECT Approved FROM MaterialIssues WHERE MaterialIssueID = @EntityID AND Approved = 1) = 1) " + "\r\n";
+            //IMPORTANT: 'CHECK BOM' AT: MaterialIssueSaveRelative: MUST RUN BEFORE CALL SAVE UPDATE TO FirmOrderMaterials ==> IN ORDER TO GET SQL_FirmOrderRemains CORRECTLY
+            queryString = queryString + "                   IF ((SELECT Approved FROM MaterialIssues WHERE MaterialIssueID = @EntityID AND Approved = 1 AND NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.MaterialStaging + ") = 1) " + "\r\n";
             queryString = queryString + "                       BEGIN " + "\r\n";
 
             queryString = queryString + "                           DECLARE     @IssueAll bit = 0 " + "\r\n";
@@ -371,22 +374,6 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "               END  " + "\r\n";
             #endregion
 
-
-            //queryString = queryString + "           IF (@SaveRelativeOption = 1) " + "\r\n";
-            //queryString = queryString + "               BEGIN " + "\r\n";
-            //queryString = queryString + "                   IF ((SELECT Approved FROM MaterialIssues WHERE MaterialIssueID = @EntityID AND Approved = 1) = 1) " + "\r\n";
-            //queryString = queryString + "                       BEGIN " + "\r\n";
-            //queryString = queryString + "                           UPDATE      MaterialIssues  SET Approved = 0 WHERE MaterialIssueID = @EntityID AND Approved = 1" + "\r\n"; //CLEAR APPROVE BEFORE CALL MaterialIssueToggleApproved
-            //queryString = queryString + "                           IF @@ROWCOUNT = 1 " + "\r\n";
-            //queryString = queryString + "                               EXEC        MaterialIssueToggleApproved @EntityID, 1 " + "\r\n";
-            //queryString = queryString + "                           ELSE " + "\r\n";
-            //queryString = queryString + "                               BEGIN " + "\r\n";
-            //queryString = queryString + "                                   SET         @msg = N'Dữ liệu không tồn tại hoặc đã duyệt'; " + "\r\n";
-            //queryString = queryString + "                                   THROW       61001,  @msg, 1; " + "\r\n";
-            //queryString = queryString + "                               END " + "\r\n";
-            //queryString = queryString + "                       END " + "\r\n";
-            //queryString = queryString + "               END " + "\r\n";
-
             queryString = queryString + "       END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("MaterialIssueSaveRelative", queryString);
@@ -432,18 +419,15 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "       DECLARE     @msg NVARCHAR(300) = ''; " + "\r\n";
-
             queryString = queryString + "       UPDATE      MaterialIssues  SET Approved = @Approved, ApprovedDate = GetDate() WHERE MaterialIssueID = @EntityID AND Approved = ~@Approved" + "\r\n";
 
             queryString = queryString + "       IF @@ROWCOUNT = 1 " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
-
-            queryString = queryString + "               UPDATE          MaterialIssueDetails  SET Approved = @Approved WHERE MaterialIssueID = @EntityID ; " + "\r\n";
+            queryString = queryString + "               UPDATE      MaterialIssueDetails  SET Approved = @Approved WHERE MaterialIssueID = @EntityID ; " + "\r\n";
             queryString = queryString + "           END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
-            queryString = queryString + "               SET         @msg = N'Dữ liệu không tồn tại hoặc đã ' + iif(@Approved = 0, N'hủy', '')  + N' duyệt' ; " + "\r\n";
+            queryString = queryString + "               DECLARE     @msg NVARCHAR(300) = N'Dữ liệu không tồn tại hoặc đã ' + iif(@Approved = 0, N'hủy', '')  + N' duyệt' ; " + "\r\n";
             queryString = queryString + "               THROW       61001,  @msg, 1; " + "\r\n";
             queryString = queryString + "           END " + "\r\n";
 
