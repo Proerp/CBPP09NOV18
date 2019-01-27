@@ -153,8 +153,8 @@
                     columns.Bound(p => p.BomID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (BomID == null)? '' : BomID #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].BomID' value='#= (BomID == null) ? '' : BomID #' />");
                     columns.Bound(p => p.BomDetailID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (BomDetailID == null)? '' : BomDetailID #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].BomDetailID' value='#= (BomDetailID == null) ? '' : BomDetailID #' />");                    
-                    columns.Bound(p => p.LayerCode).DisplayNameTitle().Width(20).Hidden(GlobalEnums.CBPP || @Model.IsItem)
+                        .ClientTemplate("#= (BomDetailID == null)? '' : BomDetailID #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].BomDetailID' value='#= (BomDetailID == null) ? '' : BomDetailID #' />");
+                    columns.Bound(p => p.LayerCode).DisplayNameTitle().Width(20).Hidden(GlobalEnums.CBPP || @Model.IsItem).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
                         .ClientTemplate("#= (LayerCode == null)? '' : LayerCode #" + "<input type='hidden' name='MaterialIssueViewDetails[#= index(data) #].LayerCode' value='#= (LayerCode == null) ? '' : LayerCode #' />");
                     
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
