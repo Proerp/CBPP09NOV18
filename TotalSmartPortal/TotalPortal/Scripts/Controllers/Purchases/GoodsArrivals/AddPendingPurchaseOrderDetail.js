@@ -63,7 +63,7 @@ function handleOKEvent(goodsArrivalGridDataSource, pendingPurchaseOrderDetailGri
         dataRow.QuantityRemains = purchaseOrderGridDataItem.QuantityRemains;
         dataRow.Quantity = purchaseOrderGridDataItem.Quantity;
 
-        dataRow.UnitWeight = 1;
+        dataRow.UnitWeight = purchaseOrderGridDataItem.UnitWeight != null? purchaseOrderGridDataItem.UnitWeight : 1;
         dataRow.Packages = 0;
 
         dataRow.SealCode = null;

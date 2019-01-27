@@ -28,5 +28,6 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public Nullable<bool> IsSelected { get; set; }
         public Nullable<int> Shelflife { get; set; }
+        public Nullable<decimal> UnitWeight { get; set; }
     }
 }

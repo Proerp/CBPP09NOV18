@@ -211,7 +211,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             string queryString = "";
 
             queryString = queryString + "       SELECT      PurchaseOrders.PurchaseOrderID, PurchaseOrderDetails.PurchaseOrderDetailID, PurchaseOrders.Reference AS PurchaseOrderReference, PurchaseOrders.Code AS PurchaseOrderCode, PurchaseOrders.EntryDate AS PurchaseOrderEntryDate, " + "\r\n";
-            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.Shelflife, Commodities.CommodityTypeID, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.Shelflife, Commodities.CommodityTypeID, Commodities.Weight AS UnitWeight, " + "\r\n";
             queryString = queryString + "                   ROUND(PurchaseOrderDetails.Quantity - PurchaseOrderDetails.QuantityArrived, 0) AS QuantityRemains, " + "\r\n";
             queryString = queryString + "                   0 AS Quantity, PurchaseOrders.Description, PurchaseOrderDetails.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
@@ -227,7 +227,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             string queryString = "";
             //NO NEED TO UNDO QuantityAvailable -THE WAREHOUSE BALANCE- FOR THIS EDIT QUERY: BECAUSE: THIS STORED PROCEDURE ONLY BE CALLED WHEN Approved = 0 => BECAUSE OF THIS (HAVE NOT UPPROVED YET): THIS DELIVERYADVICE QUANTITY DOES NOT EFFECT THE WAREHOUSE BALANCE
             queryString = queryString + "       SELECT      PurchaseOrders.PurchaseOrderID, PurchaseOrderDetails.PurchaseOrderDetailID, PurchaseOrders.Reference AS PurchaseOrderReference, PurchaseOrders.Code AS PurchaseOrderCode, PurchaseOrders.EntryDate AS PurchaseOrderEntryDate, " + "\r\n";
-            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.Shelflife, Commodities.CommodityTypeID, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.Shelflife, Commodities.CommodityTypeID, Commodities.Weight AS UnitWeight, " + "\r\n";
             queryString = queryString + "                   ROUND(PurchaseOrderDetails.Quantity - PurchaseOrderDetails.QuantityArrived + GoodsArrivalDetails.Quantity, 0) AS QuantityRemains, " + "\r\n";
             queryString = queryString + "                   0 AS Quantity, PurchaseOrders.Description, PurchaseOrderDetails.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 

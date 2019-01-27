@@ -21014,6 +21014,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
           <Property Type="Int32" Name="Shelflife" Nullable="true" />
+          <Property Type="Decimal" Name="UnitWeight" Nullable="true" Precision="18" Scale="3" />
         </ComplexType>
         <ComplexType Name="GoodsArrivalPendingPurchaseOrder">
           <Property Type="Int32" Name="PurchaseOrderID" Nullable="false" />
@@ -28917,6 +28918,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
                 <ScalarProperty Name="Shelflife" ColumnName="Shelflife" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
