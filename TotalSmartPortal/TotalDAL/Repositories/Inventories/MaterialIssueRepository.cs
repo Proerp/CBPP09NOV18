@@ -51,10 +51,10 @@ namespace TotalDAL.Repositories.Inventories
             return pendingFirmOrders;
         }
 
-        public IEnumerable<MaterialIssuePendingFirmOrderMaterial> GetPendingFirmOrderMaterials(int? locationID, int? materialIssueID, int? firmOrderID, int? warehouseID, string goodsReceiptDetailIDs, bool isReadonly)
+        public IEnumerable<MaterialIssuePendingFirmOrderMaterial> GetPendingFirmOrderMaterials(int? locationID, int? materialIssueID, int? firmOrderID, decimal? quantityMaterialEstimated, int? warehouseID, string goodsReceiptDetailIDs, bool isReadonly)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<MaterialIssuePendingFirmOrderMaterial> pendingFirmOrderDetails = base.TotalSmartPortalEntities.GetMaterialIssuePendingFirmOrderMaterials(locationID, materialIssueID, firmOrderID, warehouseID, goodsReceiptDetailIDs, isReadonly).ToList();
+            IEnumerable<MaterialIssuePendingFirmOrderMaterial> pendingFirmOrderDetails = base.TotalSmartPortalEntities.GetMaterialIssuePendingFirmOrderMaterials(locationID, materialIssueID, firmOrderID, quantityMaterialEstimated, warehouseID, goodsReceiptDetailIDs, isReadonly).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingFirmOrderDetails;

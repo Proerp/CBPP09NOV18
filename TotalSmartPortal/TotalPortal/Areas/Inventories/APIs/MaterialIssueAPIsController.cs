@@ -53,9 +53,9 @@ namespace TotalPortal.Areas.Inventories.APIs
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPendingFirmOrderMaterials([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? materialIssueID, int? firmOrderID, int? warehouseID, string goodsReceiptDetailIDs, bool isReadonly)
+        public JsonResult GetPendingFirmOrderMaterials([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? materialIssueID, int? firmOrderID, decimal? quantityMaterialEstimated, int? warehouseID, string goodsReceiptDetailIDs, bool isReadonly)
         {
-            var result = this.materialIssueAPIRepository.GetPendingFirmOrderMaterials(locationID, materialIssueID, firmOrderID, warehouseID, goodsReceiptDetailIDs, isReadonly);
+            var result = this.materialIssueAPIRepository.GetPendingFirmOrderMaterials(locationID, materialIssueID, firmOrderID, quantityMaterialEstimated, warehouseID, goodsReceiptDetailIDs, isReadonly);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 

@@ -32,5 +32,6 @@ namespace TotalModel.Models
         public string FirmOrderSpecs { get; set; }
         public Nullable<decimal> TotalQuantityRemains { get; set; }
         public int BomID { get; set; }
+        public Nullable<decimal> QuantityMaterialEstimatedRemains { get; set; }
     }
 }

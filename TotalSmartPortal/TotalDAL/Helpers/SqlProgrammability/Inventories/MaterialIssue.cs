@@ -72,9 +72,15 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
+            queryString = queryString + "       DECLARE     @IssueAll bit = 0 " + "\r\n";
+            queryString = queryString + "       DECLARE     @FirmOrderID int, @QuantityMaterialEstimated decimal(18, 2) " + "\r\n";
+            queryString = queryString + "       SELECT      TOP 1 @FirmOrderID = FirmOrderID, @QuantityMaterialEstimated = QuantityMaterialEstimated FROM MaterialIssues WHERE MaterialIssueID = @MaterialIssueID " + "\r\n";
+
+            queryString = queryString + "       " + this.SQL_IssueAll() + "\r\n";
+
             queryString = queryString + "       SELECT      MaterialIssueDetails.MaterialIssueDetailID, MaterialIssueDetails.MaterialIssueID, FirmOrderMaterials.FirmOrderMaterialID, FirmOrderMaterials.BomID, FirmOrderMaterials.BomDetailID, BomDetails.LayerCode, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
-            queryString = queryString + "                   GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceiptDetails.Reference AS GoodsReceiptReference, GoodsReceiptDetails.Code AS GoodsReceiptCode, GoodsReceiptDetails.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsReceiptDetails.LabID, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, GoodsReceiptDetails.Barcode, GoodsReceiptDetails.BatchCode, GoodsReceiptDetails.SealCode, GoodsReceiptDetails.LabCode, " + "\r\n";           
-            queryString = queryString + "                   ROUND(FirmOrderMaterials.Quantity - FirmOrderMaterials.QuantityIssued + Issued_FirmOrderMaterials.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS FirmOrderRemains, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued + Issued_GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, MaterialIssueDetails.Quantity, MaterialIssueDetails.Remarks " + "\r\n";
+            queryString = queryString + "                   GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceiptDetails.Reference AS GoodsReceiptReference, GoodsReceiptDetails.Code AS GoodsReceiptCode, GoodsReceiptDetails.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsReceiptDetails.LabID, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, GoodsReceiptDetails.Barcode, GoodsReceiptDetails.BatchCode, GoodsReceiptDetails.SealCode, GoodsReceiptDetails.LabCode, " + "\r\n";
+            queryString = queryString + "                   ROUND(" + this.SQL_FirmOrderRemains() + " + Issued_FirmOrderMaterials.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS FirmOrderRemains, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued + Issued_GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, MaterialIssueDetails.Quantity, MaterialIssueDetails.Remarks " + "\r\n";
 
             queryString = queryString + "       FROM        MaterialIssueDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN FirmOrderMaterials ON MaterialIssueDetails.MaterialIssueID = @MaterialIssueID AND MaterialIssueDetails.FirmOrderMaterialID = FirmOrderMaterials.FirmOrderMaterialID " + "\r\n";
@@ -83,7 +89,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   INNER JOIN (SELECT FirmOrderMaterialID, SUM(Quantity) AS QuantityIssued FROM MaterialIssueDetails WHERE MaterialIssueID = @MaterialIssueID GROUP BY FirmOrderMaterialID) AS Issued_FirmOrderMaterials ON MaterialIssueDetails.FirmOrderMaterialID = Issued_FirmOrderMaterials.FirmOrderMaterialID " + "\r\n";
 
             queryString = queryString + "                   INNER JOIN Commodities ON FirmOrderMaterials.MaterialID = Commodities.CommodityID " + "\r\n";
-            
+
             queryString = queryString + "                   INNER JOIN GoodsReceiptDetails ON MaterialIssueDetails.GoodsReceiptDetailID = GoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
             queryString = queryString + "                   INNER JOIN (SELECT GoodsReceiptDetailID, SUM(Quantity) AS QuantityIssued FROM MaterialIssueDetails WHERE MaterialIssueID = @MaterialIssueID GROUP BY GoodsReceiptDetailID) AS Issued_GoodsReceiptDetails ON MaterialIssueDetails.GoodsReceiptDetailID = Issued_GoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
 
@@ -94,6 +100,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.totalSmartPortalEntities.CreateStoredProcedure("GetMaterialIssueViewDetails", queryString);
         }
 
+        private string SQL_IssueAll() { return "SET         @IssueAll = (SELECT TOP 1 IIF(ROUND(QuantityMaterialEstimated - QuantityMaterialEstimatedIssued, " + (int)GlobalEnums.rndQuantity + ") <= @QuantityMaterialEstimated, 1, 0) FROM FirmOrders WHERE FirmOrderID = @FirmOrderID)"; }
+        private string SQL_FirmOrderRemains() { return "IIF(@IssueAll = 1, FirmOrderMaterials.Quantity - FirmOrderMaterials.QuantityIssued, (((@QuantityMaterialEstimated * BomDetails.BlockUnit)/ 100) * (BomDetails.BlockQuantity/ BomDetails.LayerQuantity)))"; }
 
 
 
@@ -104,18 +112,18 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "       SELECT          " + (int)@GlobalEnums.MaterialIssueTypeID.FirmOrders + " AS MaterialIssueTypeID, ProductionOrderDetails.ProductionOrderDetailID, ProductionOrderDetails.ProductionOrderID, ProductionOrderDetails.PlannedOrderID, ProductionOrderDetails.FirmOrderID, FirmOrders.Code AS FirmOrderCode, FirmOrders.Reference AS FirmOrderReference, FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.Specs AS FirmOrderSpecs, FirmOrders.Specification AS FirmOrderSpecification, FirmOrders.BomID, FirmOrders.TotalQuantity, FirmOrderRemains.TotalQuantityRemains, " + "\r\n";
+            queryString = queryString + "       SELECT          " + (int)@GlobalEnums.MaterialIssueTypeID.FirmOrders + " AS MaterialIssueTypeID, ProductionOrderDetails.ProductionOrderDetailID, ProductionOrderDetails.ProductionOrderID, ProductionOrderDetails.PlannedOrderID, ProductionOrderDetails.FirmOrderID, FirmOrders.Code AS FirmOrderCode, FirmOrders.Reference AS FirmOrderReference, FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.Specs AS FirmOrderSpecs, FirmOrders.Specification AS FirmOrderSpecification, FirmOrders.BomID, FirmOrders.TotalQuantity, FirmOrderRemains.TotalQuantityRemains, ROUND(QuantityMaterialEstimated - QuantityMaterialEstimatedIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityMaterialEstimatedRemains, " + "\r\n";
             queryString = queryString + "                       ProductionOrderDetails.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName " + "\r\n";
 
             queryString = queryString + "       FROM           (SELECT FirmOrderID, ROUND(SUM(Quantity - (QuantitySemifinished - QuantityShortage - QuantityFailure + QuantityExcess)), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM FirmOrderDetails WHERE NMVNTaskID = @NMVNTaskID + 671977 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND (@FirmOrderID IS NULL OR FirmOrderID = @FirmOrderID) AND ROUND(Quantity - (QuantitySemifinished - QuantityShortage - QuantityFailure + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY FirmOrderID) AS FirmOrderRemains " + "\r\n";
             queryString = queryString + "                       INNER JOIN ProductionOrderDetails ON ProductionOrderDetails.Approved = 1 AND ProductionOrderDetails.InActive = 0 AND ProductionOrderDetails.InActivePartial = 0 AND FirmOrderRemains.FirmOrderID = ProductionOrderDetails.FirmOrderID " + "\r\n";//LocationID = @LocationID AND 
             queryString = queryString + "                       INNER JOIN FirmOrders ON FirmOrderRemains.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
-            
+
             //ProductionOrderDetails.FirmOrderID IN 
             queryString = queryString + "                       INNER JOIN Customers ON ProductionOrderDetails.CustomerID = Customers.CustomerID " + "\r\n";
 
             queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = IIF(@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemStaging + ", 6, 1) " + "\r\n";
-            
+
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetMaterialIssuePendingFirmOrders", queryString);
         }
@@ -124,11 +132,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            queryString = " @LocationID Int, @MaterialIssueID Int, @FirmOrderID Int, @WarehouseID Int, @GoodsReceiptDetailIDs varchar(3999), @IsReadonly bit " + "\r\n";
+            queryString = " @LocationID Int, @MaterialIssueID Int, @FirmOrderID Int, @QuantityMaterialEstimated decimal(18, 2), @WarehouseID Int, @GoodsReceiptDetailIDs varchar(3999), @IsReadonly bit " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       DECLARE @IssueAll bit = 0 " + "\r\n";
+            queryString = queryString + "       " + this.SQL_IssueAll() + "\r\n";
 
             queryString = queryString + "       IF  (@GoodsReceiptDetailIDs <> '') " + "\r\n";
             queryString = queryString + "           " + this.BuildSQLPendingDetails(true) + "\r\n";
@@ -151,21 +162,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   ORDER BY FirmOrderMaterials.FirmOrderMaterialID " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-
-            queryString = queryString + "               IF (@IsReadonly = 1) " + "\r\n";
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.BuildSQLEdit(isGoodsReceiptDetailIDs) + "\r\n";
-            queryString = queryString + "                       ORDER BY FirmOrderMaterials.FirmOrderMaterialID " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
-
-            queryString = queryString + "               ELSE " + "\r\n"; //FULL SELECT FOR EDIT MODE
-
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.BuildSQLNew(isGoodsReceiptDetailIDs) + " WHERE FirmOrderMaterials.FirmOrderMaterialID NOT IN (SELECT FirmOrderMaterialID FROM MaterialIssueDetails WHERE MaterialIssueID = @MaterialIssueID) " + "\r\n";
-            queryString = queryString + "                       UNION ALL " + "\r\n";
-            queryString = queryString + "                       " + this.BuildSQLEdit(isGoodsReceiptDetailIDs) + "\r\n";
-            queryString = queryString + "                       ORDER BY FirmOrderMaterials.FirmOrderMaterialID " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLNew(isGoodsReceiptDetailIDs) + " WHERE FirmOrderMaterials.FirmOrderMaterialID NOT IN (SELECT FirmOrderMaterialID FROM MaterialIssueDetails WHERE MaterialIssueID = @MaterialIssueID) " + "\r\n";
+            queryString = queryString + "                   UNION ALL " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLEdit(isGoodsReceiptDetailIDs) + "\r\n";
+            queryString = queryString + "                   ORDER BY FirmOrderMaterials.FirmOrderMaterialID " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
 
@@ -178,7 +180,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "       SELECT      FirmOrderMaterials.FirmOrderMaterialID, FirmOrderMaterials.BomID, FirmOrderMaterials.BomDetailID, BomDetails.LayerCode, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.OfficialCode, Commodities.CodePartA, Commodities.CodePartB, Commodities.CodePartC, Commodities.CodePartD, Commodities.CodePartE, Commodities.CodePartF, Commodities.CommodityTypeID, " + "\r\n";
             queryString = queryString + "                   GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceipts.Reference AS GoodsReceiptReference, GoodsReceipts.Code AS GoodsReceiptCode, GoodsReceipts.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsReceiptDetails.LabID, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, GoodsReceiptDetails.Barcode, GoodsReceiptDetails.BatchCode, GoodsReceiptDetails.SealCode, GoodsReceiptDetails.LabCode, " + "\r\n";
-            queryString = queryString + "                   ROUND(FirmOrderMaterials.Quantity - FirmOrderMaterials.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS FirmOrderRemains, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, 0 AS Quantity, CAST(0 AS bit) AS IsSelected " + "\r\n";
+            queryString = queryString + "                   ROUND(" + this.SQL_FirmOrderRemains() + ", " + (int)GlobalEnums.rndQuantity + ") AS FirmOrderRemains, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, 0 AS Quantity, CAST(0 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        FirmOrderMaterials " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON FirmOrderMaterials.FirmOrderID = @FirmOrderID AND FirmOrderMaterials.Approved = 1 AND FirmOrderMaterials.InActive = 0 AND FirmOrderMaterials.InActivePartial = 0 AND FirmOrderMaterials.MaterialID = Commodities.CommodityID " + "\r\n"; //AND ROUND(FirmOrderMaterials.Quantity - FirmOrderMaterials.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 
@@ -196,7 +198,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "       SELECT      FirmOrderMaterials.FirmOrderMaterialID, FirmOrderMaterials.BomID, FirmOrderMaterials.BomDetailID, BomDetails.LayerCode, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.OfficialCode, Commodities.CodePartA, Commodities.CodePartB, Commodities.CodePartC, Commodities.CodePartD, Commodities.CodePartE, Commodities.CodePartF, Commodities.CommodityTypeID, " + "\r\n";
             queryString = queryString + "                   GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceipts.Reference AS GoodsReceiptReference, GoodsReceipts.Code AS GoodsReceiptCode, GoodsReceipts.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsReceiptDetails.LabID, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, GoodsReceiptDetails.Barcode, GoodsReceiptDetails.BatchCode, GoodsReceiptDetails.SealCode, GoodsReceiptDetails.LabCode, " + "\r\n";
-            queryString = queryString + "                   ROUND(FirmOrderMaterials.Quantity - FirmOrderMaterials.QuantityIssued + MaterialIssueDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS FirmOrderRemains, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued + ISNULL(IssuedGoodsReceiptDetails.Quantity, 0), " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, 0 AS Quantity, CAST(0 AS bit) AS IsSelected " + "\r\n";
+            queryString = queryString + "                   ROUND(" + this.SQL_FirmOrderRemains() + " + MaterialIssueDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS FirmOrderRemains, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued + ISNULL(IssuedGoodsReceiptDetails.Quantity, 0), " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, 0 AS Quantity, CAST(0 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        FirmOrderMaterials " + "\r\n";
             queryString = queryString + "                   INNER JOIN (SELECT FirmOrderMaterialID, SUM(Quantity) AS Quantity FROM MaterialIssueDetails WHERE MaterialIssueID = @MaterialIssueID GROUP BY FirmOrderMaterialID) AS MaterialIssueDetails ON FirmOrderMaterials.FirmOrderMaterialID = MaterialIssueDetails.FirmOrderMaterialID " + "\r\n";
@@ -204,7 +206,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   INNER JOIN BomDetails ON FirmOrderMaterials.BomDetailID = BomDetails.BomDetailID " + "\r\n";
 
             queryString = queryString + "                   LEFT JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND FirmOrderMaterials.MaterialID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND (ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 OR GoodsReceiptDetails.GoodsReceiptDetailID IN (SELECT GoodsReceiptDetailID FROM MaterialIssueDetails WHERE MaterialIssueID = @MaterialIssueID)) " + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
-            queryString = queryString + "                   LEFT JOIN (SELECT GoodsReceiptDetailID, SUM(Quantity) AS Quantity FROM MaterialIssueDetails WHERE MaterialIssueID = @MaterialIssueID GROUP BY GoodsReceiptDetailID) AS IssuedGoodsReceiptDetails ON GoodsReceiptDetails.GoodsReceiptDetailID = IssuedGoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n"; 
+            queryString = queryString + "                   LEFT JOIN (SELECT GoodsReceiptDetailID, SUM(Quantity) AS Quantity FROM MaterialIssueDetails WHERE MaterialIssueID = @MaterialIssueID GROUP BY GoodsReceiptDetailID) AS IssuedGoodsReceiptDetails ON GoodsReceiptDetails.GoodsReceiptDetailID = IssuedGoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN GoodsReceipts ON GoodsReceiptDetails.GoodsReceiptID = GoodsReceipts.GoodsReceiptID " + "\r\n";
 
             return queryString;

@@ -31,6 +31,8 @@
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecs)
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecification)
 
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).QuantityMaterialEstimated)
+
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).BomID)
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).CustomerID)
 
@@ -49,19 +51,19 @@
 
     @Html.HiddenFor(model => (model as IMaterialIssueDTO).ProductionLine.ProductionLineID);
     @Html.HiddenFor(model => (model as IMaterialIssueDTO).ProductionLine.Name);
-    
+
     @Html.HiddenFor(model => (model as IMaterialIssueDTO).Warehouse.WarehouseID)
     @Html.HiddenFor(model => (model as IMaterialIssueDTO).Warehouse.Code)
     @Html.HiddenFor(model => (model as IMaterialIssueDTO).Warehouse.Name)
 
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).ShiftID);
-    
+
     @Html.HiddenFor(model => (model as IMaterialIssueDTO).CrucialWorker.EmployeeID);
     @Html.HiddenFor(model => (model as IMaterialIssueDTO).CrucialWorker.Name);
-    
+
     @Html.HiddenFor(model => (model as IMaterialIssueDTO).Storekeeper.EmployeeID);
     @Html.HiddenFor(model => (model as IMaterialIssueDTO).Storekeeper.Name);
-    
+
     @Html.HiddenFor(model => (model as IBaseDTO).Description);
 
     @(Html.Kendo().Grid<MaterialIssuePendingFirmOrder>()
@@ -76,6 +78,8 @@
             columns.Bound(c => c.FirmOrderSpecs).Title(@Model.IsMaterial ? "Mô tả tên màng" : "Tên thành phẩm").Width(92);
             columns.Bound(p => p.TotalQuantity).Title("SL ĐH").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(31);
             columns.Bound(p => p.TotalQuantityRemains).Title("Tồn đơn").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(31);
+
+            columns.Bound(p => p.QuantityMaterialEstimatedRemains).Title("Tồn NVL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(31);
         })
         .ToolBar(toolbar =>
         {
@@ -86,6 +90,7 @@
                 </div>
             </text>);
         })
+        .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell); })
         .Scrollable(s => s.Height(Settings.PopupContentHeight))
         .DataSource(ds => ds.Ajax()
             .Read(read => read.Action("GetFirmOrders", "MaterialIssueAPIs", new { area = "Inventories" }).Data(@<text>
@@ -97,9 +102,22 @@
                     };
                 }
                 </text>))
-                .ServerOperation(false)
-            )
-            .Selectable()
+            .ServerOperation(false)
+            .Model(model =>
+            {
+                model.Id(p => p.FirmOrderID);
+
+                model.Field(p => p.FirmOrderReference).Editable(false);
+                model.Field(p => p.FirmOrderCode).Editable(false);
+                model.Field(p => p.FirmOrderEntryDate).Editable(false);
+                model.Field(p => p.CustomerName).Editable(false);
+                model.Field(p => p.FirmOrderSpecification).Editable(false);
+                model.Field(p => p.FirmOrderSpecs).Editable(false);
+                model.Field(p => p.TotalQuantity).Editable(false);                
+            })
+                    
+        )
+        .Selectable()
     )
 
 
@@ -154,6 +172,8 @@
             $("#FirmOrderEntryDate").val(selectedDataItem === undefined || selectedDataItem.FirmOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.FirmOrderEntryDate, Settings.DateTimeFormat));
             $("#FirmOrderSpecs").val(selectedDataItem === undefined || selectedDataItem.FirmOrderSpecs === undefined ? null : selectedDataItem.FirmOrderSpecs);
             $("#FirmOrderSpecification").val(selectedDataItem === undefined || selectedDataItem.FirmOrderSpecification === undefined ? null : selectedDataItem.FirmOrderSpecification);
+
+            $("#QuantityMaterialEstimated").val(selectedDataItem === undefined || selectedDataItem.QuantityMaterialEstimatedRemains === undefined ? null : selectedDataItem.QuantityMaterialEstimatedRemains);
 
             $("#BomID").val(selectedDataItem === undefined || selectedDataItem.BomID === undefined ? null : selectedDataItem.BomID);
 

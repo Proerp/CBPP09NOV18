@@ -61,6 +61,8 @@ namespace TotalModel.Models
         public decimal BlockQuantity { get; set; }
         public string Specs { get; set; }
         public int NMVNTaskID { get; set; }
+        public Nullable<decimal> QuantityMaterialEstimated { get; set; }
+        public Nullable<decimal> QuantityMaterialEstimatedIssued { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Location Location { get; set; }

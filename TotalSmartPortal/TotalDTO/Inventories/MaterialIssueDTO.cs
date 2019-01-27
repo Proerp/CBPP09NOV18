@@ -46,6 +46,8 @@ namespace TotalDTO.Inventories
         [Display(Name = "Thành phẩm")]
         string FirmOrderSpecificationSpecs { get; }
 
+        decimal QuantityMaterialEstimated { get; set; }
+
         int BomID { get; set; }
 
         [Display(Name = "Thông số máy")]
@@ -98,6 +100,9 @@ namespace TotalDTO.Inventories
         public string FirmOrderSpecification { get; set; }
         [Display(Name = "Thành phẩm")]
         public string FirmOrderSpecificationSpecs { get { return this.FirmOrderSpecs + " (" + this.FirmOrderSpecification + ")"; } }
+
+        [Display(Name = "Tổng lượng NVL cần xuất")]
+        public decimal QuantityMaterialEstimated { get; set; }
 
         public int BomID { get; set; }
 

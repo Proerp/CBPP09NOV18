@@ -47,8 +47,9 @@
                 locationID: window.parent.requireConfig.pageOptions.LocationID,
                 materialIssueID: window.parent.$("#MaterialIssueID").val(),
                 firmOrderID: window.parent.$("#FirmOrderID").val(),
-                workshiftID: window.parent.$("#WorkshiftID").val(),
-                moldID: window.parent.$("#MoldID").val(),
+                quantityMaterialEstimated: window.parent.$("#QuantityMaterialEstimated").val(),
+                @*workshiftID: window.parent.$("#WorkshiftID").val(),
+                moldID: window.parent.$("#MoldID").val(),*@
                 warehouseID: window.parent.$("#Warehouse_WarehouseID").val(),
                 goodsReceiptDetailIDs : materialIssueJSON.map(function(elem){return elem.GoodsReceiptDetailID;}).join(","),
                 isReadOnly: false

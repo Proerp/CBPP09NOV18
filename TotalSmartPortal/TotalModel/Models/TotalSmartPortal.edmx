@@ -852,6 +852,8 @@
           <Property Name="ApproverID" Type="int" Nullable="false" />
           <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantitySemifinished" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="QuantityMaterialEstimated" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityMaterialEstimatedIssued" Type="decimal" Precision="18" Scale="2" />
           <Property Name="Specs" Type="nvarchar" MaxLength="800" />
           <Property Name="Specification" Type="nvarchar" MaxLength="800" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
@@ -1386,6 +1388,7 @@
           <Property Name="OrganizationalUnitID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="ApproverID" Type="int" Nullable="false" />
+          <Property Name="QuantityMaterialEstimated" Type="decimal" Precision="18" Scale="2" />
           <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantitySemifinished" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantityFailure" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -7646,6 +7649,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="MaterialIssueID" Type="int" Mode="In" />
           <Parameter Name="FirmOrderID" Type="int" Mode="In" />
+          <Parameter Name="QuantityMaterialEstimated" Type="decimal" Mode="In" />
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
           <Parameter Name="GoodsReceiptDetailIDs" Type="varchar" Mode="In" />
           <Parameter Name="IsReadonly" Type="bit" Mode="In" />
@@ -14019,6 +14023,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="MaterialIssueID" Mode="In" Type="Int32" />
             <Parameter Name="FirmOrderID" Mode="In" Type="Int32" />
+            <Parameter Name="QuantityMaterialEstimated" Mode="In" Type="Decimal" />
             <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsReceiptDetailIDs" Mode="In" Type="String" />
             <Parameter Name="IsReadonly" Mode="In" Type="Boolean" />
@@ -17795,6 +17800,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_FirmOrders" FromRole="FirmOrder" ToRole="SemifinishedItemDetail" />
           <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_FirmOrders" FromRole="FirmOrder" ToRole="SemifinishedItem" />
+          <Property Name="QuantityMaterialEstimated" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityMaterialEstimatedIssued" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PlannedOrderDetail">
           <Key>
@@ -17953,6 +17960,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="FirmOrderSpecs" Nullable="true" MaxLength="800" />
           <Property Type="Decimal" Name="TotalQuantityRemains" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Int32" Name="BomID" Nullable="false" />
+          <Property Type="Decimal" Name="QuantityMaterialEstimatedRemains" Nullable="true" Precision="19" Scale="2" />
         </ComplexType>
         <ComplexType Name="SemifinishedProductPendingMaterialIssueDetail">
           <Property Type="Int32" Name="MaterialIssueDetailID" Nullable="false" />
@@ -18176,7 +18184,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="GoodsReceiptEntryDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="GoodsReceiptReference" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="GoodsReceiptCode" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="FirmOrderRemains" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="FirmOrderRemains" Nullable="true" Precision="38" Scale="6" />
           <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="19" Scale="2" />
           <Property Type="Int32" Name="Quantity" Nullable="false" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
@@ -18684,6 +18692,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_MaterialIssues" FromRole="MaterialIssue" ToRole="SemifinishedItemDetail" />
           <Property Name="BomID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Bom" Relationship="TotalSmartPortalModel.FK_MaterialIssues_Boms" FromRole="MaterialIssue" ToRole="Bom" />
+          <Property Name="QuantityMaterialEstimated" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="SemifinishedProductDetail">
           <Key>
@@ -26918,6 +26927,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="FirmOrders">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.FirmOrder">
               <MappingFragment StoreEntitySet="FirmOrders">
+                <ScalarProperty Name="QuantityMaterialEstimatedIssued" ColumnName="QuantityMaterialEstimatedIssued" />
+                <ScalarProperty Name="QuantityMaterialEstimated" ColumnName="QuantityMaterialEstimated" />
                 <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="Specs" ColumnName="Specs" />
                 <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />
@@ -27058,6 +27069,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="FirmOrderSpecs" ColumnName="FirmOrderSpecs" />
                 <ScalarProperty Name="TotalQuantityRemains" ColumnName="TotalQuantityRemains" />
                 <ScalarProperty Name="BomID" ColumnName="BomID" />
+                <ScalarProperty Name="QuantityMaterialEstimatedRemains" ColumnName="QuantityMaterialEstimatedRemains" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -27685,6 +27697,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="MaterialIssues">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.MaterialIssue">
               <MappingFragment StoreEntitySet="MaterialIssues">
+                <ScalarProperty Name="QuantityMaterialEstimated" ColumnName="QuantityMaterialEstimated" />
                 <ScalarProperty Name="BomID" ColumnName="BomID" />
                 <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />

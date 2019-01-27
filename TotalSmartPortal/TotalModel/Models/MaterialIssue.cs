@@ -56,6 +56,7 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public int NMVNTaskID { get; set; }
         public int BomID { get; set; }
+        public Nullable<decimal> QuantityMaterialEstimated { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
