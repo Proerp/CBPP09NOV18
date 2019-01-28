@@ -83,7 +83,7 @@ namespace TotalDTO.Commons
         [Required(ErrorMessage = "Vui lòng nhập ĐVT")]
         string SalesUnit { get; set; }
 
-        [Display(Name = "Định dạng, quy cách")]
+        [Display(Name = "Định dạng, quy cách bao bì")]
         string Packing { get; set; }
         string Origin { get; set; }
 
@@ -104,7 +104,7 @@ namespace TotalDTO.Commons
         string HSCode { get; set; }
         [Display(Name = "Qui định tồn trữ, bảo quản")]
         string Specification { get; set; }
-        [Display(Name = "Điều kiện tồn trữ, bảo quản")]
+        [Display(Name = "Thành phần hoặc mô tả sản phẩm")]
         string Description { get; set; }
 
         bool IsMaterial { get; }

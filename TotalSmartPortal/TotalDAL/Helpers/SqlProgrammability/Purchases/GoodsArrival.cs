@@ -464,12 +464,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "       DECLARE         @LocalGoodsArrivalID int    SET @LocalGoodsArrivalID = @GoodsArrivalID" + "\r\n";
 
             queryString = queryString + "       SELECT          GoodsArrivals.GoodsArrivalID, GoodsArrivals.EntryDate, GoodsArrivals.Reference, GoodsArrivals.Code, GoodsArrivals.InvoiceDate, GoodsArrivals.Description, " + "\r\n";
-            queryString = queryString + "                       GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivalPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, " + "\r\n";
+            queryString = queryString + "                       GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivalPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.OriginalName AS CommodityOriginalName, CommodityCategories.Name AS CommodityCategoryName, Commodities.Weight, Commodities.Origin, Commodities.Shelflife, Commodities.Specification, Commodities.Description AS CommodityDescription, Commodities.Remarks AS CommodityRemarks, Commodities.Caption AS CommodityCaption, " + "\r\n";
             queryString = queryString + "                       GoodsArrivalPackages.SealCode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.LabCode, GoodsArrivalPackages.Barcode, Barcodes.Symbologies, GoodsArrivalPackages.ProductionDate, GoodsArrivalPackages.ExpiryDate, GoodsArrivalPackages.Quantity " + "\r\n";
 
             queryString = queryString + "       FROM            GoodsArrivals " + "\r\n";
             queryString = queryString + "                       INNER JOIN GoodsArrivalPackages ON GoodsArrivals.GoodsArrivalID = @LocalGoodsArrivalID AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON GoodsArrivalPackages.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN CommodityCategories ON Commodities.CommodityCategoryID = CommodityCategories.CommodityCategoryID " + "\r\n";
 
             queryString = queryString + "                       LEFT  JOIN Barcodes ON GoodsArrivalPackages.GoodsArrivalPackageID = Barcodes.GoodsArrivalPackageID " + "\r\n";
 
