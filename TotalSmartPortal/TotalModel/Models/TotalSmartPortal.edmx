@@ -967,6 +967,7 @@
           <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalPackages" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Caption" Type="nvarchar" MaxLength="100" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
@@ -20349,6 +20350,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="CustomsDeclaration" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="CustomsDeclarationDate" Type="DateTime" Precision="3" />
           <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
+          <Property Name="Caption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_GoodsArrivals_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -20970,6 +20972,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="PurchaseOrderReferences" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="PackingList" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="CustomsDeclaration" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Caption" Nullable="true" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="GoodsArrivalPendingCustomer">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
@@ -28456,6 +28460,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsArrivals">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrival">
               <MappingFragment StoreEntitySet="GoodsArrivals">
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
                 <ScalarProperty Name="CustomsDeclarationDate" ColumnName="CustomsDeclarationDate" />
                 <ScalarProperty Name="CustomsDeclaration" ColumnName="CustomsDeclaration" />
@@ -28866,6 +28871,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="PurchaseOrderReferences" ColumnName="PurchaseOrderReferences" />
                 <ScalarProperty Name="PackingList" ColumnName="PackingList" />
                 <ScalarProperty Name="CustomsDeclaration" ColumnName="CustomsDeclaration" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -67,9 +67,9 @@ namespace TotalDTO.Purchases
         {
             base.PerformPresaveRule();
 
-            string purchaseOrderReferences = ""; string purchaseOrderCodes = ""; int serialID = 0;
-            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.TransporterID = this.TransporterID; e.WarehouseID = this.WarehouseID; e.SalespersonID = this.SalespersonID; e.SerialID = ++serialID; if (this.HasPurchaseOrder && purchaseOrderReferences.IndexOf(e.PurchaseOrderReference) < 0) purchaseOrderReferences = purchaseOrderReferences + (purchaseOrderReferences != "" ? ", " : "") + e.PurchaseOrderReference; if (this.HasPurchaseOrder && e.PurchaseOrderCode != null && purchaseOrderCodes.IndexOf(e.PurchaseOrderCode) < 0) purchaseOrderCodes = purchaseOrderCodes + (purchaseOrderCodes != "" ? ", " : "") + e.PurchaseOrderCode; });
-            this.PurchaseOrderReferences = purchaseOrderReferences; this.PurchaseOrderCodes = purchaseOrderCodes != "" ? purchaseOrderCodes : null; //if (this.HasPurchaseOrder) this.Code = this.PurchaseOrderCodes;
+            string purchaseOrderReferences = ""; string purchaseOrderCodes = ""; string caption = ""; int serialID = 0;
+            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.TransporterID = this.TransporterID; e.WarehouseID = this.WarehouseID; e.SalespersonID = this.SalespersonID; e.SerialID = ++serialID; if (this.HasPurchaseOrder && purchaseOrderReferences.IndexOf(e.PurchaseOrderReference) < 0) purchaseOrderReferences = purchaseOrderReferences + (purchaseOrderReferences != "" ? ", " : "") + e.PurchaseOrderReference; if (this.HasPurchaseOrder && e.PurchaseOrderCode != null && purchaseOrderCodes.IndexOf(e.PurchaseOrderCode) < 0) purchaseOrderCodes = purchaseOrderCodes + (purchaseOrderCodes != "" ? ", " : "") + e.PurchaseOrderCode; if (caption.IndexOf(e.CommodityCode) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityCode; });
+            this.PurchaseOrderReferences = purchaseOrderReferences; this.PurchaseOrderCodes = purchaseOrderCodes != "" ? purchaseOrderCodes : null; this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null; //if (this.HasPurchaseOrder) this.Code = this.PurchaseOrderCodes;
         }
     }
 

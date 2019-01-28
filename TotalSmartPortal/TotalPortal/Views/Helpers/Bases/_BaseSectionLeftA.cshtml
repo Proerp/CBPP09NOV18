@@ -13,7 +13,7 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(model => model.EntryDate)
+    @if (ViewData["EntryDateDisplayName"] != null) {@Html.Label((ViewData["EntryDateDisplayName"]).ToString())} else { @Html.LabelFor(model => model.EntryDate)}
     <div class="div-input">
         @Html.Kendo().DateTimePickerFor(model => model.EntryDate).HtmlAttributes((ViewData["EntryDateReadonly"] != null && (bool)ViewData["EntryDateReadonly"] == false ? (object)new { @class = "left-panel-input" } : (object)new { @class = "left-panel-input", @readonly = "readonly" }))
     </div>

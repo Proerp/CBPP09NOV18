@@ -31,5 +31,7 @@ namespace TotalModel.Models
         public string PurchaseOrderReferences { get; set; }
         public string PackingList { get; set; }
         public string CustomsDeclaration { get; set; }
+        public string CustomerCode { get; set; }
+        public string Caption { get; set; }
     }
 }
