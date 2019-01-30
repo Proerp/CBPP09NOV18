@@ -275,6 +275,7 @@
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="CommodityClassID" Type="int" Nullable="false" />
           <Property Name="CommodityLineID" Type="int" Nullable="false" />
+          <Property Name="CommodityIconID" Type="int" />
           <Property Name="SupplierID" Type="int" Nullable="false" />
           <Property Name="PiecePerPack" Type="int" Nullable="false" />
           <Property Name="QuantityAlert" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -22793,6 +22794,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="Specification" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Caption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CommodityIconID" Type="Int32" />
         </EntityType>
         <Association Name="FK_AccountInvoiceDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -29687,6 +29689,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="Commodities">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.Commodity">
               <MappingFragment StoreEntitySet="Commodities">
+                <ScalarProperty Name="CommodityIconID" ColumnName="CommodityIconID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="Specification" ColumnName="Specification" />

@@ -105,7 +105,7 @@ namespace TotalService.Purchases
             return Convert.ToBase64String(bitmapData);
 
 
-            ////Bitmap bmp = (Bitmap)Image.FromFile("D:\\MVC PROJECTS\\CBPP\\Documents\\BP\\Mr Hien\\ICONS\\Icons\\Icons\\" + barcode + ".jpg"); ;
+            ////Bitmap bmp = (Bitmap)Image.FromFile("D:\\MVC PROJECTS\\CBPP\\Documents\\BP\\Mr Hien\\Icons\\Icons\\FINALS\\" + barcode + ".jpg");
 
             ////byte[] bitmapData;
 
