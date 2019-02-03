@@ -16762,7 +16762,13 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="WorkshiftName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="UserFirstName" Nullable="false" MaxLength="60" />
           <Property Type="String" Name="UserLastName" Nullable="false" MaxLength="60" />
-        </ComplexType>
+          <Property Type="String" Name="GoodsArrivalCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="GoodsArrivalPackingList" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="GoodsArrivalCustomsDeclaration" Nullable="true" MaxLength="60" />
+          <Property Type="DateTime" Name="GoodsArrivalCustomsDeclarationDate" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="GoodsArrivalPurchaseOrderVoucherDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="GoodsArrivalPurchaseOrderCodes" Nullable="true" MaxLength="200" />
+          </ComplexType>
         <ComplexType Name="GoodsReceiptPendingCustomer">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
@@ -20440,7 +20446,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="WarehouseID" Nullable="false" />
           <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
-        </ComplexType>
+          <Property Type="String" Name="GoodsArrivalCustomsDeclaration" Nullable="true" MaxLength="60" />
+          <Property Type="DateTime" Name="GoodsArrivalCustomsDeclarationDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="GoodsArrivalPurchaseOrderCodes" Nullable="true" MaxLength="200" />
+          <Property Type="DateTime" Name="GoodsArrivalPurchaseOrderVoucherDate" Nullable="true" Precision="23" />
+          </ComplexType>
         <EntityType Name="GoodsArrivalDetail">
           <Key>
             <PropertyRef Name="GoodsArrivalDetailID" />
@@ -26162,7 +26172,13 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="WorkshiftName" ColumnName="WorkshiftName" />
                 <ScalarProperty Name="UserFirstName" ColumnName="UserFirstName" />
                 <ScalarProperty Name="UserLastName" ColumnName="UserLastName" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="GoodsArrivalCode" ColumnName="GoodsArrivalCode" />
+                <ScalarProperty Name="GoodsArrivalPackingList" ColumnName="GoodsArrivalPackingList" />
+                <ScalarProperty Name="GoodsArrivalCustomsDeclaration" ColumnName="GoodsArrivalCustomsDeclaration" />
+                <ScalarProperty Name="GoodsArrivalCustomsDeclarationDate" ColumnName="GoodsArrivalCustomsDeclarationDate" />
+                <ScalarProperty Name="GoodsArrivalPurchaseOrderVoucherDate" ColumnName="GoodsArrivalPurchaseOrderVoucherDate" />
+                <ScalarProperty Name="GoodsArrivalPurchaseOrderCodes" ColumnName="GoodsArrivalPurchaseOrderCodes" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetGoodsReceiptPendingCustomers" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptPendingCustomers">
@@ -28518,7 +28534,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="GoodsArrivalCustomsDeclaration" ColumnName="GoodsArrivalCustomsDeclaration" />
+                <ScalarProperty Name="GoodsArrivalCustomsDeclarationDate" ColumnName="GoodsArrivalCustomsDeclarationDate" />
+                <ScalarProperty Name="GoodsArrivalPurchaseOrderCodes" ColumnName="GoodsArrivalPurchaseOrderCodes" />
+                <ScalarProperty Name="GoodsArrivalPurchaseOrderVoucherDate" ColumnName="GoodsArrivalPurchaseOrderVoucherDate" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <EntitySetMapping Name="GoodsArrivalDetails">

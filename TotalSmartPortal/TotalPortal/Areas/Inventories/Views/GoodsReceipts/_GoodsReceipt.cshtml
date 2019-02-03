@@ -241,7 +241,7 @@
                 <div class="right-panel-label right-panel-label-whole-width">
                     @if (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival)
                     {
-                        <a style="color: #428bca; " href="@Url.Action("Edit", "GoodsArrivals", new { area = "Purchases", id = Model.GoodsArrivalID })" target="_blank"> Phiếu nhập hàng </a> }
+                        <a style="color: #428bca; " href="@Url.Action("Edit", "GoodsArrivals", new { area = "Purchases", id = Model.GoodsArrivalID })" target="_blank"> Phiếu nhận hàng </a> }
                     else
                     {@Html.LabelFor(model => (model as IGoodsReceiptDTO).Features)}                    
                 </div>

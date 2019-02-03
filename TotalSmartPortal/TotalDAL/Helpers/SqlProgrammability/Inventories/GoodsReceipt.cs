@@ -66,14 +66,19 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      GoodsReceipts.GoodsReceiptID, CAST(GoodsReceipts.EntryDate AS DATE) AS EntryDate, GoodsReceipts.Reference, Locations.Code AS LocationCode, Workshifts.Name AS WorkshiftName, Users.FirstName AS UserFirstName, Users.LastName AS UserLastName, Customers.Name AS CustomerName, ISNULL(PlannedOrders.Reference, '') +  ISNULL(' (' + PlannedOrders.Code + ')', '') + ISNULL(WarehouseIssues.Code, '') + IIF(GoodsReceipts.GoodsReceiptTypeID = 7, N'Thu hồi màng đã cấp', '') AS GoodsReceiptTypeCaption, GoodsReceipts.Caption, GoodsReceipts.Description, GoodsReceipts.TotalQuantity, GoodsReceipts.Approved " + "\r\n";
+            queryString = queryString + "       SELECT      GoodsReceipts.GoodsReceiptID, CAST(GoodsReceipts.EntryDate AS DATE) AS EntryDate, GoodsReceipts.Reference, Locations.Code AS LocationCode, Workshifts.Name AS WorkshiftName, Users.FirstName AS UserFirstName, Users.LastName AS UserLastName, Customers.Name AS CustomerName, ISNULL(PlannedOrders.Reference, '') +  ISNULL(' (' + PlannedOrders.Code + ')', '') + ISNULL(WarehouseIssues.Code, '') + IIF(GoodsReceipts.GoodsReceiptTypeID = 7, N'Thu hồi màng đã cấp', '') AS GoodsReceiptTypeCaption, GoodsReceipts.Caption, GoodsReceipts.Description, " + "\r\n";
+            queryString = queryString + "                   GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.PackingList AS GoodsArrivalPackingList, GoodsArrivals.CustomsDeclaration AS GoodsArrivalCustomsDeclaration, GoodsArrivals.CustomsDeclarationDate AS GoodsArrivalCustomsDeclarationDate, GoodsArrivals.PurchaseOrderCodes AS GoodsArrivalPurchaseOrderCodes, PurchaseOrders.VoucherDate AS GoodsArrivalPurchaseOrderVoucherDate, GoodsReceipts.TotalQuantity, GoodsReceipts.Approved " + "\r\n";
             queryString = queryString + "       FROM        GoodsReceipts " + "\r\n";
             queryString = queryString + "                   INNER JOIN Locations ON (GoodsReceipts.GoodsReceiptTypeID = 6 OR GoodsReceipts.GoodsReceiptTypeID = 7 OR GoodsReceipts.GoodsReceiptTypeID = 8 " + (GlobalEnums.CBPP ? "" : "OR GoodsReceipts.GoodsReceiptTypeID = 9") + ") AND GoodsReceipts.NMVNTaskID = @NMVNTaskID AND GoodsReceipts.EntryDate >= @FromDate AND GoodsReceipts.EntryDate <= @ToDate AND GoodsReceipts.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = @NMVNTaskID AND AccessControls.AccessLevel > 0) AND Locations.LocationID = GoodsReceipts.LocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Workshifts ON GoodsReceipts.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Users ON GoodsReceipts.UserID = Users.UserID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN Customers ON GoodsReceipts.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN PlannedOrders ON GoodsReceipts.PlannedOrderID = PlannedOrders.PlannedOrderID " + "\r\n";
+
             queryString = queryString + "                   LEFT JOIN Warehouses WarehouseIssues ON GoodsReceipts.WarehouseIssueID = WarehouseIssues.WarehouseID " + "\r\n";
+
+            queryString = queryString + "                   LEFT JOIN GoodsArrivals ON GoodsReceipts.GoodsArrivalID = GoodsArrivals.GoodsArrivalID " + "\r\n";
+            queryString = queryString + "                   LEFT JOIN PurchaseOrders ON GoodsArrivals.PurchaseOrderID = PurchaseOrders.PurchaseOrderID " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
@@ -140,12 +145,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "       SELECT          " + (int)@GlobalEnums.GoodsReceiptTypeID.GoodsArrival + " AS GoodsReceiptTypeID, GoodsArrivals.GoodsArrivalID, GoodsArrivals.Reference AS GoodsArrivalReference, GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.EntryDate AS GoodsArrivalEntryDate, GoodsArrivals.Description, GoodsArrivals.Remarks, " + "\r\n";
-            queryString = queryString + "                       GoodsArrivals.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Customers.OfficialName AS CustomerOfficialName, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName " + "\r\n";
+            queryString = queryString + "                       GoodsArrivals.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Customers.OfficialName AS CustomerOfficialName, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, GoodsArrivals.CustomsDeclaration AS GoodsArrivalCustomsDeclaration, GoodsArrivals.CustomsDeclarationDate AS GoodsArrivalCustomsDeclarationDate, GoodsArrivals.PurchaseOrderCodes AS GoodsArrivalPurchaseOrderCodes, PurchaseOrders.VoucherDate AS GoodsArrivalPurchaseOrderVoucherDate " + "\r\n";
 
             queryString = queryString + "       FROM            GoodsArrivals " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON GoodsArrivals.GoodsArrivalID IN (SELECT GoodsArrivalID FROM GoodsArrivalPackages WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0) AND GoodsArrivals.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN EntireTerritories CustomerEntireTerritories ON Customers.TerritoryID = CustomerEntireTerritories.TerritoryID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Warehouses ON GoodsArrivals.WarehouseID = Warehouses.WarehouseID " + "\r\n";
+            queryString = queryString + "                       LEFT JOIN PurchaseOrders ON GoodsArrivals.PurchaseOrderID = PurchaseOrders.PurchaseOrderID " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptPendingGoodsArrivals", queryString);
         }

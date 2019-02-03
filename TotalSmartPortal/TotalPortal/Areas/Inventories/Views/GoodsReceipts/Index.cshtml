@@ -19,11 +19,16 @@
 
             columns.Bound(p => p.CustomerName).Title("NCC").Width(108);
             //columns.Bound(p => p.GoodsReceiptTypeCaption).Title("Nguồn hàng").Width(168);
+
+            columns.Bound(p => p.GoodsArrivalCode).Title("Số HĐ").Width(68);
+            columns.Bound(p => p.GoodsArrivalPurchaseOrderCodes).Title("Số PO").Width(68);
+            columns.Bound(p => p.GoodsArrivalPurchaseOrderVoucherDate).Title("Ngày PO").Width(38).Format("{0:dd/MM/yy}");
+            columns.Bound(p => p.GoodsArrivalCustomsDeclaration).Title("TKHQ").Width(68);
+            columns.Bound(p => p.GoodsArrivalCustomsDeclarationDate).Title("Ngày TK").Width(38).Format("{0:dd/MM/yy}");
             
             columns.Bound(p => p.Caption).Title("Mặt hàng").Width(296);
-            columns.Bound(p => p.Description).Title("Diễn giải").Width(207);
             
-            columns.Bound(p => p.TotalQuantity).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+            columns.Bound(p => p.TotalQuantity).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(38).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
             columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
             

@@ -26,5 +26,11 @@ namespace TotalModel.Models
         public string WorkshiftName { get; set; }
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
+        public string GoodsArrivalCode { get; set; }
+        public string GoodsArrivalPackingList { get; set; }
+        public string GoodsArrivalCustomsDeclaration { get; set; }
+        public Nullable<System.DateTime> GoodsArrivalCustomsDeclarationDate { get; set; }
+        public Nullable<System.DateTime> GoodsArrivalPurchaseOrderVoucherDate { get; set; }
+        public string GoodsArrivalPurchaseOrderCodes { get; set; }
     }
 }

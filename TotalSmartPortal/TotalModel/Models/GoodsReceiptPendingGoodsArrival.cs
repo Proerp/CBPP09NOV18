@@ -27,5 +27,9 @@ namespace TotalModel.Models
         public int WarehouseID { get; set; }
         public string WarehouseCode { get; set; }
         public string WarehouseName { get; set; }
+        public string GoodsArrivalCustomsDeclaration { get; set; }
+        public Nullable<System.DateTime> GoodsArrivalCustomsDeclarationDate { get; set; }
+        public string GoodsArrivalPurchaseOrderCodes { get; set; }
+        public Nullable<System.DateTime> GoodsArrivalPurchaseOrderVoucherDate { get; set; }
     }
 }

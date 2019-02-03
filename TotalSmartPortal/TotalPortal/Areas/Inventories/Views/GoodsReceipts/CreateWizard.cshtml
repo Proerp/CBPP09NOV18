@@ -34,8 +34,12 @@
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalReference)
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalEntryDate)
 
-    
-    
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalPurchaseOrderCodes)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalPurchaseOrderVoucherDate)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalCustomsDeclaration)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsArrivalCustomsDeclarationDate)
+
+
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferID)
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferReference)
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseTransferEntryDate)
@@ -76,7 +80,7 @@
             tabStrip.Add().Text("Khách hàng không có đơn hàng")
                 .Visible(false)
                 .Content(@<text>
-                    @*@Html.Partial("~/Views/Helpers/Commons/_SearchCustomer.cshtml")*@
+            @*@Html.Partial("~/Views/Helpers/Commons/_SearchCustomer.cshtml")*@
                 </text>);
 
 
@@ -97,16 +101,16 @@
             .Visible(Model.IsMaterial)
             .Selected(Model.IsMaterial)
             .Content(@<text>
-                @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetGoodsArrival.cshtml")
+                    @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetGoodsArrival.cshtml")
             </text>);
-        
-        
-        
+
+
+
             tabStrip.Add().Text("Phiếu VCNB")
                 .Visible(Model.IsItem || Model.IsMaterial)
                 .Selected(Model.IsItem)
                 .Content(@<text>
-                    @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetWarehouseTransfer.cshtml")
+                @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetWarehouseTransfer.cshtml")
                 </text>);
             tabStrip.Add().Text("Tổng hợp VCNB")
                 .Visible(Model.IsItem)
@@ -182,7 +186,7 @@
 
 
     function handleOKEvent(promotionGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
-        var hasPurchaseRequisition =  true;// $("#tabStrip").data("kendoTabStrip").select().index() === 0 ? false : true;
+        var hasPurchaseRequisition = true;// $("#tabStrip").data("kendoTabStrip").select().index() === 0 ? false : true;
 
         if (hasPurchaseRequisition == false) {
             if ($("#Customer_CustomerID").val() === null || $("#Customer_CustomerID").val() === "")
@@ -294,6 +298,10 @@
                 $("#GoodsArrivalReference").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalReference === undefined ? null : selectedDataItem.GoodsArrivalReference);
                 $("#GoodsArrivalEntryDate").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalEntryDate === undefined ? null : kendo.toString(selectedDataItem.GoodsArrivalEntryDate, Settings.DateTimeFormat));
 
+                $("#GoodsArrivalPurchaseOrderCodes").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalPurchaseOrderCodes === undefined ? null : selectedDataItem.GoodsArrivalPurchaseOrderCodes);
+                $("#GoodsArrivalPurchaseOrderVoucherDate").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalPurchaseOrderVoucherDate === undefined ? null : kendo.toString(selectedDataItem.GoodsArrivalPurchaseOrderVoucherDate, Settings.DateTimeFormat));
+                $("#GoodsArrivalCustomsDeclaration").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalCustomsDeclaration === undefined ? null : selectedDataItem.GoodsArrivalCustomsDeclaration);
+                $("#GoodsArrivalCustomsDeclarationDate").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalCustomsDeclarationDate === undefined ? null : kendo.toString(selectedDataItem.GoodsArrivalCustomsDeclarationDate, Settings.DateTimeFormat));
 
 
                 $("#WarehouseTransferID").val(selectedDataItem === undefined || selectedDataItem.WarehouseTransferID === undefined ? null : selectedDataItem.WarehouseTransferID);
