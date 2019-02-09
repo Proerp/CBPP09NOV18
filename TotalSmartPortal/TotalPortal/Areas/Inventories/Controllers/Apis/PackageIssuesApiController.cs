@@ -63,10 +63,10 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         }
 
         [HttpGet]
-        [Route("GetPendingBlendingInstructionDetails/{locationID}/{packageIssueID}/{blendingInstructionID}/{warehouseID}/{goodsReceiptDetailIDs}")]
-        public IEnumerable<PackageIssuePendingBlendingInstructionDetail> GetPendingBlendingInstructionDetails(int? locationID, int? packageIssueID, int? blendingInstructionID, int? warehouseID, string goodsReceiptDetailIDs)
+        [Route("GetPendingBlendingInstructionDetails/{locationID}/{packageIssueID}/{blendingInstructionID}/{warehouseID}/{barcode}/{goodsReceiptDetailIDs}")]
+        public IEnumerable<PackageIssuePendingBlendingInstructionDetail> GetPendingBlendingInstructionDetails(int? locationID, int? packageIssueID, int? blendingInstructionID, int? warehouseID, string barcode, string goodsReceiptDetailIDs)
         {
-            return this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(true, locationID, packageIssueID, blendingInstructionID, warehouseID, goodsReceiptDetailIDs);
+            return this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(true, locationID, packageIssueID, blendingInstructionID, warehouseID, barcode, goodsReceiptDetailIDs);
         }
     }
 }

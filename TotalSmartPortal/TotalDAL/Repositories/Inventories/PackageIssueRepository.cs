@@ -46,10 +46,10 @@ namespace TotalDAL.Repositories.Inventories
             return pendingBlendingInstructions;
         }
 
-        public IEnumerable<PackageIssuePendingBlendingInstructionDetail> GetPendingBlendingInstructionDetails(bool webAPI, int? locationID, int? packageIssueID, int? blendingInstructionID, int? warehouseID, string goodsReceiptDetailIDs)
+        public IEnumerable<PackageIssuePendingBlendingInstructionDetail> GetPendingBlendingInstructionDetails(bool webAPI, int? locationID, int? packageIssueID, int? blendingInstructionID, int? warehouseID, string barcode, string goodsReceiptDetailIDs)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<PackageIssuePendingBlendingInstructionDetail> pendingBlendingInstructionDetails = base.TotalSmartPortalEntities.GetPackageIssuePendingBlendingInstructionDetails(webAPI, locationID, packageIssueID, blendingInstructionID, warehouseID, goodsReceiptDetailIDs).ToList();
+            IEnumerable<PackageIssuePendingBlendingInstructionDetail> pendingBlendingInstructionDetails = base.TotalSmartPortalEntities.GetPackageIssuePendingBlendingInstructionDetails(webAPI, locationID, packageIssueID, blendingInstructionID, warehouseID, barcode, goodsReceiptDetailIDs).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingBlendingInstructionDetails;

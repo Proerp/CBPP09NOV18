@@ -82,10 +82,10 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         }
 
         [HttpGet]
-        [Route("GetTransferOrderDetails/{locationID}/{nmvnTaskID}/{warehouseTransferID}/{transferOrderID}/{warehouseID}/{warehouseReceiptID}/{goodsReceiptDetailIDs}")]
-        public IEnumerable<WarehouseTransferPendingTransferOrderDetail> GetTransferOrderDetails(int? locationID, int? nmvnTaskID, int? warehouseTransferID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string goodsReceiptDetailIDs)
+        [Route("GetTransferOrderDetails/{locationID}/{nmvnTaskID}/{warehouseTransferID}/{transferOrderID}/{warehouseID}/{warehouseReceiptID}/{barcode}/{goodsReceiptDetailIDs}")]
+        public IEnumerable<WarehouseTransferPendingTransferOrderDetail> GetTransferOrderDetails(int? locationID, int? nmvnTaskID, int? warehouseTransferID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string barcode, string goodsReceiptDetailIDs)
         {
-            return this.warehouseTransferAPIRepository.GetTransferOrderDetails(true, locationID, nmvnTaskID, warehouseTransferID, transferOrderID, warehouseID, warehouseReceiptID, goodsReceiptDetailIDs);
+            return this.warehouseTransferAPIRepository.GetTransferOrderDetails(true, locationID, nmvnTaskID, warehouseTransferID, transferOrderID, warehouseID, warehouseReceiptID, barcode, goodsReceiptDetailIDs);
         }
     }
 

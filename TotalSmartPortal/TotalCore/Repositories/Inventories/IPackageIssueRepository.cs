@@ -15,7 +15,7 @@ namespace TotalCore.Repositories.Inventories
 
         IEnumerable<PackageIssuePendingBlendingInstruction> GetBlendingInstructions(int? locationID, int? blendingInstructionID);
 
-        IEnumerable<PackageIssuePendingBlendingInstructionDetail> GetPendingBlendingInstructionDetails(bool webAPI, int? locationID, int? materialIssueID, int? blendingInstructionID, int? warehouseID, string goodsReceiptDetailIDs);
+        IEnumerable<PackageIssuePendingBlendingInstructionDetail> GetPendingBlendingInstructionDetails(bool webAPI, int? locationID, int? materialIssueID, int? blendingInstructionID, int? warehouseID, string barcode, string goodsReceiptDetailIDs);
     }
 
 }

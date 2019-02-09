@@ -38,6 +38,7 @@
                 locationID: window.parent.requireConfig.pageOptions.LocationID,
                 goodsReceiptID: window.parent.$("#GoodsReceiptID").val(),
                 goodsArrivalID: window.parent.$("#GoodsArrivalID").val(),
+                barcode: "",
                 goodsArrivalPackageIDs : goodsReceiptJSON.map(function(elem){return elem.GoodsArrivalPackageID;}).join(",")            
             };}
             </text>))
