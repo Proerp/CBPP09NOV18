@@ -7547,6 +7547,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="GoodsReceiptID" Type="int" Mode="In" />
           <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
+          <Parameter Name="Barcode" Type="nvarchar" Mode="In" />
           <Parameter Name="GoodsArrivalPackageIDs" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetGoodsReceiptPendingGoodsArrivals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -7703,6 +7704,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="PackageIssueID" Type="int" Mode="In" />
           <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
+          <Parameter Name="Barcode" Type="nvarchar" Mode="In" />
           <Parameter Name="GoodsReceiptDetailIDs" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetPackageIssuePendingBlendingInstructions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -8047,6 +8049,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="TransferOrderID" Type="int" Mode="In" />
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
           <Parameter Name="WarehouseReceiptID" Type="int" Mode="In" />
+          <Parameter Name="Barcode" Type="nvarchar" Mode="In" />
           <Parameter Name="GoodsReceiptDetailIDs" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetWarehouseTransferPendingTransferOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -14411,6 +14414,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="TransferOrderID" Mode="In" Type="Int32" />
             <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
             <Parameter Name="WarehouseReceiptID" Mode="In" Type="Int32" />
+            <Parameter Name="Barcode" Mode="In" Type="String" />
             <Parameter Name="GoodsReceiptDetailIDs" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetWarehouseTransferPendingTransferOrders" ReturnType="Collection(TotalSmartPortalModel.WarehouseTransferPendingTransferOrder)">
@@ -14713,6 +14717,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="PackageIssueID" Mode="In" Type="Int32" />
             <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
             <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
+            <Parameter Name="Barcode" Mode="In" Type="String" />
             <Parameter Name="GoodsReceiptDetailIDs" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetPackageIssuePendingBlendingInstructions" ReturnType="Collection(TotalSmartPortalModel.PackageIssuePendingBlendingInstruction)">
@@ -14866,6 +14871,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsReceiptID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
+            <Parameter Name="Barcode" Mode="In" Type="String" />
             <Parameter Name="GoodsArrivalPackageIDs" Mode="In" Type="String" />
           </FunctionImport>
           <EntitySet Name="GoodsReceiptDetails" EntityType="TotalSmartPortalModel.GoodsReceiptDetail" />

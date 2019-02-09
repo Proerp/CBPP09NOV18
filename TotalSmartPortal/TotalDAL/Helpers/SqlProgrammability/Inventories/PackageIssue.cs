@@ -119,44 +119,52 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            queryString = " @WebAPI bit, @LocationID Int, @PackageIssueID Int, @BlendingInstructionID Int, @WarehouseID Int, @GoodsReceiptDetailIDs varchar(3999) " + "\r\n";
+            queryString = " @WebAPI bit, @LocationID Int, @PackageIssueID Int, @BlendingInstructionID Int, @WarehouseID Int, @Barcode nvarchar(60), @GoodsReceiptDetailIDs varchar(3999) " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN " + "\r\n";
-
-            queryString = queryString + "       IF (@WebAPI = 1) " + "\r\n";
-            queryString = queryString + "           " + this.BuildSQLNew(false) + "\r\n"; //SHOULD SAVE BEFORE CALL NEXT
-            queryString = queryString + "           ORDER BY BlendingInstructionDetails.BlendingInstructionDetailID " + "\r\n";
+            queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '') " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-            queryString = queryString + "           BEGIN " + "\r\n";
-            queryString = queryString + "               IF  (@GoodsReceiptDetailIDs <> '') " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLPendingDetails(true) + "\r\n";
-            queryString = queryString + "               ELSE " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLPendingDetails(false) + "\r\n";
-            queryString = queryString + "           END " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(false) + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetPackageIssuePendingBlendingInstructionDetails", queryString);
         }
 
-        private string BuildSQLPendingDetails(bool isGoodsReceiptDetailIDs)
+        private string BuildSQLPendingDetails(bool isBarcode)
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
 
-            queryString = queryString + "       IF (@PackageIssueID <= 0) " + "\r\n";
+            queryString = queryString + "       IF  (@GoodsReceiptDetailIDs <> '' AND @GoodsReceiptDetailIDs <> '0') " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(isBarcode, true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(isBarcode, false) + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string BuildSQLPendingDetails(bool isBarcode, bool isGoodsReceiptDetailIDs)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       IF (@PackageIssueID <= 0 OR @WebAPI = 1) " + "\r\n"; //@WebAPI = 1: SHOULD SAVE BEFORE CALL NEXT
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLNew(isGoodsReceiptDetailIDs) + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLNew(isBarcode, isGoodsReceiptDetailIDs) + "\r\n";
             queryString = queryString + "                   ORDER BY BlendingInstructionDetails.BlendingInstructionDetailID " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
 
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLNew(isGoodsReceiptDetailIDs) + " WHERE BlendingInstructionDetails.BlendingInstructionDetailID NOT IN (SELECT BlendingInstructionDetailID FROM PackageIssueDetails WHERE PackageIssueID = @PackageIssueID) " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLNew(isBarcode, isGoodsReceiptDetailIDs) + " WHERE BlendingInstructionDetails.BlendingInstructionDetailID NOT IN (SELECT BlendingInstructionDetailID FROM PackageIssueDetails WHERE PackageIssueID = @PackageIssueID) " + "\r\n";
             queryString = queryString + "                   UNION ALL " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLEdit(isGoodsReceiptDetailIDs) + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLEdit(isBarcode, isGoodsReceiptDetailIDs) + "\r\n";
             queryString = queryString + "                   ORDER BY BlendingInstructionDetails.BlendingInstructionDetailID " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
 
@@ -165,7 +173,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             return queryString;
         }
 
-        private string BuildSQLNew(bool isGoodsReceiptDetailIDs)
+        private string BuildSQLNew(bool isBarcode, bool isGoodsReceiptDetailIDs)
         {
             string queryString = "";
 
@@ -176,14 +184,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       FROM        BlendingInstructionDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON BlendingInstructionDetails.BlendingInstructionID = @BlendingInstructionID AND BlendingInstructionDetails.Approved = 1 AND BlendingInstructionDetails.InActive = 0 AND BlendingInstructionDetails.InActivePartial = 0 AND ROUND(BlendingInstructionDetails.Quantity - BlendingInstructionDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 AND BlendingInstructionDetails.CommodityID = Commodities.CommodityID " + "\r\n";
 
-            queryString = queryString + "                   LEFT JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND BlendingInstructionDetails.CommodityID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
+            queryString = queryString + "                   LEFT JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND BlendingInstructionDetails.CommodityID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + (isBarcode ? " AND GoodsReceiptDetails.Barcode = @Barcode" : "") + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
             queryString = queryString + "                   LEFT JOIN GoodsReceipts ON GoodsReceiptDetails.GoodsReceiptID = GoodsReceipts.GoodsReceiptID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN BinLocations ON GoodsReceiptDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";
 
             return queryString;
         }
 
-        private string BuildSQLEdit(bool isGoodsReceiptDetailIDs)
+        private string BuildSQLEdit(bool isBarcode, bool isGoodsReceiptDetailIDs)
         {
             string queryString = "";
 
@@ -195,7 +203,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   INNER JOIN (SELECT BlendingInstructionDetailID, SUM(Quantity) AS Quantity FROM PackageIssueDetails WHERE PackageIssueID = @PackageIssueID GROUP BY BlendingInstructionDetailID) AS PackageIssueDetails ON BlendingInstructionDetails.BlendingInstructionDetailID = PackageIssueDetails.BlendingInstructionDetailID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON BlendingInstructionDetails.CommodityID = Commodities.CommodityID " + "\r\n";
 
-            queryString = queryString + "                   LEFT JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND BlendingInstructionDetails.CommodityID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND (ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 OR GoodsReceiptDetails.GoodsReceiptDetailID IN (SELECT GoodsReceiptDetailID FROM PackageIssueDetails WHERE PackageIssueID = @PackageIssueID)) " + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
+            queryString = queryString + "                   LEFT JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND BlendingInstructionDetails.CommodityID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND (ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 OR GoodsReceiptDetails.GoodsReceiptDetailID IN (SELECT GoodsReceiptDetailID FROM PackageIssueDetails WHERE PackageIssueID = @PackageIssueID)) " + (isBarcode ? " AND GoodsReceiptDetails.Barcode = @Barcode" : "") + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
             queryString = queryString + "                   LEFT JOIN (SELECT GoodsReceiptDetailID, SUM(Quantity) AS Quantity FROM PackageIssueDetails WHERE PackageIssueID = @PackageIssueID GROUP BY GoodsReceiptDetailID) AS IssuedGoodsReceiptDetails ON GoodsReceiptDetails.GoodsReceiptDetailID = IssuedGoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN GoodsReceipts ON GoodsReceiptDetails.GoodsReceiptID = GoodsReceipts.GoodsReceiptID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN BinLocations ON GoodsReceiptDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";

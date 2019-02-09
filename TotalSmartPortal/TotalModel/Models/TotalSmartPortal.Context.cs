@@ -3867,7 +3867,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WarehouseTransferIndex>("GetWarehouseTransferIndexes", nMVNTaskIDParameter, aspUserIDParameter, fromDateParameter, toDateParameter);
         }
     
-        public virtual ObjectResult<WarehouseTransferPendingTransferOrderDetail> GetWarehouseTransferPendingTransferOrderDetails(Nullable<bool> webAPI, Nullable<int> locationID, Nullable<int> nMVNTaskID, Nullable<int> warehouseTransferID, Nullable<int> transferOrderID, Nullable<int> warehouseID, Nullable<int> warehouseReceiptID, string goodsReceiptDetailIDs)
+        public virtual ObjectResult<WarehouseTransferPendingTransferOrderDetail> GetWarehouseTransferPendingTransferOrderDetails(Nullable<bool> webAPI, Nullable<int> locationID, Nullable<int> nMVNTaskID, Nullable<int> warehouseTransferID, Nullable<int> transferOrderID, Nullable<int> warehouseID, Nullable<int> warehouseReceiptID, string barcode, string goodsReceiptDetailIDs)
         {
             var webAPIParameter = webAPI.HasValue ?
                 new ObjectParameter("WebAPI", webAPI) :
@@ -3897,11 +3897,15 @@ namespace TotalModel.Models
                 new ObjectParameter("WarehouseReceiptID", warehouseReceiptID) :
                 new ObjectParameter("WarehouseReceiptID", typeof(int));
     
+            var barcodeParameter = barcode != null ?
+                new ObjectParameter("Barcode", barcode) :
+                new ObjectParameter("Barcode", typeof(string));
+    
             var goodsReceiptDetailIDsParameter = goodsReceiptDetailIDs != null ?
                 new ObjectParameter("GoodsReceiptDetailIDs", goodsReceiptDetailIDs) :
                 new ObjectParameter("GoodsReceiptDetailIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WarehouseTransferPendingTransferOrderDetail>("GetWarehouseTransferPendingTransferOrderDetails", webAPIParameter, locationIDParameter, nMVNTaskIDParameter, warehouseTransferIDParameter, transferOrderIDParameter, warehouseIDParameter, warehouseReceiptIDParameter, goodsReceiptDetailIDsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<WarehouseTransferPendingTransferOrderDetail>("GetWarehouseTransferPendingTransferOrderDetails", webAPIParameter, locationIDParameter, nMVNTaskIDParameter, warehouseTransferIDParameter, transferOrderIDParameter, warehouseIDParameter, warehouseReceiptIDParameter, barcodeParameter, goodsReceiptDetailIDsParameter);
         }
     
         public virtual ObjectResult<WarehouseTransferPendingTransferOrder> GetWarehouseTransferPendingTransferOrders(Nullable<int> locationID, Nullable<int> nMVNTaskID)
@@ -4148,7 +4152,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PackageIssueIndex>("GetPackageIssueIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
         }
     
-        public virtual ObjectResult<PackageIssuePendingBlendingInstructionDetail> GetPackageIssuePendingBlendingInstructionDetails(Nullable<bool> webAPI, Nullable<int> locationID, Nullable<int> packageIssueID, Nullable<int> blendingInstructionID, Nullable<int> warehouseID, string goodsReceiptDetailIDs)
+        public virtual ObjectResult<PackageIssuePendingBlendingInstructionDetail> GetPackageIssuePendingBlendingInstructionDetails(Nullable<bool> webAPI, Nullable<int> locationID, Nullable<int> packageIssueID, Nullable<int> blendingInstructionID, Nullable<int> warehouseID, string barcode, string goodsReceiptDetailIDs)
         {
             var webAPIParameter = webAPI.HasValue ?
                 new ObjectParameter("WebAPI", webAPI) :
@@ -4170,11 +4174,15 @@ namespace TotalModel.Models
                 new ObjectParameter("WarehouseID", warehouseID) :
                 new ObjectParameter("WarehouseID", typeof(int));
     
+            var barcodeParameter = barcode != null ?
+                new ObjectParameter("Barcode", barcode) :
+                new ObjectParameter("Barcode", typeof(string));
+    
             var goodsReceiptDetailIDsParameter = goodsReceiptDetailIDs != null ?
                 new ObjectParameter("GoodsReceiptDetailIDs", goodsReceiptDetailIDs) :
                 new ObjectParameter("GoodsReceiptDetailIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PackageIssuePendingBlendingInstructionDetail>("GetPackageIssuePendingBlendingInstructionDetails", webAPIParameter, locationIDParameter, packageIssueIDParameter, blendingInstructionIDParameter, warehouseIDParameter, goodsReceiptDetailIDsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PackageIssuePendingBlendingInstructionDetail>("GetPackageIssuePendingBlendingInstructionDetails", webAPIParameter, locationIDParameter, packageIssueIDParameter, blendingInstructionIDParameter, warehouseIDParameter, barcodeParameter, goodsReceiptDetailIDsParameter);
         }
     
         public virtual ObjectResult<PackageIssuePendingBlendingInstruction> GetPackageIssuePendingBlendingInstructions(Nullable<int> locationID, Nullable<int> blendingInstructionID)
@@ -4508,7 +4516,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GoodsArrivalToggleApproved", entityIDParameter, approvedParameter);
         }
     
-        public virtual ObjectResult<GoodsReceiptPendingGoodsArrivalPackage> GetGoodsReceiptPendingGoodsArrivalPackages(Nullable<bool> webAPI, Nullable<int> locationID, Nullable<int> goodsReceiptID, Nullable<int> goodsArrivalID, string goodsArrivalPackageIDs)
+        public virtual ObjectResult<GoodsReceiptPendingGoodsArrivalPackage> GetGoodsReceiptPendingGoodsArrivalPackages(Nullable<bool> webAPI, Nullable<int> locationID, Nullable<int> goodsReceiptID, Nullable<int> goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
         {
             var webAPIParameter = webAPI.HasValue ?
                 new ObjectParameter("WebAPI", webAPI) :
@@ -4526,11 +4534,15 @@ namespace TotalModel.Models
                 new ObjectParameter("GoodsArrivalID", goodsArrivalID) :
                 new ObjectParameter("GoodsArrivalID", typeof(int));
     
+            var barcodeParameter = barcode != null ?
+                new ObjectParameter("Barcode", barcode) :
+                new ObjectParameter("Barcode", typeof(string));
+    
             var goodsArrivalPackageIDsParameter = goodsArrivalPackageIDs != null ?
                 new ObjectParameter("GoodsArrivalPackageIDs", goodsArrivalPackageIDs) :
                 new ObjectParameter("GoodsArrivalPackageIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrivalPackage>("GetGoodsReceiptPendingGoodsArrivalPackages", webAPIParameter, locationIDParameter, goodsReceiptIDParameter, goodsArrivalIDParameter, goodsArrivalPackageIDsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrivalPackage>("GetGoodsReceiptPendingGoodsArrivalPackages", webAPIParameter, locationIDParameter, goodsReceiptIDParameter, goodsArrivalIDParameter, barcodeParameter, goodsArrivalPackageIDsParameter);
         }
     
         public virtual ObjectResult<string> BlendingInstructionApproved(Nullable<int> entityID)
