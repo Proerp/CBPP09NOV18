@@ -58,7 +58,7 @@ namespace TotalModel.Models
         public string EntryMonth { get { return ((DateTime)this.EntryDate).ToString("yyyy/MM"); } }
         public string ApprovedStatus { get { return this.Approved ? "đã duyệt" : "chưa duyệt"; } }
 
-        public string Features { get { return this.Reference + (this.VoucherDate != null? " Ngày PO: " + ((DateTime)this.VoucherDate).ToString("dd/MM/yy") :"") + ", NCC: " + this.CustomerName + (this.DeliveryDate != null ? ", Ngày GH: " + ((DateTime)this.DeliveryDate).ToString("dd/MM/yyyy") : ""); } }
+        public string Features { get { return this.Reference + (this.VoucherDate != null ? " Ngày PO: " + ((DateTime)this.VoucherDate).ToString("dd/MM/yy") : "") + ", NCC: " + this.CustomerName + (this.DeliveryDate != null ? ", Ngày GH: " + ((DateTime)this.DeliveryDate).ToString("dd/MM/yyyy") : ""); } }
     }
 
     public partial class PurchaseOrder : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<PurchaseOrderDetail>
@@ -117,6 +117,9 @@ namespace TotalModel.Models
         public int GetID() { return this.GoodsReceiptID; }
 
         public virtual Warehouse WarehouseIssue { get { return this.Warehouse1; } }
+
+        //public string GoodsArrivalPurchaseOrderCodes { get { return this.GoodsArrival != null ? this.GoodsArrival.PurchaseOrderCodes : null; } }
+        public Nullable<System.DateTime> GoodsArrivalPurchaseOrderVoucherDate { get { return this.GoodsArrival != null && this.GoodsArrival.PurchaseOrder != null ? this.GoodsArrival.PurchaseOrder.VoucherDate : null; } }
 
         public ICollection<GoodsReceiptDetail> GetDetails() { return this.GoodsReceiptDetails; }
     }

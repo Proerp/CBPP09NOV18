@@ -36,7 +36,10 @@ namespace TotalPortal.Areas.Commons.Builders
         private readonly ICommodityLineSelectListBuilder commodityLineSelectListBuilder;
         private readonly ICommodityLineRepository commodityLineRepository;
 
-        public CommoditySelectListBuilder(ICommodityBrandSelectListBuilder commodityBrandSelectListBuilder, ICommodityBrandRepository commodityBrandRepository, ICommodityCategorySelectListBuilder commodityCategorySelectListBuilder, ICommodityCategoryRepository commodityCategoryRepository, ICommodityTypeSelectListBuilder commodityTypeSelectListBuilder, ICommodityTypeRepository commodityTypeRepository, ICommodityClassSelectListBuilder commodityClassSelectListBuilder, ICommodityClassRepository commodityClassRepository, ICommodityLineSelectListBuilder commodityLineSelectListBuilder, ICommodityLineRepository commodityLineRepository)
+        private readonly ICommodityIconSelectListBuilder commodityIconSelectListBuilder;
+        private readonly ICommodityIconRepository commodityIconRepository;
+
+        public CommoditySelectListBuilder(ICommodityBrandSelectListBuilder commodityBrandSelectListBuilder, ICommodityBrandRepository commodityBrandRepository, ICommodityCategorySelectListBuilder commodityCategorySelectListBuilder, ICommodityCategoryRepository commodityCategoryRepository, ICommodityTypeSelectListBuilder commodityTypeSelectListBuilder, ICommodityTypeRepository commodityTypeRepository, ICommodityClassSelectListBuilder commodityClassSelectListBuilder, ICommodityClassRepository commodityClassRepository, ICommodityLineSelectListBuilder commodityLineSelectListBuilder, ICommodityLineRepository commodityLineRepository, ICommodityIconSelectListBuilder commodityIconSelectListBuilder, ICommodityIconRepository commodityIconRepository)
         {
             this.commodityBrandSelectListBuilder = commodityBrandSelectListBuilder;
             this.commodityBrandRepository = commodityBrandRepository;
@@ -52,6 +55,9 @@ namespace TotalPortal.Areas.Commons.Builders
 
             this.commodityLineSelectListBuilder = commodityLineSelectListBuilder;
             this.commodityLineRepository = commodityLineRepository;
+
+            this.commodityIconSelectListBuilder = commodityIconSelectListBuilder;
+            this.commodityIconRepository = commodityIconRepository;
         }
 
         public virtual void BuildSelectLists(TCommodityBuilderModel commodityViewModel)
@@ -60,6 +66,7 @@ namespace TotalPortal.Areas.Commons.Builders
             commodityViewModel.CommodityCategorySelectList = this.commodityCategorySelectListBuilder.BuildSelectListItemsForCommodityCategorys(this.commodityCategoryRepository.GetAllCommodityCategories(commodityViewModel.IsItem || commodityViewModel.IsProduct ? ((int)GlobalEnums.CommodityTypeID.Products).ToString() : ((int)GlobalEnums.CommodityTypeID.Materials).ToString()));
             commodityViewModel.CommodityClassSelectList = this.commodityClassSelectListBuilder.BuildSelectListItemsForCommodityClasss(this.commodityClassRepository.GetAllCommodityClasses());
             commodityViewModel.CommodityLineSelectList = this.commodityLineSelectListBuilder.BuildSelectListItemsForCommodityLines(this.commodityLineRepository.GetAllCommodityLines());
+            commodityViewModel.CommodityIconSelectList = this.commodityIconSelectListBuilder.BuildSelectListItemsForCommodityIcons(this.commodityIconRepository.GetCommodityIconBases());
         }
     }
 
@@ -67,24 +74,24 @@ namespace TotalPortal.Areas.Commons.Builders
     public interface IMaterialSelectListBuilder : ICommoditySelectListBuilder<MaterialViewModel> { }
     public class MaterialSelectListBuilder : CommoditySelectListBuilder<MaterialViewModel>, IMaterialSelectListBuilder
     {
-        public MaterialSelectListBuilder(ICommodityBrandSelectListBuilder commodityBrandSelectListBuilder, ICommodityBrandRepository commodityBrandRepository, ICommodityCategorySelectListBuilder commodityCategorySelectListBuilder, ICommodityCategoryRepository commodityCategoryRepository, ICommodityTypeSelectListBuilder commodityTypeSelectListBuilder, ICommodityTypeRepository commodityTypeRepository, ICommodityClassSelectListBuilder commodityClassSelectListBuilder, ICommodityClassRepository commodityClassRepository, ICommodityLineSelectListBuilder commodityLineSelectListBuilder, ICommodityLineRepository commodityLineRepository)
-            : base(commodityBrandSelectListBuilder, commodityBrandRepository, commodityCategorySelectListBuilder, commodityCategoryRepository, commodityTypeSelectListBuilder, commodityTypeRepository, commodityClassSelectListBuilder, commodityClassRepository, commodityLineSelectListBuilder, commodityLineRepository)
+        public MaterialSelectListBuilder(ICommodityBrandSelectListBuilder commodityBrandSelectListBuilder, ICommodityBrandRepository commodityBrandRepository, ICommodityCategorySelectListBuilder commodityCategorySelectListBuilder, ICommodityCategoryRepository commodityCategoryRepository, ICommodityTypeSelectListBuilder commodityTypeSelectListBuilder, ICommodityTypeRepository commodityTypeRepository, ICommodityClassSelectListBuilder commodityClassSelectListBuilder, ICommodityClassRepository commodityClassRepository, ICommodityLineSelectListBuilder commodityLineSelectListBuilder, ICommodityLineRepository commodityLineRepository, ICommodityIconSelectListBuilder commodityIconSelectListBuilder, ICommodityIconRepository commodityIconRepository)
+            : base(commodityBrandSelectListBuilder, commodityBrandRepository, commodityCategorySelectListBuilder, commodityCategoryRepository, commodityTypeSelectListBuilder, commodityTypeRepository, commodityClassSelectListBuilder, commodityClassRepository, commodityLineSelectListBuilder, commodityLineRepository, commodityIconSelectListBuilder, commodityIconRepository)
         { }
     }
 
     public interface IItemSelectListBuilder : ICommoditySelectListBuilder<ItemViewModel> { }
     public class ItemSelectListBuilder : CommoditySelectListBuilder<ItemViewModel>, IItemSelectListBuilder
     {
-        public ItemSelectListBuilder(ICommodityBrandSelectListBuilder commodityBrandSelectListBuilder, ICommodityBrandRepository commodityBrandRepository, ICommodityCategorySelectListBuilder commodityCategorySelectListBuilder, ICommodityCategoryRepository commodityCategoryRepository, ICommodityTypeSelectListBuilder commodityTypeSelectListBuilder, ICommodityTypeRepository commodityTypeRepository, ICommodityClassSelectListBuilder commodityClassSelectListBuilder, ICommodityClassRepository commodityClassRepository, ICommodityLineSelectListBuilder commodityLineSelectListBuilder, ICommodityLineRepository commodityLineRepository)
-            : base(commodityBrandSelectListBuilder, commodityBrandRepository, commodityCategorySelectListBuilder, commodityCategoryRepository, commodityTypeSelectListBuilder, commodityTypeRepository, commodityClassSelectListBuilder, commodityClassRepository, commodityLineSelectListBuilder, commodityLineRepository)
+        public ItemSelectListBuilder(ICommodityBrandSelectListBuilder commodityBrandSelectListBuilder, ICommodityBrandRepository commodityBrandRepository, ICommodityCategorySelectListBuilder commodityCategorySelectListBuilder, ICommodityCategoryRepository commodityCategoryRepository, ICommodityTypeSelectListBuilder commodityTypeSelectListBuilder, ICommodityTypeRepository commodityTypeRepository, ICommodityClassSelectListBuilder commodityClassSelectListBuilder, ICommodityClassRepository commodityClassRepository, ICommodityLineSelectListBuilder commodityLineSelectListBuilder, ICommodityLineRepository commodityLineRepository, ICommodityIconSelectListBuilder commodityIconSelectListBuilder, ICommodityIconRepository commodityIconRepository)
+            : base(commodityBrandSelectListBuilder, commodityBrandRepository, commodityCategorySelectListBuilder, commodityCategoryRepository, commodityTypeSelectListBuilder, commodityTypeRepository, commodityClassSelectListBuilder, commodityClassRepository, commodityLineSelectListBuilder, commodityLineRepository, commodityIconSelectListBuilder, commodityIconRepository)
         { }
     }
 
     public interface IProductSelectListBuilder : ICommoditySelectListBuilder<ProductViewModel> { }
     public class ProductSelectListBuilder : CommoditySelectListBuilder<ProductViewModel>, IProductSelectListBuilder
     {
-        public ProductSelectListBuilder(ICommodityBrandSelectListBuilder commodityBrandSelectListBuilder, ICommodityBrandRepository commodityBrandRepository, ICommodityCategorySelectListBuilder commodityCategorySelectListBuilder, ICommodityCategoryRepository commodityCategoryRepository, ICommodityTypeSelectListBuilder commodityTypeSelectListBuilder, ICommodityTypeRepository commodityTypeRepository, ICommodityClassSelectListBuilder commodityClassSelectListBuilder, ICommodityClassRepository commodityClassRepository, ICommodityLineSelectListBuilder commodityLineSelectListBuilder, ICommodityLineRepository commodityLineRepository)
-            : base(commodityBrandSelectListBuilder, commodityBrandRepository, commodityCategorySelectListBuilder, commodityCategoryRepository, commodityTypeSelectListBuilder, commodityTypeRepository, commodityClassSelectListBuilder, commodityClassRepository, commodityLineSelectListBuilder, commodityLineRepository)
+        public ProductSelectListBuilder(ICommodityBrandSelectListBuilder commodityBrandSelectListBuilder, ICommodityBrandRepository commodityBrandRepository, ICommodityCategorySelectListBuilder commodityCategorySelectListBuilder, ICommodityCategoryRepository commodityCategoryRepository, ICommodityTypeSelectListBuilder commodityTypeSelectListBuilder, ICommodityTypeRepository commodityTypeRepository, ICommodityClassSelectListBuilder commodityClassSelectListBuilder, ICommodityClassRepository commodityClassRepository, ICommodityLineSelectListBuilder commodityLineSelectListBuilder, ICommodityLineRepository commodityLineRepository, ICommodityIconSelectListBuilder commodityIconSelectListBuilder, ICommodityIconRepository commodityIconRepository)
+            : base(commodityBrandSelectListBuilder, commodityBrandRepository, commodityCategorySelectListBuilder, commodityCategoryRepository, commodityTypeSelectListBuilder, commodityTypeRepository, commodityClassSelectListBuilder, commodityClassRepository, commodityLineSelectListBuilder, commodityLineRepository, commodityIconSelectListBuilder, commodityIconRepository)
         { }
     }
 }

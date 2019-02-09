@@ -1,4 +1,5 @@
-﻿@using TotalModel.Models;
+﻿@using TotalBase.Enums
+@using TotalModel.Models;
 @using TotalPortal.Configuration;
 
 @model TotalDTO.Helpers.Interfaces.IMaterialItemProduct
@@ -10,13 +11,14 @@
     {
         columns.Bound(p => p.CodePartA).Title("Mã").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(20).Hidden(@Model.IsItem ? true : false);
         columns.Bound(p => p.CodePartB).Title("Phân loại").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(11);
-        columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
+        columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(@GlobalEnums.CBPP);
         columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsMaterial ? true : false);
         columns.Bound(p => p.CodePartA).Title("Công thức").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsItem ? false : true);
         columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
         columns.Bound(p => p.CodePartF).Title("Chiều rộng").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(!@Model.IsItem ? true : false);
         columns.Bound(c => c.CommodityName).Title("Tên hàng").Width(45);
         columns.Bound(c => c.GoodsReceiptReference).Title("Lô").Width(10);
+        columns.Bound(c => c.Barcode).Title("Mã vạch").Width(38).Hidden(!@GlobalEnums.CBPP);
         columns.Bound(c => c.GoodsReceiptEntryDate).Title("Ngày").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(15).Format("{0:" + Settings.DateFormat + "}");
         columns.Bound(c => c.QuantityAvailables).Title("Tồn Kho").Format(Settings.kfmQuantity).Width(12).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
 
@@ -44,6 +46,7 @@
             commodityID: null,
             commodityIDs: "",
             batchID: null,
+            barcode: "",
             goodsReceiptDetailIDs : materialIssueJSON.map(function(elem){return elem.GoodsReceiptDetailID;}).join(","),
             onlyApproved: true,
             onlyIssuable: true

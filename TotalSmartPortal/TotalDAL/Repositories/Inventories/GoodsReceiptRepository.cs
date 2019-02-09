@@ -87,10 +87,10 @@ namespace TotalDAL.Repositories.Inventories
             return pendingGoodsArrivals;
         }
 
-        public IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string goodsArrivalPackageIDs)
+        public IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(bool webAPI, int? locationID, int? goodsReceiptID, int? goodsArrivalID, string goodsArrivalPackageIDs)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> pendingGoodsArrivalPackages = base.TotalSmartPortalEntities.GetGoodsReceiptPendingGoodsArrivalPackages(locationID, goodsReceiptID, goodsArrivalID, goodsArrivalPackageIDs).ToList();
+            IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> pendingGoodsArrivalPackages = base.TotalSmartPortalEntities.GetGoodsReceiptPendingGoodsArrivalPackages(webAPI, locationID, goodsReceiptID, goodsArrivalID, goodsArrivalPackageIDs).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingGoodsArrivalPackages;
@@ -181,10 +181,10 @@ namespace TotalDAL.Repositories.Inventories
             return base.TotalSmartPortalEntities.GetGoodsReceiptID(goodsArrivalID, plannedOrderID, warehouseTransferID, warehouseAdjustmentID).FirstOrDefault();
         }
 
-        public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? commodityID, string commodityIDs, int? batchID, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
+        public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? commodityID, string commodityIDs, int? batchID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<GoodsReceiptDetailAvailable> goodsReceiptDetailAvailables = base.TotalSmartPortalEntities.GetGoodsReceiptDetailAvailables(locationID, warehouseID, commodityID, commodityIDs, batchID, goodsReceiptDetailIDs, onlyApproved, onlyIssuable).ToList();
+            IEnumerable<GoodsReceiptDetailAvailable> goodsReceiptDetailAvailables = base.TotalSmartPortalEntities.GetGoodsReceiptDetailAvailables(locationID, warehouseID, commodityID, commodityIDs, batchID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return goodsReceiptDetailAvailables;

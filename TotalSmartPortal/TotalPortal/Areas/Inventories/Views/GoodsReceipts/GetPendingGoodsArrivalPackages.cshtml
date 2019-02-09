@@ -34,11 +34,11 @@
 
             var goodsReceiptJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
 
-            return {
-            locationID: window.parent.requireConfig.pageOptions.LocationID,
-            goodsReceiptID: window.parent.$("#GoodsReceiptID").val(),
-            goodsArrivalID: window.parent.$("#GoodsArrivalID").val(),
-            goodsArrivalPackageIDs : goodsReceiptJSON.map(function(elem){return elem.GoodsArrivalPackageID;}).join(",")            
+            return {             
+                locationID: window.parent.requireConfig.pageOptions.LocationID,
+                goodsReceiptID: window.parent.$("#GoodsReceiptID").val(),
+                goodsArrivalID: window.parent.$("#GoodsArrivalID").val(),
+                goodsArrivalPackageIDs : goodsReceiptJSON.map(function(elem){return elem.GoodsArrivalPackageID;}).join(",")            
             };}
             </text>))
     .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client

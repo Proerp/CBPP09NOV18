@@ -160,37 +160,50 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            queryString = " @LocationID Int, @GoodsReceiptID Int, @GoodsArrivalID Int, @GoodsArrivalPackageIDs varchar(3999) " + "\r\n";
+            queryString = " @WebAPI bit, @LocationID Int, @GoodsReceiptID Int, @GoodsArrivalID Int, @Barcode nvarchar(60), @GoodsArrivalPackageIDs varchar(3999) " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN " + "\r\n";
-
-            queryString = queryString + "       IF  (@GoodsArrivalPackageIDs <> '' AND @GoodsArrivalPackageIDs <> '0') " + "\r\n";
+            queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '') " + "\r\n";
             queryString = queryString + "           " + this.BuildSQLGoodsArrival(true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           " + this.BuildSQLGoodsArrival(false) + "\r\n";
-
             queryString = queryString + "   END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptPendingGoodsArrivalPackages", queryString);
         }
 
-        private string BuildSQLGoodsArrival(bool isGoodsArrivalPackageIDs)
+        private string BuildSQLGoodsArrival(bool isBarcode)
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
 
-            queryString = queryString + "       IF (@GoodsReceiptID <= 0) " + "\r\n";
+            queryString = queryString + "       IF  (@GoodsArrivalPackageIDs <> '' AND @GoodsArrivalPackageIDs <> '0') " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLGoodsArrival(isBarcode, true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLGoodsArrival(isBarcode, false) + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string BuildSQLGoodsArrival(bool isBarcode, bool isGoodsArrivalPackageIDs)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       IF (@GoodsReceiptID <= 0 OR @WebAPI = 1) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalNew(isGoodsArrivalPackageIDs) + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalNew(isBarcode, isGoodsArrivalPackageIDs) + "\r\n";
             queryString = queryString + "                   ORDER BY GoodsArrivals.EntryDate, GoodsArrivals.GoodsArrivalID, GoodsArrivalPackages.SerialID, GoodsArrivalPackages.GoodsArrivalPackageID DESC " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalNew(isGoodsArrivalPackageIDs) + " WHERE GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT GoodsArrivalPackageID FROM GoodsReceiptDetails WHERE GoodsReceiptID = @GoodsReceiptID) " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalNew(isBarcode, isGoodsArrivalPackageIDs) + " WHERE GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT GoodsArrivalPackageID FROM GoodsReceiptDetails WHERE GoodsReceiptID = @GoodsReceiptID) " + "\r\n";
             queryString = queryString + "                   UNION ALL " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalEdit(isGoodsArrivalPackageIDs) + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalEdit(isBarcode, isGoodsArrivalPackageIDs) + "\r\n";
             queryString = queryString + "                   ORDER BY GoodsArrivals.EntryDate, GoodsArrivals.GoodsArrivalID, GoodsArrivalPackages.SerialID, GoodsArrivalPackages.GoodsArrivalPackageID DESC " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
 
@@ -199,7 +212,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             return queryString;
         }
 
-        private string BuildSQLGoodsArrivalNew(bool isGoodsArrivalPackageIDs)
+        private string BuildSQLGoodsArrivalNew(bool isBarcode, bool isGoodsArrivalPackageIDs)
         {
             string queryString = "";
 
@@ -209,13 +222,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   0.0 AS Quantity, GoodsArrivals.Description, GoodsArrivalPackages.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        GoodsArrivals " + "\r\n";
-            queryString = queryString + "                   INNER JOIN GoodsArrivalPackages ON GoodsArrivals.GoodsArrivalID = @GoodsArrivalID AND GoodsArrivalPackages.Approved = 1 AND GoodsArrivalPackages.InActive = 0 AND GoodsArrivalPackages.InActivePartial = 0 AND ROUND(GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID" + (isGoodsArrivalPackageIDs ? " AND GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsArrivalPackageIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN GoodsArrivalPackages ON GoodsArrivals.GoodsArrivalID = @GoodsArrivalID AND GoodsArrivalPackages.Approved = 1 AND GoodsArrivalPackages.InActive = 0 AND GoodsArrivalPackages.InActivePartial = 0 AND ROUND(GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID" + (isBarcode ? " AND GoodsArrivalPackages.Barcode = @Barcode" : "") + (isGoodsArrivalPackageIDs ? " AND GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsArrivalPackageIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON GoodsArrivalPackages.CommodityID = Commodities.CommodityID " + "\r\n";
 
             return queryString;
         }
 
-        private string BuildSQLGoodsArrivalEdit(bool isGoodsArrivalPackageIDs)
+        private string BuildSQLGoodsArrivalEdit(bool isBarcode, bool isGoodsArrivalPackageIDs)
         {
             string queryString = "";
 
@@ -225,7 +238,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   0.0 AS Quantity, GoodsArrivals.Description, GoodsArrivalPackages.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        GoodsArrivalPackages " + "\r\n";
-            queryString = queryString + "                   INNER JOIN GoodsReceiptDetails ON GoodsReceiptDetails.GoodsReceiptID = @GoodsReceiptID AND GoodsArrivalPackages.GoodsArrivalPackageID = GoodsReceiptDetails.GoodsArrivalPackageID" + (isGoodsArrivalPackageIDs ? " AND GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsArrivalPackageIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN GoodsReceiptDetails ON GoodsReceiptDetails.GoodsReceiptID = @GoodsReceiptID AND GoodsArrivalPackages.GoodsArrivalPackageID = GoodsReceiptDetails.GoodsArrivalPackageID" + (isBarcode ? " AND GoodsArrivalPackages.Barcode = @Barcode" : "") + (isGoodsArrivalPackageIDs ? " AND GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsArrivalPackageIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON GoodsArrivalPackages.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN GoodsArrivals ON GoodsArrivalPackages.GoodsArrivalID = GoodsArrivals.GoodsArrivalID " + "\r\n";
 
@@ -851,7 +864,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "                   IF @AffectedROWCOUNT <> (SELECT COUNT(*) FROM GoodsReceiptDetails WHERE GoodsReceiptID = @EntityID) " + "\r\n";
             queryString = queryString + "                       BEGIN " + "\r\n";
-            queryString = queryString + "                           DECLARE     @msg NVARCHAR(300) = N'Phiếu giao hàng đã hủy, hoặc chưa duyệt' ; " + "\r\n";
+            queryString = queryString + "                           DECLARE     @msg NVARCHAR(300) = N'Phiếu giao hàng đã hủy, hoặc chưa duyệt; hoặc số lượng nhập kho không phù hợp' ; " + "\r\n";
             queryString = queryString + "                           THROW       61001,  @msg, 1; " + "\r\n";
             queryString = queryString + "                       END " + "\r\n";
 
@@ -975,7 +988,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void GetGoodsReceiptDetailAvailables()
         {
-            string queryString = " @LocationID Int, @WarehouseID Int, @CommodityID Int, @CommodityIDs varchar(3999), @BatchID Int, @GoodsReceiptDetailIDs varchar(3999), @OnlyApproved bit, @OnlyIssuable bit " + "\r\n";
+            string queryString = " @LocationID Int, @WarehouseID Int, @CommodityID Int, @CommodityIDs varchar(3999), @BatchID Int, @Barcode nvarchar(60), @GoodsReceiptDetailIDs varchar(3999), @OnlyApproved bit, @OnlyIssuable bit " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -1027,7 +1040,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       IF  (@GoodsReceiptDetailIDs <> '') " + "\r\n";
+            queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '') " + "\r\n";
             queryString = queryString + "           " + this.GetGoodsReceiptDetailAvailableSQL(isWarehouseID, isCommodityID, isCommodityIDs, isBatchID, true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           " + this.GetGoodsReceiptDetailAvailableSQL(isWarehouseID, isCommodityID, isCommodityIDs, isBatchID, false) + "\r\n";
@@ -1036,7 +1049,20 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             return queryString;
         }
 
-        private string GetGoodsReceiptDetailAvailableSQL(bool isWarehouseID, bool isCommodityID, bool isCommodityIDs, bool isBatchID, bool isGoodsReceiptDetailIDs)
+        private string GetGoodsReceiptDetailAvailableSQL(bool isWarehouseID, bool isCommodityID, bool isCommodityIDs, bool isBatchID, bool isBarcode)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+            queryString = queryString + "       IF  (@GoodsReceiptDetailIDs <> '') " + "\r\n";
+            queryString = queryString + "           " + this.GetGoodsReceiptDetailAvailableSQL(isWarehouseID, isCommodityID, isCommodityIDs, isBatchID, isBarcode, true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.GetGoodsReceiptDetailAvailableSQL(isWarehouseID, isCommodityID, isCommodityIDs, isBatchID, isBarcode, false) + "\r\n";
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string GetGoodsReceiptDetailAvailableSQL(bool isWarehouseID, bool isCommodityID, bool isCommodityIDs, bool isBatchID, bool isBarcode, bool isGoodsReceiptDetailIDs)
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
@@ -1046,7 +1072,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + GlobalEnums.rndQuantity + ") AS QuantityAvailables, ISNULL(CAST(0 AS bit), CAST(0 AS bit)) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        GoodsReceiptDetails " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Warehouses ON ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + GlobalEnums.rndQuantity + ") > 0 " + (isWarehouseID ? " AND GoodsReceiptDetails.WarehouseID = @WarehouseID" : " AND GoodsReceiptDetails.LocationID = @LocationID") + (isCommodityID ? " AND GoodsReceiptDetails.CommodityID = @CommodityID" : "") + (isCommodityIDs ? " AND GoodsReceiptDetails.CommodityID IN (SELECT Id FROM dbo.SplitToIntList (@CommodityIDs))" : "") + " AND (@OnlyApproved = 0 OR GoodsReceiptDetails.Approved = 1) AND (@OnlyIssuable = 0 OR Warehouses.Issuable = 1) AND GoodsReceiptDetails.WarehouseID = Warehouses.WarehouseID " + (isBatchID ? " AND GoodsReceiptDetails.BatchID = @BatchID" : "") + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN Warehouses ON ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + GlobalEnums.rndQuantity + ") > 0 " + (isWarehouseID ? " AND GoodsReceiptDetails.WarehouseID = @WarehouseID" : " AND GoodsReceiptDetails.LocationID = @LocationID") + (isCommodityID ? " AND GoodsReceiptDetails.CommodityID = @CommodityID" : "") + (isCommodityIDs ? " AND GoodsReceiptDetails.CommodityID IN (SELECT Id FROM dbo.SplitToIntList (@CommodityIDs))" : "") + " AND (@OnlyApproved = 0 OR GoodsReceiptDetails.Approved = 1) AND (@OnlyIssuable = 0 OR Warehouses.Issuable = 1) AND GoodsReceiptDetails.WarehouseID = Warehouses.WarehouseID " + (isBatchID ? " AND GoodsReceiptDetails.BatchID = @BatchID" : "") + (isBarcode ? " AND GoodsReceiptDetails.Barcode = @Barcode" : "") + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON GoodsReceiptDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN BinLocations ON GoodsReceiptDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";
 

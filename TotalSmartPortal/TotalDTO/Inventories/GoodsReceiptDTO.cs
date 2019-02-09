@@ -277,13 +277,13 @@ namespace TotalDTO.Inventories
                 switch (this.GoodsReceiptTypeID)
                 {
                     case (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition:
-                        return this.PurchaseRequisitionReferenceNote + (this.PurchaseRequisitionCodeNote != null ? " [" + this.PurchaseRequisitionCodeNote + "] " : "") + (this.PurchaseRequisitionEntryDate != null ? "Ngày: " + this.PurchaseRequisitionEntryDate.ToString() : "");
+                        return this.PurchaseRequisitionReferenceNote + (this.PurchaseRequisitionCodeNote != null ? " [" + this.PurchaseRequisitionCodeNote + "] " : "") + (this.PurchaseRequisitionEntryDate != null ? " Ngày: " + this.PurchaseRequisitionEntryDate.ToString() : "");
                     case (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival:
-                        return this.GoodsArrivalReferenceNote + (this.GoodsArrivalCodeNote != null ? " [HĐ: " + this.GoodsArrivalCodeNote + "] " : "") + (this.GoodsArrivalEntryDate != null ? "Ngày nhận: " + ((DateTime)this.GoodsArrivalEntryDate).ToString("dd/MM/yy") : "") + (this.GoodsArrivalPurchaseOrderCodes != null ? " [PO: " + this.GoodsArrivalPurchaseOrderCodes + "] " : "") + (this.GoodsArrivalCustomsDeclaration != null ? " [TKHQ: " + this.GoodsArrivalCustomsDeclaration + "] " : "");
+                        return this.GoodsArrivalReferenceNote + (this.GoodsArrivalCodeNote != null ? " [HĐ: " + this.GoodsArrivalCodeNote + "] " : "") + (this.GoodsArrivalEntryDate != null ? " Ngày nhận: " + ((DateTime)this.GoodsArrivalEntryDate).ToString("dd/MM/yy") : "") + (this.GoodsArrivalPurchaseOrderCodes != null ? " [PO: " + this.GoodsArrivalPurchaseOrderCodes + "] " : "") + (this.GoodsArrivalCustomsDeclaration != null ? " [TKHQ: " + this.GoodsArrivalCustomsDeclaration + "] " : "");
                     case (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer:
-                        return "Kho xuất: " + WarehouseIssue.Name + ", Phiếu VCNB: " + this.WarehouseTransferReferenceNote + (this.WarehouseTransferEntryDate != null ? "Ngày: " + this.WarehouseTransferEntryDate.ToString() : "");
+                        return "Kho xuất: " + WarehouseIssue.Name + ", Phiếu VCNB: " + this.WarehouseTransferReferenceNote + (this.WarehouseTransferEntryDate != null ? " Ngày: " + this.WarehouseTransferEntryDate.ToString() : "");
                     case (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct:
-                        return this.PlannedOrderReference + (this.PlannedOrderCode != null ? " [" + this.PlannedOrderCode + "] " : "") + (this.PlannedOrderEntryDate != null ? "Ngày: " + this.PlannedOrderEntryDate.ToString() : "");
+                        return this.PlannedOrderReference + (this.PlannedOrderCode != null ? " [" + this.PlannedOrderCode + "] " : "") + (this.PlannedOrderEntryDate != null ? " Ngày: " + this.PlannedOrderEntryDate.ToString() : "");
                     case (int)GlobalEnums.GoodsReceiptTypeID.WarehouseAdjustments:
                         return "[OTHER ADJUSTMENT]";
                     default:

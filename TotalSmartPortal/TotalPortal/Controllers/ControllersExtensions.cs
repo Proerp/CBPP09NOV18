@@ -25,7 +25,10 @@ namespace TotalPortal.Controllers
             }
             else
             {
-                modelState.AddModelError(string.Empty, exception.Message + (exception.Message != exception.GetBaseException().Message ? "\r\n" + exception.GetBaseException().Message : ""));
+                string message = exception.Message + (exception.Message != exception.GetBaseException().Message ? "\r\n" + exception.GetBaseException().Message : "");
+                message = message.Replace("See the inner exception for details.", "");
+                message = message.Replace("An error occurred while executing the command definition.", "");
+                modelState.AddModelError(string.Empty, message);
             }
 
         }

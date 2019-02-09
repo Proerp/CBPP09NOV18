@@ -74,10 +74,10 @@ namespace TotalDAL.Repositories.Inventories
             return pendingTransferOrders;
         }
 
-        public IEnumerable<WarehouseTransferPendingTransferOrderDetail> GetTransferOrderDetails(int? locationID, int? nmvnTaskID, int? warehouseTransferID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string goodsReceiptDetailIDs)
+        public IEnumerable<WarehouseTransferPendingTransferOrderDetail> GetTransferOrderDetails(bool webAPI, int? locationID, int? nmvnTaskID, int? warehouseTransferID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string goodsReceiptDetailIDs)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<WarehouseTransferPendingTransferOrderDetail> pendingTransferOrderDetails = base.TotalSmartPortalEntities.GetWarehouseTransferPendingTransferOrderDetails(locationID, nmvnTaskID, warehouseTransferID, transferOrderID, warehouseID, warehouseReceiptID, goodsReceiptDetailIDs).ToList();
+            IEnumerable<WarehouseTransferPendingTransferOrderDetail> pendingTransferOrderDetails = base.TotalSmartPortalEntities.GetWarehouseTransferPendingTransferOrderDetails(webAPI, locationID, nmvnTaskID, warehouseTransferID, transferOrderID, warehouseID, warehouseReceiptID, goodsReceiptDetailIDs).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingTransferOrderDetails;

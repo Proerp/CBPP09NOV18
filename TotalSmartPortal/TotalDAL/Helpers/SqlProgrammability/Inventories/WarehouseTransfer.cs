@@ -159,7 +159,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            queryString = " @LocationID Int, @NMVNTaskID int, @WarehouseTransferID Int, @TransferOrderID Int, @WarehouseID Int, @WarehouseReceiptID Int, @GoodsReceiptDetailIDs varchar(3999) " + "\r\n";
+            queryString = " @WebAPI bit, @LocationID Int, @NMVNTaskID int, @WarehouseTransferID Int, @TransferOrderID Int, @WarehouseID Int, @WarehouseReceiptID Int, @GoodsReceiptDetailIDs varchar(3999) " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -195,7 +195,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
 
-            queryString = queryString + "       IF (@WarehouseTransferID <= 0) " + "\r\n";
+            queryString = queryString + "       IF (@WarehouseTransferID <= 0 OR @WebAPI = 1) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
             queryString = queryString + "                   " + this.BuildSQLNew(isTransferOrderID, isGoodsReceiptDetailIDs) + "\r\n";
             queryString = queryString + "                   ORDER BY TransferOrderDetails.TransferOrderDetailID " + "\r\n";

@@ -71,16 +71,16 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         [Route("GetPendingGoodsArrivalPackages/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{goodsArrivalPackageIDs}")]
         public IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string goodsArrivalPackageIDs)
         {
-            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(locationID, goodsReceiptID, goodsArrivalID, goodsArrivalPackageIDs);
+            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, goodsReceiptID, goodsArrivalID, goodsArrivalPackageIDs);
         }
 
 
 
         [HttpGet]
-        [Route("GetGoodsReceiptDetailAvailables/{locationID}/{warehouseID}/{commodityID}/{commodityIDs}/{batchID}/{goodsReceiptDetailIDs}/{onlyApproved}/{onlyIssuable}")]
-        public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? commodityID, string commodityIDs, int? batchID, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
+        [Route("GetGoodsReceiptDetailAvailables/{locationID}/{warehouseID}/{commodityID}/{commodityIDs}/{batchID}/{barcode}/{goodsReceiptDetailIDs}/{onlyApproved}/{onlyIssuable}")]
+        public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? commodityID, string commodityIDs, int? batchID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
         {
-            return this.goodsReceiptAPIRepository.GetGoodsReceiptDetailAvailables(locationID, warehouseID, commodityID, commodityIDs, batchID, goodsReceiptDetailIDs, onlyApproved, onlyIssuable);
+            return this.goodsReceiptAPIRepository.GetGoodsReceiptDetailAvailables(locationID, warehouseID, commodityID, commodityIDs, batchID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable);
         }
     }
 

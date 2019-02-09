@@ -362,6 +362,10 @@ namespace TotalDAL.Repositories
             Helpers.SqlProgrammability.Inventories.MaterialIssue materialIssue = new Helpers.SqlProgrammability.Inventories.MaterialIssue(totalSmartPortalEntities);
             materialIssue.RestoreProcedure();
 
+            //return;
+
+            Helpers.SqlProgrammability.Commons.CommodityIcon commodityIcon = new Helpers.SqlProgrammability.Commons.CommodityIcon(totalSmartPortalEntities);
+            commodityIcon.RestoreProcedure();
 
             //return;
 

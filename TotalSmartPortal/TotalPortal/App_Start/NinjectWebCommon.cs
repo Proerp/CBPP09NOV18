@@ -368,6 +368,7 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IWarehouseAdjustmentTypeSelectListBuilder>().To<WarehouseAdjustmentTypeSelectListBuilder>();
                 kernel.Bind<ICommodityClassSelectListBuilder>().To<CommodityClassSelectListBuilder>();
                 kernel.Bind<ICommodityLineSelectListBuilder>().To<CommodityLineSelectListBuilder>();
+                kernel.Bind<ICommodityIconSelectListBuilder>().To<CommodityIconSelectListBuilder>();
                 kernel.Bind<IShiftSelectListBuilder>().To<ShiftSelectListBuilder>();
                 kernel.Bind<ITransferOrderTypeSelectListBuilder>().To<TransferOrderTypeSelectListBuilder>();
 
@@ -403,6 +404,7 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IWarehouseAdjustmentTypeRepository>().To<WarehouseAdjustmentTypeRepository>();
                 kernel.Bind<ICommodityClassRepository>().To<CommodityClassRepository>();
                 kernel.Bind<ICommodityLineRepository>().To<CommodityLineRepository>();
+                kernel.Bind<ICommodityIconRepository>().To<CommodityIconRepository>();
                 kernel.Bind<IShiftRepository>().To<ShiftRepository>();
                 kernel.Bind<ITransferOrderTypeRepository>().To<TransferOrderTypeRepository>();
 

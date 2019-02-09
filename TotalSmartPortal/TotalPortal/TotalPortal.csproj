@@ -275,6 +275,7 @@
     <Compile Include="Areas\Commons\Builders\ICommodityBrandSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityCategorySelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityClassSelectListBuilder.cs" />
+    <Compile Include="Areas\Commons\Builders\ICommodityIconSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityLineSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommodityPriceSelectListBuilder.cs" />
     <Compile Include="Areas\Commons\Builders\ICommoditySelectListBuilder.cs" />
@@ -314,6 +315,7 @@
     <Compile Include="Areas\Commons\ViewModels\Helpers\IBinTypeDropDownViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\Helpers\ICommodityBrandDropDownViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\Helpers\ICommodityClassDropDownViewModel.cs" />
+    <Compile Include="Areas\Commons\ViewModels\Helpers\ICommodityIconDropDownViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\Helpers\ICommodityLineDropDownViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\Helpers\IMonetaryAccountDropDownViewModel.cs" />
     <Compile Include="Areas\Commons\ViewModels\Helpers\IPackingMaterialDropDownViewModel.cs" />
@@ -3143,6 +3145,7 @@
     <Content Include="Views\Helpers\Bases\_BaseSectionLeft.cshtml" />
     <Content Include="Views\Helpers\Commons\_Warehouse2019.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DropDowns\BinType.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DropDowns\CommodityIcon.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

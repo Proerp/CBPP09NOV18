@@ -54,7 +54,7 @@ namespace TotalPortal.Areas.Inventories.APIs
 
         public JsonResult GetPendingBlendingInstructionDetails([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? packageIssueID, int? blendingInstructionID, int? warehouseID, string goodsReceiptDetailIDs)
         {
-            var result = this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(locationID, packageIssueID, blendingInstructionID, warehouseID, goodsReceiptDetailIDs, false);
+            var result = this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(false, locationID, packageIssueID, blendingInstructionID, warehouseID, goodsReceiptDetailIDs);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 

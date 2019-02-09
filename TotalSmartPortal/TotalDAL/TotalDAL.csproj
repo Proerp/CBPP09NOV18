@@ -54,6 +54,7 @@
     <Compile Include="Helpers\SqlProgrammability\Commons\BinLocation.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\Bom.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\Commodity.cs" />
+    <Compile Include="Helpers\SqlProgrammability\Commons\CommodityIcon.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\Mold.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\ProductionLine.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\Workshift.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Repositories\Commons\CommodityBrandRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityCategoryRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityClassRepository.cs" />
+    <Compile Include="Repositories\Commons\CommodityIconRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityLineRepository.cs" />
     <Compile Include="Repositories\Commons\BomRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityPriceRepository.cs" />

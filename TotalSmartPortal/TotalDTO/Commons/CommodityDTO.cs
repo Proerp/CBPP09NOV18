@@ -70,6 +70,9 @@ namespace TotalDTO.Commons
         int CommodityTypeID { get; }
         string CommodityTypeName { get; set; }
 
+        int CommodityIconID { get; set; }
+        string CommodityIconName { get; set; }
+
         [Display(Name = "Nhà cung cấp")]
         int SupplierID { get; }
 
@@ -147,6 +150,9 @@ namespace TotalDTO.Commons
 
         public int CommodityTypeID { get { return (int)(this.NMVNTaskID == GlobalEnums.NmvnTaskID.Material ? GlobalEnums.CommodityTypeID.Materials : this.NMVNTaskID == GlobalEnums.NmvnTaskID.Item ? GlobalEnums.CommodityTypeID.Items : this.NMVNTaskID == GlobalEnums.NmvnTaskID.Product ? GlobalEnums.CommodityTypeID.Products : GlobalEnums.CommodityTypeID.Unknown); } }
         public string CommodityTypeName { get; set; }
+
+        public int CommodityIconID { get; set; }
+        public string CommodityIconName { get; set; }
 
         public int SupplierID { get { return 1; } }
 

@@ -7357,6 +7357,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="GetCommodityCodePartC" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
         </Function>
+        <Function Name="GetCommodityIconBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="GetCommodityIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
@@ -7521,6 +7522,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="CommodityID" Type="int" Mode="In" />
           <Parameter Name="CommodityIDs" Type="varchar" Mode="In" />
           <Parameter Name="BatchID" Type="int" Mode="In" />
+          <Parameter Name="Barcode" Type="nvarchar" Mode="In" />
           <Parameter Name="GoodsReceiptDetailIDs" Type="varchar" Mode="In" />
           <Parameter Name="OnlyApproved" Type="bit" Mode="In" />
           <Parameter Name="OnlyIssuable" Type="bit" Mode="In" />
@@ -7541,6 +7543,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="LocationID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetGoodsReceiptPendingGoodsArrivalPackages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WebAPI" Type="bit" Mode="In" />
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="GoodsReceiptID" Type="int" Mode="In" />
           <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
@@ -7695,12 +7698,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="GetPackageIssuePendingBlendingInstructionDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WebAPI" Type="bit" Mode="In" />
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="PackageIssueID" Type="int" Mode="In" />
           <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
           <Parameter Name="GoodsReceiptDetailIDs" Type="varchar" Mode="In" />
-          <Parameter Name="WebAPI" Type="bit" Mode="In" />
         </Function>
         <Function Name="GetPackageIssuePendingBlendingInstructions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -8037,6 +8040,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="GetWarehouseTransferPendingTransferOrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WebAPI" Type="bit" Mode="In" />
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="WarehouseTransferID" Type="int" Mode="In" />
@@ -13822,6 +13826,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="CommodityID" Mode="In" Type="Int32" />
             <Parameter Name="CommodityIDs" Mode="In" Type="String" />
             <Parameter Name="BatchID" Mode="In" Type="Int32" />
+            <Parameter Name="Barcode" Mode="In" Type="String" />
             <Parameter Name="GoodsReceiptDetailIDs" Mode="In" Type="String" />
             <Parameter Name="OnlyApproved" Mode="In" Type="Boolean" />
             <Parameter Name="OnlyIssuable" Mode="In" Type="Boolean" />
@@ -14399,6 +14404,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="GetWarehouseTransferPendingTransferOrderDetails" ReturnType="Collection(TotalSmartPortalModel.WarehouseTransferPendingTransferOrderDetail)">
+            <Parameter Name="WebAPI" Mode="In" Type="Boolean" />
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="WarehouseTransferID" Mode="In" Type="Int32" />
@@ -14702,12 +14708,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="GetPackageIssuePendingBlendingInstructionDetails" ReturnType="Collection(TotalSmartPortalModel.PackageIssuePendingBlendingInstructionDetail)">
+            <Parameter Name="WebAPI" Mode="In" Type="Boolean" />
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="PackageIssueID" Mode="In" Type="Int32" />
             <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
             <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsReceiptDetailIDs" Mode="In" Type="String" />
-            <Parameter Name="WebAPI" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GetPackageIssuePendingBlendingInstructions" ReturnType="Collection(TotalSmartPortalModel.PackageIssuePendingBlendingInstruction)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
@@ -14856,6 +14862,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="Approved" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsReceiptPendingGoodsArrivalPackages" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingGoodsArrivalPackage)">
+            <Parameter Name="WebAPI" Mode="In" Type="Boolean" />
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsReceiptID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
@@ -15574,6 +15581,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="BinType" EntitySet="BinTypes" />
             <End Role="BinLocation" EntitySet="BinLocations" />
           </AssociationSet>
+          <FunctionImport Name="GetCommodityIconBases" ReturnType="Collection(TotalSmartPortalModel.CommodityIconBase)" />
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -23597,6 +23605,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="CommodityIconBase">
+          <Property Type="Int32" Name="CommodityIconID" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="60" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -29933,6 +29946,15 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetCommodityIconBases" FunctionName="TotalSmartPortalModel.Store.GetCommodityIconBases">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.CommodityIconBase">
+                <ScalarProperty Name="CommodityIconID" ColumnName="CommodityIconID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
