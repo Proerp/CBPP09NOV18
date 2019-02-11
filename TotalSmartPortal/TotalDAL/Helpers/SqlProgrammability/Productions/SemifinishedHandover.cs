@@ -44,14 +44,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime " + "\r\n";
+            queryString = " @NMVNTaskID int, @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
             queryString = queryString + "       SELECT      SemifinishedHandovers.SemifinishedHandoverID, CAST(SemifinishedHandovers.EntryDate AS DATE) AS EntryDate, SemifinishedHandovers.Reference, Locations.Code AS LocationCode, ISNULL(Customers.Name + ',    ' + Customers.BillingAddress, N'Bàn giao phôi định hình') AS CustomerDescription, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, SemifinishedHandovers.Description, SemifinishedHandovers.TotalQuantity, SemifinishedHandovers.Approved " + "\r\n";
             queryString = queryString + "       FROM        SemifinishedHandovers " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Locations ON SemifinishedHandovers.EntryDate >= @FromDate AND SemifinishedHandovers.EntryDate <= @ToDate AND SemifinishedHandovers.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.SemifinishedHandover + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = SemifinishedHandovers.LocationID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Locations ON SemifinishedHandovers.NMVNTaskID = @NMVNTaskID AND SemifinishedHandovers.EntryDate >= @FromDate AND SemifinishedHandovers.EntryDate <= @ToDate AND SemifinishedHandovers.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = @NMVNTaskID AND AccessControls.AccessLevel > 0) AND Locations.LocationID = SemifinishedHandovers.LocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Workshifts ON SemifinishedHandovers.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN Customers ON SemifinishedHandovers.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "       " + "\r\n";
@@ -98,24 +98,24 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void GetSemifinishedHandoverPendingWorkshifts()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @NMVNTaskID int, @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate, Workshifts.Code AS WorkshiftCode " + "\r\n";
             queryString = queryString + "       FROM            Workshifts " + "\r\n";
-            queryString = queryString + "       WHERE           WorkshiftID IN (SELECT DISTINCT WorkshiftID FROM SemifinishedProducts WHERE SemifinishedHandoverID IS NULL AND Approved = 1) " + "\r\n";
+            queryString = queryString + "       WHERE           WorkshiftID IN (SELECT DISTINCT WorkshiftID FROM SemifinishedProducts WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.SemifinishedProductHandover + " AND SemifinishedHandoverID IS NULL AND Approved = 1 UNION ALL SELECT DISTINCT WorkshiftID FROM SemifinishedItems WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.SemifinishedItemHandover + " AND SemifinishedHandoverID IS NULL AND Approved = 1) " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetSemifinishedHandoverPendingWorkshifts", queryString);
         }
 
         private void GetSemifinishedHandoverPendingCustomers()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @NMVNTaskID int, @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate, Workshifts.Code AS WorkshiftCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
             queryString = queryString + "       FROM            Workshifts " + "\r\n";
-            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, CustomerID FROM SemifinishedProducts WHERE SemifinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID) SemifinishedProducts ON Workshifts.WorkshiftID = SemifinishedProducts.WorkshiftID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, CustomerID FROM SemifinishedProducts WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.SemifinishedProductHandover + " AND SemifinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID UNION ALL SELECT WorkshiftID, CustomerID FROM SemifinishedItems WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.SemifinishedItemHandover + " AND SemifinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID) SemifinishedProducts ON Workshifts.WorkshiftID = SemifinishedProducts.WorkshiftID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON SemifinishedProducts.CustomerID = Customers.CustomerID " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetSemifinishedHandoverPendingCustomers", queryString);
@@ -126,7 +126,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @SemifinishedHandoverID Int, @WorkshiftID Int, @CustomerID Int, @SemifinishedProductIDs varchar(3999), @IsReadonly bit " + "\r\n";
+            queryString = " @NMVNTaskID int, @SemifinishedHandoverID Int, @WorkshiftID Int, @CustomerID Int, @SemifinishedProductIDs varchar(3999), @IsReadonly bit " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -332,7 +332,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void SemifinishedHandoverInitReference()
         {
-            SimpleInitReference simpleInitReference = new SimpleInitReference("SemifinishedHandovers", "SemifinishedHandoverID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.SemifinishedHandover));
+            SimpleInitReference simpleInitReference = new SimpleInitReference("SemifinishedHandovers", "SemifinishedHandoverID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.SemifinishedProductHandover));
             this.totalSmartPortalEntities.CreateTrigger("SemifinishedHandoverInitReference", simpleInitReference.CreateQuery());
         }
 

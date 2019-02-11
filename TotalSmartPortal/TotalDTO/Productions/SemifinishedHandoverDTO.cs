@@ -15,7 +15,7 @@ namespace TotalDTO.Productions
 {
     public class SemifinishedHandoverPrimitiveDTO : BaseWithDetailDTO<SemifinishedHandoverDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
     {
-        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.SemifinishedHandover; } }
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.SemifinishedProductHandover; } }
 
         public int GetID() { return this.SemifinishedHandoverID; }
         public void SetID(int id) { this.SemifinishedHandoverID = id; }
