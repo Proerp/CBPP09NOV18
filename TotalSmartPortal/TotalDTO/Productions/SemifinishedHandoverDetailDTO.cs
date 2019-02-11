@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 using TotalModel;
+using TotalBase.Enums;
 using TotalDTO.Helpers;
 using TotalDTO.Commons;
 
@@ -13,8 +14,10 @@ namespace TotalDTO.Productions
 
         public int SemifinishedHandoverDetailID { get; set; }
         public int SemifinishedHandoverID { get; set; }
-       
-        public int SemifinishedProductID { get; set; }
+
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get; set; }
+        public Nullable<int> SemifinishedItemID { get; set; }
+        public Nullable<int> SemifinishedProductID { get; set; }
 
         [Display(Name = "Phiếu phôi")]
         [UIHint("StringReadonly")]

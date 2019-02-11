@@ -242,11 +242,22 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<SemifinishedProductViewDetail, SemifinishedProductDetailDTO>();
                 cfg.CreateMap<SemifinishedProductDetailDTO, SemifinishedProductDetail>();
 
-                cfg.CreateMap<SemifinishedHandover, SemifinishedHandoverViewModel>();
-                cfg.CreateMap<SemifinishedHandover, SemifinishedHandoverDTO>();
-                cfg.CreateMap<SemifinishedHandoverPrimitiveDTO, SemifinishedHandover>();
+
+
+                cfg.CreateMap<SemifinishedHandover, SemifinishedHandoverDTO<SemifinishedItemHandoverOption>>();
+                cfg.CreateMap<SemifinishedHandover, SemifinishedHandoverDTO<SemifinishedProductHandoverOption>>();
+
+                cfg.CreateMap<SemifinishedHandoverPrimitiveDTO<SemifinishedItemHandoverOption>, SemifinishedHandover>();
+                cfg.CreateMap<SemifinishedHandoverPrimitiveDTO<SemifinishedProductHandoverOption>, SemifinishedHandover>();
+
                 cfg.CreateMap<SemifinishedHandoverViewDetail, SemifinishedHandoverDetailDTO>();
                 cfg.CreateMap<SemifinishedHandoverDetailDTO, SemifinishedHandoverDetail>();
+
+                cfg.CreateMap<SemifinishedHandover, SemifinishedItemHandoverViewModel>();
+                cfg.CreateMap<SemifinishedHandover, SemifinishedProductHandoverViewModel>();
+
+
+                
 
                 cfg.CreateMap<FinishedProduct, FinishedProductViewModel>();
                 cfg.CreateMap<FinishedProduct, FinishedProductDTO>();

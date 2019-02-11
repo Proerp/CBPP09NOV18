@@ -255,10 +255,17 @@ namespace TotalPortal.App_Start
                 kernel.Bind<ISemifinishedProductAPIRepository>().To<SemifinishedProductAPIRepository>();
                 kernel.Bind<ISemifinishedProductViewModelSelectListBuilder>().To<SemifinishedProductViewModelSelectListBuilder>();
 
-                kernel.Bind<ISemifinishedHandoverService>().To<SemifinishedHandoverService>();
+
+
                 kernel.Bind<ISemifinishedHandoverRepository>().To<SemifinishedHandoverRepository>();
                 kernel.Bind<ISemifinishedHandoverAPIRepository>().To<SemifinishedHandoverAPIRepository>();
-                kernel.Bind<ISemifinishedHandoverViewModelSelectListBuilder>().To<SemifinishedHandoverViewModelSelectListBuilder>();
+
+                kernel.Bind<ISemifinishedItemHandoverService>().To<SemifinishedItemHandoverService>();
+                kernel.Bind<ISemifinishedItemHandoverViewModelSelectListBuilder>().To<SemifinishedItemHandoverViewModelSelectListBuilder>();
+                kernel.Bind<ISemifinishedProductHandoverService>().To<SemifinishedProductHandoverService>();
+                kernel.Bind<ISemifinishedProductHandoverViewModelSelectListBuilder>().To<SemifinishedProductHandoverViewModelSelectListBuilder>();
+
+
 
                 kernel.Bind<IFinishedProductService>().To<FinishedProductService>();
                 kernel.Bind<IFinishedProductRepository>().To<FinishedProductRepository>();
