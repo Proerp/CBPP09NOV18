@@ -18,6 +18,7 @@ namespace TotalModel.Models
         public SemifinishedItem()
         {
             this.SemifinishedItemDetails = new HashSet<SemifinishedItemDetail>();
+            this.SemifinishedHandoverDetails = new HashSet<SemifinishedHandoverDetail>();
         }
     
         public int SemifinishedItemID { get; set; }
@@ -68,5 +69,7 @@ namespace TotalModel.Models
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
         public virtual Bom Bom { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SemifinishedHandoverDetail> SemifinishedHandoverDetails { get; set; }
     }
 }

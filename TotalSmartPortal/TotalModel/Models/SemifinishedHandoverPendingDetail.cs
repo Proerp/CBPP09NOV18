@@ -25,5 +25,6 @@ namespace TotalModel.Models
         public string CrucialWorkerName { get; set; }
         public string SemifinishedProductReference { get; set; }
         public System.DateTime SemifinishedProductEntryDate { get; set; }
+        public Nullable<int> SemifinishedItemID { get; set; }
     }
 }

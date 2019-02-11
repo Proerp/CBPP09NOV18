@@ -2152,8 +2152,10 @@
           <Property Name="SemifinishedHandoverDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SemifinishedHandoverID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
-          <Property Name="SemifinishedProductID" Type="int" Nullable="false" />
+          <Property Name="SemifinishedItemID" Type="int" />
+          <Property Name="SemifinishedProductID" Type="int" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="Approved" Type="bit" Nullable="false" />
@@ -2165,6 +2167,7 @@
           <Property Name="SemifinishedHandoverID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="WorkshiftID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" />
           <Property Name="SemifinishedLeaderID" Type="int" Nullable="false" />
@@ -6131,8 +6134,20 @@ warning 6035: The relationship 'FK_SalesReturns_AspNetUsers2' has columns that a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SemifinishedHandoverDetails_SemifinishedItems">
+          <End Role="SemifinishedItems" Type="Self.SemifinishedItems" Multiplicity="0..1" />
+          <End Role="SemifinishedHandoverDetails" Type="Self.SemifinishedHandoverDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SemifinishedItems">
+              <PropertyRef Name="SemifinishedItemID" />
+            </Principal>
+            <Dependent Role="SemifinishedHandoverDetails">
+              <PropertyRef Name="SemifinishedItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SemifinishedHandoverDetails_SemifinishedProducts">
-          <End Role="SemifinishedProducts" Type="Self.SemifinishedProducts" Multiplicity="1" />
+          <End Role="SemifinishedProducts" Type="Self.SemifinishedProducts" Multiplicity="0..1" />
           <End Role="SemifinishedHandoverDetails" Type="Self.SemifinishedHandoverDetails" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SemifinishedProducts">
@@ -7902,21 +7917,25 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="SalesReturnID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetSemifinishedHandoverIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="GetSemifinishedHandoverPendingCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="LocationID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetSemifinishedHandoverPendingDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="SemifinishedHandoverID" Type="int" Mode="In" />
           <Parameter Name="WorkshiftID" Type="int" Mode="In" />
           <Parameter Name="CustomerID" Type="int" Mode="In" />
           <Parameter Name="SemifinishedProductIDs" Type="varchar" Mode="In" />
-          <Parameter Name="IsReadonly" Type="bit" Mode="In" />
+          <Parameter Name="SemifinishedItemIDs" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetSemifinishedHandoverPendingWorkshifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="LocationID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetSemifinishedHandoverViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
@@ -9810,6 +9829,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </AssociationSet>
           <AssociationSet Name="FK_SemifinishedHandoverDetails_SemifinishedHandovers" Association="Self.FK_SemifinishedHandoverDetails_SemifinishedHandovers">
             <End Role="SemifinishedHandovers" EntitySet="SemifinishedHandovers" />
+            <End Role="SemifinishedHandoverDetails" EntitySet="SemifinishedHandoverDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedHandoverDetails_SemifinishedItems" Association="Self.FK_SemifinishedHandoverDetails_SemifinishedItems">
+            <End Role="SemifinishedItems" EntitySet="SemifinishedItems" />
             <End Role="SemifinishedHandoverDetails" EntitySet="SemifinishedHandoverDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_SemifinishedHandoverDetails_SemifinishedProducts" Association="Self.FK_SemifinishedHandoverDetails_SemifinishedProducts">
@@ -14065,6 +14088,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="IsDefault" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GetSemifinishedHandoverIndexes" ReturnType="Collection(TotalSmartPortalModel.SemifinishedHandoverIndex)">
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="AspUserID" Mode="In" Type="String" />
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
@@ -14080,17 +14104,20 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="SaveRelativeOption" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSemifinishedHandoverPendingCustomers" ReturnType="Collection(TotalSmartPortalModel.SemifinishedHandoverPendingCustomer)">
-          <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSemifinishedHandoverPendingDetails" ReturnType="Collection(TotalSmartPortalModel.SemifinishedHandoverPendingDetail)">
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="SemifinishedHandoverID" Mode="In" Type="Int32" />
             <Parameter Name="WorkshiftID" Mode="In" Type="Int32" />
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
             <Parameter Name="SemifinishedProductIDs" Mode="In" Type="String" />
-            <Parameter Name="IsReadonly" Mode="In" Type="Boolean" />
+            <Parameter Name="SemifinishedItemIDs" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetSemifinishedHandoverPendingWorkshifts" ReturnType="Collection(TotalSmartPortalModel.SemifinishedHandoverPendingWorkshift)">
-          <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="UpdateCommodityBom">
             <Parameter Name="CommodityBomID" Mode="In" Type="Int32" />
@@ -14478,15 +14505,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_SemifinishedHandovers_Workshifts" Association="TotalSmartPortalModel.FK_SemifinishedHandovers_Workshifts">
             <End Role="Workshift" EntitySet="Workshifts" />
             <End Role="SemifinishedHandover" EntitySet="SemifinishedHandovers" />
-          </AssociationSet>
-          <EntitySet Name="SemifinishedHandoverDetails" EntityType="TotalSmartPortalModel.SemifinishedHandoverDetail" />
-          <AssociationSet Name="FK_SemifinishedHandoverDetails_SemifinishedHandovers" Association="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedHandovers">
-            <End Role="SemifinishedHandover" EntitySet="SemifinishedHandovers" />
-            <End Role="SemifinishedHandoverDetail" EntitySet="SemifinishedHandoverDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedHandoverDetails_SemifinishedProducts" Association="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedProducts">
-            <End Role="SemifinishedProduct" EntitySet="SemifinishedProducts" />
-            <End Role="SemifinishedHandoverDetail" EntitySet="SemifinishedHandoverDetails" />
           </AssociationSet>
           <EntitySet Name="FinishedHandoverDetails" EntityType="TotalSmartPortalModel.FinishedHandoverDetail" />
           <FunctionImport Name="GetGoodsReceiptViewDetails" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptViewDetail)">
@@ -15588,6 +15606,19 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="BinLocation" EntitySet="BinLocations" />
           </AssociationSet>
           <FunctionImport Name="GetCommodityIconBases" ReturnType="Collection(TotalSmartPortalModel.CommodityIconBase)" />
+          <EntitySet Name="SemifinishedHandoverDetails" EntityType="TotalSmartPortalModel.SemifinishedHandoverDetail" />
+          <AssociationSet Name="FK_SemifinishedHandoverDetails_SemifinishedHandovers" Association="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedHandovers">
+            <End Role="SemifinishedHandover" EntitySet="SemifinishedHandovers" />
+            <End Role="SemifinishedHandoverDetail" EntitySet="SemifinishedHandoverDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedHandoverDetails_SemifinishedItems" Association="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedItems">
+            <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
+            <End Role="SemifinishedHandoverDetail" EntitySet="SemifinishedHandoverDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedHandoverDetails_SemifinishedProducts" Association="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedProducts">
+            <End Role="SemifinishedProduct" EntitySet="SemifinishedProducts" />
+            <End Role="SemifinishedHandoverDetail" EntitySet="SemifinishedHandoverDetails" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -18269,7 +18300,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <ComplexType Name="SemifinishedHandoverViewDetail">
           <Property Type="Int32" Name="SemifinishedHandoverDetailID" Nullable="false" />
           <Property Type="Int32" Name="SemifinishedHandoverID" Nullable="false" />
-          <Property Type="Int32" Name="SemifinishedProductID" Nullable="false" />
+          <Property Type="Int32" Name="SemifinishedProductID" Nullable="true" />
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
@@ -18281,6 +18312,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CrucialWorkerName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="SemifinishedProductReference" Nullable="true" MaxLength="10" />
           <Property Type="DateTime" Name="SemifinishedProductEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="SemifinishedItemID" Nullable="true" />
           </ComplexType>
         <ComplexType Name="SemifinishedHandoverPendingCustomer">
           <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
@@ -18303,6 +18335,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CrucialWorkerName" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="SemifinishedProductReference" Nullable="true" MaxLength="10" />
           <Property Type="DateTime" Name="SemifinishedProductEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="SemifinishedItemID" Nullable="true" />
         </ComplexType>
         <ComplexType Name="SemifinishedHandoverPendingWorkshift">
           <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
@@ -18803,13 +18836,13 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_SemifinishedProducts_Workshifts" FromRole="SemifinishedProduct" ToRole="Workshift" />
           <Property Name="SemifinishedHandoverID" Type="Int32" />
           <Property Name="HandoverApproved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="SemifinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedProducts" FromRole="SemifinishedProduct" ToRole="SemifinishedHandoverDetail" />
           <Property Name="Caption" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
           <Property Name="PlannedOrderID" Type="Int32" Nullable="false" />
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="StopDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_SemifinishedProducts_GoodsReceiptDetails" FromRole="SemifinishedProduct" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsReceipt" Relationship="TotalSmartPortalModel.FK_SemifinishedProducts_GoodsReceipts" FromRole="SemifinishedProduct" ToRole="GoodsReceipt" />
+          <NavigationProperty Name="SemifinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedProducts" FromRole="SemifinishedProduct" ToRole="SemifinishedHandoverDetail" />
         </EntityType>
         <Association Name="FK_MaterialIssueDetails_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -19509,6 +19542,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Employee1" Relationship="TotalSmartPortalModel.FK_SemifinishedHandovers_Employees1" FromRole="SemifinishedHandover" ToRole="Employee" />
           <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_SemifinishedHandovers_Locations" FromRole="SemifinishedHandover" ToRole="Location" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_SemifinishedHandovers_Workshifts" FromRole="SemifinishedHandover" ToRole="Workshift" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SemifinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedHandovers" FromRole="SemifinishedHandover" ToRole="SemifinishedHandoverDetail" />
         </EntityType>
         <Association Name="FK_SemifinishedHandovers_Employees">
@@ -19556,45 +19590,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Principal>
             <Dependent Role="SemifinishedHandover">
               <PropertyRef Name="WorkshiftID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="SemifinishedHandoverDetail">
-          <Key>
-            <PropertyRef Name="SemifinishedHandoverDetailID" />
-          </Key>
-          <Property Name="SemifinishedHandoverDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SemifinishedHandoverID" Type="Int32" Nullable="false" />
-          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LocationID" Type="Int32" Nullable="false" />
-          <Property Name="SemifinishedProductID" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Approved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="SemifinishedHandover" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedHandovers" FromRole="SemifinishedHandoverDetail" ToRole="SemifinishedHandover" />
-          <NavigationProperty Name="SemifinishedProduct" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedProducts" FromRole="SemifinishedHandoverDetail" ToRole="SemifinishedProduct" />
-        </EntityType>
-        <Association Name="FK_SemifinishedHandoverDetails_SemifinishedHandovers">
-          <End Type="TotalSmartPortalModel.SemifinishedHandover" Role="SemifinishedHandover" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedHandoverDetail" Role="SemifinishedHandoverDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SemifinishedHandover">
-              <PropertyRef Name="SemifinishedHandoverID" />
-            </Principal>
-            <Dependent Role="SemifinishedHandoverDetail">
-              <PropertyRef Name="SemifinishedHandoverID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedHandoverDetails_SemifinishedProducts">
-          <End Type="TotalSmartPortalModel.SemifinishedProduct" Role="SemifinishedProduct" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedHandoverDetail" Role="SemifinishedHandoverDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SemifinishedProduct">
-              <PropertyRef Name="SemifinishedProductID" />
-            </Principal>
-            <Dependent Role="SemifinishedHandoverDetail">
-              <PropertyRef Name="SemifinishedProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -23312,6 +23307,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Workshifts" FromRole="SemifinishedItem" ToRole="Workshift" />
           <Property Name="BomID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Bom" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Boms" FromRole="SemifinishedItem" ToRole="Bom" />
+          <NavigationProperty Name="SemifinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedItems" FromRole="SemifinishedItem" ToRole="SemifinishedHandoverDetail" />
         </EntityType>
         <Association Name="FK_SemifinishedItemDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -23616,6 +23612,60 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Code" Nullable="false" MaxLength="60" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="100" />
         </ComplexType>
+        <EntityType Name="SemifinishedHandoverDetail">
+          <Key>
+            <PropertyRef Name="SemifinishedHandoverDetailID" />
+          </Key>
+          <Property Name="SemifinishedHandoverDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SemifinishedHandoverID" Type="Int32" Nullable="false" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="SemifinishedItemID" Type="Int32" />
+          <Property Name="SemifinishedProductID" Type="Int32" />
+          <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="SemifinishedHandover" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedHandovers" FromRole="SemifinishedHandoverDetail" ToRole="SemifinishedHandover" />
+          <NavigationProperty Name="SemifinishedItem" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedItems" FromRole="SemifinishedHandoverDetail" ToRole="SemifinishedItem" />
+          <NavigationProperty Name="SemifinishedProduct" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedProducts" FromRole="SemifinishedHandoverDetail" ToRole="SemifinishedProduct" />
+        </EntityType>
+        <Association Name="FK_SemifinishedHandoverDetails_SemifinishedHandovers">
+          <End Type="TotalSmartPortalModel.SemifinishedHandover" Role="SemifinishedHandover" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedHandoverDetail" Role="SemifinishedHandoverDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SemifinishedHandover">
+              <PropertyRef Name="SemifinishedHandoverID" />
+            </Principal>
+            <Dependent Role="SemifinishedHandoverDetail">
+              <PropertyRef Name="SemifinishedHandoverID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedHandoverDetails_SemifinishedItems">
+          <End Type="TotalSmartPortalModel.SemifinishedItem" Role="SemifinishedItem" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.SemifinishedHandoverDetail" Role="SemifinishedHandoverDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SemifinishedItem">
+              <PropertyRef Name="SemifinishedItemID" />
+            </Principal>
+            <Dependent Role="SemifinishedHandoverDetail">
+              <PropertyRef Name="SemifinishedItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SemifinishedHandoverDetails_SemifinishedProducts">
+          <End Type="TotalSmartPortalModel.SemifinishedProduct" Role="SemifinishedProduct" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.SemifinishedHandoverDetail" Role="SemifinishedHandoverDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SemifinishedProduct">
+              <PropertyRef Name="SemifinishedProductID" />
+            </Principal>
+            <Dependent Role="SemifinishedHandoverDetail">
+              <PropertyRef Name="SemifinishedProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -27344,6 +27394,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="CrucialWorkerName" ColumnName="CrucialWorkerName" />
                 <ScalarProperty Name="SemifinishedProductReference" ColumnName="SemifinishedProductReference" />
                 <ScalarProperty Name="SemifinishedProductEntryDate" ColumnName="SemifinishedProductEntryDate" />
+                <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -27376,6 +27427,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="CrucialWorkerName" ColumnName="CrucialWorkerName" />
                 <ScalarProperty Name="SemifinishedProductReference" ColumnName="SemifinishedProductReference" />
                 <ScalarProperty Name="SemifinishedProductEntryDate" ColumnName="SemifinishedProductEntryDate" />
+                <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -28151,6 +28203,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="SemifinishedHandovers">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedHandover">
               <MappingFragment StoreEntitySet="SemifinishedHandovers">
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
@@ -28171,20 +28224,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
                 <ScalarProperty Name="SemifinishedHandoverID" ColumnName="SemifinishedHandoverID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SemifinishedHandoverDetails">
-            <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedHandoverDetail">
-              <MappingFragment StoreEntitySet="SemifinishedHandoverDetails">
-                <ScalarProperty Name="Approved" ColumnName="Approved" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="SemifinishedProductID" ColumnName="SemifinishedProductID" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="SemifinishedHandoverID" ColumnName="SemifinishedHandoverID" />
-                <ScalarProperty Name="SemifinishedHandoverDetailID" ColumnName="SemifinishedHandoverDetailID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -29961,6 +30000,22 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="SemifinishedHandoverDetails">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedHandoverDetail">
+              <MappingFragment StoreEntitySet="SemifinishedHandoverDetails">
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="SemifinishedProductID" ColumnName="SemifinishedProductID" />
+                <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="SemifinishedHandoverID" ColumnName="SemifinishedHandoverID" />
+                <ScalarProperty Name="SemifinishedHandoverDetailID" ColumnName="SemifinishedHandoverDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

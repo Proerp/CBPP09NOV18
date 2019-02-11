@@ -94,7 +94,6 @@ namespace TotalModel.Models
         public virtual DbSet<FinishedProduct> FinishedProducts { get; set; }
         public virtual DbSet<TransferOrderType> TransferOrderTypes { get; set; }
         public virtual DbSet<SemifinishedHandover> SemifinishedHandovers { get; set; }
-        public virtual DbSet<SemifinishedHandoverDetail> SemifinishedHandoverDetails { get; set; }
         public virtual DbSet<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }
         public virtual DbSet<ModuleDetail> ModuleDetails { get; set; }
         public virtual DbSet<ModuleDefault> ModuleDefaults { get; set; }
@@ -127,6 +126,7 @@ namespace TotalModel.Models
         public virtual DbSet<SemifinishedItemDetail> SemifinishedItemDetails { get; set; }
         public virtual DbSet<SemifinishedItem> SemifinishedItems { get; set; }
         public virtual DbSet<BinType> BinTypes { get; set; }
+        public virtual DbSet<SemifinishedHandoverDetail> SemifinishedHandoverDetails { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {
@@ -3280,8 +3280,12 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("UpdateCommodityMold", commodityMoldIDParameter, commodityIDParameter, quantityParameter, remarksParameter, isDefaultParameter);
         }
     
-        public virtual ObjectResult<SemifinishedHandoverIndex> GetSemifinishedHandoverIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        public virtual ObjectResult<SemifinishedHandoverIndex> GetSemifinishedHandoverIndexes(Nullable<int> nMVNTaskID, string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var aspUserIDParameter = aspUserID != null ?
                 new ObjectParameter("AspUserID", aspUserID) :
                 new ObjectParameter("AspUserID", typeof(string));
@@ -3294,7 +3298,7 @@ namespace TotalModel.Models
                 new ObjectParameter("ToDate", toDate) :
                 new ObjectParameter("ToDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverIndex>("GetSemifinishedHandoverIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverIndex>("GetSemifinishedHandoverIndexes", nMVNTaskIDParameter, aspUserIDParameter, fromDateParameter, toDateParameter);
         }
     
         public virtual ObjectResult<SemifinishedHandoverViewDetail> GetSemifinishedHandoverViewDetails(Nullable<int> semifinishedHandoverID)
@@ -3328,17 +3332,25 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SemifinishedHandoverSaveRelative", entityIDParameter, saveRelativeOptionParameter);
         }
     
-        public virtual ObjectResult<SemifinishedHandoverPendingCustomer> GetSemifinishedHandoverPendingCustomers(Nullable<int> locationID)
+        public virtual ObjectResult<SemifinishedHandoverPendingCustomer> GetSemifinishedHandoverPendingCustomers(Nullable<int> nMVNTaskID, Nullable<int> locationID)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverPendingCustomer>("GetSemifinishedHandoverPendingCustomers", locationIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverPendingCustomer>("GetSemifinishedHandoverPendingCustomers", nMVNTaskIDParameter, locationIDParameter);
         }
     
-        public virtual ObjectResult<SemifinishedHandoverPendingDetail> GetSemifinishedHandoverPendingDetails(Nullable<int> semifinishedHandoverID, Nullable<int> workshiftID, Nullable<int> customerID, string semifinishedProductIDs, Nullable<bool> isReadonly)
+        public virtual ObjectResult<SemifinishedHandoverPendingDetail> GetSemifinishedHandoverPendingDetails(Nullable<int> nMVNTaskID, Nullable<int> semifinishedHandoverID, Nullable<int> workshiftID, Nullable<int> customerID, string semifinishedProductIDs, string semifinishedItemIDs)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var semifinishedHandoverIDParameter = semifinishedHandoverID.HasValue ?
                 new ObjectParameter("SemifinishedHandoverID", semifinishedHandoverID) :
                 new ObjectParameter("SemifinishedHandoverID", typeof(int));
@@ -3355,20 +3367,24 @@ namespace TotalModel.Models
                 new ObjectParameter("SemifinishedProductIDs", semifinishedProductIDs) :
                 new ObjectParameter("SemifinishedProductIDs", typeof(string));
     
-            var isReadonlyParameter = isReadonly.HasValue ?
-                new ObjectParameter("IsReadonly", isReadonly) :
-                new ObjectParameter("IsReadonly", typeof(bool));
+            var semifinishedItemIDsParameter = semifinishedItemIDs != null ?
+                new ObjectParameter("SemifinishedItemIDs", semifinishedItemIDs) :
+                new ObjectParameter("SemifinishedItemIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverPendingDetail>("GetSemifinishedHandoverPendingDetails", semifinishedHandoverIDParameter, workshiftIDParameter, customerIDParameter, semifinishedProductIDsParameter, isReadonlyParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverPendingDetail>("GetSemifinishedHandoverPendingDetails", nMVNTaskIDParameter, semifinishedHandoverIDParameter, workshiftIDParameter, customerIDParameter, semifinishedProductIDsParameter, semifinishedItemIDsParameter);
         }
     
-        public virtual ObjectResult<SemifinishedHandoverPendingWorkshift> GetSemifinishedHandoverPendingWorkshifts(Nullable<int> locationID)
+        public virtual ObjectResult<SemifinishedHandoverPendingWorkshift> GetSemifinishedHandoverPendingWorkshifts(Nullable<int> nMVNTaskID, Nullable<int> locationID)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverPendingWorkshift>("GetSemifinishedHandoverPendingWorkshifts", locationIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverPendingWorkshift>("GetSemifinishedHandoverPendingWorkshifts", nMVNTaskIDParameter, locationIDParameter);
         }
     
         public virtual int UpdateCommodityBom(Nullable<int> commodityBomID, Nullable<int> commodityID, Nullable<decimal> blockUnit, Nullable<decimal> blockQuantity, string remarks, Nullable<bool> isDefault)

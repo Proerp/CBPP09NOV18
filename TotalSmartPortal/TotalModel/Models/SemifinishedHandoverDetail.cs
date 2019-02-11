@@ -17,13 +17,16 @@ namespace TotalModel.Models
         public int SemifinishedHandoverDetailID { get; set; }
         public int SemifinishedHandoverID { get; set; }
         public System.DateTime EntryDate { get; set; }
+        public int NMVNTaskID { get; set; }
         public int LocationID { get; set; }
-        public int SemifinishedProductID { get; set; }
+        public Nullable<int> SemifinishedItemID { get; set; }
+        public Nullable<int> SemifinishedProductID { get; set; }
         public decimal Quantity { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
     
         public virtual SemifinishedHandover SemifinishedHandover { get; set; }
+        public virtual SemifinishedItem SemifinishedItem { get; set; }
         public virtual SemifinishedProduct SemifinishedProduct { get; set; }
     }
 }

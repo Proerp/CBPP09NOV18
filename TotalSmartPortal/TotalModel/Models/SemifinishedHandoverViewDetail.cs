@@ -15,7 +15,7 @@ namespace TotalModel.Models
     {
         public int SemifinishedHandoverDetailID { get; set; }
         public int SemifinishedHandoverID { get; set; }
-        public int SemifinishedProductID { get; set; }
+        public Nullable<int> SemifinishedProductID { get; set; }
         public int CustomerID { get; set; }
         public string CustomerCode { get; set; }
         public string CustomerName { get; set; }
@@ -27,5 +27,6 @@ namespace TotalModel.Models
         public string CrucialWorkerName { get; set; }
         public string SemifinishedProductReference { get; set; }
         public System.DateTime SemifinishedProductEntryDate { get; set; }
+        public Nullable<int> SemifinishedItemID { get; set; }
     }
 }

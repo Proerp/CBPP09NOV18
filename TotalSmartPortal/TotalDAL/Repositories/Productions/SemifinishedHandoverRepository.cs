@@ -32,28 +32,28 @@ namespace TotalDAL.Repositories.Productions
         {
         }
 
-        public IEnumerable<SemifinishedHandoverPendingCustomer> GetCustomers(int? locationID)
+        public IEnumerable<SemifinishedHandoverPendingCustomer> GetCustomers(int? nmvnTaskID, int? locationID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<SemifinishedHandoverPendingCustomer> pendingPlannedOrderCustomers = base.TotalSmartPortalEntities.GetSemifinishedHandoverPendingCustomers(locationID).ToList();
+            IEnumerable<SemifinishedHandoverPendingCustomer> pendingPlannedOrderCustomers = base.TotalSmartPortalEntities.GetSemifinishedHandoverPendingCustomers(nmvnTaskID, locationID).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingPlannedOrderCustomers;
         }
 
-        public IEnumerable<SemifinishedHandoverPendingWorkshift> GetWorkshifts(int? locationID)
+        public IEnumerable<SemifinishedHandoverPendingWorkshift> GetWorkshifts(int? nmvnTaskID, int? locationID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<SemifinishedHandoverPendingWorkshift> pendingWorkshifts = base.TotalSmartPortalEntities.GetSemifinishedHandoverPendingWorkshifts(locationID).ToList();
+            IEnumerable<SemifinishedHandoverPendingWorkshift> pendingWorkshifts = base.TotalSmartPortalEntities.GetSemifinishedHandoverPendingWorkshifts(nmvnTaskID, locationID).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingWorkshifts;
         }
 
-        public IEnumerable<SemifinishedHandoverPendingDetail> GetPendingDetails(int? semifinishedHandoverID, int? workshiftID, int? customerID, string semifinishedProductIDs, bool? isReadonly)
+        public IEnumerable<SemifinishedHandoverPendingDetail> GetPendingDetails(int? nmvnTaskID, int? semifinishedHandoverID, int? workshiftID, int? customerID, string semifinishedProductIDs, string semifinishedItemIDs)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<SemifinishedHandoverPendingDetail> semifinishedHandoverPendingDetails = base.TotalSmartPortalEntities.GetSemifinishedHandoverPendingDetails(semifinishedHandoverID, workshiftID, customerID, semifinishedProductIDs, isReadonly).ToList();
+            IEnumerable<SemifinishedHandoverPendingDetail> semifinishedHandoverPendingDetails = base.TotalSmartPortalEntities.GetSemifinishedHandoverPendingDetails(nmvnTaskID, semifinishedHandoverID, workshiftID, customerID, semifinishedProductIDs, semifinishedItemIDs).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return semifinishedHandoverPendingDetails;
