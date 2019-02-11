@@ -165,7 +165,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '') " + "\r\n";
+            queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '' AND @Barcode <> '0') " + "\r\n";
             queryString = queryString + "           " + this.BuildSQLGoodsArrival(true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           " + this.BuildSQLGoodsArrival(false) + "\r\n";
@@ -1040,7 +1040,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '') " + "\r\n";
+            queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '' AND @Barcode <> '0') " + "\r\n";
             queryString = queryString + "           " + this.GetGoodsReceiptDetailAvailableSQL(isWarehouseID, isCommodityID, isCommodityIDs, isBatchID, true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           " + this.GetGoodsReceiptDetailAvailableSQL(isWarehouseID, isCommodityID, isCommodityIDs, isBatchID, false) + "\r\n";

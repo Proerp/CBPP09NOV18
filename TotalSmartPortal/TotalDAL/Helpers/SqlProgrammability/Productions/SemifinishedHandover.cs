@@ -18,6 +18,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         public void RestoreProcedure()
         {
+            return;
+
             this.GetSemifinishedHandoverIndexes();
 
             this.GetSemifinishedHandoverViewDetails();
@@ -126,12 +128,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @NMVNTaskID int, @SemifinishedHandoverID Int, @WorkshiftID Int, @CustomerID Int, @SemifinishedProductIDs varchar(3999), @IsReadonly bit " + "\r\n";
+            queryString = " @NMVNTaskID int, @SemifinishedHandoverID Int, @WorkshiftID Int, @CustomerID Int, @SemifinishedProductIDs varchar(3999), @SemifinishedItemIDs varchar(3999) " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       IF  (@CustomerID <> 0) " + "\r\n";
+            queryString = queryString + "       IF  (@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.SemifinishedProductHandover + ") " + "\r\n";
             queryString = queryString + "           " + this.GetPendingBUILDSQL(true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           " + this.GetPendingBUILDSQL(false) + "\r\n";
@@ -140,79 +142,83 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.totalSmartPortalEntities.CreateStoredProcedure("GetSemifinishedHandoverPendingDetails", queryString);
         }
 
-        private string GetPendingBUILDSQL(bool isCustomerID)
+        private string GetPendingBUILDSQL(bool semifinishedProductVsItem)
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       IF  (@SemifinishedProductIDs <> '') " + "\r\n";
-            queryString = queryString + "           " + this.GetPendingBUILDSQL(isCustomerID, true) + "\r\n";
+            queryString = queryString + "       IF  (@CustomerID <> 0) " + "\r\n";
+            queryString = queryString + "           " + this.GetPendingBUILDSQL(semifinishedProductVsItem, true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-            queryString = queryString + "           " + this.GetPendingBUILDSQL(isCustomerID, false) + "\r\n";
+            queryString = queryString + "           " + this.GetPendingBUILDSQL(semifinishedProductVsItem, false) + "\r\n";
             queryString = queryString + "   END " + "\r\n";
 
             return queryString;
         }
 
-        private string GetPendingBUILDSQL(bool isCustomerID, bool isSemifinishedProductIDs)
+        private string GetPendingBUILDSQL(bool semifinishedProductVsItem, bool isCustomerID)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+            queryString = queryString + "       IF  (@SemifinishedProductIDs <> '') " + "\r\n";
+            queryString = queryString + "           " + this.GetPendingBUILDSQL(semifinishedProductVsItem, isCustomerID, true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.GetPendingBUILDSQL(semifinishedProductVsItem, isCustomerID, false) + "\r\n";
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string GetPendingBUILDSQL(bool semifinishedProductVsItem, bool isCustomerID, bool isSemifinishedProductIDs)
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
 
             queryString = queryString + "       IF (@SemifinishedHandoverID <= 0) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.GetPendingBUILDSQLNew(isCustomerID, isSemifinishedProductIDs) + "\r\n";
-            queryString = queryString + "                   ORDER BY ProductionLines.Code, SemifinishedProducts.EntryDate " + "\r\n";
+            queryString = queryString + "                   " + this.GetPendingBUILDSQLNew(semifinishedProductVsItem, isCustomerID, isSemifinishedProductIDs) + "\r\n";
+            queryString = queryString + "                   ORDER BY ProductionLines.Code, SemifinishedProtems.EntryDate " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-
-            queryString = queryString + "               IF (@IsReadonly = 1) " + "\r\n";
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.GetPendingBUILDSQLEdit(isCustomerID, isSemifinishedProductIDs) + "\r\n";
-            queryString = queryString + "                       ORDER BY ProductionLines.Code, SemifinishedProducts.EntryDate " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
-
-            queryString = queryString + "               ELSE " + "\r\n"; //FULL SELECT FOR EDIT MODE
-
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.GetPendingBUILDSQLNew(isCustomerID, isSemifinishedProductIDs) + "\r\n";
-            queryString = queryString + "                       UNION ALL " + "\r\n";
-            queryString = queryString + "                       " + this.GetPendingBUILDSQLEdit(isCustomerID, isSemifinishedProductIDs) + "\r\n";
-            queryString = queryString + "                       ORDER BY ProductionLines.Code, SemifinishedProducts.EntryDate " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   " + this.GetPendingBUILDSQLNew(semifinishedProductVsItem, isCustomerID, isSemifinishedProductIDs) + "\r\n";
+            queryString = queryString + "                   UNION ALL " + "\r\n";
+            queryString = queryString + "                   " + this.GetPendingBUILDSQLEdit(semifinishedProductVsItem, isCustomerID, isSemifinishedProductIDs) + "\r\n";
+            queryString = queryString + "                   ORDER BY ProductionLines.Code, SemifinishedProtems.EntryDate " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
 
             return queryString;
         }
 
-        private string GetPendingBUILDSQLNew(bool isCustomerID, bool isSemifinishedProductIDs)
+        private string GetPendingBUILDSQLNew(bool semifinishedProductVsItem, bool isCustomerID, bool isSemifinishedProductIDs)
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.EntryDate AS SemifinishedProductEntryDate, SemifinishedProducts.Reference AS SemifinishedProductReference, SemifinishedProducts.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
-            queryString = queryString + "                   SemifinishedProducts.ProductionLineID, ProductionLines.Code AS ProductionLineCode, SemifinishedProducts.CrucialWorkerID, Employees.Name AS CrucialWorkerName, SemifinishedProducts.TotalQuantity AS Quantity, CAST(1 AS bit) AS IsSelected " + "\r\n";
+            queryString = queryString + "       SELECT      " + (semifinishedProductVsItem ? "SemifinishedProtems.SemifinishedProductID" : "NULL AS SemifinishedProductID") + ", " + (semifinishedProductVsItem ? "NULL AS SemifinishedItemID" : "SemifinishedProtems.SemifinishedItemID") + ", SemifinishedProtems.EntryDate AS SemifinishedProductEntryDate, SemifinishedProtems.Reference AS SemifinishedProductReference, SemifinishedProtems.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "                   SemifinishedProtems.ProductionLineID, ProductionLines.Code AS ProductionLineCode, SemifinishedProtems.CrucialWorkerID, Employees.Name AS CrucialWorkerName, SemifinishedProtems.TotalQuantity AS Quantity, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
 
-            queryString = queryString + "       FROM        SemifinishedProducts " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Customers ON SemifinishedProducts.WorkshiftID = @WorkshiftID AND SemifinishedProducts.Approved = 1 " + (isCustomerID ? " AND SemifinishedProducts.CustomerID = @CustomerID " : "") + " AND SemifinishedProducts.SemifinishedHandoverID IS NULL AND SemifinishedProducts.CustomerID = Customers.CustomerID " + (isSemifinishedProductIDs ? " AND SemifinishedProducts.SemifinishedProductID NOT IN (SELECT Id FROM dbo.SplitToIntList (@SemifinishedProductIDs))" : "") + "\r\n";
-            queryString = queryString + "                   INNER JOIN ProductionLines ON SemifinishedProducts.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Employees ON SemifinishedProducts.CrucialWorkerID = Employees.EmployeeID " + "\r\n";
+            queryString = queryString + "       FROM        " + (semifinishedProductVsItem ? "SemifinishedProducts" : "SemifinishedItems") + " SemifinishedProtems" + "\r\n";
+            queryString = queryString + "                   INNER JOIN Customers ON SemifinishedProtems.WorkshiftID = @WorkshiftID AND SemifinishedProtems.Approved = 1 " + (isCustomerID ? " AND SemifinishedProtems.CustomerID = @CustomerID " : "") + " AND SemifinishedProtems.SemifinishedHandoverID IS NULL AND SemifinishedProtems.CustomerID = Customers.CustomerID " + (isSemifinishedProductIDs ? " AND SemifinishedProtems." + (semifinishedProductVsItem ? "SemifinishedProductID" : "SemifinishedItemID") + " NOT IN (SELECT Id FROM dbo.SplitToIntList (" + (semifinishedProductVsItem ? "@SemifinishedProductIDs" : "@SemifinishedItemIDs") + "))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN ProductionLines ON SemifinishedProtems.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Employees ON SemifinishedProtems.CrucialWorkerID = Employees.EmployeeID " + "\r\n";
 
             return queryString;
         }
 
-        private string GetPendingBUILDSQLEdit(bool isCustomerID, bool isSemifinishedProductIDs)
+        private string GetPendingBUILDSQLEdit(bool semifinishedProductVsItem, bool isCustomerID, bool isSemifinishedProductIDs)
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.EntryDate AS SemifinishedProductEntryDate, SemifinishedProducts.Reference AS SemifinishedProductReference, SemifinishedProducts.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
-            queryString = queryString + "                   SemifinishedProducts.ProductionLineID, ProductionLines.Code AS ProductionLineCode, SemifinishedProducts.CrucialWorkerID, Employees.Name AS CrucialWorkerName, SemifinishedProducts.TotalQuantity AS Quantity, CAST(1 AS bit) AS IsSelected " + "\r\n";
+            queryString = queryString + "       SELECT      " + (semifinishedProductVsItem ? "SemifinishedProtems.SemifinishedProductID" : "NULL AS SemifinishedProductID") + ", " + (semifinishedProductVsItem ? "NULL AS SemifinishedItemID" : "SemifinishedProtems.SemifinishedItemID") + ", SemifinishedProtems.EntryDate AS SemifinishedProductEntryDate, SemifinishedProtems.Reference AS SemifinishedProductReference, SemifinishedProtems.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "                   SemifinishedProtems.ProductionLineID, ProductionLines.Code AS ProductionLineCode, SemifinishedProtems.CrucialWorkerID, Employees.Name AS CrucialWorkerName, SemifinishedProtems.TotalQuantity AS Quantity, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
 
-            queryString = queryString + "       FROM        SemifinishedProducts " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Customers ON SemifinishedProducts.SemifinishedHandoverID = @SemifinishedHandoverID AND SemifinishedProducts.CustomerID = Customers.CustomerID " + (isSemifinishedProductIDs ? " AND SemifinishedProducts.SemifinishedProductID NOT IN (SELECT Id FROM dbo.SplitToIntList (@SemifinishedProductIDs))" : "") + "\r\n";
-            queryString = queryString + "                   INNER JOIN ProductionLines ON SemifinishedProducts.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Employees ON SemifinishedProducts.CrucialWorkerID = Employees.EmployeeID " + "\r\n";
+            queryString = queryString + "       FROM        " + (semifinishedProductVsItem ? "SemifinishedProducts" : "SemifinishedItems") + " SemifinishedProtems" + "\r\n";
+            queryString = queryString + "                   INNER JOIN Customers ON SemifinishedProtems.SemifinishedHandoverID = @SemifinishedHandoverID AND SemifinishedProtems.CustomerID = Customers.CustomerID " + (isSemifinishedProductIDs ? " AND SemifinishedProtems." + (semifinishedProductVsItem ? "SemifinishedProductID" : "SemifinishedItemID") + " NOT IN (SELECT Id FROM dbo.SplitToIntList (" + (semifinishedProductVsItem ? "@SemifinishedProductIDs" : "@SemifinishedItemIDs") + "))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN ProductionLines ON SemifinishedProtems.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Employees ON SemifinishedProtems.CrucialWorkerID = Employees.EmployeeID " + "\r\n";
 
             return queryString;
         }

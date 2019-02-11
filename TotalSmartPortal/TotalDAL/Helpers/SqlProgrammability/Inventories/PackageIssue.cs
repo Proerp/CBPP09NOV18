@@ -124,7 +124,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '') " + "\r\n";
+            queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '' AND @Barcode <> '0') " + "\r\n";
             queryString = queryString + "           " + this.BuildSQLPendingDetails(true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           " + this.BuildSQLPendingDetails(false) + "\r\n";
