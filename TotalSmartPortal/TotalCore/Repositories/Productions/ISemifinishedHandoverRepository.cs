@@ -11,10 +11,10 @@ namespace TotalCore.Repositories.Productions
 
     public interface ISemifinishedHandoverAPIRepository : IGenericAPIRepository
     {
-        IEnumerable<SemifinishedHandoverPendingCustomer> GetCustomers(int? locationID);
-        IEnumerable<SemifinishedHandoverPendingWorkshift> GetWorkshifts(int? locationID);
+        IEnumerable<SemifinishedHandoverPendingCustomer> GetCustomers(int? nmvnTaskID, int? locationID);
+        IEnumerable<SemifinishedHandoverPendingWorkshift> GetWorkshifts(int? nmvnTaskID, int? locationID);
 
-        IEnumerable<SemifinishedHandoverPendingDetail> GetPendingDetails(int? semifinishedHandoverID, int? workshiftID, int? customerID, string semifinishedProductIDs, bool? isReadonly);
+        IEnumerable<SemifinishedHandoverPendingDetail> GetPendingDetails(int? nmvnTaskID, int? semifinishedHandoverID, int? workshiftID, int? customerID, string semifinishedItemIDs, string semifinishedProductIDs);
      
     }
 }

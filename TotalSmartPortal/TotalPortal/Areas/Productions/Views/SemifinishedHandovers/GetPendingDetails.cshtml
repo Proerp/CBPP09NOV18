@@ -34,12 +34,13 @@
 
             var semifinishedHandoverJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
 
-            return {            
+            return {
+                nmvnTaskID: window.parent.requireConfig.pageOptions.NmvnTaskID,            
                 semifinishedHandoverID: window.parent.$("#SemifinishedHandoverID").val(),
                 workshiftID: window.parent.$("#WorkshiftID").val(),
                 customerID: window.parent.$("#Customer_CustomerID").val(),
-                semifinishedProductIDs : semifinishedHandoverJSON.map(function(elem){return elem.SemifinishedProductID;}).join(","),
-                isReadOnly: false
+                semifinishedItemIDs : semifinishedHandoverJSON.map(function(elem){return elem.SemifinishedItemID;}).join(","),
+                semifinishedProductIDs : semifinishedHandoverJSON.map(function(elem){return elem.SemifinishedProductID;}).join(",")                
             };}
             </text>))
     .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client

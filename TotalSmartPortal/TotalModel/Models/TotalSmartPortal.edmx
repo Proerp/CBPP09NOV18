@@ -7931,8 +7931,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="SemifinishedHandoverID" Type="int" Mode="In" />
           <Parameter Name="WorkshiftID" Type="int" Mode="In" />
           <Parameter Name="CustomerID" Type="int" Mode="In" />
-          <Parameter Name="SemifinishedProductIDs" Type="varchar" Mode="In" />
           <Parameter Name="SemifinishedItemIDs" Type="varchar" Mode="In" />
+          <Parameter Name="SemifinishedProductIDs" Type="varchar" Mode="In" />
         </Function>
         <Function Name="GetSemifinishedHandoverPendingWorkshifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
@@ -14112,8 +14112,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="SemifinishedHandoverID" Mode="In" Type="Int32" />
             <Parameter Name="WorkshiftID" Mode="In" Type="Int32" />
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
-            <Parameter Name="SemifinishedProductIDs" Mode="In" Type="String" />
             <Parameter Name="SemifinishedItemIDs" Mode="In" Type="String" />
+            <Parameter Name="SemifinishedProductIDs" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetSemifinishedHandoverPendingWorkshifts" ReturnType="Collection(TotalSmartPortalModel.SemifinishedHandoverPendingWorkshift)">
             <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />

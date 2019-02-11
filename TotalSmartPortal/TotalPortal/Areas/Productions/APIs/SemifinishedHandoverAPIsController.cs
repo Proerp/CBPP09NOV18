@@ -24,8 +24,9 @@ namespace TotalPortal.Areas.Productions.APIs
         }
 
 
-        public JsonResult GetSemifinishedHandoverIndexes([DataSourceRequest] DataSourceRequest request)
+        public JsonResult GetSemifinishedHandoverIndexes([DataSourceRequest] DataSourceRequest request, int nmvnTaskID)
         {
+            this.semifinishedHandoverAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
             ICollection<SemifinishedHandoverIndex> semifinishedHandoverIndexes = this.semifinishedHandoverAPIRepository.GetEntityIndexes<SemifinishedHandoverIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext));
 
             DataSourceResult response = semifinishedHandoverIndexes.ToDataSourceResult(request);
@@ -34,21 +35,21 @@ namespace TotalPortal.Areas.Productions.APIs
         }
 
 
-        public JsonResult GetCustomers([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetCustomers([DataSourceRequest] DataSourceRequest dataSourceRequest, int? nmvnTaskID, int? locationID)
         {
-            var result = this.semifinishedHandoverAPIRepository.GetCustomers(locationID);
+            var result = this.semifinishedHandoverAPIRepository.GetCustomers(nmvnTaskID, locationID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetWorkshifts([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetWorkshifts([DataSourceRequest] DataSourceRequest dataSourceRequest, int? nmvnTaskID, int? locationID)
         {
-            var result = this.semifinishedHandoverAPIRepository.GetWorkshifts(locationID);
+            var result = this.semifinishedHandoverAPIRepository.GetWorkshifts(nmvnTaskID, locationID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPendingDetails([DataSourceRequest] DataSourceRequest dataSourceRequest, int? semifinishedHandoverID, int? workshiftID, int? customerID, string semifinishedProductIDs, bool? isReadonly)
+        public JsonResult GetPendingDetails([DataSourceRequest] DataSourceRequest dataSourceRequest, int? nmvnTaskID, int? semifinishedHandoverID, int? workshiftID, int? customerID, string semifinishedItemIDs, string semifinishedProductIDs)
         {
-            var result = this.semifinishedHandoverAPIRepository.GetPendingDetails(semifinishedHandoverID, workshiftID, customerID, semifinishedProductIDs, false);
+            var result = this.semifinishedHandoverAPIRepository.GetPendingDetails(nmvnTaskID, semifinishedHandoverID, workshiftID, customerID, semifinishedItemIDs, semifinishedProductIDs);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
     }

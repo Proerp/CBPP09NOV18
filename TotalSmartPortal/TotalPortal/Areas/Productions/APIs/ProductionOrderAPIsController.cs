@@ -25,7 +25,7 @@ namespace TotalPortal.Areas.Productions.APIs
         }
 
 
-        public JsonResult GetProductionOrderIndexes([DataSourceRequest] DataSourceRequest request, string nmvnTaskID)
+        public JsonResult GetProductionOrderIndexes([DataSourceRequest] DataSourceRequest request, int nmvnTaskID)
         {
             this.productionOrderAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
             ICollection<ProductionOrderIndex> productionOrderIndexes = this.productionOrderAPIRepository.GetEntityIndexes<ProductionOrderIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext));

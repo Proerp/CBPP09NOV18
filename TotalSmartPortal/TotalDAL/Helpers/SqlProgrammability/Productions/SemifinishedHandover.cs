@@ -150,7 +150,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @NMVNTaskID int, @SemifinishedHandoverID Int, @WorkshiftID Int, @CustomerID Int, @SemifinishedProductIDs varchar(3999), @SemifinishedItemIDs varchar(3999) " + "\r\n";
+            queryString = " @NMVNTaskID int, @SemifinishedHandoverID Int, @WorkshiftID Int, @CustomerID Int, @SemifinishedItemIDs varchar(3999), @SemifinishedProductIDs varchar(3999) " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 

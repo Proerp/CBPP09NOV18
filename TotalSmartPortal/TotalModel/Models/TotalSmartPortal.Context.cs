@@ -3345,7 +3345,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverPendingCustomer>("GetSemifinishedHandoverPendingCustomers", nMVNTaskIDParameter, locationIDParameter);
         }
     
-        public virtual ObjectResult<SemifinishedHandoverPendingDetail> GetSemifinishedHandoverPendingDetails(Nullable<int> nMVNTaskID, Nullable<int> semifinishedHandoverID, Nullable<int> workshiftID, Nullable<int> customerID, string semifinishedProductIDs, string semifinishedItemIDs)
+        public virtual ObjectResult<SemifinishedHandoverPendingDetail> GetSemifinishedHandoverPendingDetails(Nullable<int> nMVNTaskID, Nullable<int> semifinishedHandoverID, Nullable<int> workshiftID, Nullable<int> customerID, string semifinishedItemIDs, string semifinishedProductIDs)
         {
             var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
                 new ObjectParameter("NMVNTaskID", nMVNTaskID) :
@@ -3363,15 +3363,15 @@ namespace TotalModel.Models
                 new ObjectParameter("CustomerID", customerID) :
                 new ObjectParameter("CustomerID", typeof(int));
     
-            var semifinishedProductIDsParameter = semifinishedProductIDs != null ?
-                new ObjectParameter("SemifinishedProductIDs", semifinishedProductIDs) :
-                new ObjectParameter("SemifinishedProductIDs", typeof(string));
-    
             var semifinishedItemIDsParameter = semifinishedItemIDs != null ?
                 new ObjectParameter("SemifinishedItemIDs", semifinishedItemIDs) :
                 new ObjectParameter("SemifinishedItemIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverPendingDetail>("GetSemifinishedHandoverPendingDetails", nMVNTaskIDParameter, semifinishedHandoverIDParameter, workshiftIDParameter, customerIDParameter, semifinishedProductIDsParameter, semifinishedItemIDsParameter);
+            var semifinishedProductIDsParameter = semifinishedProductIDs != null ?
+                new ObjectParameter("SemifinishedProductIDs", semifinishedProductIDs) :
+                new ObjectParameter("SemifinishedProductIDs", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedHandoverPendingDetail>("GetSemifinishedHandoverPendingDetails", nMVNTaskIDParameter, semifinishedHandoverIDParameter, workshiftIDParameter, customerIDParameter, semifinishedItemIDsParameter, semifinishedProductIDsParameter);
         }
     
         public virtual ObjectResult<SemifinishedHandoverPendingWorkshift> GetSemifinishedHandoverPendingWorkshifts(Nullable<int> nMVNTaskID, Nullable<int> locationID)
