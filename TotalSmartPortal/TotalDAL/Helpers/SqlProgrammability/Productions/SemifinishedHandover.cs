@@ -84,7 +84,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       SELECT      SemifinishedHandoverDetails.SemifinishedHandoverDetailID, SemifinishedHandoverDetails.SemifinishedHandoverID, SemifinishedHandoverDetails.SemifinishedItemID, SemifinishedHandoverDetails.SemifinishedProductID, SemifinishedProtems.EntryDate AS SemifinishedProductEntryDate, SemifinishedProtems.Reference AS SemifinishedProductReference, SemifinishedProtems.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "       SELECT      SemifinishedHandoverDetails.SemifinishedHandoverDetailID, SemifinishedHandoverDetails.SemifinishedHandoverID, SemifinishedHandoverDetails.SemifinishedItemID, SemifinishedHandoverDetails.SemifinishedProductID, SemifinishedProtems.EntryDate AS SemifinishedProtemEntryDate, SemifinishedProtems.Reference AS SemifinishedProtemReference, SemifinishedProtems.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
             queryString = queryString + "                   SemifinishedProtems.ProductionLineID, ProductionLines.Code AS ProductionLineCode, SemifinishedProtems.CrucialWorkerID, Employees.Name AS CrucialWorkerName, SemifinishedHandoverDetails.Quantity, SemifinishedHandoverDetails.Remarks " + "\r\n";
 
             queryString = queryString + "       FROM        SemifinishedHandoverDetails " + "\r\n";
@@ -139,8 +139,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate, Workshifts.Code AS WorkshiftCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
             queryString = queryString + "       FROM            Workshifts " + "\r\n";
-            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, CustomerID FROM SemifinishedProducts WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.SemifinishedProductHandover + " AND SemifinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID UNION ALL SELECT WorkshiftID, CustomerID FROM SemifinishedItems WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.SemifinishedItemHandover + " AND SemifinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID) SemifinishedProducts ON Workshifts.WorkshiftID = SemifinishedProducts.WorkshiftID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN Customers ON SemifinishedProducts.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, CustomerID FROM SemifinishedProducts WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.SemifinishedProductHandover + " AND SemifinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID UNION ALL SELECT WorkshiftID, CustomerID FROM SemifinishedItems WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.SemifinishedItemHandover + " AND SemifinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID) SemifinishedProtems ON Workshifts.WorkshiftID = SemifinishedProtems.WorkshiftID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Customers ON SemifinishedProtems.CustomerID = Customers.CustomerID " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetSemifinishedHandoverPendingCustomers", queryString);
         }
@@ -217,7 +217,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      " + (productVsItem ? "NULL AS SemifinishedItemID" : "SemifinishedProtems.SemifinishedItemID") + ", " + (productVsItem ? "SemifinishedProtems.SemifinishedProductID" : "NULL AS SemifinishedProductID") + ", SemifinishedProtems.EntryDate AS SemifinishedProductEntryDate, SemifinishedProtems.Reference AS SemifinishedProductReference, SemifinishedProtems.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "       SELECT      " + (productVsItem ? "NULL AS SemifinishedItemID" : "SemifinishedProtems.SemifinishedItemID") + ", " + (productVsItem ? "SemifinishedProtems.SemifinishedProductID" : "NULL AS SemifinishedProductID") + ", SemifinishedProtems.EntryDate AS SemifinishedProtemEntryDate, SemifinishedProtems.Reference AS SemifinishedProtemReference, SemifinishedProtems.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
             queryString = queryString + "                   SemifinishedProtems.ProductionLineID, ProductionLines.Code AS ProductionLineCode, SemifinishedProtems.CrucialWorkerID, Employees.Name AS CrucialWorkerName, SemifinishedProtems.TotalQuantity AS Quantity, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
 
@@ -233,7 +233,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      " + (productVsItem ? "NULL AS SemifinishedItemID" : "SemifinishedProtems.SemifinishedItemID") + ", " + (productVsItem ? "SemifinishedProtems.SemifinishedProductID" : "NULL AS SemifinishedProductID") + ", SemifinishedProtems.EntryDate AS SemifinishedProductEntryDate, SemifinishedProtems.Reference AS SemifinishedProductReference, SemifinishedProtems.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "       SELECT      " + (productVsItem ? "NULL AS SemifinishedItemID" : "SemifinishedProtems.SemifinishedItemID") + ", " + (productVsItem ? "SemifinishedProtems.SemifinishedProductID" : "NULL AS SemifinishedProductID") + ", SemifinishedProtems.EntryDate AS SemifinishedProtemEntryDate, SemifinishedProtems.Reference AS SemifinishedProtemReference, SemifinishedProtems.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
             queryString = queryString + "                   SemifinishedProtems.ProductionLineID, ProductionLines.Code AS ProductionLineCode, SemifinishedProtems.CrucialWorkerID, Employees.Name AS CrucialWorkerName, SemifinishedProtems.TotalQuantity AS Quantity, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
 
@@ -442,7 +442,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "    BEGIN " + "\r\n";
 
             queryString = queryString + "       SELECT      SemifinishedHandovers.SemifinishedHandoverID, SemifinishedHandovers.EntryDate, SemifinishedHandovers.Reference, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, ProductionLines.Code AS ProductionLineCode, " + "\r\n";
-            queryString = queryString + "                   FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, Customers.Name AS CustomerName, SemifinishedProtems.Reference AS SemifinishedProductReference, SemifinishedProtems.Caption, SemifinishedLeaders.Name AS SemifinishedLeaderName, FinishedLeaders.Name AS FinishedLeaderName, SemifinishedHandoverDetails.Quantity " + "\r\n";
+            queryString = queryString + "                   FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, Customers.Name AS CustomerName, SemifinishedProtems.Reference AS SemifinishedProtemReference, SemifinishedProtems.Caption, SemifinishedLeaders.Name AS SemifinishedLeaderName, FinishedLeaders.Name AS FinishedLeaderName, SemifinishedHandoverDetails.Quantity " + "\r\n";
 
             queryString = queryString + "       FROM        SemifinishedHandovers " + "\r\n";
             queryString = queryString + "                   INNER JOIN SemifinishedHandoverDetails ON SemifinishedHandovers.SemifinishedHandoverID = @LocalSemifinishedHandoverID AND SemifinishedHandovers.SemifinishedHandoverID = SemifinishedHandoverDetails.SemifinishedHandoverID " + "\r\n";

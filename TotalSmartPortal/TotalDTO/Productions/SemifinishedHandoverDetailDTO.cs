@@ -18,10 +18,10 @@ namespace TotalDTO.Productions
 
         [Display(Name = "Phiếu phôi")]
         [UIHint("StringReadonly")]
-        public string SemifinishedProductReference { get; set; }
+        public string SemifinishedProtemReference { get; set; }
         [Display(Name = "Ngày lập")]
         [UIHint("DateTimeReadonly")]
-        public Nullable<System.DateTime> SemifinishedProductEntryDate { get; set; }
+        public Nullable<System.DateTime> SemifinishedProtemEntryDate { get; set; }
 
         public int CustomerID { get; set; }
         [Display(Name = "Mã khách hàng")]
