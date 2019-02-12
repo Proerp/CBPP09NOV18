@@ -87,7 +87,7 @@ namespace TotalDTO.Productions
         bool IsProduct { get; }
     }
 
-    public class SemifinishedHandoverDTO<TSemifinishedHandoverOption> : SemifinishedHandoverPrimitiveDTO<TSemifinishedHandoverOption>, IBaseDetailEntity<SemifinishedHandoverDetailDTO>
+    public class SemifinishedHandoverDTO<TSemifinishedHandoverOption> : SemifinishedHandoverPrimitiveDTO<TSemifinishedHandoverOption>, IBaseDetailEntity<SemifinishedHandoverDetailDTO>, ISemifinishedHandoverDTO
         where TSemifinishedHandoverOption : ISemifinishedHandoverOption, new()
     {
         public SemifinishedHandoverDTO()

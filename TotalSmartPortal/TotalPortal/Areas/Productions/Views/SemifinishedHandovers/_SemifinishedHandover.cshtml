@@ -1,7 +1,12 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration
 
-@model TotalPortal.Areas.Productions.ViewModels.SemifinishedHandoverViewModel
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Productions
+@using TotalPortal.Areas.Productions.ViewModels
+
+@model ISemifinishedHandoverViewModel
 
 <div id="popupWindow"></div>
 
@@ -11,42 +16,42 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
 
-    @Html.HiddenFor(model => model.TotalQuantity)
-    @Html.HiddenFor(model => model.SemifinishedHandoverID)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverPrimitiveDTO).TotalQuantity)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverPrimitiveDTO).SemifinishedHandoverID)
 
     <div class="left-panel">
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
 
 
-        @Html.HiddenFor(model => model.WorkshiftID)                
+        @Html.HiddenFor(model => (model as ISemifinishedHandoverPrimitiveDTO).WorkshiftID)                
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkshiftCode)
+            @Html.LabelFor(model => (model as ISemifinishedHandoverPrimitiveDTO).WorkshiftCode)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.WorkshiftCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                @Html.Kendo().MaskedTextBoxFor(model => (model as ISemifinishedHandoverPrimitiveDTO).WorkshiftCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.WorkshiftCode, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as ISemifinishedHandoverPrimitiveDTO).WorkshiftCode, "", new { @class = "text-danger" })
             </div>
         </div>        
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkshiftEntryDate)
+            @Html.LabelFor(model => (model as ISemifinishedHandoverPrimitiveDTO).WorkshiftEntryDate)
             <div class="div-input">
-                @Html.Kendo().DateTimePickerFor(model => model.WorkshiftEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                @Html.Kendo().DateTimePickerFor(model => (model as ISemifinishedHandoverPrimitiveDTO).WorkshiftEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.WorkshiftEntryDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as ISemifinishedHandoverPrimitiveDTO).WorkshiftEntryDate, "", new { @class = "text-danger" })
             </div>
         </div>   
         
         <div class="form-group">
-            @Html.EditorFor(d => d.SemifinishedLeader, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.SemifinishedLeader) })
+            @Html.EditorFor(d => (d as ISemifinishedHandoverDTO).SemifinishedLeader, new { EmployeeDisplayName = @Model.SemifinishedLeader.GetDisplayName(m => m.EmployeeID) })
         </div>   
         
         <div class="form-group">
-            @Html.EditorFor(d => d.FinishedLeader, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.FinishedLeader) })
+            @Html.EditorFor(d => (d as ISemifinishedHandoverDTO).FinishedLeader, new { EmployeeDisplayName = @Model.FinishedLeader.GetDisplayName(m => m.EmployeeID) })
         </div>                      
 
     </div>
@@ -55,7 +60,7 @@
 
         <div class="right-top-panel right-top-panel-H2">
 
-            @Html.EditorFor(d => d.Customer, new { CustomerDisplayName = @Model.GetDisplayName(m => m.Customer), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Bàn giao phôi định hình tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
+            @Html.EditorFor(d => (d as ISemifinishedHandoverDTO).Customer, new { CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Bàn giao phôi định hình tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
             
         </div>
 
@@ -157,22 +162,22 @@
                         .Content(@<text>
                             <div class="right-first-panel">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Description, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseDTO).Description, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Description).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Remarks, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseModel).Remarks, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Remarks).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseModel).Remarks, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
@@ -192,18 +197,18 @@
         <div class="right-botton-panel">
             @if (Model.Editable)
             {
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedHandovers")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedHandovers")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedHandovers")" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in</button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in</button>
             }
             else
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "SemifinishedHandovers", new { id = @Model.SemifinishedHandoverID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", Model.ControllerName, new { id = @Model.SemifinishedHandoverID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
             }
 
             @if (Model.SemifinishedHandoverID > 0 && !Model.Approvable && !Model.UnApprovable)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "SemifinishedHandovers", new {id = @Model.SemifinishedHandoverID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.SemifinishedHandoverID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
             }
         </div>
 
@@ -220,7 +225,7 @@
     function GetPendingDetails() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingDetails", "SemifinishedHandovers", new { area = "Productions" })", "Chọn mặt hàng từ bán thành phẩm", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingDetails", Model.ControllerName, new { area = "Productions" })", "Chọn mặt hàng từ bán thành phẩm", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
     }
 </script>

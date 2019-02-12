@@ -18310,9 +18310,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="CrucialWorkerID" Nullable="false" />
           <Property Type="String" Name="CrucialWorkerName" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="SemifinishedProductReference" Nullable="true" MaxLength="10" />
-          <Property Type="DateTime" Name="SemifinishedProductEntryDate" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="SemifinishedItemID" Nullable="true" />
+          <Property Type="DateTime" Name="SemifinishedProtemEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="SemifinishedProtemReference" Nullable="true" MaxLength="10" />
           </ComplexType>
         <ComplexType Name="SemifinishedHandoverPendingCustomer">
           <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
@@ -18333,9 +18333,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
           <Property Type="Int32" Name="CrucialWorkerID" Nullable="false" />
           <Property Type="String" Name="CrucialWorkerName" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="SemifinishedProductReference" Nullable="true" MaxLength="10" />
-          <Property Type="DateTime" Name="SemifinishedProductEntryDate" Nullable="false" Precision="23" />
           <Property Type="Int32" Name="SemifinishedItemID" Nullable="true" />
+          <Property Type="DateTime" Name="SemifinishedProtemEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="SemifinishedProtemReference" Nullable="true" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="SemifinishedHandoverPendingWorkshift">
           <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
@@ -27392,9 +27392,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="CrucialWorkerID" ColumnName="CrucialWorkerID" />
                 <ScalarProperty Name="CrucialWorkerName" ColumnName="CrucialWorkerName" />
-                <ScalarProperty Name="SemifinishedProductReference" ColumnName="SemifinishedProductReference" />
-                <ScalarProperty Name="SemifinishedProductEntryDate" ColumnName="SemifinishedProductEntryDate" />
                 <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
+                <ScalarProperty Name="SemifinishedProtemEntryDate" ColumnName="SemifinishedProtemEntryDate" />
+                <ScalarProperty Name="SemifinishedProtemReference" ColumnName="SemifinishedProtemReference" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -27425,9 +27425,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
                 <ScalarProperty Name="CrucialWorkerID" ColumnName="CrucialWorkerID" />
                 <ScalarProperty Name="CrucialWorkerName" ColumnName="CrucialWorkerName" />
-                <ScalarProperty Name="SemifinishedProductReference" ColumnName="SemifinishedProductReference" />
-                <ScalarProperty Name="SemifinishedProductEntryDate" ColumnName="SemifinishedProductEntryDate" />
                 <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
+                <ScalarProperty Name="SemifinishedProtemEntryDate" ColumnName="SemifinishedProtemEntryDate" />
+                <ScalarProperty Name="SemifinishedProtemReference" ColumnName="SemifinishedProtemReference" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

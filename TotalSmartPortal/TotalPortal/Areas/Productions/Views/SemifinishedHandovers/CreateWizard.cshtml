@@ -1,9 +1,14 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration;
 
-@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Productions
+@using TotalPortal.Areas.Productions.ViewModels
 
-@model TotalPortal.Areas.Productions.ViewModels.SemifinishedHandoverViewModel
+@model ISemifinishedHandoverViewModel
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
 @using (Html.BeginForm())
 {
@@ -11,32 +16,32 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
     
-    @Html.HiddenFor(model => model.WorkshiftID)
-    @Html.HiddenFor(model => model.WorkshiftCode)
-    @Html.HiddenFor(model => model.WorkshiftEntryDate)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverPrimitiveDTO).WorkshiftID)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverPrimitiveDTO).WorkshiftCode)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverPrimitiveDTO).WorkshiftEntryDate)
 
-    @Html.HiddenFor(model => model.CustomerID)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverPrimitiveDTO).CustomerID)
     
-    @Html.HiddenFor(model => model.Customer.CustomerID)
-    @Html.HiddenFor(model => model.Customer.Code)
-    @Html.HiddenFor(model => model.Customer.Name)
-    @Html.HiddenFor(model => model.Customer.VATCode)
-    @Html.HiddenFor(model => model.Customer.Telephone)
-    @Html.HiddenFor(model => model.Customer.BillingAddress)
-    @Html.HiddenFor(model => model.Customer.EntireTerritoryEntireName)
-    @Html.HiddenFor(model => model.Customer.SalespersonID)
-    @Html.HiddenFor(model => model.Customer.SalespersonName)
-    @Html.HiddenFor(model => model.Customer.PaymentTermID)
-    @Html.HiddenFor(model => model.Customer.PriceCategoryID)
-    @Html.HiddenFor(model => model.Customer.PriceCategoryCode)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.CustomerID)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.Code)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.Name)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.VATCode)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.Telephone)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.BillingAddress)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.EntireTerritoryEntireName)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.SalespersonID)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.SalespersonName)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.PaymentTermID)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.PriceCategoryID)
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).Customer.PriceCategoryCode)
     
-    @Html.HiddenFor(model => model.SemifinishedLeader.EmployeeID);
-    @Html.HiddenFor(model => model.SemifinishedLeader.Name);
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).SemifinishedLeader.EmployeeID);
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).SemifinishedLeader.Name);
 
-    @Html.HiddenFor(model => model.FinishedLeader.EmployeeID);
-    @Html.HiddenFor(model => model.FinishedLeader.Name);
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).FinishedLeader.EmployeeID);
+    @Html.HiddenFor(model => (model as ISemifinishedHandoverDTO).FinishedLeader.Name);
 
-    @Html.HiddenFor(model => model.Description);
+    @Html.HiddenFor(model => (model as IBaseDTO).Description);
 
     @(Html.Kendo().TabStrip()
         .HtmlAttributes(new { @style = "height: 468px; margin-left: 0px; margin-right: 0px;" })

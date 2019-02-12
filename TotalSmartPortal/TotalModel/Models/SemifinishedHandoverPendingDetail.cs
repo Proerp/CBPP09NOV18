@@ -23,8 +23,8 @@ namespace TotalModel.Models
         public Nullable<bool> IsSelected { get; set; }
         public int CrucialWorkerID { get; set; }
         public string CrucialWorkerName { get; set; }
-        public string SemifinishedProductReference { get; set; }
-        public System.DateTime SemifinishedProductEntryDate { get; set; }
         public Nullable<int> SemifinishedItemID { get; set; }
+        public System.DateTime SemifinishedProtemEntryDate { get; set; }
+        public string SemifinishedProtemReference { get; set; }
     }
 }
