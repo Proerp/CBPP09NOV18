@@ -80,8 +80,11 @@
                     columns.Bound(p => p.ProductionLineCode).DisplayNameTitle().Width(100)
                         .ClientTemplate("#= (ProductionLineCode == null)? '' : ProductionLineCode #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].ProductionLineCode' value='#= (ProductionLineCode == null) ? '' : ProductionLineCode #' />");
 
+                    columns.Bound(p => p.SemifinishedItemID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (SemifinishedItemID == null)? '' : SemifinishedItemID #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].SemifinishedItemID' value='#= (SemifinishedItemID == null) ? '' : SemifinishedItemID #' />");
                     columns.Bound(p => p.SemifinishedProductID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (SemifinishedProductID == null)? '' : SemifinishedProductID #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].SemifinishedProductID' value='#= (SemifinishedProductID == null) ? '' : SemifinishedProductID #' />");
+                    
                     columns.Bound(p => p.SemifinishedProtemReference).DisplayNameTitle().Width(80)
                         .ClientTemplate("#= (SemifinishedProtemReference == null)? '' : SemifinishedProtemReference #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].SemifinishedProtemReference' value='#= (SemifinishedProtemReference == null) ? '' : SemifinishedProtemReference #' />");
                     columns.Bound(p => p.SemifinishedProtemEntryDate).DisplayNameTitle().Width(80)

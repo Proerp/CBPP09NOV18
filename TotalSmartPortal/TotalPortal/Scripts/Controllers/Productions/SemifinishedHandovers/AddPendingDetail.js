@@ -45,7 +45,9 @@ function handleOKEvent(semifinishedHandoverGridDataSource, pendingDetailGridData
         dataRow.SemifinishedHandoverID = window.parent.$("#SemifinishedHandoverID").val();
         dataRow.SemifinishedHandoverDetailID = 0;
 
+        dataRow.SemifinishedItemID = semifinishedHandoverGridDataItem.SemifinishedItemID;
         dataRow.SemifinishedProductID = semifinishedHandoverGridDataItem.SemifinishedProductID;
+
         dataRow.SemifinishedProtemReference = semifinishedHandoverGridDataItem.SemifinishedProtemReference;
         dataRow.SemifinishedProtemEntryDate = semifinishedHandoverGridDataItem.SemifinishedProtemEntryDate;
 
