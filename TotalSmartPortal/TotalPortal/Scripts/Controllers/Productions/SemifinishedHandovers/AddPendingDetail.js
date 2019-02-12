@@ -46,8 +46,8 @@ function handleOKEvent(semifinishedHandoverGridDataSource, pendingDetailGridData
         dataRow.SemifinishedHandoverDetailID = 0;
 
         dataRow.SemifinishedProductID = semifinishedHandoverGridDataItem.SemifinishedProductID;
-        dataRow.SemifinishedProductReference = semifinishedHandoverGridDataItem.SemifinishedProductReference;
-        dataRow.SemifinishedProductEntryDate = semifinishedHandoverGridDataItem.SemifinishedProductEntryDate;
+        dataRow.SemifinishedProtemReference = semifinishedHandoverGridDataItem.SemifinishedProtemReference;
+        dataRow.SemifinishedProtemEntryDate = semifinishedHandoverGridDataItem.SemifinishedProtemEntryDate;
 
         dataRow.CustomerID = semifinishedHandoverGridDataItem.CustomerID;
         dataRow.CustomerName = semifinishedHandoverGridDataItem.CustomerName;

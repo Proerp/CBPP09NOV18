@@ -9,8 +9,8 @@
     .Columns(columns =>
     {
         columns.Bound(c => c.ProductionLineCode).Title("Mã máy").Width(80);
-        columns.Bound(c => c.SemifinishedProductReference).Title("Mã máy").Width(80);
-        columns.Bound(c => c.SemifinishedProductEntryDate).Title("Ngày").Width(80).Format("{0:" + Settings.DateTimeFormat + "}");
+        columns.Bound(c => c.SemifinishedProtemReference).Title("Mã máy").Width(80);
+        columns.Bound(c => c.SemifinishedProtemEntryDate).Title("Ngày").Width(80).Format("{0:" + Settings.DateTimeFormat + "}");
         columns.Bound(c => c.CustomerName).Title("Khách hàng").Width(100);
         
         columns.Bound(c => c.CrucialWorkerName).Title("Công nhân").Width(100);

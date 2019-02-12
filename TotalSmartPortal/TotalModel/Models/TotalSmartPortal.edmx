@@ -18323,7 +18323,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
         </ComplexType>
         <ComplexType Name="SemifinishedHandoverPendingDetail">
-          <Property Type="Int32" Name="SemifinishedProductID" Nullable="false" />
+          <Property Type="Int32" Name="SemifinishedProductID" Nullable="true" />
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />

@@ -13,7 +13,7 @@ namespace TotalModel.Models
     
     public partial class SemifinishedHandoverPendingDetail
     {
-        public int SemifinishedProductID { get; set; }
+        public Nullable<int> SemifinishedProductID { get; set; }
         public int CustomerID { get; set; }
         public string CustomerCode { get; set; }
         public string CustomerName { get; set; }
