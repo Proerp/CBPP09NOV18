@@ -424,7 +424,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void WarehouseTransferInitReference()
         {
-            SimpleInitReference simpleInitReference = new SimpleInitReference("WarehouseTransfers", "WarehouseTransferID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.WarehouseTransfer));
+            SimpleInitReference simpleInitReference = new WarehouseTransferInitReference("WarehouseTransfers", "WarehouseTransferID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.WarehouseTransfer));
             this.totalSmartPortalEntities.CreateTrigger("WarehouseTransferInitReference", simpleInitReference.CreateQuery());
 
             string queryString = " @WarehouseTransferID int " + "\r\n";

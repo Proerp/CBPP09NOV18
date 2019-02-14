@@ -184,7 +184,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void WarehouseAdjustmentInitReference()
         {
-            SimpleInitReference simpleInitReference = new SimpleInitReference("WarehouseAdjustments", "WarehouseAdjustmentID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.WarehouseAdjustment));
+            SimpleInitReference simpleInitReference = new WarehouseAdjustmentInitReference("WarehouseAdjustments", "WarehouseAdjustmentID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.WarehouseAdjustment));
             this.totalSmartPortalEntities.CreateTrigger("WarehouseAdjustmentInitReference", simpleInitReference.CreateQuery());
         }
 
