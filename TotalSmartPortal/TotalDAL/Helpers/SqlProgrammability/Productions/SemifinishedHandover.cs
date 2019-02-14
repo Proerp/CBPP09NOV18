@@ -400,7 +400,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void SemifinishedHandoverInitReference()
         {
-            SimpleInitReference simpleInitReference = new SimpleInitReference("SemifinishedHandovers", "SemifinishedHandoverID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.SemifinishedProductHandover));
+            SimpleInitReference simpleInitReference = new SemifinishedHandoverInitReference("SemifinishedHandovers", "SemifinishedHandoverID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.SemifinishedHandover));
             this.totalSmartPortalEntities.CreateTrigger("SemifinishedHandoverInitReference", simpleInitReference.CreateQuery());
         }
 

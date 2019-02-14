@@ -88,32 +88,32 @@
     }
 
 
-    public class TransferOrderInitReference : SimpleInitReference
-    {
-        public TransferOrderInitReference(string tableName, string identityName, string referenceName, int referenceLength, string prefixLetter)
-            : base(tableName, identityName, referenceName, referenceLength, prefixLetter)
-        { }
+    //public class TransferOrderInitReference : SimpleInitReference
+    //{
+    //    public TransferOrderInitReference(string tableName, string identityName, string referenceName, int referenceLength, string prefixLetter)
+    //        : base(tableName, identityName, referenceName, referenceLength, prefixLetter)
+    //    { }
 
-        protected override string QueryDeclare()
-        {
-            string queryString = base.QueryDeclare() + "\r\n";
-            queryString = queryString + "   DECLARE     @StockTransferTypeID int           SET @StockTransferTypeID = (SELECT StockTransferTypeID FROM Inserted) " + "\r\n";
+    //    protected override string QueryDeclare()
+    //    {
+    //        string queryString = base.QueryDeclare() + "\r\n";
+    //        queryString = queryString + "   DECLARE     @StockTransferTypeID int           SET @StockTransferTypeID = (SELECT StockTransferTypeID FROM Inserted) " + "\r\n";
 
-            return queryString;
-        }
+    //        return queryString;
+    //    }
 
-        protected override string QueryPrefix()
-        {
-            return "          DECLARE     @PrefixLetter varchar(10)   SET @PrefixLetter = " + this.prefixLetter + "\r\n";
-        }
+    //    protected override string QueryPrefix()
+    //    {
+    //        return "          DECLARE     @PrefixLetter varchar(10)   SET @PrefixLetter = " + this.prefixLetter + "\r\n";
+    //    }
 
-        protected override string QueryWhere()
-        {
-            string queryString = base.QueryWhere() + "\r\n";
-            queryString = queryString + "   AND     StockTransferTypeID = @StockTransferTypeID " + "\r\n";
-            return queryString;
-        }
-    }
+    //    protected override string QueryWhere()
+    //    {
+    //        string queryString = base.QueryWhere() + "\r\n";
+    //        queryString = queryString + "   AND     StockTransferTypeID = @StockTransferTypeID " + "\r\n";
+    //        return queryString;
+    //    }
+    //}
 
     public class StockTransferInitReference : SimpleInitReference
     {
@@ -171,6 +171,147 @@
     }
 
 
+
+
+
+    public class PlannedOrderInitReference : SimpleInitReference
+    {
+        public PlannedOrderInitReference(string tableName, string identityName, string referenceName, int referenceLength, string prefixLetter)
+            : base(tableName, identityName, referenceName, referenceLength, prefixLetter)
+        { }
+
+        protected override string QueryDeclare()
+        {
+            string queryString = base.QueryDeclare() + "\r\n";
+            queryString = queryString + "   DECLARE     @NmvnTaskID int           SET @NmvnTaskID = (SELECT NmvnTaskID FROM Inserted) " + "\r\n";
+
+            return queryString;
+        }
+
+        protected override string QueryPrefix()
+        {
+            return "          DECLARE     @PrefixLetter varchar(10)   SET @PrefixLetter = " + this.prefixLetter + "\r\n";
+        }
+
+        protected override string QueryWhere()
+        {
+            string queryString = base.QueryWhere() + "\r\n";
+            queryString = queryString + "   AND     NmvnTaskID = @NmvnTaskID " + "\r\n";
+            return queryString;
+        }
+    }
+
+
+    public class ProductionOrderInitReference : SimpleInitReference
+    {
+        public ProductionOrderInitReference(string tableName, string identityName, string referenceName, int referenceLength, string prefixLetter)
+            : base(tableName, identityName, referenceName, referenceLength, prefixLetter)
+        { }
+
+        protected override string QueryDeclare()
+        {
+            string queryString = base.QueryDeclare() + "\r\n";
+            queryString = queryString + "   DECLARE     @NmvnTaskID int           SET @NmvnTaskID = (SELECT NmvnTaskID FROM Inserted) " + "\r\n";
+
+            return queryString;
+        }
+
+        protected override string QueryPrefix()
+        {
+            return "          DECLARE     @PrefixLetter varchar(10)   SET @PrefixLetter = " + this.prefixLetter + "\r\n";
+        }
+
+        protected override string QueryWhere()
+        {
+            string queryString = base.QueryWhere() + "\r\n";
+            queryString = queryString + "   AND     NmvnTaskID = @NmvnTaskID " + "\r\n";
+            return queryString;
+        }
+    }
+
+
+    public class SemifinishedHandoverInitReference : SimpleInitReference
+    {
+        public SemifinishedHandoverInitReference(string tableName, string identityName, string referenceName, int referenceLength, string prefixLetter)
+            : base(tableName, identityName, referenceName, referenceLength, prefixLetter)
+        { }
+
+        protected override string QueryDeclare()
+        {
+            string queryString = base.QueryDeclare() + "\r\n";
+            queryString = queryString + "   DECLARE     @NmvnTaskID int           SET @NmvnTaskID = (SELECT NmvnTaskID FROM Inserted) " + "\r\n";
+
+            return queryString;
+        }
+
+        protected override string QueryPrefix()
+        {
+            return "          DECLARE     @PrefixLetter varchar(10)   SET @PrefixLetter = " + this.prefixLetter + "\r\n";
+        }
+
+        protected override string QueryWhere()
+        {
+            string queryString = base.QueryWhere() + "\r\n";
+            queryString = queryString + "   AND     NmvnTaskID = @NmvnTaskID " + "\r\n";
+            return queryString;
+        }
+    }
+
+
+    public class MaterialIssueInitReference : SimpleInitReference
+    {
+        public MaterialIssueInitReference(string tableName, string identityName, string referenceName, int referenceLength, string prefixLetter)
+            : base(tableName, identityName, referenceName, referenceLength, prefixLetter)
+        { }
+
+        protected override string QueryDeclare()
+        {
+            string queryString = base.QueryDeclare() + "\r\n";
+            queryString = queryString + "   DECLARE     @NmvnTaskID int           SET @NmvnTaskID = (SELECT NmvnTaskID FROM Inserted) " + "\r\n";
+
+            return queryString;
+        }
+
+        protected override string QueryPrefix()
+        {
+            return "          DECLARE     @PrefixLetter varchar(10)   SET @PrefixLetter = " + this.prefixLetter + "\r\n";
+        }
+
+        protected override string QueryWhere()
+        {
+            string queryString = base.QueryWhere() + "\r\n";
+            queryString = queryString + "   AND     NmvnTaskID = @NmvnTaskID " + "\r\n";
+            return queryString;
+        }
+    }
+
+
+    public class TransferOrderInitReference : SimpleInitReference
+    {
+        public TransferOrderInitReference(string tableName, string identityName, string referenceName, int referenceLength, string prefixLetter)
+            : base(tableName, identityName, referenceName, referenceLength, prefixLetter)
+        { }
+
+        protected override string QueryDeclare()
+        {
+            string queryString = base.QueryDeclare() + "\r\n";
+            queryString = queryString + "   DECLARE     @NmvnTaskID int           SET @NmvnTaskID = (SELECT NmvnTaskID FROM Inserted) " + "\r\n";
+
+            return queryString;
+        }
+
+        protected override string QueryPrefix()
+        {
+            return "          DECLARE     @PrefixLetter varchar(10)   SET @PrefixLetter = " + this.prefixLetter + "\r\n";
+        }
+
+        protected override string QueryWhere()
+        {
+            string queryString = base.QueryWhere() + "\r\n";
+            queryString = queryString + "   AND     NmvnTaskID = @NmvnTaskID " + "\r\n";
+            return queryString;
+        }
+    }
 
     public class GoodsReceiptInitReference : SimpleInitReference
     {

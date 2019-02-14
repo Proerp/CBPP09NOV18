@@ -437,7 +437,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void MaterialIssueInitReference()
         {
-            SimpleInitReference simpleInitReference = new SimpleInitReference("MaterialIssues", "MaterialIssueID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.ItemStaging));
+            SimpleInitReference simpleInitReference = new MaterialIssueInitReference("MaterialIssues", "MaterialIssueID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.MaterialIssue));
             this.totalSmartPortalEntities.CreateTrigger("MaterialIssueInitReference", simpleInitReference.CreateQuery());
         }
 

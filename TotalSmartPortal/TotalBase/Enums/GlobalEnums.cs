@@ -62,16 +62,19 @@ namespace TotalBase.Enums
             BlendingInstruction = 6800160,
 
 
+            PlannedOrder = 100680016,
             PlannedItem = 680016008,
             PlannedProduct = 680016,
-            
 
+
+            ProductionOrder = 100680018,
             ProductOrder = 680018,
             ItemOrder = 680016010,
 
             SemifinishedItem = 680020888,
             SemifinishedProduct = 680020,
 
+            SemifinishedHandover = 100680026,
             SemifinishedItemHandover = 680026888,
             SemifinishedProductHandover = 680026,
 
@@ -84,6 +87,7 @@ namespace TotalBase.Enums
             GoodsIssue = 8037,
 
 
+            MaterialIssue = 1008039,
             MaterialStaging = 679344031,
             ItemStaging = 8039,
             ProductStaging = 680687987,//RESERVER ONLY

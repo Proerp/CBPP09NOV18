@@ -21,18 +21,62 @@ namespace TotalBase
                     return "LB";
 
                 case GlobalEnums.NmvnTaskID.PurchaseInvoice:
-                    return "H";
+                    return "PV";
+
+
+
+
 
 
                 case GlobalEnums.NmvnTaskID.BlendingInstruction:
-                    return "FT";
-                case GlobalEnums.NmvnTaskID.PlannedProduct:
-                    return "PL";
-                case GlobalEnums.NmvnTaskID.ProductOrder:
-                    return "PO";
+                    return "FI";
 
-                case GlobalEnums.NmvnTaskID.ItemStaging:
-                    return "MI";
+                case GlobalEnums.NmvnTaskID.PlannedOrder:
+                    return @"CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.PlannedItem + @" THEN 'PM' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.PlannedProduct + @" THEN 'PL' ELSE '#' END
+                             END ";
+
+                case GlobalEnums.NmvnTaskID.ProductionOrder:
+                    return @"CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.ItemOrder + @" THEN 'IO' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductOrder + @" THEN 'KO' ELSE '#' END
+                             END ";
+
+
+                case GlobalEnums.NmvnTaskID.SemifinishedItem:
+                    return "SI";
+                case GlobalEnums.NmvnTaskID.SemifinishedProduct:
+                    return "SP";
+
+                case GlobalEnums.NmvnTaskID.SemifinishedHandover:
+                    return @"CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.SemifinishedItemHandover + @" THEN 'HI' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.SemifinishedProductHandover + @" THEN 'HP' ELSE '#' END
+                             END ";
+
+                case GlobalEnums.NmvnTaskID.MaterialIssue:
+                    return @"CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.MaterialStaging + @" THEN 'MM' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.ItemStaging + @" THEN 'MI' ELSE
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductStaging + @" THEN 'MP' ELSE '#' END
+                             END END ";
+
+                case GlobalEnums.NmvnTaskID.PackageIssue:
+                    return "PI";
+
+
+                case GlobalEnums.NmvnTaskID.FinishedHandover:
+                    return "OP";
+
+                case GlobalEnums.NmvnTaskID.FinishedProduct:
+                    return "FP";
+
 
 
 
@@ -51,7 +95,7 @@ namespace TotalBase
                     return "X";
 
                 case GlobalEnums.NmvnTaskID.Quotation:
-                    return "B";
+                    return "Q";
 
                 case GlobalEnums.NmvnTaskID.SalesInvoice:
                     return @"CASE WHEN @SalesInvoiceTypeID = 
@@ -69,8 +113,7 @@ namespace TotalBase
                 case GlobalEnums.NmvnTaskID.CreditNote:
                     return "CR";
 
-                case GlobalEnums.NmvnTaskID.GoodsReceipt:
-                    //return "R";
+                case GlobalEnums.NmvnTaskID.GoodsReceipt:                    
                     return @"CASE WHEN @NmvnTaskID = 
                                     " + (int)GlobalEnums.NmvnTaskID.MaterialReceipt + @" AND @LocationID = 1 THEN 'N' ELSE 
                              CASE WHEN @NmvnTaskID = 
@@ -80,13 +123,27 @@ namespace TotalBase
                              CASE WHEN @NmvnTaskID = 
                                     " + (int)GlobalEnums.NmvnTaskID.ItemReceipt + @" AND @LocationID = 2 THEN 'D' ELSE 
                              CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.ProductReceipt + @" AND @LocationID = 1 THEN 'K' ELSE 
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductReceipt + @" AND @LocationID = 1 THEN 'T' ELSE 
                              CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.ProductReceipt + @" AND @LocationID = 2 THEN 'T' ELSE '#' END
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductReceipt + @" AND @LocationID = 2 THEN 'B' ELSE '#' END
+                             END END END END END";
+
+                case GlobalEnums.NmvnTaskID.TransferOrder:
+                    return @"CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.MaterialTransferOrder + @" AND @LocationID = 1 THEN 'TH' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.MaterialTransferOrder + @" AND @LocationID = 2 THEN 'TR' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.ItemTransferOrder + @" AND @LocationID = 1 THEN 'TD' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.ItemTransferOrder + @" AND @LocationID = 2 THEN 'TO' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductTransferOrder + @" AND @LocationID = 1 THEN 'TK' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductTransferOrder + @" AND @LocationID = 2 THEN 'TP' ELSE '#' END
                              END END END END END";
 
                 case GlobalEnums.NmvnTaskID.WarehouseTransfer:
-                    //return "R";
                     return @"CASE WHEN @NmvnTaskID = 
                                     " + (int)GlobalEnums.NmvnTaskID.MaterialTransfer + @" AND @LocationID = 1 THEN 'NC' ELSE 
                              CASE WHEN @NmvnTaskID = 
@@ -96,13 +153,12 @@ namespace TotalBase
                              CASE WHEN @NmvnTaskID = 
                                     " + (int)GlobalEnums.NmvnTaskID.ItemTransfer + @" AND @LocationID = 2 THEN 'DC' ELSE 
                              CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.ProductTransfer + @" AND @LocationID = 1 THEN 'KC' ELSE 
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductTransfer + @" AND @LocationID = 1 THEN 'TC' ELSE 
                              CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.ProductTransfer + @" AND @LocationID = 2 THEN 'TC' ELSE '#' END
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductTransfer + @" AND @LocationID = 2 THEN 'KC' ELSE '#' END
                              END END END END END";
 
-                case GlobalEnums.NmvnTaskID.WarehouseAdjustment:
-                    //return "R";
+                case GlobalEnums.NmvnTaskID.WarehouseAdjustment:                    
                     return @"CASE WHEN @NmvnTaskID = 
                                     " + (int)GlobalEnums.NmvnTaskID.MaterialAdjustment + @" THEN 'NA' ELSE 
                              CASE WHEN @NmvnTaskID = 
@@ -120,24 +176,17 @@ namespace TotalBase
 
 
                              CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.ProductAdjustment + @" THEN 'KA' ELSE 
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductAdjustment + @" THEN 'TA' ELSE 
                              CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.OtherProductReceipt + @" THEN 'KN' ELSE 
+                                    " + (int)GlobalEnums.NmvnTaskID.OtherProductReceipt + @" THEN 'TN' ELSE 
                              CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.OtherProductIssue + @" THEN 'KX' ELSE '#' END
+                                    " + (int)GlobalEnums.NmvnTaskID.OtherProductIssue + @" THEN 'TX' ELSE '#' END
 
                              END END END END END END END END";
 
                 case GlobalEnums.NmvnTaskID.ServiceContract:
-                    return "H";
+                    return "SC";
 
-                case GlobalEnums.NmvnTaskID.TransferOrder:
-                    return "TO";
-                //                    return @"CASE WHEN @StockTransferTypeID = 
-                //                                    " + (int)GlobalEnums.StockTransferTypeID.VehicleTransfer + @" THEN 'LX' ELSE 
-                //                             CASE WHEN @StockTransferTypeID = 
-                //                                    " + (int)GlobalEnums.StockTransferTypeID.PartTransfer + @" THEN 'LP' ELSE '#' END 
-                //                             END";
 
                 case GlobalEnums.NmvnTaskID.StockTransfer:
                     return @"CASE WHEN @StockTransferTypeID = 
