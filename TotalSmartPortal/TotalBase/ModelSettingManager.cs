@@ -47,9 +47,9 @@ namespace TotalBase
 
 
                 case GlobalEnums.NmvnTaskID.SemifinishedItem:
-                    return "SI";
+                    return "L";
                 case GlobalEnums.NmvnTaskID.SemifinishedProduct:
-                    return "SP";
+                    return "P";
 
                 case GlobalEnums.NmvnTaskID.SemifinishedHandover:
                     return @"CASE WHEN @NmvnTaskID = 
@@ -101,7 +101,7 @@ namespace TotalBase
                     return @"CASE WHEN @SalesInvoiceTypeID = 
                                     " + (int)GlobalEnums.SalesInvoiceTypeID.VehiclesInvoice + @" THEN 'X' ELSE 
                              CASE WHEN @SalesInvoiceTypeID = 
-                                    " + (int)GlobalEnums.SalesInvoiceTypeID.PartsInvoice + @" THEN 'P' ELSE 
+                                    " + (int)GlobalEnums.SalesInvoiceTypeID.PartsInvoice + @" THEN 'Z' ELSE 
                              CASE WHEN @SalesInvoiceTypeID = 
                                     " + (int)GlobalEnums.SalesInvoiceTypeID.ServicesInvoice + @" THEN 'S' ELSE '#' END
                              END END";
