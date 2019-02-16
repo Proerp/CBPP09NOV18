@@ -137,6 +137,8 @@
     <Compile Include="Productions\BlendingInstructionDTO.cs" />
     <Compile Include="Productions\FinishedHandoverDetailDTO.cs" />
     <Compile Include="Productions\FinishedHandoverDTO.cs" />
+    <Compile Include="Productions\FinishedItemDetailDTO.cs" />
+    <Compile Include="Productions\FinishedItemDTO.cs" />
     <Compile Include="Productions\FinishedProductDetailDTO.cs" />
     <Compile Include="Productions\FinishedProductDTO.cs" />
     <Compile Include="Productions\PlannedOrderDetailDTO.cs" />

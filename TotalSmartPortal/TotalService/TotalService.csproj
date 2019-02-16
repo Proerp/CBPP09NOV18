@@ -84,6 +84,7 @@
     <Compile Include="Inventories\WarehouseTransferService.cs" />
     <Compile Include="Productions\BlendingInstructionService.cs" />
     <Compile Include="Productions\FinishedHandoverService.cs" />
+    <Compile Include="Productions\FinishedItemService.cs" />
     <Compile Include="Productions\FinishedProductService.cs" />
     <Compile Include="Productions\PlannedOrderService.cs" />
     <Compile Include="Productions\ProductionOrderService.cs" />

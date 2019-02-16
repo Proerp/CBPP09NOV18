@@ -130,6 +130,7 @@
     <Compile Include="Repositories\Inventories\WarehouseTransferRepository.cs" />
     <Compile Include="Repositories\Productions\BlendingInstructionRepository.cs" />
     <Compile Include="Repositories\Productions\FinishedHandoverRepository.cs" />
+    <Compile Include="Repositories\Productions\FinishedItemRepository.cs" />
     <Compile Include="Repositories\Productions\FinishedProductRepository.cs" />
     <Compile Include="Repositories\Productions\PlannedOrderRepository.cs" />
     <Compile Include="Repositories\Productions\ProductionOrderRepository.cs" />

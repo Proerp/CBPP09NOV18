@@ -267,6 +267,11 @@ namespace TotalPortal.App_Start
 
 
 
+                kernel.Bind<IFinishedItemService>().To<FinishedItemService>();
+                kernel.Bind<IFinishedItemRepository>().To<FinishedItemRepository>();
+                kernel.Bind<IFinishedItemAPIRepository>().To<FinishedItemAPIRepository>();
+                kernel.Bind<IFinishedItemViewModelSelectListBuilder>().To<FinishedItemViewModelSelectListBuilder>();
+
                 kernel.Bind<IFinishedProductService>().To<FinishedProductService>();
                 kernel.Bind<IFinishedProductRepository>().To<FinishedProductRepository>();
                 kernel.Bind<IFinishedProductAPIRepository>().To<FinishedProductAPIRepository>();

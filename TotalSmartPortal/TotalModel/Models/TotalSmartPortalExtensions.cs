@@ -415,6 +415,21 @@ namespace TotalModel.Models
 
 
 
+    public partial class FinishedItem : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<FinishedItemDetail>
+    {
+        public int GetID() { return this.FinishedItemID; }
+
+        public virtual Employee CrucialWorker { get { return this.Employee; } }
+
+        public ICollection<FinishedItemDetail> GetDetails() { return this.FinishedItemDetails; }
+    }
+
+
+    public partial class FinishedItemDetail : IPrimitiveEntity, IHelperEntryDate, IHelperCommodityID, IHelperCommodityTypeID
+    {
+        public int GetID() { return this.FinishedItemDetailID; }
+    }
+
     public partial class FinishedProduct : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<FinishedProductDetail>
     {
         public int GetID() { return this.FinishedProductID; }
