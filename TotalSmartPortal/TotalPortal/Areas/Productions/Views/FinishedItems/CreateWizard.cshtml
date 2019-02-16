@@ -13,6 +13,7 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")    
     
+    @Html.HiddenFor(model => model.PlannedOrderID)
     @Html.HiddenFor(model => model.FirmOrderID)
     @Html.HiddenFor(model => model.FirmOrderCode)
     @Html.HiddenFor(model => model.FirmOrderReference)
@@ -115,6 +116,7 @@
             $("#MaterialIssueDetailID").val(selectedDataItem === undefined || selectedDataItem.MaterialIssueDetailID === undefined ? null : selectedDataItem.MaterialIssueDetailID);
             $("#MaterialIssueID").val(selectedDataItem === undefined || selectedDataItem.MaterialIssueID === undefined ? null : selectedDataItem.MaterialIssueID);
             
+            $("#PlannedOrderID").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderID === undefined ? null : selectedDataItem.PlannedOrderID); 
             $("#FirmOrderID").val(selectedDataItem === undefined || selectedDataItem.FirmOrderID === undefined ? null : selectedDataItem.FirmOrderID);
             $("#FirmOrderCode").val(selectedDataItem === undefined || selectedDataItem.FirmOrderCode === undefined ? null : selectedDataItem.FirmOrderCode);
             $("#FirmOrderReference").val(selectedDataItem === undefined || selectedDataItem.FirmOrderReference === undefined ? null : selectedDataItem.FirmOrderReference);

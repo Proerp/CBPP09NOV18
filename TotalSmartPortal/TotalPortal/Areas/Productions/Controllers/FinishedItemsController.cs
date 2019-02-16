@@ -61,13 +61,14 @@ namespace TotalPortal.Areas.Productions.Controllers
                         });
                 }
 
-            var finishedItemSummaries = finishedItemViewModel.ViewDetails
+            var finishedItemPackages = finishedItemViewModel.ViewDetails
                                             .GroupBy(g => g.CommodityID)
-                                            .Select(sl => new FinishedItemSummaryDTO
+                                            .Select(sl => new FinishedItemPackageDTO
                                             {
                                                 CommodityID = sl.First().CommodityID,
                                                 CommodityCode = sl.First().CommodityCode,
                                                 CommodityName = sl.First().CommodityName,
+                                                CommodityTypeID = sl.First().CommodityTypeID,
 
                                                 PiecePerPack = sl.First().PiecePerPack,
                                                 PackageUnitWeights = sl.First().PackageUnitWeights,
@@ -78,7 +79,7 @@ namespace TotalPortal.Areas.Productions.Controllers
                                                 Swarfs = sl.Sum(s => s.Swarfs),
                                             });
 
-            finishedItemViewModel.FinishedItemSummaries = finishedItemSummaries.ToList();
+            finishedItemViewModel.FinishedItemPackages = finishedItemPackages.ToList();
 
             return base.TailorViewModel(finishedItemViewModel, forDelete, forAlter, forOpen);
         }

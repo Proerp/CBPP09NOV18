@@ -83,8 +83,17 @@ namespace TotalDTO.Productions
     }
 
 
-    public class FinishedItemSummaryDTO
+    public class FinishedItemPackageDTO : BaseModel
     {
+        public int FinishedItemPackageID { get; set; }
+
+        public int FirmOrderID { get; set; }
+        public int PlannedOrderID { get; set; }
+
+        public Nullable<int> CustomerID { get; set; }
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; }
+
         public int CommodityID { get; set; }
         [Display(Name = "Mã hàng")]
         [UIHint("StringReadonly")]
@@ -92,6 +101,7 @@ namespace TotalDTO.Productions
         [Display(Name = "Tên hàng")]
         [UIHint("StringReadonly")]
         public string CommodityName { get; set; }
+        public int CommodityTypeID { get; set; }
 
         [Display(Name = "Cái/ kiện")]
         [UIHint("Integer")]
@@ -129,6 +139,9 @@ namespace TotalDTO.Productions
         [Display(Name = "Biên (kg)")]
         [UIHint("QuantityReadonly")]
         public decimal Swarfs { get; set; }
+
+
+        public string SemifinishedItemReferences { get; set; }
     }
 
 }

@@ -264,6 +264,8 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<FinishedItemPrimitiveDTO, FinishedItem>();
                 cfg.CreateMap<FinishedItemViewDetail, FinishedItemDetailDTO>();
                 cfg.CreateMap<FinishedItemDetailDTO, FinishedItemDetail>();
+                cfg.CreateMap<FinishedItemPackage, FinishedItemPackageDTO>();
+                cfg.CreateMap<FinishedItemPackageDTO, FinishedItemPackage>();
 
                 cfg.CreateMap<FinishedProduct, FinishedProductViewModel>();
                 cfg.CreateMap<FinishedProduct, FinishedProductDTO>();

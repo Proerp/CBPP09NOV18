@@ -56,5 +56,6 @@ namespace TotalModel.Models
         public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual FinishedItem FinishedItem { get; set; }
     }
 }

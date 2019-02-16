@@ -24,6 +24,8 @@ namespace TotalDTO.Productions
 
         public virtual Nullable<int> CustomerID { get; set; }
 
+        public int PlannedOrderID { get; set; }
+
         public int FirmOrderID { get; set; }
         [Display(Name = "Số KHSX")]
         public string FirmOrderReference { get; set; }
@@ -33,6 +35,8 @@ namespace TotalDTO.Productions
         public DateTime FirmOrderEntryDate { get; set; }
         [Display(Name = "Thành phẩm khay")]
         public string FirmOrderSpecification { get; set; }
+
+        public string SemifinishedItemReferences { get; set; }
 
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; } // WHEN ADD NEW: THIS WILL BE ZERO. THEN, THE REAL VALUE OF WorkshiftID WILL BE UPDATE BY MaterialIssueSaveRelative
@@ -63,8 +67,10 @@ namespace TotalDTO.Productions
         {
             base.PerformPresaveRule();
 
+            string purchaseOrderReferences = ""; 
             this.ShiftSaving(this.ShiftID);
-            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; });
+            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; if (purchaseOrderReferences.IndexOf(e.SemifinishedItemReference) < 0) purchaseOrderReferences = purchaseOrderReferences + (purchaseOrderReferences != "" ? ", " : "") + e.SemifinishedItemReference; });
+            this.SemifinishedItemReferences = purchaseOrderReferences; 
         }
 
     }
@@ -75,6 +81,8 @@ namespace TotalDTO.Productions
         public FinishedItemDTO()
         {
             this.FinishedItemViewDetails = new List<FinishedItemDetailDTO>();
+
+            this.FinishedItemPackages = new List<FinishedItemPackageDTO>();
         }
 
         public override Nullable<int> CustomerID { get { return (this.Customer != null ? (this.Customer.CustomerID > 0 ? (Nullable<int>)this.Customer.CustomerID : null) : null); } }
@@ -95,6 +103,14 @@ namespace TotalDTO.Productions
         protected override IEnumerable<FinishedItemDetailDTO> DtoDetails() { return this.FinishedItemViewDetails; }
 
 
-        public List<FinishedItemSummaryDTO> FinishedItemSummaries { get; set; }
+        public List<FinishedItemPackageDTO> FinishedItemPackages { get; set; }
+
+
+        public override void PerformPresaveRule()
+        {
+            base.PerformPresaveRule();
+
+            this.FinishedItemPackages.ForEach(e => { e.LocationID = this.LocationID; e.EntryDate = this.EntryDate; e.Approved = this.Approved; e.ApprovedDate = this.ApprovedDate; e.InActive = this.InActive; e.InActiveDate = this.InActiveDate; e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.FirmOrderID = this.FirmOrderID; e.PlannedOrderID = this.PlannedOrderID; e.SemifinishedItemReferences = this.SemifinishedItemReferences; });
+        }
     }
 }

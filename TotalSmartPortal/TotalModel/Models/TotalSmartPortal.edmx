@@ -3604,6 +3604,18 @@ warning 6035: The relationship 'FK_FinishedHandovers_AspNetUsers2' has columns t
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_FinishedItemPackages_FinishedItems">
+          <End Role="FinishedItems" Type="Self.FinishedItems" Multiplicity="1" />
+          <End Role="FinishedItemPackages" Type="Self.FinishedItemPackages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinishedItems">
+              <PropertyRef Name="FinishedItemID" />
+            </Principal>
+            <Dependent Role="FinishedItemPackages">
+              <PropertyRef Name="FinishedItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_FinishedItemPackages_Shifts">
           <End Role="Shifts" Type="Self.Shifts" Multiplicity="1" />
           <End Role="FinishedItemPackages" Type="Self.FinishedItemPackages" Multiplicity="*" />
@@ -9306,6 +9318,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_FinishedItemDetails_Workshifts" Association="Self.FK_FinishedItemDetails_Workshifts">
             <End Role="Workshifts" EntitySet="Workshifts" />
             <End Role="FinishedItemDetails" EntitySet="FinishedItemDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinishedItemPackages_FinishedItems" Association="Self.FK_FinishedItemPackages_FinishedItems">
+            <End Role="FinishedItems" EntitySet="FinishedItems" />
+            <End Role="FinishedItemPackages" EntitySet="FinishedItemPackages" />
           </AssociationSet>
           <AssociationSet Name="FK_FinishedItemPackages_Shifts" Association="Self.FK_FinishedItemPackages_Shifts">
             <End Role="Shifts" EntitySet="Shifts" />
@@ -16079,6 +16095,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_FinishedItems_Workshifts" Association="TotalSmartPortalModel.FK_FinishedItems_Workshifts">
             <End Role="Workshift" EntitySet="Workshifts" />
             <End Role="FinishedItem" EntitySet="FinishedItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FinishedItemPackages_FinishedItems" Association="TotalSmartPortalModel.FK_FinishedItemPackages_FinishedItems">
+            <End Role="FinishedItem" EntitySet="FinishedItems" />
+            <End Role="FinishedItemPackage" EntitySet="FinishedItemPackages" />
           </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -24165,6 +24185,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="PlannedOrderID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="FinishedItemViewDetail">
           <Property Type="Int32" Name="FinishedItemDetailID" Nullable="false" />
@@ -24273,6 +24294,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="FinishedItemDetails" Relationship="TotalSmartPortalModel.FK_FinishedItemDetails_FinishedItemPackages" FromRole="FinishedItemPackage" ToRole="FinishedItemDetail" />
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_FinishedItemPackages_Shifts" FromRole="FinishedItemPackage" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedItemPackages_Workshifts" FromRole="FinishedItemPackage" ToRole="Workshift" />
+          <NavigationProperty Name="FinishedItem" Relationship="TotalSmartPortalModel.FK_FinishedItemPackages_FinishedItems" FromRole="FinishedItemPackage" ToRole="FinishedItem" />
         </EntityType>
         <EntityType Name="FinishedItem">
           <Key>
@@ -24312,6 +24334,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_FinishedItems_Locations" FromRole="FinishedItem" ToRole="Location" />
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_FinishedItems_Shifts" FromRole="FinishedItem" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedItems_Workshifts" FromRole="FinishedItem" ToRole="Workshift" />
+          <NavigationProperty Name="FinishedItemPackages" Relationship="TotalSmartPortalModel.FK_FinishedItemPackages_FinishedItems" FromRole="FinishedItem" ToRole="FinishedItemPackage" />
         </EntityType>
         <Association Name="FK_FinishedItemDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -24478,6 +24501,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Principal>
             <Dependent Role="FinishedItem">
               <PropertyRef Name="WorkshiftID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FinishedItemPackages_FinishedItems">
+          <End Type="TotalSmartPortalModel.FinishedItem" Role="FinishedItem" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.FinishedItemPackage" Role="FinishedItemPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinishedItem">
+              <PropertyRef Name="FinishedItemID" />
+            </Principal>
+            <Dependent Role="FinishedItemPackage">
+              <PropertyRef Name="FinishedItemID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -30872,6 +30907,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -135,7 +135,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "       SELECT          FirmOrders.FirmOrderID, FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification AS FirmOrderSpecification, FirmOrders.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
+            queryString = queryString + "       SELECT          FirmOrders.PlannedOrderID, FirmOrders.FirmOrderID, FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification AS FirmOrderSpecification, FirmOrders.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
             queryString = queryString + "       FROM            FirmOrders " + "\r\n";//LocationID = @LocationID AND 
             queryString = queryString + "                       INNER JOIN Customers ON FirmOrders.FirmOrderID IN (SELECT DISTINCT FirmOrderID FROM SemifinishedItemDetails WHERE Approved = 1 AND HandoverApproved = 1 AND ROUND(Quantity - QuantityFinished, " + (int)GlobalEnums.rndQuantity + ") > 0) AND FirmOrders.CustomerID = Customers.CustomerID " + "\r\n";
 
@@ -166,6 +166,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "               UPDATE          FinishedItems        SET WorkshiftID = @WorkshiftID WHERE FinishedItemID = @EntityID " + "\r\n";
             queryString = queryString + "               UPDATE          FinishedItemDetails  SET WorkshiftID = @WorkshiftID WHERE FinishedItemID = @EntityID " + "\r\n";
+            queryString = queryString + "               UPDATE          FinishedItemPackages SET WorkshiftID = @WorkshiftID WHERE FinishedItemID = @EntityID " + "\r\n";
             #endregion UPDATE WorkshiftID
             queryString = queryString + "           END " + "\r\n";
 
