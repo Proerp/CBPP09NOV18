@@ -29,7 +29,7 @@ namespace TotalBase
 
 
                 case GlobalEnums.NmvnTaskID.BlendingInstruction:
-                    return "FI";
+                    return "BI";
 
                 case GlobalEnums.NmvnTaskID.PlannedOrder:
                     return @"CASE WHEN @NmvnTaskID = 
@@ -76,7 +76,8 @@ namespace TotalBase
 
                 case GlobalEnums.NmvnTaskID.FinishedProduct:
                     return "FP";
-
+                case GlobalEnums.NmvnTaskID.FinishedItem:
+                    return "FI";
 
 
 

@@ -6,7 +6,7 @@ namespace TotalBase.Enums
 {
     public static class GlobalEnums
     {
-        public static bool CBPP = true;
+        public static bool CBPP = false;
 
         public static bool ERPConnected = false;
 
@@ -78,6 +78,7 @@ namespace TotalBase.Enums
             SemifinishedItemHandover = 680026888,
             SemifinishedProductHandover = 680026,
 
+            FinishedItem = 680028888,
             FinishedProduct = 680028,
             FinishedHandover = 680029,
 
