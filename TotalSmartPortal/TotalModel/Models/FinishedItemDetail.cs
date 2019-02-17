@@ -47,8 +47,8 @@ namespace TotalModel.Models
     
         public virtual Commodity Commodity { get; set; }
         public virtual FinishedItemPackage FinishedItemPackage { get; set; }
-        public virtual FinishedItem FinishedItem { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual FinishedItem FinishedItem { get; set; }
     }
 }

@@ -29,6 +29,10 @@ namespace TotalModel.Models
         public int FirmOrderID { get; set; }
         public int CustomerID { get; set; }
         public int CrucialWorkerID { get; set; }
+        public System.DateTime StartDate { get; set; }
+        public System.DateTime StopDate { get; set; }
+        public decimal ThicknessMin { get; set; }
+        public decimal ThicknessMax { get; set; }
         public int UserID { get; set; }
         public int PreparedPersonID { get; set; }
         public int OrganizationalUnitID { get; set; }
@@ -51,13 +55,13 @@ namespace TotalModel.Models
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinishedItemPackage> FinishedItemPackages { get; set; }
         public virtual FinishedItem FinishedItems1 { get; set; }
         public virtual FinishedItem FinishedItem1 { get; set; }
         public virtual FirmOrder FirmOrder { get; set; }
         public virtual Location Location { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FinishedItemPackage> FinishedItemPackages { get; set; }
     }
 }

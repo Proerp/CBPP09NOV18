@@ -32,13 +32,13 @@ namespace TotalDTO.Productions
 
         public int SemifinishedHandoverID { get; set; }
 
-        [Display(Name = "Ca SX")]
+        [Display(Name = "Ca trộn")]
         [UIHint("StringReadonly")]
         public string WorkshiftCode { get; set; }
-        [Display(Name = "Ngày SX")]
+        [Display(Name = "Ngày trộn")]
         [UIHint("DateTimeReadonly")]
         public DateTime WorkshiftEntryDate { get; set; }
-        [Display(Name = "Pallet")]
+        [Display(Name = "Phiếu trộn")]
         [UIHint("StringReadonly")]
         public string SemifinishedItemReference { get; set; }
 
@@ -46,27 +46,27 @@ namespace TotalDTO.Productions
         public virtual decimal PackageUnitWeights { get; set; }
 
 
-        [Display(Name = "Tồn phôi")]
+        [Display(Name = "Tồn hổn hợp")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
 
-        [Display(Name = "Trừ phôi")]
+        [Display(Name = "Trừ hổn hợp")]
         [UIHint("QuantityReadonly")]
         public override decimal Quantity { get; set; }
 
-        [Display(Name = "P-Phẩm")]
+        [Display(Name = "Phế phẩm")]
         [UIHint("Quantity")]
         public decimal QuantityFailure { get; set; }
 
-        [Display(Name = "Thừa")]
+        [Display(Name = "HH thừa")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityExcess { get; set; }
 
-        [Display(Name = "Thiếu")]
+        [Display(Name = "HH thiếu")]
         [UIHint("Quantity")]
         public decimal QuantityShortage { get; set; }
 
-        [Display(Name = "T-Phẩm")]
+        [Display(Name = "Màng thành phẩm")]
         [UIHint("Quantity")]
         public decimal QuantityAndExcess { get { return this.Quantity + this.QuantityExcess; } set { } }
 
@@ -111,11 +111,11 @@ namespace TotalDTO.Productions
         public virtual decimal PackageUnitWeights { get; set; }
 
 
-        [Display(Name = "Tồn phôi")]
+        [Display(Name = "Tồn hổn hợp")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
 
-        [Display(Name = "SLTP")]
+        [Display(Name = "Màng thành phẩm")]
         [UIHint("QuantityReadonly")]
         public decimal Quantity { get; set; }
         [Display(Name = "Số kiện")]
@@ -129,12 +129,26 @@ namespace TotalDTO.Productions
         [UIHint("QuantityReadonly")]
         public decimal QuantityWeights { get { return this.PiecePerPack > 0 ? this.Quantity * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
 
-        [Display(Name = "PP")]
+        [Display(Name = "Phế phẩm")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityFailure { get; set; }
         [Display(Name = "PP (kg)")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityFailureWeights { get { return this.PiecePerPack > 0 ? this.QuantityFailure * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
+
+        [Display(Name = "PP")]
+        [UIHint("QuantityReadonly")]
+        public decimal QuantityExcess { get; set; }
+        [Display(Name = "PP (kg)")]
+        [UIHint("QuantityReadonly")]
+        public decimal QuantityExcessWeights { get { return this.PiecePerPack > 0 ? this.QuantityExcess * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
+
+        [Display(Name = "PP")]
+        [UIHint("QuantityReadonly")]
+        public decimal QuantityShortage { get; set; }
+        [Display(Name = "PP (kg)")]
+        [UIHint("QuantityReadonly")]
+        public decimal QuantityShortageWeights { get { return this.PiecePerPack > 0 ? this.QuantityShortage * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
 
         [Display(Name = "Biên (kg)")]
         [UIHint("QuantityReadonly")]

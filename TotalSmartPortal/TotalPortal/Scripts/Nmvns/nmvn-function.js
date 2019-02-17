@@ -57,15 +57,16 @@ function keydown_insert(columnEdit) {
 
 
 
-function cloneSelectedItem() { //https://www.telerik.com/forums/copy-row-in-the-grid
+function cloneSelectedItem(selectedItem) { //https://www.telerik.com/forums/copy-row-in-the-grid
     var kenGrid = $("#kendoGridDetails").data("kendoGrid");
-    var selectedItem = kenGrid.dataItem(kenGrid.select());
-    if (selectedItem != undefined) {
-        var clonedItem = selectedItem.toJSON();
+    var baseItem; if (selectedItem != undefined) baseItem = selectedItem; else baseItem = kenGrid.dataItem(kenGrid.select());
+
+    if (baseItem != undefined) {
+        var clonedItem = baseItem.toJSON();
 
         tailorClonedItem(clonedItem); //MUST ADD [function tailorClonedItem] SPECIFIC FOR EACH MODULE WHEN USE THIS function cloneSelectedItem(). SEE _GoodsArrival.cshtml FOR AN EXAMPLE
 
-        var idx = kenGrid.dataSource.indexOf(selectedItem); // Get the index in the DataSource (not in current page of the grid) https://stackoverflow.com/questions/24931390/kendo-ui-grid-inline-insert-new-row-at-a-specific-position-on-the-grid
+        var idx = kenGrid.dataSource.indexOf(baseItem); // Get the index in the DataSource (not in current page of the grid) https://stackoverflow.com/questions/24931390/kendo-ui-grid-inline-insert-new-row-at-a-specific-position-on-the-grid
         kenGrid.dataSource.insert(idx, clonedItem);
     }
 }

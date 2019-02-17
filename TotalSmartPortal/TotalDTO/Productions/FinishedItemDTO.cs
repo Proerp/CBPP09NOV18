@@ -41,6 +41,20 @@ namespace TotalDTO.Productions
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; } // WHEN ADD NEW: THIS WILL BE ZERO. THEN, THE REAL VALUE OF WorkshiftID WILL BE UPDATE BY MaterialIssueSaveRelative
 
+        [UIHint("DateTime")]
+        [Display(Name = "Thời gian bắt đầu SX")]
+        public Nullable<System.DateTime> StartDate { get; set; }
+        [UIHint("DateTime")]
+        [Display(Name = "Thời gian kết thúc SX")]
+        public Nullable<System.DateTime> StopDate { get; set; }
+
+        [Display(Name = "Độ dày thực tế: Min và Max")]
+        [Range(0, 999999, ErrorMessage = "Số tấm phải >= 0")]
+        public decimal ThicknessMin { get; set; }
+        [Display(Name = "Max")]
+        [Range(0, 999999, ErrorMessage = "Số kg >= 0")]
+        public decimal ThicknessMax { get; set; }
+
         public virtual int CrucialWorkerID { get; set; }
 
         public virtual decimal TotalQuantityFailure { get; set; }
@@ -91,7 +105,7 @@ namespace TotalDTO.Productions
         public CustomerBaseDTO Customer { get; set; }
 
         public override int CrucialWorkerID { get { return (this.CrucialWorker != null ? this.CrucialWorker.EmployeeID : 0); } }
-        [Display(Name = "NV đóng gói")]
+        [Display(Name = "NV tạo màng")]
         [UIHint("AutoCompletes/EmployeeBase")]
         public EmployeeBaseDTO CrucialWorker { get; set; }
 

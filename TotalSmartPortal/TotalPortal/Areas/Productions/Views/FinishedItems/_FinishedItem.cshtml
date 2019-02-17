@@ -25,6 +25,27 @@
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Shift.cshtml")
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.StartDate)
+            <div class="div-input">
+                @Html.Kendo().DateTimePickerFor(model => model.StartDate).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StopDate)
+            <div class="div-input">
+                @Html.Kendo().DateTimePickerFor(model => model.StopDate).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.StopDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
         @Html.HiddenFor(model => model.PlannedOrderID)
         @Html.HiddenFor(model => model.FirmOrderID)
         <div class="form-group">
@@ -54,6 +75,18 @@
             </div>
             <div class="div-validation-message">
                 @Html.ValidationMessageFor(model => model.FirmOrderEntryDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ThicknessMax)
+            <div class="div-input left-panel-input">
+                <span style="width: 47%;float: left;">@Html.Kendo().NumericTextBoxFor(model => model.ThicknessMin).Format(@Settings.kfmQuantity).HtmlAttributes(new { @style = "width: 100%;" }) </span>
+                <label style="width:6%; text-align:center; margin-top: 4px;"> / </label>
+                <span style="width: 47%;float: right;">@Html.Kendo().NumericTextBoxFor(model => model.ThicknessMax).Format(@Settings.kfmQuantity).HtmlAttributes(new { @style = "width: 100%;" }) </span>
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.ThicknessMax, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -111,7 +144,7 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='FinishedItemViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(128).EditorTemplateName("StringReadonly")
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(128).EditorTemplateName("StringReadonly").Hidden()
                         .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='FinishedItemViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
                     columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(150).HtmlAttributes(new { style = "" }).Hidden()
@@ -132,7 +165,7 @@
                     columns.Bound(p => p.WorkshiftEntryDate).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(25)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (WorkshiftEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', WorkshiftEntryDate) #" + "<input type='hidden' name='FinishedItemViewDetails[#= index(data) #].WorkshiftEntryDate' value='#= (WorkshiftEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', WorkshiftEntryDate) #' />");
-                    columns.Bound(p => p.WorkshiftCode).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(62)
+                    columns.Bound(p => p.WorkshiftCode).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(62).Hidden()
                         .ClientTemplate("#= (WorkshiftCode == null)? '' : WorkshiftCode #" + "<input type='hidden' name='FinishedItemViewDetails[#= index(data) #].WorkshiftCode' value='#= (WorkshiftCode == null) ? '' : WorkshiftCode #' />");
 
 
@@ -164,7 +197,7 @@
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityFailure) #" + "<input type='hidden' name='FinishedItemViewDetails[#= index(data) #].QuantityFailure' value='#= QuantityFailure #' />");
 
-                    columns.Bound(p => p.Swarfs).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
+                    columns.Bound(p => p.Swarfs).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).Hidden()
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Swarfs) #" + "<input type='hidden' name='FinishedItemViewDetails[#= index(data) #].Swarfs' value='#= Swarfs #' />");
@@ -271,7 +304,7 @@
                 .Items(items =>
                 {
                     items.Add()
-                        .Text("Tổng hợp phiếu đóng gói")
+                        .Text("Tổng hợp màng thành phẩm")
                         .Selected(true)
                         .Expanded(true)
                         .Content(@<text>
@@ -301,101 +334,125 @@
     </div>
 
     @helper kendoSummaryGrid()
-{
-    @(Html.Kendo().Grid(Model.FinishedItemPackages)
-            .Name("kendoGridFinishedItemPackages")
-            .Columns(columns =>
-            {
-                columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
-                    .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].CommodityID' value='#= CommodityID #' />");
-                columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(110).EditorTemplateName("StringReadonly")
-                    .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].CommodityCode' value='#= CommodityCode #' />")
-                    .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
-                columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(160).HtmlAttributes(new { style = "" })
-                    .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].CommodityName' value='#= CommodityName #' />");
-                columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
-                    .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
-
-
-                columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
-                    .Format(Settings.kfmN0)
-                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', QuantityRemains) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityRemains' value='#= QuantityRemains #' />");
-
-                columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(35)
-                    .Format(Settings.kfmN0)
-                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', Quantity) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].Quantity' value='#= Quantity #' />");
-
-                columns.Bound(p => p.PiecePerPack).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(50)
-                    .ClientTemplate("#= (PiecePerPack == null)? '' : PiecePerPack #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].PiecePerPack' value='#= (PiecePerPack == null) ? '' : PiecePerPack #' />");
-
-                columns.Bound(p => p.PackageUnitWeights).DisplayNameTitle().Width(20).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
-                    .Format(Settings.kfmWeight)
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmWeight + "', PackageUnitWeights) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].PackageUnitWeights' value='#= PackageUnitWeights #' />");
-
-                columns.Bound(p => p.Packages).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
-                    .Format(Settings.kfmN0)
-                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', Packages) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].Packages' value='#= Packages #' />");
-                columns.Bound(p => p.OddPackages).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
-                    .Format(Settings.kfmN0)
-                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', OddPackages) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].OddPackages' value='#= OddPackages #' />");
-
-                columns.Bound(p => p.QuantityWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
-                    .Format(Settings.kfmQuantity)
-                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityWeights) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityWeights' value='#= QuantityWeights #' />");
-
-                columns.Bound(p => p.QuantityFailure).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20)
-                    .Format(Settings.kfmN0)
-                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', QuantityFailure) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityFailure' value='#= QuantityFailure #' />");
-                columns.Bound(p => p.QuantityFailureWeights).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
-                    .Format(Settings.kfmQuantity)
-                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityFailureWeights) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityFailureWeights' value='#= QuantityFailureWeights #' />");
-                columns.Bound(p => p.Swarfs).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
-                    .Format(Settings.kfmQuantity)
-                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Swarfs) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].Swarfs' value='#= Swarfs #' />");
-
-            })
-            .Navigatable()
-            .Filterable(f => f.Enabled(false))
-            .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
-            .Selectable(settings =>
-            {
-                settings.Mode(GridSelectionMode.Multiple);
-                settings.Type(GridSelectionType.Row);
-            })
-            .DataSource(dataSource => dataSource
-                .Ajax()
-                .Batch(true)
-                .ServerOperation(false)
-                .Model(model =>
+    {
+        @(Html.Kendo().Grid(Model.FinishedItemPackages)
+                .Name("kendoGridFinishedItemPackages")
+                .Columns(columns =>
                 {
-                    model.Id(x => x.CommodityID);
-                    model.Field(m => m.CommodityID).DefaultValue(0);
+                    columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].CommodityID' value='#= CommodityID #' />");
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(310).EditorTemplateName("StringReadonly")
+                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].CommodityCode' value='#= CommodityCode #' />")
+                        .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(160).HtmlAttributes(new { style = "" }).Hidden()
+                        .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].CommodityName' value='#= CommodityName #' />");
+                    columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
+
+
+                    columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityRemains' value='#= QuantityRemains #' />");
+
+                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].Quantity' value='#= Quantity #' />");
+
+                    columns.Bound(p => p.PiecePerPack).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(50).Hidden()
+                        .ClientTemplate("#= (PiecePerPack == null)? '' : PiecePerPack #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].PiecePerPack' value='#= (PiecePerPack == null) ? '' : PiecePerPack #' />");
+
+                    columns.Bound(p => p.PackageUnitWeights).DisplayNameTitle().Width(20).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
+                        .Format(Settings.kfmWeight)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmWeight + "', PackageUnitWeights) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].PackageUnitWeights' value='#= PackageUnitWeights #' />");
+
+                    columns.Bound(p => p.Packages).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
+                        .Format(Settings.kfmN0)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', Packages) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].Packages' value='#= Packages #' />");
+                    columns.Bound(p => p.OddPackages).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
+                        .Format(Settings.kfmN0)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', OddPackages) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].OddPackages' value='#= OddPackages #' />");
+
+                    columns.Bound(p => p.QuantityWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityWeights) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityWeights' value='#= QuantityWeights #' />");
+
+                    columns.Bound(p => p.QuantityFailure).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityFailure) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityFailure' value='#= QuantityFailure #' />");
+                    columns.Bound(p => p.QuantityFailureWeights).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).Hidden()
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityFailureWeights) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityFailureWeights' value='#= QuantityFailureWeights #' />");
+
+                    columns.Bound(p => p.QuantityExcess).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).Hidden()
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityExcess) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityExcess' value='#= QuantityExcess #' />");
+                    columns.Bound(p => p.QuantityExcessWeights).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).Hidden()
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityExcessWeights) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityExcessWeights' value='#= QuantityExcessWeights #' />");
+
+                    columns.Bound(p => p.QuantityShortage).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).Hidden()
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityShortage) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityShortage' value='#= QuantityShortage #' />");
+                    columns.Bound(p => p.QuantityShortageWeights).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).Hidden()
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityShortageWeights) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].QuantityShortageWeights' value='#= QuantityShortageWeights #' />");
+
+
+                    columns.Bound(p => p.Swarfs).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).Hidden()
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Swarfs) #" + "<input type='hidden' name='FinishedItemPackages[#= newIndex(data) #].Swarfs' value='#= Swarfs #' />");
+
                 })
-                .Events(events =>
+                .Navigatable()
+                .Filterable(f => f.Enabled(false))
+                .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
+                .Selectable(settings =>
+                {
+                    settings.Mode(GridSelectionMode.Multiple);
+                    settings.Type(GridSelectionType.Row);
+                })
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .Batch(true)
+                    .ServerOperation(false)
+                    .Model(model =>
                     {
-                        events.Change("dataSourceSummaryChange");
-                        events.Error("kendGrid_ErrorHandler");
+                        model.Id(x => x.CommodityID);
+                        model.Field(m => m.CommodityID).DefaultValue(0);
                     })
-                .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
-                .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                .Aggregates(a => a.Add(x => x.Packages).Sum())
-                .Aggregates(a => a.Add(x => x.OddPackages).Sum())
-                .Aggregates(a => a.Add(x => x.QuantityWeights).Sum())
-                .Aggregates(a => a.Add(x => x.QuantityFailure).Sum())
-                .Aggregates(a => a.Add(x => x.QuantityFailureWeights).Sum())
-                .Aggregates(a => a.Add(x => x.Swarfs).Sum())
-            )
-    )
-}
+                    .Events(events =>
+                        {
+                            events.Change("dataSourceSummaryChange");
+                            events.Error("kendGrid_ErrorHandler");
+                        })
+                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                    .Aggregates(a => a.Add(x => x.Packages).Sum())
+                    .Aggregates(a => a.Add(x => x.OddPackages).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityWeights).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityFailure).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityFailureWeights).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityExcess).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityExcessWeights).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityShortage).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityShortageWeights).Sum())
+                    .Aggregates(a => a.Add(x => x.Swarfs).Sum())
+                )
+        )
+    }
 
 }
 
@@ -419,18 +476,22 @@
             var summaryDataItem = summaryDataRows[i];
 
             var commodityID = summaryDataItem["CommodityID"];
-            var quantity = 0; var quantityFailure = 0; var swarfs = 0;
+            var quantity = 0; var quantityFailure = 0; var quantityExcess = 0; var quantityShortage = 0; var swarfs = 0;
 
             detailDataRows.forEach(function (detailDataItem) {
                 if (detailDataItem["CommodityID"] === commodityID) {
                     quantity = quantity + detailDataItem["Quantity"] + detailDataItem["QuantityExcess"];
                     quantityFailure = quantityFailure + detailDataItem["QuantityFailure"];
+                    quantityExcess = quantityExcess + detailDataItem["QuantityExcess"];
+                    quantityShortage = quantityShortage + detailDataItem["QuantityShortage"];
                     swarfs = swarfs + detailDataItem["Swarfs"];
                 }
             })
 
             summaryDataItem.set("Quantity", DoRound(quantity, requireConfig.websiteOptions.rndQuantity));
             summaryDataItem.set("QuantityFailure", DoRound(quantityFailure, requireConfig.websiteOptions.rndQuantity));
+            summaryDataItem.set("QuantityExcess", DoRound(quantityExcess, requireConfig.websiteOptions.rndQuantity));
+            summaryDataItem.set("QuantityShortage", DoRound(quantityShortage, requireConfig.websiteOptions.rndQuantity));
             summaryDataItem.set("Swarfs", DoRound(swarfs, requireConfig.websiteOptions.rndQuantity));
 
             summaryDataItem.set("Packages", summaryDataItem["PiecePerPack"] * 1 > 0 ? Math.trunc(DoRound(quantity / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity)) : 0);
@@ -438,6 +499,8 @@
 
             summaryDataItem.set("QuantityWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantity * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndWeight) : 0);
             summaryDataItem.set("QuantityFailureWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantityFailure * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndWeight) : 0);
+            summaryDataItem.set("QuantityExcessWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantityExcess * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndWeight) : 0);
+            summaryDataItem.set("QuantityShortageWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantityShortage * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndWeight) : 0);
         }
 
         kenGridSummaries.unbind("dataBinding"); //When finish modifying the data, unbind dataBinding event

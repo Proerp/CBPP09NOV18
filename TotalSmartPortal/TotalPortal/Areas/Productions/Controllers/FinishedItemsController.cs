@@ -76,6 +76,8 @@ namespace TotalPortal.Areas.Productions.Controllers
                                                 QuantityRemains = sl.Sum(s => s.QuantityRemains),
                                                 Quantity = sl.Sum(s => (s.Quantity + s.QuantityExcess)),
                                                 QuantityFailure = sl.Sum(s => s.QuantityFailure),
+                                                QuantityExcess = sl.Sum(s => s.QuantityExcess),
+                                                QuantityShortage = sl.Sum(s => s.QuantityShortage),
                                                 Swarfs = sl.Sum(s => s.Swarfs),
                                             });
 
