@@ -45,6 +45,22 @@
             </div>
         </div>
 
+        <div class="form-group">
+            @Html.LabelFor(model => model.ThicknessMin)
+            <div class="div-input left-panel-input">
+                <span style="width: 47%;float: left;">@Html.Kendo().NumericTextBoxFor(model => model.ThicknessMin).Format(@Settings.kfmQuantity).HtmlAttributes(new { @style = "width: 100%;" }) </span>
+                <label style="width:6%; text-align:center; margin-top: 4px;"> / </label>
+                <span style="width: 47%;float: right;">@Html.Kendo().NumericTextBoxFor(model => model.ThicknessMax).Format(@Settings.kfmQuantity).HtmlAttributes(new { @style = "width: 100%;" }) </span>
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.ThicknessMax, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.EditorFor(d => d.CrucialWorker, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.CrucialWorker) })
+        </div>
+
 
         @Html.HiddenFor(model => model.PlannedOrderID)
         @Html.HiddenFor(model => model.FirmOrderID)
@@ -76,22 +92,6 @@
             <div class="div-validation-message">
                 @Html.ValidationMessageFor(model => model.FirmOrderEntryDate, "", new { @class = "text-danger" })
             </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ThicknessMax)
-            <div class="div-input left-panel-input">
-                <span style="width: 47%;float: left;">@Html.Kendo().NumericTextBoxFor(model => model.ThicknessMin).Format(@Settings.kfmQuantity).HtmlAttributes(new { @style = "width: 100%;" }) </span>
-                <label style="width:6%; text-align:center; margin-top: 4px;"> / </label>
-                <span style="width: 47%;float: right;">@Html.Kendo().NumericTextBoxFor(model => model.ThicknessMax).Format(@Settings.kfmQuantity).HtmlAttributes(new { @style = "width: 100%;" }) </span>
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.ThicknessMax, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.EditorFor(d => d.CrucialWorker, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.CrucialWorker) })
         </div>
 
     </div>

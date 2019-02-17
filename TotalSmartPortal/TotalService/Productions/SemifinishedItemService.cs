@@ -23,6 +23,11 @@ namespace TotalService.Productions
             throw new System.ArgumentException("Invalid call GetViewDetails(id). Use GetSemifinishedItemViewDetails instead.", "SemifinishProduct Service");
         }
 
+        public override bool Save(SemifinishedItemDTO semifinishedItemDTO)
+        {
+            semifinishedItemDTO.SemifinishedItemViewDetails.RemoveAll(x => x.Quantity == 0 && x.QuantityFailure == 0);
+            return base.Save(semifinishedItemDTO);
+        }
         public ICollection<SemifinishedItemViewDetail> GetSemifinishedItemViewDetails(int semifinishedItemID, int firmOrderID)
         {
             ObjectParameter[] parameters = new ObjectParameter[] { new ObjectParameter("SemifinishedItemID", semifinishedItemID), new ObjectParameter("FirmOrderID", firmOrderID) };

@@ -74,44 +74,11 @@ namespace TotalDTO.Productions
         [UIHint("DateTime")]
         [Display(Name = "Thời gian kết thúc SX")]
         public Nullable<System.DateTime> StopDate { get; set; }
+        [Display(Name = "Nhiệt độ trộn")]
+        public int Temperature { get; set; }
 
-        [Display(Name = "Số thứ tự tấm phôi đầu")]
-        [Range(0, 999999, ErrorMessage = "Số thứ tự >= 0")]
-        public decimal StartSequenceNo { get; set; }
-        [Display(Name = "Số thứ tự tấm phôi cuối")]
-        [Range(0, 999999, ErrorMessage = "Số thứ tự >= 0")]
-        public decimal StopSequenceNo { get; set; }
-        [Display(Name = "Tổng số tấm phôi")]
-        [Range(0, 999999, ErrorMessage = "Tổng số tấm phôi >= 0")]
-        public decimal FoilCounts { get; set; }
-        [Display(Name = "Số kg/ Số tấm phôi mẫu")]
-        [Range(1, 999999, ErrorMessage = "Số tấm phải >= 1")]
-        public decimal FoilUnitCounts { get; set; }
-        [Display(Name = "Số kg")]
-        [Range(0, 999999, ErrorMessage = "Số kg >= 0")]
-        public decimal FoilUnitWeights { get; set; }
-        [Display(Name = "Tổng số kg phôi")]
-        [Range(0, 999999, ErrorMessage = "Tổng số kg >= 0")]
-        public decimal FoilWeights { get; set; }
-        [Display(Name = "Số kg phế phẩm")]
-        [Range(0, 999999, ErrorMessage = "Số kg >= 0")]
-        public decimal FailureWeights { get; set; }
+        public virtual decimal TotalQuantityFailure { get { return this.DtoDetails().Select(o => o.QuantityFailure).Sum(); } }
 
-        public decimal TotalQuantityIssue { get; set; }
-
-
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            foreach (var result in base.Validate(validationContext)) { yield return result; }
-
-            if (Math.Round(this.StopSequenceNo - this.StartSequenceNo + 1, GlobalEnums.rndN0, MidpointRounding.AwayFromZero) != this.FoilCounts) yield return new ValidationResult("Lỗi số lượng tấm phôi", new[] { "FoilCounts" });
-            if (Math.Round(this.FoilCounts * this.FoilUnitWeights / this.FoilUnitCounts, GlobalEnums.rndQuantity, MidpointRounding.AwayFromZero) != this.FoilWeights) yield return new ValidationResult("Lỗi tổng số kg phôi", new[] { "FoilWeights" });
-
-            foreach (SemifinishedItemDetailDTO semifinishedItemDetailDTO in this.DtoDetails())
-            {
-                if (Math.Round(this.FoilCounts * semifinishedItemDetailDTO.MoldQuantity, GlobalEnums.rndQuantity, MidpointRounding.AwayFromZero) != semifinishedItemDetailDTO.Quantity) yield return new ValidationResult("Lỗi số thành phẩm", new[] { "FoilCounts" });
-            }
-        }
 
         public override void PerformPresaveRule()
         {

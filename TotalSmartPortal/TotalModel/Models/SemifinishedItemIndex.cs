@@ -26,10 +26,10 @@ namespace TotalModel.Models
         public string FirmOrdersReference { get; set; }
         public string FirmOrdersCode { get; set; }
         public string Specification { get; set; }
-        public decimal StartSequenceNo { get; set; }
-        public decimal StopSequenceNo { get; set; }
         public string Description { get; set; }
         public decimal TotalQuantity { get; set; }
         public bool Approved { get; set; }
+        public string BomCode { get; set; }
+        public decimal TotalQuantityFailure { get; set; }
     }
 }

@@ -28,6 +28,7 @@
     @Html.HiddenFor(model => model.MaterialQuantity)
     @Html.HiddenFor(model => model.MaterialQuantityRemains)
 
+    @Html.HiddenFor(model => model.TotalQuantityFailure)
 
     <div class="left-panel">
 
@@ -57,64 +58,12 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.StartSequenceNo)
+            @Html.LabelFor(model => model.Temperature)
             <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => model.StartSequenceNo).Format(@Settings.kfmN0).HtmlAttributes(new { @class = "left-panel-input" }).Events(e => e.Change("updateFoilCounts").Spin("updateFoilCounts"))
+                @Html.Kendo().NumericTextBoxFor(model => model.Temperature).Format(@Settings.kfmN0).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.StartSequenceNo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StopSequenceNo)
-            <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => model.StopSequenceNo).Format(@Settings.kfmN0).HtmlAttributes(new { @class = "left-panel-input" }).Events(e => e.Change("updateFoilCounts").Spin("updateFoilCounts"))
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.StopSequenceNo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FoilCounts)
-            <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => model.FoilCounts).Format(@Settings.kfmN0).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" }).Events(e => e.Change("updateFoilWeights").Spin("updateFoilWeights"))
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.FoilCounts, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FoilUnitCounts)
-            <div class="div-input left-panel-input">
-                <span style="width: 47%;float: left;">@Html.Kendo().NumericTextBoxFor(model => model.FoilUnitWeights).Format(@Settings.kfmQuantity).HtmlAttributes(new { @style = "width: 100%;" }).Events(e => e.Change("updateFoilWeights").Spin("updateFoilWeights")) </span>
-                <label style="width:6%; text-align:center; margin-top: 4px;"> / </label>
-                <span style="width: 47%;float: right;">@Html.Kendo().NumericTextBoxFor(model => model.FoilUnitCounts).Format(@Settings.kfmN0).HtmlAttributes(new { @style = "width: 100%;" }).Events(e => e.Change("updateFoilWeights").Spin("updateFoilWeights")) </span>
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.FoilUnitCounts, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FoilWeights)
-            <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => model.FoilWeights).Format(@Settings.kfmQuantity).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.FoilWeights, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FailureWeights)
-            <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => model.FailureWeights).Format(@Settings.kfmQuantity).HtmlAttributes(new { @class = "left-panel-input" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.FailureWeights, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.Temperature, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -162,7 +111,7 @@
 
     <div class="right-panel">
 
-        <div class="right-top-panel right-top-panel-H1">
+        <div class="right-top-panel right-top-panel-H2">
 
             @Html.EditorFor(d => d.Customer, new { CustomerDisplayName = @Model.GetDisplayName(m => m.Customer), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Lệnh sản xuất tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
 
@@ -179,7 +128,7 @@
             </div>
 
 
-            <div id="show-current-PriceCategory" style="float: right; margin-top: -170px; text-align: center; width: 110px; height: 110px; " title="Kho hàng">
+            <div id="show-current-PriceCategory" style="float: right; margin-top: -120px; text-align: center; width: 110px; height: 110px; " title="Kho hàng">
                 <div style="height: 90px; padding-left: 22px; padding-right: 22px; padding-top: 22px;">
                     <span style="color:blue;"> @Html.Label(@Model.Reference != null? @Model.Reference: " ") </span>
                     <span style="color:blue;"> @Html.Label(@Model.EntryDate.ToString()) </span>
@@ -210,12 +159,15 @@
                     columns.Bound(p => p.PlannedOrderDetailID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (PlannedOrderDetailID == null)? '' : PlannedOrderDetailID #" + "<input type='hidden' name='SemifinishedItemViewDetails[#= index(data) #].PlannedOrderDetailID' value='#= (PlannedOrderDetailID == null) ? '' : PlannedOrderDetailID #' />");
 
+                    columns.Bound(p => p.BomCode).DisplayNameTitle().Width(127)
+                        .ClientTemplate("#= (BomCode == null)? '' : BomCode #" + "<input type='hidden' name='SemifinishedItemViewDetails[#= index(data) #].BomCode' value='#= (BomCode == null) ? '' : BomCode #' />");
+                    
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='SemifinishedItemViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(120).EditorTemplateName("StringReadonly")
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(230).EditorTemplateName("StringReadonly")
                         .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='SemifinishedItemViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(150).HtmlAttributes(new { style = "" })
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(150).Hidden()
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='SemifinishedItemViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
@@ -235,9 +187,13 @@
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='SemifinishedItemViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
+                    columns.Bound(p => p.QuantityFailure).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityFailure) #" + "<input type='hidden' name='SemifinishedItemViewDetails[#= index(data) #].QuantityFailure' value='#= QuantityFailure #' />");
 
 
-                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(60)
+                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(206)
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='SemifinishedItemViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
 
@@ -251,7 +207,7 @@
                         if (Model.Editable)
                         {                            
                             toolbar.Template(@<text>
-                                <button type="button" class="k-button" onclick="doCloneSelectedItem()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm cuộn màng </button>
+                                <button type="button" class="k-button" onclick="doCloneSelectedItem()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm hỗn hợp </button>
                             </text>);
                         }
                         else
@@ -298,6 +254,7 @@
                     .Aggregates(a => a.Add(x => x.CommodityCode).Count())
                     .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
                     .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityFailure).Sum())
                 )
             )
         </div>
@@ -351,7 +308,6 @@
             {
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedItems")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedItems")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Create" formaction="@Url.Action("Edit", "SemifinishedItems")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Slide.png" /> Lưu, duyệt và lập phiếu </button>
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedItems")" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in </button>
             }
             else
@@ -377,41 +333,10 @@
 
 <script type="text/javascript">
     $(document.body).keydown(function (e) { if (e.keyCode === 45) { cloneSelectedItem(); } });
-
     function doCloneSelectedItem() {
         var kenGrid = $("#kendoGridDetails").data("kendoGrid");
         kenGrid.element.find('tbody tr:first').addClass('k-state-selected');
         cloneSelectedItem();
     }
-
-
-    function tailorClonedItem(clonedItem) { clonedItem.SemifinishedItemDetailID = 0; clonedItem.Quantity = 0; }
-
-    function updateFoilCounts() {
-        var foilCounts = DoRound($("#StopSequenceNo").val() - $("#StartSequenceNo").val() + 1, requireConfig.websiteOptions.rndN0);
-        $("#FoilCounts").data("kendoNumericTextBox").value(foilCounts > 0 ? foilCounts : 0);
-        $("#FoilCounts").data("kendoNumericTextBox").trigger("change");
-
-        updateDetailQuantity();
-    }
-
-    function updateFoilWeights() {
-        $("#FoilWeights").data("kendoNumericTextBox").value(($("#FoilUnitCounts").val() * 1) > 0 ? DoRound($("#FoilCounts").val() * $("#FoilUnitWeights").val()/ $("#FoilUnitCounts").val(), requireConfig.websiteOptions.rndQuantity) : 0);
-        $("#FoilWeights").data("kendoNumericTextBox").trigger("change");
-    }
-
-    function updateDetailQuantity () { //Define function to be called by action some button
-        var kenGrid = $("#kendoGridDetails").data("kendoGrid");
-        kenGrid.bind("dataBinding", function (e) { e.preventDefault(); }); //You can prevent the data bind action at the dataBinding event, when updating multiple model properties
-
-        var foilCounts = $("#FoilCounts").val();
-        var allDataRows = kenGrid.dataSource.data();
-        for (var i = 0; i < allDataRows.length; i++) {
-            var dataItem = allDataRows[i];
-            dataItem.set("Quantity", DoRound(foilCounts * dataItem["MoldQuantity"], requireConfig.websiteOptions.rndQuantity));
-        }
-
-        kenGrid.unbind("dataBinding"); //When finish modifying the data, unbind dataBinding event
-        kenGrid.refresh(); //Then, finally, refresh grid
-    }
+    function tailorClonedItem(clonedItem) { clonedItem.SemifinishedItemDetailID = 0; clonedItem.Quantity = 0; }    
 </script>

@@ -26,7 +26,7 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
     
         public virtual SemifinishedHandover SemifinishedHandover { get; set; }
-        public virtual SemifinishedItem SemifinishedItem { get; set; }
         public virtual SemifinishedProduct SemifinishedProduct { get; set; }
+        public virtual SemifinishedItem SemifinishedItem { get; set; }
     }
 }

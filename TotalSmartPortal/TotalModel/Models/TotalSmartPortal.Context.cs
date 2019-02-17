@@ -123,13 +123,13 @@ namespace TotalModel.Models
         public virtual DbSet<Lab> Labs { get; set; }
         public virtual DbSet<Commodity> Commodities { get; set; }
         public virtual DbSet<Mold> Molds { get; set; }
-        public virtual DbSet<SemifinishedItemDetail> SemifinishedItemDetails { get; set; }
-        public virtual DbSet<SemifinishedItem> SemifinishedItems { get; set; }
         public virtual DbSet<BinType> BinTypes { get; set; }
         public virtual DbSet<SemifinishedHandoverDetail> SemifinishedHandoverDetails { get; set; }
         public virtual DbSet<FinishedItemDetail> FinishedItemDetails { get; set; }
         public virtual DbSet<FinishedItemPackage> FinishedItemPackages { get; set; }
         public virtual DbSet<FinishedItem> FinishedItems { get; set; }
+        public virtual DbSet<SemifinishedItemDetail> SemifinishedItemDetails { get; set; }
+        public virtual DbSet<SemifinishedItem> SemifinishedItems { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {

@@ -1,5 +1,7 @@
 ﻿@using TotalPortal.Configuration
 
+@model TotalPortal.Areas.Inventories.ViewModels.IMaterialIssueViewModel
+
 <div id="popupWindow"></div>
 
 <div>
@@ -14,9 +16,10 @@
             columns.Bound(p => p.FirmOrdersCode).Title("Số CT").Width(10);
             columns.Bound(p => p.WorkshiftName).Title("Ca SX").Hidden();
             columns.Bound(p => p.ProductionLinesCode).Title("Máy").Width(10);
-            columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(80);
-            columns.Bound(p => p.FirmOrderSpecs).Title("Sản phẩm").Width(218);
-            columns.Bound(p => p.Description).Title("Diễn giải").Width(196);
+            columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(108);
+            columns.Bound(p => p.FirmOrderSpecification).Title((@Model.IsMaterial ? "Màng thành phẩm" : "Sản phẩm")).Width(180);
+            columns.Bound(p => p.BomCode).Title((@Model.IsMaterial? "Công thức": "Mã màng")).Width(180);
+            columns.Bound(p => p.Description).Title("Diễn giải").Width(160);
 
             columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 

@@ -32,5 +32,6 @@ namespace TotalModel.Models
         public decimal TotalQuantityShortage { get; set; }
         public decimal TotalSwarfs { get; set; }
         public bool Approved { get; set; }
+        public string FirmOrderSpecification { get; set; }
     }
 }

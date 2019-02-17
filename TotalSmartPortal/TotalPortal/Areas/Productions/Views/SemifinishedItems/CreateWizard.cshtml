@@ -67,10 +67,10 @@
             columns.Bound(c => c.MaterialIssueWorkshiftCode).Title("Cấp NVL").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(30);
             columns.Bound(c => c.ProductionLineCode).Title("Máy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(19);
             columns.Bound(c => c.CustomerName).Title("Khách hàng").Width(52);
-            columns.Bound(c => c.FirmOrderSpecification).Title("Mã thành phẩm").Width(62);
-            columns.Bound(c => c.BomCode).Title("Mã công thức").Width(70);
+            columns.Bound(c => c.FirmOrderSpecification).Title("Mã màng").Width(88);
+            columns.Bound(c => c.BomCode).Title("Mã công thức").Width(56);
             //columns.Bound(c => c.MaterialQuantity).Title("SL màng").Format(Settings.kfmQuantity).Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
-            columns.Bound(c => c.MaterialQuantityRemains).Title("Tồn màng").Format(Settings.kfmQuantity).Width(32).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+            columns.Bound(c => c.MaterialQuantityRemains).Title("Tồn NVL").Format(Settings.kfmQuantity).Width(32).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
         })
         .ToolBar(toolbar =>
         {

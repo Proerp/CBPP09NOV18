@@ -17,8 +17,8 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public SemifinishedItem()
         {
-            this.SemifinishedItemDetails = new HashSet<SemifinishedItemDetail>();
             this.SemifinishedHandoverDetails = new HashSet<SemifinishedHandoverDetail>();
+            this.SemifinishedItemDetails = new HashSet<SemifinishedItemDetail>();
         }
     
         public int SemifinishedItemID { get; set; }
@@ -28,6 +28,7 @@ namespace TotalModel.Models
         public int MaterialIssueID { get; set; }
         public int PlannedOrderID { get; set; }
         public int FirmOrderID { get; set; }
+        public int BomID { get; set; }
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
         public int ProductionLineID { get; set; }
@@ -40,14 +41,9 @@ namespace TotalModel.Models
         public int ApproverID { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> StopDate { get; set; }
-        public decimal StartSequenceNo { get; set; }
-        public decimal StopSequenceNo { get; set; }
-        public decimal FoilCounts { get; set; }
-        public decimal FoilUnitCounts { get; set; }
-        public decimal FoilUnitWeights { get; set; }
-        public decimal FoilWeights { get; set; }
-        public decimal FailureWeights { get; set; }
+        public int Temperature { get; set; }
         public decimal TotalQuantity { get; set; }
+        public decimal TotalQuantityFailure { get; set; }
         public decimal TotalQuantityFinished { get; set; }
         public string Caption { get; set; }
         public string Description { get; set; }
@@ -57,19 +53,18 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public bool HandoverApproved { get; set; }
-        public int BomID { get; set; }
     
+        public virtual Bom Bom { get; set; }
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual FirmOrder FirmOrder { get; set; }
         public virtual Location Location { get; set; }
         public virtual ProductionLine ProductionLine { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SemifinishedHandoverDetail> SemifinishedHandoverDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedItemDetail> SemifinishedItemDetails { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
-        public virtual Bom Bom { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SemifinishedHandoverDetail> SemifinishedHandoverDetails { get; set; }
     }
 }

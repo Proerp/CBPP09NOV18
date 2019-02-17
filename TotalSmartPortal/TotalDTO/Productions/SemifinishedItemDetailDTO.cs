@@ -23,6 +23,9 @@ namespace TotalDTO.Productions
 
         public int PlannedOrderID { get; set; }
         public int PlannedOrderDetailID { get; set; }
+        [Display(Name = "Công thức")]
+        [UIHint("StringReadonly")]
+        public string BomCode { get; set; }
 
         public Nullable<int> CustomerID { get; set; }
 
@@ -36,12 +39,15 @@ namespace TotalDTO.Productions
         [UIHint("QuantityReadonly")]
         public decimal MoldQuantity { get; set; }
 
-        [Display(Name = "Tồn đơn")]
+        [Display(Name = "Tồn lệnh")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
-        [Display(Name = "SL khay")]
-        [UIHint("QuantityReadonly")]
+        [Display(Name = "KL hỗn hợp")]
+        [UIHint("Quantity")]
         public override decimal Quantity { get; set; }
+        [Display(Name = "Phế phẩm")]
+        [UIHint("Quantity")]
+        public decimal QuantityFailure { get; set; }
 
         public string GetCaption(int count) { return this.CommodityCode + (count > 1 ? " [" + this.Quantity.ToString("N" + GlobalEnums.rndQuantity.ToString()) + "] " : ""); }
 

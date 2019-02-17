@@ -29,5 +29,6 @@ namespace TotalModel.Models
         public string FirmOrderSpecification { get; set; }
         public string FirmOrderSpecs { get; set; }
         public string CustomerName { get; set; }
+        public string BomCode { get; set; }
     }
 }

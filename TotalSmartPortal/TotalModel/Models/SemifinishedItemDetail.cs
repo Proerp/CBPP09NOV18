@@ -34,6 +34,7 @@ namespace TotalModel.Models
         public int PiecePerPack { get; set; }
         public int MoldQuantity { get; set; }
         public decimal Quantity { get; set; }
+        public decimal QuantityFailure { get; set; }
         public decimal QuantityFinished { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }

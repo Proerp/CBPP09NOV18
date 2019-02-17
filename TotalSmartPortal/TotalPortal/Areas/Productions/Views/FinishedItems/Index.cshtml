@@ -10,20 +10,18 @@
             columns.Bound(p => p.FinishedItemID).DisplayNameTitle().Hidden();            
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
 
-            columns.Bound(p => p.Reference).Title("ĐG").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/FinishedItems", action = "Edit" }) + "/#= FinishedItemID #'>#=Reference#</a>");
+            columns.Bound(p => p.Reference).Title("PM").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/FinishedItems", action = "Edit" }) + "/#= FinishedItemID #'>#=Reference#</a>");
 
             columns.Bound(p => p.FirmOrderReference).Title("KHSX").Width(30);
             columns.Bound(p => p.FirmOrderCode).Title("Số CT").Width(30);
             columns.Bound(p => p.WorkshiftName).Title("Ca SX").Width(72);
             columns.Bound(p => p.CustomerName).Title("Tên KH").Width(118);
-            columns.Bound(p => p.FirmOrderSpecs).Title("Thành phẩm").Width(227);
+            columns.Bound(p => p.FirmOrderSpecification).Title("Màng thành phẩm").Width(188);
             
-            columns.Bound(p => p.Description).Title("Diễn giải").Width(88);
+            columns.Bound(p => p.Description).Title("Diễn giải").Width(127);
 
             columns.Bound(p => p.TotalQuantity).Title("TP").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
             columns.Bound(p => p.TotalQuantityFailure).Title("PP").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-            columns.Bound(p => p.TotalQuantityShortage).Title("Thiếu").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-            columns.Bound(p => p.TotalSwarfs).Title("Biên").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
             columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
             
@@ -33,7 +31,7 @@
         .ToolBar(toolbar =>
         {
             toolbar.Template(@<text>
-                <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu đóng gói </button>
+                <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu tạo màng </button>
                 <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> In </button>
                 <div class="toolbar" style="float: right;">
                     <label>Nhập số phiếu, tên KH, thành phẩm hoặc diễn giải </label>

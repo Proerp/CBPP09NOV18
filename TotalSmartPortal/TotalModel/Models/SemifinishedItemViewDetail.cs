@@ -27,5 +27,8 @@ namespace TotalModel.Models
         public Nullable<decimal> QuantityRemains { get; set; }
         public decimal Quantity { get; set; }
         public string Remarks { get; set; }
+        public decimal QuantityFailure { get; set; }
+        public int BomID { get; set; }
+        public string BomCode { get; set; }
     }
 }

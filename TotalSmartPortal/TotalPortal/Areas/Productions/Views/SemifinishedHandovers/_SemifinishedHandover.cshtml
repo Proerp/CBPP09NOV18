@@ -47,11 +47,11 @@
         </div>   
         
         <div class="form-group">
-            @Html.EditorFor(d => (d as ISemifinishedHandoverDTO).SemifinishedLeader, new { EmployeeDisplayName = @Model.SemifinishedLeader.GetDisplayName(m => m.EmployeeID) })
+            @Html.EditorFor(d => (d as ISemifinishedHandoverDTO).SemifinishedLeader, new { EmployeeDisplayName = (@Model.IsItem ? "Tổ trưởng tổ trộn" : "Tổ trưởng tổ phôi") })
         </div>   
         
         <div class="form-group">
-            @Html.EditorFor(d => (d as ISemifinishedHandoverDTO).FinishedLeader, new { EmployeeDisplayName = @Model.FinishedLeader.GetDisplayName(m => m.EmployeeID) })
+            @Html.EditorFor(d => (d as ISemifinishedHandoverDTO).FinishedLeader, new { EmployeeDisplayName = (@Model.IsItem ? "Tổ trưởng kho nguyên liệu" : "Tổ trưởng tổ đóng gói") })
         </div>                      
 
     </div>
@@ -60,7 +60,7 @@
 
         <div class="right-top-panel right-top-panel-H2">
 
-            @Html.EditorFor(d => (d as ISemifinishedHandoverDTO).Customer, new { CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Bàn giao phôi định hình tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
+            @Html.EditorFor(d => (d as ISemifinishedHandoverDTO).Customer, new { CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Bàn giao tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
             
         </div>
 
@@ -85,7 +85,7 @@
                     columns.Bound(p => p.SemifinishedProductID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (SemifinishedProductID == null)? '' : SemifinishedProductID #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].SemifinishedProductID' value='#= (SemifinishedProductID == null) ? '' : SemifinishedProductID #' />");
                     
-                    columns.Bound(p => p.SemifinishedProtemReference).DisplayNameTitle().Width(80)
+                    columns.Bound(p => p.SemifinishedProtemReference).Title(@Model.IsItem? "Phiếu trộn" : "Phiếu phôi").Width(80)
                         .ClientTemplate("#= (SemifinishedProtemReference == null)? '' : SemifinishedProtemReference #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].SemifinishedProtemReference' value='#= (SemifinishedProtemReference == null) ? '' : SemifinishedProtemReference #' />");
                     columns.Bound(p => p.SemifinishedProtemEntryDate).DisplayNameTitle().Width(80)
                         .Format("{0:" + @Settings.DateFormat + "}")
@@ -119,7 +119,7 @@
                         {
                             //toolbar.Create().HtmlAttributes(new { @class = "fa fa-map-marker" }).Text("Add new aa le ea1");
                             toolbar.Template(@<text>
-                                <button type="button" class="k-button" onclick="GetPendingDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng từ BTP chưa giao </button>
+                                <button type="button" class="k-button" onclick="GetPendingDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn @(Model.IsItem ? "hỗn hợp" : "mặt hàng từ BTP") chưa giao </button>
                             </text>);
                         }
                         else
