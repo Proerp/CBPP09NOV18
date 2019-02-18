@@ -41,6 +41,26 @@
             @Html.EditorFor(d => (d as IMaterialIssueDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID) })
         </div>
 
+        <div class="form-group">
+            @Html.EditorFor(d => (d as IMaterialIssueDTO).ProductionLine)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).Code)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).Code).HtmlAttributes(new { @class = "left-panel-input" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).Code, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.EditorFor(d => (d as IMaterialIssueDTO).CrucialWorker, new { EmployeeDisplayName = @Model.CrucialWorker.GetDisplayName(m => m.EmployeeID) })
+        </div>
+        <div class="form-group">
+            @Html.EditorFor(d => (d as IMaterialIssueDTO).Storekeeper, new { EmployeeDisplayName = @Model.Storekeeper.GetDisplayName(m => m.EmployeeID) })
+        </div>
 
         @if (Model.MaterialIssueTypeID == (int)GlobalEnums.MaterialIssueTypeID.FirmOrders)
         {
@@ -75,26 +95,7 @@
             </div>
         }
 
-        <div class="form-group">
-            @Html.EditorFor(d => (d as IMaterialIssueDTO).ProductionLine)
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).Code)
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).Code).HtmlAttributes(new { @class = "left-panel-input" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).Code, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.EditorFor(d => (d as IMaterialIssueDTO).CrucialWorker, new { EmployeeDisplayName = @Model.CrucialWorker.GetDisplayName(m => m.EmployeeID) })
-        </div>
-        <div class="form-group">
-            @Html.EditorFor(d => (d as IMaterialIssueDTO).Storekeeper, new { EmployeeDisplayName = @Model.Storekeeper.GetDisplayName(m => m.EmployeeID) })
-        </div>
     </div>
 
     <div class="right-panel">

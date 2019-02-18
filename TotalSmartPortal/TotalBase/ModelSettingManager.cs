@@ -60,7 +60,7 @@ namespace TotalBase
 
                 case GlobalEnums.NmvnTaskID.MaterialIssue:
                     return @"CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.MaterialStaging + @" THEN 'MM' ELSE 
+                                    " + (int)GlobalEnums.NmvnTaskID.MaterialStaging + @" THEN 'ME' ELSE 
                              CASE WHEN @NmvnTaskID = 
                                     " + (int)GlobalEnums.NmvnTaskID.ItemStaging + @" THEN 'MI' ELSE
                              CASE WHEN @NmvnTaskID = 
