@@ -93,7 +93,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                   GoodsArrivalDetails.Quantity, GoodsArrivalDetails.UnitWeight, GoodsArrivalDetails.Packages, GoodsArrivalDetails.SealCode, GoodsArrivalDetails.BatchCode, GoodsArrivalDetails.LabCode, GoodsArrivalDetails.ProductionDate, GoodsArrivalDetails.ExpiryDate, GoodsArrivalDetails.Remarks " + "\r\n";
             queryString = queryString + "       FROM        GoodsArrivalDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON GoodsArrivalDetails.GoodsArrivalID = @GoodsArrivalID AND GoodsArrivalDetails.CommodityID = Commodities.CommodityID " + "\r\n";
-            
+
             queryString = queryString + "                   LEFT JOIN PurchaseOrderDetails ON GoodsArrivalDetails.PurchaseOrderDetailID = PurchaseOrderDetails.PurchaseOrderDetailID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN PurchaseOrders ON PurchaseOrderDetails.PurchaseOrderID = PurchaseOrders.PurchaseOrderID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN (SELECT PurchaseOrderDetailID, SUM(Quantity) AS Quantity FROM GoodsArrivalDetails WHERE GoodsArrivalID = @GoodsArrivalID AND NOT PurchaseOrderDetailID IS NULL GROUP BY PurchaseOrderDetailID) AS GoodsArrivalSummaries ON GoodsArrivalDetails.PurchaseOrderDetailID = GoodsArrivalSummaries.PurchaseOrderDetailID " + "\r\n";
@@ -114,7 +114,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
         private void GetGoodsArrivalPendingPurchaseOrders()
         {
             string queryString = " @LocationID int " + "\r\n";
-            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "       SELECT          PurchaseOrders.PurchaseOrderID, PurchaseOrders.Reference AS PurchaseOrderReference, PurchaseOrders.Code AS PurchaseOrderCode, PurchaseOrders.EntryDate AS PurchaseOrderEntryDate, PurchaseOrders.VoucherDate AS PurchaseOrderVoucherDate, PurchaseOrders.DeliveryDate AS PurchaseOrderDeliveryDate, PurchaseOrders.Caption, PurchaseOrders.Description, PurchaseOrders.Remarks, " + "\r\n";
@@ -125,7 +125,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                       INNER JOIN Customers ON PurchaseOrders.PurchaseOrderID IN (SELECT PurchaseOrderID FROM PurchaseOrderDetails WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0  AND ROUND(Quantity - QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") > 0) AND PurchaseOrders.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers Transporters ON PurchaseOrders.TransporterID = Transporters.CustomerID " + "\r\n";
 
-            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = 1 " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = " + (GlobalEnums.CBPP ? 1 : 2) + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsArrivalPendingPurchaseOrders", queryString);
         }
@@ -395,7 +395,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "                               FETCH NEXT FROM CURSORGoodsArrivalDetails INTO @EntryDate, @GoodsArrivalID, @GoodsArrivalDetailID, @LocationID, @CustomerID, @TransporterID, @PurchaseOrderID, @PurchaseOrderDetailID, @CommodityID, @CommodityCode, @CommodityTypeID, @WarehouseID, @SerialID, @LabID, @Code, @SealCode, @BatchCode, @LabCode, @Barcode, @ProductionDate, @ExpiryDate, @Quantity, @QuantityReceipted, @UnitWeight, @Packages, @Remarks, @VoidTypeID, @InActive, @InActivePartial, @InActivePartialDate; " + "\r\n";
             queryString = queryString + "                           END " + "\r\n";
-            
+
             queryString = queryString + "                   END " + "\r\n";
 
             queryString = queryString + "               ELSE " + "\r\n";
@@ -403,8 +403,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                       UPDATE          GoodsArrivalDetails SET LabID = NULL WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
 
             queryString = queryString + "                       DELETE FROM     Barcodes WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
-            queryString = queryString + "                       DELETE FROM     GoodsArrivalPackages WHERE GoodsArrivalID = @EntityID ; " + "\r\n";            
-            queryString = queryString + "                       DELETE FROM     Labs WHERE GoodsArrivalID = @EntityID ; " + "\r\n";            
+            queryString = queryString + "                       DELETE FROM     GoodsArrivalPackages WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
+            queryString = queryString + "                       DELETE FROM     Labs WHERE GoodsArrivalID = @EntityID ; " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
             #endregion INIT GoodsArrivalPackages
 
