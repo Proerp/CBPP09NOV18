@@ -239,7 +239,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void FinishedItemEditable()
         {
-            string[] queryArray = new string[2];
+            string[] queryArray = new string[0];
 
             //queryArray[0] = " SELECT TOP 1 @FoundEntity = FinishedItemID FROM FinishedItemDetails WHERE FinishedItemID = @EntityID AND NOT FinishedHandoverID IS NULL ";
             //queryArray[1] = " SELECT TOP 1 @FoundEntity = FinishedItemID FROM FinishedHandoverDetails WHERE FinishedItemID = @EntityID ";

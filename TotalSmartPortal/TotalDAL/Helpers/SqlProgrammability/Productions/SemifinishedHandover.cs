@@ -350,9 +350,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void SemifinishedHandoverEditable()
         {
-            string[] queryArray = new string[1];
+            string[] queryArray = new string[2];
 
-            queryArray[0] = " SELECT TOP 1 @FoundEntity = SemifinishedHandoverID FROM FinishedProductDetails WHERE SemifinishedHandoverID = @EntityID ";
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = SemifinishedHandoverID FROM FinishedItemDetails WHERE SemifinishedHandoverID = @EntityID ";
+            queryArray[1] = " SELECT TOP 1 @FoundEntity = SemifinishedHandoverID FROM FinishedProductDetails WHERE SemifinishedHandoverID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("SemifinishedHandoverEditable", queryArray);
         }
