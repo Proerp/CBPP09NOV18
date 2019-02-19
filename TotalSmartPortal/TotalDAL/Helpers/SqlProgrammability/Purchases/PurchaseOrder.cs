@@ -74,7 +74,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "    BEGIN " + "\r\n";
 
             queryString = queryString + "       SELECT      PurchaseOrderDetails.PurchaseOrderDetailID, PurchaseOrderDetails.PurchaseOrderID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, PurchaseOrderDetails.CommodityTypeID, VoidTypes.VoidTypeID, VoidTypes.Code AS VoidTypeCode, VoidTypes.Name AS VoidTypeName, VoidTypes.VoidClassID, " + "\r\n";
-            queryString = queryString + "                   PurchaseOrderDetails.Quantity, PurchaseOrderDetails.InActivePartial, PurchaseOrderDetails.InActivePartialDate, PurchaseOrderDetails.Remarks " + "\r\n";
+            queryString = queryString + "                   PurchaseOrderDetails.Quantity, PurchaseOrderDetails.InActivePartial, PurchaseOrderDetails.InActivePartialDate, PurchaseOrderDetails.Remarks, PurchaseOrderDetails.LabCode, PurchaseOrderDetails.ProductionDate, PurchaseOrderDetails.ExpiryDate " + "\r\n";
             queryString = queryString + "       FROM        PurchaseOrderDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON PurchaseOrderDetails.PurchaseOrderID = @PurchaseOrderID AND PurchaseOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN VoidTypes ON PurchaseOrderDetails.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";

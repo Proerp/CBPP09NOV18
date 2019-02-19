@@ -33,6 +33,18 @@ namespace TotalDTO.Purchases
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get { return this.Quantity - QuantityArrived; } set { } }
 
+
+        [Display(Name = "Lab code")]
+        [Required(ErrorMessage = "Vui lòng nhập lab code")]
+        public virtual string LabCode { get; set; }
+        [Display(Name = "Ngày SX")]
+        [UIHint("Date")]
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        [Display(Name = "HSD")]
+        [UIHint("Date")]
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
+
+
         public string VoidTypeCode { get; set; }
         [Display(Name = "Lý do")]
         [UIHint("AutoCompletes/VoidTypeBase")]

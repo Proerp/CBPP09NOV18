@@ -18,7 +18,7 @@
         var jsonWorkBook = JSON.stringify(to_json(wb), 2, 2); //jsonWorkBook = to_formulae(wb); //jsonWorkBook = to_csv(wb);
         var excelRowCollection = JSON.parse(jsonWorkBook);
 
-        var xlsxWorkbookInstance = new xlsxWorkbook(["ImportID", "SoDonHang", "NgayDatHang", "NhaCungCap", "Rcode", "SoLuong", "Labcode", "ProductionDate", "ExpiryDate"]);
+        var xlsxWorkbookInstance = new xlsxWorkbook(["ImportID", "SoDonHang", "NgayDatHang", "NhaCungCap", "Rcode", "SoLuong", "Labcode", "ProductionDate", "ExpiryDate", "DeliveryDate"]);
         if (xlsxWorkbookInstance.checkValidColumn(excelRowCollection.ImportSheet)) {
 
             var gridDataSource = $("#kendoGridDetails").data("kendoGrid").dataSource;
@@ -40,7 +40,15 @@
                             var mySplits = excelRow0["NgayDatHang"].split(/[.,\/ -]/);
                             if (mySplits.length == 3) {
                                 var voucherDate = new Date((mySplits[2].length == 2 ? "20" + mySplits[2] : mySplits[2]), mySplits[0] - 1, mySplits[1]);
-                                if (excelRow0["NgayDatHang"] != null) $("#VoucherDate").val(kendo.toString(voucherDate, Settings.DateFormat));
+                                if (excelRow0["NgayDatHang"] != null) $("#EntryDate").val(kendo.toString(voucherDate, Settings.DateFormat));
+                            }
+                        }
+
+                        if (excelRow0["DeliveryDate"] != "") {
+                            var mySplits = excelRow0["DeliveryDate"].split(/[.,\/ -]/);
+                            if (mySplits.length == 3) {
+                                var voucherDate = new Date((mySplits[2].length == 2 ? "20" + mySplits[2] : mySplits[2]), mySplits[0] - 1, mySplits[1]);
+                                if (excelRow0["DeliveryDate"] != null) $("#VoucherDate").val(kendo.toString(voucherDate, Settings.DateFormat));
                             }
                         }
 
@@ -52,7 +60,7 @@
 
                             var dataRow = gridDataSource.add({});
                             var excelRow = excelRowCollection.ImportSheet[i];
-                            alert(excelRow["SoLuong"]);
+                            
                             dataRow.set("QuantityTemp", DoRound(excelRow["SoLuong"], requireConfig.websiteOptions.rndQuantity));
 
                             _getCommoditiesByCode(dataRow, excelRow);
@@ -86,7 +94,7 @@
                         dataRow.CommodityName = result.CommodityName;
                         dataRow.CommodityCode = result.CommodityCode;
                         dataRow.CommodityTypeID = result.CommodityTypeID;
-                        alert(dataRow.QuantityTemp);
+                        
                         dataRow.set("Quantity", DoRound(dataRow.QuantityTemp, requireConfig.websiteOptions.rndQuantity));
                     }
                     else

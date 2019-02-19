@@ -39,6 +39,9 @@ namespace TotalModel.Models
         public bool InActivePartial { get; set; }
         public Nullable<System.DateTime> InActivePartialDate { get; set; }
         public string Reference { get; set; }
+        public string LabCode { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }

@@ -1894,6 +1894,9 @@
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityArrived" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="LabCode" Type="nvarchar" MaxLength="60" />
+          <Property Name="ProductionDate" Type="datetime" />
+          <Property Name="ExpiryDate" Type="datetime" />
           <Property Name="VoidTypeID" Type="int" />
           <Property Name="Approved" Type="bit" Nullable="false" />
           <Property Name="InActive" Type="bit" Nullable="false" />
@@ -21343,6 +21346,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="GoodsArrivalPackages" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_PurchaseOrderDetails" FromRole="PurchaseOrderDetail" ToRole="GoodsArrivalPackage" />
           <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PurchaseOrderDetails_Commodities" FromRole="PurchaseOrderDetail" ToRole="Commodity" />
+          <Property Name="LabCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="ProductionDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -29765,6 +29771,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="PurchaseOrderDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.PurchaseOrderDetail">
               <MappingFragment StoreEntitySet="PurchaseOrderDetails">
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
                 <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
