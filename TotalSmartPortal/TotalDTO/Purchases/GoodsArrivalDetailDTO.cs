@@ -64,7 +64,7 @@ namespace TotalDTO.Purchases
 
         [Display(Name = "Ngày lô hàng")]
         [UIHint("DateTimeReadonly")]
-        public Nullable<System.DateTime> BatchEntryDate { get { return this.EntryDate; } }
+        public Nullable<System.DateTime> BatchEntryDate { get { return this.EntryDate == null ? this.EntryDate : ((DateTime)this.EntryDate).Date; } }
 
         [Display(Name = "Tồn đơn")]
         [UIHint("QuantityReadonly")]

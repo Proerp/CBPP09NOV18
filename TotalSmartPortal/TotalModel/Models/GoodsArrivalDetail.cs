@@ -44,6 +44,8 @@ namespace TotalModel.Models
         public decimal UnitWeight { get; set; }
         public decimal Packages { get; set; }
         public Nullable<int> LabID { get; set; }
+        public int BatchID { get; set; }
+        public System.DateTime BatchEntryDate { get; set; }
     
         public virtual GoodsArrival GoodsArrival { get; set; }
         public virtual VoidType VoidType { get; set; }

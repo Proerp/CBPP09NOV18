@@ -271,6 +271,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       END " + "\r\n";
 
+
+            queryString = queryString + "       INSERT INTO Batches (EntryDate, GoodsArrivalID, GoodsArrivalDetailID) SELECT EntryDate, GoodsArrivalID, GoodsArrivalDetailID FROM GoodsArrivalDetails WHERE GoodsArrivalDetailID NOT IN (SELECT GoodsArrivalDetailID FROM Batches WHERE GoodsArrivalID = @EntityID) " + "\r\n";
+            queryString = queryString + "       UPDATE GoodsArrivalDetails SET GoodsArrivalDetails.BatchID = Batches.BatchID FROM GoodsArrivalDetails INNER JOIN Batches ON GoodsArrivalDetails.GoodsArrivalID = @EntityID AND GoodsArrivalDetails.GoodsArrivalDetailID = Batches.GoodsArrivalDetailID " + "\r\n";
+
+
             queryString = queryString + "       IF ((SELECT Approved FROM GoodsArrivals WHERE GoodsArrivalID = @EntityID AND Approved = 1) = 1) " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
             queryString = queryString + "               UPDATE      GoodsArrivals  SET Approved = 0 WHERE GoodsArrivalID = @EntityID AND Approved = 1" + "\r\n"; //CLEAR APPROVE BEFORE CALL GoodsArrivalToggleApproved

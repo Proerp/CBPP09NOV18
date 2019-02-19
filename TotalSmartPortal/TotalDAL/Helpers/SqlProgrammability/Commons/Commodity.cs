@@ -141,7 +141,6 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
                 queryArray[28] = " SELECT TOP 1 @FoundEntity = CommodityID FROM AccountInvoiceDetails WHERE CommodityID = @EntityID ";
                 queryArray[29] = " SELECT TOP 1 @FoundEntity = MaterialID FROM BomDetails WHERE MaterialID = @EntityID ";
                 queryArray[30] = " SELECT TOP 1 @FoundEntity = CommodityID FROM Boms WHERE CommodityID = @EntityID OR MaterialID = @EntityID ";
-                queryArray[31] = " SELECT TOP 1 @FoundEntity = CommodityID FROM Batches WHERE CommodityID = @EntityID ";
                 queryArray[32] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PromotionCommodities WHERE CommodityID = @EntityID ";
                 queryArray[33] = " SELECT TOP 1 @FoundEntity = CommodityID FROM CommodityBoms WHERE CommodityID = @EntityID ";
                 queryArray[34] = " SELECT TOP 1 @FoundEntity = CommodityID FROM CommodityMolds WHERE CommodityID = @EntityID  ";

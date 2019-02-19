@@ -997,6 +997,8 @@
           <Property Name="Barcode" Type="nvarchar" MaxLength="60" />
           <Property Name="ProductionDate" Type="datetime" />
           <Property Name="ExpiryDate" Type="datetime" />
+          <Property Name="BatchID" Type="int" Nullable="false" />
+          <Property Name="BatchEntryDate" Type="datetime" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="UnitWeight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -1033,6 +1035,8 @@
           <Property Name="Barcode" Type="nvarchar" MaxLength="60" />
           <Property Name="ProductionDate" Type="datetime" />
           <Property Name="ExpiryDate" Type="datetime" />
+          <Property Name="BatchID" Type="int" Nullable="false" />
+          <Property Name="BatchEntryDate" Type="datetime" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="UnitWeight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -20988,6 +20992,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="LabID" Type="Int32" />
           <NavigationProperty Name="Lab" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_Labs" FromRole="GoodsArrivalDetail" ToRole="Lab" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" FromRole="GoodsArrivalDetail" ToRole="Commodity" />
+          <Property Name="BatchID" Type="Int32" Nullable="false" />
+          <Property Name="BatchEntryDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_GoodsArrivalDetails_GoodsArrivals">
           <End Type="TotalSmartPortalModel.GoodsArrival" Role="GoodsArrival" Multiplicity="1" />
@@ -21586,6 +21592,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="Shelflife" Nullable="true" />
           <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
+          <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingGoodsArrivalPackage">
           <Property Type="Int32" Name="GoodsArrivalID" Nullable="false" />
@@ -21829,6 +21837,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="LabID" Type="Int32" />
           <NavigationProperty Name="Lab" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_Labs" FromRole="GoodsArrivalPackage" ToRole="Lab" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_Commodities" FromRole="GoodsArrivalPackage" ToRole="Commodity" />
+          <Property Name="BatchID" Type="Int32" Nullable="false" />
+          <Property Name="BatchEntryDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_GoodsArrivalPackages_GoodsArrivals">
           <End Type="TotalSmartPortalModel.GoodsArrival" Role="GoodsArrival" Multiplicity="1" />
@@ -29458,6 +29468,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsArrivalDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrivalDetail">
               <MappingFragment StoreEntitySet="GoodsArrivalDetails">
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="Packages" ColumnName="Packages" />
                 <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
@@ -29928,6 +29940,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Shelflife" ColumnName="Shelflife" />
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -30019,6 +30033,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsArrivalPackages">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrivalPackage">
               <MappingFragment StoreEntitySet="GoodsArrivalPackages">
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />

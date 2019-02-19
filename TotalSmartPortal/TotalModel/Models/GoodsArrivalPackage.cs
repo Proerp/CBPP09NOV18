@@ -51,6 +51,8 @@ namespace TotalModel.Models
         public bool InActivePartial { get; set; }
         public Nullable<System.DateTime> InActivePartialDate { get; set; }
         public Nullable<int> LabID { get; set; }
+        public int BatchID { get; set; }
+        public System.DateTime BatchEntryDate { get; set; }
     
         public virtual GoodsArrival GoodsArrival { get; set; }
         public virtual PurchaseOrderDetail PurchaseOrderDetail { get; set; }

@@ -35,5 +35,7 @@ namespace TotalModel.Models
         public Nullable<int> Shelflife { get; set; }
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public int BatchID { get; set; }
+        public System.DateTime BatchEntryDate { get; set; }
     }
 }
