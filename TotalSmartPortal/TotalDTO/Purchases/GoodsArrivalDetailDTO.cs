@@ -62,6 +62,10 @@ namespace TotalDTO.Purchases
         [Required(ErrorMessage = "Vui lòng nhập lab code")]
         public virtual string LabCode { get; set; }
 
+        [Display(Name = "Ngày lô hàng")]
+        [UIHint("DateTimeReadonly")]
+        public Nullable<System.DateTime> BatchEntryDate { get { return this.EntryDate; } }
+
         [Display(Name = "Tồn đơn")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
