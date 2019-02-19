@@ -17333,6 +17333,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
           <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingPurchaseRequisition">
           <Property Type="Int32" Name="PurchaseRequisitionID" Nullable="false" />
@@ -19004,6 +19005,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
           <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
           </ComplexType>
         <ComplexType Name="PlannedOrderLog">
           <Property Type="Int32" Name="MaterialIssueDetailID" Nullable="false" />
@@ -19114,6 +19116,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="FirmOrderReference" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="FirmOrderCode" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="SemifinishedProductReferences" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
+          <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingPlannedOrder">
           <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
@@ -19995,6 +19999,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="LabID" Nullable="false" />
           <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingWarehouseTransfer">
           <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
@@ -21624,6 +21629,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="LabID" Nullable="true" />
           <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
         </ComplexType>
         <EntityType Name="GoodsReceiptDetail">
           <Key>
@@ -27159,6 +27165,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -28447,6 +28454,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -28594,6 +28602,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="FirmOrderReference" ColumnName="FirmOrderReference" />
                 <ScalarProperty Name="FirmOrderCode" ColumnName="FirmOrderCode" />
                 <ScalarProperty Name="SemifinishedProductReferences" ColumnName="SemifinishedProductReferences" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -29052,6 +29062,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -29985,6 +29996,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

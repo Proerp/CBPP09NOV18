@@ -28,5 +28,6 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public Nullable<bool> IsSelected { get; set; }
         public System.DateTime BatchEntryDate { get; set; }
+        public int BatchID { get; set; }
     }
 }

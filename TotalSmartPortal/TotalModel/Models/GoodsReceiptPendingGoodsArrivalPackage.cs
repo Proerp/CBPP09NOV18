@@ -37,5 +37,6 @@ namespace TotalModel.Models
         public Nullable<int> LabID { get; set; }
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public int BatchID { get; set; }
     }
 }
