@@ -717,6 +717,8 @@
           <Property Name="FinishedHandoverDate" Type="datetime" />
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
+          <Property Name="BatchID" Type="int" Nullable="false" />
+          <Property Name="BatchEntryDate" Type="datetime" Nullable="false" />
           <Property Name="PiecePerPack" Type="int" Nullable="false" />
           <Property Name="PackageUnitWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -822,6 +824,8 @@
           <Property Name="FinishedHandoverDate" Type="datetime" />
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
+          <Property Name="BatchID" Type="int" Nullable="false" />
+          <Property Name="BatchEntryDate" Type="datetime" Nullable="false" />
           <Property Name="PiecePerPack" Type="int" Nullable="false" />
           <Property Name="PackageUnitWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -22156,6 +22160,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedProductPackages_Workshifts" FromRole="FinishedProductPackage" ToRole="Workshift" />
           <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedProductPackages" FromRole="FinishedProductPackage" ToRole="GoodsReceiptDetail" />
           <Property Name="FinishedHandoverDate" Type="DateTime" Precision="3" />
+          <Property Name="BatchID" Type="Int32" Nullable="false" />
+          <Property Name="BatchEntryDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_FinishedHandoverDetails_FinishedProductPackages">
           <End Type="TotalSmartPortalModel.FinishedProductPackage" Role="FinishedProductPackage" Multiplicity="1" />
@@ -24043,6 +24049,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_FinishedItemPackages_Shifts" FromRole="FinishedItemPackage" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedItemPackages_Workshifts" FromRole="FinishedItemPackage" ToRole="Workshift" />
           <NavigationProperty Name="FinishedItem" Relationship="TotalSmartPortalModel.FK_FinishedItemPackages_FinishedItems" FromRole="FinishedItemPackage" ToRole="FinishedItem" />
+          <Property Name="BatchID" Type="Int32" Nullable="false" />
+          <Property Name="BatchEntryDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_FinishedItemDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -30237,6 +30245,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="FinishedProductPackages">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.FinishedProductPackage">
               <MappingFragment StoreEntitySet="FinishedProductPackages">
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="FinishedHandoverDate" ColumnName="FinishedHandoverDate" />
                 <ScalarProperty Name="HandoverApproved" ColumnName="HandoverApproved" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
@@ -30936,6 +30946,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="FinishedItemPackages">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.FinishedItemPackage">
               <MappingFragment StoreEntitySet="FinishedItemPackages">
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="HandoverApproved" ColumnName="HandoverApproved" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
