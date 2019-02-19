@@ -6,10 +6,11 @@
     .Columns(columns =>
     {
         columns.Bound(c => c.PurchaseOrderReference).Title("Số ĐH").Width(30);
-        columns.Bound(c => c.PurchaseOrderCode).Title("Số PO").Width(39);
-        columns.Bound(c => c.PurchaseOrderVoucherDate).Title("Ngày ĐH").Width(42).Format("{0:" + Settings.DateFormat + "}");
-        columns.Bound(c => c.CustomerCode).Title("NCC").Width(30);
-        columns.Bound(c => c.Caption).Title("Mặt hàng").Width(238);
+        columns.Bound(c => c.PurchaseOrderEntryDate).Title("Ngày Lập").Width(42).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.PurchaseOrderCode).Title("Số PO").Width(50);
+        columns.Bound(c => c.PurchaseOrderVoucherDate).Title("Ngày PO").Width(42).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.CustomerCode).Title("NCC").Width(60);
+        columns.Bound(c => c.Caption).Title("Mặt hàng").Width(168);
     })
     .ToolBar(toolbar =>
     {

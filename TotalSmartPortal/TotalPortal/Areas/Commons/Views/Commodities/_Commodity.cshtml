@@ -151,7 +151,7 @@
             </div>
         </div>
 
-        <div class="form-group SBT-Hidden">
+        <div class="form-group">
             @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Origin)
             <div class="div-input">
                 @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Origin).HtmlAttributes(new { @class = "left-panel-input" })
@@ -195,12 +195,12 @@
 
         <div class="form-group" @{if (!GlobalEnums.CBPP || !Model.IsMaterial) { <text> style="display:none;" </text>             } }>
             <div class="form-group">
-                @Html.Label("Điều kiện tồn trữ, bảo quản")
+                @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Description)
                 <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "left-panel-input" })
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Description).HtmlAttributes(new { @class = "left-panel-input" })
                 </div>
                 <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Description, "", new { @class = "text-danger" })
                 </div>
             </div>
 

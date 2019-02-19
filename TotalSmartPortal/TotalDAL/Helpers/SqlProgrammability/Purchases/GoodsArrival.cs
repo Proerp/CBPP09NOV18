@@ -115,7 +115,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
         private void GetGoodsArrivalPendingPurchaseOrders()
         {
             string queryString = " @LocationID int " + "\r\n";
-            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "       SELECT          PurchaseOrders.PurchaseOrderID, PurchaseOrders.Reference AS PurchaseOrderReference, PurchaseOrders.Code AS PurchaseOrderCode, PurchaseOrders.EntryDate AS PurchaseOrderEntryDate, PurchaseOrders.VoucherDate AS PurchaseOrderVoucherDate, PurchaseOrders.DeliveryDate AS PurchaseOrderDeliveryDate, PurchaseOrders.Caption, PurchaseOrders.Description, PurchaseOrders.Remarks, " + "\r\n";
@@ -127,6 +127,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                       INNER JOIN Customers Transporters ON PurchaseOrders.TransporterID = Transporters.CustomerID " + "\r\n";
 
             queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = " + (GlobalEnums.CBPP ? 1 : 2) + "\r\n";
+
+            queryString = queryString + "       ORDER BY        PurchaseOrders.PurchaseOrderID " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsArrivalPendingPurchaseOrders", queryString);
         }
@@ -388,7 +390,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                               WHILE @Packages > 0 " + "\r\n";
             queryString = queryString + "                                   BEGIN " + "\r\n";
 
-            queryString = queryString + "                                       SET @PackageBarcode = @CommodityCode + @BatchCode + @LabCode + ISNULL(@Barcode, '') + RIGHT(CAST(1000 + CAST(@Packages AS INT) AS NVARCHAR), 3) " + "\r\n";
+            queryString = queryString + "                                       SET @PackageBarcode = @CommodityCode + @LabCode + ISNULL(@Barcode, '') + RIGHT(CAST(1000 + CAST(@Packages AS INT) AS NVARCHAR), 3) " + "\r\n";
 
             queryString = queryString + "                                       INSERT INTO GoodsArrivalPackages(EntryDate, GoodsArrivalID, GoodsArrivalDetailID, LocationID, CustomerID, TransporterID, PurchaseOrderID, PurchaseOrderDetailID, CommodityID, CommodityTypeID, WarehouseID, SerialID, LabID, Code, SealCode, BatchCode, LabCode, Barcode, ProductionDate, ExpiryDate, BatchID, BatchEntryDate, Quantity, QuantityReceipted, UnitWeight, Packages, Remarks, VoidTypeID, Approved, InActive, InActivePartial, InActivePartialDate) " + "\r\n";
             queryString = queryString + "                                       VALUES                          (@EntryDate, @GoodsArrivalID, @GoodsArrivalDetailID, @LocationID, @CustomerID, @TransporterID, @PurchaseOrderID, @PurchaseOrderDetailID, @CommodityID, @CommodityTypeID, @WarehouseID, @SerialID, @LabID, @Code, @SealCode, @BatchCode, @LabCode, @PackageBarcode, @ProductionDate, @ExpiryDate, @BatchID, @BatchEntryDate, @UnitWeight, 0, @UnitWeight, 1, @Remarks, @VoidTypeID, @Approved, @InActive, @InActivePartial, @InActivePartialDate); " + "\r\n";
