@@ -86,6 +86,8 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPlannedOrderDetailGrid
         dataRow.WarehouseTransferEntryDate = null;
         dataRow.GoodsReceiptReference = null;
         dataRow.GoodsReceiptEntryDate = null;
+
+        dataRow.BatchID = plannedOrderGridDataItem.BatchID;
         dataRow.BatchEntryDate = plannedOrderGridDataItem.FinishedProductEntryDate;
 
 

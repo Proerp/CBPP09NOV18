@@ -363,7 +363,9 @@
 
                     columns.Bound(p => p.LabID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= LabID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].LabID' value='#= LabID #' />");
-                    
+
+                    columns.Bound(p => p.BatchID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= BatchID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BatchID' value='#= BatchID #' />");                    
                     columns.Bound(p => p.BatchEntryDate).DisplayNameTitle().Width(38).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer ? false : true)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (BatchEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BatchEntryDate' value='#= (BatchEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #' />");

@@ -70,9 +70,7 @@ namespace TotalDTO.Inventories
         [Display(Name = "Ngày NK")]
         [UIHint("DateTimeReadonly")]
         public Nullable<System.DateTime> GoodsReceiptEntryDate { get; set; }
-        [Display(Name = "Ngày lô hàng")]
-        [UIHint("DateTimeReadonly")]
-        public Nullable<System.DateTime> BatchEntryDate { get; set; }
+
 
 
         public Nullable<int> FinishedProductID { get; set; }
@@ -127,6 +125,9 @@ namespace TotalDTO.Inventories
 
         public int LabID { get; set; }
         public int BatchID { get; set; }
+        [Display(Name = "Ngày lô hàng")]
+        [UIHint("DateTimeReadonly")]
+        public Nullable<System.DateTime> BatchEntryDate { get; set; }
 
 
         public string Code { get; set; }
