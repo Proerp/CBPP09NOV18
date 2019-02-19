@@ -84,7 +84,9 @@
     <Compile Include="Helpers\SqlProgrammability\Productions\SemifinishedProduct.cs" />
     <Compile Include="Helpers\SqlProgrammability\Purchases\GoodsArrival.cs" />
     <Compile Include="Helpers\SqlProgrammability\Purchases\Lab.cs" />
-    <Compile Include="Helpers\SqlProgrammability\Purchases\PurchaseOrder.cs" />
+    <Compile Include="Helpers\SqlProgrammability\Purchases\PurchaseOrder.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Helpers\SqlProgrammability\Purchases\PurchaseRequisition.cs" />
     <Compile Include="Helpers\SqlProgrammability\Reports\InventoryReports.cs" />
     <Compile Include="Helpers\SqlProgrammability\Reports\ProductionReports.cs" />

@@ -23,11 +23,14 @@ namespace TotalModel.Models
         public string CommodityName { get; set; }
         public int CommodityTypeID { get; set; }
         public Nullable<decimal> QuantityRemains { get; set; }
-        public int Quantity { get; set; }
+        public decimal Quantity { get; set; }
         public string Description { get; set; }
         public string Remarks { get; set; }
         public Nullable<bool> IsSelected { get; set; }
         public Nullable<int> Shelflife { get; set; }
         public Nullable<decimal> UnitWeight { get; set; }
+        public string LabCode { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     }
 }
