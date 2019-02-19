@@ -20,6 +20,7 @@ namespace TotalBase.Enums
         public static decimal VATPercent = 10;
 
         public static int rndN0 = 0;
+        public static int rndN3 = 3;
         public static int rndQuantity = 2;
         public static int rndAmount = 0;
         public static int rndDiscountPercent = 1;

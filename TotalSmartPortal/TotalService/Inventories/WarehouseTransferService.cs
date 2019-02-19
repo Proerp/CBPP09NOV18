@@ -84,10 +84,10 @@ namespace TotalService.Inventories
                             WarehouseTransferEntryDate = pendingWarehouseTransferDetail.WarehouseTransferEntryDate,
                             GoodsReceiptReference = pendingWarehouseTransferDetail.GoodsReceiptReference,
                             GoodsReceiptEntryDate = pendingWarehouseTransferDetail.GoodsReceiptEntryDate,
+
+                            BatchID = pendingWarehouseTransferDetail.BatchID,
                             BatchEntryDate = pendingWarehouseTransferDetail.BatchEntryDate,
-
-
-                            //BatchID = pendingWarehouseTransferDetail.BatchID,
+                            
 
                             CommodityID = pendingWarehouseTransferDetail.CommodityID,
                             CommodityCode = pendingWarehouseTransferDetail.CommodityCode,

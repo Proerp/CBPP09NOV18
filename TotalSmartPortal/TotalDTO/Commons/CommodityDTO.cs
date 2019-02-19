@@ -90,9 +90,11 @@ namespace TotalDTO.Commons
         string Packing { get; set; }
         string Origin { get; set; }
 
-        [Display(Name = "Hs TL (net)")]
-        [UIHint("Weight")]
+        [Display(Name = "Trọng lượng (net)")]
+        [UIHint("DecimalN3")]
         Nullable<decimal> Weight { get; set; }
+        [Display(Name = "Hạn sử dụng")]
+        int Shelflife { get; set; }
         int LeadTime { get; set; }
 
         bool IsRegularCheckUps { get; set; }
@@ -166,6 +168,7 @@ namespace TotalDTO.Commons
         public string Origin { get; set; }
 
         public Nullable<decimal> Weight { get; set; }
+        public int Shelflife { get; set; }
         public int LeadTime { get; set; }
 
         public bool IsRegularCheckUps { get; set; }

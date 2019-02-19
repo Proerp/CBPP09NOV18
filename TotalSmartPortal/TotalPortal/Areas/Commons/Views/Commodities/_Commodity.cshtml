@@ -39,11 +39,11 @@
         }
 
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityCategory.cshtml")
-        <div @{if (GlobalEnums.CBPP) { <text> div class="SBT-Hidden" </text>          } }>
+        <div @{if (GlobalEnums.CBPP) { <text> div class="SBT-Hidden" </text>             } }>
             @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityLine.cshtml")
         </div>
 
-        <div @{if (Model.IsMaterial) { <text> style="display:none;" </text>        } }>
+        <div @{if (GlobalEnums.CBPP || Model.IsMaterial) { <text> style="display:none;" </text>           } }>
             @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityClass.cshtml")
         </div>
 
@@ -60,7 +60,7 @@
             </div>
         }
 
-        <div class="form-group" @{if (!Model.IsItem) { <text> style="display:none;" </text>       } }>
+        <div class="form-group" @{if (!Model.IsItem) { <text> style="display:none;" </text>          } }>
             @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).CodePartE)
             <div class="div-input">
                 @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).CodePartE).HtmlAttributes(new { @class = "left-panel-input" })
@@ -70,7 +70,7 @@
             </div>
         </div>
 
-        <div class="form-group" @{if (!Model.IsItem) { <text> style="display:none;" </text>       } }>
+        <div class="form-group" @{if (!Model.IsItem) { <text> style="display:none;" </text>          } }>
             @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).CodePartF)
             <div class="div-input">
                 @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).CodePartF).HtmlAttributes(new { @class = "left-panel-input" })
@@ -117,7 +117,7 @@
             @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityBrand.cshtml")
         </div>
 
-        <div @{if (!GlobalEnums.CBPP) { <text> style="display:none;" </text>         } }>
+        <div @{if (!GlobalEnums.CBPP || !Model.IsMaterial) { <text> style="display:none;" </text>            } }>
             @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityIcon.cshtml")
         </div>
 
@@ -141,7 +141,7 @@
             </div>
         </div>
 
-        <div class="form-group" @{if (!Model.IsProduct) { <text> style="display:none;" </text>        } }>
+        <div class="form-group" @{if (GlobalEnums.CBPP || !Model.IsProduct) { <text> style="display:none;" </text>           } }>
             @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).PiecePerPack)
             <div class="div-input">
                 @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).PiecePerPack).HtmlAttributes(new { @class = "left-panel-input" })
@@ -161,64 +161,78 @@
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Weight)
-            <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).Weight).Format(GlobalEnums.CBPP ? "{0:n0}" : "{0:n3}").HtmlAttributes(new { @class = "left-panel-input" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Weight, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.Label("Điều kiện tồn trữ, bảo quản")
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "left-panel-input" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Packing)
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Packing).HtmlAttributes(new { @class = "left-panel-input" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Packing, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-                @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).LeadTime)
+        <div @{if (!GlobalEnums.CBPP || !Model.IsMaterial) { <text> style="display:none;" </text>              } }>
+            <div class="form-group">
+                @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Weight)
                 <div class="div-input">
-                    @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).LeadTime).HtmlAttributes(new { @class = "left-panel-input" })
+                    @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).Weight).Format(GlobalEnums.CBPP ? "{0:n0}" : "{0:n3}").HtmlAttributes(new { @class = "left-panel-input" })
                 </div>
                 <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).LeadTime, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Weight, "", new { @class = "text-danger" })
                 </div>
-            </div>*@
+            </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Specification)
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Specification).HtmlAttributes(new { @class = "left-panel-input" })
+            <div class="form-group">
+                @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Shelflife)
+                <div class="div-input">
+                    @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).Shelflife).Format(GlobalEnums.CBPP ? "{0:n0}" : "{0:n3}").HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Shelflife, "", new { @class = "text-danger" })
+                </div>
             </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Specification, "", new { @class = "text-danger" })
-            </div>
+
+            @*<div class="form-group">
+                    @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).LeadTime)
+                    <div class="div-input">
+                        @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).LeadTime).HtmlAttributes(new { @class = "left-panel-input" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).LeadTime, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
         </div>
 
-
-        <div class="form-group">
-            @Html.Label("Cảnh báo")
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Caption).HtmlAttributes(new { @class = "left-panel-input" })
+        <div class="form-group" @{if (!GlobalEnums.CBPP || !Model.IsMaterial) { <text> style="display:none;" </text>             } }>
+            <div class="form-group">
+                @Html.Label("Điều kiện tồn trữ, bảo quản")
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
+                </div>
             </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => (model as IBaseModel).Caption, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Packing)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Packing).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Packing, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Specification)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as ICommodityPrimitiveDTO).Specification).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as ICommodityPrimitiveDTO).Specification, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                @Html.Label("Cảnh báo")
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Caption).HtmlAttributes(new { @class = "left-panel-input" })
+                </div>
+                <div class="div-validation-message">
+                    @Html.ValidationMessageFor(model => (model as IBaseModel).Caption, "", new { @class = "text-danger" })
+                </div>
             </div>
         </div>
 
@@ -248,7 +262,7 @@
             {
                 <button type="submit" id="btnSave" class="@(Model.CommodityID > 0 ? "k-button custom-button SubmitTypeOption-Closed" : "k-button custom-button SubmitTypeOption-Closed")" formaction="@Url.Action("Edit", Model.ControllerName)"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
             }
-            @if (Model.CommodityID > 0)
+            @if (!GlobalEnums.CBPP && Model.CommodityID > 0)
             {
                 if (Model.IsProduct)
                 {<button type="button" class="k-button custom-button" onclick="ShowMolds()"> <img src="~/Content/Images/New/2017/mold-32.png" /> Danh mục khuôn sx khay </button>}

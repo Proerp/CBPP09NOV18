@@ -20169,6 +20169,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="LabID" Nullable="false" />
           <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
         </ComplexType>
         <EntityType Name="ModuleDetail">
           <Key>
@@ -29186,6 +29187,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
