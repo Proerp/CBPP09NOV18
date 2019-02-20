@@ -34,8 +34,7 @@ namespace TotalDTO.Purchases
         public decimal QuantityRemains { get { return this.Quantity - QuantityArrived; } set { } }
 
 
-        [Display(Name = "Lab code")]
-        [Required(ErrorMessage = "Vui lòng nhập lab code")]
+        [Display(Name = "Lab code")] //[Required(ErrorMessage = "Vui lòng nhập lab code")]
         public virtual string LabCode { get; set; }
         [Display(Name = "Ngày SX")]
         [UIHint("Date")]

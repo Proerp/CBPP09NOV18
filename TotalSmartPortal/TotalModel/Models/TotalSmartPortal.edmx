@@ -21509,6 +21509,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CustomsDeclaration" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="Caption" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Packages" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="GoodsArrivalPendingCustomer">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
@@ -29862,6 +29868,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="CustomsDeclaration" ColumnName="CustomsDeclaration" />
                 <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Packages" ColumnName="Packages" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

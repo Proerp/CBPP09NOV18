@@ -33,5 +33,11 @@ namespace TotalModel.Models
         public string CustomsDeclaration { get; set; }
         public string CustomerCode { get; set; }
         public string Caption { get; set; }
+        public string CommodityCode { get; set; }
+        public string CommodityName { get; set; }
+        public string BatchCode { get; set; }
+        public string LabCode { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal Packages { get; set; }
     }
 }
