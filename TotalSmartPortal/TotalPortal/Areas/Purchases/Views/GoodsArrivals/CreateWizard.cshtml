@@ -10,7 +10,7 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
 
-    @Html.HiddenFor(model => model.EntryDate) //TEMP ONLY
+    @*@Html.HiddenFor(model => model.EntryDate) //TEMP ONLY*@
     
     @Html.HiddenFor(model => model.HasPurchaseOrder)
     @Html.HiddenFor(model => model.PurchaseOrderID)
@@ -122,7 +122,7 @@
             }
             else {
                 //TEMP ONLY
-                $("#EntryDate").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.PurchaseOrderEntryDate, Settings.DateTimeFormat));
+                //$("#EntryDate").val(selectedDataItem === undefined || selectedDataItem.PurchaseOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.PurchaseOrderEntryDate, Settings.DateTimeFormat));
 
                 $("#Customer_CustomerID").val(selectedDataItem === undefined || selectedDataItem.CustomerID === undefined ? null : selectedDataItem.CustomerID);
                 $("#Customer_Code").val(selectedDataItem === undefined || selectedDataItem.CustomerCode === undefined ? null : selectedDataItem.CustomerCode);

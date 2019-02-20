@@ -17305,6 +17305,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="GoodsArrivalCustomsDeclarationDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="GoodsArrivalPurchaseOrderVoucherDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="GoodsArrivalPurchaseOrderCodes" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CustomerCode" Nullable="true" MaxLength="50" />
           </ComplexType>
         <ComplexType Name="GoodsReceiptPendingCustomer">
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
@@ -27139,6 +27140,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="GoodsArrivalCustomsDeclarationDate" ColumnName="GoodsArrivalCustomsDeclarationDate" />
                 <ScalarProperty Name="GoodsArrivalPurchaseOrderVoucherDate" ColumnName="GoodsArrivalPurchaseOrderVoucherDate" />
                 <ScalarProperty Name="GoodsArrivalPurchaseOrderCodes" ColumnName="GoodsArrivalPurchaseOrderCodes" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
