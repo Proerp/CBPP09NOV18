@@ -61,6 +61,10 @@ function handleOKEvent(warehouseAdjustmentGridDataSource, goodsReceiptDetailAvai
         dataRow.BatchID = productionOrderGridDataItem.BatchID;
         dataRow.BatchEntryDate = productionOrderGridDataItem.BatchEntryDate;
 
+        dataRow.BatchCode = productionOrderGridDataItem.BatchCode;
+        dataRow.LabCode = productionOrderGridDataItem.LabCode;
+        dataRow.Barcode = productionOrderGridDataItem.Barcode;
+
         dataRow.WarehouseID = productionOrderGridDataItem.WarehouseID;
         dataRow.WarehouseCode = productionOrderGridDataItem.WarehouseCode;
 

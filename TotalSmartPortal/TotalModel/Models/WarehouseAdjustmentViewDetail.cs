@@ -28,5 +28,8 @@ namespace TotalModel.Models
         public System.DateTime BatchEntryDate { get; set; }
         public Nullable<decimal> QuantityAvailables { get; set; }
         public int CommodityTypeID { get; set; }
+        public string BatchCode { get; set; }
+        public string LabCode { get; set; }
+        public string Barcode { get; set; }
     }
 }

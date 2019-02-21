@@ -19,7 +19,7 @@
 
     @Html.HiddenFor(model => (model as IWarehouseAdjustmentPrimitiveDTO).WarehouseAdjustmentID)
     @Html.HiddenFor(model => (model as IWarehouseAdjustmentPrimitiveDTO).TotalQuantityPositive)
-    @Html.HiddenFor(model => (model as IWarehouseAdjustmentPrimitiveDTO).TotalQuantityNegative)    
+    @Html.HiddenFor(model => (model as IWarehouseAdjustmentPrimitiveDTO).TotalQuantityNegative)
 
     <div class="left-panel">
 
@@ -53,7 +53,7 @@
                 <div class="div-validation-message">
                     @Html.ValidationMessageFor(model => (model as IWarehouseAdjustmentPrimitiveDTO).AdjustmentJobs, "", new { @class = "text-danger" })
                 </div>
-            </div>            
+            </div>
 
             <div id="show-current-PriceCategory" style="float: right; margin-top: -120px; text-align: center; width: 110px; height: 110px; " title="Kho hàng">
                 <div style="height: 90px; padding-left: 22px; padding-right: 22px; padding-top: 32px;">
@@ -78,11 +78,11 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Filterable(false).Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Filterable(false).Width(220).EditorTemplateName(@Model.NegativeOnly ? "StringReadonly" : "AutoCompletes/CommodityBase")
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Filterable(false).Width(GlobalEnums.CBPP ? 120 : 220).EditorTemplateName(@Model.NegativeOnly ? "StringReadonly" : "AutoCompletes/CommodityBase")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)")
                         .ClientTemplate("<div> #= CommodityCode #</div>" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
 
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Filterable(false).Width(200).HtmlAttributes(new { style = "" })
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Filterable(false).Width(200).Hidden(GlobalEnums.CBPP)
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Filterable(false).Hidden()
@@ -96,18 +96,26 @@
 
                     columns.Bound(p => p.GoodsReceiptCode).DisplayNameTitle().Filterable(false).Width(60).Hidden()
                         .ClientTemplate("#= (GoodsReceiptCode == null)? '' : GoodsReceiptCode #" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].GoodsReceiptCode' value='#= (GoodsReceiptCode == null) ? '' : GoodsReceiptCode #' />");
-                    columns.Bound(p => p.GoodsReceiptReference).DisplayNameTitle().Filterable(false).Width(60)
+                    columns.Bound(p => p.GoodsReceiptReference).DisplayNameTitle().Filterable(false).Width(60).Hidden(GlobalEnums.CBPP)
                         .ClientTemplate("#= (GoodsReceiptReference == null)? '' : GoodsReceiptReference #" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].GoodsReceiptReference' value='#= (GoodsReceiptReference == null) ? '' : GoodsReceiptReference #' />");
-                    columns.Bound(p => p.GoodsReceiptEntryDate).DisplayNameTitle().Filterable(false).Width(80)
+                    columns.Bound(p => p.GoodsReceiptEntryDate).DisplayNameTitle().Filterable(false).Width(80).Hidden(GlobalEnums.CBPP)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (GoodsReceiptEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].GoodsReceiptEntryDate' value='#= (GoodsReceiptEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #' />");
 
 
                     columns.Bound(p => p.BatchID).DisplayNameTitle().Filterable(false).Hidden()
                         .ClientTemplate("#= BatchID #" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].BatchID' value='#= BatchID #' />");
+                    columns.Bound(p => p.BatchCode).DisplayNameTitle().Filterable(false).Width(60).Hidden(!GlobalEnums.CBPP)
+                        .ClientTemplate("#= (BatchCode == null)? '' : BatchCode #" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].BatchCode' value='#= (BatchCode == null) ? '' : BatchCode #' />");
                     columns.Bound(p => p.BatchEntryDate).DisplayNameTitle().Filterable(false).Width(80)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (BatchEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].BatchEntryDate' value='#= (BatchEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #' />");
+
+
+                    columns.Bound(p => p.LabCode).DisplayNameTitle().Filterable(false).Width(60).Hidden(!GlobalEnums.CBPP)
+                        .ClientTemplate("#= (LabCode == null)? '' : LabCode #" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].LabCode' value='#= (LabCode == null) ? '' : LabCode #' />");
+                    columns.Bound(p => p.Barcode).DisplayNameTitle().Filterable(false).Width(60).Hidden(!GlobalEnums.CBPP)
+                        .ClientTemplate("#= (Barcode == null)? '' : Barcode #" + "<input type='hidden' name='WarehouseAdjustmentViewDetails[#= index(data) #].Barcode' value='#= (Barcode == null) ? '' : Barcode #' />");
 
 
                     columns.Bound(p => p.QuantityAvailables).DisplayNameTitle().Filterable(false).Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(@Model.PositiveOnly)
@@ -193,25 +201,25 @@
                         </text>);
 
                     }).DataSource(dataSource => dataSource
-                                    .Ajax()
-                                    .Batch(true)
-                                    .ServerOperation(false)
-                                    .Model(model =>
-                                    {
-                                        model.Id(x => x.WarehouseAdjustmentDetailID);
-                                        model.Field(m => m.WarehouseAdjustmentDetailID).DefaultValue(0);
-                                        model.Field(m => m.WarehouseAdjustmentID).DefaultValue(@Model.WarehouseAdjustmentID);
-                                    })
-                                    .Events(events =>
-                                    {
-                                        events.Error("kendGrid_ErrorHandler");
-                                    })
-                                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                                    .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
-                                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                                    .Aggregates(a => a.Add(x => x.QuantityPositive).Sum())
-                                    .Aggregates(a => a.Add(x => x.QuantityNegative).Sum())
-                                )
+                                                            .Ajax()
+                                                            .Batch(true)
+                                                            .ServerOperation(false)
+                                                            .Model(model =>
+                                                            {
+                                                                model.Id(x => x.WarehouseAdjustmentDetailID);
+                                                                model.Field(m => m.WarehouseAdjustmentDetailID).DefaultValue(0);
+                                                                model.Field(m => m.WarehouseAdjustmentID).DefaultValue(@Model.WarehouseAdjustmentID);
+                                                            })
+                                                            .Events(events =>
+                                                            {
+                                                                events.Error("kendGrid_ErrorHandler");
+                                                            })
+                                                            .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                                                            .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
+                                                            .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                                                            .Aggregates(a => a.Add(x => x.QuantityPositive).Sum())
+                                                            .Aggregates(a => a.Add(x => x.QuantityNegative).Sum())
+                                                        )
             )
         </div>
 
@@ -280,8 +288,8 @@
         </div>
 
 
-        @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")   
-        
+        @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
+
     </div>
 }
 

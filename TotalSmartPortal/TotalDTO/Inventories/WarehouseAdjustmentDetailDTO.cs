@@ -36,6 +36,16 @@ namespace TotalDTO.Inventories
         [UIHint("DateTimeReadonly")]
         public System.DateTime BatchEntryDate { get; set; }
 
+        [Display(Name = "Lô")]
+        [UIHint("StringReadonly")]
+        public string BatchCode { get; set; }
+        [Display(Name = "Lab")]
+        [UIHint("StringReadonly")]
+        public string LabCode { get; set; }
+        [Display(Name = "Mã vạch")]
+        [UIHint("StringReadonly")]
+        public string Barcode { get; set; }
+
         public int WarehouseID { get; set; }
         public string WarehouseCode { get; set; }        
 
