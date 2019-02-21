@@ -290,7 +290,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryArray[0] = " SELECT TOP 1 @FoundEntity = N'Ngày nhập kho: ' + CAST(GoodsReceipts.EntryDate AS nvarchar) FROM PackageIssueDetails INNER JOIN GoodsReceipts ON PackageIssueDetails.PackageIssueID = @EntityID AND PackageIssueDetails.GoodsReceiptID = GoodsReceipts.GoodsReceiptID AND PackageIssueDetails.EntryDate < GoodsReceipts.EntryDate ";
             queryArray[1] = " SELECT TOP 1 @FoundEntity = N'Số lượng xuất vượt quá số lượng tồn kho: ' + CAST(ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM GoodsReceiptDetails WHERE (ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
-            queryArray[2] = " SELECT TOP 1 @FoundEntity = N'Số lượng xuất vượt quá số lượng yêu cầu: ' + CAST(ROUND(Quantity * 1.005 - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM BlendingInstructionDetails WHERE (ROUND(Quantity * 1.005 - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
+            queryArray[2] = " SELECT TOP 1 @FoundEntity = N'Số lượng xuất vượt quá số lượng yêu cầu: ' + CAST(ROUND(Quantity * 1005 - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM BlendingInstructionDetails WHERE (ROUND(Quantity * 1.005 - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("PackageIssuePostSaveValidate", queryArray);
         }

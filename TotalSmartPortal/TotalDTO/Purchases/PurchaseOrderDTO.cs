@@ -24,13 +24,13 @@ namespace TotalDTO.Purchases
         public virtual Nullable<int> CustomerID { get; set; }
         public virtual Nullable<int> TransporterID { get; set; }
 
-        [Display(Name = "Số chứng từ")]
+        [Display(Name = "Số PO")]
         public string Code { get; set; }
 
         [Display(Name = "Mục đích")]
         public string Purposes { get; set; }
 
-        [Display(Name = "Ngày chứng từ")]
+        [Display(Name = "Ngày PO")]
         public Nullable<System.DateTime> VoucherDate { get; set; }
         [Display(Name = "Ngày dự kiến giao hàng")]
         public Nullable<System.DateTime> DeliveryDate { get; set; }
