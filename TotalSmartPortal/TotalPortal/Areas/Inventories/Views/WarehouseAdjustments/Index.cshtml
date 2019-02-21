@@ -13,11 +13,12 @@
             columns.Bound(p => p.WarehouseAdjustmentID).DisplayNameTitle().Hidden();                
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
 
-            columns.Bound(p => p.Reference).Title("Số phiếu").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= WarehouseAdjustmentID #'>#=Reference#</a>");
-            columns.Bound(p => p.WarehouseAdjustmentTypeName).Title("Phân loại").Width(107).Filterable(false);
-            columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(227);
-            columns.Bound(p => p.AdjustmentJobs).Title("Mục đích").Width(207);                
-            columns.Bound(p => p.Description).Title("Diễn giải").Width(108);
+            columns.Bound(p => p.Reference).Title("Số phiếu").Width(5).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= WarehouseAdjustmentID #'>#=Reference#</a>");
+            columns.Bound(p => p.WarehouseAdjustmentTypeName).Title("Phân loại").Width(80).Filterable(false);
+            columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(108);
+            columns.Bound(p => p.AdjustmentJobs).Title("Mục đích").Width(107);
+            columns.Bound(p => p.Caption).Title("Mặt hàng").Width(180);                
+            columns.Bound(p => p.Description).Title("Diễn giải").Width(80);
 
             columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(50).Hidden(!@Model.BothAdjustment);
             columns.Bound(p => p.TotalQuantityPositive).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(50).Hidden(!@Model.PositiveOnly);
@@ -25,7 +26,7 @@
 
             columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
             
-            columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
+            columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(30)
                 .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Print" }) + "/#= WarehouseAdjustmentID #' target='_blank'><span class='k-icon sbt-printer'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= WarehouseAdjustmentID #'><span class='k-icon sbt-delete'></span></a>");
         })
         .ToolBar(toolbar =>
@@ -123,6 +124,8 @@
                     { field: "WarehouseAdjustmentTypeName", operator: "contains", value: indexFilterText },
                     { field: "Reference", operator: "contains", value: indexFilterText },
                     { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "AdjustmentJobs", operator: "contains", value: indexFilterText },
+                    { field: "Caption", operator: "contains", value: indexFilterText },
                     { field: "Description", operator: "contains", value: indexFilterText }
                 ]
             });
