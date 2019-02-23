@@ -16,8 +16,8 @@
                     .Title("Nguyên liệu").HeaderHtmlAttributes(new { style = "text-align:center" })
                     .Columns(g =>
                         {
-                            g.Bound(p => p.CommodityCode).Title("Mã").Width(118).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/InventoryControls", action = "Details" }) + "/#= CommodityID #' target='_blank'>#=CommodityCode#</a>");
-                            g.Bound(p => p.CommodityName).Title("Tên").Width(168);
+                            g.Bound(p => p.CommodityCode).Title("Mã").Width(88).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/InventoryControls", action = "Details" }) + "/#= CommodityID #' target='_blank'>#=CommodityCode#</a>");
+                            g.Bound(p => p.CommodityName).Title("Tên").Width(198);
                             g.Bound(p => p.ExpiryDate).Title("HSD").Format("{0:dd/MM/yy}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                         }
                     ));
@@ -150,7 +150,7 @@
     function onGetInventoryControls(e) {
         var indexFilterText = $("#indexFilterText").val();
         return {
-            summaryOnly: true,
+            summaryOptionID: 10,
             labOptionID: $("#ShowLabOptionID").val(),
             filterOptionID: $("#ShowFilterOptionID").val(),
             pendingOptionID: 1,
@@ -220,6 +220,8 @@
                 logic: "or",
                 filters: [
                     { field: "CommodityCode", operator: "contains", value: indexFilterText },
+                    { field: "BatchCode", operator: "contains", value: indexFilterText },
+                    { field: "LabCode", operator: "contains", value: indexFilterText },
                     { field: "CommodityName", operator: "contains", value: indexFilterText }
                 ]
             });

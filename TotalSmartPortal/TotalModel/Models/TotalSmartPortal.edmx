@@ -7979,7 +7979,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="GetInventoryControls" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
-          <Parameter Name="SummaryOnly" Type="bit" Mode="In" />
+          <Parameter Name="SummaryOptionID" Type="int" Mode="In" />
           <Parameter Name="LabOptionID" Type="int" Mode="In" />
           <Parameter Name="FilterOptionID" Type="int" Mode="In" />
           <Parameter Name="PendingOptionID" Type="int" Mode="In" />
@@ -15470,7 +15470,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </FunctionImport>
           <FunctionImport Name="GetInventoryControls" ReturnType="Collection(TotalSmartPortalModel.InventoryControl)">
             <Parameter Name="AspUserID" Mode="In" Type="String" />
-            <Parameter Name="SummaryOnly" Mode="In" Type="Boolean" />
+            <Parameter Name="SummaryOptionID" Mode="In" Type="Int32" />
             <Parameter Name="LabOptionID" Mode="In" Type="Int32" />
             <Parameter Name="FilterOptionID" Mode="In" Type="Int32" />
             <Parameter Name="PendingOptionID" Mode="In" Type="Int32" />

@@ -17,10 +17,10 @@ namespace TotalDAL.Repositories.Inventories
         {
         }
 
-        public List<InventoryControl> GetInventoryControls(string aspUserID, bool? summaryOnly, int? labOptionID, int? filterOptionID, int? pendingOptionID, int? shelfLife)
+        public List<InventoryControl> GetInventoryControls(string aspUserID, int? summaryOptionID, int? labOptionID, int? filterOptionID, int? pendingOptionID, int? shelfLife)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            List<InventoryControl> inventoryControls = base.TotalSmartPortalEntities.GetInventoryControls(aspUserID, summaryOnly, labOptionID, filterOptionID, pendingOptionID, shelfLife).ToList();
+            List<InventoryControl> inventoryControls = base.TotalSmartPortalEntities.GetInventoryControls(aspUserID, summaryOptionID, labOptionID, filterOptionID, pendingOptionID, shelfLife).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return inventoryControls;
