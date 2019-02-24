@@ -1,4 +1,6 @@
-﻿using TotalModel;
+﻿using System.Collections.Generic;
+
+using TotalModel;
 using TotalDTO;
 using TotalModel.Models;
 using TotalDTO.Productions;
@@ -10,6 +12,7 @@ namespace TotalCore.Services.Productions
         where TPrimitiveDto : BaseDTO, IPrimitiveEntity, IPrimitiveDTO, new()
         where TDtoDetail : class, IPrimitiveEntity
     {
+        ICollection<WorkOrderViewDetail> GetWorkOrderViewDetails(int workOrderID, int firmOrderID, int? warehouseID);
     }
 
     public interface IMaterialWorkOrderService : IWorkOrderService<WorkOrderDTO<WOOptionMaterial>, WorkOrderPrimitiveDTO<WOOptionMaterial>, WorkOrderDetailDTO>

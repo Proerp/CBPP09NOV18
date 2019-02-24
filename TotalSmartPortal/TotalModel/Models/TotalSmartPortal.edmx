@@ -7490,6 +7490,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WorkOrders_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="WorkOrders" Type="Self.WorkOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="WorkOrders">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_WorkOrders_FirmOrders">
           <End Role="FirmOrders" Type="Self.FirmOrders" Multiplicity="1" />
           <End Role="WorkOrders" Type="Self.WorkOrders" Multiplicity="*" />
@@ -10713,6 +10725,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Boms" EntitySet="Boms" />
             <End Role="WorkOrders" EntitySet="WorkOrders" />
           </AssociationSet>
+          <AssociationSet Name="FK_WorkOrders_Customers" Association="Self.FK_WorkOrders_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="WorkOrders" EntitySet="WorkOrders" />
+          </AssociationSet>
           <AssociationSet Name="FK_WorkOrders_FirmOrders" Association="Self.FK_WorkOrders_FirmOrders">
             <End Role="FirmOrders" EntitySet="FirmOrders" />
             <End Role="WorkOrders" EntitySet="WorkOrders" />
@@ -11051,6 +11067,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Boms" Relationship="TotalSmartPortalModel.FK_Boms_Customers" FromRole="Customer" ToRole="Bom" />
           <NavigationProperty Name="FinishedItems" Relationship="TotalSmartPortalModel.FK_FinishedItems_Customers" FromRole="Customer" ToRole="FinishedItem" />
           <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Customers" FromRole="Customer" ToRole="SemifinishedItem" />
+          <NavigationProperty Name="WorkOrders" Relationship="TotalSmartPortalModel.FK_WorkOrders_Customers" FromRole="Customer" ToRole="WorkOrder" />
         </EntityType>
         <EntityType Name="CustomerType">
           <Key>
@@ -16341,13 +16358,13 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WorkOrderApproved" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WorkOrderEditable" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WorkOrderPostSaveValidate" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="WorkOrderSaveRelative">
             <Parameter Name="EntityID" Mode="In" Type="Int32" />
@@ -16357,6 +16374,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="EntityID" Mode="In" Type="Int32" />
             <Parameter Name="Approved" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <AssociationSet Name="FK_WorkOrders_Customers" Association="TotalSmartPortalModel.FK_WorkOrders_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="WorkOrder" EntitySet="WorkOrders" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -24882,6 +24903,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="FirmOrder" Relationship="TotalSmartPortalModel.FK_WorkOrders_FirmOrders" FromRole="WorkOrder" ToRole="FirmOrder" />
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_WorkOrders_Warehouses" FromRole="WorkOrder" ToRole="Warehouse" />
           <NavigationProperty Name="WorkOrderDetails" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_WorkOrders" FromRole="WorkOrder" ToRole="WorkOrderDetail" />
+          <NavigationProperty Name="Customer" Relationship="TotalSmartPortalModel.FK_WorkOrders_Customers" FromRole="WorkOrder" ToRole="Customer" />
         </EntityType>
         <Association Name="FK_WorkOrders_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -25011,6 +25033,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
+        <Association Name="FK_WorkOrders_Customers">
+          <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.WorkOrder" Role="WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="WorkOrder">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

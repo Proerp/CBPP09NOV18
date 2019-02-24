@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.Web.Mvc;
 using System.Text;
+using System.Collections.Generic;
 
 using AutoMapper;
 using RequireJsNet;
@@ -32,9 +33,19 @@ namespace TotalPortal.Areas.Productions.Controllers
         where TDtoDetail : class, IPrimitiveEntity
         where TViewDetailViewModel : TDto, IViewDetailViewModel<TDtoDetail>, IWorkOrderViewModel, new()
     {
+        private readonly IWorkOrderService<TDto, TPrimitiveDto, TDtoDetail> workOrderService;
+
         public WorkOrdersController(IWorkOrderService<TDto, TPrimitiveDto, TDtoDetail> workOrderService, IWorkOrderViewModelSelectListBuilder<TViewDetailViewModel> workOrderViewModelSelectListBuilder)
             : base(workOrderService, workOrderViewModelSelectListBuilder, true)
         {
+            this.workOrderService = workOrderService;
+        }
+
+        protected override ICollection<WorkOrderViewDetail> GetEntityViewDetails(TViewDetailViewModel workOrderViewModel)
+        {
+            ICollection<WorkOrderViewDetail> workOrderViewDetails = this.workOrderService.GetWorkOrderViewDetails(workOrderViewModel.WorkOrderID, workOrderViewModel.FirmOrderID, workOrderViewModel.WarehouseID);
+
+            return workOrderViewDetails;
         }
     }
 

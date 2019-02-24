@@ -23,7 +23,12 @@ namespace TotalService.Productions
 
         public override ICollection<WorkOrderViewDetail> GetViewDetails(int workOrderID)
         {
-            ObjectParameter[] parameters = new ObjectParameter[] { new ObjectParameter("WorkOrderID", workOrderID) };
+            throw new System.ArgumentException("Invalid call GetViewDetails(id). Use GetWorkOrderViewDetails instead.", "Service");
+        }
+
+        public ICollection<WorkOrderViewDetail> GetWorkOrderViewDetails(int workOrderID, int firmOrderID, int? warehouseID)
+        {
+            ObjectParameter[] parameters = new ObjectParameter[] { new ObjectParameter("WorkOrderID", workOrderID), new ObjectParameter("FirmOrderID", firmOrderID), new ObjectParameter("WarehouseID", warehouseID) };
             return this.GetViewDetails(parameters);
         }
     }
