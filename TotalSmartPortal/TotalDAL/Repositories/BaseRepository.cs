@@ -322,6 +322,12 @@ namespace TotalDAL.Repositories
 
         public void CreateStoredProcedure()
         {
+            
+            //return;
+
+            Helpers.SqlProgrammability.Productions.WorkOrder workOrder = new Helpers.SqlProgrammability.Productions.WorkOrder(totalSmartPortalEntities);
+            workOrder.RestoreProcedure();
+
             //return;
 
             Helpers.SqlProgrammability.Productions.SemifinishedItem semifinishedItem = new Helpers.SqlProgrammability.Productions.SemifinishedItem(totalSmartPortalEntities);

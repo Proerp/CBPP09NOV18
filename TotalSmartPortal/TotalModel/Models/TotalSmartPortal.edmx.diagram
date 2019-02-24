@@ -482,6 +482,14 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItemDetails_SemifinishedItems" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItems_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItems_Workshifts" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.WorkOrderDetail" Width="1.5" PointX="39.875" PointY="19.625" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.WorkOrder" Width="1.5" PointX="36.625" PointY="7.75" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_Boms" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrderDetails_Commodities" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrderDetails_FirmOrderMaterials" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_FirmOrders" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_Warehouses" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrderDetails_WorkOrders" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

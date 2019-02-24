@@ -2713,6 +2713,61 @@
           <Property Name="Approved" Type="bit" Nullable="false" />
           <Property Name="ApprovedDate" Type="datetime" />
         </EntityType>
+        <EntityType Name="WorkOrderDetails">
+          <Key>
+            <PropertyRef Name="WorkOrderDetailID" />
+          </Key>
+          <Property Name="WorkOrderDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WorkOrderID" Type="int" Nullable="false" />
+          <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="ProductionOrderID" Type="int" Nullable="false" />
+          <Property Name="ProductionOrderDetailID" Type="int" Nullable="false" />
+          <Property Name="PlannedOrderID" Type="int" Nullable="false" />
+          <Property Name="FirmOrderID" Type="int" Nullable="false" />
+          <Property Name="FirmOrderMaterialID" Type="int" Nullable="false" />
+          <Property Name="BomID" Type="int" Nullable="false" />
+          <Property Name="BomDetailID" Type="int" Nullable="false" />
+          <Property Name="CommodityID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="QuantityIssued" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkOrders">
+          <Key>
+            <PropertyRef Name="WorkOrderID" />
+          </Key>
+          <Property Name="WorkOrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="10" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="ProductionOrderID" Type="int" Nullable="false" />
+          <Property Name="ProductionOrderDetailID" Type="int" Nullable="false" />
+          <Property Name="PlannedOrderID" Type="int" Nullable="false" />
+          <Property Name="FirmOrderID" Type="int" Nullable="false" />
+          <Property Name="BomID" Type="int" Nullable="false" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="PreparedPersonID" Type="int" Nullable="false" />
+          <Property Name="OrganizationalUnitID" Type="int" Nullable="false" />
+          <Property Name="LocationID" Type="int" Nullable="false" />
+          <Property Name="ApproverID" Type="int" Nullable="false" />
+          <Property Name="QuantityMaterialEstimated" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalQuantityIssued" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="100" />
+          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="EditedDate" Type="datetime" Nullable="false" />
+          <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="ApprovedDate" Type="datetime" />
+        </EntityType>
         <EntityType Name="Workshifts">
           <Key>
             <PropertyRef Name="WorkshiftID" />
@@ -7387,6 +7442,78 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WorkOrderDetails_Commodities">
+          <End Role="Commodities" Type="Self.Commodities" Multiplicity="1" />
+          <End Role="WorkOrderDetails" Type="Self.WorkOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodities">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="WorkOrderDetails">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkOrderDetails_FirmOrderMaterials">
+          <End Role="FirmOrderMaterials" Type="Self.FirmOrderMaterials" Multiplicity="1" />
+          <End Role="WorkOrderDetails" Type="Self.WorkOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmOrderMaterials">
+              <PropertyRef Name="FirmOrderMaterialID" />
+            </Principal>
+            <Dependent Role="WorkOrderDetails">
+              <PropertyRef Name="FirmOrderMaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkOrderDetails_WorkOrders">
+          <End Role="WorkOrders" Type="Self.WorkOrders" Multiplicity="1" />
+          <End Role="WorkOrderDetails" Type="Self.WorkOrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkOrders">
+              <PropertyRef Name="WorkOrderID" />
+            </Principal>
+            <Dependent Role="WorkOrderDetails">
+              <PropertyRef Name="WorkOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkOrders_Boms">
+          <End Role="Boms" Type="Self.Boms" Multiplicity="1" />
+          <End Role="WorkOrders" Type="Self.WorkOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Boms">
+              <PropertyRef Name="BomID" />
+            </Principal>
+            <Dependent Role="WorkOrders">
+              <PropertyRef Name="BomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkOrders_FirmOrders">
+          <End Role="FirmOrders" Type="Self.FirmOrders" Multiplicity="1" />
+          <End Role="WorkOrders" Type="Self.WorkOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmOrders">
+              <PropertyRef Name="FirmOrderID" />
+            </Principal>
+            <Dependent Role="WorkOrders">
+              <PropertyRef Name="FirmOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkOrders_Warehouses">
+          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1" />
+          <End Role="WorkOrders" Type="Self.WorkOrders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouses">
+              <PropertyRef Name="WarehouseID" />
+            </Principal>
+            <Dependent Role="WorkOrders">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Workshifts_Shifts">
           <End Role="Shifts" Type="Self.Shifts" Multiplicity="1" />
           <End Role="Workshifts" Type="Self.Workshifts" Multiplicity="*" />
@@ -8415,6 +8542,22 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="GetWarehouseTransferViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="WarehouseTransferID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetWorkOrderIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
+          <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
+          <Parameter Name="FromDate" Type="datetime" Mode="In" />
+          <Parameter Name="ToDate" Type="datetime" Mode="In" />
+        </Function>
+        <Function Name="GetWorkOrderPendingFirmOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
+          <Parameter Name="FirmOrderID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetWorkOrderViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WorkOrderID" Type="int" Mode="In" />
+          <Parameter Name="FirmOrderID" Type="int" Mode="In" />
+          <Parameter Name="WarehouseID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetWorkshiftBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
         </Function>
@@ -8943,6 +9086,23 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="EntityID" Type="int" Mode="In" />
           <Parameter Name="Approved" Type="bit" Mode="In" />
         </Function>
+        <Function Name="WorkOrderApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="WorkOrderEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="WorkOrderPostSaveValidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="WorkOrderSaveRelative" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="SaveRelativeOption" Type="int" Mode="In" />
+        </Function>
+        <Function Name="WorkOrderToggleApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="Approved" Type="bit" Mode="In" />
+        </Function>
         <EntityContainer Name="TotalSmartPortalModelStoreContainer">
           <EntitySet Name="AccessControls" EntityType="Self.AccessControls" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AccountInvoiceDetails" EntityType="Self.AccountInvoiceDetails" Schema="dbo" store:Type="Tables" />
@@ -9046,6 +9206,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySet Name="Warehouses" EntityType="Self.Warehouses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseTransferDetails" EntityType="Self.WarehouseTransferDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseTransfers" EntityType="Self.WarehouseTransfers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkOrderDetails" EntityType="Self.WorkOrderDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkOrders" EntityType="Self.WorkOrders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Workshifts" EntityType="Self.Workshifts" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_AccessControls_OrganizationalUnits" Association="Self.FK_AccessControls_OrganizationalUnits">
             <End Role="OrganizationalUnits" EntitySet="OrganizationalUnits" />
@@ -10534,6 +10696,30 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_WarehouseTransfers_Workshifts" Association="Self.FK_WarehouseTransfers_Workshifts">
             <End Role="Workshifts" EntitySet="Workshifts" />
             <End Role="WarehouseTransfers" EntitySet="WarehouseTransfers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrderDetails_Commodities" Association="Self.FK_WorkOrderDetails_Commodities">
+            <End Role="Commodities" EntitySet="Commodities" />
+            <End Role="WorkOrderDetails" EntitySet="WorkOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrderDetails_FirmOrderMaterials" Association="Self.FK_WorkOrderDetails_FirmOrderMaterials">
+            <End Role="FirmOrderMaterials" EntitySet="FirmOrderMaterials" />
+            <End Role="WorkOrderDetails" EntitySet="WorkOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrderDetails_WorkOrders" Association="Self.FK_WorkOrderDetails_WorkOrders">
+            <End Role="WorkOrders" EntitySet="WorkOrders" />
+            <End Role="WorkOrderDetails" EntitySet="WorkOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrders_Boms" Association="Self.FK_WorkOrders_Boms">
+            <End Role="Boms" EntitySet="Boms" />
+            <End Role="WorkOrders" EntitySet="WorkOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrders_FirmOrders" Association="Self.FK_WorkOrders_FirmOrders">
+            <End Role="FirmOrders" EntitySet="FirmOrders" />
+            <End Role="WorkOrders" EntitySet="WorkOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrders_Warehouses" Association="Self.FK_WorkOrders_Warehouses">
+            <End Role="Warehouses" EntitySet="Warehouses" />
+            <End Role="WorkOrders" EntitySet="WorkOrders" />
           </AssociationSet>
           <AssociationSet Name="FK_Workshifts_Shifts" Association="Self.FK_Workshifts_Shifts">
             <End Role="Shifts" EntitySet="Shifts" />
@@ -16112,6 +16298,65 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Workshift" EntitySet="Workshifts" />
             <End Role="SemifinishedItem" EntitySet="SemifinishedItems" />
           </AssociationSet>
+          <EntitySet Name="WorkOrderDetails" EntityType="TotalSmartPortalModel.WorkOrderDetail" />
+          <EntitySet Name="WorkOrders" EntityType="TotalSmartPortalModel.WorkOrder" />
+          <AssociationSet Name="FK_WorkOrders_Boms" Association="TotalSmartPortalModel.FK_WorkOrders_Boms">
+            <End Role="Bom" EntitySet="Boms" />
+            <End Role="WorkOrder" EntitySet="WorkOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrderDetails_Commodities" Association="TotalSmartPortalModel.FK_WorkOrderDetails_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="WorkOrderDetail" EntitySet="WorkOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrderDetails_FirmOrderMaterials" Association="TotalSmartPortalModel.FK_WorkOrderDetails_FirmOrderMaterials">
+            <End Role="FirmOrderMaterial" EntitySet="FirmOrderMaterials" />
+            <End Role="WorkOrderDetail" EntitySet="WorkOrderDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrders_FirmOrders" Association="TotalSmartPortalModel.FK_WorkOrders_FirmOrders">
+            <End Role="FirmOrder" EntitySet="FirmOrders" />
+            <End Role="WorkOrder" EntitySet="WorkOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrders_Warehouses" Association="TotalSmartPortalModel.FK_WorkOrders_Warehouses">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="WorkOrder" EntitySet="WorkOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkOrderDetails_WorkOrders" Association="TotalSmartPortalModel.FK_WorkOrderDetails_WorkOrders">
+            <End Role="WorkOrder" EntitySet="WorkOrders" />
+            <End Role="WorkOrderDetail" EntitySet="WorkOrderDetails" />
+          </AssociationSet>
+          <FunctionImport Name="GetWorkOrderIndexes" ReturnType="Collection(TotalSmartPortalModel.WorkOrderIndex)">
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
+            <Parameter Name="AspUserID" Mode="In" Type="String" />
+            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="GetWorkOrderPendingFirmOrders" ReturnType="Collection(TotalSmartPortalModel.WorkOrderPendingFirmOrder)">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
+            <Parameter Name="FirmOrderID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetWorkOrderViewDetails" ReturnType="Collection(TotalSmartPortalModel.WorkOrderViewDetail)">
+            <Parameter Name="WorkOrderID" Mode="In" Type="Int32" />
+            <Parameter Name="FirmOrderID" Mode="In" Type="Int32" />
+            <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WorkOrderApproved" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WorkOrderEditable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WorkOrderPostSaveValidate" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WorkOrderSaveRelative">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="SaveRelativeOption" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="WorkOrderToggleApproved">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="Approved" Mode="In" Type="Boolean" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -17787,6 +18032,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="WarehouseTransfers1" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Warehouses1" FromRole="Warehouse" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="GoodsReceipts" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_Warehouses" FromRole="Warehouse" ToRole="GoodsReceipt" />
           <NavigationProperty Name="GoodsReceipts1" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_Warehouses1" FromRole="Warehouse" ToRole="GoodsReceipt" />
+          <NavigationProperty Name="WorkOrders" Relationship="TotalSmartPortalModel.FK_WorkOrders_Warehouses" FromRole="Warehouse" ToRole="WorkOrder" />
           </EntityType>
         <Association Name="FK_DeliveryAdvices_Warehouses">
           <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
@@ -18363,6 +18609,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="FinishedItems" Relationship="TotalSmartPortalModel.FK_FinishedItems_FirmOrders" FromRole="FirmOrder" ToRole="FinishedItem" />
           <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_FirmOrders" FromRole="FirmOrder" ToRole="SemifinishedItemDetail" />
           <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_FirmOrders" FromRole="FirmOrder" ToRole="SemifinishedItem" />
+          <NavigationProperty Name="WorkOrders" Relationship="TotalSmartPortalModel.FK_WorkOrders_FirmOrders" FromRole="FirmOrder" ToRole="WorkOrder" />
         </EntityType>
         <EntityType Name="PlannedOrderDetail">
           <Key>
@@ -18605,6 +18852,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="MaterialIssues" Relationship="TotalSmartPortalModel.FK_MaterialIssues_Boms" FromRole="Bom" ToRole="MaterialIssue" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_Boms_Commodities" FromRole="Bom" ToRole="Commodity" />
           <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Boms" FromRole="Bom" ToRole="SemifinishedItem" />
+          <NavigationProperty Name="WorkOrders" Relationship="TotalSmartPortalModel.FK_WorkOrders_Boms" FromRole="Bom" ToRole="WorkOrder" />
         </EntityType>
         <Association Name="FK_BomDetails_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -18685,6 +18933,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_FirmOrderMaterials" FromRole="FirmOrderMaterial" ToRole="MaterialIssueDetail" />
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
           <Property Name="BomDetailID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="WorkOrderDetails" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_FirmOrderMaterials" FromRole="FirmOrderMaterial" ToRole="WorkOrderDetail" />
         </EntityType>
         <Association Name="FK_FirmOrderMaterials_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -23352,6 +23601,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="CommodityIconID" Type="Int32" />
           <NavigationProperty Name="FinishedItemDetails" Relationship="TotalSmartPortalModel.FK_FinishedItemDetails_Commodities" FromRole="Commodity" ToRole="FinishedItemDetail" />
           <NavigationProperty Name="SemifinishedItemDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedItemDetails_Commodities" FromRole="Commodity" ToRole="SemifinishedItemDetail" />
+          <NavigationProperty Name="WorkOrderDetails" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_Commodities" FromRole="Commodity" ToRole="WorkOrderDetail" />
         </EntityType>
         <Association Name="FK_AccountInvoiceDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -24571,6 +24821,196 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="WorkOrderDetail">
+          <Key>
+            <PropertyRef Name="WorkOrderDetailID" />
+          </Key>
+          <Property Name="WorkOrderDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WorkOrderID" Type="Int32" Nullable="false" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="ProductionOrderID" Type="Int32" Nullable="false" />
+          <Property Name="ProductionOrderDetailID" Type="Int32" Nullable="false" />
+          <Property Name="PlannedOrderID" Type="Int32" Nullable="false" />
+          <Property Name="FirmOrderID" Type="Int32" Nullable="false" />
+          <Property Name="FirmOrderMaterialID" Type="Int32" Nullable="false" />
+          <Property Name="BomID" Type="Int32" Nullable="false" />
+          <Property Name="BomDetailID" Type="Int32" Nullable="false" />
+          <Property Name="CommodityID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="QuantityIssued" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_Commodities" FromRole="WorkOrderDetail" ToRole="Commodity" />
+          <NavigationProperty Name="FirmOrderMaterial" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_FirmOrderMaterials" FromRole="WorkOrderDetail" ToRole="FirmOrderMaterial" />
+          <NavigationProperty Name="WorkOrder" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_WorkOrders" FromRole="WorkOrderDetail" ToRole="WorkOrder" />
+        </EntityType>
+        <EntityType Name="WorkOrder">
+          <Key>
+            <PropertyRef Name="WorkOrderID" />
+          </Key>
+          <Property Name="WorkOrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="ProductionOrderID" Type="Int32" Nullable="false" />
+          <Property Name="ProductionOrderDetailID" Type="Int32" Nullable="false" />
+          <Property Name="PlannedOrderID" Type="Int32" Nullable="false" />
+          <Property Name="FirmOrderID" Type="Int32" Nullable="false" />
+          <Property Name="BomID" Type="Int32" Nullable="false" />
+          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="PreparedPersonID" Type="Int32" Nullable="false" />
+          <Property Name="OrganizationalUnitID" Type="Int32" Nullable="false" />
+          <Property Name="LocationID" Type="Int32" Nullable="false" />
+          <Property Name="ApproverID" Type="Int32" Nullable="false" />
+          <Property Name="QuantityMaterialEstimated" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TotalQuantityIssued" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EditedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Approved" Type="Boolean" Nullable="false" />
+          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Bom" Relationship="TotalSmartPortalModel.FK_WorkOrders_Boms" FromRole="WorkOrder" ToRole="Bom" />
+          <NavigationProperty Name="FirmOrder" Relationship="TotalSmartPortalModel.FK_WorkOrders_FirmOrders" FromRole="WorkOrder" ToRole="FirmOrder" />
+          <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_WorkOrders_Warehouses" FromRole="WorkOrder" ToRole="Warehouse" />
+          <NavigationProperty Name="WorkOrderDetails" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_WorkOrders" FromRole="WorkOrder" ToRole="WorkOrderDetail" />
+        </EntityType>
+        <Association Name="FK_WorkOrders_Boms">
+          <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.WorkOrder" Role="WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Bom">
+              <PropertyRef Name="BomID" />
+            </Principal>
+            <Dependent Role="WorkOrder">
+              <PropertyRef Name="BomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkOrderDetails_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.WorkOrderDetail" Role="WorkOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="WorkOrderDetail">
+              <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkOrderDetails_FirmOrderMaterials">
+          <End Type="TotalSmartPortalModel.FirmOrderMaterial" Role="FirmOrderMaterial" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.WorkOrderDetail" Role="WorkOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmOrderMaterial">
+              <PropertyRef Name="FirmOrderMaterialID" />
+            </Principal>
+            <Dependent Role="WorkOrderDetail">
+              <PropertyRef Name="FirmOrderMaterialID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkOrders_FirmOrders">
+          <End Type="TotalSmartPortalModel.FirmOrder" Role="FirmOrder" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.WorkOrder" Role="WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FirmOrder">
+              <PropertyRef Name="FirmOrderID" />
+            </Principal>
+            <Dependent Role="WorkOrder">
+              <PropertyRef Name="FirmOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkOrders_Warehouses">
+          <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.WorkOrder" Role="WorkOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseID" />
+            </Principal>
+            <Dependent Role="WorkOrder">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkOrderDetails_WorkOrders">
+          <End Type="TotalSmartPortalModel.WorkOrder" Role="WorkOrder" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.WorkOrderDetail" Role="WorkOrderDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkOrder">
+              <PropertyRef Name="WorkOrderID" />
+            </Principal>
+            <Dependent Role="WorkOrderDetail">
+              <PropertyRef Name="WorkOrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="WorkOrderIndex">
+          <Property Type="Int32" Name="WorkOrderID" Nullable="false" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="true" />
+          <Property Type="String" Name="Reference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="LocationCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="Description" Nullable="false" MaxLength="201" />
+          <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="Approved" Nullable="false" />
+          <Property Type="String" Name="FirmOrdersReference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FirmOrdersCode" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="FirmOrderEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="FirmOrderSpecs" Nullable="true" MaxLength="800" />
+          <Property Type="String" Name="FirmOrderSpecification" Nullable="true" MaxLength="800" />
+          <Property Type="String" Name="BomCode" Nullable="false" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="WorkOrderPendingFirmOrder">
+          <Property Type="Int32" Name="ProductionOrderDetailID" Nullable="false" />
+          <Property Type="Int32" Name="ProductionOrderID" Nullable="false" />
+          <Property Type="Int32" Name="PlannedOrderID" Nullable="false" />
+          <Property Type="Int32" Name="FirmOrderID" Nullable="false" />
+          <Property Type="String" Name="FirmOrderCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="FirmOrderReference" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="FirmOrderEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="FirmOrderSpecs" Nullable="true" MaxLength="800" />
+          <Property Type="String" Name="FirmOrderSpecification" Nullable="true" MaxLength="800" />
+          <Property Type="Int32" Name="BomID" Nullable="false" />
+          <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TotalQuantityRemains" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="QuantityMaterialEstimatedRemains" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
+          <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="WorkOrderViewDetail">
+          <Property Type="Int32" Name="WorkOrderDetailID" Nullable="true" />
+          <Property Type="Int32" Name="WorkOrderID" Nullable="true" />
+          <Property Type="Int32" Name="FirmOrderMaterialID" Nullable="false" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
+          <Property Type="Int32" Name="BomID" Nullable="false" />
+          <Property Type="Int32" Name="BomDetailID" Nullable="false" />
+          <Property Type="String" Name="LayerCode" Nullable="false" MaxLength="5" />
+          <Property Type="Decimal" Name="BlockUnit" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="BlockQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="LayerQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="FirmOrderMaterialQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="FirmOrderMaterialQuantityIssued" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -31146,6 +31586,136 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WorkOrderDetails">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.WorkOrderDetail">
+              <MappingFragment StoreEntitySet="WorkOrderDetails">
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="QuantityIssued" ColumnName="QuantityIssued" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="BomDetailID" ColumnName="BomDetailID" />
+                <ScalarProperty Name="BomID" ColumnName="BomID" />
+                <ScalarProperty Name="FirmOrderMaterialID" ColumnName="FirmOrderMaterialID" />
+                <ScalarProperty Name="FirmOrderID" ColumnName="FirmOrderID" />
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
+                <ScalarProperty Name="ProductionOrderDetailID" ColumnName="ProductionOrderDetailID" />
+                <ScalarProperty Name="ProductionOrderID" ColumnName="ProductionOrderID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="WorkOrderID" ColumnName="WorkOrderID" />
+                <ScalarProperty Name="WorkOrderDetailID" ColumnName="WorkOrderDetailID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkOrders">
+            <EntityTypeMapping TypeName="TotalSmartPortalModel.WorkOrder">
+              <MappingFragment StoreEntitySet="WorkOrders">
+                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TotalQuantityIssued" ColumnName="TotalQuantityIssued" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="QuantityMaterialEstimated" ColumnName="QuantityMaterialEstimated" />
+                <ScalarProperty Name="ApproverID" ColumnName="ApproverID" />
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="OrganizationalUnitID" ColumnName="OrganizationalUnitID" />
+                <ScalarProperty Name="PreparedPersonID" ColumnName="PreparedPersonID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="BomID" ColumnName="BomID" />
+                <ScalarProperty Name="FirmOrderID" ColumnName="FirmOrderID" />
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
+                <ScalarProperty Name="ProductionOrderDetailID" ColumnName="ProductionOrderDetailID" />
+                <ScalarProperty Name="ProductionOrderID" ColumnName="ProductionOrderID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="WorkOrderID" ColumnName="WorkOrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetWorkOrderIndexes" FunctionName="TotalSmartPortalModel.Store.GetWorkOrderIndexes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.WorkOrderIndex">
+                <ScalarProperty Name="WorkOrderID" ColumnName="WorkOrderID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="FirmOrdersReference" ColumnName="FirmOrdersReference" />
+                <ScalarProperty Name="FirmOrdersCode" ColumnName="FirmOrdersCode" />
+                <ScalarProperty Name="FirmOrderEntryDate" ColumnName="FirmOrderEntryDate" />
+                <ScalarProperty Name="FirmOrderSpecs" ColumnName="FirmOrderSpecs" />
+                <ScalarProperty Name="FirmOrderSpecification" ColumnName="FirmOrderSpecification" />
+                <ScalarProperty Name="BomCode" ColumnName="BomCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetWorkOrderPendingFirmOrders" FunctionName="TotalSmartPortalModel.Store.GetWorkOrderPendingFirmOrders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.WorkOrderPendingFirmOrder">
+                <ScalarProperty Name="ProductionOrderDetailID" ColumnName="ProductionOrderDetailID" />
+                <ScalarProperty Name="ProductionOrderID" ColumnName="ProductionOrderID" />
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
+                <ScalarProperty Name="FirmOrderID" ColumnName="FirmOrderID" />
+                <ScalarProperty Name="FirmOrderCode" ColumnName="FirmOrderCode" />
+                <ScalarProperty Name="FirmOrderReference" ColumnName="FirmOrderReference" />
+                <ScalarProperty Name="FirmOrderEntryDate" ColumnName="FirmOrderEntryDate" />
+                <ScalarProperty Name="FirmOrderSpecs" ColumnName="FirmOrderSpecs" />
+                <ScalarProperty Name="FirmOrderSpecification" ColumnName="FirmOrderSpecification" />
+                <ScalarProperty Name="BomID" ColumnName="BomID" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="TotalQuantityRemains" ColumnName="TotalQuantityRemains" />
+                <ScalarProperty Name="QuantityMaterialEstimatedRemains" ColumnName="QuantityMaterialEstimatedRemains" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetWorkOrderViewDetails" FunctionName="TotalSmartPortalModel.Store.GetWorkOrderViewDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.WorkOrderViewDetail">
+                <ScalarProperty Name="WorkOrderDetailID" ColumnName="WorkOrderDetailID" />
+                <ScalarProperty Name="WorkOrderID" ColumnName="WorkOrderID" />
+                <ScalarProperty Name="FirmOrderMaterialID" ColumnName="FirmOrderMaterialID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="BomID" ColumnName="BomID" />
+                <ScalarProperty Name="BomDetailID" ColumnName="BomDetailID" />
+                <ScalarProperty Name="LayerCode" ColumnName="LayerCode" />
+                <ScalarProperty Name="BlockUnit" ColumnName="BlockUnit" />
+                <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />
+                <ScalarProperty Name="LayerQuantity" ColumnName="LayerQuantity" />
+                <ScalarProperty Name="FirmOrderMaterialQuantity" ColumnName="FirmOrderMaterialQuantity" />
+                <ScalarProperty Name="FirmOrderMaterialQuantityIssued" ColumnName="FirmOrderMaterialQuantityIssued" />
+                <ScalarProperty Name="QuantityAvailables" ColumnName="QuantityAvailables" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="WorkOrderApproved" FunctionName="TotalSmartPortalModel.Store.WorkOrderApproved" />
+          <FunctionImportMapping FunctionImportName="WorkOrderEditable" FunctionName="TotalSmartPortalModel.Store.WorkOrderEditable" />
+          <FunctionImportMapping FunctionImportName="WorkOrderPostSaveValidate" FunctionName="TotalSmartPortalModel.Store.WorkOrderPostSaveValidate" />
+          <FunctionImportMapping FunctionImportName="WorkOrderSaveRelative" FunctionName="TotalSmartPortalModel.Store.WorkOrderSaveRelative" />
+          <FunctionImportMapping FunctionImportName="WorkOrderToggleApproved" FunctionName="TotalSmartPortalModel.Store.WorkOrderToggleApproved" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

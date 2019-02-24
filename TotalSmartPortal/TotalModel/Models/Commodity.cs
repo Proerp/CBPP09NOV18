@@ -45,6 +45,7 @@ namespace TotalModel.Models
             this.Boms = new HashSet<Bom>();
             this.FinishedItemDetails = new HashSet<FinishedItemDetail>();
             this.SemifinishedItemDetails = new HashSet<SemifinishedItemDetail>();
+            this.WorkOrderDetails = new HashSet<WorkOrderDetail>();
         }
     
         public int CommodityID { get; set; }
@@ -148,5 +149,7 @@ namespace TotalModel.Models
         public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedItemDetail> SemifinishedItemDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkOrderDetail> WorkOrderDetails { get; set; }
     }
 }

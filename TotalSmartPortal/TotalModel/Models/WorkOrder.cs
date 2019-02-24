@@ -12,41 +12,44 @@ namespace TotalModel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FirmOrderMaterial
+    public partial class WorkOrder
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FirmOrderMaterial()
+        public WorkOrder()
         {
-            this.MaterialIssueDetails = new HashSet<MaterialIssueDetail>();
             this.WorkOrderDetails = new HashSet<WorkOrderDetail>();
         }
     
-        public int FirmOrderMaterialID { get; set; }
-        public int FirmOrderID { get; set; }
-        public int PlannedOrderID { get; set; }
+        public int WorkOrderID { get; set; }
         public System.DateTime EntryDate { get; set; }
-        public int LocationID { get; set; }
-        public int CustomerID { get; set; }
-        public int BomID { get; set; }
-        public int MaterialID { get; set; }
-        public decimal Quantity { get; set; }
-        public decimal QuantityIssued { get; set; }
-        public Nullable<int> VoidTypeID { get; set; }
-        public bool Approved { get; set; }
-        public bool InActive { get; set; }
-        public bool InActivePartial { get; set; }
-        public Nullable<System.DateTime> InActivePartialDate { get; set; }
-        public decimal BlockUnit { get; set; }
-        public decimal BlockQuantity { get; set; }
+        public string Reference { get; set; }
+        public string Code { get; set; }
         public int NMVNTaskID { get; set; }
-        public int BomDetailID { get; set; }
+        public int CustomerID { get; set; }
+        public int ProductionOrderID { get; set; }
+        public int ProductionOrderDetailID { get; set; }
+        public int PlannedOrderID { get; set; }
+        public int FirmOrderID { get; set; }
+        public int BomID { get; set; }
+        public int WarehouseID { get; set; }
+        public int UserID { get; set; }
+        public int PreparedPersonID { get; set; }
+        public int OrganizationalUnitID { get; set; }
+        public int LocationID { get; set; }
+        public int ApproverID { get; set; }
+        public decimal QuantityMaterialEstimated { get; set; }
+        public decimal TotalQuantity { get; set; }
+        public decimal TotalQuantityIssued { get; set; }
+        public string Description { get; set; }
+        public string Remarks { get; set; }
+        public System.DateTime CreatedDate { get; set; }
+        public System.DateTime EditedDate { get; set; }
+        public bool Approved { get; set; }
+        public Nullable<System.DateTime> ApprovedDate { get; set; }
     
         public virtual Bom Bom { get; set; }
-        public virtual Customer Customer { get; set; }
         public virtual FirmOrder FirmOrder { get; set; }
-        public virtual VoidType VoidType { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<MaterialIssueDetail> MaterialIssueDetails { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WorkOrderDetail> WorkOrderDetails { get; set; }
     }

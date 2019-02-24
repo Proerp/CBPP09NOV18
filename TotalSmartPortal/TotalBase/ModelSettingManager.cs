@@ -58,6 +58,15 @@ namespace TotalBase
                                     " + (int)GlobalEnums.NmvnTaskID.SemifinishedProductHandover + @" THEN 'HP' ELSE '#' END
                              END ";
 
+                case GlobalEnums.NmvnTaskID.WorkOrder:
+                    return @"CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.MaterialWork + @" THEN 'MW' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.ItemWork + @" THEN 'MW' ELSE
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductWork + @" THEN 'MW' ELSE '#' END
+                             END END ";
+
                 case GlobalEnums.NmvnTaskID.MaterialIssue:
                     return @"CASE WHEN @NmvnTaskID = 
                                     " + (int)GlobalEnums.NmvnTaskID.MaterialStaging + @" THEN 'ME' ELSE 
