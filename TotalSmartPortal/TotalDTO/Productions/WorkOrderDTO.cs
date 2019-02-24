@@ -49,13 +49,6 @@ namespace TotalDTO.Productions
 
         int BomID { get; set; }
 
-        [Display(Name = "Thông số máy")]
-        [Required(ErrorMessage = "Vui lòng nhập thông số máy")]
-        string Code { get; set; }
-
-        [Display(Name = "Mã số máy, ca sx")]
-        string Caption { get; }
-
         Nullable<int> WarehouseID { get; set; }
     }
 
@@ -89,16 +82,13 @@ namespace TotalDTO.Productions
 
         public int BomID { get; set; }
 
-        public string Code { get; set; }
-        public override string Caption { get { return ""; } }
-
         public virtual Nullable<int> WarehouseID { get; set; }
 
         public override void PerformPresaveRule()
         {
             base.PerformPresaveRule();
 
-            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.PlannedOrderID = this.PlannedOrderID; e.FirmOrderID = this.FirmOrderID; e.ProductionOrderID = this.ProductionOrderID; e.ProductionOrderDetailID = this.ProductionOrderDetailID; e.CustomerID = this.CustomerID; e.WarehouseID = this.WarehouseID; e.Code = this.Code; });
+            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.PlannedOrderID = this.PlannedOrderID; e.FirmOrderID = this.FirmOrderID; e.ProductionOrderID = this.ProductionOrderID; e.ProductionOrderDetailID = this.ProductionOrderDetailID; e.CustomerID = this.CustomerID; e.WarehouseID = this.WarehouseID; });
         }
     }
 

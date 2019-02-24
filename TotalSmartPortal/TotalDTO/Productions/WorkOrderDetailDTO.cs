@@ -25,8 +25,6 @@ namespace TotalDTO.Productions
 
         public GlobalEnums.NmvnTaskID NMVNTaskID { get; set; }
 
-        public string Code { get; set; }
-
         public int BomID { get; set; }
         public int BomDetailID { get; set; }
         [Display(Name = "Trục")]
@@ -39,27 +37,11 @@ namespace TotalDTO.Productions
         [UIHint("StringReadonly")]
         public override string CommodityCode { get; set; }     
 
-        [Display(Name = "Tồn LSX")]
-        [UIHint("QuantityReadonly")]
-        public decimal WorkshiftFirmOrderRemains { get; set; }
-
         [Display(Name = "Tồn kho")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityAvailables { get; set; }
 
-        [Display(Name = "[MIN QuantityAvailables vs WorkshiftPlannedOrderRemains]Remains")]
         [UIHint("QuantityReadonly")]
-        public decimal QuantityRemains { get; set; }
-
-        [UIHint("Quantity")]
         public override decimal Quantity { get; set; }
-
-
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            foreach (var result in base.Validate(validationContext)) { yield return result; }
-
-            if (this.ProductionOrderID > 0 && this.Quantity > this.QuantityRemains) yield return new ValidationResult("Số lượng xuất không được lớn hơn số lượng còn lại [" + this.CommodityName + "]", new[] { "Quantity" });
-        }
     }
 }

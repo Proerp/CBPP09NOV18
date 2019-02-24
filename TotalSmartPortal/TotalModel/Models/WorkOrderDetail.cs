@@ -17,7 +17,6 @@ namespace TotalModel.Models
         public int WorkOrderDetailID { get; set; }
         public int WorkOrderID { get; set; }
         public System.DateTime EntryDate { get; set; }
-        public string Code { get; set; }
         public int NMVNTaskID { get; set; }
         public int LocationID { get; set; }
         public int CustomerID { get; set; }

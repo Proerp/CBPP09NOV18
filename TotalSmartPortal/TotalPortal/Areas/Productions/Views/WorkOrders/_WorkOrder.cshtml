@@ -36,16 +36,6 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => (model as IWorkOrderPrimitiveDTO).Code)
-            <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => (model as IWorkOrderPrimitiveDTO).Code).HtmlAttributes(new { @class = "left-panel-input" })
-            </div>
-            <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => (model as IWorkOrderPrimitiveDTO).Code, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             @Html.LabelFor(model => (model as IWorkOrderPrimitiveDTO).FirmOrderReference)
             <div class="div-input">
                 @Html.Kendo().MaskedTextBoxFor(model => (model as IWorkOrderPrimitiveDTO).FirmOrderReference).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
@@ -142,44 +132,33 @@
                         .ClientTemplate("#= (BomID == null)? '' : BomID #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].BomID' value='#= (BomID == null) ? '' : BomID #' />");
                     columns.Bound(p => p.BomDetailID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (BomDetailID == null)? '' : BomDetailID #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].BomDetailID' value='#= (BomDetailID == null) ? '' : BomDetailID #' />");
-                    columns.Bound(p => p.LayerCode).DisplayNameTitle().Width(20).Hidden(GlobalEnums.CBPP || @Model.IsItem).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
-                        .ClientTemplate("#= (LayerCode == null)? '' : LayerCode #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].LayerCode' value='#= (LayerCode == null) ? '' : LayerCode #' />");
+
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
                     columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(200)
                         .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(280).HtmlAttributes(new { style = "" })
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(190).HtmlAttributes(new { style = "" })
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
+                    columns.Bound(p => p.Remarks).DisplayNameTitle()
+                        .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
+                    columns.Bound(p => p.LayerCode).DisplayNameTitle().Width(20).Hidden(GlobalEnums.CBPP || @Model.IsItem).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
+                        .ClientTemplate("#= (LayerCode == null)? '' : LayerCode #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].LayerCode' value='#= (LayerCode == null) ? '' : LayerCode #' />");
+                                        
                     columns.Bound(p => p.QuantityAvailables).DisplayNameTitle().Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityAvailables) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].QuantityAvailables' value='#= QuantityAvailables #' />");
 
-                    columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(true)
-                        .Format(Settings.kfmQuantity)
-                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
-
-                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(50)
+                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(80)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
-
-
-
-                    columns.Bound(p => p.Remarks).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
-
-
-                    columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(50).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center" });
-
-                    columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(50).Hidden(!@Model.Voidable && !@Model.UnVoidable)
-                        .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' onclick='callVoidDetail(#= WorkOrderDetailID #)'><span class='k-icon sbt-void'></span></a>");
                 })
                     .Filterable(f => f.Enabled(false))
                     .Navigatable()
@@ -226,7 +205,6 @@
                                             })
                                             .Aggregates(a => a.Add(x => x.CommodityCode).Count())
                                             .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
-                                            .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
                                             .Aggregates(a => a.Add(x => x.Quantity).Sum())
                                         )
             )

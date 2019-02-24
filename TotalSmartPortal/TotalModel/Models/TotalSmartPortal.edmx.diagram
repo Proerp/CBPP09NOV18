@@ -482,15 +482,18 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItemDetails_SemifinishedItems" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItems_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItems_Workshifts" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.WorkOrderDetail" Width="1.5" PointX="39.875" PointY="19.625" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.WorkOrder" Width="1.5" PointX="36.625" PointY="7.75" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.WorkOrderDetail" Width="1.5" PointX="56.875" PointY="34.5" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.WorkOrder" Width="1.5" PointX="54.625" PointY="13.25" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_Boms" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrderDetails_Commodities" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_Customers" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrderDetails_FirmOrderMaterials" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_FirmOrders" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_Locations" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_PlannedOrders" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_Users" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrderDetails_WorkOrders" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_Customers" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

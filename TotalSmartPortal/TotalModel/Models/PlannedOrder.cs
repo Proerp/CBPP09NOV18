@@ -23,6 +23,7 @@ namespace TotalModel.Models
             this.ProductionOrders = new HashSet<ProductionOrder>();
             this.FinishedHandovers = new HashSet<FinishedHandover>();
             this.GoodsReceipts = new HashSet<GoodsReceipt>();
+            this.WorkOrders = new HashSet<WorkOrder>();
         }
     
         public int PlannedOrderID { get; set; }
@@ -68,5 +69,7 @@ namespace TotalModel.Models
         public virtual ICollection<FinishedHandover> FinishedHandovers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceipt> GoodsReceipts { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkOrder> WorkOrders { get; set; }
     }
 }

@@ -74,7 +74,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       SELECT      WorkOrderDetails.WorkOrderDetailID, @WorkOrderID AS WorkOrderID, FirmOrderMaterials.FirmOrderMaterialID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
             queryString = queryString + "                   FirmOrderMaterials.BomID, FirmOrderMaterials.BomDetailID, BomDetails.LayerCode, BomDetails.BlockUnit, BomDetails.BlockQuantity, BomDetails.LayerQuantity, " + "\r\n";
-            queryString = queryString + "                   FirmOrderMaterials.Quantity AS FirmOrderMaterialQuantity, FirmOrderMaterials.QuantityIssued AS FirmOrderMaterialQuantityIssued, GoodsReceiptDetails.QuantityAvailables, ISNULL(WorkOrderDetails.Quantity, 0) AS Quantity " + "\r\n";
+            queryString = queryString + "                   FirmOrderMaterials.Quantity AS FirmOrderMaterialQuantity, FirmOrderMaterials.QuantityIssued AS FirmOrderMaterialQuantityIssued, GoodsReceiptDetails.QuantityAvailables, ISNULL(WorkOrderDetails.Quantity, 0) AS Quantity, WorkOrderDetails.Remarks " + "\r\n";
 
             queryString = queryString + "       FROM        FirmOrderMaterials " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON FirmOrderMaterials.FirmOrderID = @FirmOrderID AND FirmOrderMaterials.Approved = 1 AND FirmOrderMaterials.InActive = 0 AND FirmOrderMaterials.InActivePartial = 0 AND FirmOrderMaterials.MaterialID = Commodities.CommodityID " + "\r\n";
@@ -82,6 +82,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "                   LEFT JOIN WorkOrderDetails ON WorkOrderDetails.WorkOrderID = @WorkOrderID AND FirmOrderMaterials.FirmOrderMaterialID = WorkOrderDetails.FirmOrderMaterialID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN (SELECT CommodityID, ROUND(SUM(Quantity - QuantityIssued), " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables FROM GoodsReceiptDetails WHERE WarehouseID = @WarehouseID AND CommodityID IN (SELECT MaterialID FROM FirmOrderMaterials WHERE FirmOrderID = @FirmOrderID) AND Approved = 1 AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY CommodityID) GoodsReceiptDetails ON FirmOrderMaterials.MaterialID = GoodsReceiptDetails.CommodityID " + "\r\n";
+
+            queryString = queryString + "       ORDER BY    BomDetails.LayerCode, BomDetails.BomDetailID " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 

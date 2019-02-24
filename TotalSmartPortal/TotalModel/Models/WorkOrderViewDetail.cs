@@ -30,5 +30,6 @@ namespace TotalModel.Models
         public decimal FirmOrderMaterialQuantityIssued { get; set; }
         public Nullable<decimal> QuantityAvailables { get; set; }
         public decimal Quantity { get; set; }
+        public string Remarks { get; set; }
     }
 }

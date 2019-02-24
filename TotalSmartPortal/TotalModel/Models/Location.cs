@@ -50,6 +50,7 @@ namespace TotalModel.Models
             this.Labs = new HashSet<Lab>();
             this.FinishedItems = new HashSet<FinishedItem>();
             this.SemifinishedItems = new HashSet<SemifinishedItem>();
+            this.WorkOrders = new HashSet<WorkOrder>();
         }
     
         public int LocationID { get; set; }
@@ -130,5 +131,7 @@ namespace TotalModel.Models
         public virtual ICollection<FinishedItem> FinishedItems { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedItem> SemifinishedItems { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<WorkOrder> WorkOrders { get; set; }
     }
 }
