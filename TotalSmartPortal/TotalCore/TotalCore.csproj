@@ -97,6 +97,7 @@
     <Compile Include="Repositories\Productions\ISemifinishedHandoverRepository.cs" />
     <Compile Include="Repositories\Productions\ISemifinishedItemRepository.cs" />
     <Compile Include="Repositories\Productions\ISemifinishedProductRepository.cs" />
+    <Compile Include="Repositories\Productions\IWorkOrderRepository.cs" />
     <Compile Include="Repositories\Purchases\IGoodsArrivalRepository.cs" />
     <Compile Include="Repositories\Purchases\ILabRepository.cs" />
     <Compile Include="Repositories\Purchases\IPurchaseOrderRepository.cs" />
@@ -156,6 +157,7 @@
     <Compile Include="Services\Productions\ISemifinishedHandoverService.cs" />
     <Compile Include="Services\Productions\ISemifinishedItemService.cs" />
     <Compile Include="Services\Productions\ISemifinishedProductService.cs" />
+    <Compile Include="Services\Productions\IWorkOrderService.cs" />
     <Compile Include="Services\Purchases\IGoodsArrivalService.cs" />
     <Compile Include="Services\Purchases\ILabService.cs" />
     <Compile Include="Services\Purchases\IPurchaseOrderService.cs" />
