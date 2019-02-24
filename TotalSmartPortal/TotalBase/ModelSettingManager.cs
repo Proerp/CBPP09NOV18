@@ -60,11 +60,11 @@ namespace TotalBase
 
                 case GlobalEnums.NmvnTaskID.WorkOrder:
                     return @"CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.MaterialWork + @" THEN 'MW' ELSE 
+                                    " + (int)GlobalEnums.NmvnTaskID.MaterialWorkOrder + @" THEN 'MW' ELSE 
                              CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.ItemWork + @" THEN 'MW' ELSE
+                                    " + (int)GlobalEnums.NmvnTaskID.ItemWorkOrder + @" THEN 'MW' ELSE
                              CASE WHEN @NmvnTaskID = 
-                                    " + (int)GlobalEnums.NmvnTaskID.ProductWork + @" THEN 'MW' ELSE '#' END
+                                    " + (int)GlobalEnums.NmvnTaskID.ProductWorkOrder + @" THEN 'MW' ELSE '#' END
                              END END ";
 
                 case GlobalEnums.NmvnTaskID.MaterialIssue:

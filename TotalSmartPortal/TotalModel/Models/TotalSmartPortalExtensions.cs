@@ -135,6 +135,20 @@ namespace TotalModel.Models
         public virtual decimal? QuantityRemains { get { return this.QuantityAvailables; } }
     }
 
+    public partial class WorkOrder : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<WorkOrderDetail>
+    {
+        public int GetID() { return this.WorkOrderID; }
+
+        public ICollection<WorkOrderDetail> GetDetails() { return this.WorkOrderDetails; }
+    }
+
+
+    public partial class WorkOrderDetail : IPrimitiveEntity, IHelperEntryDate, IHelperCommodityID
+    {
+        public int GetID() { return this.WorkOrderDetailID; }
+    }
+
+
     public partial class MaterialIssue : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<MaterialIssueDetail>
     {
         public int GetID() { return this.MaterialIssueID; }

@@ -100,11 +100,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       FROM           (SELECT FirmOrderID, ROUND(SUM(Quantity - (QuantitySemifinished - QuantityShortage - QuantityFailure + QuantityExcess)), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM FirmOrderDetails WHERE NMVNTaskID = @NMVNTaskID + 671977 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND (@FirmOrderID IS NULL OR FirmOrderID = @FirmOrderID) AND ROUND(Quantity - (QuantitySemifinished - QuantityShortage - QuantityFailure + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY FirmOrderID) AS FirmOrderRemains " + "\r\n";
             queryString = queryString + "                       INNER JOIN ProductionOrderDetails ON ProductionOrderDetails.Approved = 1 AND ProductionOrderDetails.InActive = 0 AND ProductionOrderDetails.InActivePartial = 0 AND FirmOrderRemains.FirmOrderID = ProductionOrderDetails.FirmOrderID " + "\r\n";//LocationID = @LocationID AND 
-            queryString = queryString + "                       INNER JOIN FirmOrders ON (@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemWork + " OR ROUND(FirmOrders.QuantityMaterialEstimated - FirmOrders.QuantityMaterialEstimatedIssued, " + (int)GlobalEnums.rndQuantity + ") >0) AND FirmOrderRemains.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN FirmOrders ON (@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemWorkOrder + " OR ROUND(FirmOrders.QuantityMaterialEstimated - FirmOrders.QuantityMaterialEstimatedIssued, " + (int)GlobalEnums.rndQuantity + ") >0) AND FirmOrderRemains.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
 
             queryString = queryString + "                       INNER JOIN Customers ON ProductionOrderDetails.CustomerID = Customers.CustomerID " + "\r\n";
 
-            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = IIF(@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemWork + ", 6, 1) " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = IIF(@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemWorkOrder + ", 6, 1) " + "\r\n";
 
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetWorkOrderPendingFirmOrders", queryString);
