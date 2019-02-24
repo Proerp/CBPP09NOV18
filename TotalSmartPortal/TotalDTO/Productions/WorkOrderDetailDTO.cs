@@ -36,6 +36,9 @@ namespace TotalDTO.Productions
         public Nullable<int> CustomerID { get; set; }
         public Nullable<int> WarehouseID { get; set; }
 
+        [UIHint("StringReadonly")]
+        public override string CommodityCode { get; set; }     
+
         [Display(Name = "Tồn LSX")]
         [UIHint("QuantityReadonly")]
         public decimal WorkshiftFirmOrderRemains { get; set; }

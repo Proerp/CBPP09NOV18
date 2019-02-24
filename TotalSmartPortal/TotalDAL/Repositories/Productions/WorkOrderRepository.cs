@@ -10,9 +10,6 @@ using TotalCore.Repositories.Productions;
 
 namespace TotalDAL.Repositories.Productions
 {
-    class WorkOrderRepository
-    {
-    }
     public class WorkOrderRepository : GenericWithDetailRepository<WorkOrder, WorkOrderDetail>, IWorkOrderRepository
     {
         public WorkOrderRepository(TotalSmartPortalEntities totalSmartPortalEntities)

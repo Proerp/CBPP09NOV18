@@ -155,7 +155,18 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IPackageIssueViewModelSelectListBuilder>().To<PackageIssueViewModelSelectListBuilder>();
 
 
-                
+
+                kernel.Bind<IWorkOrderRepository>().To<WorkOrderRepository>();
+                kernel.Bind<IWorkOrderAPIRepository>().To<WorkOrderAPIRepository>();
+
+                kernel.Bind<IMaterialWorkOrderService>().To<MaterialWorkOrderService>();
+                kernel.Bind<IMaterialWorkOrderViewModelSelectListBuilder>().To<MaterialWorkOrderViewModelSelectListBuilder>();
+                kernel.Bind<IItemWorkOrderService>().To<ItemWorkOrderService>();
+                kernel.Bind<IItemWorkOrderViewModelSelectListBuilder>().To<ItemWorkOrderViewModelSelectListBuilder>();
+                kernel.Bind<IProductWorkOrderService>().To<ProductWorkOrderService>();
+                kernel.Bind<IProductWorkOrderViewModelSelectListBuilder>().To<ProductWorkOrderViewModelSelectListBuilder>();
+
+
                 kernel.Bind<IMaterialIssueRepository>().To<MaterialIssueRepository>();
                 kernel.Bind<IMaterialIssueAPIRepository>().To<MaterialIssueAPIRepository>();
 

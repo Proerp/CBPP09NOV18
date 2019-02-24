@@ -97,6 +97,22 @@ namespace TotalPortal.App_Start
 
 
 
+                cfg.CreateMap<WorkOrder, WorkOrderDTO<WOOptionMaterial>>();
+                cfg.CreateMap<WorkOrder, WorkOrderDTO<WOOptionItem>>();
+                cfg.CreateMap<WorkOrder, WorkOrderDTO<WOOptionProduct>>();
+
+                cfg.CreateMap<WorkOrderPrimitiveDTO<WOOptionMaterial>, WorkOrder>();
+                cfg.CreateMap<WorkOrderPrimitiveDTO<WOOptionItem>, WorkOrder>();
+                cfg.CreateMap<WorkOrderPrimitiveDTO<WOOptionProduct>, WorkOrder>();
+
+                cfg.CreateMap<WorkOrderViewDetail, WorkOrderDetailDTO>();
+                cfg.CreateMap<WorkOrderDetailDTO, WorkOrderDetail>();
+
+                cfg.CreateMap<WorkOrder, MaterialWorkOrderViewModel>();
+                cfg.CreateMap<WorkOrder, ItemWorkOrderViewModel>();
+                cfg.CreateMap<WorkOrder, ProductWorkOrderViewModel>();
+
+
                 cfg.CreateMap<MaterialIssue, MaterialIssueDTO<MIOptionMaterial>>();
                 cfg.CreateMap<MaterialIssue, MaterialIssueDTO<MIOptionItem>>();
                 cfg.CreateMap<MaterialIssue, MaterialIssueDTO<MIOptionProduct>>();
