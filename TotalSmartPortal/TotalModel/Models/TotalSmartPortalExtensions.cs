@@ -139,6 +139,8 @@ namespace TotalModel.Models
     {
         public int GetID() { return this.WorkOrderID; }
 
+        public decimal QuantityMaterialEstimatedRemains { get { return this.FirmOrder.QuantityMaterialEstimated - this.FirmOrder.QuantityMaterialEstimatedIssued + this.QuantityMaterialEstimated; } }
+
         public ICollection<WorkOrderDetail> GetDetails() { return this.WorkOrderDetails; }
     }
 

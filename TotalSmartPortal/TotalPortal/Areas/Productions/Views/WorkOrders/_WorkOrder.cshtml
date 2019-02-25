@@ -94,13 +94,13 @@
             <div class="right-second-panel">
                 <div class="form-group">
                     <div class="right-panel-label">
-                        @Html.LabelFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimated)
+                        @Html.LabelFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimatedRemains)
                     </div>
                     <div class="div-input">
-                        @Html.Kendo().NumericTextBoxFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimated).HtmlAttributes(new { @class = "right-panel-input only-here", @readonly = "readonly" })
+                        @Html.Kendo().NumericTextBoxFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimatedRemains).HtmlAttributes(new { @class = "right-panel-input only-here", @readonly = "readonly" })
                     </div>
                     <div class="div-validation-message">
-                        @Html.ValidationMessageFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimated, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimatedRemains, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
@@ -148,66 +148,82 @@
                     columns.Bound(p => p.Remarks).DisplayNameTitle()
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
+
+                    columns.Bound(p => p.FirmOrderMaterialQuantity).Hidden()
+                        .Format(Settings.kfmQuantity)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', FirmOrderMaterialQuantity) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].FirmOrderMaterialQuantity' value='#= FirmOrderMaterialQuantity #' />");
+                    columns.Bound(p => p.FirmOrderMaterialQuantityIssued).Hidden()
+                        .Format(Settings.kfmQuantity)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', FirmOrderMaterialQuantityIssued) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].FirmOrderMaterialQuantityIssued' value='#= FirmOrderMaterialQuantityIssued #' />");
+                    
+                    
+                    columns.Bound(p => p.BlockQuantity).DisplayNameTitle().Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmQuantity)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', BlockQuantity) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].BlockQuantity' value='#= BlockQuantity #' />");
                     columns.Bound(p => p.LayerCode).DisplayNameTitle().Width(20).Hidden(GlobalEnums.CBPP || @Model.IsItem).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
                         .ClientTemplate("#= (LayerCode == null)? '' : LayerCode #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].LayerCode' value='#= (LayerCode == null) ? '' : LayerCode #' />");
-                                        
-                    columns.Bound(p => p.QuantityAvailables).DisplayNameTitle().Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                    columns.Bound(p => p.BlockUnit).DisplayNameTitle().Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)
-                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityAvailables) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].QuantityAvailables' value='#= QuantityAvailables #' />");
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', BlockUnit) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].BlockUnit' value='#= BlockUnit #' />");
 
                     columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(80)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
-                })
-                    .Filterable(f => f.Enabled(false))
-                    .Navigatable()
 
-                    .ToolBar(toolbar =>
+                    columns.Bound(p => p.QuantityAvailables).DisplayNameTitle().Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmQuantity)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityAvailables) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].QuantityAvailables' value='#= QuantityAvailables #' />");
+                })
+                .Filterable(f => f.Enabled(false))
+                .Navigatable()
+
+                .ToolBar(toolbar =>
+                {
+                    if (Model.Editable)
+                    {
+                        toolbar.Template(@<text>
+                            <span style="float:right">
+                                @Html.LabelFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimated)
+                                @Html.Kendo().NumericTextBoxFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimated).HtmlAttributes(new { @style = "width: 118px;" }).Events(e => e.Change("updateFoilCounts").Spin("updateFoilCounts"))
+                            </span>
+                        </text>);
+                    }
+                    else
                     {
                         toolbar.Template(@<text> @Commons.Toolbars.BlankToolbar() </text>);
-                    })
+                    }
+                })
 
-                    .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
-                    .Selectable(settings =>
+                .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
+                .Selectable(settings =>
+                {
+                    settings.Mode(GridSelectionMode.Multiple);
+                    settings.Type(GridSelectionType.Row);
+                })
+                .Events(events =>
+                        {
+                            events.DataBound("colorLayerCode");
+                        })
+                .DataSource(dataSource => dataSource
+                    .Ajax()
+                    .Batch(true)
+                    .ServerOperation(false)
+                    .Model(model =>
                     {
-                        settings.Mode(GridSelectionMode.Multiple);
-                        settings.Type(GridSelectionType.Row);
+                        model.Id(x => x.WorkOrderDetailID);
+                        model.Field(m => m.WorkOrderDetailID).DefaultValue(0);
+                        model.Field(m => m.WorkOrderID).DefaultValue(@Model.WorkOrderID);
                     })
                     .Events(events =>
                     {
-                        events.DataBound(@<text>
-                            function(e) {
-
-                            var grid = $("#kendoGridDetails").data("kendoGrid");
-                            var data = grid.dataSource.data();
-                            $.each(data, function (i, row) {
-                            var isWarrantyClaim = row.VoidTypeName;
-                            if (isWarrantyClaim != null && isWarrantyClaim != '') {
-                            $('tr[data-uid="' + row.uid + '"]').addClass("isBonus");
-                            }
-                            });
-                            }
-                        </text>);
-                    }).DataSource(dataSource => dataSource
-                                            .Ajax()
-                                            .Batch(true)
-                                            .ServerOperation(false)
-                                            .Model(model =>
-                                            {
-                                                model.Id(x => x.WorkOrderDetailID);
-                                                model.Field(m => m.WorkOrderDetailID).DefaultValue(0);
-                                                model.Field(m => m.WorkOrderID).DefaultValue(@Model.WorkOrderID);
-                                            })
-                                            .Events(events =>
-                                            {
-                                                events.Error("kendGrid_ErrorHandler");
-                                            })
-                                            .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                                            .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
-                                            .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                                        )
-            )
+                        events.Error("kendGrid_ErrorHandler");
+                    })
+                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                    .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
+                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                )
+)
         </div>
 
         <div class="div-k-panel">
@@ -286,17 +302,39 @@
 <script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
 
 <script type="text/javascript">
-    function GetPendingFirmOrderMaterials() {
-        require(["kpopupWindow"], function (kpopupWindow) {
-            var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingFirmOrderMaterials", Model.ControllerName, new { area = "Productions" })", "Xuất kho", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
-        });
+    function updateFoilCounts() {
+        var quantityMaterialEstimated = DoRound($("#QuantityMaterialEstimated").val(), requireConfig.websiteOptions.rndQuantity);
+        var quantityMaterialEstimatedRemains = DoRound($("#QuantityMaterialEstimatedRemains").val(), requireConfig.websiteOptions.rndQuantity);
+
+        var kenGrid = $("#kendoGridDetails").data("kendoGrid");
+        kenGrid.bind("dataBinding", function (e) { e.preventDefault(); }); //You can prevent the data bind action at the dataBinding event, when updating multiple model properties
+        
+        var allDataRows = kenGrid.dataSource.data();
+        for (var i = 0; i < allDataRows.length; i++) {
+            var dataItem = allDataRows[i];
+
+            var quantity = (quantityMaterialEstimated == quantityMaterialEstimatedRemains ? dataItem.FirmOrderMaterialQuantity - dataItem.FirmOrderMaterialQuantityIssued : (((quantityMaterialEstimated * dataItem.BlockUnit) / 100) * (dataItem.BlockQuantity / dataItem.LayerQuantity)));
+
+            dataItem.set("Quantity", DoRound(quantity, requireConfig.websiteOptions.rndQuantity));
+        }
+
+        kenGrid.unbind("dataBinding"); //When finish modifying the data, unbind dataBinding event
+        kenGrid.refresh(); //Then, finally, refresh grid
     }
 
-    function callVoidDetail(materialIssueDetailID) {
-        require(["kpopupWindow"], function (kpopupWindow) {
-            var voidDetailWindow = new kpopupWindow();
-            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", Model.ControllerName)" + "/" + $("#WorkOrderID").val() + "/" + materialIssueDetailID, "Hủy/ phục hồi một phần phiếu xuất", @Settings.PopupWidthVoid,  @Settings.PopupHeightVoid);
+
+    colorLayerCode = function (e) {
+        var grid = $("#kendoGridDetails").data("kendoGrid");
+        var data = grid.dataSource.data();
+        $.each(data, function (i, row) {
+            var layerCode = row.LayerCode.toUpperCase();
+            if (layerCode != null) {
+                if ($('tr[data-uid="' + row.uid + '"]').hasClass("Color-A")) $('tr[data-uid="' + row.uid + '"]').removeClass("Color-A");
+                if ($('tr[data-uid="' + row.uid + '"]').hasClass("Color-B")) $('tr[data-uid="' + row.uid + '"]').removeClass("Color-B");
+                if ($('tr[data-uid="' + row.uid + '"]').hasClass("Color-C")) $('tr[data-uid="' + row.uid + '"]').removeClass("Color-C");
+
+                $('tr[data-uid="' + row.uid + '"]').addClass((layerCode == 'B' ? "Color-B" : (layerCode == 'C' ? "Color-C" : "Color-A")));
+            }
         });
     }
 </script>

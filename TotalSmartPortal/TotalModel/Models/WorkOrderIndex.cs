@@ -27,5 +27,6 @@ namespace TotalModel.Models
         public string FirmOrderSpecs { get; set; }
         public string FirmOrderSpecification { get; set; }
         public string BomCode { get; set; }
+        public decimal QuantityMaterialEstimated { get; set; }
     }
 }

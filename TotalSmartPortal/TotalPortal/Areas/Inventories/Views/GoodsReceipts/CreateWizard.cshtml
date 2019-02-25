@@ -18,7 +18,7 @@
     @Html.Hidden("WarehouseTaskID", (int)@ViewBag.WarehouseTaskID);
     @Html.Hidden("WarehouseTaskIDList", (string)@ViewBag.WarehouseTaskIDList);
 
-    @Html.HiddenFor(model => (model as IBaseModel).EntryDate) //TEMP ONLY
+    @*@Html.HiddenFor(model => (model as IBaseModel).EntryDate) //TEMP ONLY*@
     
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).ShiftID);
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).GoodsReceiptTypeID)
@@ -101,7 +101,7 @@
 
 
             tabStrip.Add().Text("Mua hàng")
-            .Visible(Model.IsMaterial)
+            .Visible(Model.IsItem || Model.IsMaterial)
             .Selected(Model.IsMaterial)
             .Content(@<text>
                     @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetGoodsArrival.cshtml")
@@ -260,7 +260,7 @@
             }
             else {
                 //TEMP ONLY
-                $("#EntryDate").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalEntryDate === undefined ? null : kendo.toString(selectedDataItem.GoodsArrivalEntryDate, Settings.DateTimeFormat));
+                //$("#EntryDate").val(selectedDataItem === undefined || selectedDataItem.GoodsArrivalEntryDate === undefined ? null : kendo.toString(selectedDataItem.GoodsArrivalEntryDate, Settings.DateTimeFormat));
 
                 $("#GoodsReceiptTypeID").val(selectedDataItem === undefined || selectedDataItem.GoodsReceiptTypeID === undefined ? null : selectedDataItem.GoodsReceiptTypeID);
 

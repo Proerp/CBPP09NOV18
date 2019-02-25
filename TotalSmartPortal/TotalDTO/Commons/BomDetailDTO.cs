@@ -39,5 +39,7 @@ namespace TotalDTO.Commons
         [UIHint("DecimalN0")]
         [Range(1, 100, ErrorMessage = "Vui lòng nhập %")]
         public decimal BlockUnit { get; set; }
+
+        public bool MajorStaple { get; set; }
     }
 }

@@ -44,7 +44,12 @@ namespace TotalDTO.Productions
         [Display(Name = "Thành phẩm")]
         string FirmOrderSpecificationSpecs { get; }
 
-        [Display(Name = "KL cần xuất")]
+        decimal FirmOrderQuantityMaterialEstimated { get; set; }
+        decimal FirmOrderQuantityMaterialEstimatedIssued { get; set; }
+        
+        [Display(Name = "KL NVL tồn")]
+        decimal QuantityMaterialEstimatedRemains { get; set; }
+        [Display(Name = "KL NVL cần xuất")]
         decimal QuantityMaterialEstimated { get; set; }
 
         int BomID { get; set; }
@@ -78,6 +83,10 @@ namespace TotalDTO.Productions
         public string FirmOrderSpecification { get; set; }
         public string FirmOrderSpecificationSpecs { get { return this.FirmOrderSpecs + " (" + this.FirmOrderSpecification + ")"; } }
 
+        public decimal FirmOrderQuantityMaterialEstimated { get; set; }
+        public decimal FirmOrderQuantityMaterialEstimatedIssued { get; set; }
+
+        public decimal QuantityMaterialEstimatedRemains { get; set; } //WHEN CREATE WIZARD: SET BY CREATE WIZARD JS: MUST BE CALCUALATE IN ADVANCE (T-SQL). WHEN EDIT: AUTO MAP THIS PROPERTY FROM MODEL ==> MUST MUST BE CALCUALATE BY [partial class WorkOrder]
         public decimal QuantityMaterialEstimated { get; set; }
 
         public int BomID { get; set; }

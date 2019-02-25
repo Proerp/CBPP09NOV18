@@ -24,5 +24,6 @@ namespace TotalModel.Models
         public int CommodityTypeID { get; set; }
         public decimal Quantity { get; set; }
         public string LayerCode { get; set; }
+        public bool MajorStaple { get; set; }
     }
 }

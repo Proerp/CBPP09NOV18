@@ -93,6 +93,11 @@
                         .Format(Settings.kfmN0)
                         .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', BlockUnit) #" + "<input type='hidden' name='BomViewDetails[#= index(data) #].BlockUnit' value='#= BlockUnit #' />");
 
+                    //columns.Bound(p => p.MajorStaple).DisplayNameTitle()
+                    //    .ClientTemplate("#= MajorStaple ? checked='checked':'' #" + "<input class='GridCheckbox' type='checkbox' name='BomViewDetails[#= index(data) #].MajorStaple' value='#= MajorStaple #' />");
+                    //columns.Bound(p => p.MajorStaple).DisplayNameTitle().ClientTemplate("#= MajorStaple ? checked='checked':'' #  <input class='GridCheckbox' type='checkbox' name='BomViewDetails[#= index(data) #].MajorStaple' value='#= MajorStaple #' />").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(39);
+                    columns.Template(t => { }).Title("NVL chính").ClientTemplate("<input id = 'MajorStaple' class='GridCheckbox' #= MajorStaple ? checked='checked':'' #  type='checkbox' name='BomViewDetails[#= index(data) #].MajorStaple' value='#= MajorStaple #' />").HtmlAttributes(new { @class = "grid-column-center", @readonly = "readonly" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(39);
+
                     columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(10).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center" });
                 })
                 .Filterable(e => e.Enabled(false))
@@ -181,10 +186,9 @@
 
         <div class="left-panel-input">
             @if (Model.Editable)
-            {                
-                
+            {
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "Boms")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
-    <button type="submit" class="k-button custom-button SubmitTypeOption-Save" formaction="@Url.Action("Edit", "Boms")"> <img src="~/Content/Images/New/Save-Slide.png" /> Lưu & nhập ds màng </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Save" formaction="@Url.Action("Edit", "Boms")"> <img src="~/Content/Images/New/Save-Slide.png" /> Lưu & nhập ds màng </button>
             }
                                                                                                                                                                                                     
             @if (Model.CommodityID > 0)
@@ -200,6 +204,25 @@
 <script src="@Url.Content("~/Scripts/Controllers/Commons/Boms/Import.js")"></script>
 
 <script type="text/javascript">
+    //var grid = $("#kendoGridDetails").data("kendoGrid");
+    //grid.tbody.on("change", ".GridCheckbox", function (e) {
+        //var row = $(e.target).closest("tr");
+        //var item = grid.dataItem(row);
+        //var checked = $(e.target).is(":checked");
+        //alert(checked);
+        //item.set("fullyPaid", $(e.target).is(":checked") ? 1 : 0);
+    //});
+
+    $('#kendoGridDetails').on('click', '.GridCheckbox', function () {
+        var grid = $('#kendoGridDetails').data().kendoGrid;
+        var dataItem = grid.dataItem($(this).closest('tr'));
+
+        var checked = $(this).is(':checked');
+        //alert(checked);
+        dataItem.set("MajorStaple", checked ? 1 : 0);
+        //UpdateCommodityBom(dataItem.CommodityBomID, dataItem.CommodityID, dataItem.BlockUnit, dataItem.BlockQuantity, dataItem.Remarks, (this.id === "IsDefault" ? checked : dataItem.IsDefault))
+    })
+
     function ShowBoms() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();

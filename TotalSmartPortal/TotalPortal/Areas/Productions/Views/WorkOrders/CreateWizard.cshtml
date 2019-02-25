@@ -29,7 +29,9 @@
     @Html.HiddenFor(model => (model as IWorkOrderPrimitiveDTO).FirmOrderSpecs)
     @Html.HiddenFor(model => (model as IWorkOrderPrimitiveDTO).FirmOrderSpecification)
 
-    @Html.HiddenFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimated)
+    @Html.HiddenFor(model => (model as IWorkOrderPrimitiveDTO).FirmOrderQuantityMaterialEstimated)
+    @Html.HiddenFor(model => (model as IWorkOrderPrimitiveDTO).FirmOrderQuantityMaterialEstimatedIssued)
+    @Html.HiddenFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimatedRemains)
 
     @Html.HiddenFor(model => (model as IWorkOrderPrimitiveDTO).BomID)
     @Html.HiddenFor(model => (model as IWorkOrderPrimitiveDTO).CustomerID)
@@ -76,8 +78,7 @@
                     <input id="materialIssuePendingFirmOrderFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="materialIssuePendingFirmOrderFilter_KeyUp()" />
                 </div>
             </text>);
-        })
-        .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell); })
+        })        
         .Scrollable(s => s.Height(Settings.PopupContentHeight))
         .DataSource(ds => ds.Ajax()
             .Read(read => read.Action("GetFirmOrders", "WorkOrderAPIs", new { area = "Productions" }).Data(@<text>
@@ -89,20 +90,7 @@
                     };
                 }
                 </text>))
-            .ServerOperation(false)
-            .Model(model =>
-            {
-                model.Id(p => p.FirmOrderID);
-
-                model.Field(p => p.FirmOrderReference).Editable(false);
-                model.Field(p => p.FirmOrderCode).Editable(false);
-                model.Field(p => p.FirmOrderEntryDate).Editable(false);
-                model.Field(p => p.CustomerName).Editable(false);
-                model.Field(p => p.FirmOrderSpecification).Editable(false);
-                model.Field(p => p.FirmOrderSpecs).Editable(false);
-                model.Field(p => p.TotalQuantity).Editable(false);                
-            })
-                    
+            .ServerOperation(false)                                
         )
         .Selectable()
     )
@@ -158,7 +146,9 @@
             $("#FirmOrderSpecs").val(selectedDataItem === undefined || selectedDataItem.FirmOrderSpecs === undefined ? null : selectedDataItem.FirmOrderSpecs);
             $("#FirmOrderSpecification").val(selectedDataItem === undefined || selectedDataItem.FirmOrderSpecification === undefined ? null : selectedDataItem.FirmOrderSpecification);
 
-            $("#QuantityMaterialEstimated").val(selectedDataItem === undefined || selectedDataItem.QuantityMaterialEstimatedRemains === undefined ? null : selectedDataItem.QuantityMaterialEstimatedRemains);
+            $("#FirmOrderQuantityMaterialEstimated").val(selectedDataItem === undefined || selectedDataItem.FirmOrderQuantityMaterialEstimatedRemains === undefined ? null : selectedDataItem.FirmOrderQuantityMaterialEstimatedRemains);
+            $("#FirmOrderQuantityMaterialEstimatedIssued").val(selectedDataItem === undefined || selectedDataItem.FirmOrderQuantityMaterialEstimatedIssuedRemains === undefined ? null : selectedDataItem.FirmOrderQuantityMaterialEstimatedIssuedRemains);
+            $("#QuantityMaterialEstimatedRemains").val(selectedDataItem === undefined || selectedDataItem.QuantityMaterialEstimatedRemains === undefined ? null : selectedDataItem.QuantityMaterialEstimatedRemains);
 
             $("#BomID").val(selectedDataItem === undefined || selectedDataItem.BomID === undefined ? null : selectedDataItem.BomID);
 

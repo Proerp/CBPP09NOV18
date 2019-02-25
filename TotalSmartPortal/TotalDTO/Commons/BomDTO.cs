@@ -73,6 +73,8 @@ namespace TotalDTO.Commons
             foreach (var result in base.Validate(validationContext)) { yield return result; }
             if (this.CheckBlockUnit) yield return new ValidationResult("Lỗi tỷ lệ %. Lưu ý: cùng một trục phải cùng tỷ lệ %", new[] { "BOM" });
             if (this.CheckBlockUnitTotal) yield return new ValidationResult("Lỗi tổng tỷ lệ %. Lưu ý: tổng tỷ lệ các trục phải bằng 100", new[] { "BOM" });
+
+            if (this.DtoDetails().Where(g => g.MajorStaple).Count() != 1) yield return new ValidationResult("Vui lòng kiểm tra 'NVL chính'. Lưu ý: Chỉ có duy nhất 1 NVL là NVL chính.", new[] { "BOM" });
         }
 
         public override void PerformPresaveRule()

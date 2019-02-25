@@ -35,12 +35,28 @@ namespace TotalDTO.Productions
         public Nullable<int> WarehouseID { get; set; }
 
         [UIHint("StringReadonly")]
-        public override string CommodityCode { get; set; }     
+        public override string CommodityCode { get; set; }
+
+        [UIHint("QuantityReadonly")]
+        public decimal FirmOrderMaterialQuantity { get; set; }
+        [UIHint("QuantityReadonly")]
+        public decimal FirmOrderMaterialQuantityIssued { get; set; }
+
+
+        [Display(Name = "%")]
+        [UIHint("QuantityReadonly")]
+        public decimal BlockUnit { get; set; }
+        [Display(Name = "KL")]
+        [UIHint("QuantityReadonly")]
+        public decimal BlockQuantity { get; set; }
+        [UIHint("QuantityReadonly")]
+        public decimal LayerQuantity { get; set; }
 
         [Display(Name = "Tồn kho")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityAvailables { get; set; }
 
+        [Display(Name = "KL Y/C")]
         [UIHint("QuantityReadonly")]
         public override decimal Quantity { get; set; }
     }

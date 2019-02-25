@@ -225,6 +225,7 @@
           <Property Name="BlockUnit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BlockQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="MajorStaple" Type="bit" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="50" />
           <Property Name="InActive" Type="bit" Nullable="false" />
         </EntityType>
@@ -18897,6 +18898,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="LayerQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BomDetails_Materials" FromRole="BomDetail" ToRole="Commodity" />
           <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_BomDetails" FromRole="BomDetail" ToRole="MaterialIssueDetail" />
+          <Property Name="MajorStaple" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="Bom">
           <Key>
@@ -23594,6 +23596,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="LayerCode" Nullable="false" MaxLength="5" />
+          <Property Type="Boolean" Name="MajorStaple" Nullable="false" />
         </ComplexType>
         <Association Name="FK_Boms_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -24918,6 +24921,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="FirmOrderSpecs" Nullable="true" MaxLength="800" />
           <Property Type="String" Name="FirmOrderSpecification" Nullable="true" MaxLength="800" />
           <Property Type="String" Name="BomCode" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="QuantityMaterialEstimated" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="WorkOrderPendingFirmOrder">
           <Property Type="Int32" Name="ProductionOrderDetailID" Nullable="false" />
@@ -24939,6 +24943,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="WarehouseID" Nullable="false" />
           <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
+          <Property Type="Decimal" Name="FirmOrderQuantityMaterialEstimated" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="FirmOrderQuantityMaterialEstimatedIssued" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="WorkOrderViewDetail">
           <Property Type="Int32" Name="WorkOrderDetailID" Nullable="true" />
@@ -28688,6 +28694,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="BomDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.BomDetail">
               <MappingFragment StoreEntitySet="BomDetails">
+                <ScalarProperty Name="MajorStaple" ColumnName="MajorStaple" />
                 <ScalarProperty Name="LayerQuantity" ColumnName="LayerQuantity" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="LayerCode" ColumnName="LayerCode" />
@@ -31276,6 +31283,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="LayerCode" ColumnName="LayerCode" />
+                <ScalarProperty Name="MajorStaple" ColumnName="MajorStaple" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -31736,6 +31744,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="FirmOrderSpecs" ColumnName="FirmOrderSpecs" />
                 <ScalarProperty Name="FirmOrderSpecification" ColumnName="FirmOrderSpecification" />
                 <ScalarProperty Name="BomCode" ColumnName="BomCode" />
+                <ScalarProperty Name="QuantityMaterialEstimated" ColumnName="QuantityMaterialEstimated" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -31761,6 +31770,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="FirmOrderQuantityMaterialEstimated" ColumnName="FirmOrderQuantityMaterialEstimated" />
+                <ScalarProperty Name="FirmOrderQuantityMaterialEstimatedIssued" ColumnName="FirmOrderQuantityMaterialEstimatedIssued" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
