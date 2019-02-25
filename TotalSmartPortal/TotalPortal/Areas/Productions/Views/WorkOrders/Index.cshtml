@@ -19,7 +19,7 @@
             columns.Bound(p => p.BomCode).Title((@Model.IsMaterial? "Công thức": "Mã màng")).Width(180);
             columns.Bound(p => p.Description).Title("Diễn giải").Width(160);
 
-            columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+            columns.Bound(p => p.QuantityMaterialEstimated).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
             columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
             
@@ -61,7 +61,7 @@
                     model.Field(m => m.WorkOrderID).DefaultValue(0);
                 })
                 .ServerOperation(true)
-                .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityMaterialEstimated).Sum())
                 )
             .HtmlAttributes(new { @class = "grid-class" })
     )

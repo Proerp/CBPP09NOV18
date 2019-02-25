@@ -49,7 +49,7 @@ namespace TotalDTO.Productions
         
         [Display(Name = "KL NVL tồn")]
         decimal QuantityMaterialEstimatedRemains { get; set; }
-        [Display(Name = "KL NVL cần xuất")]
+        [Display(Name = "Khối lượng mẻ sản xuất")]
         decimal QuantityMaterialEstimated { get; set; }
 
         int BomID { get; set; }

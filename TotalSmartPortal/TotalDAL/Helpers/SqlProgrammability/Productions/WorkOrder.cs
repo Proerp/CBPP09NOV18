@@ -130,7 +130,6 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                       SET         @msg = N'Lệnh sản xuất đã hủy, chưa duyệt hoặc đã xóa.' ; " + "\r\n";
             queryString = queryString + "                       THROW       61001,  @msg, 1; " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
-
             queryString = queryString + "               END " + "\r\n";
 
 
@@ -138,7 +137,23 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "           SET             FirmOrders.QuantityMaterialEstimatedIssued = ROUND(FirmOrders.QuantityMaterialEstimatedIssued + WorkOrders.QuantityMaterialEstimated * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";
             queryString = queryString + "           FROM            FirmOrders  " + "\r\n";
             queryString = queryString + "                           INNER JOIN WorkOrders ON WorkOrders.WorkOrderID = @EntityID AND FirmOrders.FirmOrderID = WorkOrders.FirmOrderID " + "\r\n";
-                       
+            queryString = queryString + "           IF @@ROWCOUNT <> 1 " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   SET         @msg = N'Kế hoạch sản xuất đã hủy, chưa duyệt hoặc đã xóa.' ; " + "\r\n";
+            queryString = queryString + "                   THROW       61001,  @msg, 1; " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
+
+            queryString = queryString + "           UPDATE          FirmOrderMaterials " + "\r\n";
+            queryString = queryString + "           SET             FirmOrderMaterials.QuantityIssued = ROUND(FirmOrderMaterials.QuantityIssued + WorkOrderDetails.Quantity * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";
+            queryString = queryString + "           FROM            FirmOrderMaterials " + "\r\n";
+            queryString = queryString + "                           INNER JOIN WorkOrderDetails ON ((FirmOrderMaterials.Approved = 1 AND FirmOrderMaterials.InActive = 0 AND FirmOrderMaterials.InActivePartial = 0) OR @SaveRelativeOption = -1) AND WorkOrderDetails.WorkOrderID = @EntityID AND FirmOrderMaterials.FirmOrderMaterialID = WorkOrderDetails.FirmOrderMaterialID " + "\r\n";
+
+            queryString = queryString + "           IF @@ROWCOUNT <> (SELECT COUNT(*) FROM WorkOrderDetails WHERE WorkOrderID = @EntityID) " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   SET         @msg = N'Kế hoạch sản xuất chi tiết đã hủy, chưa duyệt hoặc đã xóa.' ; " + "\r\n";
+            queryString = queryString + "                   THROW       61001,  @msg, 1; " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
+
             queryString = queryString + "       END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("WorkOrderSaveRelative", queryString);

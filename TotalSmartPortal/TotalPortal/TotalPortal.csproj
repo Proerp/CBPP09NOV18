@@ -1894,6 +1894,7 @@
     <Content Include="Scripts\Controllers\Commons\BinLocations\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\BinLocations\Edit.js" />
     <Content Include="Scripts\Controllers\Commons\BinLocations\Index.js" />
+    <Content Include="Scripts\Controllers\Commons\Boms\ColorLayerCode.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Create.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\Boms\Edit.js" />

@@ -202,53 +202,27 @@
 
 <script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
 <script src="@Url.Content("~/Scripts/Controllers/Commons/Boms/Import.js")"></script>
+<script src="@Url.Content("~/Scripts/Controllers/Commons/Boms/ColorLayerCode.js")"></script>
 
 <script type="text/javascript">
-    //var grid = $("#kendoGridDetails").data("kendoGrid");
-    //grid.tbody.on("change", ".GridCheckbox", function (e) {
-        //var row = $(e.target).closest("tr");
-        //var item = grid.dataItem(row);
-        //var checked = $(e.target).is(":checked");
-        //alert(checked);
-        //item.set("fullyPaid", $(e.target).is(":checked") ? 1 : 0);
-    //});
-
     $('#kendoGridDetails').on('click', '.GridCheckbox', function () {
         var grid = $('#kendoGridDetails').data().kendoGrid;
         var dataItem = grid.dataItem($(this).closest('tr'));
 
-        var checked = $(this).is(':checked');
-        //alert(checked);
-        dataItem.set("MajorStaple", checked ? 1 : 0);
-        //UpdateCommodityBom(dataItem.CommodityBomID, dataItem.CommodityID, dataItem.BlockUnit, dataItem.BlockQuantity, dataItem.Remarks, (this.id === "IsDefault" ? checked : dataItem.IsDefault))
+        dataItem.set("MajorStaple", $(this).is(':checked') ? 1 : 0);
     })
+    
+    dataSourceChange = function (e) {
+        if (e.field === "LayerCode") {
+            colorLayerCode(e);
+        }
+    }
 
     function ShowBoms() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
             createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("Commodities", "Boms", new { area = "Commons", id = Model.BomID })", "Danh sách màng", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
         });
-    }
-
-    colorLayerCode = function (e) {
-        var grid = $("#kendoGridDetails").data("kendoGrid");
-        var data = grid.dataSource.data();
-        $.each(data, function (i, row) {
-            var layerCode = row.LayerCode.toUpperCase();
-            if (layerCode != null) {
-                if ($('tr[data-uid="' + row.uid + '"]').hasClass("Color-A")) $('tr[data-uid="' + row.uid + '"]').removeClass("Color-A");
-                if ($('tr[data-uid="' + row.uid + '"]').hasClass("Color-B")) $('tr[data-uid="' + row.uid + '"]').removeClass("Color-B");
-                if ($('tr[data-uid="' + row.uid + '"]').hasClass("Color-C")) $('tr[data-uid="' + row.uid + '"]').removeClass("Color-C");
-
-                $('tr[data-uid="' + row.uid + '"]').addClass((layerCode == 'B' ? "Color-B" : (layerCode == 'C' ? "Color-C" : "Color-A")));
-            }
-        });
-    }
-
-    dataSourceChange = function (e) {
-        if (e.field === "LayerCode") {
-            colorLayerCode(e);
-        }
     }
 
     window.urlCustomersApi = '@Url.Action("GetCustomerBasesImport", "CustomerAPIs", new { area = "Commons" })';
