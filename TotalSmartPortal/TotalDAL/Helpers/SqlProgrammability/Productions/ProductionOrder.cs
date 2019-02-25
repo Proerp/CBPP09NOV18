@@ -325,6 +325,42 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "           BEGIN " + "\r\n";
             queryString = queryString + "               UPDATE          ProductionOrderDetails  SET Approved = @Approved WHERE ProductionOrderID = @EntityID ; " + "\r\n";
             queryString = queryString + "               UPDATE          FirmOrderDetails SET HasProductionOrders = IIF(@Approved = 1, 1, 0) WHERE FirmOrderID IN (SELECT FirmOrderID FROM ProductionOrderDetails WHERE ProductionOrderID = @EntityID) ; " + "\r\n";
+
+            
+            #region INIT WorkOrders
+            queryString = queryString + "               IF ((SELECT NMVNTaskID FROM ProductionOrders WHERE ProductionOrderID = @EntityID) = " + (int)GlobalEnums.NmvnTaskID.ProductOrder + ") " + "\r\n";
+            queryString = queryString + "                   BEGIN " + "\r\n";
+            queryString = queryString + "                       IF (@Approved = 1) " + "\r\n";
+            queryString = queryString + "                           BEGIN " + "\r\n";
+            queryString = queryString + "                               DECLARE         @ProductionOrderDetailID int; " + "\r\n";
+
+            queryString = queryString + "                               DECLARE         CURSORProductionOrderDetails CURSOR LOCAL FOR SELECT ProductionOrderDetailID FROM ProductionOrderDetails WHERE ProductionOrderID = @EntityID; " + "\r\n";
+            queryString = queryString + "                               OPEN            CURSORProductionOrderDetails; " + "\r\n";
+            queryString = queryString + "                               FETCH NEXT FROM CURSORProductionOrderDetails INTO @ProductionOrderDetailID; " + "\r\n";
+
+            queryString = queryString + "                               WHILE @@FETCH_STATUS = 0   " + "\r\n";
+            queryString = queryString + "                                   BEGIN " + "\r\n";
+            queryString = queryString + "                                       INSERT INTO     WorkOrders         (EntryDate, Reference, NMVNTaskID, CustomerID, ProductionOrderID, ProductionOrderDetailID, PlannedOrderID, FirmOrderID, BomID, WarehouseID, UserID, PreparedPersonID, OrganizationalUnitID, LocationID, ApproverID, QuantityMaterialEstimated, TotalQuantity, TotalQuantityIssued, Description, Remarks, CreatedDate, EditedDate, Approved, ApprovedDate) " + "\r\n";
+            queryString = queryString + "                                       SELECT                              ProductionOrderDetails.EntryDate, FirmOrders.Reference, " + (int)GlobalEnums.NmvnTaskID.ProductWorkOrder + " AS NMVNTaskID, FirmOrders.CustomerID, ProductionOrderDetails.ProductionOrderID, ProductionOrderDetails.ProductionOrderDetailID, FirmOrders.PlannedOrderID, FirmOrders.FirmOrderID, FirmOrders.BomID, 6 AS WarehouseID, FirmOrders.UserID, FirmOrders.PreparedPersonID, FirmOrders.OrganizationalUnitID, FirmOrders.LocationID, FirmOrders.ApproverID, FirmOrders.QuantityMaterialEstimated, FirmOrders.TotalQuantity, 0 AS TotalQuantityIssued, FirmOrders.Description, FirmOrders.Remarks, FirmOrders.CreatedDate, FirmOrders.EditedDate, FirmOrders.Approved, FirmOrders.ApprovedDate " + "\r\n";
+            queryString = queryString + "                                       FROM                                ProductionOrderDetails INNER JOIN FirmOrders ON ProductionOrderDetails.ProductionOrderDetailID = @ProductionOrderDetailID AND ProductionOrderDetails.FirmOrderID = FirmOrders.FirmOrderID; " + "\r\n";
+
+
+            queryString = queryString + "                                       INSERT INTO     WorkOrderDetails   (WorkOrderID, EntryDate, NMVNTaskID, LocationID, CustomerID, ProductionOrderID, ProductionOrderDetailID, PlannedOrderID, FirmOrderID, FirmOrderMaterialID, BomID, BomDetailID, CommodityID, Quantity, QuantityIssued, Remarks, Approved) " + "\r\n";
+            queryString = queryString + "                                       SELECT                              SCOPE_IDENTITY() AS WorkOrderID, ProductionOrderDetails.EntryDate, " + (int)GlobalEnums.NmvnTaskID.ProductWorkOrder + " AS NMVNTaskID, FirmOrderMaterials.LocationID, FirmOrderMaterials.CustomerID, ProductionOrderDetails.ProductionOrderID, ProductionOrderDetails.ProductionOrderDetailID, FirmOrderMaterials.PlannedOrderID, FirmOrderMaterials.FirmOrderID, FirmOrderMaterials.FirmOrderMaterialID, FirmOrderMaterials.BomID, FirmOrderMaterials.BomDetailID, FirmOrderMaterials.MaterialID AS CommodityID, FirmOrderMaterials.Quantity, 0 AS QuantityIssued, ProductionOrderDetails.Remarks, FirmOrderMaterials.Approved " + "\r\n";
+            queryString = queryString + "                                       FROM                                ProductionOrderDetails INNER JOIN FirmOrderMaterials ON ProductionOrderDetails.ProductionOrderDetailID = @ProductionOrderDetailID AND ProductionOrderDetails.FirmOrderID = FirmOrderMaterials.FirmOrderID; " + "\r\n";
+
+            queryString = queryString + "                                       FETCH NEXT FROM CURSORProductionOrderDetails INTO @ProductionOrderDetailID; " + "\r\n";
+            queryString = queryString + "                                   END " + "\r\n";
+            queryString = queryString + "                           END " + "\r\n";
+            queryString = queryString + "                       ELSE " + "\r\n";
+            queryString = queryString + "                           BEGIN " + "\r\n";
+            queryString = queryString + "                               DELETE FROM     WorkOrderDetails WHERE ProductionOrderID = @EntityID ; " + "\r\n";
+            queryString = queryString + "                               DELETE FROM     WorkOrders WHERE ProductionOrderID = @EntityID ; " + "\r\n";
+            queryString = queryString + "                           END " + "\r\n";
+            queryString = queryString + "                   END " + "\r\n";
+            #endregion INIT WorkOrders
+
+
             queryString = queryString + "           END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";

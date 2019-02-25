@@ -89,10 +89,10 @@ namespace TotalBase.Enums
             GoodsIssue = 8037,
 
 
-            WorkOrder = 1008042,
-            MaterialWorkOrder = 679344034,
-            ItemWorkOrder = 8042,
-            ProductWorkOrder = 680687990,//RESERVER ONLY
+            WorkOrder = 100681016,
+            MaterialWorkOrder = 100681116,//RESERVER ONLY
+            ItemWorkOrder = 680017008,
+            ProductWorkOrder = 681016,
 
             MaterialIssue = 1008039,
             MaterialStaging = 679344031,
