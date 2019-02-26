@@ -272,9 +272,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void ProductionOrderPostSaveValidate()
         {
-            string[] queryArray = new string[1];
+            string[] queryArray = new string[2];
 
             queryArray[0] = " SELECT TOP 1 @FoundEntity = N'Ngày đặt hàng: ' + CAST(PlannedOrders.EntryDate AS nvarchar) FROM ProductionOrderDetails INNER JOIN PlannedOrders ON ProductionOrderDetails.ProductionOrderID = @EntityID AND ProductionOrderDetails.PlannedOrderID = PlannedOrders.PlannedOrderID AND ProductionOrderDetails.EntryDate < PlannedOrders.EntryDate ";
+            queryArray[1] = " SELECT TOP 1 @FoundEntity = N'Trùng lệnh sản xuất cho đơn hàng này.' FROM ProductionOrderDetails GROUP BY FirmOrderID HAVING (COUNT(*) > 1) ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("ProductionOrderPostSaveValidate", queryArray);
         }
@@ -294,10 +295,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void ProductionOrderEditable()
         {
-            string[] queryArray = new string[1];
+            string[] queryArray = new string[3];
 
             queryArray[0] = " SELECT TOP 1 @FoundEntity = ProductionOrderID FROM ProductionOrders WHERE ProductionOrderID = @EntityID AND (InActive = 1 OR InActivePartial = 1)"; //Don't allow approve after void
-            //queryArray[1] = " SELECT TOP 1 @FoundEntity = ProductionOrderID FROM SemifinishedProductDetails WHERE ProductionOrderID = @EntityID ";
+            queryArray[1] = " SELECT TOP 1 @FoundEntity = ProductionOrderID FROM MaterialIssues WHERE ProductionOrderID = @EntityID ";
+            queryArray[2] = " SELECT TOP 1 @FoundEntity = ProductionOrderID FROM WorkOrders WHERE NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemWorkOrder + " AND ProductionOrderID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("ProductionOrderEditable", queryArray);
         }
@@ -307,7 +309,6 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string[] queryArray = new string[1];
 
             queryArray[0] = " SELECT TOP 1 @FoundEntity = ProductionOrderID FROM ProductionOrders WHERE ProductionOrderID = @EntityID AND Approved = 0"; //Must approve in order to allow void
-            //queryArray[1] = " SELECT TOP 1 @FoundEntity = ProductionOrderID FROM SemifinishedProductDetails WHERE ProductionOrderID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("ProductionOrderVoidable", queryArray);
         }
