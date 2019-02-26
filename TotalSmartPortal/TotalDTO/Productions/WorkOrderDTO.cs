@@ -47,7 +47,7 @@ namespace TotalDTO.Productions
         decimal FirmOrderQuantityMaterialEstimated { get; set; }
         decimal FirmOrderQuantityMaterialEstimatedIssued { get; set; }
         
-        [Display(Name = "KL NVL tồn")]
+        [Display(Name = "KL tồn đơn")]
         decimal QuantityMaterialEstimatedRemains { get; set; }
         [Display(Name = "Khối lượng mẻ sản xuất")]
         decimal QuantityMaterialEstimated { get; set; }
