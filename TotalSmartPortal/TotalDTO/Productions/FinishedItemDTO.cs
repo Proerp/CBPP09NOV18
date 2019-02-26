@@ -43,9 +43,11 @@ namespace TotalDTO.Productions
 
         [UIHint("DateTime")]
         [Display(Name = "Thời gian bắt đầu SX")]
+        [Required(ErrorMessage = "Vui lòng nhập bắt đầu SX")]
         public Nullable<System.DateTime> StartDate { get; set; }
         [UIHint("DateTime")]
         [Display(Name = "Thời gian kết thúc SX")]
+        [Required(ErrorMessage = "Vui lòng nhập kết thúc SX")]
         public Nullable<System.DateTime> StopDate { get; set; }
 
         [Display(Name = "Độ dày thực tế: Min và Max")]
@@ -124,7 +126,7 @@ namespace TotalDTO.Productions
         {
             base.PerformPresaveRule();
 
-            this.FinishedItemPackages.ForEach(e => { e.LocationID = this.LocationID; e.EntryDate = this.EntryDate; e.Approved = this.Approved; e.ApprovedDate = this.ApprovedDate; e.InActive = this.InActive; e.InActiveDate = this.InActiveDate; e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.FirmOrderID = this.FirmOrderID; e.PlannedOrderID = this.PlannedOrderID; e.SemifinishedItemReferences = this.SemifinishedItemReferences; });
+            this.FinishedItemPackages.ForEach(e => { e.LocationID = this.LocationID; e.EntryDate = this.EntryDate; e.BatchEntryDate = (DateTime)this.EntryDate; e.Approved = this.Approved; e.ApprovedDate = this.ApprovedDate; e.InActive = this.InActive; e.InActiveDate = this.InActiveDate; e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.FirmOrderID = this.FirmOrderID; e.PlannedOrderID = this.PlannedOrderID; e.SemifinishedItemReferences = this.SemifinishedItemReferences; });
         }
     }
 }

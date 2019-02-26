@@ -47,7 +47,7 @@ namespace TotalModel.Models
         public System.DateTime EditedDate { get; set; }
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
-        public Nullable<decimal> QuantityMaterialEstimatedIssued { get; set; }
+        public decimal QuantityMaterialEstimatedIssued { get; set; }
     
         public virtual Bom Bom { get; set; }
         public virtual Customer Customer { get; set; }

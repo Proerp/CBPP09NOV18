@@ -1,11 +1,12 @@
-﻿@using TotalPortal.Configuration
+﻿@using TotalBase.Enums
+    @using TotalPortal.Configuration
 
-@model TotalPortal.Areas.Purchases.ViewModels.GoodsArrivalViewModel
+    @model TotalPortal.Areas.Purchases.ViewModels.GoodsArrivalViewModel
 
-<div id="popupWindow"></div>
+    <div id="popupWindow"></div>
 
-<div>
-    @(Html.Kendo().Grid<TotalModel.Models.GoodsArrivalIndex>()
+    <div>
+        @(Html.Kendo().Grid<TotalModel.Models.GoodsArrivalIndex>()
             .Name("kendoGridIndex")
             .Columns(columns =>
             {
@@ -15,20 +16,20 @@
 
                 columns.Bound(p => p.Reference).Title("PNH").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/GoodsArrivals", action = "Edit" }) + "/#= GoodsArrivalID #'>#=Reference#</a>");
 
-                columns.Bound(p => p.CustomerCode).Title("NCC").Width(60);
-                
+                columns.Bound(p => p.CustomerCode).Title("NCC").Width(!GlobalEnums.CBPP ? 107 : 60);
+
                 columns.Bound(p => p.PurchaseOrderReferences).Title("PĐH").Width(20).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseOrders", action = "Edit" }) + "/#= PurchaseOrderID #' target='_blank'>#=PurchaseOrderReferences#</a>");
                 columns.Bound(p => p.PurchaseOrderEntryDate).Title("Ngày ĐH").Format("{0:dd/MM/yy}").Width(30).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                 columns.Bound(p => p.PurchaseOrderCodes).Title("Số PO").Width(80);
-                                
-                columns.Bound(p => p.Code).Title("Hóa đơn").Width(30);
-                columns.Bound(p => p.PackingList).Title("PL").Width(30);
-                columns.Bound(p => p.CustomsDeclaration).Title("TKHQ").Width(30);
 
-                columns.Bound(p => p.BatchCode).Title("TKHQ").Width(30);
-                columns.Bound(p => p.LabCode).Title("TKHQ").Width(30);
-                
-                columns.Bound(p => p.CommodityCode).Title("MH").Width(80);
+                columns.Bound(p => p.Code).Title("Hóa đơn").Width(30);
+                columns.Bound(p => p.PackingList).Title("PL").Width(30).Hidden(!GlobalEnums.CBPP);
+                columns.Bound(p => p.CustomsDeclaration).Title("TKHQ").Width(30).Hidden(!GlobalEnums.CBPP);
+
+                columns.Bound(p => p.BatchCode).Title("Số lô").Width(30).Hidden(!GlobalEnums.CBPP);
+                columns.Bound(p => p.LabCode).Title("Lab").Width(30).Hidden(!GlobalEnums.CBPP);
+
+                columns.Bound(p => p.CommodityCode).Title("MH").Width(!GlobalEnums.CBPP ? 207 : 80);
 
                 columns.Bound(p => p.Packages).Title("SK").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 columns.Bound(p => p.Quantity).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
@@ -40,17 +41,17 @@
             })
             .ToolBar(toolbar =>
             {
-                toolbar.Template(@<text> 
-                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu nhập hàng </button> 
+                toolbar.Template(@<text>
+                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu nhập hàng </button>
                     <div class="toolbar" style="float: right;">
                         <label>Nhập số phiếu, hóa đơn, số PO hoặc NCC</label>
                         <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
-                        
-                        
+
+
                         @*<div style="text-align: right; margin-top: 4px;">*@
-                        
-                            <span id="filterExtended">                                
-                                @(Html.Kendo().DropDownList()
+
+                        <span id="filterExtended">
+                            @(Html.Kendo().DropDownList()
                                     .Name("ShowPendingOnly")
                                     .DataTextField("Text")
                                     .DataValueField("Value")
@@ -62,10 +63,10 @@
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                                     //.HtmlAttributes(new { @style = "padding-right: 13px;" })
-                                )
-                                @Html.Kendo().DatePicker().Name("ExtendedFromDate").Value(Model.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
-                                @Html.Kendo().DatePicker().Name("ExtendedToDate").Value(Model.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
-                            </span>
+                            )
+                            @Html.Kendo().DatePicker().Name("ExtendedFromDate").Value(Model.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                            @Html.Kendo().DatePicker().Name("ExtendedToDate").Value(Model.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                        </span>
 
 
                         @*</div>*@
@@ -75,116 +76,113 @@
                     </div>
                 </text>);
             })
-            .Filterable(f => f.Enabled(false))
-            .Pageable()
-            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))            
-            .Selectable()
-            .Sortable()
-            .Events(e =>
-            {
-                e.DataBound("hightLightSelectedRow");
-            })
-            .DataSource(dataSource => dataSource
-                .Ajax()
-                .Group(group => group.AddDescending(p => p.EntryMonth))
-                .Read(read => read.Action("GetGoodsArrivalIndexes", "GoodsArrivalAPIs", new { area = "Purchases" }).Data("onGetGoodsArrivalIndexes"))
-                .Sort(sort =>
-                    {
-                        sort.Add(p => p.EntryDate).Descending();
-                        sort.Add(p => p.GoodsArrivalID).Descending();
-                    })
-                .PageSize(20)
-                .Model(model =>
-                {
-                    model.Id(x => x.GoodsArrivalID);
-                    model.Field(m => m.GoodsArrivalID).DefaultValue(0);
-                })
-                .ServerOperation(true)
-                .Aggregates(a => a.Add(x => x.Packages).Sum())
-                .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                )
-            .HtmlAttributes(new { @class = "grid-class" }))
-</div>
+                                            .Filterable(f => f.Enabled(false))
+                                            .Pageable()
+                                            .Groupable(g => g.Messages(messages => messages.Empty("Phân nhóm dữ liệu: Kéo và thả tiêu đề một hoặc nhiều cột dữ liệu ngay bên dưới vào đây để phân nhóm hiển thị theo phân cấp của các cột dữ liệu")))
+                                            .Selectable()
+                                            .Sortable()
+                                            .Events(e =>
+                                            {
+                                                e.DataBound("hightLightSelectedRow");
+                                            })
+                                            .DataSource(dataSource => dataSource
+                                                .Ajax()
+                                                .Group(group => group.AddDescending(p => p.EntryMonth))
+                                                .Read(read => read.Action("GetGoodsArrivalIndexes", "GoodsArrivalAPIs", new { area = "Purchases" }).Data("onGetGoodsArrivalIndexes"))
+                                                .Sort(sort =>
+                                                    {
+                                                        sort.Add(p => p.EntryDate).Descending();
+                                                        sort.Add(p => p.GoodsArrivalID).Descending();
+                                                    })
+                                                .PageSize(20)
+                                                .Model(model =>
+                                                {
+                                                    model.Id(x => x.GoodsArrivalID);
+                                                    model.Field(m => m.GoodsArrivalID).DefaultValue(0);
+                                                })
+                                                .ServerOperation(true)
+                                                .Aggregates(a => a.Add(x => x.Packages).Sum())
+                                                .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                                                )
+                                            .HtmlAttributes(new { @class = "grid-class" }))
+    </div>
 
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-    function onGetGoodsArrivalIndexes(e) {
-        var indexFilterText = $("#indexFilterText").val();
-        return {
-            withExtendedSearch: true, @*indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght" ? true : false,*@
-            extendedFromDate: $("#ExtendedFromDate").val(),
-            extendedToDate: $("#ExtendedToDate").val(),
-            pendingOnly: $("#ShowPendingOnly").val() === "0" ? false : true
-        };
-    }
-
-    function hightLightSelectedRow(e) {
-        require(["kindexGrid"], function (kindexGrid) {
-            var kindexGridInstance = new kindexGrid("kendoGridIndex");
-            kindexGridInstance.setSelectedRow("GoodsArrivalID", '@ViewBag.SelectedEntityID');
-        });
-    }
-
-    function createWizard() {
-        require(["kpopupWindow"], function (kpopupWindow) {
-            var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "GoodsArrivals")", "Chọn phiếu đặt hàng", "@Settings.PopupWidthSmall", "@Settings.PopupHeightMedium");
-        });
-    }
-
-
-    decoratingKindex = function (idx, elem) {
-
-        var isWarrantyClaim = elem.InActive;
-        if (isWarrantyClaim != null && isWarrantyClaim == true) {
-            $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus");
+        function onGetGoodsArrivalIndexes(e) {
+            var indexFilterText = $("#indexFilterText").val();
+            return {
+                withExtendedSearch: true, @*indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght" ? true : false,*@
+                extendedFromDate: $("#ExtendedFromDate").val(),
+                extendedToDate: $("#ExtendedToDate").val(),
+                pendingOnly: $("#ShowPendingOnly").val() === "0" ? false : true
+            };
         }
 
-        isWarrantyClaim = elem.InActivePartial;
-        if (isWarrantyClaim != null && isWarrantyClaim == true) {
-            $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus1");
-        }
-    }
-
-
-
-
-
-
-    function indexFilterText_KeyUp() {
-        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
-
-        if ((indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght") || $("#ShowPendingOnly").val() != "0") {
-            gridDetails.dataSource.filter({
-                logic: "or",
-                filters: [
-                    { field: "Reference", operator: "contains", value: indexFilterText },
-                    { field: "Code", operator: "contains", value: indexFilterText },
-                    { field: "PackingList", operator: "contains", value: indexFilterText },
-                    { field: "CustomsDeclaration", operator: "contains", value: indexFilterText },
-
-                    { field: "CustomerCode", operator: "contains", value: indexFilterText },
-                    { field: "CustomerName", operator: "contains", value: indexFilterText },
-                    { field: "Caption", operator: "contains", value: indexFilterText },
-                    { field: "Description", operator: "contains", value: indexFilterText },
-
-                    { field: "PurchaseOrderReferences", operator: "contains", value: indexFilterText },
-                    { field: "PurchaseOrderCodes", operator: "contains", value: indexFilterText },
-
-                    { field: "ApprovedStatus", operator: "contains", value: indexFilterText }
-                ]
+        function hightLightSelectedRow(e) {
+            require(["kindexGrid"], function (kindexGrid) {
+                var kindexGridInstance = new kindexGrid("kendoGridIndex");
+                kindexGridInstance.setSelectedRow("GoodsArrivalID", '@ViewBag.SelectedEntityID');
             });
-
-
-        } else {
-            if (gridDetails.dataSource.filter() != undefined)
-                gridDetails.dataSource.filter({});
         }
-    }
 
-</script>
+        function createWizard() {
+            require(["kpopupWindow"], function (kpopupWindow) {
+                var createWizardWindow = new kpopupWindow();
+                createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "GoodsArrivals")", "Chọn phiếu đặt hàng", "@Settings.PopupWidthSmall", "@Settings.PopupHeightMedium");
+            });
+        }
+
+
+        decoratingKindex = function (idx, elem) {
+
+            var isWarrantyClaim = elem.InActive;
+            if (isWarrantyClaim != null && isWarrantyClaim == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus");
+            }
+
+            isWarrantyClaim = elem.InActivePartial;
+            if (isWarrantyClaim != null && isWarrantyClaim == true) {
+                $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus1");
+            }
+        }
 
 
 
+
+
+
+        function indexFilterText_KeyUp() {
+            var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+            if ((indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght") || $("#ShowPendingOnly").val() != "0") {
+                gridDetails.dataSource.filter({
+                    logic: "or",
+                    filters: [
+                        { field: "Reference", operator: "contains", value: indexFilterText },
+                        { field: "Code", operator: "contains", value: indexFilterText },
+                        { field: "PackingList", operator: "contains", value: indexFilterText },
+                        { field: "CustomsDeclaration", operator: "contains", value: indexFilterText },
+
+                        { field: "CustomerCode", operator: "contains", value: indexFilterText },
+                        { field: "CustomerName", operator: "contains", value: indexFilterText },
+                        { field: "Caption", operator: "contains", value: indexFilterText },
+                        { field: "Description", operator: "contains", value: indexFilterText },
+
+                        { field: "PurchaseOrderReferences", operator: "contains", value: indexFilterText },
+                        { field: "PurchaseOrderCodes", operator: "contains", value: indexFilterText },
+
+                        { field: "ApprovedStatus", operator: "contains", value: indexFilterText }
+                    ]
+                });
+
+
+            } else {
+                if (gridDetails.dataSource.filter() != undefined)
+                    gridDetails.dataSource.filter({});
+            }
+        }
+
+    </script>

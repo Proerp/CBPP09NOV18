@@ -154,6 +154,10 @@ namespace TotalDTO.Productions
         [UIHint("QuantityReadonly")]
         public decimal Swarfs { get; set; }
 
+        public int BatchID { get; set; }
+        [Display(Name = "Ngày lô hàng")]
+        [UIHint("DateTimeReadonly")]
+        public DateTime BatchEntryDate { get; set; }
 
         public string SemifinishedItemReferences { get; set; }
     }

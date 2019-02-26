@@ -99,7 +99,7 @@ namespace TotalDTO.Purchases
 
 
         public override int SalespersonID { get { return (this.Salesperson != null ? this.Salesperson.EmployeeID : 0); } }
-        [Display(Name = "Nhân viên tiếp thị")]
+        [Display(Name = "Nhân viên nhận hàng")]
         [UIHint("AutoCompletes/EmployeeBase")]
         public EmployeeBaseDTO Salesperson { get; set; }
 

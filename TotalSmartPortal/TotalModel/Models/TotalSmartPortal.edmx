@@ -2761,7 +2761,7 @@
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="ApproverID" Type="int" Nullable="false" />
           <Property Name="QuantityMaterialEstimated" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="QuantityMaterialEstimatedIssued" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityMaterialEstimatedIssued" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantityIssued" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
@@ -25102,7 +25102,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="User" Relationship="TotalSmartPortalModel.FK_WorkOrders_Users" FromRole="WorkOrder" ToRole="User" />
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_WorkOrders_Warehouses" FromRole="WorkOrder" ToRole="Warehouse" />
           <NavigationProperty Name="WorkOrderDetails" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_WorkOrders" FromRole="WorkOrder" ToRole="WorkOrderDetail" />
-          <Property Name="QuantityMaterialEstimatedIssued" Type="Decimal" Precision="18" Scale="2" />
+          <Property Name="QuantityMaterialEstimatedIssued" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrders" FromRole="WorkOrder" ToRole="MaterialIssueDetail" />
           <NavigationProperty Name="MaterialIssues" Relationship="TotalSmartPortalModel.FK_MaterialIssues_WorkOrders" FromRole="WorkOrder" ToRole="MaterialIssue" />
         </EntityType>
