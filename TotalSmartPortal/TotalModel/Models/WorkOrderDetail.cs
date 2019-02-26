@@ -14,6 +14,12 @@ namespace TotalModel.Models
     
     public partial class WorkOrderDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public WorkOrderDetail()
+        {
+            this.MaterialIssueDetails = new HashSet<MaterialIssueDetail>();
+        }
+    
         public int WorkOrderDetailID { get; set; }
         public int WorkOrderID { get; set; }
         public System.DateTime EntryDate { get; set; }
@@ -36,5 +42,7 @@ namespace TotalModel.Models
         public virtual Commodity Commodity { get; set; }
         public virtual FirmOrderMaterial FirmOrderMaterial { get; set; }
         public virtual WorkOrder WorkOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<MaterialIssueDetail> MaterialIssueDetails { get; set; }
     }
 }

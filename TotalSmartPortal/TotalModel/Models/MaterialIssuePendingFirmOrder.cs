@@ -33,5 +33,7 @@ namespace TotalModel.Models
         public Nullable<decimal> TotalQuantityRemains { get; set; }
         public int BomID { get; set; }
         public Nullable<decimal> QuantityMaterialEstimatedRemains { get; set; }
+        public int WorkOrderID { get; set; }
+        public System.DateTime WorkOrderEntryDate { get; set; }
     }
 }

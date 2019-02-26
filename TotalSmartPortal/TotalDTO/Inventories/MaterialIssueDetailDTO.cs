@@ -22,6 +22,8 @@ namespace TotalDTO.Inventories
         public int PlannedOrderID { get; set; }
         public int FirmOrderID { get; set; }
         public int FirmOrderMaterialID { get; set; }
+        public int WorkOrderID { get; set; }
+        public int WorkOrderDetailID { get; set; }
 
         public GlobalEnums.NmvnTaskID NMVNTaskID { get; set; }
         public int MaterialIssueTypeID { get; set; }

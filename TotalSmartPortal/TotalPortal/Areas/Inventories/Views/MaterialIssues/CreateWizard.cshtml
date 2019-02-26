@@ -31,6 +31,9 @@
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecs)
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecification)
 
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).WorkOrderID)
+    @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).WorkOrderEntryDate)
+    
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).QuantityMaterialEstimated)
 
     @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).BomID)
@@ -73,6 +76,7 @@
             columns.Bound(c => c.FirmOrderReference).Title("KHSX").Width(28);
             columns.Bound(c => c.FirmOrderCode).Title("Mã CT").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(28);
             columns.Bound(c => c.FirmOrderEntryDate).Title("Ngày KHSX").Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(38);
+            columns.Bound(c => c.WorkOrderEntryDate).Title("Ngày Y/C NVL").Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(38).Hidden(!@Model.IsMaterial);
             columns.Bound(c => c.CustomerName).Title("Khách hàng").Width(50);
             columns.Bound(c => c.FirmOrderSpecification).Title(@Model.IsMaterial? "Mã màng" : "Mã thành phẩm").Width(92);
             columns.Bound(c => c.FirmOrderSpecs).Title(@Model.IsMaterial ? "Mô tả tên màng" : "Tên thành phẩm").Width(92);
@@ -105,11 +109,12 @@
             .ServerOperation(false)
             .Model(model =>
             {
-                model.Id(p => p.FirmOrderID);
+                model.Id(p => p.WorkOrderID);
 
                 model.Field(p => p.FirmOrderReference).Editable(false);
                 model.Field(p => p.FirmOrderCode).Editable(false);
                 model.Field(p => p.FirmOrderEntryDate).Editable(false);
+                model.Field(p => p.WorkOrderEntryDate).Editable(false);
                 model.Field(p => p.CustomerName).Editable(false);
                 model.Field(p => p.FirmOrderSpecification).Editable(false);
                 model.Field(p => p.FirmOrderSpecs).Editable(false);
@@ -172,6 +177,9 @@
             $("#FirmOrderEntryDate").val(selectedDataItem === undefined || selectedDataItem.FirmOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.FirmOrderEntryDate, Settings.DateTimeFormat));
             $("#FirmOrderSpecs").val(selectedDataItem === undefined || selectedDataItem.FirmOrderSpecs === undefined ? null : selectedDataItem.FirmOrderSpecs);
             $("#FirmOrderSpecification").val(selectedDataItem === undefined || selectedDataItem.FirmOrderSpecification === undefined ? null : selectedDataItem.FirmOrderSpecification);
+
+            $("#WorkOrderID").val(selectedDataItem === undefined || selectedDataItem.WorkOrderID === undefined ? null : selectedDataItem.WorkOrderID);
+            $("#WorkOrderEntryDate").val(selectedDataItem === undefined || selectedDataItem.WorkOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.WorkOrderEntryDate, Settings.DateTimeFormat));
 
             $("#QuantityMaterialEstimated").val(selectedDataItem === undefined || selectedDataItem.QuantityMaterialEstimatedRemains === undefined ? null : selectedDataItem.QuantityMaterialEstimatedRemains);
 

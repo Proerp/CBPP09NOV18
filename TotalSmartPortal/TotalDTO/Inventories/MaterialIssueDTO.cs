@@ -45,6 +45,10 @@ namespace TotalDTO.Inventories
         string FirmOrderSpecification { get; set; }
         [Display(Name = "Thành phẩm")]
         string FirmOrderSpecificationSpecs { get; }
+        
+        int WorkOrderID { get; set; }
+        [Display(Name = "Ngày yêu cầu NVL")]
+        DateTime WorkOrderEntryDate { get; set; }
 
         [Display(Name = "KL cần xuất")]
         decimal QuantityMaterialEstimated { get; set; }
@@ -102,6 +106,9 @@ namespace TotalDTO.Inventories
         [Display(Name = "Thành phẩm")]
         public string FirmOrderSpecificationSpecs { get { return this.FirmOrderSpecs + " (" + this.FirmOrderSpecification + ")"; } }
 
+        public int WorkOrderID { get; set; }
+        public DateTime WorkOrderEntryDate { get; set; }
+
         public decimal QuantityMaterialEstimated { get; set; }
 
         public int BomID { get; set; }
@@ -127,7 +134,7 @@ namespace TotalDTO.Inventories
             base.PerformPresaveRule();
 
             this.ShiftSaving(this.ShiftID);
-            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.MaterialIssueTypeID = this.MaterialIssueTypeID; e.PlannedOrderID = this.PlannedOrderID; e.FirmOrderID = this.FirmOrderID; e.ProductionOrderID = this.ProductionOrderID; e.ProductionOrderDetailID = this.ProductionOrderDetailID; e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.ProductionLineID = this.ProductionLineID; e.CrucialWorkerID = this.CrucialWorkerID; e.WarehouseID = this.WarehouseID; e.Code = this.Code; });
+            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.MaterialIssueTypeID = this.MaterialIssueTypeID; e.PlannedOrderID = this.PlannedOrderID; e.FirmOrderID = this.FirmOrderID; e.WorkOrderID = this.WorkOrderID; e.ProductionOrderID = this.ProductionOrderID; e.ProductionOrderDetailID = this.ProductionOrderDetailID; e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.ProductionLineID = this.ProductionLineID; e.CrucialWorkerID = this.CrucialWorkerID; e.WarehouseID = this.WarehouseID; e.Code = this.Code; });
         }
     }
 

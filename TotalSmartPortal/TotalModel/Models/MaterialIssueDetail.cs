@@ -62,6 +62,8 @@ namespace TotalModel.Models
         public int NMVNTaskID { get; set; }
         public int BomID { get; set; }
         public int BomDetailID { get; set; }
+        public int WorkOrderID { get; set; }
+        public int WorkOrderDetailID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual FirmOrderMaterial FirmOrderMaterial { get; set; }
@@ -81,5 +83,7 @@ namespace TotalModel.Models
         public virtual Commodity Commodity { get; set; }
         public virtual BomDetail BomDetail { get; set; }
         public virtual Bom Bom { get; set; }
+        public virtual WorkOrderDetail WorkOrderDetail { get; set; }
+        public virtual WorkOrder WorkOrder { get; set; }
     }
 }

@@ -23,7 +23,6 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> GoodsReceiptEntryDate { get; set; }
         public string GoodsReceiptReference { get; set; }
         public string GoodsReceiptCode { get; set; }
-        public Nullable<decimal> FirmOrderRemains { get; set; }
         public Nullable<decimal> QuantityAvailables { get; set; }
         public int Quantity { get; set; }
         public Nullable<bool> IsSelected { get; set; }
@@ -46,5 +45,7 @@ namespace TotalModel.Models
         public string LayerCode { get; set; }
         public int BomID { get; set; }
         public int BomDetailID { get; set; }
+        public int WorkOrderDetailID { get; set; }
+        public Nullable<decimal> WorkOrderRemains { get; set; }
     }
 }

@@ -3166,7 +3166,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("RemoveCommodityBom", commodityBomIDParameter);
         }
     
-        public virtual ObjectResult<MaterialIssuePendingFirmOrderMaterial> GetMaterialIssuePendingFirmOrderMaterials(Nullable<int> locationID, Nullable<int> materialIssueID, Nullable<int> firmOrderID, Nullable<decimal> quantityMaterialEstimated, Nullable<int> warehouseID, string goodsReceiptDetailIDs, Nullable<bool> isReadonly)
+        public virtual ObjectResult<MaterialIssuePendingFirmOrderMaterial> GetMaterialIssuePendingFirmOrderMaterials(Nullable<int> locationID, Nullable<int> materialIssueID, Nullable<int> workOrderID, Nullable<int> warehouseID, string goodsReceiptDetailIDs, Nullable<bool> isReadonly)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
@@ -3176,13 +3176,9 @@ namespace TotalModel.Models
                 new ObjectParameter("MaterialIssueID", materialIssueID) :
                 new ObjectParameter("MaterialIssueID", typeof(int));
     
-            var firmOrderIDParameter = firmOrderID.HasValue ?
-                new ObjectParameter("FirmOrderID", firmOrderID) :
-                new ObjectParameter("FirmOrderID", typeof(int));
-    
-            var quantityMaterialEstimatedParameter = quantityMaterialEstimated.HasValue ?
-                new ObjectParameter("QuantityMaterialEstimated", quantityMaterialEstimated) :
-                new ObjectParameter("QuantityMaterialEstimated", typeof(decimal));
+            var workOrderIDParameter = workOrderID.HasValue ?
+                new ObjectParameter("WorkOrderID", workOrderID) :
+                new ObjectParameter("WorkOrderID", typeof(int));
     
             var warehouseIDParameter = warehouseID.HasValue ?
                 new ObjectParameter("WarehouseID", warehouseID) :
@@ -3196,7 +3192,7 @@ namespace TotalModel.Models
                 new ObjectParameter("IsReadonly", isReadonly) :
                 new ObjectParameter("IsReadonly", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaterialIssuePendingFirmOrderMaterial>("GetMaterialIssuePendingFirmOrderMaterials", locationIDParameter, materialIssueIDParameter, firmOrderIDParameter, quantityMaterialEstimatedParameter, warehouseIDParameter, goodsReceiptDetailIDsParameter, isReadonlyParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MaterialIssuePendingFirmOrderMaterial>("GetMaterialIssuePendingFirmOrderMaterials", locationIDParameter, materialIssueIDParameter, workOrderIDParameter, warehouseIDParameter, goodsReceiptDetailIDsParameter, isReadonlyParameter);
         }
     
         public virtual ObjectResult<CommodityMold> GetCommodityMolds(Nullable<int> commodityID)

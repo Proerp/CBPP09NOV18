@@ -494,6 +494,9 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_Users" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrders_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WorkOrderDetails_WorkOrders" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrderDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrders" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssues_WorkOrders" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
