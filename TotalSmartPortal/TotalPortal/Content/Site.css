@@ -1215,6 +1215,10 @@ ul.k-panelbar .k-link {
     cursor: pointer !important;    
 }
 
+.SBT-Nonvisibility {
+    visibility: hidden;
+}
+
 .SBT-Hidden {
     display: none;
 }

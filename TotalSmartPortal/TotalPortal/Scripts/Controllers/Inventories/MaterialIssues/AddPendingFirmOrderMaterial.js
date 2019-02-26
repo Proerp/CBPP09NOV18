@@ -46,6 +46,7 @@ function handleOKEvent(materialIssueGridDataSource, pendingProductionOrderDetail
         dataRow.MaterialIssueDetailID = 0;
         dataRow.MaterialIssueID = window.parent.$("#MaterialIssueID").val();
 
+        dataRow.WorkOrderDetailID = productionOrderGridDataItem.WorkOrderDetailID;
         dataRow.FirmOrderMaterialID = productionOrderGridDataItem.FirmOrderMaterialID;
 
         dataRow.BomID = productionOrderGridDataItem.BomID;
@@ -63,10 +64,10 @@ function handleOKEvent(materialIssueGridDataSource, pendingProductionOrderDetail
         dataRow.GoodsReceiptReference = productionOrderGridDataItem.GoodsReceiptReference;
         dataRow.GoodsReceiptEntryDate = productionOrderGridDataItem.GoodsReceiptEntryDate;
 
-        dataRow.WorkshiftFirmOrderRemains = productionOrderGridDataItem.WorkshiftFirmOrderRemains;
+        dataRow.WorkOrderRemains = productionOrderGridDataItem.WorkOrderRemains;
         dataRow.QuantityAvailables = productionOrderGridDataItem.QuantityAvailables;
         dataRow.QuantityRemains = productionOrderGridDataItem.QuantityRemains;
-        dataRow.Quantity = productionOrderGridDataItem.CommodityTypeID == 2 ? productionOrderGridDataItem.QuantityAvailables : productionOrderGridDataItem.FirmOrderRemains;
+        dataRow.Quantity = productionOrderGridDataItem.CommodityTypeID == 2 ? productionOrderGridDataItem.QuantityAvailables : productionOrderGridDataItem.WorkOrderRemains;
 
         dataRow.BatchID = productionOrderGridDataItem.BatchID;
         dataRow.BatchEntryDate = productionOrderGridDataItem.BatchEntryDate;

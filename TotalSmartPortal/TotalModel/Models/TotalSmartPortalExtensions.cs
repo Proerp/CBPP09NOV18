@@ -170,28 +170,12 @@ namespace TotalModel.Models
 
     public partial class MaterialIssueViewDetail
     {
-        public Nullable<decimal> WorkshiftFirmOrderRemains
-        {
-            get
-            {
-                Nullable<decimal> workshiftQuantity = this.FirmOrderRemains; // (this.WorkingHours * this.CyclePerHours * this.MoldQuantity) * this.BlockQuantity / this.BlockUnit;
-                return this.FirmOrderRemains < workshiftQuantity ? this.FirmOrderRemains : workshiftQuantity;
-            }
-        }
-        public Nullable<decimal> QuantityRemains { get { return this.WorkshiftFirmOrderRemains < this.QuantityAvailables ? this.WorkshiftFirmOrderRemains : this.QuantityAvailables; } }
+        public Nullable<decimal> QuantityRemains { get { return this.WorkOrderRemains < this.QuantityAvailables ? this.WorkOrderRemains : this.QuantityAvailables; } }
     }
 
     public partial class MaterialIssuePendingFirmOrderMaterial
     {
-        public Nullable<decimal> WorkshiftFirmOrderRemains
-        {
-            get
-            {
-                Nullable<decimal> workshiftQuantity = this.FirmOrderRemains;// (this.WorkingHours * this.CyclePerHours * this.MoldQuantity) * this.BlockQuantity / this.BlockUnit;
-                return this.FirmOrderRemains < workshiftQuantity ? this.FirmOrderRemains : workshiftQuantity;
-            }
-        }
-        public Nullable<decimal> QuantityRemains { get { return this.QuantityAvailables; } } //NOW: ALLOW TO ISSUE A WHOLE ROLL OF TAPE        { get { return this.WorkshiftFirmOrderRemains < this.QuantityAvailables ? this.WorkshiftFirmOrderRemains : this.QuantityAvailables; } }
+        public Nullable<decimal> QuantityRemains { get { return this.QuantityAvailables; } } //NOW: ALLOW TO ISSUE A WHOLE ROLL OF TAPE        { get { return this.WorkOrderRemains < this.QuantityAvailables ? this.WorkOrderRemains : this.QuantityAvailables; } }
     }
 
 

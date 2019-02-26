@@ -82,7 +82,7 @@ namespace TotalDTO.Inventories
 
         [Display(Name = "Tồn LSX")]
         [UIHint("QuantityReadonly")]
-        public decimal WorkshiftFirmOrderRemains { get; set; }
+        public decimal WorkOrderRemains { get; set; }
 
         [Display(Name = "Tồn kho")]
         [UIHint("QuantityReadonly")]

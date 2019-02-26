@@ -112,10 +112,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                       ProductionOrderDetails.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName " + "\r\n";
 
             queryString = queryString + "       FROM           (SELECT FirmOrderID, ROUND(SUM(Quantity - (QuantitySemifinished - QuantityShortage - QuantityFailure + QuantityExcess)), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM FirmOrderDetails WHERE NMVNTaskID = @NMVNTaskID + 671977 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND (@FirmOrderID IS NULL OR FirmOrderID = @FirmOrderID) AND ROUND(Quantity - (QuantitySemifinished - QuantityShortage - QuantityFailure + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY FirmOrderID) AS FirmOrderRemains " + "\r\n";
-            queryString = queryString + "                       INNER JOIN ProductionOrderDetails ON ProductionOrderDetails.Approved = 1 AND ProductionOrderDetails.InActive = 0 AND ProductionOrderDetails.InActivePartial = 0 AND FirmOrderRemains.FirmOrderID = ProductionOrderDetails.FirmOrderID " + "\r\n";//LocationID = @LocationID AND 
-            queryString = queryString + "                       INNER JOIN FirmOrders ON FirmOrderRemains.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN WorkOrders ON (@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemStaging + " OR ROUND(WorkOrders.QuantityMaterialEstimated - WorkOrders.QuantityMaterialEstimatedIssued, " + (int)GlobalEnums.rndQuantity + ") > 0) AND FirmOrderRemains.FirmOrderID = WorkOrders.FirmOrderID " + "\r\n";
 
+            queryString = queryString + "                       INNER JOIN WorkOrders ON NMVNTaskID = @NMVNTaskID + 672977 AND (@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemStaging + " OR ROUND(WorkOrders.QuantityMaterialEstimated - WorkOrders.QuantityMaterialEstimatedIssued, " + (int)GlobalEnums.rndQuantity + ") > 0) AND FirmOrderRemains.FirmOrderID = WorkOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN FirmOrders ON WorkOrders.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN ProductionOrderDetails ON ProductionOrderDetails.Approved = 1 AND ProductionOrderDetails.InActive = 0 AND ProductionOrderDetails.InActivePartial = 0 AND WorkOrders.FirmOrderID = ProductionOrderDetails.FirmOrderID " + "\r\n";//LocationID = @LocationID AND 
+                        
             //ProductionOrderDetails.FirmOrderID IN 
             queryString = queryString + "                       INNER JOIN Customers ON ProductionOrderDetails.CustomerID = Customers.CustomerID " + "\r\n";
 
