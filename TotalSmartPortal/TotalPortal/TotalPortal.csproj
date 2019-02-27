@@ -1860,6 +1860,8 @@
     <Content Include="Areas\Productions\Views\ProductWorkOrders\Edit.cshtml" />
     <Content Include="Areas\Productions\Views\ProductWorkOrders\Index.cshtml" />
     <Content Include="Areas\Productions\Views\ProductWorkOrders\Print.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedOrders\Boms.cshtml" />
+    <Content Include="Areas\Productions\Views\PlannedItems\Boms.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">

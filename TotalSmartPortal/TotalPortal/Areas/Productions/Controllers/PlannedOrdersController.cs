@@ -41,6 +41,14 @@ namespace TotalPortal.Areas.Productions.Controllers
 
             RequireJsOptions.Add("commodityTypeIDList", commodityTypeIDList.ToString(), RequireJsOptionsScope.Page);
         }
+
+        public virtual ActionResult Boms(int id, int? detailID)
+        {
+            TViewDetailViewModel simpleViewModel = this.GetViewModel(id, GlobalEnums.AccessLevel.Readable);
+            if (simpleViewModel == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return View(simpleViewModel);
+        }
     }
 
 
