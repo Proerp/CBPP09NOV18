@@ -1,96 +1,95 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration
 
-@using TotalDTO;
-@using TotalModel
-@using TotalDTO.Productions
-@using TotalPortal.Areas.Productions.ViewModels
+@using TotalDTO.Commons
+@using TotalModel.Models;
 
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
-@model IPlannedOrderViewModel
+@model BomBaseDTO
 
-<div class="left-panel">
-    <div style="padding-left: 48px; padding-top: 16px; "> <img src="~/Content/Images/New/2017/bom-64.png" /> </div>
-</div>
+@Html.HiddenFor(model => model.BomID)
 
 
-@*<div class="form-group">
-    @(Html.Kendo().Grid<CommodityBom>()
-    .Name("gridBoms")
+@(Html.Kendo().Grid<BomValue>()
+    .Name("kendoGridDetails")
     .Columns(columns =>
     {
-        columns.Bound(c => c.CommodityBomID).Hidden();
         columns.Bound(c => c.BomID).Hidden();
-        columns.Bound(c => c.BomCode).Title("Mã").Width(82).HtmlAttributes(new { @readonly = "readonly" }).EditorTemplateName("StringReadonly");
-        columns.Bound(c => c.BomName).Title("Tên").Width(96).HtmlAttributes(new { @readonly = "readonly" }).EditorTemplateName("StringReadonly");
+        columns.Bound(c => c.BomDetailID).Hidden();
+        columns.Bound(c => c.CommodityCode).Title("Mã").Width(68).HtmlAttributes(new { @readonly = "readonly" }).EditorTemplateName("StringReadonly");
+        columns.Bound(c => c.CommodityName).Title("Tên").Width(88).HtmlAttributes(new { @readonly = "readonly" }).EditorTemplateName("StringReadonly");
 
-        columns.Bound(c => c.EntryDate).Title("Ngày thêm").Width(60).Format("{0:" + Settings.DateTimeFormat + "}").HtmlAttributes(new { @class = "grid-column-center", @readonly = "readonly" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).EditorTemplateName("DateTimeReadonly");
-
-        columns.Bound(c => c.BlockUnit).Title("SL").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(27).Hidden()
-            .Format(Settings.kfmN0)
-            .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', BlockUnit) #" + "<input type='hidden' name='CommodityBom.BlockUnit' value='#= BlockUnit #' />")
-            .EditorTemplateName("Quantity");
-        columns.Bound(c => c.BlockQuantity).Title("TL").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(27).Hidden()
+        columns.Bound(c => c.BlockQuantity).Title("KL").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(27)
             .Format(Settings.kfmQuantity)
-            .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', BlockQuantity) #" + "<input type='hidden' name='CommodityBom.BlockQuantity' value='#= BlockQuantity #' />")
-            .EditorTemplateName("Quantity");
+            .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', BlockQuantity) #" + "<input type='hidden' name='CommodityBom.BlockQuantity' value='#= BlockQuantity #' />");
 
-        columns.Bound(c => c.Remarks).Title("Ghi chú").Width(160);
-        columns.Template(t => { }).Title("Mặc định").ClientTemplate("<input id = 'IsDefault' class='GridCheckbox' #= IsDefault ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center", @readonly = "readonly" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(39);
+        columns.Bound(c => c.LayerCode).Title("Trục").Width(20).HtmlAttributes(new { @readonly = "readonly" }).EditorTemplateName("StringReadonly").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
 
-        columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(20)
-            .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' onclick='RemoveCommodityBom(#=CommodityBomID#)'><span class='k-icon sbt-delete'></span></a>");
+        columns.Bound(c => c.BlockUnit).Title("%").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(15)
+            .Format(Settings.kfmN0)
+            .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', BlockUnit) #" + "<input type='hidden' name='CommodityBom.BlockUnit' value='#= BlockUnit #' />");
+        columns.Bound(c => c.Quantity).Title("KL Y/C").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(27)
+            .Format(Settings.kfmQuantity)
+            .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='CommodityBom.Quantity' value='#= Quantity #' />");
+        columns.Bound(c => c.QuantityAvailables).Title("Tồn kho").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(27)
+            .Format(Settings.kfmQuantity)
+            .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityAvailables) #" + "<input type='hidden' name='CommodityBom.QuantityAvailables' value='#= QuantityAvailables #' />");
     })
 
-    .Scrollable(s => s.Height(219))
+    .Scrollable(s => s.Height(Settings.PopupContentHeightLarge))
+    .ToolBar(toolbar =>
+                {
+                    toolbar.Template(@<text>
+                        <span style="float:right">
+                            @Html.Kendo().NumericTextBoxFor(model => model.PrintOptionID).HtmlAttributes(new { @style = "width: 118px;" }).Events(e => e.Change("updateQuantities").Spin("updateQuantities"))
+                        </span>
+                    </text>);
+                })
+
+    .Events(events =>
+        {
+            events.DataBound("colorLayerCode");
+        })
     .DataSource(ds => ds.Ajax()
-        .Model(model => model.Id(x => x.CommodityBomID))
-        .Read(read => read.Action("GetCommodityBoms", "BomAPIs", new { area = "Commons" }).Data(@<text>
-            function (e) {
-            return {
-                bomID: null,
-                commodityID: $("#CommodityID").val()
-            };}
-        </text>))
-        .ServerOperation(true))
-        .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell); })
-        .Selectable()
-        .Events(events => { events.Save("SaveCommodityBom"); })
-    )
+    .Model(model => model.Id(x => x.BomDetailID))
+    .Read(read => read.Action("GetBomValues", "BomAPIs", new { area = "Commons" }).Data(@<text>
+        function (e) {
+        return {
+        bomID: $("#BomID").val(),
+        quantity: $("#PrintOptionID").val()
+        };}
+    </text>))
+    .ServerOperation(true))
+    .Editable(e => e.Enabled(false))
+    .Selectable()
+)
 
-</div>*@
-
-
-@*<div class="background-bar" style="height: 45px;">
+<div class="background-bar" style="height: 45px;">
     <div class="popup-button-bar">
         <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Đóng </button>
     </div>
 </div>
 
-<script src="@Url.Content("~/Scripts/Controllers/Commons/Commodities/CommodityBom.js")"></script>
+<script src="@Url.Content("~/Scripts/Controllers/Commons/Boms/ColorLayerCode.js")"></script>
 
 <script type="text/javascript">
-    function CallAddCommodityBom(e) {
-        AddCommodityBom($("#Bom_BomID").val(), $("#CommodityID").val());
-    }
+    function updateQuantities() {
+        var quantityMaterialEstimated = DoRound($("#PrintOptionID").val(), 2);
 
-    window.urlAddCommodityBom = '@Url.Action("AddCommodityBom", "BomAPIs", new { area = "Commons" })';
-    window.urlRemoveCommodityBom = '@Url.Action("RemoveCommodityBom", "BomAPIs", new { area = "Commons" })';
-    window.urlUpdateCommodityBom = '@Url.Action("UpdateCommodityBom", "BomAPIs", new { area = "Commons" })';
+        var kenGrid = $("#kendoGridDetails").data("kendoGrid");
+        kenGrid.bind("dataBinding", function (e) { e.preventDefault(); }); //You can prevent the data bind action at the dataBinding event, when updating multiple model properties
+
+        var allDataRows = kenGrid.dataSource.data();
+        for (var i = 0; i < allDataRows.length; i++) {
+            var dataItem = allDataRows[i];
+
+            var quantity = (((quantityMaterialEstimated * dataItem.BlockUnit) / 100) * (dataItem.BlockQuantity / dataItem.LayerQuantity));
+
+            dataItem.set("Quantity", DoRound(quantity, 2));
+        }
+
+        kenGrid.unbind("dataBinding"); //When finish modifying the data, unbind dataBinding event
+        kenGrid.refresh(); //Then, finally, refresh grid
+    }
 </script>
-
-<style>
-    .right-first-panel {
-        padding-right: 30px;
-    }
-
-    .right-second-panel {
-        padding-top: 1px;
-        padding-right: 13px;
-    }
-
-    .left-panel-input {
-        width: 100%;
-    }
-</style>*@

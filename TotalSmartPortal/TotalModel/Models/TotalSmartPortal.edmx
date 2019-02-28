@@ -7873,6 +7873,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
         </Function>
+        <Function Name="GetBomValues" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BomID" Type="int" Mode="In" />
+          <Parameter Name="Quantity" Type="decimal" Mode="In" />
+        </Function>
         <Function Name="GetBomViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BomID" Type="int" Mode="In" />
         </Function>
@@ -16500,6 +16504,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="WorkOrder" EntitySet="WorkOrders" />
             <End Role="MaterialIssue" EntitySet="MaterialIssues" />
           </AssociationSet>
+          <FunctionImport Name="GetBomValues" ReturnType="Collection(TotalSmartPortalModel.BomValue)">
+            <Parameter Name="BomID" Mode="In" Type="Int32" />
+            <Parameter Name="Quantity" Mode="In" Type="Decimal" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -25262,6 +25270,20 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="BomValue">
+          <Property Type="Int32" Name="BomID" Nullable="false" />
+          <Property Type="Int32" Name="BomDetailID" Nullable="false" />
+          <Property Type="String" Name="LayerCode" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
+          <Property Type="Decimal" Name="BlockUnit" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="BlockQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="38" Scale="6" />
+          <Property Type="Decimal" Name="LayerQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="38" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -31979,6 +32001,24 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetBomValues" FunctionName="TotalSmartPortalModel.Store.GetBomValues">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BomValue">
+                <ScalarProperty Name="BomID" ColumnName="BomID" />
+                <ScalarProperty Name="BomDetailID" ColumnName="BomDetailID" />
+                <ScalarProperty Name="LayerCode" ColumnName="LayerCode" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="BlockUnit" ColumnName="BlockUnit" />
+                <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="LayerQuantity" ColumnName="LayerQuantity" />
+                <ScalarProperty Name="QuantityAvailables" ColumnName="QuantityAvailables" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

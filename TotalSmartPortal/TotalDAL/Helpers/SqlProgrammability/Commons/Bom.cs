@@ -29,7 +29,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
 
 
-
+            this.GetBomValues();
             this.GetCommodityBoms();
 
             this.AddCommodityBom();
@@ -143,6 +143,25 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
 
 
+        private void GetBomValues()
+        {
+            string queryString;
+
+            queryString = " @BomID int, @Quantity decimal(18, 2) " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "    BEGIN " + "\r\n";
+            queryString = queryString + "       SELECT      BomDetails.BomID, BomDetails.BomDetailID, BomDetails.LayerCode, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, BomDetails.LayerQuantity, BomDetails.BlockUnit, BomDetails.BlockQuantity, ROUND(((@Quantity * BomDetails.BlockUnit)/ 100) * (BomDetails.BlockQuantity/ BomDetails.LayerQuantity), " + (int)GlobalEnums.rndQuantity + ") AS Quantity, GoodsReceiptDetails.QuantityAvailables " + "\r\n";
+            queryString = queryString + "       FROM        BomDetails " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON BomDetails.BomID = @BomID AND BomDetails.MaterialID = Commodities.CommodityID " + "\r\n";
+
+            queryString = queryString + "                   LEFT JOIN (SELECT CommodityID, ROUND(SUM(Quantity - QuantityIssued), " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables FROM GoodsReceiptDetails WHERE CommodityID IN (SELECT MaterialID FROM BomDetails WHERE BomID = @BomID) AND Approved = 1 AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY CommodityID) GoodsReceiptDetails ON BomDetails.MaterialID = GoodsReceiptDetails.CommodityID " + "\r\n";
+
+            queryString = queryString + "       ORDER BY    BomDetails.LayerCode, BomDetails.BomDetailID " + "\r\n";
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetBomValues", queryString);
+        }
 
         private void GetCommodityBoms()
         {

@@ -5340,5 +5340,18 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WorkOrderToggleApproved", entityIDParameter, approvedParameter);
         }
+    
+        public virtual ObjectResult<BomValue> GetBomValues(Nullable<int> bomID, Nullable<decimal> quantity)
+        {
+            var bomIDParameter = bomID.HasValue ?
+                new ObjectParameter("BomID", bomID) :
+                new ObjectParameter("BomID", typeof(int));
+    
+            var quantityParameter = quantity.HasValue ?
+                new ObjectParameter("Quantity", quantity) :
+                new ObjectParameter("Quantity", typeof(decimal));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BomValue>("GetBomValues", bomIDParameter, quantityParameter);
+        }
     }
 }

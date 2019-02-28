@@ -310,7 +310,7 @@
         require(["kpopupWindow"], function (kpopupWindow) {
             quantity = Math.round(quantity);
             var bomWindow = new kpopupWindow();
-            bomWindow.openWindow($("#popupWindow"), "@Url.Action("Boms", Model.ControllerName)" + "/" + bomID + "/" + quantity, "Dự toán nguyên vật liệu", @Settings.PopupWidthVoid,  @Settings.PopupHeightSmall);
+            bomWindow.openWindow($("#popupWindow"), "@Url.Action("Boms", Model.ControllerName)" + "/" + bomID + "/" + quantity, "Dự toán nguyên vật liệu", @Settings.PopupWidthMedium, @Settings.PopupHeightWithTab);
         });
     }
 

@@ -30,6 +30,11 @@ namespace TotalDAL.Repositories.Commons
             return this.TotalSmartPortalEntities.GetBomBases(searchText, commodityID, commodityTypeID, commodityCategoryID, commodityClassID, commodityLineID).ToList();
         }
 
+        public IList<BomValue> GetBomValues(int bomID, decimal quantity)
+        {
+            return this.TotalSmartPortalEntities.GetBomValues(bomID, quantity).ToList();
+        }
+
         public IList<CommodityBom> GetCommodityBoms(int? bomID, int? commodityID)
         {
             return this.TotalSmartPortalEntities.GetCommodityBoms(bomID, commodityID).ToList();
