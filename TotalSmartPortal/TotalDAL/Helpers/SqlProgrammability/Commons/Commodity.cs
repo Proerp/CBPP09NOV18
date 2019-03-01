@@ -108,7 +108,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             }
             else
             {
-                queryArray = new string[35];
+                queryArray = new string[36];
 
                 queryArray[0] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PurchaseOrderDetails WHERE CommodityID = @EntityID ";
                 queryArray[1] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PurchaseRequisitionDetails WHERE CommodityID = @EntityID ";
@@ -144,6 +144,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
                 queryArray[32] = " SELECT TOP 1 @FoundEntity = CommodityID FROM PromotionCommodities WHERE CommodityID = @EntityID ";
                 queryArray[33] = " SELECT TOP 1 @FoundEntity = CommodityID FROM CommodityBoms WHERE CommodityID = @EntityID ";
                 queryArray[34] = " SELECT TOP 1 @FoundEntity = CommodityID FROM CommodityMolds WHERE CommodityID = @EntityID  ";
+                queryArray[35] = " SELECT TOP 1 @FoundEntity = CommodityID FROM WorkOrderDetails WHERE CommodityID = @EntityID  ";
             }
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("CommodityDeletable", queryArray);
