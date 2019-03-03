@@ -81,7 +81,10 @@ namespace TotalBase.Enums
 
             FinishedItem = 680028888,
             FinishedProduct = 680028,
-            FinishedHandover = 680029,
+
+            FinishedHandover = 100680029,
+            FinishedItemHandover = 680029888,
+            FinishedProductHandover = 680029,
 
             Quotation = 8031,
             SalesOrder = 8032,

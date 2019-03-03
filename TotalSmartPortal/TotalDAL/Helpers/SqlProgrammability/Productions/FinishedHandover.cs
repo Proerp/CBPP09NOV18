@@ -45,14 +45,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime " + "\r\n";
+            queryString = " @NMVNTaskID int, @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
             queryString = queryString + "       SELECT      FinishedHandovers.FinishedHandoverID, CAST(FinishedHandovers.EntryDate AS DATE) AS EntryDate, FinishedHandovers.Reference, Locations.Code AS LocationCode, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, ISNULL(Customers.Name, N'Phiếu tổng hợp') AS CustomerDescription, FinishedHandovers.Caption, FinishedHandovers.Description, FinishedHandovers.TotalQuantity, FinishedHandovers.Approved " + "\r\n";
             queryString = queryString + "       FROM        FinishedHandovers " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Locations ON FinishedHandovers.EntryDate >= @FromDate AND FinishedHandovers.EntryDate <= @ToDate AND FinishedHandovers.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.FinishedHandover + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = FinishedHandovers.LocationID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Locations ON FinishedHandovers.NMVNTaskID = @NMVNTaskID AND FinishedHandovers.EntryDate >= @FromDate AND FinishedHandovers.EntryDate <= @ToDate AND FinishedHandovers.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = @NMVNTaskID AND AccessControls.AccessLevel > 0) AND Locations.LocationID = FinishedHandovers.LocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Workshifts ON FinishedHandovers.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN Customers ON FinishedHandovers.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "       " + "\r\n";
@@ -71,21 +71,34 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      FinishedHandoverDetails.FinishedHandoverDetailID, FinishedHandoverDetails.FinishedHandoverID, FinishedProductPackages.FinishedProductID, FinishedProductPackages.FinishedProductPackageID, FinishedProductPackages.EntryDate AS FinishedProductEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, " + "\r\n";
-            queryString = queryString + "                   FinishedProductPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, FinishedProductPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
-            queryString = queryString + "                   FinishedHandoverDetails.Quantity, FinishedProductPackages.SemifinishedProductReferences, FinishedHandoverDetails.Remarks" + "\r\n";
-
-            queryString = queryString + "       FROM        FinishedHandoverDetails " + "\r\n";
-            queryString = queryString + "                   INNER JOIN FinishedProductPackages ON FinishedHandoverDetails.FinishedHandoverID = @FinishedHandoverID AND FinishedHandoverDetails.FinishedProductPackageID = FinishedProductPackages.FinishedProductPackageID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Customers ON FinishedProductPackages.CustomerID = Customers.CustomerID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Commodities ON FinishedProductPackages.CommodityID = Commodities.CommodityID " + "\r\n";
-
-            queryString = queryString + "       ORDER BY    FinishedHandoverDetails.FinishedHandoverDetailID " + "\r\n";
+            queryString = queryString + "       IF ((SELECT NMVNTaskID FROM FinishedHandovers WHERE FinishedHandoverID = @FinishedHandoverID) = " + (int)GlobalEnums.NmvnTaskID.FinishedProductHandover + ") " + "\r\n";
+            queryString = queryString + "           " + this.GetFinishedHandoverViewDetailSQL(true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.GetFinishedHandoverViewDetailSQL(false) + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedHandoverViewDetails", queryString);
+        }
+
+        private string GetFinishedHandoverViewDetailSQL(bool productVsItem)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+            queryString = queryString + "       SELECT      FinishedHandoverDetails.FinishedHandoverDetailID, FinishedHandoverDetails.FinishedHandoverID, FinishedProtemPackages.FinishedProductID, FinishedProtemPackages.FinishedProductPackageID, FinishedProtemPackages.FinishedItemID, FinishedProtemPackages.FinishedItemPackageID, FinishedProtemPackages.EntryDate AS FinishedProtemEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, " + "\r\n";
+            queryString = queryString + "                   FinishedProtemPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, FinishedProtemPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
+            queryString = queryString + "                   FinishedHandoverDetails.Quantity, FinishedProtemPackages." + this.productVsItemSemifinishedReferences(productVsItem) + ", FinishedHandoverDetails.Remarks" + "\r\n";
+
+            queryString = queryString + "       FROM        FinishedHandoverDetails " + "\r\n";
+            queryString = queryString + "                   INNER JOIN " + this.productVsItemTable(productVsItem) + " FinishedProtemPackages ON FinishedHandoverDetails.FinishedHandoverID = @FinishedHandoverID AND FinishedHandoverDetails." + this.productVsItemPrimaryKey(productVsItem) + " = FinishedProtemPackages." + this.productVsItemPrimaryKey(productVsItem) + " " + "\r\n";
+            queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProtemPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Customers ON FinishedProtemPackages.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON FinishedProtemPackages.CommodityID = Commodities.CommodityID " + "\r\n";
+
+            queryString = queryString + "       ORDER BY    FinishedHandoverDetails.FinishedHandoverDetailID " + "\r\n";
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
         }
 
 
@@ -95,18 +108,36 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
 
 
+        private string productVsItemTable(bool productVsItem)
+        {
+            return productVsItem ? "FinishedProducts" : "FinishedItems";
+        }
 
+        private string productVsItemTableDetail(bool productVsItem)
+        {
+            return productVsItem ? "FinishedProductPackage" : "FinishedItemPackage";
+        }
+
+        private string productVsItemPrimaryKey(bool productVsItem)
+        {
+            return productVsItem ? "FinishedProductPackageID" : "FinishedItemPackageID";
+        }
+
+        private string productVsItemSemifinishedReferences(bool productVsItem)
+        {
+            return (productVsItem ? "SemifinishedProductReferences" : "SemifinishedItemReferences") + " AS SemifinishedProtemReferences";
+        }
 
 
         private void GetFinishedHandoverPendingPlannedOrders()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @NMVNTaskID int, @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "       SELECT          PlannedOrders.PlannedOrderID, PlannedOrders.EntryDate AS PlannedOrderEntryDate, PlannedOrders.Code AS PlannedOrderCode, Workshifts.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
             queryString = queryString + "       FROM            PlannedOrders " + "\r\n";
-            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, PlannedOrderID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, PlannedOrderID) FinishedProductPackages ON PlannedOrders.PlannedOrderID = FinishedProductPackages.PlannedOrderID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN Workshifts ON FinishedProductPackages.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, PlannedOrderID FROM FinishedProductPackages WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.FinishedProductHandover + " AND FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, PlannedOrderID UNION ALL SELECT WorkshiftID, PlannedOrderID FROM FinishedItemPackages WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.FinishedItemHandover + " AND FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, PlannedOrderID) FinishedProtemPackages ON PlannedOrders.PlannedOrderID = FinishedProtemPackages.PlannedOrderID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Workshifts ON FinishedProtemPackages.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON PlannedOrders.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "       ORDER BY        Workshifts.EntryDate DESC, Workshifts.Code DESC " + "\r\n";
 
@@ -115,13 +146,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void GetFinishedHandoverPendingCustomers()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @NMVNTaskID int, @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName " + "\r\n";
             queryString = queryString + "       FROM            Workshifts " + "\r\n";
-            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, CustomerID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID) FinishedProductPackages ON Workshifts.WorkshiftID = FinishedProductPackages.WorkshiftID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN Customers ON FinishedProductPackages.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID, CustomerID FROM FinishedProductPackages WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.FinishedProductHandover + " AND FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID UNION ALL SELECT WorkshiftID, CustomerID FROM FinishedItemPackages WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.FinishedItemHandover + " AND FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID, CustomerID) FinishedProtemPackages ON Workshifts.WorkshiftID = FinishedProtemPackages.WorkshiftID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Customers ON FinishedProtemPackages.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "       ORDER BY        Workshifts.EntryDate DESC, Workshifts.Code DESC " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedHandoverPendingCustomers", queryString);
@@ -129,12 +160,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void GetFinishedHandoverPendingWorkshifts()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @NMVNTaskID int, @LocationID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode " + "\r\n";
             queryString = queryString + "       FROM            Workshifts " + "\r\n";
-            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID FROM FinishedProductPackages WHERE FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID) FinishedProductPackages ON Workshifts.WorkshiftID = FinishedProductPackages.WorkshiftID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT WorkshiftID FROM FinishedProductPackages WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.FinishedProductHandover + " AND FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID UNION ALL SELECT WorkshiftID FROM FinishedItemPackages WHERE @NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.FinishedItemHandover + " AND FinishedHandoverID IS NULL AND Approved = 1 GROUP BY WorkshiftID) FinishedProtemPackages ON Workshifts.WorkshiftID = FinishedProtemPackages.WorkshiftID " + "\r\n";
             queryString = queryString + "       ORDER BY        Workshifts.EntryDate DESC, Workshifts.Code DESC " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedHandoverPendingWorkshifts", queryString);
@@ -144,12 +175,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @FinishedHandoverID Int, @WorkshiftID Int, @PlannedOrderID Int, @CustomerID Int, @FinishedProductPackageIDs varchar(3999), @IsReadonly bit " + "\r\n";
+            queryString = " @NMVNTaskID int, @FinishedHandoverID Int, @WorkshiftID Int, @PlannedOrderID Int, @CustomerID Int, @FinishedProductPackageIDs varchar(3999), @IsReadonly bit " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       IF  (@PlannedOrderID <> 0) " + "\r\n";
+            queryString = queryString + "       IF  (@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.FinishedProductHandover + ") " + "\r\n";
             queryString = queryString + "           " + this.GetPendingBUILDSQL(true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           " + this.GetPendingBUILDSQL(false) + "\r\n";
@@ -158,57 +189,70 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedHandoverPendingDetails", queryString);
         }
 
-        private string GetPendingBUILDSQL(bool isPlannedOrderID)
+        private string GetPendingBUILDSQL(bool productVsItem)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+            queryString = queryString + "       IF  (@PlannedOrderID <> 0) " + "\r\n";
+            queryString = queryString + "           " + this.GetPendingBUILDSQL(productVsItem, true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.GetPendingBUILDSQL(productVsItem, false) + "\r\n";
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string GetPendingBUILDSQL(bool productVsItem, bool isPlannedOrderID)
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
             queryString = queryString + "       IF  (@CustomerID <> 0) " + "\r\n";
-            queryString = queryString + "           " + this.GetPendingBUILDSQL(isPlannedOrderID, true) + "\r\n";
+            queryString = queryString + "           " + this.GetPendingBUILDSQL(productVsItem, isPlannedOrderID, true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-            queryString = queryString + "           " + this.GetPendingBUILDSQL(isPlannedOrderID, false) + "\r\n";
+            queryString = queryString + "           " + this.GetPendingBUILDSQL(productVsItem, isPlannedOrderID, false) + "\r\n";
             queryString = queryString + "   END " + "\r\n";
 
             return queryString;
         }
 
-        private string GetPendingBUILDSQL(bool isPlannedOrderID, bool isCustomerID)
+        private string GetPendingBUILDSQL(bool productVsItem, bool isPlannedOrderID, bool isCustomerID)
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
             queryString = queryString + "       IF  (@FinishedProductPackageIDs <> '') " + "\r\n";
-            queryString = queryString + "           " + this.GetPendingBUILDSQL(isPlannedOrderID, isCustomerID, true) + "\r\n";
+            queryString = queryString + "           " + this.GetPendingBUILDSQL(productVsItem, isPlannedOrderID, isCustomerID, true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-            queryString = queryString + "           " + this.GetPendingBUILDSQL(isPlannedOrderID, isCustomerID, false) + "\r\n";
+            queryString = queryString + "           " + this.GetPendingBUILDSQL(productVsItem, isPlannedOrderID, isCustomerID, false) + "\r\n";
             queryString = queryString + "   END " + "\r\n";
 
             return queryString;
         }
 
-        private string GetPendingBUILDSQL(bool isPlannedOrderID, bool isCustomerID, bool isFinishedProductPackageIDs)
+        private string GetPendingBUILDSQL(bool productVsItem, bool isPlannedOrderID, bool isCustomerID, bool isFinishedProductPackageIDs)
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
 
             queryString = queryString + "       IF (@FinishedHandoverID <= 0) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.GetPendingBUILDSQLNew(isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
-            queryString = queryString + "                   ORDER BY Customers.Name, Customers.Code, Commodities.Code, FinishedProductPackages.EntryDate " + "\r\n";
+            queryString = queryString + "                   " + this.GetPendingBUILDSQLNew(productVsItem, isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
+            queryString = queryString + "                   ORDER BY Customers.Name, Customers.Code, Commodities.Code, FinishedProtemPackages.EntryDate " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
 
             queryString = queryString + "               IF (@IsReadonly = 1) " + "\r\n";
             queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.GetPendingBUILDSQLEdit(isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
-            queryString = queryString + "                       ORDER BY Customers.Name, Customers.Code, Commodities.Code, FinishedProductPackages.EntryDate " + "\r\n";
+            queryString = queryString + "                       " + this.GetPendingBUILDSQLEdit(productVsItem, isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
+            queryString = queryString + "                       ORDER BY Customers.Name, Customers.Code, Commodities.Code, FinishedProtemPackages.EntryDate " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
 
             queryString = queryString + "               ELSE " + "\r\n"; //FULL SELECT FOR EDIT MODE
 
             queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.GetPendingBUILDSQLNew(isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
+            queryString = queryString + "                       " + this.GetPendingBUILDSQLNew(productVsItem, isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
             queryString = queryString + "                       UNION ALL " + "\r\n";
-            queryString = queryString + "                       " + this.GetPendingBUILDSQLEdit(isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
-            queryString = queryString + "                       ORDER BY Customers.Name, Customers.Code, Commodities.Code, FinishedProductPackages.EntryDate " + "\r\n";
+            queryString = queryString + "                       " + this.GetPendingBUILDSQLEdit(productVsItem, isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
+            queryString = queryString + "                       ORDER BY Customers.Name, Customers.Code, Commodities.Code, FinishedProtemPackages.EntryDate " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
@@ -216,32 +260,32 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             return queryString;
         }
 
-        private string GetPendingBUILDSQLNew(bool isPlannedOrderID, bool isCustomerID, bool isFinishedProductPackageIDs)
+        private string GetPendingBUILDSQLNew(bool productVsItem, bool isPlannedOrderID, bool isCustomerID, bool isFinishedProductPackageIDs)
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      FinishedProductPackages.FinishedProductID, FinishedProductPackages.FinishedProductPackageID, FinishedProductPackages.EntryDate AS FinishedProductEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, FinishedProductPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
-            queryString = queryString + "                   FinishedProductPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, FinishedProductPackages.Quantity, FinishedProductPackages.SemifinishedProductReferences, CAST(1 AS bit) AS IsSelected " + "\r\n";
+            queryString = queryString + "       SELECT      FinishedProtemPackages.FinishedProductID, FinishedProtemPackages.FinishedProductPackageID, FinishedProtemPackages.EntryDate AS FinishedProductEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, FinishedProtemPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "                   FinishedProtemPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, FinishedProtemPackages.Quantity, FinishedProtemPackages." + this.productVsItemSemifinishedReferences(productVsItem) + ", CAST(1 AS bit) AS IsSelected " + "\r\n";
 
-            queryString = queryString + "       FROM        FinishedProductPackages " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Customers ON FinishedProductPackages.Approved = 1 AND FinishedProductPackages.WorkshiftID = @WorkshiftID " + (isCustomerID ? " AND FinishedProductPackages.CustomerID = @CustomerID " : "") + (isPlannedOrderID ? " AND FinishedProductPackages.PlannedOrderID = @PlannedOrderID " : "") + " AND FinishedProductPackages.FinishedHandoverID IS NULL AND FinishedProductPackages.CustomerID = Customers.CustomerID " + (isFinishedProductPackageIDs ? " AND FinishedProductPackages.FinishedProductPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@FinishedProductPackageIDs))" : "") + "\r\n";
-            queryString = queryString + "                   INNER JOIN Commodities ON FinishedProductPackages.CommodityID = Commodities.CommodityID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "       FROM        " + this.productVsItemTable(productVsItem) + " FinishedProtemPackages " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Customers ON FinishedProtemPackages.Approved = 1 AND FinishedProtemPackages.WorkshiftID = @WorkshiftID " + (isCustomerID ? " AND FinishedProtemPackages.CustomerID = @CustomerID " : "") + (isPlannedOrderID ? " AND FinishedProtemPackages.PlannedOrderID = @PlannedOrderID " : "") + " AND FinishedProtemPackages.FinishedHandoverID IS NULL AND FinishedProtemPackages.CustomerID = Customers.CustomerID " + (isFinishedProductPackageIDs ? " AND FinishedProtemPackages." + this.productVsItemPrimaryKey(productVsItem) + " NOT IN (SELECT Id FROM dbo.SplitToIntList (" + (productVsItem ? "@FinishedProductPackageIDs" : "@FinishedItemPackageIDs") + "))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON FinishedProtemPackages.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProtemPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
 
             return queryString;
         }
 
-        private string GetPendingBUILDSQLEdit(bool isPlannedOrderID, bool isCustomerID, bool isFinishedProductPackageIDs)
+        private string GetPendingBUILDSQLEdit(bool productVsItem, bool isPlannedOrderID, bool isCustomerID, bool isFinishedProductPackageIDs)
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      FinishedProductPackages.FinishedProductID, FinishedProductPackages.FinishedProductPackageID, FinishedProductPackages.EntryDate AS FinishedProductEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, FinishedProductPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
-            queryString = queryString + "                   FinishedProductPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, FinishedProductPackages.Quantity, FinishedProductPackages.SemifinishedProductReferences, CAST(1 AS bit) AS IsSelected " + "\r\n";
+            queryString = queryString + "       SELECT      " + (productVsItem ? "NULL AS FinishedProductID" : "FinishedProtemPackages.FinishedProductID") + ", " + (productVsItem ? "NULL AS FinishedProductPackageID" : "FinishedProtemPackages.FinishedProductPackageID") + ",                     " + (productVsItem ? "FinishedProtemPackages.FinishedItemID" : "NULL AS FinishedItemID") + ", " + (productVsItem ? "FinishedProtemPackages.FinishedItemPackageID" : "NULL AS FinishedItemPackageID") + ", FinishedProtemPackages.EntryDate AS FinishedProductEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, FinishedProtemPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "                   FinishedProtemPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, FinishedProtemPackages.Quantity, FinishedProtemPackages." + this.productVsItemSemifinishedReferences(productVsItem) + ", CAST(1 AS bit) AS IsSelected " + "\r\n";
 
-            queryString = queryString + "       FROM        FinishedProductPackages " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Customers ON FinishedProductPackages.FinishedHandoverID = @FinishedHandoverID AND FinishedProductPackages.CustomerID = Customers.CustomerID " + (isFinishedProductPackageIDs ? " AND FinishedProductPackages.FinishedProductPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@FinishedProductPackageIDs))" : "") + "\r\n";
-            queryString = queryString + "                   INNER JOIN Commodities ON FinishedProductPackages.CommodityID = Commodities.CommodityID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "       FROM        " + this.productVsItemTable(productVsItem) + " FinishedProtemPackages " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Customers ON FinishedProtemPackages.FinishedHandoverID = @FinishedHandoverID AND FinishedProtemPackages.CustomerID = Customers.CustomerID " + (isFinishedProductPackageIDs ? " AND FinishedProtemPackages." + this.productVsItemPrimaryKey(productVsItem) + " NOT IN (SELECT Id FROM dbo.SplitToIntList (" + (productVsItem ? "@FinishedProductPackageIDs" : "@FinishedItemPackageIDs") + "))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON FinishedProtemPackages.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProtemPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
 
             return queryString;
         }
@@ -385,8 +429,26 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       DECLARE     @LocalFinishedHandoverID int      SET @LocalFinishedHandoverID = @FinishedHandoverID" + "\r\n";
 
+            queryString = queryString + "       IF ((SELECT NMVNTaskID FROM FinishedHandovers WHERE FinishedHandoverID = @FinishedHandoverID) = " + (int)GlobalEnums.NmvnTaskID.FinishedProductHandover + ") " + "\r\n";
+            queryString = queryString + "           " + this.FinishedHandoverSheetSQL(true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.FinishedHandoverSheetSQL(false) + "\r\n";
+
+            queryString = queryString + "       SET NOCOUNT OFF" + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("FinishedHandoverSheet", queryString);
+        }
+
+        private string FinishedHandoverSheetSQL(bool productVsItem)
+        {
+            string queryString = "";
+
+            queryString = queryString + "    BEGIN " + "\r\n";
+
             queryString = queryString + "       SELECT      FinishedHandovers.FinishedHandoverID, FinishedHandoverDetails.FinishedHandoverDetailID, FinishedHandovers.EntryDate, FinishedHandovers.Reference, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, Customers.Name AS CustomerName, " + "\r\n";
-            queryString = queryString + "                   Commodities.Code, Commodities.Name, FinishedProductPackages.PiecePerPack, FinishedProductPackages.Quantity, FinishedProductPackages.Packages, FinishedProductPackages.OddPackages, FinishedLeaders.Name AS FinishedLeaderName, Storekeepers.Name AS StorekeeperName, FinishedProductPackages.SemifinishedProductReferences, FinishedHandovers.Description " + "\r\n";
+            queryString = queryString + "                   Commodities.Code, Commodities.Name, FinishedProductPackages.PiecePerPack, FinishedProductPackages.Quantity, FinishedProductPackages.Packages, FinishedProductPackages.OddPackages, FinishedLeaders.Name AS FinishedLeaderName, Storekeepers.Name AS StorekeeperName, FinishedProductPackages." + this.productVsItemSemifinishedReferences(productVsItem) + ", FinishedHandovers.Description " + "\r\n";
 
             queryString = queryString + "       FROM        FinishedHandovers " + "\r\n";
             queryString = queryString + "                   INNER JOIN FinishedHandoverDetails ON FinishedHandovers.FinishedHandoverID = @LocalFinishedHandoverID AND FinishedHandovers.FinishedHandoverID = FinishedHandoverDetails.FinishedHandoverID " + "\r\n";
@@ -404,7 +466,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "    END " + "\r\n";
 
-            this.totalSmartPortalEntities.CreateStoredProcedure("FinishedHandoverSheet", queryString);
+            return queryString;
         }
 
     }
