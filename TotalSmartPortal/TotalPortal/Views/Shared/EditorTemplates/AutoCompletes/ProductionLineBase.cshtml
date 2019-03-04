@@ -5,7 +5,7 @@
 @(Html.Kendo().AutoCompleteFor(m => m)
         .DataTextField("Code")
         .Filter("contains")
-        .MinLength(Settings.AutoCompleteMinLenght)
+        .MinLength(1)
         .Placeholder("Chọn mã máy...")
         .DataSource(source =>
         {
