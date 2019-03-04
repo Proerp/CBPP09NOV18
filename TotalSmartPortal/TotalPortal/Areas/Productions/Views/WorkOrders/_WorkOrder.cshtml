@@ -163,6 +163,11 @@
                     
                     columns.Bound(p => p.LayerCode).DisplayNameTitle().Width(20).Hidden(GlobalEnums.CBPP || @Model.IsItem).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
                         .ClientTemplate("#= (LayerCode == null)? '' : LayerCode #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].LayerCode' value='#= (LayerCode == null) ? '' : LayerCode #' />");
+
+                    columns.Bound(p => p.LayerQuantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(80)
+                        .Format(Settings.kfmQuantity)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', LayerQuantity) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].LayerQuantity' value='#= LayerQuantity #' />");
+                    
                     columns.Bound(p => p.BlockUnit).DisplayNameTitle().Width(50).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', BlockUnit) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].BlockUnit' value='#= BlockUnit #' />");
@@ -181,19 +186,12 @@
 
                 .ToolBar(toolbar =>
                 {
-                    //if (Model.Editable)
-                    //{
-                        toolbar.Template(@<text>
-                            <span style="float:right">
-                                @Html.LabelFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimated)
-                                @Html.Kendo().NumericTextBoxFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimated).HtmlAttributes(new { @style = "width: 118px;" }).Events(e => e.Change("updateQuantities").Spin("updateQuantities"))
-                            </span>
-                        </text>);
-                    @*}
-                    else
-                    {
-                        toolbar.Template(@<text> @Commons.Toolbars.BlankToolbar() </text>);
-                    }*@
+                    toolbar.Template(@<text>
+                        <span style="float:right">
+                            @Html.LabelFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimated)
+                            @Html.Kendo().NumericTextBoxFor(model => (model as IWorkOrderPrimitiveDTO).QuantityMaterialEstimated).HtmlAttributes(new { @style = "width: 118px;" }).Events(e => e.Change("updateQuantities").Spin("updateQuantities"))
+                        </span>
+                    </text>);                    
                 })
 
                 .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })

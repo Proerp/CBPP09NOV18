@@ -56,6 +56,7 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> InActivePartialDate { get; set; }
         public Nullable<int> HasProductionOrders { get; set; }
         public int NMVNTaskID { get; set; }
+        public decimal QuantityMaterial { get; set; }
     
         public virtual Bom Bom { get; set; }
         public virtual Customer Customer { get; set; }

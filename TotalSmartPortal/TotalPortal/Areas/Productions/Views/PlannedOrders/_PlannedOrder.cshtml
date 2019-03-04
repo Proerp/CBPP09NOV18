@@ -109,7 +109,7 @@
                         .ClientTemplate("<div> #= CommodityCode #</div>" +
                                 "<div> #= (VoidTypeName == null)? '' : VoidTypeName #</div>" +
                                 "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(127).HtmlAttributes(new { style = "" })
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(@Model.IsItem ? 80 : 127).HtmlAttributes(new { style = "" })
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
                     
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
@@ -155,7 +155,14 @@
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
 
-
+                    columns.Bound(p => p.MaterialAddedPercentage).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(50).Hidden(!@Model.IsItem)
+                        .Format(Settings.kfmN0)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', MaterialAddedPercentage) #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].MaterialAddedPercentage' value='#= MaterialAddedPercentage #' />");
+                    columns.Bound(p => p.QuantityMaterial).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(70).Hidden(!@Model.IsItem)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityMaterial) #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].QuantityMaterial' value='#= QuantityMaterial #' />");
+                    
                     columns.Bound(p => p.Remarks).DisplayNameTitle().Width(68).Hidden()
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
@@ -163,7 +170,7 @@
                         .ClientTemplate("#= (InActivePartial == null)? '' : InActivePartial #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].InActivePartial' value='#= (InActivePartial == null) ? '' : InActivePartial #' />");
 
                     columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(5).Hidden(!@Model.IsItem)
-                        .ClientTemplate("<a class='k-button' title = 'Dự toán nguyên vật liệu' style='padding-left:0px; padding-right:0px' onclick='showBoms(#= BomID #, #= Quantity #)'><span class='k-icon sbt-add-bom'></span></a>");
+                        .ClientTemplate("<a class='k-button' title = 'Dự toán nguyên vật liệu' style='padding-left:0px; padding-right:0px' onclick='showBoms(#= BomID #, #= QuantityMaterial #)'><span class='k-icon sbt-add-bom'></span></a>");
                     
                     columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(10).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center", @style="padding-left:0px; padding-right:0px"});
 
@@ -223,6 +230,7 @@
                         model.Id(x => x.PlannedOrderDetailID);
                         model.Field(m => m.PlannedOrderDetailID).DefaultValue(0);
                         model.Field(m => m.PlannedOrderID).DefaultValue(@Model.PlannedOrderID);
+                        model.Field(m => m.MaterialAddedPercentage).DefaultValue(@Model.IsItem ? 12 : 0);
                     })
                     .Events(events =>
                     {
@@ -233,6 +241,7 @@
                     .Aggregates(a => a.Add(x => x.QuantityRequested).Sum())
                     .Aggregates(a => a.Add(x => x.QuantityOnhand).Sum())
                     .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityMaterial).Sum())
                 )
             )
         </div>
@@ -327,13 +336,21 @@
     }
 
     dataSourceChange = function (e) {
-        if (e.field === "QuantityOnhand" || e.field === "QuantityRequested") {
+        if (e.field === "QuantityOnhand" || e.field === "QuantityRequested" || e.field === "Quantity" || e.field === "MaterialAddedPercentage") {
             var dataRow = e.items[0];
-            if (dataRow.QuantityRequested >= dataRow.QuantityOnhand) {
-                dataRow.set("Quantity", DoRound(dataRow.QuantityRequested - dataRow.QuantityOnhand, requireConfig.websiteOptions.rndQuantity));
+
+            if (e.field === "Quantity" || e.field === "MaterialAddedPercentage")
+            {
+                dataRow.set("QuantityMaterial", DoRound(dataRow.Quantity + dataRow.Quantity * dataRow.MaterialAddedPercentage/100, requireConfig.websiteOptions.rndQuantity));
             }
-            else {
-                dataRow.set("Quantity", 0);
+            else
+            {
+                if (dataRow.QuantityRequested >= dataRow.QuantityOnhand) {
+                    dataRow.set("Quantity", DoRound(dataRow.QuantityRequested - dataRow.QuantityOnhand, requireConfig.websiteOptions.rndQuantity));
+                }
+                else {
+                    dataRow.set("Quantity", 0);
+                }
             }
         }
     }

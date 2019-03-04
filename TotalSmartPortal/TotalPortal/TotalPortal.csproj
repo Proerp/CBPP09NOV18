@@ -3240,6 +3240,7 @@
     <Content Include="Views\Shared\EditorTemplates\DropDowns\BinType.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DropDowns\CommodityIcon.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DecimalN3.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\PercentN0.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

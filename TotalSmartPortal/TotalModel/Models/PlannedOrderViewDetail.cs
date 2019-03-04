@@ -40,5 +40,7 @@ namespace TotalModel.Models
         public decimal QuantityRequested { get; set; }
         public decimal QuantityOnhand { get; set; }
         public string Specs { get; set; }
+        public decimal MaterialAddedPercentage { get; set; }
+        public decimal QuantityMaterial { get; set; }
     }
 }

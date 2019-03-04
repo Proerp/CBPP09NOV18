@@ -53,6 +53,7 @@ namespace TotalModel.Models
         public bool InActivePartial { get; set; }
         public Nullable<System.DateTime> InActiveDate { get; set; }
         public int NMVNTaskID { get; set; }
+        public decimal TotalQuantityMaterial { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Location Location { get; set; }

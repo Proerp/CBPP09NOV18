@@ -28,6 +28,7 @@ namespace TotalPortal.Configuration
         public static string kfmQuantity { get { return "{0:n" + GlobalEnums.rndQuantity.ToString("N0") + "}"; } }
         public static string kfmAmount { get { return "{0:n" + GlobalEnums.rndAmount.ToString("N0") + "}"; } }
         public static string kfmDiscountPercent { get { return "{0:n" + GlobalEnums.rndDiscountPercent.ToString("N0") + "}%"; } }
+        public static string kfmPercentN0 { get { return "{0:n" + GlobalEnums.rndN0.ToString("N0") + "}%"; } }
 
         public static string kfmWeight { get { return "{0:n" + GlobalEnums.rndWeight.ToString("N0") + "}"; } }
 

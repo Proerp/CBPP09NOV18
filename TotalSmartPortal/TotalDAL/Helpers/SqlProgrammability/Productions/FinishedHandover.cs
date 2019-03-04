@@ -17,7 +17,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         }
 
         public void RestoreProcedure()
-        {            
+        {
+            return;
+
             this.GetFinishedHandoverIndexes();
 
             this.GetFinishedHandoverViewDetails();

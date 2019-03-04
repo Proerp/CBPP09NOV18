@@ -65,6 +65,7 @@ namespace TotalModel.Models
         public int NMVNTaskID { get; set; }
         public decimal QuantityMaterialEstimated { get; set; }
         public decimal QuantityMaterialEstimatedIssued { get; set; }
+        public decimal TotalQuantityMaterial { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Location Location { get; set; }

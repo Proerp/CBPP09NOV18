@@ -161,12 +161,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void WorkOrderPostSaveValidate()
         {
-            string[] queryArray = new string[0]; //NEED TO CHECK
+            string[] queryArray = new string[3];
 
-            //queryArray[0] = " SELECT TOP 1 @FoundEntity = N'Ngày nhập kho: ' + CAST(GoodsReceipts.EntryDate AS nvarchar) FROM WorkOrderDetails INNER JOIN GoodsReceipts ON WorkOrderDetails.WorkOrderID = @EntityID AND WorkOrderDetails.GoodsReceiptID = GoodsReceipts.GoodsReceiptID AND WorkOrderDetails.EntryDate < GoodsReceipts.EntryDate ";
-            //queryArray[1] = " SELECT TOP 1 @FoundEntity = N'Lệnh sản xuất: ' + CAST(ProductionOrders.EntryDate AS nvarchar) FROM WorkOrders INNER JOIN ProductionOrders ON WorkOrders.WorkOrderID = @EntityID AND WorkOrders.ProductionOrderID = ProductionOrders.ProductionOrderID AND WorkOrders.EntryDate < ProductionOrders.EntryDate ";
-            //queryArray[2] = " SELECT TOP 1 @FoundEntity = N'Số lượng xuất vượt quá số lượng tồn kho: ' + CAST(ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM GoodsReceiptDetails WHERE (ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
-            ////////ALLOW TO ISSUE OVER FirmOrderMaterials: queryArray[3] = " SELECT TOP 1 @FoundEntity = N'Số lượng xuất vượt quá số định mức nguyên vật liệu: ' + CAST(ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM FirmOrderMaterials WHERE (ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = N'Yêu cầu NVL: ' + CAST(ProductionOrders.EntryDate AS nvarchar) FROM WorkOrders INNER JOIN ProductionOrders ON WorkOrders.WorkOrderID = @EntityID AND WorkOrders.ProductionOrderID = ProductionOrders.ProductionOrderID AND WorkOrders.EntryDate < ProductionOrders.EntryDate ";
+            queryArray[1] = " SELECT TOP 1 @FoundEntity = N'Số lượng yêu cầu vượt quá số định mức nguyên vật liệu: ' + CAST(ROUND(QuantityMaterialEstimated - QuantityMaterialEstimatedIssued, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM FirmOrders WHERE (NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.PlannedItem + " AND ROUND(QuantityMaterialEstimated - QuantityMaterialEstimatedIssued, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
+            queryArray[2] = " SELECT TOP 1 @FoundEntity = N'Số lượng yêu cầu vượt quá số định mức nguyên vật liệu: ' + CAST(ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM FirmOrderMaterials WHERE (NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.PlannedItem + " AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("WorkOrderPostSaveValidate", queryArray);
         }
@@ -186,11 +185,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void WorkOrderEditable()
         {
-            string[] queryArray = new string[0]; //NEED TO CHECK
+            string[] queryArray = new string[1];
 
-            //queryArray[0] = " SELECT TOP 1 @FoundEntity = WorkOrderID FROM SemifinishedItems WHERE WorkOrderID = @EntityID ";
-            //queryArray[1] = " SELECT TOP 1 @FoundEntity = WorkOrderID FROM SemifinishedProducts WHERE WorkOrderID = @EntityID ";
-            //queryArray[2] = " SELECT TOP 1 @FoundEntity = WorkOrderID FROM GoodsReceiptDetails WHERE WorkOrderID = @EntityID ";
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = WorkOrderID FROM MaterialIssues WHERE WorkOrderID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("WorkOrderEditable", queryArray);
         }

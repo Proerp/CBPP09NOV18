@@ -58,6 +58,8 @@ namespace TotalDTO.Productions
 
         public virtual int CustomerID { get; set; }
 
+        public decimal TotalQuantityMaterial { get {return this.DtoDetails().Select(o => o.QuantityMaterial).Sum(); } }
+
         public virtual bool CheckBomID { get { bool checkBomID = false; this.DtoDetails().ToList().ForEach(e => { if (e.CombineIndex != null && checkBomID == false && this.DtoDetails().Where(w => w.CombineIndex == e.CombineIndex && w.BomID != e.BomID).Count() > 0) checkBomID = true; }); return checkBomID; } }
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)

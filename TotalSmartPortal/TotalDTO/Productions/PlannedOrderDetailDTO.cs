@@ -62,6 +62,15 @@ namespace TotalDTO.Productions
         [UIHint("Quantity")]
         public override decimal Quantity { get; set; }
 
+
+        [Display(Name = "% NVL")]
+        [UIHint("PercentN0")]
+        public decimal MaterialAddedPercentage { get; set; }
+        [Display(Name = "KL NVL")]
+        [UIHint("Quantity")]
+        public decimal QuantityMaterial { get; set; }
+
+
         [Display(Name = "#")]
         [UIHint("Integer")]
         public int? CombineIndex { get; set; }
