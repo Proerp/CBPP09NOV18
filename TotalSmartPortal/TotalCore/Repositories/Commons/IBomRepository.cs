@@ -12,7 +12,7 @@ namespace TotalCore.Repositories.Commons
     {
         IList<BomBase> GetBomBases(string searchText, int commodityID, int commodityTypeID, int commodityCategoryID, int commodityClassID, int commodityLineID);
 
-        IList<BomValue> GetBomValues(int bomID, decimal quantity);
+        IList<BomValue> GetBomValues(int bomID, decimal quantity, bool overStockOnly);
         IList<CommodityBom> GetCommodityBoms(int? bomID, int? commodityID);
 
         void AddCommodityBom(int? bomID, int? commodityID);

@@ -43,9 +43,9 @@ namespace TotalPortal.Areas.Commons.APIs
             return Json(result, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetBomValues([DataSourceRequest] DataSourceRequest dataSourceRequest, int bomID, decimal quantity)
+        public JsonResult GetBomValues([DataSourceRequest] DataSourceRequest dataSourceRequest, int bomID, decimal quantity, bool overStockOnly)
         {
-            var result = bomAPIRepository.GetBomValues(bomID, quantity);
+            var result = bomAPIRepository.GetBomValues(bomID, quantity, overStockOnly);
 
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
