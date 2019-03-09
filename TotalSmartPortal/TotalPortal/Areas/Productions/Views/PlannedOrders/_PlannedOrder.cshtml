@@ -170,7 +170,7 @@
                         .ClientTemplate("#= (InActivePartial == null)? '' : InActivePartial #" + "<input type='hidden' name='PlannedOrderViewDetails[#= index(data) #].InActivePartial' value='#= (InActivePartial == null) ? '' : InActivePartial #' />");
 
                     columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(5).Hidden(!@Model.IsItem)
-                        .ClientTemplate("<a class='k-button' title = 'Dự toán nguyên vật liệu' style='padding-left:0px; padding-right:0px' onclick='showBoms(#= BomID #, #= QuantityMaterial #)'><span class='k-icon sbt-add-bom'></span></a>");
+                        .ClientTemplate("<a class='k-button' title = 'Kiểm tra tồn nguyên vật liệu' style='padding-left:0px; padding-right:0px' onclick='showBoms(#= BomID #, #= QuantityMaterial #)'><span class='k-icon sbt-add-bom'></span></a>");
                     
                     columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(10).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center", @style="padding-left:0px; padding-right:0px"});
 
@@ -319,7 +319,7 @@
         require(["kpopupWindow"], function (kpopupWindow) {
             quantity = Math.round(quantity);
             var bomWindow = new kpopupWindow();
-            bomWindow.openWindow($("#popupWindow"), "@Url.Action("Boms", Model.ControllerName)" + "/" + bomID + "/" + quantity, "Dự toán nguyên vật liệu", @Settings.PopupWidthMedium, @Settings.PopupHeightWithTab);
+            bomWindow.openWindow($("#popupWindow"), "@Url.Action("Boms", Model.ControllerName)" + "/" + bomID + "/" + quantity, "Kiểm tra tồn nguyên vật liệu", @Settings.PopupWidthMedium, @Settings.PopupHeightWithTab);
         });
     }
 
