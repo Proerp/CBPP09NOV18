@@ -61,6 +61,16 @@ namespace TotalPortal.Areas.Productions.Controllers
                         });
                 }
 
+            //1-TAO TABLE/ DTO COLLECTION / FUNCCTION GET COLLECTION
+            //2-TAI CHO NAY: CHIA 2 T/H: NEW/ EDIT: EDIT: GET FROM DATAABASE, ELSE: GIONG NHU HIEN TAI (TU DONG INIT)
+            //3-CHO PHEP INSERT ==> DE INSERT DUPLICATE ROW
+            
+            //4-JS: UPDATE SUMMARY COLLLECTION: UPDATE FOR ALL ROW
+            //5-CHECK WHEN SAVE: KTRA TRA: TONG CHI TIET CUON === PHAI BANG SO NL TONG
+            //6-T-SQL: GENERATE: finishedItemPackages
+
+            //CHÚ Ý: FinishedItemPackages: TRONG T-SQL: PHẢI XEM LẠI FinishedItemPackages, CHỈ KHI APRROVE MOI GENERATE FinishedItemPackages ĐƯỢC
+
             var finishedItemPackages = finishedItemViewModel.ViewDetails
                                             .GroupBy(g => g.CommodityID)
                                             .Select(sl => new FinishedItemPackageDTO
