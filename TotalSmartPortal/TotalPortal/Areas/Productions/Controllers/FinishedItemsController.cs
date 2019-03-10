@@ -65,36 +65,39 @@ namespace TotalPortal.Areas.Productions.Controllers
             //6-T-SQL: GENERATE: finishedItemLots
 
             //CHÚ Ý: FinishedItemPackages: TRONG T-SQL: PHẢI XEM LẠI FinishedItemPackages, CHỈ KHI APRROVE MOI GENERATE FinishedItemPackages ĐƯỢC
+            if (finishedItemViewModel.FinishedItemID > 0) //EDIT
+            {
+                List<FinishedItemViewLot> entityViewDetails = this.finishedItemService.GetFinishedItemViewLots(finishedItemViewModel.FinishedItemID);
+                Mapper.Map<List<FinishedItemViewLot>, List<FinishedItemLotDTO>>(entityViewDetails, finishedItemViewModel.FinishedItemLots);
+            }
+            else
+            { //NEW
+                var finishedItemLots = finishedItemViewDetails
+                                                .GroupBy(g => g.CommodityID)
+                                                .Select(sl => new FinishedItemLotDTO
+                                                {
+                                                    CommodityID = sl.First().CommodityID,
+                                                    CommodityCode = sl.First().CommodityCode,
+                                                    CommodityName = sl.First().CommodityName,
+                                                    CommodityTypeID = sl.First().CommodityTypeID,
 
-            var finishedItemLots = finishedItemViewDetails
-                                            .GroupBy(g => g.CommodityID)
-                                            .Select(sl => new FinishedItemLotDTO
-                                            {
-                                                CommodityID = sl.First().CommodityID,
-                                                CommodityCode = sl.First().CommodityCode,
-                                                CommodityName = sl.First().CommodityName,
-                                                CommodityTypeID = sl.First().CommodityTypeID,
+                                                    PiecePerPack = sl.First().PiecePerPack,
+                                                    PackageUnitWeights = sl.First().PackageUnitWeights,
 
-                                                PiecePerPack = sl.First().PiecePerPack,
-                                                PackageUnitWeights = sl.First().PackageUnitWeights,
+                                                    QuantityRemains = sl.Sum(s => s.QuantityRemains),
+                                                    Quantity = sl.Sum(s => (s.Quantity + s.QuantityExcess)),
+                                                    QuantityFailure = sl.Sum(s => s.QuantityFailure),
+                                                    QuantityExcess = sl.Sum(s => s.QuantityExcess),
+                                                    QuantityShortage = sl.Sum(s => s.QuantityShortage),
+                                                    Swarfs = sl.Sum(s => s.Swarfs),
+                                                });
 
-                                                QuantityRemains = sl.Sum(s => s.QuantityRemains),
-                                                Quantity = sl.Sum(s => (s.Quantity + s.QuantityExcess)),
-                                                QuantityFailure = sl.Sum(s => s.QuantityFailure),
-                                                QuantityExcess = sl.Sum(s => s.QuantityExcess),
-                                                QuantityShortage = sl.Sum(s => s.QuantityShortage),
-                                                Swarfs = sl.Sum(s => s.Swarfs),
-                                            });
-
-            finishedItemViewModel.FinishedItemLots = finishedItemLots.ToList();
+                finishedItemViewModel.FinishedItemLots = finishedItemLots.ToList();
+            }
 
             return finishedItemViewDetails;
         }
 
-        //protected override FinishedItemViewModel TailorViewModel(FinishedItemViewModel finishedItemViewModel, bool forDelete, bool forAlter, bool forOpen)
-        //{            
-        //    return base.TailorViewModel(finishedItemViewModel, forDelete, forAlter, forOpen);
-        //}
 
         public override void AddRequireJsOptions()
         {

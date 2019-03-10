@@ -33,6 +33,11 @@ namespace TotalService.Productions
             return this.GetViewDetails(parameters);
         }
 
+        public List<FinishedItemViewLot> GetFinishedItemViewLots(int? finishedItemID)
+        {
+            return this.finishedItemRepository.GetFinishedItemViewLots(finishedItemID);
+        }
+
         public override bool Save(FinishedItemDTO finishedItemDTO)
         {
             finishedItemDTO.FinishedItemViewDetails.RemoveAll(x => (x.Quantity == 0 && x.QuantityFailure == 0 && x.QuantityExcess == 0 && x.QuantityShortage == 0 && x.Swarfs == 0));

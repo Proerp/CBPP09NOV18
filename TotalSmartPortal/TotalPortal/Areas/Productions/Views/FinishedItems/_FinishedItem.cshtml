@@ -339,6 +339,11 @@
                 .Name("kendoGridFinishedItemLots")
                 .Columns(columns =>
                 {
+                    columns.Bound(p => p.FinishedItemLotID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= FinishedItemLotID #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].FinishedItemLotID' value='#= FinishedItemLotID #' />");
+                    columns.Bound(p => p.FinishedItemID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= FinishedItemID #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].FinishedItemID' value='#= FinishedItemID #' />");
+                    
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].CommodityID' value='#= CommodityID #' />");
                     columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(310).EditorTemplateName("StringReadonly")
@@ -349,7 +354,7 @@
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
-
+                    
                     columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")

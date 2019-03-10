@@ -282,6 +282,7 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<FinishedItemDetailDTO, FinishedItemDetail>();
                 cfg.CreateMap<FinishedItemLot, FinishedItemLotDTO>();
                 cfg.CreateMap<FinishedItemLotDTO, FinishedItemLot>();
+                cfg.CreateMap<FinishedItemViewLot, FinishedItemLotDTO>();
 
                 cfg.CreateMap<FinishedProduct, FinishedProductViewModel>();
                 cfg.CreateMap<FinishedProduct, FinishedProductDTO>();

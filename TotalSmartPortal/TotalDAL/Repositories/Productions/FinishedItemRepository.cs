@@ -16,6 +16,15 @@ namespace TotalDAL.Repositories.Productions
             : base(totalSmartPortalEntities, "FinishedItemEditable", "FinishedItemApproved")
         {
         }
+
+        public List<FinishedItemViewLot> GetFinishedItemViewLots(int? finishedItemID)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            List<FinishedItemViewLot> finishedItemViewLots = base.TotalSmartPortalEntities.GetFinishedItemViewLots(finishedItemID).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return finishedItemViewLots;
+        }
     }
 
     public class FinishedItemAPIRepository : GenericAPIRepository, IFinishedItemAPIRepository
