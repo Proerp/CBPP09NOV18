@@ -13,7 +13,7 @@
 }
 
 
-function CreatePopUp(popuptitle, widthsize, heightsize, popupWindow) {    
+function CreatePopUp(popuptitle, widthsize, heightsize, popupWindow) {
     popupWindow.append("<div id='window'></div>");
     var mywindow = $("#window")
     .kendoWindow({
@@ -57,8 +57,8 @@ function keydown_insert(columnEdit) {
 
 
 
-function cloneSelectedItem(selectedItem) { //https://www.telerik.com/forums/copy-row-in-the-grid
-    var kenGrid = $("#kendoGridDetails").data("kendoGrid");
+function cloneSelectedItem(kendoGridName, selectedItem) { //https://www.telerik.com/forums/copy-row-in-the-grid
+    var kenGrid = $(kendoGridName != undefined ? kendoGridName : "#kendoGridDetails").data("kendoGrid");
     var baseItem; if (selectedItem != undefined) baseItem = selectedItem; else baseItem = kenGrid.dataItem(kenGrid.select());
 
     if (baseItem != undefined) {

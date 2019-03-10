@@ -395,7 +395,7 @@
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityFailureWeights) #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].QuantityFailureWeights' value='#= QuantityFailureWeights #' />");
 
-                    columns.Bound(p => p.QuantityExcess).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).Hidden()
+                    columns.Bound(p => p.QuantityExcess).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityExcess) #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].QuantityExcess' value='#= QuantityExcess #' />");
@@ -404,7 +404,7 @@
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityExcessWeights) #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].QuantityExcessWeights' value='#= QuantityExcessWeights #' />");
 
-                    columns.Bound(p => p.QuantityShortage).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).Hidden()
+                    columns.Bound(p => p.QuantityShortage).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityShortage) #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].QuantityShortage' value='#= QuantityShortage #' />");
@@ -414,7 +414,7 @@
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityShortageWeights) #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].QuantityShortageWeights' value='#= QuantityShortageWeights #' />");
 
 
-                    columns.Bound(p => p.Swarfs).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).Hidden()
+                    columns.Bound(p => p.Swarfs).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Swarfs) #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].Swarfs' value='#= Swarfs #' />");
@@ -464,6 +464,9 @@
 <script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
 
 <script type="text/javascript">
+    $(document.body).keydown(function (e) { if (e.keyCode === 45) { cloneSelectedItem("#kendoGridFinishedItemLots"); } });
+    function tailorClonedItem(clonedItem) { clonedItem.FinishedItemLotID = 0; }
+
     $("#TotalQuantity").change(function (e) { updateFinishedItemLots(); })
     $("#TotalQuantityFailure").change(function (e) { updateFinishedItemLots(); })
     $("#TotalQuantityExcess").change(function (e) { updateFinishedItemLots(); })
