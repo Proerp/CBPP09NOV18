@@ -497,6 +497,10 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrderDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrders" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssues_WorkOrders" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItemLot" Width="1.5" PointX="36.375" PointY="6.875" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemLots_FinishedItems" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemLots_Shifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemLots_Workshifts" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

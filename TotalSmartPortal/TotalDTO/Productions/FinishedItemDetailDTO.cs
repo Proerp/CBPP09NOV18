@@ -83,9 +83,9 @@ namespace TotalDTO.Productions
     }
 
 
-    public class FinishedItemPackageDTO : BaseModel
+    public class FinishedItemLotDTO : BaseModel
     {
-        public int FinishedItemPackageID { get; set; }
+        public int FinishedItemLotID { get; set; }
 
         public int FirmOrderID { get; set; }
         public int PlannedOrderID { get; set; }

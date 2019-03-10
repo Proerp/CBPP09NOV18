@@ -43,18 +43,18 @@ namespace TotalService.Productions
         {
             base.UpdateDetail(dto, entity);
 
-            if (dto.FinishedItemPackages != null && dto.FinishedItemPackages.Count > 0)
-                dto.FinishedItemPackages.Each(detailDTO =>
+            if (dto.FinishedItemLots != null && dto.FinishedItemLots.Count > 0)
+                dto.FinishedItemLots.Each(detailDTO =>
                 {
-                    FinishedItemPackage finishedItemPackage;
+                    FinishedItemLot finishedItemLot;
 
-                    if (detailDTO.FinishedItemPackageID <= 0 || (finishedItemPackage = entity.FinishedItemPackages.First(detailModel => detailModel.FinishedItemPackageID == detailDTO.FinishedItemPackageID)) == null)
+                    if (detailDTO.FinishedItemLotID <= 0 || (finishedItemLot = entity.FinishedItemLots.First(detailModel => detailModel.FinishedItemLotID == detailDTO.FinishedItemLotID)) == null)
                     {
-                        finishedItemPackage = new FinishedItemPackage();
-                        entity.FinishedItemPackages.Add(finishedItemPackage);
+                        finishedItemLot = new FinishedItemLot();
+                        entity.FinishedItemLots.Add(finishedItemLot);
                     }
 
-                    Mapper.Map<FinishedItemPackageDTO, FinishedItemPackage>(detailDTO, finishedItemPackage);
+                    Mapper.Map<FinishedItemLotDTO, FinishedItemLot>(detailDTO, finishedItemLot);
                 });
         }
 
@@ -62,13 +62,13 @@ namespace TotalService.Productions
         {
             base.UndoDetail(dto, entity, isDelete);
 
-            if (entity.GetID() > 0 && entity.FinishedItemPackages.Count > 0)
-                if (isDelete || dto.FinishedItemPackages == null || dto.FinishedItemPackages.Count == 0)
-                    this.finishedItemRepository.TotalSmartPortalEntities.FinishedItemPackages.RemoveRange(entity.FinishedItemPackages);
+            if (entity.GetID() > 0 && entity.FinishedItemLots.Count > 0)
+                if (isDelete || dto.FinishedItemLots == null || dto.FinishedItemLots.Count == 0)
+                    this.finishedItemRepository.TotalSmartPortalEntities.FinishedItemLots.RemoveRange(entity.FinishedItemLots);
                 else
-                    entity.FinishedItemPackages.ToList()//Have to use .ToList(): to convert enumerable to List before do remove. To correct this error: Collection was modified; enumeration operation may not execute. 
-                            .Where(detailModel => !dto.FinishedItemPackages.Any(detailDTO => detailDTO.FinishedItemPackageID == detailModel.FinishedItemPackageID))
-                            .Each(deleted => this.finishedItemRepository.TotalSmartPortalEntities.FinishedItemPackages.Remove(deleted)); //remove deleted details
+                    entity.FinishedItemLots.ToList()//Have to use .ToList(): to convert enumerable to List before do remove. To correct this error: Collection was modified; enumeration operation may not execute. 
+                            .Where(detailModel => !dto.FinishedItemLots.Any(detailDTO => detailDTO.FinishedItemLotID == detailModel.FinishedItemLotID))
+                            .Each(deleted => this.finishedItemRepository.TotalSmartPortalEntities.FinishedItemLots.Remove(deleted)); //remove deleted details
         }
     }
 }

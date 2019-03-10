@@ -98,7 +98,7 @@ namespace TotalDTO.Productions
         {
             this.FinishedItemViewDetails = new List<FinishedItemDetailDTO>();
 
-            this.FinishedItemPackages = new List<FinishedItemPackageDTO>();
+            this.FinishedItemLots = new List<FinishedItemLotDTO>();
         }
 
         public override Nullable<int> CustomerID { get { return (this.Customer != null ? (this.Customer.CustomerID > 0 ? (Nullable<int>)this.Customer.CustomerID : null) : null); } }
@@ -119,14 +119,14 @@ namespace TotalDTO.Productions
         protected override IEnumerable<FinishedItemDetailDTO> DtoDetails() { return this.FinishedItemViewDetails; }
 
 
-        public List<FinishedItemPackageDTO> FinishedItemPackages { get; set; }
+        public List<FinishedItemLotDTO> FinishedItemLots { get; set; }
 
 
         public override void PerformPresaveRule()
         {
             base.PerformPresaveRule();
 
-            this.FinishedItemPackages.ForEach(e => { e.LocationID = this.LocationID; e.EntryDate = this.EntryDate; e.BatchEntryDate = (DateTime)this.EntryDate; e.Approved = this.Approved; e.ApprovedDate = this.ApprovedDate; e.InActive = this.InActive; e.InActiveDate = this.InActiveDate; e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.FirmOrderID = this.FirmOrderID; e.PlannedOrderID = this.PlannedOrderID; e.SemifinishedItemReferences = this.SemifinishedItemReferences; });
+            this.FinishedItemLots.ForEach(e => { e.LocationID = this.LocationID; e.EntryDate = this.EntryDate; e.BatchEntryDate = (DateTime)this.EntryDate; e.Approved = this.Approved; e.ApprovedDate = this.ApprovedDate; e.InActive = this.InActive; e.InActiveDate = this.InActiveDate; e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.FirmOrderID = this.FirmOrderID; e.PlannedOrderID = this.PlannedOrderID; e.SemifinishedItemReferences = this.SemifinishedItemReferences; });
         }
     }
 }

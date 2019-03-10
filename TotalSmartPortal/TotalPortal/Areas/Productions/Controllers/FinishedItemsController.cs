@@ -67,13 +67,13 @@ namespace TotalPortal.Areas.Productions.Controllers
             
             //4-JS: UPDATE SUMMARY COLLLECTION: UPDATE FOR ALL ROW
             //5-CHECK WHEN SAVE: KTRA TRA: TONG CHI TIET CUON === PHAI BANG SO NL TONG
-            //6-T-SQL: GENERATE: finishedItemPackages
+            //6-T-SQL: GENERATE: finishedItemLots
 
             //CHÚ Ý: FinishedItemPackages: TRONG T-SQL: PHẢI XEM LẠI FinishedItemPackages, CHỈ KHI APRROVE MOI GENERATE FinishedItemPackages ĐƯỢC
 
-            var finishedItemPackages = finishedItemViewModel.ViewDetails
+            var finishedItemLots = finishedItemViewModel.ViewDetails
                                             .GroupBy(g => g.CommodityID)
-                                            .Select(sl => new FinishedItemPackageDTO
+                                            .Select(sl => new FinishedItemLotDTO
                                             {
                                                 CommodityID = sl.First().CommodityID,
                                                 CommodityCode = sl.First().CommodityCode,
@@ -91,7 +91,7 @@ namespace TotalPortal.Areas.Productions.Controllers
                                                 Swarfs = sl.Sum(s => s.Swarfs),
                                             });
 
-            finishedItemViewModel.FinishedItemPackages = finishedItemPackages.ToList();
+            finishedItemViewModel.FinishedItemLots = finishedItemLots.ToList();
 
             return base.TailorViewModel(finishedItemViewModel, forDelete, forAlter, forOpen);
         }

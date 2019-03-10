@@ -132,6 +132,7 @@ namespace TotalModel.Models
         public virtual DbSet<SemifinishedItem> SemifinishedItems { get; set; }
         public virtual DbSet<WorkOrderDetail> WorkOrderDetails { get; set; }
         public virtual DbSet<WorkOrder> WorkOrders { get; set; }
+        public virtual DbSet<FinishedItemLot> FinishedItemLots { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {

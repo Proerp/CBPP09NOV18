@@ -12,44 +12,44 @@ namespace TotalModel.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class FinishedItemDetail
+    public partial class FinishedItemLot
     {
-        public int FinishedItemDetailID { get; set; }
+        public int FinishedItemLotID { get; set; }
         public int FinishedItemID { get; set; }
         public System.DateTime EntryDate { get; set; }
         public int LocationID { get; set; }
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
         public int CustomerID { get; set; }
-        public int CrucialWorkerID { get; set; }
         public int FirmOrderID { get; set; }
-        public int FirmOrderDetailID { get; set; }
         public int PlannedOrderID { get; set; }
-        public int PlannedOrderDetailID { get; set; }
-        public int SemifinishedItemID { get; set; }
-        public int SemifinishedItemDetailID { get; set; }
-        public int SemifinishedHandoverID { get; set; }
-        public Nullable<int> FinishedItemPackageID { get; set; }
+        public string SemifinishedItemReferences { get; set; }
         public Nullable<int> FinishedHandoverID { get; set; }
+        public Nullable<System.DateTime> FinishedHandoverDate { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
+        public int BatchID { get; set; }
+        public System.DateTime BatchEntryDate { get; set; }
         public int PiecePerPack { get; set; }
-        public decimal PackageUnitWeights { get; set; }
+        public decimal LotUnitWeights { get; set; }
         public decimal Quantity { get; set; }
         public decimal QuantityFailure { get; set; }
         public decimal QuantityExcess { get; set; }
         public decimal QuantityShortage { get; set; }
         public decimal Swarfs { get; set; }
         public decimal QuantityReceipted { get; set; }
+        public decimal Lots { get; set; }
+        public decimal OddLots { get; set; }
+        public decimal QuantityWeights { get; set; }
+        public decimal QuantityFailureWeights { get; set; }
+        public decimal QuantityExcessWeights { get; set; }
+        public decimal QuantityShortageWeights { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public bool HandoverApproved { get; set; }
-        public Nullable<int> FinishedItemLotID { get; set; }
     
-        public virtual Commodity Commodity { get; set; }
-        public virtual FinishedItemPackage FinishedItemPackage { get; set; }
+        public virtual FinishedItem FinishedItem { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
-        public virtual FinishedItem FinishedItem { get; set; }
     }
 }
