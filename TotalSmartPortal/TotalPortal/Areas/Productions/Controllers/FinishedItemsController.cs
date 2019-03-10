@@ -42,19 +42,6 @@ namespace TotalPortal.Areas.Productions.Controllers
         {
             IList<FinishedItemViewDetail> finishedItemViewDetails = this.finishedItemService.GetFinishedItemViewDetails(finishedItemViewModel.FinishedItemID, this.finishedItemService.LocationID, finishedItemViewModel.FirmOrderID, false).ToList();
 
-            if (finishedItemViewDetails != null && finishedItemViewDetails.Count > 0)
-                for (int i = 0; i <= finishedItemViewDetails.Count - 1; i++)
-                {
-                    if (finishedItemViewDetails[i].FinishedItemDetailID > 0)
-                        finishedItemViewModel.GetDetails().Each(detailDTO =>
-                        {
-                            if (detailDTO.CommodityID == finishedItemViewDetails[i].CommodityID)
-                            {
-                                detailDTO.PiecePerPack = finishedItemViewDetails[i].PiecePerPack;
-                                detailDTO.PackageUnitWeights = finishedItemViewDetails[i].PackageUnitWeights;
-                            }
-                        });
-                }
 
             //1-TAO TABLE/ DTO COLLECTION / FUNCCTION GET COLLECTION
             //2-TAI CHO NAY: CHIA 2 T/H: NEW/ EDIT: EDIT: GET FROM DATAABASE, ELSE: GIONG NHU HIEN TAI (TU DONG INIT)
