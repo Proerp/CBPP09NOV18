@@ -343,7 +343,7 @@
                         .ClientTemplate("#= FinishedItemLotID #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].FinishedItemLotID' value='#= FinishedItemLotID #' />");
                     columns.Bound(p => p.FinishedItemID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= FinishedItemID #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].FinishedItemID' value='#= FinishedItemID #' />");
-                    
+
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].CommodityID' value='#= CommodityID #' />");
                     columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(310).EditorTemplateName("StringReadonly")
@@ -354,7 +354,7 @@
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='FinishedItemLots[#= newIndex(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
-                    
+
                     columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
@@ -421,6 +421,17 @@
 
                 })
                 .Navigatable()
+                .ToolBar(toolbar =>
+                    {
+                        if (Model.Editable)
+                        {
+                            toolbar.Template(@<text> <button type="button" class="k-button" onclick="doCloneSelectedItem()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm cuộn màng </button> </text>);
+                        }
+                        else
+                        {
+                            toolbar.Template(@<text> @Commons.Toolbars.BlankToolbar() </text>);
+                        }
+                    })
                 .Filterable(f => f.Enabled(false))
                 .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
                 .Selectable(settings =>
@@ -465,6 +476,11 @@
 
 <script type="text/javascript">
     $(document.body).keydown(function (e) { if (e.keyCode === 45) { cloneSelectedItem("#kendoGridFinishedItemLots"); } });
+    function doCloneSelectedItem() {
+        var kenGrid = $("#kendoGridFinishedItemLots").data("kendoGrid");
+        kenGrid.element.find('tbody tr:first').addClass('k-state-selected');
+        cloneSelectedItem();
+    }
     function tailorClonedItem(clonedItem) { clonedItem.FinishedItemLotID = 0; }
 
     $("#TotalQuantity").change(function (e) { updateFinishedItemLots(); })
