@@ -287,7 +287,7 @@
     function GetPendingBlendingInstructions() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingBlendingInstructions", Model.ControllerName, new { area = "Inventories" })", "Xuất kho", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingBlendingInstructions", Model.ControllerName, new { area = "Inventories" })", "Chọn mã NVL cần điều", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
     }
 

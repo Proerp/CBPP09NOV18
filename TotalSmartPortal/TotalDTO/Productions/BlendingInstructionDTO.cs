@@ -26,7 +26,6 @@ namespace TotalDTO.Productions
         public string Code { get; set; }
 
         [Display(Name = "Ngày chứng từ")]
-        [Required(ErrorMessage = "Vui lòng nhập ngày chứng từ")]
         public Nullable<System.DateTime> VoucherDate { get; set; }
 
         [Display(Name = "Mô tả lệnh pha chế")]
