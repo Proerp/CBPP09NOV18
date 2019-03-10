@@ -722,19 +722,19 @@
           <Property Name="BatchID" Type="int" Nullable="false" />
           <Property Name="BatchEntryDate" Type="datetime" Nullable="false" />
           <Property Name="PiecePerPack" Type="int" Nullable="false" />
-          <Property Name="LotUnitWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="PackageUnitWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityFailure" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityExcess" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityShortage" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Swarfs" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="QuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Lots" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="OddLots" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Packages" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="OddPackages" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityFailureWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityExcessWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityShortageWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="QuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="Approved" Type="bit" Nullable="false" />
           <Property Name="HandoverApproved" Type="bit" Nullable="false" />
@@ -787,6 +787,7 @@
           <Property Name="ShiftID" Type="int" Nullable="false" />
           <Property Name="WorkshiftID" Type="int" Nullable="false" />
           <Property Name="FirmOrderID" Type="int" Nullable="false" />
+          <Property Name="PlannedOrderID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="CrucialWorkerID" Type="int" Nullable="false" />
           <Property Name="StartDate" Type="datetime" Nullable="false" />
@@ -8095,6 +8096,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="FirmOrderID" Type="int" Mode="In" />
           <Parameter Name="IsReadonly" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="GetFinishedItemViewLots" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="FinishedItemID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetFinishedProductIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
@@ -16614,6 +16618,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Workshift" EntitySet="Workshifts" />
             <End Role="FinishedItemLot" EntitySet="FinishedItemLots" />
           </AssociationSet>
+          <FunctionImport Name="GetFinishedItemViewLots" ReturnType="Collection(TotalSmartPortalModel.FinishedItemViewLot)">
+          <Parameter Name="FinishedItemID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -24520,12 +24527,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
           <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
           <Property Type="Int32" Name="PiecePerPack" Nullable="false" />
-          <Property Type="Decimal" Name="PackageUnitWeights" Nullable="false" Precision="1" Scale="1" />
+          <Property Type="Decimal" Name="PackageUnitWeights" Nullable="false" Precision="2" Scale="1" />
           <Property Type="String" Name="Remarks" Nullable="false" MaxLength="1" />
           <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
           <Property Type="DateTime" Name="WorkshiftEntryDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
-          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="false" Precision="19" Scale="2" />
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="1" Scale="1" />
           <Property Type="Decimal" Name="QuantityFailure" Nullable="false" Precision="1" Scale="1" />
           <Property Type="Decimal" Name="QuantityExcess" Nullable="false" Precision="1" Scale="1" />
@@ -24731,6 +24738,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_FinishedItems_Shifts" FromRole="FinishedItem" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedItems_Workshifts" FromRole="FinishedItem" ToRole="Workshift" />
           <NavigationProperty Name="FinishedItemLots" Relationship="TotalSmartPortalModel.FK_FinishedItemLots_FinishedItems" FromRole="FinishedItem" ToRole="FinishedItemLot" />
+          <Property Name="PlannedOrderID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_FinishedItems_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -25422,19 +25430,19 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="BatchID" Type="Int32" Nullable="false" />
           <Property Name="BatchEntryDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="PiecePerPack" Type="Int32" Nullable="false" />
-          <Property Name="LotUnitWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="PackageUnitWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="QuantityFailure" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="QuantityExcess" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="QuantityShortage" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Swarfs" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="QuantityReceipted" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Lots" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="OddLots" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="Packages" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="OddPackages" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="QuantityWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="QuantityFailureWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="QuantityExcessWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="QuantityShortageWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="QuantityReceipted" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Approved" Type="Boolean" Nullable="false" />
           <Property Name="HandoverApproved" Type="Boolean" Nullable="false" />
@@ -25478,6 +25486,26 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="FinishedItemViewLot">
+          <Property Type="Int32" Name="FinishedItemLotID" Nullable="false" />
+          <Property Type="Int32" Name="FinishedItemID" Nullable="false" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
+          <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="PiecePerPack" Nullable="false" />
+          <Property Type="Decimal" Name="PackageUnitWeights" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityFailure" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityExcess" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityShortage" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Swarfs" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Packages" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="OddPackages" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -31969,6 +31997,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="FinishedItems">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.FinishedItem">
               <MappingFragment StoreEntitySet="FinishedItems">
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
@@ -32227,19 +32256,19 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="HandoverApproved" ColumnName="HandoverApproved" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="QuantityReceipted" ColumnName="QuantityReceipted" />
                 <ScalarProperty Name="QuantityShortageWeights" ColumnName="QuantityShortageWeights" />
                 <ScalarProperty Name="QuantityExcessWeights" ColumnName="QuantityExcessWeights" />
                 <ScalarProperty Name="QuantityFailureWeights" ColumnName="QuantityFailureWeights" />
                 <ScalarProperty Name="QuantityWeights" ColumnName="QuantityWeights" />
-                <ScalarProperty Name="OddLots" ColumnName="OddLots" />
-                <ScalarProperty Name="Lots" ColumnName="Lots" />
-                <ScalarProperty Name="QuantityReceipted" ColumnName="QuantityReceipted" />
+                <ScalarProperty Name="OddPackages" ColumnName="OddPackages" />
+                <ScalarProperty Name="Packages" ColumnName="Packages" />
                 <ScalarProperty Name="Swarfs" ColumnName="Swarfs" />
                 <ScalarProperty Name="QuantityShortage" ColumnName="QuantityShortage" />
                 <ScalarProperty Name="QuantityExcess" ColumnName="QuantityExcess" />
                 <ScalarProperty Name="QuantityFailure" ColumnName="QuantityFailure" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="LotUnitWeights" ColumnName="LotUnitWeights" />
+                <ScalarProperty Name="PackageUnitWeights" ColumnName="PackageUnitWeights" />
                 <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
@@ -32260,6 +32289,30 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetFinishedItemViewLots" FunctionName="TotalSmartPortalModel.Store.GetFinishedItemViewLots">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.FinishedItemViewLot">
+                <ScalarProperty Name="FinishedItemLotID" ColumnName="FinishedItemLotID" />
+                <ScalarProperty Name="FinishedItemID" ColumnName="FinishedItemID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
+                <ScalarProperty Name="PackageUnitWeights" ColumnName="PackageUnitWeights" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="QuantityFailure" ColumnName="QuantityFailure" />
+                <ScalarProperty Name="QuantityExcess" ColumnName="QuantityExcess" />
+                <ScalarProperty Name="QuantityShortage" ColumnName="QuantityShortage" />
+                <ScalarProperty Name="Swarfs" ColumnName="Swarfs" />
+                <ScalarProperty Name="Packages" ColumnName="Packages" />
+                <ScalarProperty Name="OddPackages" ColumnName="OddPackages" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

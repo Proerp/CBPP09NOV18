@@ -5354,5 +5354,14 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BomValue>("GetBomValues", bomIDParameter, quantityParameter);
         }
+    
+        public virtual ObjectResult<FinishedItemViewLot> GetFinishedItemViewLots(Nullable<int> finishedItemID)
+        {
+            var finishedItemIDParameter = finishedItemID.HasValue ?
+                new ObjectParameter("FinishedItemID", finishedItemID) :
+                new ObjectParameter("FinishedItemID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedItemViewLot>("GetFinishedItemViewLots", finishedItemIDParameter);
+        }
     }
 }

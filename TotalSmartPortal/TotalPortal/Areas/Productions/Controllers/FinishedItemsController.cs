@@ -40,23 +40,18 @@ namespace TotalPortal.Areas.Productions.Controllers
 
         protected override ICollection<FinishedItemViewDetail> GetEntityViewDetails(FinishedItemViewModel finishedItemViewModel)
         {
-            ICollection<FinishedItemViewDetail> finishedItemViewDetails = this.finishedItemService.GetFinishedItemViewDetails(finishedItemViewModel.FinishedItemID, this.finishedItemService.LocationID, finishedItemViewModel.FirmOrderID, false);
+            IList<FinishedItemViewDetail> finishedItemViewDetails = this.finishedItemService.GetFinishedItemViewDetails(finishedItemViewModel.FinishedItemID, this.finishedItemService.LocationID, finishedItemViewModel.FirmOrderID, false).ToList();
 
-            return finishedItemViewDetails;
-        }
-
-        protected override FinishedItemViewModel TailorViewModel(FinishedItemViewModel finishedItemViewModel, bool forDelete, bool forAlter, bool forOpen)
-        {
-            if (finishedItemViewModel.ViewDetails != null && finishedItemViewModel.ViewDetails.Count > 0)
-                for (int i = 0; i <= finishedItemViewModel.ViewDetails.Count - 1; i++)
+            if (finishedItemViewDetails != null && finishedItemViewDetails.Count > 0)
+                for (int i = 0; i <= finishedItemViewDetails.Count - 1; i++)
                 {
-                    if (finishedItemViewModel.ViewDetails[i].FinishedItemDetailID > 0)
+                    if (finishedItemViewDetails[i].FinishedItemDetailID > 0)
                         finishedItemViewModel.GetDetails().Each(detailDTO =>
                         {
-                            if (detailDTO.CommodityID == finishedItemViewModel.ViewDetails[i].CommodityID)
+                            if (detailDTO.CommodityID == finishedItemViewDetails[i].CommodityID)
                             {
-                                detailDTO.PiecePerPack = finishedItemViewModel.ViewDetails[i].PiecePerPack;
-                                detailDTO.PackageUnitWeights = finishedItemViewModel.ViewDetails[i].PackageUnitWeights;
+                                detailDTO.PiecePerPack = finishedItemViewDetails[i].PiecePerPack;
+                                detailDTO.PackageUnitWeights = finishedItemViewDetails[i].PackageUnitWeights;
                             }
                         });
                 }
@@ -64,14 +59,14 @@ namespace TotalPortal.Areas.Productions.Controllers
             //1-TAO TABLE/ DTO COLLECTION / FUNCCTION GET COLLECTION
             //2-TAI CHO NAY: CHIA 2 T/H: NEW/ EDIT: EDIT: GET FROM DATAABASE, ELSE: GIONG NHU HIEN TAI (TU DONG INIT)
             //3-CHO PHEP INSERT ==> DE INSERT DUPLICATE ROW
-            
+
             //4-JS: UPDATE SUMMARY COLLLECTION: UPDATE FOR ALL ROW
             //5-CHECK WHEN SAVE: KTRA TRA: TONG CHI TIET CUON === PHAI BANG SO NL TONG
             //6-T-SQL: GENERATE: finishedItemLots
 
             //CHÚ Ý: FinishedItemPackages: TRONG T-SQL: PHẢI XEM LẠI FinishedItemPackages, CHỈ KHI APRROVE MOI GENERATE FinishedItemPackages ĐƯỢC
 
-            var finishedItemLots = finishedItemViewModel.ViewDetails
+            var finishedItemLots = finishedItemViewDetails
                                             .GroupBy(g => g.CommodityID)
                                             .Select(sl => new FinishedItemLotDTO
                                             {
@@ -93,8 +88,13 @@ namespace TotalPortal.Areas.Productions.Controllers
 
             finishedItemViewModel.FinishedItemLots = finishedItemLots.ToList();
 
-            return base.TailorViewModel(finishedItemViewModel, forDelete, forAlter, forOpen);
+            return finishedItemViewDetails;
         }
+
+        //protected override FinishedItemViewModel TailorViewModel(FinishedItemViewModel finishedItemViewModel, bool forDelete, bool forAlter, bool forOpen)
+        //{            
+        //    return base.TailorViewModel(finishedItemViewModel, forDelete, forAlter, forOpen);
+        //}
 
         public override void AddRequireJsOptions()
         {

@@ -270,6 +270,9 @@
     <Compile Include="Models\FinishedItemViewDetail.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FinishedItemViewLot.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FinishedProduct.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

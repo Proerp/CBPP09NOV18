@@ -20,6 +20,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.GetFinishedItemPendingFirmOrders();
 
             this.GetFinishedItemViewDetails();
+            this.GetFinishedItemViewLots();
 
             this.FinishedItemSaveRelative();
             this.FinishedItemPostSaveValidate();
@@ -101,7 +102,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString = "";
 
             queryString = queryString + "       SELECT      0 AS FinishedItemDetailID, 0 AS FinishedItemID, SemifinishedItemDetails.FirmOrderID, SemifinishedItemDetails.FirmOrderDetailID, SemifinishedItemDetails.PlannedOrderID, SemifinishedItemDetails.PlannedOrderDetailID, SemifinishedItemDetails.SemifinishedItemID, SemifinishedItemDetails.SemifinishedItemDetailID, SemifinishedItemDetails.SemifinishedHandoverID, SemifinishedItemDetails.EntryDate AS SemifinishedItemEntryDate, SemifinishedItems.Reference AS SemifinishedItemReference, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, SemifinishedItemDetails.PiecePerPack, 1.0 AS PackageUnitWeights, N'' AS Remarks, " + "\r\n";
-            queryString = queryString + "                   SemifinishedItemDetails.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, ROUND(SemifinishedItemDetails.Quantity - SemifinishedItemDetails.QuantityFinished, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, 0.0 AS Quantity, 0.0 AS QuantityFailure, 0.0 AS QuantityExcess, 0.0 AS QuantityShortage, 0.0 AS Swarfs " + "\r\n";
+            queryString = queryString + "                   SemifinishedItemDetails.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, ISNULL(ROUND(SemifinishedItemDetails.Quantity - SemifinishedItemDetails.QuantityFinished, " + (int)GlobalEnums.rndQuantity + "), 0) AS QuantityRemains, 0.0 AS Quantity, 0.0 AS QuantityFailure, 0.0 AS QuantityExcess, 0.0 AS QuantityShortage, 0.0 AS Swarfs " + "\r\n";
 
             queryString = queryString + "       FROM        SemifinishedItemDetails " + "\r\n"; //AND SemifinishedItemDetails.LocationID = @LocationID 
             queryString = queryString + "                   INNER JOIN Commodities ON SemifinishedItemDetails.FirmOrderID = @FirmOrderID AND SemifinishedItemDetails.Approved = 1 AND SemifinishedItemDetails.HandoverApproved = 1 AND ROUND(SemifinishedItemDetails.Quantity - SemifinishedItemDetails.QuantityFinished, " + (int)GlobalEnums.rndQuantity + ") > 0 AND SemifinishedItemDetails.CommodityID = Commodities.CommodityID " + "\r\n";
@@ -116,7 +117,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString = "";
 
             queryString = queryString + "       SELECT      FinishedItemDetails.FinishedItemDetailID, FinishedItemDetails.FinishedItemID, SemifinishedItemDetails.FirmOrderID, SemifinishedItemDetails.FirmOrderDetailID, SemifinishedItemDetails.PlannedOrderID, SemifinishedItemDetails.PlannedOrderDetailID, SemifinishedItemDetails.SemifinishedItemID, SemifinishedItemDetails.SemifinishedItemDetailID, SemifinishedItemDetails.SemifinishedHandoverID, SemifinishedItemDetails.EntryDate AS SemifinishedItemEntryDate, SemifinishedItems.Reference AS SemifinishedItemReference, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, FinishedItemDetails.PiecePerPack, FinishedItemDetails.PackageUnitWeights, FinishedItemDetails.Remarks, " + "\r\n";
-            queryString = queryString + "                   SemifinishedItemDetails.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, ROUND(SemifinishedItemDetails.Quantity - SemifinishedItemDetails.QuantityFinished + FinishedItemDetails.Quantity + FinishedItemDetails.QuantityFailure + FinishedItemDetails.QuantityShortage, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, FinishedItemDetails.Quantity, FinishedItemDetails.QuantityFailure, FinishedItemDetails.QuantityExcess, FinishedItemDetails.QuantityShortage, FinishedItemDetails.Swarfs " + "\r\n";
+            queryString = queryString + "                   SemifinishedItemDetails.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, ISNULL(ROUND(SemifinishedItemDetails.Quantity - SemifinishedItemDetails.QuantityFinished + FinishedItemDetails.Quantity + FinishedItemDetails.QuantityFailure + FinishedItemDetails.QuantityShortage, " + (int)GlobalEnums.rndQuantity + "), 0) AS QuantityRemains, FinishedItemDetails.Quantity, FinishedItemDetails.QuantityFailure, FinishedItemDetails.QuantityExcess, FinishedItemDetails.QuantityShortage, FinishedItemDetails.Swarfs " + "\r\n";
 
             queryString = queryString + "       FROM        FinishedItemDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN SemifinishedItemDetails ON FinishedItemDetails.FinishedItemID = @FinishedItemID AND FinishedItemDetails.SemifinishedItemDetailID = SemifinishedItemDetails.SemifinishedItemDetailID " + "\r\n";
@@ -127,6 +128,25 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             return queryString;
         }
 
+
+        private void GetFinishedItemViewLots()
+        {
+            string queryString;
+
+            queryString = " @FinishedItemID Int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "        SELECT         FinishedItemLots.FinishedItemLotID, FinishedItemLots.FinishedItemID, FinishedItemLots.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, FinishedItemLots.CommodityTypeID, FinishedItemLots.BatchID, FinishedItemLots.BatchEntryDate, " + "\r\n";
+            queryString = queryString + "                       FinishedItemLots.PiecePerPack, FinishedItemLots.PackageUnitWeights, FinishedItemLots.Quantity, FinishedItemLots.QuantityFailure, FinishedItemLots.QuantityExcess, FinishedItemLots.QuantityShortage, FinishedItemLots.Swarfs, FinishedItemLots.Packages, FinishedItemLots.OddPackages, FinishedItemLots.Remarks " + "\r\n";
+            queryString = queryString + "        FROM           FinishedItemLots " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Commodities ON FinishedItemLots.FinishedItemID = @FinishedItemID AND FinishedItemLots.CommodityID = Commodities.CommodityID " + "\r\n";
+           
+            queryString = queryString + "   END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetFinishedItemViewLots", queryString);
+        }
 
 
         private void GetFinishedItemPendingFirmOrders()
@@ -166,7 +186,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "               UPDATE          FinishedItems        SET WorkshiftID = @WorkshiftID WHERE FinishedItemID = @EntityID " + "\r\n";
             queryString = queryString + "               UPDATE          FinishedItemDetails  SET WorkshiftID = @WorkshiftID WHERE FinishedItemID = @EntityID " + "\r\n";
-            queryString = queryString + "               UPDATE          FinishedItemPackages SET WorkshiftID = @WorkshiftID WHERE FinishedItemID = @EntityID " + "\r\n";
+            queryString = queryString + "               UPDATE          FinishedItemLots SET WorkshiftID = @WorkshiftID WHERE FinishedItemID = @EntityID " + "\r\n";
             #endregion UPDATE WorkshiftID
             queryString = queryString + "           END " + "\r\n";
 

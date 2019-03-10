@@ -10,23 +10,14 @@
 namespace TotalModel.Models
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class FinishedItemLot
+    public partial class FinishedItemViewLot
     {
         public int FinishedItemLotID { get; set; }
         public int FinishedItemID { get; set; }
-        public System.DateTime EntryDate { get; set; }
-        public int LocationID { get; set; }
-        public int ShiftID { get; set; }
-        public int WorkshiftID { get; set; }
-        public int CustomerID { get; set; }
-        public int FirmOrderID { get; set; }
-        public int PlannedOrderID { get; set; }
-        public string SemifinishedItemReferences { get; set; }
-        public Nullable<int> FinishedHandoverID { get; set; }
-        public Nullable<System.DateTime> FinishedHandoverDate { get; set; }
         public int CommodityID { get; set; }
+        public string CommodityCode { get; set; }
+        public string CommodityName { get; set; }
         public int CommodityTypeID { get; set; }
         public int BatchID { get; set; }
         public System.DateTime BatchEntryDate { get; set; }
@@ -39,17 +30,6 @@ namespace TotalModel.Models
         public decimal Swarfs { get; set; }
         public decimal Packages { get; set; }
         public decimal OddPackages { get; set; }
-        public decimal QuantityWeights { get; set; }
-        public decimal QuantityFailureWeights { get; set; }
-        public decimal QuantityExcessWeights { get; set; }
-        public decimal QuantityShortageWeights { get; set; }
-        public decimal QuantityReceipted { get; set; }
         public string Remarks { get; set; }
-        public bool Approved { get; set; }
-        public bool HandoverApproved { get; set; }
-    
-        public virtual FinishedItem FinishedItem { get; set; }
-        public virtual Shift Shift { get; set; }
-        public virtual Workshift Workshift { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace TotalModel.Models
         public int WorkshiftID { get; set; }
         public System.DateTime WorkshiftEntryDate { get; set; }
         public string WorkshiftCode { get; set; }
-        public Nullable<decimal> QuantityRemains { get; set; }
+        public decimal QuantityRemains { get; set; }
         public decimal Quantity { get; set; }
         public decimal QuantityFailure { get; set; }
         public decimal QuantityExcess { get; set; }
