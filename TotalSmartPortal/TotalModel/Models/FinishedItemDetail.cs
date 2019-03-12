@@ -29,12 +29,12 @@ namespace TotalModel.Models
         public int SemifinishedItemID { get; set; }
         public int SemifinishedItemDetailID { get; set; }
         public int SemifinishedHandoverID { get; set; }
+        public Nullable<int> FinishedItemLotID { get; set; }
         public Nullable<int> FinishedItemPackageID { get; set; }
         public Nullable<int> FinishedHandoverID { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public int PiecePerPack { get; set; }
-        public decimal PackageUnitWeights { get; set; }
         public decimal Quantity { get; set; }
         public decimal QuantityFailure { get; set; }
         public decimal QuantityExcess { get; set; }
@@ -44,12 +44,11 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public bool HandoverApproved { get; set; }
-        public Nullable<int> FinishedItemLotID { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual FinishedItemPackage FinishedItemPackage { get; set; }
+        public virtual FinishedItem FinishedItem { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
-        public virtual FinishedItem FinishedItem { get; set; }
     }
 }

@@ -29,7 +29,6 @@ namespace TotalModel.Models
         public string CommodityName { get; set; }
         public int CommodityTypeID { get; set; }
         public int PiecePerPack { get; set; }
-        public decimal PackageUnitWeights { get; set; }
         public string Remarks { get; set; }
         public int WorkshiftID { get; set; }
         public System.DateTime WorkshiftEntryDate { get; set; }

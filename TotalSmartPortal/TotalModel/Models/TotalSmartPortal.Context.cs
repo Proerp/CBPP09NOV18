@@ -125,14 +125,14 @@ namespace TotalModel.Models
         public virtual DbSet<Mold> Molds { get; set; }
         public virtual DbSet<BinType> BinTypes { get; set; }
         public virtual DbSet<SemifinishedHandoverDetail> SemifinishedHandoverDetails { get; set; }
-        public virtual DbSet<FinishedItemDetail> FinishedItemDetails { get; set; }
-        public virtual DbSet<FinishedItemPackage> FinishedItemPackages { get; set; }
-        public virtual DbSet<FinishedItem> FinishedItems { get; set; }
         public virtual DbSet<SemifinishedItemDetail> SemifinishedItemDetails { get; set; }
         public virtual DbSet<SemifinishedItem> SemifinishedItems { get; set; }
         public virtual DbSet<WorkOrderDetail> WorkOrderDetails { get; set; }
         public virtual DbSet<WorkOrder> WorkOrders { get; set; }
+        public virtual DbSet<FinishedItemDetail> FinishedItemDetails { get; set; }
         public virtual DbSet<FinishedItemLot> FinishedItemLots { get; set; }
+        public virtual DbSet<FinishedItemPackage> FinishedItemPackages { get; set; }
+        public virtual DbSet<FinishedItem> FinishedItems { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {

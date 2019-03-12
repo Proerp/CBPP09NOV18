@@ -69,7 +69,6 @@ namespace TotalPortal.Areas.Productions.Controllers
                                                     CommodityTypeID = sl.First().CommodityTypeID,
 
                                                     PiecePerPack = sl.First().PiecePerPack,
-                                                    PackageUnitWeights = sl.First().PackageUnitWeights,
 
                                                     QuantityRemains = sl.Sum(s => s.QuantityRemains),
                                                     Quantity = sl.Sum(s => (s.Quantity + s.QuantityExcess)),

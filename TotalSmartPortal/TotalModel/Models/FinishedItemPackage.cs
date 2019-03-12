@@ -34,8 +34,9 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> FinishedHandoverDate { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
+        public int BatchID { get; set; }
+        public System.DateTime BatchEntryDate { get; set; }
         public int PiecePerPack { get; set; }
-        public decimal PackageUnitWeights { get; set; }
         public decimal Quantity { get; set; }
         public decimal QuantityFailure { get; set; }
         public decimal QuantityExcess { get; set; }
@@ -44,20 +45,14 @@ namespace TotalModel.Models
         public decimal QuantityReceipted { get; set; }
         public decimal Packages { get; set; }
         public decimal OddPackages { get; set; }
-        public decimal QuantityWeights { get; set; }
-        public decimal QuantityFailureWeights { get; set; }
-        public decimal QuantityExcessWeights { get; set; }
-        public decimal QuantityShortageWeights { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public bool HandoverApproved { get; set; }
-        public int BatchID { get; set; }
-        public System.DateTime BatchEntryDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
+        public virtual FinishedItem FinishedItem { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
-        public virtual FinishedItem FinishedItem { get; set; }
     }
 }

@@ -42,9 +42,6 @@ namespace TotalDTO.Productions
         [UIHint("StringReadonly")]
         public string SemifinishedItemReference { get; set; }
 
-        [Display(Name = "TL kiện")]
-        public virtual decimal PackageUnitWeights { get; set; }
-
 
         [Display(Name = "Tồn hổn hợp")]
         [UIHint("QuantityReadonly")]
@@ -107,9 +104,6 @@ namespace TotalDTO.Productions
         [Display(Name = "Cái/ kiện")]
         [UIHint("Integer")]
         public int PiecePerPack { get; set; }
-        [Display(Name = "TL kiện")]
-        [UIHint("Weight")]
-        public virtual decimal PackageUnitWeights { get; set; }
 
 
         [Display(Name = "Tồn hổn hợp")]
@@ -126,31 +120,16 @@ namespace TotalDTO.Productions
         [UIHint("QuantityReadonly")]
         public decimal OddPackages { get { return this.PiecePerPack > 0 ? this.Quantity % this.PiecePerPack : 0; } set { } }
 
-        [Display(Name = "TP (kg)")]
-        [UIHint("QuantityReadonly")]
-        public decimal QuantityWeights { get { return this.PiecePerPack > 0 ? this.Quantity * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
 
         [Display(Name = "Phế phẩm")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityFailure { get; set; }
-        [Display(Name = "PP (kg)")]
-        [UIHint("QuantityReadonly")]
-        public decimal QuantityFailureWeights { get { return this.PiecePerPack > 0 ? this.QuantityFailure * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
-
         [Display(Name = "Thừa")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityExcess { get; set; }
-        [Display(Name = "Thừa (kg)")]
-        [UIHint("QuantityReadonly")]
-        public decimal QuantityExcessWeights { get { return this.PiecePerPack > 0 ? this.QuantityExcess * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
-
         [Display(Name = "Thiếu")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityShortage { get; set; }
-        [Display(Name = "Thiếu (kg)")]
-        [UIHint("QuantityReadonly")]
-        public decimal QuantityShortageWeights { get { return this.PiecePerPack > 0 ? this.QuantityShortage * this.PackageUnitWeights / this.PiecePerPack : 0; } set { } }
-
         [Display(Name = "Biên (kg)")]
         [UIHint("QuantityReadonly")]
         public decimal Swarfs { get; set; }

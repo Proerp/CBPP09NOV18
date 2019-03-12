@@ -22,7 +22,6 @@ namespace TotalModel.Models
         public int BatchID { get; set; }
         public System.DateTime BatchEntryDate { get; set; }
         public int PiecePerPack { get; set; }
-        public decimal PackageUnitWeights { get; set; }
         public decimal Quantity { get; set; }
         public decimal QuantityFailure { get; set; }
         public decimal QuantityExcess { get; set; }

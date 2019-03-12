@@ -18,8 +18,8 @@ namespace TotalModel.Models
         public FinishedItem()
         {
             this.FinishedItemDetails = new HashSet<FinishedItemDetail>();
-            this.FinishedItemPackages = new HashSet<FinishedItemPackage>();
             this.FinishedItemLots = new HashSet<FinishedItemLot>();
+            this.FinishedItemPackages = new HashSet<FinishedItemPackage>();
         }
     
         public int FinishedItemID { get; set; }
@@ -28,6 +28,7 @@ namespace TotalModel.Models
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
         public int FirmOrderID { get; set; }
+        public int PlannedOrderID { get; set; }
         public int CustomerID { get; set; }
         public int CrucialWorkerID { get; set; }
         public System.DateTime StartDate { get; set; }
@@ -51,12 +52,13 @@ namespace TotalModel.Models
         public System.DateTime EditedDate { get; set; }
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
-        public int PlannedOrderID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinishedItemLot> FinishedItemLots { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedItemPackage> FinishedItemPackages { get; set; }
         public virtual FinishedItem FinishedItems1 { get; set; }
@@ -65,7 +67,5 @@ namespace TotalModel.Models
         public virtual Location Location { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FinishedItemLot> FinishedItemLots { get; set; }
     }
 }

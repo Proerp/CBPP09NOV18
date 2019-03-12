@@ -447,24 +447,6 @@
         <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedHandoverDetail" Width="1.5" PointX="61.875" PointY="16.875" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedHandovers" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedProducts" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItemDetail" Width="1.5" PointX="49.5" PointY="37.125" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItemPackage" Width="1.5" PointX="47.25" PointY="42.125" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Commodities" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_FinishedItemPackages" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Shifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Workshifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemPackages_Shifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemPackages_Workshifts" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItem" Width="1.5" PointX="34.125" PointY="5.75" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_Customers" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_Employees" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_FinishedItems" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemPackages_FinishedItems" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_FinishedItems" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_FirmOrders" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_Locations" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_Shifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_Workshifts" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedItemDetail" Width="1.5" PointX="52.625" PointY="35" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedItem" Width="1.5" PointX="42.125" PointY="8.375" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedItems_Boms" />
@@ -497,10 +479,28 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrderDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrders" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssues_WorkOrders" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItemLot" Width="1.5" PointX="36.375" PointY="6.875" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItemDetail" Width="1.5" PointX="60.625" PointY="33.25" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItemLot" Width="1.5" PointX="57.375" PointY="13" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItemPackage" Width="1.5" PointX="57.375" PointY="20.875" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItem" Width="1.5" PointX="50.125" PointY="36.75" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Commodities" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_Customers" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_Employees" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_FinishedItemPackages" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_FinishedItems" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Shifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemLots_FinishedItems" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemLots_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemLots_Workshifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemPackages_FinishedItems" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemPackages_Shifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemPackages_Workshifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_FinishedItems" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_FirmOrders" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_Locations" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_Shifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_Workshifts" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
