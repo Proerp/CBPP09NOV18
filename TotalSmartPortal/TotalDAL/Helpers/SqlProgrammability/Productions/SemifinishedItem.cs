@@ -34,7 +34,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             this.SemifinishedItemInitReference();
 
-            //this.SemifinishedItemSheet();
+            this.SemifinishedItemSheet();
         }
 
 
@@ -313,7 +313,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         private void SemifinishedItemSheet()
         {
             string queryString = " @WorkshiftID int, @SemifinishedItemID int, @FromDate DateTime, @ToDate DateTime " + "\r\n";
-            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
@@ -341,8 +341,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString = " " + "\r\n";
 
             queryString = queryString + "       SELECT          SemifinishedItems.SemifinishedItemID, SemifinishedItems.Reference, SemifinishedItems.EntryDate, Workshifts.Code AS WorkshiftCode, Workshifts.EntryDate AS WorkshiftEntryDate, CrucialWorkers.Name AS CrucialWorkerName, CrucialWorkers.LastName AS CrucialWorkerLastName, ProductionLines.Code AS ProductionLineCode, " + "\r\n";
-            queryString = queryString + "                       FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.DeliveryDate, Customers.Name AS CustomerName, Materials.Code AS MaterialCode, MaterialClasses.Code AS MaterialClassCode, MaterialIssueDetails.BatchEntryDate, FirmOrderDetails.Quantity AS FirmOrderQuantity, FirmOrderDetails.QuantitySemifinished - FirmOrderDetails.QuantityShortage - FirmOrderDetails.QuantityFailure + FirmOrderDetails.QuantityExcess AS QuantityProduced, FirmOrderDetails.Quantity - (FirmOrderDetails.QuantitySemifinished - FirmOrderDetails.QuantityShortage - FirmOrderDetails.QuantityFailure + FirmOrderDetails.QuantityExcess) AS QuantityRemains, MaterialIssueSummaries.ItemQuantity, MaterialIssueSummaries.ItemQuantitySemifinished, MaterialIssueSummaries.ItemQuantityFailure, MaterialIssueSummaries.ItemQuantityReceipted, MaterialIssueSummaries.ItemQuantityLoss, " + "\r\n"; //ACCUMMULATED
-            queryString = queryString + "                       MaterialIssueDetails.Quantity AS MaterialQuantity, MaterialIssueDetails.Code AS MaterialIssueCode, SemifinishedItems.StartDate, SemifinishedItems.StopDate, SemifinishedItems.StartSequenceNo, SemifinishedItems.StopSequenceNo, SemifinishedItems.FoilCounts, SemifinishedItems.FoilUnitCounts, SemifinishedItems.FoilUnitWeights, SemifinishedItems.FoilWeights, SemifinishedItems.FailureWeights, Commodities.Code, Commodities.Name, Molds.Code AS MoldCode, SemifinishedItemDetails.Quantity, SemifinishedItemDetails.MoldQuantity, SemifinishedItemDetails.PiecePerPack, ISNULL(FirmOrders.Description, '') + ISNULL(' [ĐHCK: ' + SemifinishedItems.Description + ']', '') AS Description " + "\r\n";
+            queryString = queryString + "                       FirmOrders.EntryDate AS FirmOrderEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.DeliveryDate, Customers.Name AS CustomerName, MaterialIssues.EntryDate AS MaterialIssueEntryDate, MaterialIssues.Code AS MaterialIssueCode, Boms.Code AS BomCode, FirmOrderDetails.Quantity AS FirmOrderQuantity, FirmOrderDetails.QuantitySemifinished - FirmOrderDetails.QuantityShortage - FirmOrderDetails.QuantityFailure + FirmOrderDetails.QuantityExcess AS QuantityProduced, FirmOrderDetails.Quantity - (FirmOrderDetails.QuantitySemifinished - FirmOrderDetails.QuantityShortage - FirmOrderDetails.QuantityFailure + FirmOrderDetails.QuantityExcess) AS QuantityRemains, " + "\r\n"; //ACCUMMULATED
+            queryString = queryString + "                       SemifinishedItems.StartDate, SemifinishedItems.StopDate, Commodities.Code, Commodities.Name, Molds.Code AS MoldCode, SemifinishedItemDetails.Quantity, SemifinishedItemDetails.MoldQuantity, SemifinishedItemDetails.PiecePerPack, ISNULL(FirmOrders.Description, '') + ISNULL(' [ĐHCK: ' + SemifinishedItems.Description + ']', '') AS Description " + "\r\n";
 
             queryString = queryString + "       FROM            SemifinishedItems " + "\r\n";
             queryString = queryString + "                       INNER JOIN SemifinishedItemDetails ON " + this.SemifinishedItemSheetOption(workshiftID, SemifinishedItemID) + " AND SemifinishedItems.SemifinishedItemID = SemifinishedItemDetails.SemifinishedItemID " + "\r\n";
@@ -350,15 +350,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                       INNER JOIN FirmOrderDetails ON SemifinishedItemDetails.FirmOrderDetailID = FirmOrderDetails.FirmOrderDetailID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Molds ON FirmOrderDetails.MoldID = Molds.MoldID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON SemifinishedItems.CustomerID = Customers.CustomerID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN MaterialIssueDetails ON SemifinishedItems.MaterialIssueDetailID = MaterialIssueDetails.MaterialIssueDetailID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN Commodities AS Materials ON MaterialIssueDetails.CommodityID = Materials.CommodityID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN CommodityClasses MaterialClasses ON Materials.CommodityClassID = MaterialClasses.CommodityClassID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN MaterialIssues ON SemifinishedItems.MaterialIssueID = MaterialIssues.MaterialIssueID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Boms ON SemifinishedItems.BomID = Boms.BomID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Workshifts ON SemifinishedItems.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Employees AS CrucialWorkers ON SemifinishedItems.CrucialWorkerID = CrucialWorkers.EmployeeID " + "\r\n";
             queryString = queryString + "                       INNER JOIN ProductionLines ON SemifinishedItems.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON SemifinishedItemDetails.CommodityID = Commodities.CommodityID " + "\r\n";
 
-            queryString = queryString + "                       LEFT JOIN  (SELECT FirmOrderID, MAX(EntryDate) AS ItemEntryDate, MAX(CommodityID) AS ItemID, SUM(Quantity) AS ItemQuantity, SUM(QuantitySemifinished) AS ItemQuantitySemifinished, SUM(QuantityFailure) AS ItemQuantityFailure, SUM(QuantityReceipted) AS ItemQuantityReceipted, SUM(QuantityLoss) AS ItemQuantityLoss FROM MaterialIssueDetails WHERE FirmOrderID IN (SELECT FirmOrderID FROM SemifinishedItems WHERE " + this.SemifinishedItemSheetOption(workshiftID, SemifinishedItemID) + ") GROUP BY FirmOrderID) AS MaterialIssueSummaries ON FirmOrderDetails.FirmOrderID = MaterialIssueSummaries.FirmOrderID " + "\r\n";
+            //queryString = queryString + "                       LEFT JOIN  (SELECT FirmOrderID, MAX(EntryDate) AS ItemEntryDate, MAX(CommodityID) AS ItemID, SUM(Quantity) AS ItemQuantity, SUM(QuantitySemifinished) AS ItemQuantitySemifinished, SUM(QuantityFailure) AS ItemQuantityFailure, SUM(QuantityReceipted) AS ItemQuantityReceipted, SUM(QuantityLoss) AS ItemQuantityLoss FROM MaterialIssueDetails WHERE FirmOrderID IN (SELECT FirmOrderID FROM SemifinishedItems WHERE " + this.SemifinishedItemSheetOption(workshiftID, SemifinishedItemID) + ") GROUP BY FirmOrderID) AS MaterialIssueSummaries ON FirmOrderDetails.FirmOrderID = MaterialIssueSummaries.FirmOrderID " + "\r\n";
 
             queryString = queryString + "       ORDER BY        SemifinishedItemDetails.SemifinishedItemDetailID " + "\r\n";
 
