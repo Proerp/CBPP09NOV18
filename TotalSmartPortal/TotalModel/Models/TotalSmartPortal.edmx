@@ -793,6 +793,7 @@
           <Property Name="TotalQuantityExcess" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantityShortage" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalSwarfs" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TotalPackages" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
@@ -24487,6 +24488,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="TotalSwarfs" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Boolean" Name="Approved" Nullable="false" />
           <Property Type="String" Name="FirmOrderSpecification" Nullable="true" MaxLength="800" />
+          <Property Type="Decimal" Name="TotalPackages" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="FinishedItemPendingFirmOrder">
           <Property Type="Int32" Name="FirmOrderID" Nullable="false" />
@@ -25265,6 +25267,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_FinishedItems_Locations" FromRole="FinishedItem" ToRole="Location" />
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_FinishedItems_Shifts" FromRole="FinishedItem" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedItems_Workshifts" FromRole="FinishedItem" ToRole="Workshift" />
+          <Property Name="TotalPackages" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_FinishedItemDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -31843,6 +31846,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="TotalSwarfs" ColumnName="TotalSwarfs" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="FirmOrderSpecification" ColumnName="FirmOrderSpecification" />
+                <ScalarProperty Name="TotalPackages" ColumnName="TotalPackages" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -32243,6 +32247,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="FinishedItems">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.FinishedItem">
               <MappingFragment StoreEntitySet="FinishedItems">
+                <ScalarProperty Name="TotalPackages" ColumnName="TotalPackages" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />

@@ -67,7 +67,7 @@ namespace TotalDTO.Productions
         public virtual decimal GetTotalQuantityShortage() { return this.DtoDetails().Select(o => o.QuantityShortage).Sum(); }
         public virtual decimal TotalSwarfs { get; set; }
         public virtual decimal GetTotalSwarfs() { return this.DtoDetails().Select(o => o.Swarfs).Sum(); }
-
+        public virtual decimal TotalPackages { get; set; }
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
@@ -121,6 +121,16 @@ namespace TotalDTO.Productions
 
         public List<FinishedItemLotDTO> FinishedItemLots { get; set; }
 
+        public override decimal TotalPackages { get { return this.FinishedItemLots.Select(o => o.Packages).Sum(); } }
+        public decimal FinishedItemLotsQuantity { get { return this.FinishedItemLots.Select(o => o.Quantity).Sum(); } }
+
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            foreach (var result in base.Validate(validationContext)) { yield return result; }
+
+            if (this.TotalQuantity + this.TotalQuantityExcess != this.FinishedItemLotsQuantity) yield return new ValidationResult("Khối lượng hỗn hợp thành phẩm phải bằng tổng khối lượng tất cả cuộn màng", new[] { "TotalSwarfs" });
+        }
 
         public override void PerformPresaveRule()
         {

@@ -47,7 +47,7 @@ namespace TotalDTO.Productions
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
 
-        [Display(Name = "Trừ hổn hợp")]
+        [Display(Name = "Trừ tồn hổn hợp")]
         [UIHint("QuantityReadonly")]
         public override decimal Quantity { get; set; }
 
@@ -63,7 +63,7 @@ namespace TotalDTO.Productions
         [UIHint("Quantity")]
         public decimal QuantityShortage { get; set; }
 
-        [Display(Name = "Màng thành phẩm")]
+        [Display(Name = "KL màng thành phẩm")]
         [UIHint("Quantity")]
         public decimal QuantityAndExcess { get { return this.Quantity + this.QuantityExcess; } set { } }
 
@@ -101,21 +101,17 @@ namespace TotalDTO.Productions
         public string CommodityName { get; set; }
         public int CommodityTypeID { get; set; }
 
-        [Display(Name = "Cái/ kiện")]
+        [Display(Name = "Kg/ cuộn")]
         [UIHint("Integer")]
         public int PiecePerPack { get; set; }
 
 
-        [Display(Name = "Tồn hổn hợp")]
-        [UIHint("QuantityReadonly")]
-        public decimal QuantityRemains { get; set; }
-
-        [Display(Name = "Màng thành phẩm")]
+        [Display(Name = "KL màng thành phẩm")]
         [UIHint("Quantity")]
         public decimal Quantity { get; set; }
-        [Display(Name = "Số kiện")]
+        [Display(Name = "Số cuộn")]
         [UIHint("QuantityReadonly")]
-        public decimal Packages { get { return this.PiecePerPack > 0 ? Math.Truncate(this.Quantity / this.PiecePerPack) : 0; } set { } }
+        public decimal Packages { get { return this.PiecePerPack > 0 ? this.Quantity / this.PiecePerPack : 0; } set { } }
         [Display(Name = "Số cái lẻ")]
         [UIHint("QuantityReadonly")]
         public decimal OddPackages { get { return this.PiecePerPack > 0 ? this.Quantity % this.PiecePerPack : 0; } set { } }
@@ -140,6 +136,13 @@ namespace TotalDTO.Productions
         public DateTime BatchEntryDate { get; set; }
 
         public string SemifinishedItemReferences { get; set; }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            foreach (var result in base.Validate(validationContext)) { yield return result; }
+
+            if (this.OddPackages != 0) yield return new ValidationResult("Số cuộn phải lớn hơn 0 và là số nguyên [" + this.CommodityName + "(" + this.Packages.ToString() + ")" + "]", new[] { "OddPackages" });
+        }
     }
 
 }

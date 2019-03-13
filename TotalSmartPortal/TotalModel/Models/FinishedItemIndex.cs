@@ -33,5 +33,6 @@ namespace TotalModel.Models
         public decimal TotalSwarfs { get; set; }
         public bool Approved { get; set; }
         public string FirmOrderSpecification { get; set; }
+        public decimal TotalPackages { get; set; }
     }
 }

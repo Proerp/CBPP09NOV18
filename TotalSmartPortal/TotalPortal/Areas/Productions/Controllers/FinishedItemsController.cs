@@ -70,7 +70,6 @@ namespace TotalPortal.Areas.Productions.Controllers
 
                                                     PiecePerPack = sl.First().PiecePerPack,
 
-                                                    QuantityRemains = sl.Sum(s => s.QuantityRemains),
                                                     Quantity = sl.Sum(s => (s.Quantity + s.QuantityExcess)),
                                                     QuantityFailure = sl.Sum(s => s.QuantityFailure),
                                                     QuantityExcess = sl.Sum(s => s.QuantityExcess),

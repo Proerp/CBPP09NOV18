@@ -14,13 +14,14 @@
 
             columns.Bound(p => p.FirmOrderReference).Title("KHSX").Width(30);
             columns.Bound(p => p.FirmOrderCode).Title("Số CT").Width(30);
-            columns.Bound(p => p.WorkshiftName).Title("Ca SX").Width(72);
-            columns.Bound(p => p.CustomerName).Title("Tên KH").Width(118);
-            columns.Bound(p => p.FirmOrderSpecification).Title("Màng thành phẩm").Width(188);
+            columns.Bound(p => p.WorkshiftName).Title("Ca SX").Width(72).Hidden();
+            columns.Bound(p => p.CustomerName).Title("Tên KH").Width(188);
+            columns.Bound(p => p.FirmOrderSpecification).Title("Màng thành phẩm").Width(180);
             
-            columns.Bound(p => p.Description).Title("Diễn giải").Width(127);
+            columns.Bound(p => p.Description).Title("Diễn giải").Width(168);
 
             columns.Bound(p => p.TotalQuantity).Title("TP").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+            columns.Bound(p => p.TotalPackages).Title("Số cuộn").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
             columns.Bound(p => p.TotalQuantityFailure).Title("PP").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
             columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);

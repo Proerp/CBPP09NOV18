@@ -311,7 +311,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString;
 
             queryString = " @WorkshiftID int, @FinishedProductID int, @FromDate DateTime, @ToDate DateTime " + "\r\n";
-            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
             queryString = queryString + "       SET NOCOUNT ON" + "\r\n";
