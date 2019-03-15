@@ -278,32 +278,34 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "               UPDATE          FinishedItemDetails  SET Approved = @Approved WHERE FinishedItemID = @EntityID ; " + "\r\n";
 
 
-            //#region INIT FinishedItemPackages - NO NEED
-            //queryString = queryString + "               IF (@Approved = 1) " + "\r\n";
-            //queryString = queryString + "                   BEGIN " + "\r\n";
-            //queryString = queryString + "                       INSERT INTO     FinishedItemPackages (FinishedItemID, EntryDate, LocationID, ShiftID, WorkshiftID, CustomerID, FirmOrderID, PlannedOrderID, CommodityID, CommodityTypeID, PiecePerPack, Quantity, QuantityFailure, QuantityExcess, QuantityShortage, Swarfs, QuantityReceipted, Packages, OddPackages, Remarks, Approved, HandoverApproved, SemifinishedItemReferences) " + "\r\n";
-            //queryString = queryString + "                       SELECT          MIN(FinishedItemID) AS FinishedItemID, MIN(EntryDate) AS EntryDate, MIN(LocationID) AS LocationID, MIN(ShiftID) AS ShiftID, MIN(WorkshiftID) AS WorkshiftID, MIN(CustomerID) AS CustomerID, MIN(FirmOrderID) AS FirmOrderID, MIN(PlannedOrderID) AS PlannedOrderID, CommodityID, MIN(CommodityTypeID) AS CommodityTypeID, MIN(PiecePerPack) AS PiecePerPack, ROUND(SUM(Quantity + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") AS Quantity, ROUND(SUM(QuantityFailure), " + (int)GlobalEnums.rndQuantity + ") AS QuantityFailure, ROUND(SUM(QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") AS QuantityExcess, ROUND(SUM(QuantityShortage), " + (int)GlobalEnums.rndQuantity + ") AS QuantityShortage, ROUND(SUM(Swarfs), " + (int)GlobalEnums.rndQuantity + ") AS Swarfs, 0 AS QuantityReceipted, IIF(MIN(PiecePerPack) <> 0, CAST(ROUND(SUM(Quantity + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") AS int) / MIN(PiecePerPack), 0) AS Packages, IIF(MIN(PiecePerPack) <> 0, ROUND(SUM(Quantity + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") % MIN(PiecePerPack), 0) AS OddPackages, MAX(Remarks) AS Remarks, 1 AS Approved, 0 AS HandoverApproved, " + "\r\n";
+            #region INIT FinishedItemPackages
+            queryString = queryString + "               IF (@Approved = 1) " + "\r\n";
+            queryString = queryString + "                   BEGIN " + "\r\n";
+            queryString = queryString + "                       DECLARE         @FinishedItemID int, @FinishedItemLotID int, @EntryDate datetime, @LocationID int, @ShiftID int, @WorkshiftID int, @CustomerID int, @FirmOrderID int, @PlannedOrderID int, @SemifinishedItemReferences nvarchar(100), @CommodityID int, @CommodityTypeID int, @BatchID int, @BatchEntryDate datetime, @Packages decimal(18, 2), @PiecePerPack decimal(18, 2), @Remarks nvarchar(100), @HandoverApproved bit; " + "\r\n";
 
-            //queryString = queryString + "                                       STUFF   ((SELECT ', ' + SemifinishedItems.Reference " + "\r\n";
-            //queryString = queryString + "                                       FROM    FinishedItemDetails INNER JOIN SemifinishedItems ON FinishedItemDetails.SemifinishedItemID = SemifinishedItems.SemifinishedItemID " + "\r\n";
-            //queryString = queryString + "                                       WHERE   FinishedItemDetails.FinishedItemID = @EntityID AND FinishedItemDetails.CommodityID = FinishedItemDetailResults.CommodityID " + "\r\n";
-            //queryString = queryString + "                                       FOR XML PATH(''),TYPE).value('(./text())[1]','VARCHAR(MAX)'),1,1,'') AS SemifinishedItemReferences " + "\r\n";
+            queryString = queryString + "                       DECLARE         CURSORFinishedItemLots CURSOR LOCAL FOR SELECT FinishedItemID, FinishedItemLotID, EntryDate, LocationID, ShiftID, WorkshiftID, CustomerID, FirmOrderID, PlannedOrderID, SemifinishedItemReferences, CommodityID, CommodityTypeID, BatchID, BatchEntryDate, Packages, PiecePerPack, Remarks, HandoverApproved FROM FinishedItemLots WHERE FinishedItemID = @EntityID AND PiecePerPack > 0; " + "\r\n";
+            queryString = queryString + "                       OPEN            CURSORFinishedItemLots; " + "\r\n";
+            queryString = queryString + "                       FETCH NEXT FROM CURSORFinishedItemLots INTO @FinishedItemID, @FinishedItemLotID, @EntryDate, @LocationID, @ShiftID, @WorkshiftID, @CustomerID, @FirmOrderID, @PlannedOrderID, @SemifinishedItemReferences, @CommodityID, @CommodityTypeID, @BatchID, @BatchEntryDate, @Packages, @PiecePerPack, @Remarks, @HandoverApproved; " + "\r\n";
 
-            //queryString = queryString + "                       FROM            FinishedItemDetails  FinishedItemDetailResults " + "\r\n";
-            //queryString = queryString + "                       WHERE           FinishedItemID = @EntityID " + "\r\n";
-            //queryString = queryString + "                       GROUP BY        CommodityID; " + "\r\n";
+            queryString = queryString + "                       WHILE @@FETCH_STATUS = 0 " + "\r\n";
+            queryString = queryString + "                           BEGIN " + "\r\n";
 
-            //queryString = queryString + "                       UPDATE          FinishedItemDetails " + "\r\n";
-            //queryString = queryString + "                       SET             FinishedItemDetails.FinishedItemPackageID = FinishedItemPackages.FinishedItemPackageID " + "\r\n";
-            //queryString = queryString + "                       FROM            FinishedItemDetails INNER JOIN FinishedItemPackages ON FinishedItemDetails.FinishedItemID = @EntityID AND FinishedItemDetails.FinishedItemID = FinishedItemPackages.FinishedItemID AND FinishedItemDetails.CommodityID = FinishedItemPackages.CommodityID; " + "\r\n";
-            //queryString = queryString + "                   END " + "\r\n";
+            queryString = queryString + "                               WHILE @Packages > 0 " + "\r\n";
+            queryString = queryString + "                                   BEGIN " + "\r\n";
+            queryString = queryString + "                                       INSERT INTO FinishedItemPackages(FinishedItemID, FinishedItemLotID, EntryDate, LocationID, ShiftID, WorkshiftID, CustomerID, FirmOrderID, PlannedOrderID, SemifinishedItemReferences, CommodityID, CommodityTypeID, BatchID, BatchEntryDate, Quantity, QuantityReceipted, Remarks, Approved, HandoverApproved) " + "\r\n";
+            queryString = queryString + "                                       VALUES                          (@FinishedItemID, @FinishedItemLotID, @EntryDate, @LocationID, @ShiftID, @WorkshiftID, @CustomerID, @FirmOrderID, @PlannedOrderID, @SemifinishedItemReferences, @CommodityID, @CommodityTypeID, @BatchID, @BatchEntryDate, @PiecePerPack, 0, @Remarks, @Approved, @HandoverApproved); " + "\r\n";
+            
+            queryString = queryString + "                                       SET @Packages = @Packages - 1 " + "\r\n";
+            queryString = queryString + "                                   END " + "\r\n";
 
-            //queryString = queryString + "               ELSE " + "\r\n";
-            //queryString = queryString + "                   BEGIN " + "\r\n";
-            //queryString = queryString + "                       UPDATE          FinishedItemDetails SET FinishedItemPackageID = NULL WHERE FinishedItemID = @EntityID ; " + "\r\n";
-            //queryString = queryString + "                       DELETE FROM     FinishedItemPackages WHERE FinishedItemID = @EntityID ; " + "\r\n";
-            //queryString = queryString + "                   END " + "\r\n";
-            //#endregion INIT FinishedItemPackages
+            queryString = queryString + "                               FETCH NEXT FROM CURSORFinishedItemLots INTO @FinishedItemID, @FinishedItemLotID, @EntryDate, @LocationID, @ShiftID, @WorkshiftID, @CustomerID, @FirmOrderID, @PlannedOrderID, @SemifinishedItemReferences, @CommodityID, @CommodityTypeID, @BatchID, @BatchEntryDate, @Packages, @PiecePerPack, @Remarks, @HandoverApproved; " + "\r\n";
+            queryString = queryString + "                           END " + "\r\n";
+            queryString = queryString + "                   END " + "\r\n";
+            queryString = queryString + "               ELSE " + "\r\n";
+            queryString = queryString + "                   BEGIN " + "\r\n";
+            queryString = queryString + "                       DELETE FROM     FinishedItemPackages WHERE FinishedItemID = @EntityID ; " + "\r\n";
+            queryString = queryString + "                   END " + "\r\n";
+            #endregion INIT FinishedItemPackages
 
 
             queryString = queryString + "           END " + "\r\n";
@@ -328,7 +330,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString;
 
             queryString = " @WorkshiftID int, @FinishedItemID int, @FromDate DateTime, @ToDate DateTime " + "\r\n";
-            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
             queryString = queryString + "       SET NOCOUNT ON" + "\r\n";

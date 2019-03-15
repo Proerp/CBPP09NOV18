@@ -142,6 +142,7 @@ namespace TotalDTO.Productions
             foreach (var result in base.Validate(validationContext)) { yield return result; }
 
             if (this.OddPackages != 0) yield return new ValidationResult("Số cuộn phải lớn hơn 0 và là số nguyên [" + this.CommodityName + "(" + this.Packages.ToString() + ")" + "]", new[] { "OddPackages" });
+            if (this.Quantity != 0 && this.PiecePerPack == 0) yield return new ValidationResult("Vui lòng nhập số kg/ cuộn [" + this.CommodityName + "(" + this.Quantity.ToString() + ")" + "]", new[] { "PiecePerPack" });
         }
     }
 

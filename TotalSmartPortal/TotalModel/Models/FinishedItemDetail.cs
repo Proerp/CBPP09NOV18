@@ -29,8 +29,6 @@ namespace TotalModel.Models
         public int SemifinishedItemID { get; set; }
         public int SemifinishedItemDetailID { get; set; }
         public int SemifinishedHandoverID { get; set; }
-        public Nullable<int> FinishedItemLotID { get; set; }
-        public Nullable<int> FinishedItemPackageID { get; set; }
         public Nullable<int> FinishedHandoverID { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
@@ -46,7 +44,6 @@ namespace TotalModel.Models
         public bool HandoverApproved { get; set; }
     
         public virtual Commodity Commodity { get; set; }
-        public virtual FinishedItemPackage FinishedItemPackage { get; set; }
         public virtual FinishedItem FinishedItem { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }

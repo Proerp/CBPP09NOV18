@@ -14,14 +14,9 @@ namespace TotalModel.Models
     
     public partial class FinishedItemPackage
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FinishedItemPackage()
-        {
-            this.FinishedItemDetails = new HashSet<FinishedItemDetail>();
-        }
-    
         public int FinishedItemPackageID { get; set; }
         public int FinishedItemID { get; set; }
+        public int FinishedItemLotID { get; set; }
         public System.DateTime EntryDate { get; set; }
         public int LocationID { get; set; }
         public int ShiftID { get; set; }
@@ -36,21 +31,12 @@ namespace TotalModel.Models
         public int CommodityTypeID { get; set; }
         public int BatchID { get; set; }
         public System.DateTime BatchEntryDate { get; set; }
-        public int PiecePerPack { get; set; }
         public decimal Quantity { get; set; }
-        public decimal QuantityFailure { get; set; }
-        public decimal QuantityExcess { get; set; }
-        public decimal QuantityShortage { get; set; }
-        public decimal Swarfs { get; set; }
         public decimal QuantityReceipted { get; set; }
-        public decimal Packages { get; set; }
-        public decimal OddPackages { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public bool HandoverApproved { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
         public virtual FinishedItem FinishedItem { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
