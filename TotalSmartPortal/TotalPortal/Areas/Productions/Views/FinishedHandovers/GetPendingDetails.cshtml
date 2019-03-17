@@ -10,8 +10,8 @@
     {
         columns.Bound(c => c.FirmOrderReference).Title("KHSX").Width(50);
         columns.Bound(c => c.FirmOrderCode).Title("Số CT").Width(50);
-        columns.Bound(c => c.SemifinishedProductReferences).Title("Pallet").Width(50);
-        columns.Bound(c => c.FinishedProductEntryDate).Title("Ngày ĐG").Width(80).Format("{0:" + Settings.DateTimeFormat + "}");
+        columns.Bound(c => c.SemifinishedProtemReferences).Title("Pallet").Width(50);
+        columns.Bound(c => c.FinishedProtemEntryDate).Title("Ngày ĐG").Width(80).Format("{0:" + Settings.DateTimeFormat + "}");
 
         columns.Bound(c => c.CustomerName).Title("Tên KH").Width(100);
         columns.Bound(c => c.CommodityCode).Title("Mã hàng").Width(100);
@@ -37,14 +37,15 @@
             var finishedHandoverJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
 
             return {
+                nmvnTaskID: window.parent.requireConfig.pageOptions.NmvnTaskID,
                 finishedHandoverID: window.parent.$("#FinishedHandoverID").val(),
                 workshiftID: window.parent.$("#WorkshiftID").val(),
                 plannedOrderID: window.parent.$("#PlannedOrderID").val(),
                 customerID: window.parent.$("#Customer_CustomerID").val(),
-                finishedProductPackageIDs: finishedHandoverJSON.map(function (elem) { return elem.FinishedProductPackageID; }).join(","),
-                isReadOnly: false
+                finishedItemPackageIDs: finishedHandoverJSON.map(function (elem) { return elem.FinishedItemPackageID; }).join(",")
+                finishedProductPackageIDs: finishedHandoverJSON.map(function (elem) { return elem.FinishedProductPackageID; }).join(",")                
             };}
-                    </text>))
+        </text>))
     .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client
     .Selectable()
 )
@@ -85,7 +86,7 @@
                 filters: [
                     { field: "FirmOrderReference", operator: "contains", value: filterText },
                     { field: "FirmOrderCode", operator: "contains", value: filterText },
-                    { field: "SemifinishedProductReferences", operator: "contains", value: filterText },
+                    { field: "SemifinishedProtemReferences", operator: "contains", value: filterText },
 
                     { field: "CustomerName", operator: "contains", value: filterText },
                     { field: "CommodityCode", operator: "contains", value: filterText },

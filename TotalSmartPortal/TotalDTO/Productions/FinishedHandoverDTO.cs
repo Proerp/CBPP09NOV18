@@ -89,7 +89,7 @@ namespace TotalDTO.Productions
         [UIHint("AutoCompletes/EmployeeBase")]
         EmployeeBaseDTO Storekeeper { get; set; }
 
-        [Display(Name = "Tổ trưởng ĐG")]
+        [Display(Name = "Tổ trưởng đóng gói")]
         [UIHint("AutoCompletes/EmployeeBase")]
         EmployeeBaseDTO FinishedLeader { get; set; }
 

@@ -1,9 +1,14 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration;
 
-@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Productions
+@using TotalPortal.Areas.Productions.ViewModels
 
-@model TotalPortal.Areas.Productions.ViewModels.FinishedHandoverViewModel
+@model IFinishedHandoverViewModel
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
 @using (Html.BeginForm())
 {
@@ -11,36 +16,36 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
     
-    @Html.HiddenFor(model => model.WorkshiftID)
-    @Html.HiddenFor(model => model.WorkshiftCode)
-    @Html.HiddenFor(model => model.WorkshiftEntryDate)
+    @Html.HiddenFor(model => (model as IFinishedHandoverPrimitiveDTO).WorkshiftID)
+    @Html.HiddenFor(model => (model as IFinishedHandoverPrimitiveDTO).WorkshiftCode)
+    @Html.HiddenFor(model => (model as IFinishedHandoverPrimitiveDTO).WorkshiftEntryDate)
 
-    @Html.HiddenFor(model => model.PlannedOrderID)
-    @Html.HiddenFor(model => model.PlannedOrderCode)
-    @Html.HiddenFor(model => model.PlannedOrderEntryDate)
+    @Html.HiddenFor(model => (model as IFinishedHandoverPrimitiveDTO).PlannedOrderID)
+    @Html.HiddenFor(model => (model as IFinishedHandoverPrimitiveDTO).PlannedOrderCode)
+    @Html.HiddenFor(model => (model as IFinishedHandoverPrimitiveDTO).PlannedOrderEntryDate)
     
-    @Html.HiddenFor(model => model.CustomerID)
+    @Html.HiddenFor(model => (model as IFinishedHandoverPrimitiveDTO).CustomerID)
     
-    @Html.HiddenFor(model => model.Customer.CustomerID)
-    @Html.HiddenFor(model => model.Customer.Code)
-    @Html.HiddenFor(model => model.Customer.Name)
-    @Html.HiddenFor(model => model.Customer.VATCode)
-    @Html.HiddenFor(model => model.Customer.Telephone)
-    @Html.HiddenFor(model => model.Customer.BillingAddress)
-    @Html.HiddenFor(model => model.Customer.EntireTerritoryEntireName)
-    @Html.HiddenFor(model => model.Customer.SalespersonID)
-    @Html.HiddenFor(model => model.Customer.SalespersonName)
-    @Html.HiddenFor(model => model.Customer.PaymentTermID)
-    @Html.HiddenFor(model => model.Customer.PriceCategoryID)
-    @Html.HiddenFor(model => model.Customer.PriceCategoryCode)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.CustomerID)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.Code)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.Name)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.VATCode)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.Telephone)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.BillingAddress)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.EntireTerritoryEntireName)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.SalespersonID)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.SalespersonName)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.PaymentTermID)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.PriceCategoryID)
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Customer.PriceCategoryCode)
     
-    @Html.HiddenFor(model => model.Storekeeper.EmployeeID);
-    @Html.HiddenFor(model => model.Storekeeper.Name);
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Storekeeper.EmployeeID);
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).Storekeeper.Name);
 
-    @Html.HiddenFor(model => model.FinishedLeader.EmployeeID);
-    @Html.HiddenFor(model => model.FinishedLeader.Name);
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).FinishedLeader.EmployeeID);
+    @Html.HiddenFor(model => (model as IFinishedHandoverDTO).FinishedLeader.Name);
 
-    @Html.HiddenFor(model => model.Description);
+    @Html.HiddenFor(model => (model as IBaseDTO).Description);
 
     @(Html.Kendo().TabStrip()
         .HtmlAttributes(new { @style = "height: 468px; margin-left: 0px; margin-right: 0px;" })
@@ -133,8 +138,3 @@
     }
 
 </script>
-
-
-
-
-

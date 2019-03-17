@@ -1,7 +1,12 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration
 
-@model TotalPortal.Areas.Productions.ViewModels.FinishedHandoverViewModel
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Productions
+@using TotalPortal.Areas.Productions.ViewModels
+
+@model IFinishedHandoverViewModel
 
 <div id="popupWindow"></div>
 
@@ -12,62 +17,62 @@
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTopB.cshtml")
 
-    @Html.HiddenFor(model => model.FinishedHandoverID)
+    @Html.HiddenFor(model => (model as IFinishedHandoverPrimitiveDTO).FinishedHandoverID)
 
     <div class="left-panel">
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
     
-        @Html.HiddenFor(model => model.WorkshiftID)
+        @Html.HiddenFor(model => (model as IFinishedHandoverPrimitiveDTO).WorkshiftID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkshiftCode)
+            @Html.LabelFor(model => (model as IFinishedHandoverPrimitiveDTO).WorkshiftCode)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.WorkshiftCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IFinishedHandoverPrimitiveDTO).WorkshiftCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.WorkshiftCode, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IFinishedHandoverPrimitiveDTO).WorkshiftCode, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkshiftEntryDate)
+            @Html.LabelFor(model => (model as IFinishedHandoverPrimitiveDTO).WorkshiftEntryDate)
             <div class="div-input">
-                @Html.Kendo().DateTimePickerFor(model => model.WorkshiftEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                @Html.Kendo().DateTimePickerFor(model => (model as IFinishedHandoverPrimitiveDTO).WorkshiftEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.WorkshiftEntryDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IFinishedHandoverPrimitiveDTO).WorkshiftEntryDate, "", new { @class = "text-danger" })
             </div>
         </div>   
 
-        @Html.HiddenFor(model => model.PlannedOrderID)
+        @Html.HiddenFor(model => (model as IFinishedHandoverPrimitiveDTO).PlannedOrderID)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PlannedOrderCode)
+            @Html.LabelFor(model => (model as IFinishedHandoverPrimitiveDTO).PlannedOrderCode)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.PlannedOrderCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IFinishedHandoverPrimitiveDTO).PlannedOrderCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.PlannedOrderCode, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IFinishedHandoverPrimitiveDTO).PlannedOrderCode, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PlannedOrderEntryDate)
+            @Html.LabelFor(model => (model as IFinishedHandoverPrimitiveDTO).PlannedOrderEntryDate)
             <div class="div-input">
-                @Html.Kendo().DateTimePickerFor(model => model.PlannedOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                @Html.Kendo().DateTimePickerFor(model => (model as IFinishedHandoverPrimitiveDTO).PlannedOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.PlannedOrderEntryDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IFinishedHandoverPrimitiveDTO).PlannedOrderEntryDate, "", new { @class = "text-danger" })
             </div>
         </div>   
 
         <div class="form-group">
-            @Html.EditorFor(d => d.Storekeeper, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.Storekeeper) })
+            @Html.EditorFor(d => (d as IFinishedHandoverDTO).Storekeeper, new { EmployeeDisplayName = @Model.Storekeeper.GetDisplayName(m => m.EmployeeID) })
         </div>   
         
         <div class="form-group">
-            @Html.EditorFor(d => d.FinishedLeader, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.FinishedLeader) })
+            @Html.EditorFor(d => (d as IFinishedHandoverDTO).FinishedLeader, new { EmployeeDisplayName = (@Model.IsItem ? "Tổ trưởng tổ màng" : "Tổ trưởng đóng gói") })
         </div>                      
 
     </div>
@@ -76,7 +81,7 @@
 
         <div class="right-top-panel right-top-panel-H2">
 
-            @Html.EditorFor(d => d.Customer, new { CustomerDisplayName = @Model.GetDisplayName(m => m.Customer), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Bàn giao khay thành phẩm tổng hợp"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
+            @Html.EditorFor(d => (d as IFinishedHandoverDTO).Customer, new { CustomerDisplayName = @Model.GetDisplayName(m => m.Customer), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : (@Model.IsItem? "Bàn giao màng thành phẩm" : "Bàn giao khay thành phẩm tổng hợp")), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
             
         </div>
 
@@ -100,11 +105,11 @@
                     columns.Bound(p => p.FirmOrderCode).DisplayNameTitle().Width(20)
                         .ClientTemplate("#= FirmOrderCode #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FirmOrderCode' value='#= FirmOrderCode #' />");
                                         
-                    columns.Bound(p => p.SemifinishedProductReferences).DisplayNameTitle().Width(20)
-                        .ClientTemplate("#= SemifinishedProductReferences #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].SemifinishedProductReferences' value='#= SemifinishedProductReferences #' />");
-                    columns.Bound(p => p.FinishedProductEntryDate).DisplayNameTitle().Width(20)
+                    columns.Bound(p => p.SemifinishedProtemReferences).DisplayNameTitle().Width(20)
+                        .ClientTemplate("#= SemifinishedProtemReferences #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].SemifinishedProtemReferences' value='#= SemifinishedProtemReferences #' />");
+                    columns.Bound(p => p.FinishedProtemEntryDate).DisplayNameTitle().Width(20)
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (FinishedProductEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProductEntryDate) #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FinishedProductEntryDate' value='#= (FinishedProductEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProductEntryDate) #' />");
+                        .ClientTemplate("#= (FinishedProtemEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProtemEntryDate) #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FinishedProtemEntryDate' value='#= (FinishedProtemEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProtemEntryDate) #' />");
 
 
                     columns.Bound(p => p.CustomerID).DisplayNameTitle().Hidden()
@@ -183,12 +188,22 @@
                         .Content(@<text>
                             <div class="right-first-panel">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Description, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseDTO).Description, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Description).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => (model as IBaseModel).Remarks, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => (model as IBaseModel).Remarks, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
