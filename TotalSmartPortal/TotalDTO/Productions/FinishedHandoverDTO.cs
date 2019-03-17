@@ -12,10 +12,39 @@ using TotalDTO.Commons;
 using TotalDTO.Helpers.Interfaces;
 
 namespace TotalDTO.Productions
-{   
-    public class FinishedHandoverPrimitiveDTO : QuantityDTO<FinishedHandoverDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+{
+    public interface IFinishedHandoverOption { GlobalEnums.NmvnTaskID NMVNTaskID { get; } }
+
+    public class FinishedItemHandoverOption : IFinishedHandoverOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.FinishedItemHandover; } } }
+    public class FinishedProductHandoverOption : IFinishedHandoverOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.FinishedProductHandover; } } }
+
+    public interface IFinishedHandoverPrimitiveDTO : IQuantityDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
     {
-        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.FinishedHandover; } }
+        int FinishedHandoverID { get; set; }
+
+
+        virtual int WorkshiftID { get; set; }
+        [Display(Name = "Ca sản xuất")]
+        string WorkshiftCode { get; set; }
+        [Display(Name = "Ngày sản xuất")]
+        DateTime WorkshiftEntryDate { get; set; }
+
+        Nullable<int> PlannedOrderID { get; set; }
+        [Display(Name = "KHSX")]
+        string PlannedOrderCode { get; set; }
+        [Display(Name = "Ngày KHSX")]
+        Nullable<DateTime> PlannedOrderEntryDate { get; set; }
+
+        virtual Nullable<int> CustomerID { get; set; }
+
+        virtual int FinishedLeaderID { get; set; }
+        virtual int StorekeeperID { get; set; }
+    }
+
+    public class FinishedHandoverPrimitiveDTO<TFinishedHandoverOption> : QuantityDTO<FinishedHandoverDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+        where TFinishedHandoverOption : IFinishedHandoverOption, new()
+    {
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return new TFinishedHandoverOption().NMVNTaskID; } }
 
         public int GetID() { return this.FinishedHandoverID; }
         public void SetID(int id) { this.FinishedHandoverID = id; }
@@ -50,7 +79,31 @@ namespace TotalDTO.Productions
         }
     }
 
-    public class FinishedHandoverDTO : FinishedHandoverPrimitiveDTO, IBaseDetailEntity<FinishedHandoverDetailDTO>
+    public interface IFinishedHandoverDTO : IFinishedHandoverPrimitiveDTO
+    {
+        [Display(Name = "Khách hàng")]
+        [UIHint("Commons/CustomerBase")]
+        CustomerBaseDTO Customer { get; set; }
+
+        [Display(Name = "Nhân viên kho")]
+        [UIHint("AutoCompletes/EmployeeBase")]
+        EmployeeBaseDTO Storekeeper { get; set; }
+
+        [Display(Name = "Tổ trưởng ĐG")]
+        [UIHint("AutoCompletes/EmployeeBase")]
+        EmployeeBaseDTO FinishedLeader { get; set; }
+
+        List<FinishedHandoverDetailDTO> FinishedHandoverViewDetails { get; set; }
+        List<FinishedHandoverDetailDTO> ViewDetails { get; set; }
+
+        string ControllerName { get; }
+
+        bool IsItem { get; }
+        bool IsProduct { get; }
+    }
+
+    public class FinishedHandoverDTO<TFinishedHandoverOption> : FinishedHandoverPrimitiveDTO<TFinishedHandoverOption>, IBaseDetailEntity<FinishedHandoverDetailDTO>, IFinishedHandoverDTO
+        where TFinishedHandoverOption : IFinishedHandoverOption, new()
     {
         public FinishedHandoverDTO()
         {
@@ -78,5 +131,12 @@ namespace TotalDTO.Productions
         public ICollection<FinishedHandoverDetailDTO> GetDetails() { return this.FinishedHandoverViewDetails; }
 
         protected override IEnumerable<FinishedHandoverDetailDTO> DtoDetails() { return this.FinishedHandoverViewDetails; }
+
+        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
+
+        public bool IsItem { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.FinishedItemHandover; } }
+        public bool IsProduct { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.FinishedProductHandover; } }
     }
+
+
 }

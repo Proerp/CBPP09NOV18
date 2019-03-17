@@ -26,10 +26,10 @@ namespace TotalDTO.Productions
         
         [Display(Name = "Pallet")]
         [UIHint("StringReadonly")]
-        public string SemifinishedProductReferences { get; set; }
+        public string SemifinishedProtemReferences { get; set; }
         [Display(Name = "Ngày ĐG")]
         [UIHint("DateTimeReadonly")]
-        public Nullable<System.DateTime> FinishedProductEntryDate { get; set; }
+        public Nullable<System.DateTime> FinishedProtemEntryDate { get; set; }
 
         public int CustomerID { get; set; }
         [Display(Name = "Mã KH")]

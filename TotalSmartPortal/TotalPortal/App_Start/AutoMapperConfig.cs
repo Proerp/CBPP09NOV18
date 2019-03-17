@@ -290,11 +290,17 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<FinishedProductViewDetail, FinishedProductDetailDTO>();
                 cfg.CreateMap<FinishedProductDetailDTO, FinishedProductDetail>();
 
-                cfg.CreateMap<FinishedHandover, FinishedHandoverViewModel>();
-                cfg.CreateMap<FinishedHandover, FinishedHandoverDTO>();
-                cfg.CreateMap<FinishedHandoverPrimitiveDTO, FinishedHandover>();
+                cfg.CreateMap<FinishedHandover, FinishedHandoverDTO<FinishedItemHandoverOption>>();
+                cfg.CreateMap<FinishedHandover, FinishedHandoverDTO<FinishedProductHandoverOption>>();
+
+                cfg.CreateMap<FinishedHandoverPrimitiveDTO<FinishedItemHandoverOption>, FinishedHandover>();
+                cfg.CreateMap<FinishedHandoverPrimitiveDTO<FinishedProductHandoverOption>, FinishedHandover>();
+
                 cfg.CreateMap<FinishedHandoverViewDetail, FinishedHandoverDetailDTO>();
                 cfg.CreateMap<FinishedHandoverDetailDTO, FinishedHandoverDetail>();
+
+                cfg.CreateMap<FinishedHandover, FinishedItemHandoverViewModel>();
+                cfg.CreateMap<FinishedHandover, FinishedProductHandoverViewModel>();
 
 
 

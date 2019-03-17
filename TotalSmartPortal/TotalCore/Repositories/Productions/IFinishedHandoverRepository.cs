@@ -12,11 +12,11 @@ namespace TotalCore.Repositories.Productions
 
     public interface IFinishedHandoverAPIRepository : IGenericAPIRepository
     {
-        IEnumerable<FinishedHandoverPendingWorkshift> GetWorkshifts(int? locationID);
-        IEnumerable<FinishedHandoverPendingCustomer> GetCustomers(int? locationID);
-        IEnumerable<FinishedHandoverPendingPlannedOrder> GetPlannedOrders(int? locationID);
+        IEnumerable<FinishedHandoverPendingWorkshift> GetWorkshifts(int? nmvnTaskID, int? locationID);
+        IEnumerable<FinishedHandoverPendingCustomer> GetCustomers(int? nmvnTaskID, int? locationID);
+        IEnumerable<FinishedHandoverPendingPlannedOrder> GetPlannedOrders(int? nmvnTaskID, int? locationID);
 
-        IEnumerable<FinishedHandoverPendingDetail> GetPendingDetails(int? finishedHandoverID, int? workshiftID, int? plannedOrderID, int? customerID, string finishedProductPackageIDs, bool? isReadonly);
+        IEnumerable<FinishedHandoverPendingDetail> GetPendingDetails(int? nmvnTaskID, int? finishedHandoverID, int? workshiftID, int? plannedOrderID, int? customerID, string finishedItemPackageIDs, string finishedProductPackageIDs);
 
     }
 }

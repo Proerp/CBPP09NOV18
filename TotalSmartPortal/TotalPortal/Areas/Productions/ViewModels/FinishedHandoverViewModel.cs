@@ -11,7 +11,16 @@ using TotalPortal.Areas.Commons.ViewModels.Helpers;
 
 namespace TotalPortal.Areas.Productions.ViewModels
 {
-    public class FinishedHandoverViewModel : FinishedHandoverDTO, IViewDetailViewModel<FinishedHandoverDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
+    public interface IFinishedHandoverViewModel : IFinishedHandoverDTO, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
+    {
+    }
+
+    public class FinishedItemHandoverViewModel : FinishedHandoverDTO<FinishedItemHandoverOption>, IViewDetailViewModel<FinishedHandoverDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IFinishedHandoverViewModel
+    {
+        public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
+    }
+
+    public class FinishedProductHandoverViewModel : FinishedHandoverDTO<FinishedProductHandoverOption>, IViewDetailViewModel<FinishedHandoverDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IFinishedHandoverViewModel
     {
         public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
     }

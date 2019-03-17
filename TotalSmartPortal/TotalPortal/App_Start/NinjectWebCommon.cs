@@ -288,10 +288,14 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IFinishedProductAPIRepository>().To<FinishedProductAPIRepository>();
                 kernel.Bind<IFinishedProductViewModelSelectListBuilder>().To<FinishedProductViewModelSelectListBuilder>();
 
-                kernel.Bind<IFinishedHandoverService>().To<FinishedHandoverService>();
                 kernel.Bind<IFinishedHandoverRepository>().To<FinishedHandoverRepository>();
                 kernel.Bind<IFinishedHandoverAPIRepository>().To<FinishedHandoverAPIRepository>();
-                kernel.Bind<IFinishedHandoverViewModelSelectListBuilder>().To<FinishedHandoverViewModelSelectListBuilder>();
+
+                kernel.Bind<IFinishedItemHandoverService>().To<FinishedItemHandoverService>();
+                kernel.Bind<IFinishedItemHandoverViewModelSelectListBuilder>().To<FinishedItemHandoverViewModelSelectListBuilder>();
+                kernel.Bind<IFinishedProductHandoverService>().To<FinishedProductHandoverService>();
+                kernel.Bind<IFinishedProductHandoverViewModelSelectListBuilder>().To<FinishedProductHandoverViewModelSelectListBuilder>();
+
 
 
 

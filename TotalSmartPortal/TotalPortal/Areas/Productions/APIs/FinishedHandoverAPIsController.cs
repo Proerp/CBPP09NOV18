@@ -24,8 +24,9 @@ namespace TotalPortal.Areas.Productions.APIs
         }
 
 
-        public JsonResult GetFinishedHandoverIndexes([DataSourceRequest] DataSourceRequest request)
+        public JsonResult GetFinishedHandoverIndexes([DataSourceRequest] DataSourceRequest request, int nmvnTaskID)
         {
+            this.finishedHandoverAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
             ICollection<FinishedHandoverIndex> finishedHandoverIndexes = this.finishedHandoverAPIRepository.GetEntityIndexes<FinishedHandoverIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext));
 
             DataSourceResult response = finishedHandoverIndexes.ToDataSourceResult(request);
@@ -33,27 +34,27 @@ namespace TotalPortal.Areas.Productions.APIs
             return Json(response, JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetWorkshifts([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetWorkshifts([DataSourceRequest] DataSourceRequest dataSourceRequest, int nmvnTaskID, int? locationID)
         {
-            var result = this.finishedHandoverAPIRepository.GetWorkshifts(locationID);
+            var result = this.finishedHandoverAPIRepository.GetWorkshifts(nmvnTaskID, locationID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetCustomers([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetCustomers([DataSourceRequest] DataSourceRequest dataSourceRequest, int nmvnTaskID, int? locationID)
         {
-            var result = this.finishedHandoverAPIRepository.GetCustomers(locationID);
+            var result = this.finishedHandoverAPIRepository.GetCustomers(nmvnTaskID, locationID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPlannedOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetPlannedOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int nmvnTaskID, int? locationID)
         {
-            var result = this.finishedHandoverAPIRepository.GetPlannedOrders(locationID);
+            var result = this.finishedHandoverAPIRepository.GetPlannedOrders(nmvnTaskID, locationID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPendingDetails([DataSourceRequest] DataSourceRequest dataSourceRequest, int? finishedHandoverID, int? workshiftID, int? plannedOrderID, int? customerID, string finishedProductPackageIDs, bool? isReadonly)
+        public JsonResult GetPendingDetails([DataSourceRequest] DataSourceRequest dataSourceRequest, int nmvnTaskID, int? finishedHandoverID, int? workshiftID, int? plannedOrderID, int? customerID, string finishedItemPackageIDs, string finishedProductPackageIDs)
         {
-            var result = this.finishedHandoverAPIRepository.GetPendingDetails(finishedHandoverID, workshiftID, plannedOrderID, customerID, finishedProductPackageIDs, false);
+            var result = this.finishedHandoverAPIRepository.GetPendingDetails(nmvnTaskID, finishedHandoverID, workshiftID, plannedOrderID, customerID, finishedItemPackageIDs, finishedProductPackageIDs);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
     }
