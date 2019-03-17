@@ -74,7 +74,7 @@ namespace TotalDTO.Productions
             base.PerformPresaveRule();
 
             string caption = "";
-            this.DtoDetails().ToList().ForEach(e => { if (caption.IndexOf(e.CommodityName) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityName; });
+            this.DtoDetails().ToList().ForEach(e => { if (caption.IndexOf(this.NMVNTaskID == GlobalEnums.NmvnTaskID.FinishedItemHandover ? e.CommodityCode : e.CommodityName) < 0) caption = caption + (caption != "" ? ", " : "") + (this.NMVNTaskID == GlobalEnums.NmvnTaskID.FinishedItemHandover ? e.CommodityCode : e.CommodityName); });
             this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
     }
@@ -109,7 +109,7 @@ namespace TotalDTO.Productions
         {
             this.FinishedHandoverViewDetails = new List<FinishedHandoverDetailDTO>();
         }
-        
+
         public override Nullable<int> CustomerID { get { return (this.Customer != null ? (this.Customer.CustomerID > 0 ? (Nullable<int>)this.Customer.CustomerID : null) : null); } }
         [Display(Name = "Khách hàng")]
         [UIHint("Commons/CustomerBase")]

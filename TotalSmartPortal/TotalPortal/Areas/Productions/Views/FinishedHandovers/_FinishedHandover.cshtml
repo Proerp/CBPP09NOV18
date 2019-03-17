@@ -79,7 +79,7 @@
 
     <div class="right-panel">
 
-        <div class="right-top-panel right-top-panel-H2">
+        <div class="right-top-panel right-top-panel-H3">
 
             @Html.EditorFor(d => (d as IFinishedHandoverDTO).Customer, new { CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : (@Model.IsItem ? "Bàn giao màng thành phẩm" : "Bàn giao khay thành phẩm tổng hợp")), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
             
@@ -109,10 +109,10 @@
                         .ClientTemplate("#= FirmOrderReference #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FirmOrderReference' value='#= FirmOrderReference #' />");
                     columns.Bound(p => p.FirmOrderCode).DisplayNameTitle().Width(20)
                         .ClientTemplate("#= FirmOrderCode #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FirmOrderCode' value='#= FirmOrderCode #' />");
-                                        
-                    columns.Bound(p => p.SemifinishedProtemReferences).DisplayNameTitle().Width(20)
+
+                    columns.Bound(p => p.SemifinishedProtemReferences).Title(@Model.IsItem ? "Cuộn màng" : "Pallet").Width(20)
                         .ClientTemplate("#= SemifinishedProtemReferences #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].SemifinishedProtemReferences' value='#= SemifinishedProtemReferences #' />");
-                    columns.Bound(p => p.FinishedProtemEntryDate).DisplayNameTitle().Width(20)
+                    columns.Bound(p => p.FinishedProtemEntryDate).Title(@Model.IsItem? "Ngày Tạo" : "Ngày ĐG").Width(20)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (FinishedProtemEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProtemEntryDate) #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FinishedProtemEntryDate' value='#= (FinishedProtemEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProtemEntryDate) #' />");
 
