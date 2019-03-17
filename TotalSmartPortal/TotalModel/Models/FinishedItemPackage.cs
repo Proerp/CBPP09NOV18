@@ -14,6 +14,12 @@ namespace TotalModel.Models
     
     public partial class FinishedItemPackage
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public FinishedItemPackage()
+        {
+            this.FinishedHandoverDetails = new HashSet<FinishedHandoverDetail>();
+        }
+    
         public int FinishedItemPackageID { get; set; }
         public int FinishedItemID { get; set; }
         public int FinishedItemLotID { get; set; }
@@ -40,5 +46,7 @@ namespace TotalModel.Models
         public virtual FinishedItem FinishedItem { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }
     }
 }

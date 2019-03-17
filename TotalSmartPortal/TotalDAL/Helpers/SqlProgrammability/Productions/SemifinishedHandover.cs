@@ -181,7 +181,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       IF  (@SemifinishedProductIDs <> '') " + "\r\n";
+            queryString = queryString + "       IF  (" + (productVsItem ? "@SemifinishedProductIDs" : "@SemifinishedItemIDs") + " <> '') " + "\r\n";
             queryString = queryString + "           " + this.GetPendingBUILDSQL(productVsItem, isCustomerID, true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           " + this.GetPendingBUILDSQL(productVsItem, isCustomerID, false) + "\r\n";

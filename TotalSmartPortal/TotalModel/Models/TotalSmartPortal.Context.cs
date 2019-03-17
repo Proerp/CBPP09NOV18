@@ -94,7 +94,6 @@ namespace TotalModel.Models
         public virtual DbSet<FinishedProduct> FinishedProducts { get; set; }
         public virtual DbSet<TransferOrderType> TransferOrderTypes { get; set; }
         public virtual DbSet<SemifinishedHandover> SemifinishedHandovers { get; set; }
-        public virtual DbSet<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }
         public virtual DbSet<ModuleDetail> ModuleDetails { get; set; }
         public virtual DbSet<ModuleDefault> ModuleDefaults { get; set; }
         public virtual DbSet<FinishedHandover> FinishedHandovers { get; set; }
@@ -130,9 +129,10 @@ namespace TotalModel.Models
         public virtual DbSet<WorkOrderDetail> WorkOrderDetails { get; set; }
         public virtual DbSet<WorkOrder> WorkOrders { get; set; }
         public virtual DbSet<FinishedItem> FinishedItems { get; set; }
-        public virtual DbSet<FinishedItemDetail> FinishedItemDetails { get; set; }
         public virtual DbSet<FinishedItemLot> FinishedItemLots { get; set; }
         public virtual DbSet<FinishedItemPackage> FinishedItemPackages { get; set; }
+        public virtual DbSet<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }
+        public virtual DbSet<FinishedItemDetail> FinishedItemDetails { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {
@@ -3583,8 +3583,12 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PlannedOrderLog>("GetPlannedOrderLogs", plannedOrderIDParameter, firmOrderIDParameter);
         }
     
-        public virtual ObjectResult<FinishedHandoverIndex> GetFinishedHandoverIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        public virtual ObjectResult<FinishedHandoverIndex> GetFinishedHandoverIndexes(Nullable<int> nMVNTaskID, string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var aspUserIDParameter = aspUserID != null ?
                 new ObjectParameter("AspUserID", aspUserID) :
                 new ObjectParameter("AspUserID", typeof(string));
@@ -3597,20 +3601,28 @@ namespace TotalModel.Models
                 new ObjectParameter("ToDate", toDate) :
                 new ObjectParameter("ToDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverIndex>("GetFinishedHandoverIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverIndex>("GetFinishedHandoverIndexes", nMVNTaskIDParameter, aspUserIDParameter, fromDateParameter, toDateParameter);
         }
     
-        public virtual ObjectResult<FinishedHandoverPendingCustomer> GetFinishedHandoverPendingCustomers(Nullable<int> locationID)
+        public virtual ObjectResult<FinishedHandoverPendingCustomer> GetFinishedHandoverPendingCustomers(Nullable<int> nMVNTaskID, Nullable<int> locationID)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingCustomer>("GetFinishedHandoverPendingCustomers", locationIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingCustomer>("GetFinishedHandoverPendingCustomers", nMVNTaskIDParameter, locationIDParameter);
         }
     
-        public virtual ObjectResult<FinishedHandoverPendingDetail> GetFinishedHandoverPendingDetails(Nullable<int> finishedHandoverID, Nullable<int> workshiftID, Nullable<int> plannedOrderID, Nullable<int> customerID, string finishedProductPackageIDs, Nullable<bool> isReadonly)
+        public virtual ObjectResult<FinishedHandoverPendingDetail> GetFinishedHandoverPendingDetails(Nullable<int> nMVNTaskID, Nullable<int> finishedHandoverID, Nullable<int> workshiftID, Nullable<int> plannedOrderID, Nullable<int> customerID, string finishedItemPackageIDs, string finishedProductPackageIDs)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var finishedHandoverIDParameter = finishedHandoverID.HasValue ?
                 new ObjectParameter("FinishedHandoverID", finishedHandoverID) :
                 new ObjectParameter("FinishedHandoverID", typeof(int));
@@ -3627,24 +3639,28 @@ namespace TotalModel.Models
                 new ObjectParameter("CustomerID", customerID) :
                 new ObjectParameter("CustomerID", typeof(int));
     
+            var finishedItemPackageIDsParameter = finishedItemPackageIDs != null ?
+                new ObjectParameter("FinishedItemPackageIDs", finishedItemPackageIDs) :
+                new ObjectParameter("FinishedItemPackageIDs", typeof(string));
+    
             var finishedProductPackageIDsParameter = finishedProductPackageIDs != null ?
                 new ObjectParameter("FinishedProductPackageIDs", finishedProductPackageIDs) :
                 new ObjectParameter("FinishedProductPackageIDs", typeof(string));
     
-            var isReadonlyParameter = isReadonly.HasValue ?
-                new ObjectParameter("IsReadonly", isReadonly) :
-                new ObjectParameter("IsReadonly", typeof(bool));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingDetail>("GetFinishedHandoverPendingDetails", finishedHandoverIDParameter, workshiftIDParameter, plannedOrderIDParameter, customerIDParameter, finishedProductPackageIDsParameter, isReadonlyParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingDetail>("GetFinishedHandoverPendingDetails", nMVNTaskIDParameter, finishedHandoverIDParameter, workshiftIDParameter, plannedOrderIDParameter, customerIDParameter, finishedItemPackageIDsParameter, finishedProductPackageIDsParameter);
         }
     
-        public virtual ObjectResult<FinishedHandoverPendingPlannedOrder> GetFinishedHandoverPendingPlannedOrders(Nullable<int> locationID)
+        public virtual ObjectResult<FinishedHandoverPendingPlannedOrder> GetFinishedHandoverPendingPlannedOrders(Nullable<int> nMVNTaskID, Nullable<int> locationID)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingPlannedOrder>("GetFinishedHandoverPendingPlannedOrders", locationIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingPlannedOrder>("GetFinishedHandoverPendingPlannedOrders", nMVNTaskIDParameter, locationIDParameter);
         }
     
         public virtual ObjectResult<FinishedHandoverViewDetail> GetFinishedHandoverViewDetails(Nullable<int> finishedHandoverID)
@@ -4144,13 +4160,17 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BinLocationBase>("GetBinLocationBases", warehouseIDParameter, searchTextParameter);
         }
     
-        public virtual ObjectResult<FinishedHandoverPendingWorkshift> GetFinishedHandoverPendingWorkshifts(Nullable<int> locationID)
+        public virtual ObjectResult<FinishedHandoverPendingWorkshift> GetFinishedHandoverPendingWorkshifts(Nullable<int> nMVNTaskID, Nullable<int> locationID)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingWorkshift>("GetFinishedHandoverPendingWorkshifts", locationIDParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedHandoverPendingWorkshift>("GetFinishedHandoverPendingWorkshifts", nMVNTaskIDParameter, locationIDParameter);
         }
     
         public virtual ObjectResult<PackageIssueIndex> GetPackageIssueIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)

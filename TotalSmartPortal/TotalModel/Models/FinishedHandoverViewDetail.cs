@@ -15,7 +15,7 @@ namespace TotalModel.Models
     {
         public int FinishedHandoverDetailID { get; set; }
         public int FinishedHandoverID { get; set; }
-        public int FinishedProductID { get; set; }
+        public Nullable<int> FinishedProductID { get; set; }
         public int CustomerID { get; set; }
         public string CustomerCode { get; set; }
         public string CustomerName { get; set; }
@@ -25,11 +25,13 @@ namespace TotalModel.Models
         public int CommodityTypeID { get; set; }
         public decimal Quantity { get; set; }
         public string Remarks { get; set; }
-        public int FinishedProductPackageID { get; set; }
-        public System.DateTime FinishedProductEntryDate { get; set; }
-        public string SemifinishedProductReferences { get; set; }
+        public Nullable<int> FinishedProductPackageID { get; set; }
         public string FirmOrderReference { get; set; }
         public string FirmOrderCode { get; set; }
         public System.DateTime FirmOrderEntryDate { get; set; }
+        public Nullable<int> FinishedItemID { get; set; }
+        public Nullable<int> FinishedItemPackageID { get; set; }
+        public System.DateTime FinishedProtemEntryDate { get; set; }
+        public string SemifinishedProtemReferences { get; set; }
     }
 }

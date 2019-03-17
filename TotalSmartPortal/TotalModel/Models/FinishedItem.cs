@@ -17,9 +17,9 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FinishedItem()
         {
-            this.FinishedItemDetails = new HashSet<FinishedItemDetail>();
             this.FinishedItemLots = new HashSet<FinishedItemLot>();
             this.FinishedItemPackages = new HashSet<FinishedItemPackage>();
+            this.FinishedItemDetails = new HashSet<FinishedItemDetail>();
         }
     
         public int FinishedItemID { get; set; }
@@ -63,10 +63,10 @@ namespace TotalModel.Models
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedItemLot> FinishedItemLots { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedItemPackage> FinishedItemPackages { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
     }
 }

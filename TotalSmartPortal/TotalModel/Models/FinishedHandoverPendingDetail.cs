@@ -23,11 +23,13 @@ namespace TotalModel.Models
         public decimal Quantity { get; set; }
         public Nullable<bool> IsSelected { get; set; }
         public int FinishedProductPackageID { get; set; }
-        public System.DateTime FinishedProductEntryDate { get; set; }
-        public string SemifinishedProductReferences { get; set; }
         public string FirmOrderReference { get; set; }
         public string FirmOrderCode { get; set; }
         public System.DateTime FirmOrderEntryDate { get; set; }
         public string CommodityName { get; set; }
+        public Nullable<int> FinishedItemID { get; set; }
+        public Nullable<int> FinishedItemPackageID { get; set; }
+        public System.DateTime FinishedProtemEntryDate { get; set; }
+        public string SemifinishedProtemReferences { get; set; }
     }
 }

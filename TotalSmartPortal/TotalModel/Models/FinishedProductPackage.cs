@@ -17,9 +17,9 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FinishedProductPackage()
         {
-            this.FinishedHandoverDetails = new HashSet<FinishedHandoverDetail>();
             this.FinishedProductDetails = new HashSet<FinishedProductDetail>();
             this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
+            this.FinishedHandoverDetails = new HashSet<FinishedHandoverDetail>();
         }
     
         public int FinishedProductPackageID { get; set; }
@@ -57,12 +57,12 @@ namespace TotalModel.Models
         public System.DateTime BatchEntryDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedProductDetail> FinishedProductDetails { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }
     }
 }

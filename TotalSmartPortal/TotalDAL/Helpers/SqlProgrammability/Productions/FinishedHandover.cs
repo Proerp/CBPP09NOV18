@@ -18,8 +18,6 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         public void RestoreProcedure()
         {
-            return;
-
             this.GetFinishedHandoverIndexes();
 
             this.GetFinishedHandoverViewDetails();
@@ -87,12 +85,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       SELECT      FinishedHandoverDetails.FinishedHandoverDetailID, FinishedHandoverDetails.FinishedHandoverID, FinishedProtemPackages.FinishedProductID, FinishedProtemPackages.FinishedProductPackageID, FinishedProtemPackages.FinishedItemID, FinishedProtemPackages.FinishedItemPackageID, FinishedProtemPackages.EntryDate AS FinishedProtemEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, " + "\r\n";
+            queryString = queryString + "       SELECT      FinishedHandoverDetails.FinishedHandoverDetailID, FinishedHandoverDetails.FinishedHandoverID, FinishedHandoverDetails.FinishedItemID, FinishedHandoverDetails.FinishedItemPackageID, FinishedHandoverDetails.FinishedProductID, FinishedHandoverDetails.FinishedProductPackageID, FinishedProtemPackages.EntryDate AS FinishedProtemEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, " + "\r\n";
             queryString = queryString + "                   FinishedProtemPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, FinishedProtemPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
-            queryString = queryString + "                   FinishedHandoverDetails.Quantity, FinishedProtemPackages." + this.productVsItemSemifinishedReferences(productVsItem) + ", FinishedHandoverDetails.Remarks" + "\r\n";
+            queryString = queryString + "                   FinishedHandoverDetails.Quantity, FinishedProtemPackages." + this.productVsItemSemifinishedReferences(productVsItem) + ", FinishedHandoverDetails.Remarks " + "\r\n";
 
             queryString = queryString + "       FROM        FinishedHandoverDetails " + "\r\n";
-            queryString = queryString + "                   INNER JOIN " + this.productVsItemTable(productVsItem) + " FinishedProtemPackages ON FinishedHandoverDetails.FinishedHandoverID = @FinishedHandoverID AND FinishedHandoverDetails." + this.productVsItemPrimaryKey(productVsItem) + " = FinishedProtemPackages." + this.productVsItemPrimaryKey(productVsItem) + " " + "\r\n";
+            queryString = queryString + "                   INNER JOIN " + this.productVsItemTable(productVsItem) + " FinishedProtemPackages ON FinishedHandoverDetails.FinishedHandoverID = @FinishedHandoverID AND FinishedHandoverDetails." + this.productVsItemPrimaryKey(productVsItem) + " = FinishedProtemPackages." + this.productVsItemPrimaryKey(productVsItem) + "\r\n";
             queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProtemPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON FinishedProtemPackages.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON FinishedProtemPackages.CommodityID = Commodities.CommodityID " + "\r\n";
@@ -112,12 +110,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private string productVsItemTable(bool productVsItem)
         {
-            return productVsItem ? "FinishedProducts" : "FinishedItems";
-        }
-
-        private string productVsItemTableDetail(bool productVsItem)
-        {
-            return productVsItem ? "FinishedProductPackage" : "FinishedItemPackage";
+            return productVsItem ? "FinishedProductPackages" : "FinishedItemPackages";
         }
 
         private string productVsItemPrimaryKey(bool productVsItem)
@@ -177,7 +170,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString;
 
-            queryString = " @NMVNTaskID int, @FinishedHandoverID Int, @WorkshiftID Int, @PlannedOrderID Int, @CustomerID Int, @FinishedProductPackageIDs varchar(3999), @IsReadonly bit " + "\r\n";
+            queryString = " @NMVNTaskID int, @FinishedHandoverID Int, @WorkshiftID Int, @PlannedOrderID Int, @CustomerID Int, @FinishedItemPackageIDs varchar(3999), @FinishedProductPackageIDs varchar(3999) " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -221,7 +214,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
-            queryString = queryString + "       IF  (@FinishedProductPackageIDs <> '') " + "\r\n";
+            queryString = queryString + "       IF  (" + (productVsItem ? "@FinishedProductPackageIDs" : "@FinishedItemPackageIDs") + " <> '') " + "\r\n";
             queryString = queryString + "           " + this.GetPendingBUILDSQL(productVsItem, isPlannedOrderID, isCustomerID, true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           " + this.GetPendingBUILDSQL(productVsItem, isPlannedOrderID, isCustomerID, false) + "\r\n";
@@ -241,21 +234,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                   ORDER BY Customers.Name, Customers.Code, Commodities.Code, FinishedProtemPackages.EntryDate " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-
-            queryString = queryString + "               IF (@IsReadonly = 1) " + "\r\n";
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.GetPendingBUILDSQLEdit(productVsItem, isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
-            queryString = queryString + "                       ORDER BY Customers.Name, Customers.Code, Commodities.Code, FinishedProtemPackages.EntryDate " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
-
-            queryString = queryString + "               ELSE " + "\r\n"; //FULL SELECT FOR EDIT MODE
-
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.GetPendingBUILDSQLNew(productVsItem, isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
-            queryString = queryString + "                       UNION ALL " + "\r\n";
-            queryString = queryString + "                       " + this.GetPendingBUILDSQLEdit(productVsItem, isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
-            queryString = queryString + "                       ORDER BY Customers.Name, Customers.Code, Commodities.Code, FinishedProtemPackages.EntryDate " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   " + this.GetPendingBUILDSQLNew(productVsItem, isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
+            queryString = queryString + "                   UNION ALL " + "\r\n";
+            queryString = queryString + "                   " + this.GetPendingBUILDSQLEdit(productVsItem, isPlannedOrderID, isCustomerID, isFinishedProductPackageIDs) + "\r\n";
+            queryString = queryString + "                   ORDER BY Customers.Name, Customers.Code, Commodities.Code, FinishedProtemPackages.EntryDate " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
 
@@ -266,7 +250,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      FinishedProtemPackages.FinishedProductID, FinishedProtemPackages.FinishedProductPackageID, FinishedProtemPackages.EntryDate AS FinishedProductEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, FinishedProtemPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "       SELECT      " + (productVsItem ? "NULL AS FinishedItemID" : "FinishedProtemPackages.FinishedItemID") + ", " + (productVsItem ? "NULL AS FinishedItemPackageID" : "FinishedProtemPackages.FinishedItemPackageID") + ", " + (productVsItem ? "FinishedProtemPackages.FinishedProductID" : "NULL AS FinishedProductID") + ", " + (productVsItem ? "FinishedProtemPackages.FinishedProductPackageID" : "NULL AS FinishedProductPackageID") + ", FinishedProtemPackages.EntryDate AS FinishedProtemEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, FinishedProtemPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
             queryString = queryString + "                   FinishedProtemPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, FinishedProtemPackages.Quantity, FinishedProtemPackages." + this.productVsItemSemifinishedReferences(productVsItem) + ", CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        " + this.productVsItemTable(productVsItem) + " FinishedProtemPackages " + "\r\n";
@@ -281,7 +265,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      " + (productVsItem ? "NULL AS FinishedProductID" : "FinishedProtemPackages.FinishedProductID") + ", " + (productVsItem ? "NULL AS FinishedProductPackageID" : "FinishedProtemPackages.FinishedProductPackageID") + ",                     " + (productVsItem ? "FinishedProtemPackages.FinishedItemID" : "NULL AS FinishedItemID") + ", " + (productVsItem ? "FinishedProtemPackages.FinishedItemPackageID" : "NULL AS FinishedItemPackageID") + ", FinishedProtemPackages.EntryDate AS FinishedProductEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, FinishedProtemPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
+            queryString = queryString + "       SELECT      " + (productVsItem ? "NULL AS FinishedItemID" : "FinishedProtemPackages.FinishedItemID") + ", " + (productVsItem ? "NULL AS FinishedItemPackageID" : "FinishedProtemPackages.FinishedItemPackageID") + ", " + (productVsItem ? "FinishedProtemPackages.FinishedProductID" : "NULL AS FinishedProductID") + ", " + (productVsItem ? "FinishedProtemPackages.FinishedProductPackageID" : "NULL AS FinishedProductPackageID") + ", FinishedProtemPackages.EntryDate AS FinishedProtemEntryDate, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, FinishedProtemPackages.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, " + "\r\n";
             queryString = queryString + "                   FinishedProtemPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, FinishedProtemPackages.Quantity, FinishedProtemPackages." + this.productVsItemSemifinishedReferences(productVsItem) + ", CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        " + this.productVsItemTable(productVsItem) + " FinishedProtemPackages " + "\r\n";
@@ -300,27 +284,45 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
+            queryString = queryString + "       DECLARE @msg NVARCHAR(300) " + "\r\n";
+
+            queryString = queryString + "       IF ((SELECT NMVNTaskID FROM FinishedHandovers WHERE FinishedHandoverID = @EntityID) = " + (int)GlobalEnums.NmvnTaskID.FinishedProductHandover + ") " + "\r\n";
+            queryString = queryString + "           " + this.FinishedHandoverSaveRelativeSQL(true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.FinishedHandoverSaveRelativeSQL(false) + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("FinishedHandoverSaveRelative", queryString);
+        }
+
+        private string FinishedHandoverSaveRelativeSQL(bool productVsItem)
+        {
+            string queryString = "";
+
+            queryString = queryString + "    BEGIN " + "\r\n";
             queryString = queryString + "       IF (@SaveRelativeOption = 1) " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
 
-            queryString = queryString + "               DECLARE @msg NVARCHAR(300) " + "\r\n"; ;
+            queryString = queryString + "               UPDATE      FinishedProtemPackages" + "\r\n";
+            queryString = queryString + "               SET         FinishedProtemPackages.FinishedHandoverID = FinishedHandoverDetails.FinishedHandoverID, FinishedProtemPackages.FinishedHandoverDate = FinishedHandoverDetails.EntryDate " + "\r\n";
+            queryString = queryString + "               FROM        " + this.productVsItemTable(productVsItem) + " FinishedProtemPackages INNER JOIN" + "\r\n";
+            queryString = queryString + "                           FinishedHandoverDetails ON FinishedHandoverDetails.FinishedHandoverID = @EntityID AND FinishedProtemPackages.Approved = 1 AND FinishedProtemPackages." + this.productVsItemPrimaryKey(productVsItem) + " = FinishedHandoverDetails." + this.productVsItemPrimaryKey(productVsItem) + " " + "\r\n";
 
-            queryString = queryString + "               UPDATE      FinishedProductPackages" + "\r\n";
-            queryString = queryString + "               SET         FinishedProductPackages.FinishedHandoverID = FinishedHandoverDetails.FinishedHandoverID, FinishedProductPackages.FinishedHandoverDate = FinishedHandoverDetails.EntryDate " + "\r\n";
-            queryString = queryString + "               FROM        FinishedProductPackages INNER JOIN" + "\r\n";
-            queryString = queryString + "                           FinishedHandoverDetails ON FinishedHandoverDetails.FinishedHandoverID = @EntityID AND FinishedProductPackages.Approved = 1 AND FinishedProductPackages.FinishedProductPackageID = FinishedHandoverDetails.FinishedProductPackageID " + "\r\n";
-
-            queryString = queryString + "               IF @@ROWCOUNT = (SELECT COUNT(*) FROM FinishedProductPackages WHERE FinishedHandoverID = @EntityID) " + "\r\n";
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       UPDATE      FinishedProductDetails" + "\r\n";
-            queryString = queryString + "                       SET         FinishedHandoverID = @EntityID " + "\r\n";
-            queryString = queryString + "                       WHERE       FinishedProductPackageID IN (SELECT FinishedProductPackageID FROM FinishedProductPackages WHERE FinishedHandoverID = @EntityID) " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
-            queryString = queryString + "               ELSE " + "\r\n";
+            queryString = queryString + "               IF @@ROWCOUNT <> (SELECT COUNT(*) FROM FinishedHandoverDetails WHERE FinishedHandoverID = @EntityID) " + "\r\n";
             queryString = queryString + "                   BEGIN " + "\r\n";
             queryString = queryString + "                       SET         @msg = N'Dữ liệu không tồn tại hoặc chưa duyệt' ; " + "\r\n";
             queryString = queryString + "                       THROW       61001,  @msg, 1; " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
+            if (productVsItem)
+            {
+                queryString = queryString + "           ELSE " + "\r\n";
+                queryString = queryString + "               BEGIN " + "\r\n";
+                queryString = queryString + "                   UPDATE      FinishedProductDetails" + "\r\n";
+                queryString = queryString + "                   SET         FinishedHandoverID = @EntityID " + "\r\n";
+                queryString = queryString + "                   WHERE       FinishedProductPackageID IN (SELECT FinishedProductPackageID FROM FinishedProductPackages WHERE FinishedHandoverID = @EntityID) " + "\r\n";
+                queryString = queryString + "               END " + "\r\n";
+            }
 
 
             queryString = queryString + "               IF ((SELECT Approved FROM FinishedHandovers WHERE FinishedHandoverID = @EntityID AND Approved = 1) = 1) " + "\r\n";
@@ -340,24 +342,27 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       ELSE " + "\r\n"; //(@SaveRelativeOption = -1) 
             queryString = queryString + "           BEGIN " + "\r\n";
-            queryString = queryString + "               UPDATE      FinishedProductPackages" + "\r\n";
+            queryString = queryString + "               UPDATE      " + this.productVsItemTable(productVsItem) + "\r\n";
             queryString = queryString + "               SET         FinishedHandoverID = NULL " + "\r\n";
             queryString = queryString + "               WHERE       FinishedHandoverID = @EntityID " + "\r\n";
-
-            queryString = queryString + "               UPDATE      FinishedProductDetails " + "\r\n";
-            queryString = queryString + "               SET         FinishedHandoverID = NULL " + "\r\n";
-            queryString = queryString + "               WHERE       FinishedHandoverID = @EntityID " + "\r\n";
+            if (productVsItem)
+            {
+                queryString = queryString + "           UPDATE      FinishedProductDetails " + "\r\n";
+                queryString = queryString + "           SET         FinishedHandoverID = NULL " + "\r\n";
+                queryString = queryString + "           WHERE       FinishedHandoverID = @EntityID " + "\r\n";
+            }
             queryString = queryString + "           END " + "\r\n";
             queryString = queryString + "    END " + "\r\n";
 
-            this.totalSmartPortalEntities.CreateStoredProcedure("FinishedHandoverSaveRelative", queryString);
+            return queryString;
         }
 
         private void FinishedHandoverPostSaveValidate()
         {
-            string[] queryArray = new string[1];
+            string[] queryArray = new string[2];
 
-            queryArray[0] = " SELECT TOP 1 @FoundEntity = N'Ngày đóng hàng: ' + CAST(FinishedProductPackages.EntryDate AS nvarchar) FROM FinishedHandovers INNER JOIN FinishedProductPackages ON FinishedHandovers.FinishedHandoverID = @EntityID AND FinishedHandovers.FinishedHandoverID = FinishedProductPackages.FinishedHandoverID AND FinishedHandovers.EntryDate < FinishedProductPackages.EntryDate ";
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = N'Ngày đóng hàng: ' + CAST(FinishedItemPackages.EntryDate AS nvarchar) FROM FinishedHandovers INNER JOIN FinishedItemPackages ON FinishedHandovers.FinishedHandoverID = @EntityID AND FinishedHandovers.FinishedHandoverID = FinishedItemPackages.FinishedHandoverID AND FinishedHandovers.EntryDate < FinishedItemPackages.EntryDate ";
+            queryArray[1] = " SELECT TOP 1 @FoundEntity = N'Ngày đóng hàng: ' + CAST(FinishedProductPackages.EntryDate AS nvarchar) FROM FinishedHandovers INNER JOIN FinishedProductPackages ON FinishedHandovers.FinishedHandoverID = @EntityID AND FinishedHandovers.FinishedHandoverID = FinishedProductPackages.FinishedHandoverID AND FinishedHandovers.EntryDate < FinishedProductPackages.EntryDate ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("FinishedHandoverPostSaveValidate", queryArray);
         }
@@ -395,8 +400,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "       IF @@ROWCOUNT = 1 " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
             queryString = queryString + "               UPDATE          FinishedHandoverDetails     SET Approved            = @Approved WHERE FinishedHandoverID = @EntityID ; " + "\r\n";
-            queryString = queryString + "               UPDATE          FinishedProductPackages     SET HandoverApproved    = @Approved WHERE FinishedHandoverID = @EntityID ; " + "\r\n";
-            queryString = queryString + "               UPDATE          FinishedProductDetails      SET HandoverApproved    = @Approved WHERE FinishedProductPackageID IN (SELECT FinishedProductPackageID FROM FinishedProductPackages WHERE FinishedHandoverID = @EntityID) ; " + "\r\n";
+
+            queryString = queryString + "               IF ((SELECT NMVNTaskID FROM FinishedHandovers WHERE FinishedHandoverID = @EntityID) = " + (int)GlobalEnums.NmvnTaskID.FinishedProductHandover + ") " + "\r\n";
+            queryString = queryString + "                   " + this.FinishedHandoverToggleApprovedSQL(true) + "\r\n";
+            queryString = queryString + "               ELSE " + "\r\n";
+            queryString = queryString + "                   " + this.FinishedHandoverToggleApprovedSQL(false) + "\r\n";
+
             queryString = queryString + "           END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
@@ -405,6 +414,21 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "           END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("FinishedHandoverToggleApproved", queryString);
+        }
+
+        private string FinishedHandoverToggleApprovedSQL(bool productVsItem)
+        {
+            string queryString = "";
+
+            queryString = queryString + "    BEGIN " + "\r\n";
+
+            queryString = queryString + "               UPDATE          " + this.productVsItemTable(productVsItem) + " SET HandoverApproved    = @Approved WHERE FinishedHandoverID = @EntityID ; " + "\r\n";
+            if (productVsItem)
+                queryString = queryString + "           UPDATE          FinishedProductDetails      SET HandoverApproved    = @Approved WHERE FinishedProductPackageID IN (SELECT FinishedProductPackageID FROM FinishedProductPackages WHERE FinishedHandoverID = @EntityID) ; " + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            return queryString;
         }
 
         private void FinishedHandoverInitReference()
@@ -450,14 +474,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "    BEGIN " + "\r\n";
 
             queryString = queryString + "       SELECT      FinishedHandovers.FinishedHandoverID, FinishedHandoverDetails.FinishedHandoverDetailID, FinishedHandovers.EntryDate, FinishedHandovers.Reference, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, FirmOrders.Reference AS FirmOrderReference, FirmOrders.Code AS FirmOrderCode, FirmOrders.EntryDate AS FirmOrderEntryDate, Customers.Name AS CustomerName, " + "\r\n";
-            queryString = queryString + "                   Commodities.Code, Commodities.Name, FinishedProductPackages.PiecePerPack, FinishedProductPackages.Quantity, FinishedProductPackages.Packages, FinishedProductPackages.OddPackages, FinishedLeaders.Name AS FinishedLeaderName, Storekeepers.Name AS StorekeeperName, FinishedProductPackages." + this.productVsItemSemifinishedReferences(productVsItem) + ", FinishedHandovers.Description " + "\r\n";
+            queryString = queryString + "                   Commodities.Code, Commodities.Name, " + (productVsItem ? "FinishedProtemPackages.PiecePerPack" : "FinishedProtemPackages.Quantity AS PiecePerPack") + ", FinishedProtemPackages.Quantity, " + (productVsItem ? "FinishedProtemPackages.Packages" : "1 AS Packages") + ", " + (productVsItem ? "FinishedProtemPackages.OddPackages" : "0 AS OddPackages") + ", FinishedLeaders.Name AS FinishedLeaderName, Storekeepers.Name AS StorekeeperName, FinishedProtemPackages." + this.productVsItemSemifinishedReferences(productVsItem) + ", FinishedHandovers.Description " + "\r\n";
 
             queryString = queryString + "       FROM        FinishedHandovers " + "\r\n";
             queryString = queryString + "                   INNER JOIN FinishedHandoverDetails ON FinishedHandovers.FinishedHandoverID = @LocalFinishedHandoverID AND FinishedHandovers.FinishedHandoverID = FinishedHandoverDetails.FinishedHandoverID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN FinishedProductPackages ON FinishedHandoverDetails.FinishedProductPackageID = FinishedProductPackages.FinishedProductPackageID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Customers ON FinishedProductPackages.CustomerID = Customers.CustomerID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Commodities ON FinishedProductPackages.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN " + this.productVsItemTable(productVsItem) + " FinishedProtemPackages ON FinishedHandoverDetails." + this.productVsItemPrimaryKey(productVsItem) + " = FinishedProtemPackages." + this.productVsItemPrimaryKey(productVsItem) + "\r\n";
+            queryString = queryString + "                   INNER JOIN FirmOrders ON FinishedProtemPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Customers ON FinishedProtemPackages.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON FinishedProtemPackages.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Workshifts ON FinishedHandovers.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Employees AS FinishedLeaders ON FinishedHandovers.FinishedLeaderID = FinishedLeaders.EmployeeID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Employees AS Storekeepers ON FinishedHandovers.StorekeeperID = Storekeepers.EmployeeID " + "\r\n";

@@ -17,17 +17,21 @@ namespace TotalModel.Models
         public int FinishedHandoverDetailID { get; set; }
         public int FinishedHandoverID { get; set; }
         public System.DateTime EntryDate { get; set; }
+        public int NMVNTaskID { get; set; }
         public int LocationID { get; set; }
-        public int FinishedProductID { get; set; }
-        public int FinishedProductPackageID { get; set; }
+        public Nullable<int> FinishedItemID { get; set; }
+        public Nullable<int> FinishedItemPackageID { get; set; }
+        public Nullable<int> FinishedProductID { get; set; }
+        public Nullable<int> FinishedProductPackageID { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public decimal Quantity { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
     
-        public virtual FinishedHandover FinishedHandover { get; set; }
-        public virtual FinishedProductPackage FinishedProductPackage { get; set; }
         public virtual Commodity Commodity { get; set; }
+        public virtual FinishedHandover FinishedHandover { get; set; }
+        public virtual FinishedItemPackage FinishedItemPackage { get; set; }
+        public virtual FinishedProductPackage FinishedProductPackage { get; set; }
     }
 }
