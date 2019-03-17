@@ -10,7 +10,7 @@
                 columns.Bound(p => p.FinishedHandoverID).DisplayNameTitle().Hidden();                
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
                 
-                columns.Bound(p => p.Reference).Title("Phiếu").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/FinishedHandovers", action = "Edit" }) + "/#= FinishedHandoverID #'>#=Reference#</a>");
+                columns.Bound(p => p.Reference).Title("Phiếu").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Edit" }) + "/#= FinishedHandoverID #'>#=Reference#</a>");
                 columns.Bound(p => p.WorkshiftCode).Title("Ca SX").Width(10);
                 columns.Bound(p => p.WorkshiftEntryDate).Title("Ngày SX").Format("{0:dd/MM/yy}").Width(30);
                 columns.Bound(p => p.CustomerDescription).Title("Khách hàng").Width(118);
@@ -20,7 +20,7 @@
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
-                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/FinishedHandovers", action = "Print" }) + "/#= FinishedHandoverID #' target='_blank'><span class='k-icon sbt-printer'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/FinishedHandovers", action = "Delete" }) + "/#= FinishedHandoverID #'><span class='k-icon sbt-delete'></span></a>");
+                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Print" }) + "/#= FinishedHandoverID #' target='_blank'><span class='k-icon sbt-printer'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/" + Model.ControllerName, action = "Delete" }) + "/#= FinishedHandoverID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>
             {
@@ -80,7 +80,7 @@
     function createWizard() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "FinishedHandovers")", "Chọn kế hoạch sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", Model.ControllerName)", "Chọn kế hoạch sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
         });
     }
 

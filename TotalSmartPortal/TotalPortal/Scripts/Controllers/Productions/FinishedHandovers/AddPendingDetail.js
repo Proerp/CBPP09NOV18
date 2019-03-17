@@ -46,14 +46,18 @@ function handleOKEvent(finishedHandoverGridDataSource, pendingDetailGridDataSour
         dataRow.FinishedHandoverDetailID = 0;
         dataRow.FinishedHandoverID = window.parent.$("#FinishedHandoverID").val();
 
+        dataRow.FinishedItemID = finishedHandoverGridDataItem.FinishedItemID;
+        dataRow.FinishedItemPackageID = finishedHandoverGridDataItem.FinishedItemPackageID;
+
         dataRow.FinishedProductID = finishedHandoverGridDataItem.FinishedProductID;
         dataRow.FinishedProductPackageID = finishedHandoverGridDataItem.FinishedProductPackageID;
-        dataRow.FinishedProductEntryDate = finishedHandoverGridDataItem.FinishedProductEntryDate;
+
+        dataRow.FinishedProtemEntryDate = finishedHandoverGridDataItem.FinishedProtemEntryDate;
 
         dataRow.FirmOrderReference = finishedHandoverGridDataItem.FirmOrderReference;
         dataRow.FirmOrderCode = finishedHandoverGridDataItem.FirmOrderCode;
 
-        dataRow.SemifinishedProductReferences = finishedHandoverGridDataItem.SemifinishedProductReferences;
+        dataRow.SemifinishedProtemReferences = finishedHandoverGridDataItem.SemifinishedProtemReferences;
 
         dataRow.CustomerID = finishedHandoverGridDataItem.CustomerID;
         dataRow.CustomerName = finishedHandoverGridDataItem.CustomerName;

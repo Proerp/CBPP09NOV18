@@ -14994,7 +14994,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="GetFinishedHandoverPendingCustomers" ReturnType="Collection(TotalSmartPortalModel.FinishedHandoverPendingCustomer)">
-          <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetFinishedHandoverPendingDetails" ReturnType="Collection(TotalSmartPortalModel.FinishedHandoverPendingDetail)">
@@ -15007,7 +15007,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="FinishedProductPackageIDs" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetFinishedHandoverPendingPlannedOrders" ReturnType="Collection(TotalSmartPortalModel.FinishedHandoverPendingPlannedOrder)">
-          <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetFinishedHandoverViewDetails" ReturnType="Collection(TotalSmartPortalModel.FinishedHandoverViewDetail)">
@@ -15513,7 +15513,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="FinishedHandover" EntitySet="FinishedHandovers" />
           </AssociationSet>
           <FunctionImport Name="GetFinishedHandoverPendingWorkshifts" ReturnType="Collection(TotalSmartPortalModel.FinishedHandoverPendingWorkshift)">
-          <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetPackageIssueIndexes" ReturnType="Collection(TotalSmartPortalModel.PackageIssueIndex)">
@@ -19575,7 +19575,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="WorkshiftEntryDate" Nullable="false" Precision="23" />
         </ComplexType>
         <ComplexType Name="FinishedHandoverPendingDetail">
-          <Property Type="Int32" Name="FinishedProductID" Nullable="false" />
+          <Property Type="Int32" Name="FinishedProductID" Nullable="true" />
           <Property Type="Int32" Name="CustomerID" Nullable="false" />
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
@@ -19584,7 +19584,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
-          <Property Type="Int32" Name="FinishedProductPackageID" Nullable="false" />
+          <Property Type="Int32" Name="FinishedProductPackageID" Nullable="true" />
           <Property Type="String" Name="FirmOrderReference" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="FirmOrderCode" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="FirmOrderEntryDate" Nullable="false" Precision="23" />

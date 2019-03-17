@@ -13,7 +13,7 @@ namespace TotalModel.Models
     
     public partial class FinishedHandoverPendingDetail
     {
-        public int FinishedProductID { get; set; }
+        public Nullable<int> FinishedProductID { get; set; }
         public int CustomerID { get; set; }
         public string CustomerCode { get; set; }
         public string CustomerName { get; set; }
@@ -22,7 +22,7 @@ namespace TotalModel.Models
         public int CommodityTypeID { get; set; }
         public decimal Quantity { get; set; }
         public Nullable<bool> IsSelected { get; set; }
-        public int FinishedProductPackageID { get; set; }
+        public Nullable<int> FinishedProductPackageID { get; set; }
         public string FirmOrderReference { get; set; }
         public string FirmOrderCode { get; set; }
         public System.DateTime FirmOrderEntryDate { get; set; }

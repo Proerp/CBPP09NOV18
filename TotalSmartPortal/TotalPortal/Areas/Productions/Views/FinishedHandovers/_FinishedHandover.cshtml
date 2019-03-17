@@ -81,7 +81,7 @@
 
         <div class="right-top-panel right-top-panel-H2">
 
-            @Html.EditorFor(d => (d as IFinishedHandoverDTO).Customer, new { CustomerDisplayName = @Model.GetDisplayName(m => m.Customer), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : (@Model.IsItem? "Bàn giao màng thành phẩm" : "Bàn giao khay thành phẩm tổng hợp")), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
+            @Html.EditorFor(d => (d as IFinishedHandoverDTO).Customer, new { CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : (@Model.IsItem ? "Bàn giao màng thành phẩm" : "Bàn giao khay thành phẩm tổng hợp")), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
             
         </div>
 
@@ -95,6 +95,11 @@
                     columns.Bound(p => p.FinishedHandoverID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= FinishedHandoverID #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FinishedHandoverID' value='#= FinishedHandoverID #' />");
 
+                    columns.Bound(p => p.FinishedItemID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (FinishedItemID == null)? '' : FinishedItemID #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FinishedItemID' value='#= (FinishedItemID == null) ? '' : FinishedItemID #' />");
+                    columns.Bound(p => p.FinishedItemPackageID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (FinishedItemPackageID == null)? '' : FinishedItemPackageID #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FinishedItemPackageID' value='#= (FinishedItemPackageID == null) ? '' : FinishedItemPackageID #' />");
+                    
                     columns.Bound(p => p.FinishedProductID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (FinishedProductID == null)? '' : FinishedProductID #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FinishedProductID' value='#= (FinishedProductID == null) ? '' : FinishedProductID #' />");
                     columns.Bound(p => p.FinishedProductPackageID).DisplayNameTitle().Hidden()
@@ -222,18 +227,18 @@
         <div class="right-botton-panel">
             @if (Model.Editable)
             {
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "FinishedHandovers")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "FinishedHandovers")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "FinishedHandovers")" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in </button>
             }
             else
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "FinishedHandovers", new { id = @Model.FinishedHandoverID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", Model.ControllerName, new { id = @Model.FinishedHandoverID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
             }
 
             @if (Model.FinishedHandoverID > 0 && !Model.Approvable && !Model.UnApprovable)
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "FinishedHandovers", new {id = @Model.FinishedHandoverID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.FinishedHandoverID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
             }
         </div>
 
@@ -250,7 +255,7 @@
     function GetPendingDetails() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingDetails", "FinishedHandovers", new { area = "Productions" })", "Chọn mặt hàng từ bán thành phẩm", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingDetails", Model.ControllerName, new { area = "Productions" })", "Chọn mặt hàng từ bán thành phẩm", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
     }
 </script>

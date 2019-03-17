@@ -42,7 +42,7 @@
                 workshiftID: window.parent.$("#WorkshiftID").val(),
                 plannedOrderID: window.parent.$("#PlannedOrderID").val(),
                 customerID: window.parent.$("#Customer_CustomerID").val(),
-                finishedItemPackageIDs: finishedHandoverJSON.map(function (elem) { return elem.FinishedItemPackageID; }).join(",")
+                finishedItemPackageIDs: finishedHandoverJSON.map(function (elem) { return elem.FinishedItemPackageID; }).join(","),
                 finishedProductPackageIDs: finishedHandoverJSON.map(function (elem) { return elem.FinishedProductPackageID; }).join(",")                
             };}
         </text>))

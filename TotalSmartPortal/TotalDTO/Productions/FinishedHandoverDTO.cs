@@ -23,7 +23,7 @@ namespace TotalDTO.Productions
         int FinishedHandoverID { get; set; }
 
 
-        virtual int WorkshiftID { get; set; }
+        int WorkshiftID { get; set; }
         [Display(Name = "Ca sản xuất")]
         string WorkshiftCode { get; set; }
         [Display(Name = "Ngày sản xuất")]
@@ -35,10 +35,10 @@ namespace TotalDTO.Productions
         [Display(Name = "Ngày KHSX")]
         Nullable<DateTime> PlannedOrderEntryDate { get; set; }
 
-        virtual Nullable<int> CustomerID { get; set; }
+        Nullable<int> CustomerID { get; set; }
 
-        virtual int FinishedLeaderID { get; set; }
-        virtual int StorekeeperID { get; set; }
+        int FinishedLeaderID { get; set; }
+        int StorekeeperID { get; set; }
     }
 
     public class FinishedHandoverPrimitiveDTO<TFinishedHandoverOption> : QuantityDTO<FinishedHandoverDetailDTO>, IPrimitiveEntity, IPrimitiveDTO

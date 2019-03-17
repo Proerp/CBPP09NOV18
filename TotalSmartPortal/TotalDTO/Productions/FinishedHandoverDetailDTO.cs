@@ -13,7 +13,10 @@ namespace TotalDTO.Productions
 
         public int FinishedHandoverDetailID { get; set; }
         public int FinishedHandoverID { get; set; }
-       
+
+        public Nullable<int> FinishedItemID { get; set; }
+        public Nullable<int> FinishedItemPackageID { get; set; }
+
         public Nullable<int> FinishedProductID { get; set; }
         public Nullable<int> FinishedProductPackageID { get; set; }
 

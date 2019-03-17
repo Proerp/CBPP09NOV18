@@ -311,7 +311,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "               IF @@ROWCOUNT <> (SELECT COUNT(*) FROM FinishedHandoverDetails WHERE FinishedHandoverID = @EntityID) " + "\r\n";
             queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       SET         @msg = N'Dữ liệu không tồn tại hoặc chưa duyệt' ; " + "\r\n";
+            queryString = queryString + "                       SET         @msg = N'Dữ liệu không tồn tại hoặc chưa duyệt' + CAST(@@ROWCOUNT AS NVARCHAR) ; " + "\r\n";
             queryString = queryString + "                       THROW       61001,  @msg, 1; " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
             if (productVsItem)
