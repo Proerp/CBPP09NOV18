@@ -492,16 +492,16 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemPackages_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemPackages_Workshifts" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedHandoverDetail" Width="1.5" PointX="59.625" PointY="30.625" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItemDetail" Width="1.5" PointX="59.375" PointY="36.5" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandoverDetails_Commodities" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandoverDetails_FinishedHandovers" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandoverDetails_FinishedItemPackages" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandoverDetails_FinishedProductPackages" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedItemPackages" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItemDetail" Width="1.5" PointX="59.5" PointY="36.625" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_FinishedItems" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Workshifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedItemPackages" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

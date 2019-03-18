@@ -29,7 +29,6 @@ namespace TotalModel.Models
         public int SemifinishedItemID { get; set; }
         public int SemifinishedItemDetailID { get; set; }
         public int SemifinishedHandoverID { get; set; }
-        public Nullable<int> FinishedHandoverID { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public int PiecePerPack { get; set; }
