@@ -331,9 +331,9 @@
                     columns.Bound(p => p.FirmOrderSpecs).DisplayNameTitle().Width(96).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? false : true)
                         .ClientTemplate("#= (FirmOrderSpecs == null)? '' : FirmOrderSpecs #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FirmOrderSpecs' value='#= (FirmOrderSpecs == null) ? '' : FirmOrderSpecs #' />");
 
-                    columns.Bound(p => p.SemifinishedItemReferences).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem ? false : true)
+                    columns.Bound(p => p.SemifinishedItemReferences).DisplayNameTitle().Width(88).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem ? false : true)
                         .ClientTemplate("#= (SemifinishedItemReferences == null)? '' : SemifinishedItemReferences #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].SemifinishedItemReferences' value='#= (SemifinishedItemReferences == null) ? '' : SemifinishedItemReferences #' />");
-                    columns.Bound(p => p.FinishedItemEntryDate).DisplayNameTitle().Width(80).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem ? false : true)
+                    columns.Bound(p => p.FinishedItemEntryDate).DisplayNameTitle().Width(60).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem ? false : true)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (FinishedItemEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedItemEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedItemEntryDate' value='#= (FinishedItemEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedItemEntryDate) #' />");
                     

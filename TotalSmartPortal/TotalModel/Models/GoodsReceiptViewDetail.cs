@@ -68,5 +68,9 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public int BatchID { get; set; }
+        public Nullable<int> FinishedItemPackageID { get; set; }
+        public Nullable<int> FinishedItemID { get; set; }
+        public Nullable<System.DateTime> FinishedItemEntryDate { get; set; }
+        public string SemifinishedItemReferences { get; set; }
     }
 }

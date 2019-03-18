@@ -382,9 +382,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void FinishedHandoverEditable()
         {
-            string[] queryArray = new string[1];
+            string[] queryArray = new string[2];
 
             queryArray[0] = " SELECT TOP 1 @FoundEntity = GoodsReceiptDetailID FROM GoodsReceiptDetails WHERE FinishedProductPackageID IN (SELECT FinishedProductPackageID FROM FinishedProductPackages WHERE FinishedHandoverID = @EntityID) ";
+            queryArray[1] = " SELECT TOP 1 @FoundEntity = GoodsReceiptDetailID FROM GoodsReceiptDetails WHERE FinishedItemPackageID IN (SELECT FinishedItemPackageID FROM FinishedItemPackages WHERE FinishedHandoverID = @EntityID) ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("FinishedHandoverEditable", queryArray);
         }
