@@ -30,6 +30,11 @@ namespace TotalCore.Repositories.Inventories
         IEnumerable<GoodsReceiptPendingPlannedOrder> GetPlannedOrders(int? locationID);
         IEnumerable<GoodsReceiptPendingPlannedOrderDetail> GetPendingPlannedOrderDetails(int? locationID, int? goodsReceiptID, int? plannedOrderID, int? customerID, string finishedProductPackageIDs, bool isReadonly);
 
+        IEnumerable<GoodsReceiptPendingPlannedItemCustomer> GetPlannedItemCustomers(int? locationID);
+        IEnumerable<GoodsReceiptPendingPlannedItem> GetPlannedItems(int? locationID);
+        IEnumerable<GoodsReceiptPendingPlannedItemDetail> GetPendingPlannedItemDetails(int? locationID, int? goodsReceiptID, int? plannedOrderID, int? customerID, string finishedItemPackageIDs);
+
+
         IEnumerable<GoodsReceiptPendingMaterialIssueDetail> GetPendingMaterialIssueDetails(int? locationID, int? goodsReceiptID, string materialIssueDetailIDs, bool isReadonly);
 
 

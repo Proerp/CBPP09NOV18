@@ -157,6 +157,35 @@ namespace TotalDAL.Repositories.Inventories
         }
 
 
+
+        public IEnumerable<GoodsReceiptPendingPlannedItemCustomer> GetPlannedItemCustomers(int? locationID)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            IEnumerable<GoodsReceiptPendingPlannedItemCustomer> pendingPlannedItemCustomers = base.TotalSmartPortalEntities.GetGoodsReceiptPendingPlannedItemCustomers(locationID).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return pendingPlannedItemCustomers;
+        }
+
+        public IEnumerable<GoodsReceiptPendingPlannedItem> GetPlannedItems(int? locationID)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            IEnumerable<GoodsReceiptPendingPlannedItem> pendingPlannedItems = base.TotalSmartPortalEntities.GetGoodsReceiptPendingPlannedItems(locationID).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return pendingPlannedItems;
+        }
+
+        public IEnumerable<GoodsReceiptPendingPlannedItemDetail> GetPendingPlannedItemDetails(int? locationID, int? goodsReceiptID, int? plannedOrderID, int? customerID, string finishedItemPackageIDs)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            IEnumerable<GoodsReceiptPendingPlannedItemDetail> pendingPlannedItemDetails = base.TotalSmartPortalEntities.GetGoodsReceiptPendingPlannedItemDetails(locationID, goodsReceiptID, plannedOrderID, customerID, finishedItemPackageIDs).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return pendingPlannedItemDetails;
+        }
+
+
         public IEnumerable<GoodsReceiptPendingMaterialIssueDetail> GetPendingMaterialIssueDetails(int? locationID, int? goodsReceiptID, string materialIssueDetailIDs, bool isReadonly)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;

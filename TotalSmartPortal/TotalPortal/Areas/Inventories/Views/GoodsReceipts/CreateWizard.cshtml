@@ -122,7 +122,18 @@
                 </text>);
 
 
-
+            tabStrip.Add().Text("Nhập SX")
+                    .Visible(Model.IsItem)
+                    .Content(@<text>
+                        @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetPlannedItem.cshtml")
+                    </text>);
+            @*tabStrip.Add().Text("Nhập SX theo KH")
+                    .Visible(Model.IsItem)
+                    .Content(@<text>
+                        @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetPlannedItemCustomer.cshtml")
+                    </text>);*@
+        
+        
             tabStrip.Add().Text("Số KHSX")
                 .Visible(Model.IsProduct)
                 .Selected(Model.IsProduct)
@@ -227,7 +238,12 @@
                     selectedGrid = $("#goodsReceiptPendingWarehouseGrid").data("kendoGrid");
                     break;
 
-
+                case "Nhập SX":
+                    selectedGrid = $("#goodsReceiptPendingPlannedItemGrid").data("kendoGrid");
+                    break;
+                case "Nhập SX theo KH":
+                    selectedGrid = $("#goodsReceiptPendingPlannedItemCustomerGrid").data("kendoGrid");
+                    break;
 
                 case "Số KHSX":
                     selectedGrid = $("#goodsReceiptPendingPlannedOrderGrid").data("kendoGrid");

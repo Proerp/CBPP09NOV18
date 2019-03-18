@@ -1,8 +1,8 @@
 ﻿@using TotalPortal.Configuration
 @using TotalModel.Models;
 
-@(Html.Kendo().Grid<GoodsReceiptPendingPlannedOrder>()
-    .Name("goodsReceiptPendingPlannedOrderGrid")
+@(Html.Kendo().Grid<GoodsReceiptPendingPlannedItem>()
+    .Name("goodsReceiptPendingPlannedItemGrid")
     .Columns(columns =>
     {
         columns.Bound(c => c.PlannedOrderReference).Title("KHSX").Width(50);
@@ -18,13 +18,13 @@
         toolbar.Template(@<text>
             <div class="toolbar" style="float: right;">
                 <label>Nhập số KHSX hoặc mã, tên khách hàng</label>
-                <input id="goodsReceiptPendingPlannedOrderFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="goodsReceiptPendingPlannedOrderFilter_KeyUp()" />
+                <input id="goodsReceiptPendingPlannedItemFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="goodsReceiptPendingPlannedItemFilter_KeyUp()" />
             </div>
         </text>);
     })
         .Scrollable(s => s.Height(Settings.PopupContentHeight))
         .DataSource(ds => ds.Ajax()
-            .Read(read => read.Action("GetPlannedOrders", "GoodsReceiptAPIs", new { area = "Inventories" }).Data("onAdditionalGetPurchaseRequisitions"))
+            .Read(read => read.Action("GetPlannedItems", "GoodsReceiptAPIs", new { area = "Inventories" }).Data("onAdditionalGetPurchaseRequisitions"))
             .ServerOperation(false)
         )
         .Selectable()
@@ -37,16 +37,16 @@
         };
     }
 
-    function goodsReceiptPendingPlannedOrderFilter_KeyUp() {
-        var goodsReceiptPendingPlannedOrderFilter = $("#goodsReceiptPendingPlannedOrderFilter").val(), gridDetails = $("#goodsReceiptPendingPlannedOrderGrid").data("kendoGrid");
+    function goodsReceiptPendingPlannedItemFilter_KeyUp() {
+        var goodsReceiptPendingPlannedItemFilter = $("#goodsReceiptPendingPlannedItemFilter").val(), gridDetails = $("#goodsReceiptPendingPlannedItemGrid").data("kendoGrid");
 
-        if (goodsReceiptPendingPlannedOrderFilter && goodsReceiptPendingPlannedOrderFilter.length >= "@Settings.AutoCompleteMinLenght") {
+        if (goodsReceiptPendingPlannedItemFilter && goodsReceiptPendingPlannedItemFilter.length >= "@Settings.AutoCompleteMinLenght") {
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [
-                    { field: "PlannedOrderCode", operator: "contains", value: goodsReceiptPendingPlannedOrderFilter },
-                    { field: "CustomerCode", operator: "contains", value: goodsReceiptPendingPlannedOrderFilter },
-                    { field: "CustomerName", operator: "contains", value: goodsReceiptPendingPlannedOrderFilter }
+                    { field: "PlannedItemCode", operator: "contains", value: goodsReceiptPendingPlannedItemFilter },
+                    { field: "CustomerCode", operator: "contains", value: goodsReceiptPendingPlannedItemFilter },
+                    { field: "CustomerName", operator: "contains", value: goodsReceiptPendingPlannedItemFilter }
                 ]
             });
 
@@ -57,7 +57,7 @@
         }
     }
 
-    $("#goodsReceiptPendingPlannedOrderGrid").dblclick(function (e) {
+    $("#goodsReceiptPendingPlannedItemGrid").dblclick(function (e) {
         okButton_Click();
     })
 </script>

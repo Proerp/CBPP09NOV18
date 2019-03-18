@@ -1,0 +1,59 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<GoodsReceiptPendingPlannedItemCustomer>()
+    .Name("goodsReceiptPendingPlannedItemCustomerGrid")
+
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.CustomerCode).Title("Mã khách hàng").Width(90);
+        columns.Bound(c => c.CustomerName).Title("Tên khách hàng").Width(190);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập mã, tên, MST, địa chỉ, địa bàn khách hàng, hoặc mã kho</label>
+                <input id="goodsReceiptPendingPlannedItemCustomerFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="goodsReceiptPendingPlannedItemCustomerFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetPlannedItemCustomers", "GoodsReceiptAPIs", new { area = "Inventories" }).Data("onAdditionalGetCustomers"))
+        .ServerOperation(false)
+    )
+    .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetCustomers(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID
+        };
+    }
+
+    function goodsReceiptPendingPlannedItemCustomerFilter_KeyUp() {
+        var goodsReceiptPendingPlannedItemCustomerFilter = $("#goodsReceiptPendingPlannedItemCustomerFilter").val(), gridDetails = $("#goodsReceiptPendingPlannedItemCustomerGrid").data("kendoGrid");
+
+        if (goodsReceiptPendingPlannedItemCustomerFilter && goodsReceiptPendingPlannedItemCustomerFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "CustomerCode", operator: "contains", value: goodsReceiptPendingPlannedItemCustomerFilter },
+                    { field: "CustomerName", operator: "contains", value: goodsReceiptPendingPlannedItemCustomerFilter },
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+
+    $("#goodsReceiptPendingPlannedItemCustomerGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>

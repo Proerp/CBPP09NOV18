@@ -78,6 +78,12 @@ namespace TotalPortal.Areas.Inventories.Controllers
             return View("../GoodsReceipts/GetPendingMaterialIssueDetails", this.InitViewModel(new TViewDetailViewModel()));
         }
 
+        public virtual ActionResult GetPendingPlannedItemDetails()
+        {
+            this.AddRequireJsOptions();
+            return View("../GoodsReceipts/GetPendingPlannedItemDetails", this.InitViewModel(new TViewDetailViewModel()));
+        }
+
         public virtual ActionResult GetPendingPlannedOrderDetails()
         {
             this.AddRequireJsOptions();

@@ -73,6 +73,9 @@ namespace TotalDTO.Inventories
 
 
 
+        public Nullable<int> FinishedItemID { get; set; }
+        public Nullable<int> FinishedItemPackageID { get; set; }
+
         public Nullable<int> FinishedProductID { get; set; }
         public Nullable<int> FinishedProductPackageID { get; set; }
 
@@ -85,6 +88,14 @@ namespace TotalDTO.Inventories
         [Display(Name = "TP")]
         [UIHint("StringReadonly")]
         public string FirmOrderSpecs { get; set; }
+
+        [Display(Name = "Tạo màng")]
+        [UIHint("DateTimeReadonly")]
+        public string SemifinishedItemReferences { get; set; }
+        [Display(Name = "Ngày TM")]
+        [UIHint("DateTimeReadonly")]
+        public Nullable<System.DateTime> FinishedItemEntryDate { get; set; }
+
         [Display(Name = "Pallet")]
         [UIHint("DateTimeReadonly")]
         public string SemifinishedProductReferences { get; set; }

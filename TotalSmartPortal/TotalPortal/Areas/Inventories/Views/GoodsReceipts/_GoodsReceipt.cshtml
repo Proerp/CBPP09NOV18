@@ -313,6 +313,10 @@
                         .ClientTemplate("#= (GoodsReceiptEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsReceiptEntryDate' value='#= (GoodsReceiptEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #' />");
 
 
+                    columns.Bound(p => p.FinishedItemID).DisplayNameTitle().Hidden()
+                       .ClientTemplate("#= (FinishedItemID == null)? '' : FinishedItemID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedItemID' value='#= (FinishedItemID == null) ? '' : FinishedItemID #' />");
+                    columns.Bound(p => p.FinishedItemPackageID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (FinishedItemPackageID == null)? '' : FinishedItemPackageID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedItemPackageID' value='#= (FinishedItemPackageID == null) ? '' : FinishedItemPackageID #' />");
 
                     columns.Bound(p => p.FinishedProductID).DisplayNameTitle().Hidden()
                        .ClientTemplate("#= (FinishedProductID == null)? '' : FinishedProductID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedProductID' value='#= (FinishedProductID == null) ? '' : FinishedProductID #' />");
@@ -326,6 +330,12 @@
 
                     columns.Bound(p => p.FirmOrderSpecs).DisplayNameTitle().Width(96).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? false : true)
                         .ClientTemplate("#= (FirmOrderSpecs == null)? '' : FirmOrderSpecs #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FirmOrderSpecs' value='#= (FirmOrderSpecs == null) ? '' : FirmOrderSpecs #' />");
+
+                    columns.Bound(p => p.SemifinishedItemReferences).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem ? false : true)
+                        .ClientTemplate("#= (SemifinishedItemReferences == null)? '' : SemifinishedItemReferences #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].SemifinishedItemReferences' value='#= (SemifinishedItemReferences == null) ? '' : SemifinishedItemReferences #' />");
+                    columns.Bound(p => p.FinishedItemEntryDate).DisplayNameTitle().Width(80).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem ? false : true)
+                        .Format("{0:" + @Settings.DateFormat + "}")
+                        .ClientTemplate("#= (FinishedItemEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedItemEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedItemEntryDate' value='#= (FinishedItemEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedItemEntryDate) #' />");
                     
                     columns.Bound(p => p.SemifinishedProductReferences).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? false : true)
                         .ClientTemplate("#= (SemifinishedProductReferences == null)? '' : SemifinishedProductReferences #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].SemifinishedProductReferences' value='#= (SemifinishedProductReferences == null) ? '' : SemifinishedProductReferences #' />");
@@ -351,7 +361,7 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? "StringReadonly" : "AutoCompletes/CommodityAvailable")                        
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? "StringReadonly" : "AutoCompletes/CommodityAvailable")                        
                         .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
 
                     columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(268).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? true : false)
@@ -442,6 +452,12 @@
                                 case (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue:
                                     toolbar.Template(@<text>
                                         <button type="button" class="k-button" onclick="GetPendingMaterialIssueDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng </button>
+                                        <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Nhập kho toàn bộ </button>
+                                    </text>);
+                                    break;
+                                case (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem:
+                                    toolbar.Template(@<text>
+                                        <button type="button" class="k-button" onclick="GetPendingPlannedItemDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng </button>
                                         <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Nhập kho toàn bộ </button>
                                     </text>);
                                     break;
@@ -587,6 +603,13 @@
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
             createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingMaterialIssueDetails", Model.ControllerName, new { area = "Inventories" })", "Chọn mặt hàng ", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+        });
+    }
+
+    function GetPendingPlannedItemDetails() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingPlannedItemDetails", Model.ControllerName, new { area = "Inventories" })", "Chọn mặt hàng ", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
     }
 

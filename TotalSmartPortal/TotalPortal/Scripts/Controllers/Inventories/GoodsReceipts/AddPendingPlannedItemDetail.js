@@ -2,9 +2,9 @@
     window.parent.$("#myWindow").data("kendoWindow").close();
 }
 
-function handleOKEvent(goodsReceiptGridDataSource, pendingMaterialIssueDetailGridDataSource) {
-    if (goodsReceiptGridDataSource != undefined && pendingMaterialIssueDetailGridDataSource != undefined) {
-        var pendingPurchaseRequisitionDetailGridDataItems = pendingMaterialIssueDetailGridDataSource.view();
+function handleOKEvent(goodsReceiptGridDataSource, pendingPlannedOrderDetailGridDataSource) {
+    if (goodsReceiptGridDataSource != undefined && pendingPlannedOrderDetailGridDataSource != undefined) {
+        var pendingPurchaseRequisitionDetailGridDataItems = pendingPlannedOrderDetailGridDataSource.view();
         var goodsReceiptJSON = goodsReceiptGridDataSource.data().toJSON();
         for (var i = 0; i < pendingPurchaseRequisitionDetailGridDataItems.length; i++) {
             if (pendingPurchaseRequisitionDetailGridDataItems[i].IsSelected === true)
@@ -34,7 +34,7 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingMaterialIssueDetailGri
     //grid.dataSource.data(data); //set changed data as data of the Grid
 
 
-    function _setParentInput(goodsReceiptJSON, materialIssueGridDataItem) {
+    function _setParentInput(goodsReceiptJSON, plannedOrderGridDataItem) {
 
         //var dataRow = goodsReceiptJSON.add({});
 
@@ -47,32 +47,33 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingMaterialIssueDetailGri
         dataRow.GoodsReceiptID = window.parent.$("#GoodsReceiptID").val();
 
 
-        dataRow.MaterialIssueID = materialIssueGridDataItem.MaterialIssueID;
-        dataRow.MaterialIssueDetailID = materialIssueGridDataItem.MaterialIssueDetailID;
-        dataRow.MaterialIssueEntryDate = materialIssueGridDataItem.MaterialIssueEntryDate;
-        dataRow.ProductionLinesCode = materialIssueGridDataItem.ProductionLinesCode;
+        dataRow.MaterialIssueID = null;
+        dataRow.MaterialIssueDetailID = null;
+        dataRow.MaterialIssueEntryDate = null;
+        dataRow.ProductionLinesCode = null;
 
-        dataRow.WorkshiftName = materialIssueGridDataItem.WorkshiftName;
-        dataRow.WorkshiftEntryDate = materialIssueGridDataItem.WorkshiftEntryDate;
+        dataRow.WorkshiftName = null;
+        dataRow.WorkshiftEntryDate = null;
 
 
-        dataRow.FinishedItemID = null;
-        dataRow.FinishedItemPackageID = null;
-        dataRow.FinishedItemEntryDate = null;
-        dataRow.SemifinishedItemReferences = null;
+        dataRow.FinishedItemID = plannedOrderGridDataItem.FinishedItemID;
+        dataRow.FinishedItemPackageID = plannedOrderGridDataItem.FinishedItemPackageID;
+        dataRow.FinishedItemEntryDate = plannedOrderGridDataItem.FinishedItemEntryDate;
+        dataRow.SemifinishedItemReferences = plannedOrderGridDataItem.SemifinishedItemReferences;
 
         dataRow.FinishedProductID = null;
         dataRow.FinishedProductPackageID = null;
         dataRow.FinishedProductEntryDate = null;
         dataRow.SemifinishedProductReferences = null;
 
-        dataRow.FirmOrderReference = materialIssueGridDataItem.FirmOrderReference;
-        dataRow.FirmOrderCode = materialIssueGridDataItem.FirmOrderCode;
-        dataRow.FirmOrderSpecs = materialIssueGridDataItem.FirmOrderSpecs;      
+        dataRow.FirmOrderReference = plannedOrderGridDataItem.FirmOrderReference;
+        dataRow.FirmOrderCode = plannedOrderGridDataItem.FirmOrderCode;
+        dataRow.FirmOrderSpecs = null;
+
 
 
         dataRow.PurchaseRequisitionID = null;
-        dataRow.PurchaseRequisitionDetailID = null;                  
+        dataRow.PurchaseRequisitionDetailID = null;
         dataRow.PurchaseRequisitionCode = null;
         dataRow.PurchaseRequisitionReference = null;
         dataRow.PurchaseRequisitionEntryDate = null;
@@ -93,16 +94,16 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingMaterialIssueDetailGri
         dataRow.GoodsReceiptReference = null;
         dataRow.GoodsReceiptEntryDate = null;
 
-        dataRow.BatchID = materialIssueGridDataItem.BatchID;
-        dataRow.BatchEntryDate = materialIssueGridDataItem.BatchEntryDate;
+        dataRow.BatchID = plannedOrderGridDataItem.BatchID;
+        dataRow.BatchEntryDate = plannedOrderGridDataItem.FinishedItemEntryDate;
 
 
-        dataRow.CommodityID = materialIssueGridDataItem.CommodityID;
-        dataRow.CommodityName = materialIssueGridDataItem.CommodityName;
-        dataRow.CommodityCode = materialIssueGridDataItem.CommodityCode;
-        dataRow.CommodityTypeID = materialIssueGridDataItem.CommodityTypeID;
+        dataRow.CommodityID = plannedOrderGridDataItem.CommodityID;
+        dataRow.CommodityName = plannedOrderGridDataItem.CommodityName;
+        dataRow.CommodityCode = plannedOrderGridDataItem.CommodityCode;
+        dataRow.CommodityTypeID = plannedOrderGridDataItem.CommodityTypeID;
 
-        dataRow.LabID = materialIssueGridDataItem.LabID;
+        dataRow.LabID = -1;
 
         dataRow.Barcode = null;
         dataRow.BatchCode = null;
@@ -112,11 +113,11 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingMaterialIssueDetailGri
         dataRow.BinLocationID = 1;
         dataRow.BinLocationCode = "DEFAULT";
 
-        dataRow.ProductionDate = materialIssueGridDataItem.ProductionDate;
-        dataRow.ExpiryDate = materialIssueGridDataItem.ExpiryDate;
+        dataRow.ProductionDate = null;
+        dataRow.ExpiryDate = null;
 
-        dataRow.QuantityRemains = materialIssueGridDataItem.QuantityRemains;
-        dataRow.Quantity = materialIssueGridDataItem.Quantity;
+        dataRow.QuantityRemains = plannedOrderGridDataItem.QuantityRemains;
+        dataRow.Quantity = plannedOrderGridDataItem.Quantity;
 
         dataRow.Remarks = null;
 
