@@ -193,7 +193,7 @@ namespace TotalBase.Enums
             PurchaseRequisition = 61,
             MaterialIssue = 7,
             FinishedProduct = 8,
-
+            FinishedItem = 18,
 
             WarehouseTransfer = 9,
 

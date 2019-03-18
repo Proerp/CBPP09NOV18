@@ -1290,6 +1290,8 @@
           <Property Name="GoodsArrivalID" Type="int" />
           <Property Name="GoodsArrivalDetailID" Type="int" />
           <Property Name="GoodsArrivalPackageID" Type="int" />
+          <Property Name="FinishedItemID" Type="int" />
+          <Property Name="FinishedItemPackageID" Type="int" />
           <Property Name="FinishedProductID" Type="int" />
           <Property Name="FinishedProductPackageID" Type="int" />
           <Property Name="MaterialIssueID" Type="int" />
@@ -4695,6 +4697,18 @@ warning 6035: The relationship 'FK_GoodsDeliveries_AspNetUsers2' has columns tha
             </Principal>
             <Dependent Role="GoodsReceiptDetails">
               <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsReceiptDetails_FinishedItemPackages">
+          <End Role="FinishedItemPackages" Type="Self.FinishedItemPackages" Multiplicity="0..1" />
+          <End Role="GoodsReceiptDetails" Type="Self.GoodsReceiptDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinishedItemPackages">
+              <PropertyRef Name="FinishedItemPackageID" />
+            </Principal>
+            <Dependent Role="GoodsReceiptDetails">
+              <PropertyRef Name="FinishedItemPackageID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8200,6 +8214,19 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="MaterialIssueDetailIDs" Type="varchar" Mode="In" />
           <Parameter Name="IsReadonly" Type="bit" Mode="In" />
         </Function>
+        <Function Name="GetGoodsReceiptPendingPlannedItemCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetGoodsReceiptPendingPlannedItemDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="GoodsReceiptID" Type="int" Mode="In" />
+          <Parameter Name="PlannedOrderID" Type="int" Mode="In" />
+          <Parameter Name="CustomerID" Type="int" Mode="In" />
+          <Parameter Name="FinishedItemPackageIDs" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetGoodsReceiptPendingPlannedItems" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetGoodsReceiptPendingPlannedOrderCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
         </Function>
@@ -9973,6 +10000,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </AssociationSet>
           <AssociationSet Name="FK_GoodsReceiptDetails_Commodities" Association="Self.FK_GoodsReceiptDetails_Commodities">
             <End Role="Commodities" EntitySet="Commodities" />
+            <End Role="GoodsReceiptDetails" EntitySet="GoodsReceiptDetails" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GoodsReceiptDetails_FinishedItemPackages" Association="Self.FK_GoodsReceiptDetails_FinishedItemPackages">
+            <End Role="FinishedItemPackages" EntitySet="FinishedItemPackages" />
             <End Role="GoodsReceiptDetails" EntitySet="GoodsReceiptDetails" />
           </AssociationSet>
           <AssociationSet Name="FK_GoodsReceiptDetails_FinishedProductPackages" Association="Self.FK_GoodsReceiptDetails_FinishedProductPackages">
@@ -16617,6 +16648,23 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Workshift" EntitySet="Workshifts" />
             <End Role="FinishedItemDetail" EntitySet="FinishedItemDetails" />
           </AssociationSet>
+          <AssociationSet Name="FK_GoodsReceiptDetails_FinishedItemPackages" Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedItemPackages">
+            <End Role="FinishedItemPackage" EntitySet="FinishedItemPackages" />
+            <End Role="GoodsReceiptDetail" EntitySet="GoodsReceiptDetails" />
+          </AssociationSet>
+          <FunctionImport Name="GetGoodsReceiptPendingPlannedItemCustomers" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingPlannedItemCustomer)">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetGoodsReceiptPendingPlannedItemDetails" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingPlannedItemDetail)">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="GoodsReceiptID" Mode="In" Type="Int32" />
+            <Parameter Name="PlannedOrderID" Mode="In" Type="Int32" />
+            <Parameter Name="CustomerID" Mode="In" Type="Int32" />
+            <Parameter Name="FinishedItemPackageIDs" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetGoodsReceiptPendingPlannedItems" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingPlannedItem)">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -22227,6 +22275,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="GoodsReceipt" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsReceipts" FromRole="GoodsReceiptDetail" ToRole="GoodsReceipt" />
           <NavigationProperty Name="Lab" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_Labs" FromRole="GoodsReceiptDetail" ToRole="Lab" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities" FromRole="GoodsReceiptDetail" ToRole="Commodity" />
+          <Property Name="FinishedItemID" Type="Int32" />
+          <Property Name="FinishedItemPackageID" Type="Int32" />
+          <NavigationProperty Name="FinishedItemPackage" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedItemPackages" FromRole="GoodsReceiptDetail" ToRole="FinishedItemPackage" />
         </EntityType>
         <Association Name="FK_GoodsReceiptDetails_BinLocations">
           <End Type="TotalSmartPortalModel.BinLocation" Role="BinLocation" Multiplicity="1" />
@@ -25262,6 +25313,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Shift" Relationship="TotalSmartPortalModel.FK_FinishedItemPackages_Shifts" FromRole="FinishedItemPackage" ToRole="Shift" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_FinishedItemPackages_Workshifts" FromRole="FinishedItemPackage" ToRole="Workshift" />
           <NavigationProperty Name="FinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_FinishedHandoverDetails_FinishedItemPackages" FromRole="FinishedItemPackage" ToRole="FinishedHandoverDetail" />
+          <NavigationProperty Name="GoodsReceiptDetails" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedItemPackages" FromRole="FinishedItemPackage" ToRole="GoodsReceiptDetail" />
         </EntityType>
         <Association Name="FK_FinishedItemLots_FinishedItems">
           <End Type="TotalSmartPortalModel.FinishedItem" Role="FinishedItem" Multiplicity="1" />
@@ -25491,6 +25543,60 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GoodsReceiptDetails_FinishedItemPackages">
+          <End Type="TotalSmartPortalModel.FinishedItemPackage" Role="FinishedItemPackage" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.GoodsReceiptDetail" Role="GoodsReceiptDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FinishedItemPackage">
+              <PropertyRef Name="FinishedItemPackageID" />
+            </Principal>
+            <Dependent Role="GoodsReceiptDetail">
+              <PropertyRef Name="FinishedItemPackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="GoodsReceiptPendingPlannedItemCustomer">
+          <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
+          <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="GoodsReceiptPendingPlannedItemDetail">
+          <Property Type="Int32" Name="FinishedItemID" Nullable="false" />
+          <Property Type="Int32" Name="FinishedItemPackageID" Nullable="false" />
+          <Property Type="DateTime" Name="FinishedItemEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="FirmOrderReference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="FirmOrderCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="SemifinishedItemReferences" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
+          <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="1" Scale="1" />
+          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+          <Property Type="Boolean" Name="IsSelected" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="GoodsReceiptPendingPlannedItem">
+          <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
+          <Property Type="Int32" Name="PlannedOrderID" Nullable="false" />
+          <Property Type="DateTime" Name="PlannedOrderEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="PlannedOrderReference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="PlannedOrderCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="PlannedOrderCaption" Nullable="true" MaxLength="100" />
+          <Property Type="DateTime" Name="MinHandoverDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="CustomerID" Nullable="false" />
+          <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
+          <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -30974,6 +31080,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsReceiptDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptDetail">
               <MappingFragment StoreEntitySet="GoodsReceiptDetails">
+                <ScalarProperty Name="FinishedItemPackageID" ColumnName="FinishedItemPackageID" />
+                <ScalarProperty Name="FinishedItemID" ColumnName="FinishedItemID" />
                 <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
                 <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
@@ -32287,6 +32395,60 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetGoodsReceiptPendingPlannedItemCustomers" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptPendingPlannedItemCustomers">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptPendingPlannedItemCustomer">
+                <ScalarProperty Name="GoodsReceiptTypeID" ColumnName="GoodsReceiptTypeID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetGoodsReceiptPendingPlannedItemDetails" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptPendingPlannedItemDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptPendingPlannedItemDetail">
+                <ScalarProperty Name="FinishedItemID" ColumnName="FinishedItemID" />
+                <ScalarProperty Name="FinishedItemPackageID" ColumnName="FinishedItemPackageID" />
+                <ScalarProperty Name="FinishedItemEntryDate" ColumnName="FinishedItemEntryDate" />
+                <ScalarProperty Name="FirmOrderReference" ColumnName="FirmOrderReference" />
+                <ScalarProperty Name="FirmOrderCode" ColumnName="FirmOrderCode" />
+                <ScalarProperty Name="SemifinishedItemReferences" ColumnName="SemifinishedItemReferences" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetGoodsReceiptPendingPlannedItems" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptPendingPlannedItems">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptPendingPlannedItem">
+                <ScalarProperty Name="GoodsReceiptTypeID" ColumnName="GoodsReceiptTypeID" />
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
+                <ScalarProperty Name="PlannedOrderEntryDate" ColumnName="PlannedOrderEntryDate" />
+                <ScalarProperty Name="PlannedOrderReference" ColumnName="PlannedOrderReference" />
+                <ScalarProperty Name="PlannedOrderCode" ColumnName="PlannedOrderCode" />
+                <ScalarProperty Name="PlannedOrderCaption" ColumnName="PlannedOrderCaption" />
+                <ScalarProperty Name="MinHandoverDate" ColumnName="MinHandoverDate" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

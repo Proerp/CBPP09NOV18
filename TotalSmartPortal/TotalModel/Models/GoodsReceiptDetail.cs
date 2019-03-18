@@ -68,6 +68,8 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
+        public Nullable<int> FinishedItemID { get; set; }
+        public Nullable<int> FinishedItemPackageID { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }
@@ -92,5 +94,6 @@ namespace TotalModel.Models
         public virtual GoodsReceipt GoodsReceipt { get; set; }
         public virtual Lab Lab { get; set; }
         public virtual Commodity Commodity { get; set; }
+        public virtual FinishedItemPackage FinishedItemPackage { get; set; }
     }
 }

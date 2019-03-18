@@ -5383,5 +5383,48 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<FinishedItemViewLot>("GetFinishedItemViewLots", finishedItemIDParameter);
         }
+    
+        public virtual ObjectResult<GoodsReceiptPendingPlannedItemCustomer> GetGoodsReceiptPendingPlannedItemCustomers(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPlannedItemCustomer>("GetGoodsReceiptPendingPlannedItemCustomers", locationIDParameter);
+        }
+    
+        public virtual ObjectResult<GoodsReceiptPendingPlannedItemDetail> GetGoodsReceiptPendingPlannedItemDetails(Nullable<int> locationID, Nullable<int> goodsReceiptID, Nullable<int> plannedOrderID, Nullable<int> customerID, string finishedItemPackageIDs)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var goodsReceiptIDParameter = goodsReceiptID.HasValue ?
+                new ObjectParameter("GoodsReceiptID", goodsReceiptID) :
+                new ObjectParameter("GoodsReceiptID", typeof(int));
+    
+            var plannedOrderIDParameter = plannedOrderID.HasValue ?
+                new ObjectParameter("PlannedOrderID", plannedOrderID) :
+                new ObjectParameter("PlannedOrderID", typeof(int));
+    
+            var customerIDParameter = customerID.HasValue ?
+                new ObjectParameter("CustomerID", customerID) :
+                new ObjectParameter("CustomerID", typeof(int));
+    
+            var finishedItemPackageIDsParameter = finishedItemPackageIDs != null ?
+                new ObjectParameter("FinishedItemPackageIDs", finishedItemPackageIDs) :
+                new ObjectParameter("FinishedItemPackageIDs", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPlannedItemDetail>("GetGoodsReceiptPendingPlannedItemDetails", locationIDParameter, goodsReceiptIDParameter, plannedOrderIDParameter, customerIDParameter, finishedItemPackageIDsParameter);
+        }
+    
+        public virtual ObjectResult<GoodsReceiptPendingPlannedItem> GetGoodsReceiptPendingPlannedItems(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPlannedItem>("GetGoodsReceiptPendingPlannedItems", locationIDParameter);
+        }
     }
 }

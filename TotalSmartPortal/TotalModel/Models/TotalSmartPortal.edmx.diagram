@@ -501,6 +501,7 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_FinishedItems" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Workshifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedItemPackages" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
