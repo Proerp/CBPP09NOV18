@@ -164,7 +164,7 @@
                     columns.Bound(p => p.LayerCode).DisplayNameTitle().Width(20).Hidden(GlobalEnums.CBPP || @Model.IsItem).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
                         .ClientTemplate("#= (LayerCode == null)? '' : LayerCode #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].LayerCode' value='#= (LayerCode == null) ? '' : LayerCode #' />");
 
-                    columns.Bound(p => p.LayerQuantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(80)
+                    columns.Bound(p => p.LayerQuantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
                         .Format(Settings.kfmQuantity)
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', LayerQuantity) #" + "<input type='hidden' name='WorkOrderViewDetails[#= index(data) #].LayerQuantity' value='#= LayerQuantity #' />");
                     
