@@ -77,7 +77,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         private string GetPlannedOrderIndexSQL(int dateOptionID)
         {
             string queryString = "";
-            
+
             queryString = queryString + "   BEGIN " + "\r\n";
             queryString = queryString + "       IF  (@LocalFilterOptionID = 0) " + "\r\n";
             queryString = queryString + "           " + this.GetPlannedOrderIndexSQL(dateOptionID, 0) + "\r\n";
@@ -94,7 +94,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                               IF  (@LocalFilterOptionID = 12) " + "\r\n";
             queryString = queryString + "                                   " + this.GetPlannedOrderIndexSQL(dateOptionID, 12) + "\r\n";
             queryString = queryString + "                               ELSE " + "\r\n";
-            queryString = queryString + "                                   " + this.GetPlannedOrderIndexSQL(dateOptionID, 20) + "\r\n";
+            queryString = queryString + "                                   BEGIN " + "\r\n";
+            queryString = queryString + "                                       IF  (@LocalFilterOptionID = 30) " + "\r\n";
+            queryString = queryString + "                                           " + this.GetPlannedOrderIndexSQL(dateOptionID, 30) + "\r\n";
+            queryString = queryString + "                                       ELSE " + "\r\n";
+            queryString = queryString + "                                           " + this.GetPlannedOrderIndexSQL(dateOptionID, 20) + "\r\n";
+            queryString = queryString + "                                   END " + "\r\n";
             queryString = queryString + "                           END " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
             queryString = queryString + "           END " + "\r\n";
@@ -104,12 +109,15 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         }
         private string GetPlannedOrderIndexSQL(int dateOptionID, int filterOptionID)
         {
-
+            //DATE RANGE: FROM TO
             //filterOptionID: 0: NORMAL  PlannedOrderDetails LEFT JOIN FirmOrderDetails: FROM TO
+            //filterOptionID: 20: FINISH  PlannedOrderDetails INNER JOIN FirmOrderDetails: FROM TO
+            //WITHOUT DATE RANGE:
             //filterOptionID: 10: PENDING PlannedOrderDetails LEFT JOIN FirmOrderDetails WITH: NOT InActive AND (FirmOrderDetails IS NULL (NOT APPROVED YET) OR FirmOrderDetails.QuantityPending > 0))
             //filterOptionID: 11: 10 AND NOT MATERIAL
             //filterOptionID: 12: 10 AND WITH MATERIAL
-            //filterOptionID: 20: FINISH  PlannedOrderDetails INNER JOIN FirmOrderDetails: FROM TO
+            //filterOptionID: 30: PENDING QuantitySemifinished
+
 
             string queryString = "";
 
@@ -185,9 +193,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         private string SQLPendingVsFinished(int filterOptionID)
         {
             bool pendingVsFinished = filterOptionID == 10 || filterOptionID == 11 || filterOptionID == 12;
-            return filterOptionID == 0 ? "" : ("(FirmOrderDetails.InActive " + (pendingVsFinished ? "=" : "<>") + " 0 " + (pendingVsFinished ? "AND" : "OR") + " FirmOrderDetails.InActivePartial " + (pendingVsFinished ? "=" : "<>") + " 0 " + (pendingVsFinished ? "AND" : "OR") + " ROUND(FirmOrderDetails.Quantity - (FirmOrderDetails.QuantitySemifinished + FirmOrderDetails.QuantityExcess - FirmOrderDetails.QuantityShortage - FirmOrderDetails.QuantityFailure), " + (int)GlobalEnums.rndQuantity + ") " + (pendingVsFinished ? ">" : "<=") + " 0) AND ");
+            return filterOptionID == 0 ? "" : (filterOptionID == 30 ? "ROUND(FirmOrderDetails.QuantitySemifinished - FirmOrderDetails.QuantityFinished, " + (int)GlobalEnums.rndQuantity + ") > 0 AND " : ("(FirmOrderDetails.InActive " + (pendingVsFinished ? "=" : "<>") + " 0 " + (pendingVsFinished ? "AND" : "OR") + " FirmOrderDetails.InActivePartial " + (pendingVsFinished ? "=" : "<>") + " 0 " + (pendingVsFinished ? "AND" : "OR") + " ROUND(FirmOrderDetails.Quantity - (FirmOrderDetails.QuantitySemifinished + FirmOrderDetails.QuantityExcess - FirmOrderDetails.QuantityShortage - FirmOrderDetails.QuantityFailure), " + (int)GlobalEnums.rndQuantity + ") " + (pendingVsFinished ? ">" : "<=") + " 0) AND "));
         }
-        
+
 
         #region X
 
@@ -329,7 +337,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "                       INSERT INTO     FirmOrderMaterials (FirmOrderID, PlannedOrderID, NMVNTaskID, EntryDate, LocationID, CustomerID, BomID, BomDetailID, BlockUnit, BlockQuantity, MaterialID, Quantity, QuantityIssued, VoidTypeID, Approved, InActive, InActivePartial, InActivePartialDate) " + "\r\n";
             queryString = queryString + "                       SELECT          FirmOrderDetails.FirmOrderID, FirmOrderDetails.PlannedOrderID, FirmOrderDetails.NMVNTaskID, FirmOrderDetails.EntryDate, FirmOrderDetails.LocationID, FirmOrderDetails.CustomerID, FirmOrderDetails.BomID, BomDetails.BomDetailID, BomDetails.BlockUnit, BomDetails.BlockQuantity, BomDetails.MaterialID, ROUND(((FirmOrderDetails.QuantityMaterial * BomDetails.BlockUnit)/ 100) * (BomDetails.BlockQuantity/ BomDetails.LayerQuantity), " + (int)GlobalEnums.rndQuantity + ") AS Quantity, 0 AS QuantityIssued, FirmOrderDetails.VoidTypeID, FirmOrderDetails.Approved, FirmOrderDetails.InActive, FirmOrderDetails.InActivePartial, FirmOrderDetails.InActivePartialDate " + "\r\n";
-            queryString = queryString + "                       FROM            FirmOrderDetails INNER JOIN BomDetails ON FirmOrderDetails.PlannedOrderID = @EntityID AND FirmOrderDetails.BomID = BomDetails.BomID " + "\r\n";            
+            queryString = queryString + "                       FROM            FirmOrderDetails INNER JOIN BomDetails ON FirmOrderDetails.PlannedOrderID = @EntityID AND FirmOrderDetails.BomID = BomDetails.BomID " + "\r\n";
 
             queryString = queryString + "                   END " + "\r\n";
 
