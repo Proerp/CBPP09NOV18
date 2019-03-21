@@ -137,6 +137,7 @@ namespace TotalBase.Enums
 
 
 
+            StockTake = 1976001,
             InventoryAdjustment = 8078,
             VehicleAdjustment = 8078008,
             PartAdjustment = 8078009,
