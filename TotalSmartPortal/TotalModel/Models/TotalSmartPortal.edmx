@@ -16668,7 +16668,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="FinishedItemDetail" EntitySet="FinishedItemDetails" />
           </AssociationSet>
           <FunctionImport Name="GetGoodsReceiptPendingPurchasings" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingPurchasing)">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -20750,6 +20750,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="FinishedItemEntryDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="SemifinishedItemReferences" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="PurchaseOrderCodes" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="100" />
         </ComplexType>
         <EntityType Name="ModuleDetail">
           <Key>
@@ -22219,6 +22220,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="BatchID" Nullable="false" />
           <Property Type="String" Name="PurchaseOrderCodes" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
         </ComplexType>
         <EntityType Name="GoodsReceiptDetail">
           <Key>
@@ -30266,6 +30268,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="FinishedItemEntryDate" ColumnName="FinishedItemEntryDate" />
                 <ScalarProperty Name="SemifinishedItemReferences" ColumnName="SemifinishedItemReferences" />
                 <ScalarProperty Name="PurchaseOrderCodes" ColumnName="PurchaseOrderCodes" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -31096,6 +31099,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="PurchaseOrderCodes" ColumnName="PurchaseOrderCodes" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
