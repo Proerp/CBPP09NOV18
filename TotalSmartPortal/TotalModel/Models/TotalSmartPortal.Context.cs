@@ -5426,5 +5426,14 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPlannedItem>("GetGoodsReceiptPendingPlannedItems", locationIDParameter);
         }
+    
+        public virtual ObjectResult<GoodsReceiptPendingPurchasing> GetGoodsReceiptPendingPurchasings(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPurchasing>("GetGoodsReceiptPendingPurchasings", locationIDParameter);
+        }
     }
 }

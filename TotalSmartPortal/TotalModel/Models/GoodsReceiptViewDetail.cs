@@ -72,5 +72,6 @@ namespace TotalModel.Models
         public Nullable<int> FinishedItemID { get; set; }
         public Nullable<System.DateTime> FinishedItemEntryDate { get; set; }
         public string SemifinishedItemReferences { get; set; }
+        public string PurchaseOrderCodes { get; set; }
     }
 }

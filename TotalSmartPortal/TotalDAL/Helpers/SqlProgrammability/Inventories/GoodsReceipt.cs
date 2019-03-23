@@ -171,8 +171,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       END " + "\r\n";
 
             queryString = queryString + "       SELECT          " + (int)@GlobalEnums.GoodsReceiptTypeID.GoodsArrival + " AS GoodsReceiptTypeID, @PurchaseOrderCodes AS PurchaseOrderCodes, @CustomerOfficialNames AS CustomerOfficialNames, '' AS Description WHERE @GoodsArrivalCount > 0 " + "\r\n";
-            
-            this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptPendingGoodsArrivals", queryString);
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptPendingPurchasings", queryString);
         }
 
         private void GetGoodsReceiptPendingGoodsArrivals()
