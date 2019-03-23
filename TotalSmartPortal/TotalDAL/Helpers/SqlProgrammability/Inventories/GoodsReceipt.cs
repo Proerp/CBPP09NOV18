@@ -22,6 +22,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             this.GetGoodsReceiptViewDetails();
 
+            this.GetGoodsReceiptPendingPurchasings();
             this.GetGoodsReceiptPendingGoodsArrivals();
             this.GetGoodsReceiptPendingGoodsArrivalPackages();
 
@@ -99,7 +100,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.PurchaseRequisitionID, GoodsReceiptDetails.PurchaseRequisitionDetailID, PurchaseRequisitions.Reference AS PurchaseRequisitionReference, PurchaseRequisitions.Code AS PurchaseRequisitionCode, PurchaseRequisitions.EntryDate AS PurchaseRequisitionEntryDate, GoodsReceiptDetails.GoodsArrivalID, GoodsReceiptDetails.GoodsArrivalDetailID, GoodsReceiptDetails.GoodsArrivalPackageID, GoodsArrivals.Reference AS GoodsArrivalReference, GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.EntryDate AS GoodsArrivalEntryDate, " + "\r\n";
+            queryString = queryString + "       SELECT      GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.PurchaseRequisitionID, GoodsReceiptDetails.PurchaseRequisitionDetailID, PurchaseRequisitions.Reference AS PurchaseRequisitionReference, PurchaseRequisitions.Code AS PurchaseRequisitionCode, PurchaseRequisitions.EntryDate AS PurchaseRequisitionEntryDate, GoodsReceiptDetails.GoodsArrivalID, GoodsReceiptDetails.GoodsArrivalDetailID, GoodsReceiptDetails.GoodsArrivalPackageID, GoodsArrivals.Reference AS GoodsArrivalReference, GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.EntryDate AS GoodsArrivalEntryDate, GoodsArrivals.PurchaseOrderCodes, " + "\r\n";
             queryString = queryString + "                   GoodsReceiptDetails.WarehouseTransferID, GoodsReceiptDetails.WarehouseTransferDetailID, WarehouseTransfers.Reference AS WarehouseTransferReference, WarehouseTransfers.EntryDate AS WarehouseTransferEntryDate, WarehouseTransferGoodsReceiptDetails.Reference AS GoodsReceiptReference, WarehouseTransferGoodsReceiptDetails.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsReceiptDetails.WarehouseAdjustmentID, GoodsReceiptDetails.WarehouseAdjustmentDetailID, WarehouseAdjustmentDetails.Reference AS WarehouseAdjustmentReference, WarehouseAdjustmentDetails.EntryDate AS WarehouseAdjustmentEntryDate, WarehouseAdjustmentDetails.WarehouseAdjustmentTypeID, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, GoodsReceiptDetails.CommodityTypeID, GoodsReceiptDetails.BinLocationID, BinLocations.Code AS BinLocationCode, GoodsReceiptDetails.Barcode, GoodsReceiptDetails.BatchCode, GoodsReceiptDetails.SealCode, GoodsReceiptDetails.LabCode, GoodsReceiptDetails.LabID, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, " + "\r\n";
             queryString = queryString + "                   ROUND(ISNULL(IIF(PurchaseRequisitionDetails.Approved = 1 AND PurchaseRequisitionDetails.InActive = 0 AND PurchaseRequisitionDetails.InActivePartial = 0, PurchaseRequisitionDetails.Quantity - PurchaseRequisitionDetails.QuantityReceipted, 0), 0) + ISNULL(IIF(GoodsArrivalPackages.Approved = 1 AND GoodsArrivalPackages.InActive = 0 AND GoodsArrivalPackages.InActivePartial = 0, GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, 0), 0) + ISNULL(WarehouseTransferDetails.Quantity - WarehouseTransferDetails.QuantityReceipted, 0) + ISNULL(MaterialIssueDetails.Quantity - MaterialIssueDetails.QuantitySemifinished - MaterialIssueDetails.QuantityFailure - MaterialIssueDetails.QuantityReceipted, 0) + ISNULL(WarehouseAdjustmentDetails.Quantity - WarehouseAdjustmentDetails.QuantityReceipted, 0) + ISNULL(FinishedProductPackages.Quantity - FinishedProductPackages.QuantityReceipted, 0) + ISNULL(FinishedItemPackages.Quantity - FinishedItemPackages.QuantityReceipted, 0) + GoodsReceiptDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, GoodsReceiptDetails.Quantity, GoodsReceiptDetails.Remarks, " + "\r\n";
@@ -128,7 +129,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   LEFT JOIN GoodsReceiptDetails WarehouseTransferGoodsReceiptDetails ON WarehouseTransferDetails.GoodsReceiptDetailID = WarehouseTransferGoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
 
             queryString = queryString + "                   LEFT JOIN WarehouseAdjustmentDetails ON GoodsReceiptDetails.WarehouseAdjustmentDetailID = WarehouseAdjustmentDetails.WarehouseAdjustmentDetailID " + "\r\n";
-            
+
             queryString = queryString + "                   LEFT JOIN FinishedProductPackages ON GoodsReceiptDetails.FinishedProductPackageID = FinishedProductPackages.FinishedProductPackageID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
 
@@ -146,6 +147,33 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
 
         #region GoodsArrival
+
+        private void GetGoodsReceiptPendingPurchasings()
+        {
+            string queryString = " @LocationID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       DECLARE         @GoodsArrivalCount int              DECLARE @PurchaseOrderCodes varchar(3999)           DECLARE @CustomerOfficialNames varchar(555) " + "\r\n";
+            queryString = queryString + "       DECLARE         @GoodsArrivals TABLE (PurchaseOrderCode nvarchar(60), CustomerOfficialName nvarchar(150) NOT NULL)" + "\r\n";
+
+            queryString = queryString + "       INSERT INTO     @GoodsArrivals (PurchaseOrderCode, CustomerOfficialName) " + "\r\n";
+            queryString = queryString + "       SELECT          ISNULL(GoodsArrivals.PurchaseOrderCodes, GoodsArrivals.Code) AS PurchaseOrderCode, Customers.OfficialName AS CustomerOfficialName " + "\r\n";
+            queryString = queryString + "       FROM            GoodsArrivals " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Customers ON GoodsArrivals.GoodsArrivalID IN (SELECT GoodsArrivalID FROM GoodsArrivalPackages WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0) AND GoodsArrivals.CustomerID = Customers.CustomerID " + "\r\n";
+
+            queryString = queryString + "       SET @GoodsArrivalCount = @@ROWCOUNT " + "\r\n";
+
+            queryString = queryString + "       IF (@GoodsArrivalCount > 0) " + "\r\n";
+            queryString = queryString + "       BEGIN " + "\r\n";
+            queryString = queryString + "           SELECT      @PurchaseOrderCodes = LEFT(STUFF((SELECT ',' + PurchaseOrderCode FROM @GoodsArrivals FOR XML PATH('')) ,1,1,''), 100) " + "\r\n";
+            queryString = queryString + "           SELECT      @CustomerOfficialNames = LEFT(STUFF((SELECT ',' + CustomerOfficialName FROM (SELECT DISTINCT CustomerOfficialName FROM @GoodsArrivals) DistinctCustomerOfficialNames FOR XML PATH('')) ,1,1,''), 100) " + "\r\n";
+            queryString = queryString + "       END " + "\r\n";
+
+            queryString = queryString + "       SELECT          " + (int)@GlobalEnums.GoodsReceiptTypeID.GoodsArrival + " AS GoodsReceiptTypeID, @PurchaseOrderCodes AS PurchaseOrderCodes, @CustomerOfficialNames AS CustomerOfficialNames, '' AS Description WHERE @GoodsArrivalCount > 0 " + "\r\n";
+            
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptPendingGoodsArrivals", queryString);
+        }
 
         private void GetGoodsReceiptPendingGoodsArrivals()
         {
@@ -205,16 +233,31 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
 
+            queryString = queryString + "       IF  (NOT @GoodsArrivalID IS NULL AND @GoodsArrivalID <> 0) " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLGoodsArrival(isBarcode, isGoodsArrivalPackageIDs, true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLGoodsArrival(isBarcode, isGoodsArrivalPackageIDs, false) + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string BuildSQLGoodsArrival(bool isBarcode, bool isGoodsArrivalPackageIDs, bool isGoodsArrivalID)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
             queryString = queryString + "       IF (@GoodsReceiptID <= 0 OR @WebAPI = 1) " + "\r\n";
-            queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalNew(isBarcode, isGoodsArrivalPackageIDs) + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n"; //@WebAPI = 1: MEANS: EVERY TIME, WHEN MOIBILE APP REMOVE A DETAIL ROW: IT [MUST SAVE], IN ORDER TO CALL THIS STORED PROCEDURE TO GET THE PENDING. BY THIS RULE: THERE IS NO NEED FOR THE BuildSQLGoodsArrivalEdit
+            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalNew(isBarcode, isGoodsArrivalPackageIDs, isGoodsArrivalID) + "\r\n";
             queryString = queryString + "                   ORDER BY GoodsArrivals.EntryDate, GoodsArrivals.GoodsArrivalID, GoodsArrivalPackages.SerialID, GoodsArrivalPackages.GoodsArrivalPackageID DESC " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalNew(isBarcode, isGoodsArrivalPackageIDs) + " WHERE GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT GoodsArrivalPackageID FROM GoodsReceiptDetails WHERE GoodsReceiptID = @GoodsReceiptID) " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalNew(isBarcode, isGoodsArrivalPackageIDs, isGoodsArrivalID) + " WHERE GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT GoodsArrivalPackageID FROM GoodsReceiptDetails WHERE GoodsReceiptID = @GoodsReceiptID) " + "\r\n";
             queryString = queryString + "                   UNION ALL " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalEdit(isBarcode, isGoodsArrivalPackageIDs) + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLGoodsArrivalEdit(isBarcode, isGoodsArrivalPackageIDs, isGoodsArrivalID) + "\r\n";
             queryString = queryString + "                   ORDER BY GoodsArrivals.EntryDate, GoodsArrivals.GoodsArrivalID, GoodsArrivalPackages.SerialID, GoodsArrivalPackages.GoodsArrivalPackageID DESC " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
 
@@ -223,27 +266,27 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             return queryString;
         }
 
-        private string BuildSQLGoodsArrivalNew(bool isBarcode, bool isGoodsArrivalPackageIDs)
+        private string BuildSQLGoodsArrivalNew(bool isBarcode, bool isGoodsArrivalPackageIDs, bool isGoodsArrivalID)
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      GoodsArrivals.GoodsArrivalID, GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivals.Reference AS GoodsArrivalReference, GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.EntryDate AS GoodsArrivalEntryDate, GoodsArrivalPackages.BatchID, GoodsArrivalPackages.BatchEntryDate, " + "\r\n";
+            queryString = queryString + "       SELECT      GoodsArrivals.GoodsArrivalID, GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivals.Reference AS GoodsArrivalReference, GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.EntryDate AS GoodsArrivalEntryDate, GoodsArrivals.PurchaseOrderCodes, GoodsArrivalPackages.BatchID, GoodsArrivalPackages.BatchEntryDate, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, GoodsArrivalPackages.LabID, GoodsArrivalPackages.ProductionDate, GoodsArrivalPackages.ExpiryDate, GoodsArrivalPackages.SerialID, GoodsArrivalPackages.Barcode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.SealCode, GoodsArrivalPackages.LabCode, " + "\r\n";
             queryString = queryString + "                   ROUND(GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
             queryString = queryString + "                   0.0 AS Quantity, GoodsArrivals.Description, GoodsArrivalPackages.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        GoodsArrivals " + "\r\n";
-            queryString = queryString + "                   INNER JOIN GoodsArrivalPackages ON GoodsArrivals.GoodsArrivalID = @GoodsArrivalID AND GoodsArrivalPackages.Approved = 1 AND GoodsArrivalPackages.InActive = 0 AND GoodsArrivalPackages.InActivePartial = 0 AND ROUND(GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID" + (isBarcode ? " AND GoodsArrivalPackages.Barcode = @Barcode" : "") + (isGoodsArrivalPackageIDs ? " AND GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsArrivalPackageIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN GoodsArrivalPackages ON " + (isGoodsArrivalID ? "GoodsArrivals.GoodsArrivalID = @GoodsArrivalID AND " : "") + " GoodsArrivalPackages.Approved = 1 AND GoodsArrivalPackages.InActive = 0 AND GoodsArrivalPackages.InActivePartial = 0 AND ROUND(GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID" + (isBarcode ? " AND GoodsArrivalPackages.Barcode = @Barcode" : "") + (isGoodsArrivalPackageIDs ? " AND GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsArrivalPackageIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON GoodsArrivalPackages.CommodityID = Commodities.CommodityID " + "\r\n";
 
             return queryString;
         }
 
-        private string BuildSQLGoodsArrivalEdit(bool isBarcode, bool isGoodsArrivalPackageIDs)
+        private string BuildSQLGoodsArrivalEdit(bool isBarcode, bool isGoodsArrivalPackageIDs, bool isGoodsArrivalID)
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      GoodsArrivals.GoodsArrivalID, GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivals.Reference AS GoodsArrivalReference, GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.EntryDate AS GoodsArrivalEntryDate, GoodsArrivalPackages.BatchID, GoodsArrivalPackages.BatchEntryDate, " + "\r\n";
+            queryString = queryString + "       SELECT      GoodsArrivals.GoodsArrivalID, GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivals.Reference AS GoodsArrivalReference, GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.EntryDate AS GoodsArrivalEntryDate, GoodsArrivals.PurchaseOrderCodes, GoodsArrivalPackages.BatchID, GoodsArrivalPackages.BatchEntryDate, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, GoodsArrivalPackages.LabID, GoodsArrivalPackages.ProductionDate, GoodsArrivalPackages.ExpiryDate, GoodsArrivalPackages.SerialID, GoodsArrivalPackages.Barcode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.SealCode, GoodsArrivalPackages.LabCode, " + "\r\n";
             queryString = queryString + "                   ROUND(GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted + GoodsReceiptDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
             queryString = queryString + "                   0.0 AS Quantity, GoodsArrivals.Description, GoodsArrivalPackages.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
