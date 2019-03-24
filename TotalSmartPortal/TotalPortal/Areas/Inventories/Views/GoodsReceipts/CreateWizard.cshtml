@@ -80,13 +80,6 @@
         .Name("tabStrip")
         .Items(tabStrip =>
         {
-            tabStrip.Add().Text("Khách hàng không có đơn hàng")
-                .Visible(false)
-                .Content(@<text>
-            @*@Html.Partial("~/Views/Helpers/Commons/_SearchCustomer.cshtml")*@
-                </text>);
-
-
             tabStrip.Add().Text("Phiếu mua hàng")
                 .Visible(false)
                 .Content(@<text>
@@ -99,8 +92,13 @@
                 </text>);
 
 
-
             tabStrip.Add().Text("Mua hàng")
+                .Visible(GlobalEnums.CBPP)
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetPurchasing.cshtml")
+                </text>);
+
+            tabStrip.Add().Text("Đơn hàng")
             .Visible(Model.IsItem || Model.IsMaterial)
             .Selected(Model.IsMaterial)
             .Content(@<text>
@@ -224,8 +222,10 @@
                     break;
 
 
-
                 case "Mua hàng":
+                    selectedGrid = $("#goodsReceiptPendingPurchasingGrid").data("kendoGrid");
+                    break;
+                case "Đơn hàng":
                     selectedGrid = $("#goodsReceiptPendingGoodsArrivalGrid").data("kendoGrid");
                     break;
 

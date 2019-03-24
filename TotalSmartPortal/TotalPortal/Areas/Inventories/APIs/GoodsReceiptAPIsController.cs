@@ -70,6 +70,11 @@ namespace TotalPortal.Areas.Inventories.APIs
 
 
 
+        public JsonResult GetPurchasings([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        {
+            var result = this.goodsReceiptAPIRepository.GetPurchasings(locationID);
+            return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult GetGoodsArrivals([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
         {
@@ -163,6 +168,6 @@ namespace TotalPortal.Areas.Inventories.APIs
         {
             var result = this.goodsReceiptAPIRepository.GetGoodsReceiptDetailAvailables(locationID, warehouseID, commodityID, commodityIDs, batchID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
-        }       
+        }
     }
 }

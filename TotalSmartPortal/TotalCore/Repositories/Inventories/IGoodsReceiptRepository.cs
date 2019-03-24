@@ -17,6 +17,7 @@ namespace TotalCore.Repositories.Inventories
         IEnumerable<GoodsReceiptPendingPurchaseRequisition> GetPurchaseRequisitions(int? locationID);
         IEnumerable<GoodsReceiptPendingPurchaseRequisitionDetail> GetPendingPurchaseRequisitionDetails(int? locationID, int? goodsReceiptID, int? purchaseRequisitionID, int? customerID, string purchaseRequisitionDetailIDs, bool isReadonly);
 
+        IEnumerable<GoodsReceiptPendingPurchasing> GetPurchasings(int? locationID);
         IEnumerable<GoodsReceiptPendingGoodsArrival> GetGoodsArrivals(int? locationID);
         IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(bool webAPI, int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs);
 

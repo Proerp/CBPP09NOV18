@@ -232,7 +232,7 @@
             }
             else
             {
-                @Html.EditorFor(model => (model as IGoodsReceiptDTO).Customer, new { CustomerDescriptionHidden = "true", CustomerTelephoneHidden = "true", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+                @Html.EditorFor(model => (model as IGoodsReceiptDTO).Customer, new { CustomerDescriptionHidden = "true", CustomerTelephoneHidden = "true", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), NullCustomer = (Model.CustomerID > 0 ? null : (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival ? (Model.Purposes != null ? Model.Purposes: "Nhập kho chung nhiều đơn hàng") : "")), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
             }
 
             @Html.Partial("~/Views/Helpers/Commons/_Warehouse2019.cshtml")
@@ -287,14 +287,14 @@
 
                     columns.Bound(p => p.PurchaseOrderCodes).DisplayNameTitle().Width(60).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null ? false : true)
                         .ClientTemplate("#= (PurchaseOrderCodes == null)? '' : PurchaseOrderCodes #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].PurchaseOrderCodes' value='#= (PurchaseOrderCodes == null) ? '' : PurchaseOrderCodes #' />");
-                    columns.Bound(p => p.CustomerName).DisplayNameTitle().Width(60).Hidden()
-                        .ClientTemplate("#= (CustomerName == null)? '' : CustomerName #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CustomerName' value='#= (CustomerName == null) ? '' : CustomerName #' />");
+                    columns.Bound(p => p.CustomerCode).DisplayNameTitle().Width(60).Hidden()
+                        .ClientTemplate("#= (CustomerCode == null)? '' : CustomerCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CustomerCode' value='#= (CustomerCode == null) ? '' : CustomerCode #' />");
                     
                     columns.Bound(p => p.GoodsArrivalCode).DisplayNameTitle().Width(60).Hidden()
                         .ClientTemplate("#= (GoodsArrivalCode == null)? '' : GoodsArrivalCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalCode' value='#= (GoodsArrivalCode == null) ? '' : GoodsArrivalCode #' />");
-                    columns.Bound(p => p.GoodsArrivalReference).DisplayNameTitle().Width(60).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null ? false : true)
+                    columns.Bound(p => p.GoodsArrivalReference).DisplayNameTitle().Width(60).Hidden()
                         .ClientTemplate("#= (GoodsArrivalReference == null)? '' : GoodsArrivalReference #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalReference' value='#= (GoodsArrivalReference == null) ? '' : GoodsArrivalReference #' />");
-                    columns.Bound(p => p.GoodsArrivalEntryDate).DisplayNameTitle().Width(80).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null ? false : true)
+                    columns.Bound(p => p.GoodsArrivalEntryDate).DisplayNameTitle().Width(80).Hidden()
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (GoodsArrivalEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsArrivalEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalEntryDate' value='#= (GoodsArrivalEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsArrivalEntryDate) #' />");
 
@@ -367,11 +367,11 @@
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
                     columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? "StringReadonly" : "AutoCompletes/CommodityAvailable")                        
-                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
-
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(268).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? true : false)
-                        .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />")
+                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
+
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(268).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null) ? true : false)
+                        .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
@@ -506,7 +506,7 @@
                     {
                         events.Error("kendGrid_ErrorHandler");
                     })
-                    .Aggregates(a => a.Add(x => x.CommodityName).Count())
+                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
                     .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
                     .Aggregates(a => a.Add(x => x.Quantity).Sum())
                 )

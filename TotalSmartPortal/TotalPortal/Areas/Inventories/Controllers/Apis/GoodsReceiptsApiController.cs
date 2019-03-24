@@ -61,6 +61,13 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         }
 
         [HttpGet]
+        [Route("GetPurchasings/{locationID}")]
+        public IEnumerable<GoodsReceiptPendingPurchasing> GetPurchasings(int? locationID)
+        {
+            return this.goodsReceiptAPIRepository.GetPurchasings(locationID);
+        }
+
+        [HttpGet]
         [Route("GetGoodsArrivals/{locationID}")]
         public IEnumerable<GoodsReceiptPendingGoodsArrival> GetGoodsArrivals(int? locationID)
         {

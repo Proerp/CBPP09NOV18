@@ -73,6 +73,6 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> FinishedItemEntryDate { get; set; }
         public string SemifinishedItemReferences { get; set; }
         public string PurchaseOrderCodes { get; set; }
-        public string CustomerName { get; set; }
+        public string CustomerCode { get; set; }
     }
 }

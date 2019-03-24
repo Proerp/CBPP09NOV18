@@ -15,7 +15,10 @@ namespace TotalModel.Models
     {
         public int GoodsReceiptTypeID { get; set; }
         public string PurchaseOrderCodes { get; set; }
-        public string CustomerOfficialNames { get; set; }
         public string Description { get; set; }
+        public string CustomerNames { get; set; }
+        public int WarehouseID { get; set; }
+        public string WarehouseCode { get; set; }
+        public string WarehouseName { get; set; }
     }
 }

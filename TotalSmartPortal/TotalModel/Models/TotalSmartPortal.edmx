@@ -20750,7 +20750,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="FinishedItemEntryDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="SemifinishedItemReferences" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="PurchaseOrderCodes" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="CustomerName" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="CustomerCode" Nullable="true" MaxLength="50" />
         </ComplexType>
         <EntityType Name="ModuleDetail">
           <Key>
@@ -22220,7 +22220,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="BatchID" Nullable="false" />
           <Property Type="String" Name="PurchaseOrderCodes" Nullable="true" MaxLength="200" />
-          <Property Type="String" Name="CustomerName" Nullable="false" MaxLength="100" />
+          <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
         </ComplexType>
         <EntityType Name="GoodsReceiptDetail">
           <Key>
@@ -25612,8 +25612,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <ComplexType Name="GoodsReceiptPendingPurchasing">
           <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
           <Property Type="String" Name="PurchaseOrderCodes" Nullable="true" MaxLength="3999" />
-          <Property Type="String" Name="CustomerOfficialNames" Nullable="true" MaxLength="555" />
           <Property Type="String" Name="Description" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="CustomerNames" Nullable="true" MaxLength="555" />
+          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
+          <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
+          <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -30268,7 +30271,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="FinishedItemEntryDate" ColumnName="FinishedItemEntryDate" />
                 <ScalarProperty Name="SemifinishedItemReferences" ColumnName="SemifinishedItemReferences" />
                 <ScalarProperty Name="PurchaseOrderCodes" ColumnName="PurchaseOrderCodes" />
-                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -31099,7 +31102,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="PurchaseOrderCodes" ColumnName="PurchaseOrderCodes" />
-                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -32479,8 +32482,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptPendingPurchasing">
                 <ScalarProperty Name="GoodsReceiptTypeID" ColumnName="GoodsReceiptTypeID" />
                 <ScalarProperty Name="PurchaseOrderCodes" ColumnName="PurchaseOrderCodes" />
-                <ScalarProperty Name="CustomerOfficialNames" ColumnName="CustomerOfficialNames" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CustomerNames" ColumnName="CustomerNames" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
