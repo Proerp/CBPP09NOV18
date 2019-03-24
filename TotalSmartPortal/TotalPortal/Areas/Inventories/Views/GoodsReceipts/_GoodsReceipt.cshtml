@@ -285,6 +285,11 @@
                     columns.Bound(p => p.GoodsArrivalPackageID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (GoodsArrivalPackageID == null)? '' : GoodsArrivalPackageID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalPackageID' value='#= (GoodsArrivalPackageID == null) ? '' : GoodsArrivalPackageID #' />");
 
+                    columns.Bound(p => p.PurchaseOrderCodes).DisplayNameTitle().Width(60).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null ? false : true)
+                        .ClientTemplate("#= (PurchaseOrderCodes == null)? '' : PurchaseOrderCodes #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].PurchaseOrderCodes' value='#= (PurchaseOrderCodes == null) ? '' : PurchaseOrderCodes #' />");
+                    columns.Bound(p => p.CustomerName).DisplayNameTitle().Width(60).Hidden()
+                        .ClientTemplate("#= (CustomerName == null)? '' : CustomerName #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CustomerName' value='#= (CustomerName == null) ? '' : CustomerName #' />");
+                    
                     columns.Bound(p => p.GoodsArrivalCode).DisplayNameTitle().Width(60).Hidden()
                         .ClientTemplate("#= (GoodsArrivalCode == null)? '' : GoodsArrivalCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalCode' value='#= (GoodsArrivalCode == null) ? '' : GoodsArrivalCode #' />");
                     columns.Bound(p => p.GoodsArrivalReference).DisplayNameTitle().Width(60).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null ? false : true)

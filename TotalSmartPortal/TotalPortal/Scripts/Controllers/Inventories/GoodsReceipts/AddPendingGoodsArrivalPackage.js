@@ -84,7 +84,8 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingGoodsArrivalPackageGri
         dataRow.GoodsArrivalCode = goodsArrivalGridDataItem.GoodsArrivalCode;
         dataRow.GoodsArrivalReference = goodsArrivalGridDataItem.GoodsArrivalReference;
         dataRow.GoodsArrivalEntryDate = goodsArrivalGridDataItem.GoodsArrivalEntryDate;
-
+        dataRow.PurchaseOrderCodes = goodsArrivalGridDataItem.PurchaseOrderCodes;
+        dataRow.CustomerName = goodsArrivalGridDataItem.CustomerName;
 
         dataRow.WarehouseTransferID = null;
         dataRow.WarehouseTransferDetailID = null;

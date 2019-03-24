@@ -46,7 +46,7 @@ namespace TotalDTO.Inventories
         [Display(Name = "Số PO")]
         [UIHint("StringReadonly")]
         public string PurchaseOrderCodes { get; set; }
-        [Display(Name = "KH")]
+        [Display(Name = "NCC")]
         [UIHint("StringReadonly")]
         public string CustomerName { get; set; }
 
