@@ -48,6 +48,10 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public decimal QuantityMaterialEstimatedIssued { get; set; }
+        public Nullable<int> VoidTypeID { get; set; }
+        public bool InActive { get; set; }
+        public bool InActivePartial { get; set; }
+        public Nullable<System.DateTime> InActiveDate { get; set; }
     
         public virtual Bom Bom { get; set; }
         public virtual Customer Customer { get; set; }

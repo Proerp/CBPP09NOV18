@@ -23,6 +23,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.GetTransferOrderViewDetails();
 
             this.GetTransferOrderAvailableWarehouses();
+            this.GetTransferOrderPendingWorkOrders();
             this.GetTransferOrderPendingBlendingInstructions();
 
             this.TransferOrderApproved();
@@ -140,6 +141,40 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "   END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetTransferOrderPendingBlendingInstructions", queryString);
+        }
+
+        private void GetTransferOrderPendingWorkOrders()
+        {
+            string queryString;
+
+            queryString = " @LocationID Int, @TransferOrderID Int, @CommodityIDs varchar(3999) " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       DECLARE         @WorkOrderDetails TABLE (CommodityID int NOT NULL, QuantityRemains decimal(18, 2) NOT NULL, QuantityTransferOrders decimal(18, 2) NOT NULL, QuantityAvailableL2 decimal(18, 2) NOT NULL) " + "\r\n";
+
+
+            queryString = queryString + "       INSERT INTO     @WorkOrderDetails (CommodityID, QuantityRemains, QuantityTransferOrders, QuantityAvailableL2) " + "\r\n";
+            queryString = queryString + "       SELECT          CommodityID, ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, 0 AS QuantityTransferOrders, 0 AS QuantityAvailableL2 FROM WorkOrderDetails WHERE Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n";
+
+            queryString = queryString + "       INSERT INTO     @WorkOrderDetails (CommodityID, QuantityRemains, QuantityTransferOrders, QuantityAvailableL2) " + "\r\n";
+            queryString = queryString + "       SELECT          CommodityID, 0 AS QuantityRemains, ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityTransferOrders, 0 AS QuantityAvailableL2 FROM TransferOrderDetails WHERE CommodityID IN (SELECT CommodityID FROM @WorkOrderDetails) AND LocationIssuedID = 1 AND LocationReceiptID = 2 AND TransferOrderID <> @TransferOrderID AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n"; //Approved = 1 AND 
+
+            queryString = queryString + "       INSERT INTO     @WorkOrderDetails (CommodityID, QuantityRemains, QuantityTransferOrders, QuantityAvailableL2) " + "\r\n";
+            queryString = queryString + "       SELECT          GoodsReceiptDetails.CommodityID, 0 AS QuantityRemains, 0 AS QuantityTransferOrders, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains FROM GoodsReceiptDetails INNER JOIN Warehouses ON GoodsReceiptDetails.WarehouseID = Warehouses.WarehouseID WHERE GoodsReceiptDetails.CommodityID IN (SELECT CommodityID FROM @WorkOrderDetails) AND Warehouses.LocationID = 2 AND ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n";
+
+
+            queryString = queryString + "       SELECT          WorkOrderDetails.CommodityID, MIN(Commodities.Code) AS CommodityCode, MIN(Commodities.Name) AS CommodityName, MIN(Commodities.OfficialCode) AS OfficialCode, MIN(Commodities.CommodityTypeID) AS CommodityTypeID, SUM(WorkOrderDetails.QuantityRemains) AS QuantityRemains, SUM(WorkOrderDetails.QuantityTransferOrders) AS QuantityTransferOrders, SUM(WorkOrderDetails.QuantityAvailableL2) AS QuantityAvailableL2, CAST(0 AS bit) AS IsSelected " + "\r\n";
+            queryString = queryString + "       FROM            @WorkOrderDetails WorkOrderDetails " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Commodities ON WorkOrderDetails.CommodityID NOT IN (SELECT Id FROM dbo.SplitToIntList (@CommodityIDs)) AND WorkOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "       GROUP BY        WorkOrderDetails.CommodityID " + "\r\n";
+            queryString = queryString + "       HAVING          ROUND(SUM(WorkOrderDetails.QuantityRemains) - SUM(WorkOrderDetails.QuantityTransferOrders) - SUM(WorkOrderDetails.QuantityAvailableL2), " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetTransferOrderPendingWorkOrders", queryString);
         }
         #endregion Pending
 

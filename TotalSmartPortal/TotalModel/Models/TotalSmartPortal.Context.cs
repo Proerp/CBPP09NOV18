@@ -5435,5 +5435,22 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPurchasing>("GetGoodsReceiptPendingPurchasings", locationIDParameter);
         }
+    
+        public virtual ObjectResult<TransferOrderPendingWorkOrder> GetTransferOrderPendingWorkOrders(Nullable<int> locationID, Nullable<int> transferOrderID, string commodityIDs)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var transferOrderIDParameter = transferOrderID.HasValue ?
+                new ObjectParameter("TransferOrderID", transferOrderID) :
+                new ObjectParameter("TransferOrderID", typeof(int));
+    
+            var commodityIDsParameter = commodityIDs != null ?
+                new ObjectParameter("CommodityIDs", commodityIDs) :
+                new ObjectParameter("CommodityIDs", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderPendingWorkOrder>("GetTransferOrderPendingWorkOrders", locationIDParameter, transferOrderIDParameter, commodityIDsParameter);
+        }
     }
 }

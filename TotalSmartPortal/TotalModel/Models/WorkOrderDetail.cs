@@ -38,6 +38,10 @@ namespace TotalModel.Models
         public decimal QuantityIssued { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
+        public Nullable<int> VoidTypeID { get; set; }
+        public Nullable<bool> InActive { get; set; }
+        public Nullable<bool> InActivePartial { get; set; }
+        public Nullable<System.DateTime> InActivePartialDate { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual FirmOrderMaterial FirmOrderMaterial { get; set; }

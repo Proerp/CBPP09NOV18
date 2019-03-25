@@ -2770,7 +2770,11 @@
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityIssued" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
+          <Property Name="VoidTypeID" Type="int" />
           <Property Name="Approved" Type="bit" Nullable="false" />
+          <Property Name="InActive" Type="bit" />
+          <Property Name="InActivePartial" Type="bit" />
+          <Property Name="InActivePartialDate" Type="datetime" />
         </EntityType>
         <EntityType Name="WorkOrders">
           <Key>
@@ -2802,6 +2806,10 @@
           <Property Name="EditedDate" Type="datetime" Nullable="false" />
           <Property Name="Approved" Type="bit" Nullable="false" />
           <Property Name="ApprovedDate" Type="datetime" />
+          <Property Name="VoidTypeID" Type="int" />
+          <Property Name="InActive" Type="bit" Nullable="false" />
+          <Property Name="InActivePartial" Type="bit" Nullable="false" />
+          <Property Name="InActiveDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Workshifts">
           <Key>
@@ -8648,6 +8656,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="GetTransferOrderPendingBlendingInstructions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="TransferOrderID" Type="int" Mode="In" />
+          <Parameter Name="CommodityIDs" Type="varchar" Mode="In" />
+        </Function>
+        <Function Name="GetTransferOrderPendingWorkOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="TransferOrderID" Type="int" Mode="In" />
           <Parameter Name="CommodityIDs" Type="varchar" Mode="In" />
@@ -16669,6 +16682,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </AssociationSet>
           <FunctionImport Name="GetGoodsReceiptPendingPurchasings" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingPurchasing)">
           <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetTransferOrderPendingWorkOrders" ReturnType="Collection(TotalSmartPortalModel.TransferOrderPendingWorkOrder)">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="TransferOrderID" Mode="In" Type="Int32" />
+            <Parameter Name="CommodityIDs" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -24899,6 +24917,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="FirmOrderMaterial" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_FirmOrderMaterials" FromRole="WorkOrderDetail" ToRole="FirmOrderMaterial" />
           <NavigationProperty Name="WorkOrder" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_WorkOrders" FromRole="WorkOrderDetail" ToRole="WorkOrder" />
           <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrderDetails" FromRole="WorkOrderDetail" ToRole="MaterialIssueDetail" />
+          <Property Name="VoidTypeID" Type="Int32" />
+          <Property Name="InActive" Type="Boolean" />
+          <Property Name="InActivePartial" Type="Boolean" />
+          <Property Name="InActivePartialDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="WorkOrder">
           <Key>
@@ -24940,6 +24962,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="QuantityMaterialEstimatedIssued" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
           <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrders" FromRole="WorkOrder" ToRole="MaterialIssueDetail" />
           <NavigationProperty Name="MaterialIssues" Relationship="TotalSmartPortalModel.FK_MaterialIssues_WorkOrders" FromRole="WorkOrder" ToRole="MaterialIssue" />
+          <Property Name="VoidTypeID" Type="Int32" />
+          <Property Name="InActive" Type="Boolean" Nullable="false" />
+          <Property Name="InActivePartial" Type="Boolean" Nullable="false" />
+          <Property Name="InActiveDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_WorkOrders_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -25618,6 +25644,17 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="WarehouseID" Nullable="false" />
           <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="TransferOrderPendingWorkOrder">
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="true" MaxLength="200" />
+          <Property Type="String" Name="OfficialCode" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CommodityTypeID" Nullable="true" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="QuantityTransferOrders" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailableL2" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Boolean" Name="IsSelected" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -32179,6 +32216,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="WorkOrderDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.WorkOrderDetail">
               <MappingFragment StoreEntitySet="WorkOrderDetails">
+                <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
+                <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="VoidTypeID" ColumnName="VoidTypeID" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="QuantityIssued" ColumnName="QuantityIssued" />
@@ -32203,6 +32244,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="WorkOrders">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.WorkOrder">
               <MappingFragment StoreEntitySet="WorkOrders">
+                <ScalarProperty Name="InActiveDate" ColumnName="InActiveDate" />
+                <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="VoidTypeID" ColumnName="VoidTypeID" />
                 <ScalarProperty Name="QuantityMaterialEstimatedIssued" ColumnName="QuantityMaterialEstimatedIssued" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
@@ -32489,6 +32534,21 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
                 <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetTransferOrderPendingWorkOrders" FunctionName="TotalSmartPortalModel.Store.GetTransferOrderPendingWorkOrders">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.TransferOrderPendingWorkOrder">
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="OfficialCode" ColumnName="OfficialCode" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
+                <ScalarProperty Name="QuantityTransferOrders" ColumnName="QuantityTransferOrders" />
+                <ScalarProperty Name="QuantityAvailableL2" ColumnName="QuantityAvailableL2" />
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
