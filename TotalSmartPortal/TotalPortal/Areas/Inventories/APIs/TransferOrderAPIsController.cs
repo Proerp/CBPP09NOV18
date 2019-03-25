@@ -41,6 +41,12 @@ namespace TotalPortal.Areas.Inventories.APIs
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetTransferOrderPendingWorkOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? transferOrderID, string commodityIDs)
+        {
+            var result = this.transferOrderAPIRepository.GetTransferOrderPendingWorkOrders(locationID, transferOrderID, commodityIDs);
+            return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult GetTransferOrderPendingBlendingInstructions([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? transferOrderID, string commodityIDs)
         {
             var result = this.transferOrderAPIRepository.GetTransferOrderPendingBlendingInstructions(locationID, transferOrderID, commodityIDs);

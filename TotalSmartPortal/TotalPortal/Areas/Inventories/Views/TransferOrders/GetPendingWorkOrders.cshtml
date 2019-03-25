@@ -1,11 +1,12 @@
-﻿@using TotalModel.Models;
+﻿
+@using TotalModel.Models;
 @using TotalPortal.Configuration;
 
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
 
-@(Html.Kendo().Grid<TransferOrderPendingBlendingInstruction>()
-    .Name("gridPendingBlendingInstructions")
+@(Html.Kendo().Grid<TransferOrderPendingWorkOrder>()
+    .Name("gridPendingWorkOrders")
     .Columns(columns =>
     {
         columns.Bound(c => c.CommodityCode).Title("Mã").Width(30);
@@ -27,7 +28,7 @@
     })
     .Scrollable(s => s.Height(Settings.PopupContentHeightLarge))
     .DataSource(ds => ds.Ajax()
-            .Read(read => read.Action("GetTransferOrderPendingBlendingInstructions", "TransferOrderAPIs", new { area = "Inventories" }).Data(@<text>
+            .Read(read => read.Action("GetTransferOrderPendingWorkOrders", "TransferOrderAPIs", new { area = "Inventories" }).Data(@<text>
             function(e) {
 
             var packageIssueJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
@@ -54,12 +55,12 @@
 
 <script type="text/javascript">
     function okButton_Click() {
-        handleOKEvent(window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource, $("#gridPendingBlendingInstructions").data("kendoGrid").dataSource);
+        handleOKEvent(window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource, $("#gridPendingWorkOrders").data("kendoGrid").dataSource);
     }
 
-    $('#gridPendingBlendingInstructions').on('click', '.IsSelected', function () {
+    $('#gridPendingWorkOrders').on('click', '.IsSelected', function () {
         var checked = $(this).is(':checked');
-        var grid = $('#gridPendingBlendingInstructions').data().kendoGrid;
+        var grid = $('#gridPendingWorkOrders').data().kendoGrid;
         var dataItem = grid.dataItem($(this).closest('tr'));
         dataItem.set('IsSelected', checked);
     })
@@ -69,7 +70,7 @@
 
 <script>
     function filterText_KeyUp() {
-        var filterText = $("#filterText").val(), gridDetails = $("#gridPendingBlendingInstructions").data("kendoGrid");
+        var filterText = $("#filterText").val(), gridDetails = $("#gridPendingWorkOrders").data("kendoGrid");
 
         if (filterText && filterText.length >= "@Settings.AutoCompleteMinLenght") {
             gridDetails.dataSource.filter({

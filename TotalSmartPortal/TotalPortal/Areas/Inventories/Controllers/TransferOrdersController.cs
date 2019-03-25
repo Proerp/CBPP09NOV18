@@ -30,6 +30,12 @@ namespace TotalPortal.Areas.Inventories.Controllers
         {
         }
 
+        public virtual ActionResult GetPendingWorkOrders()
+        {
+            this.AddRequireJsOptions();
+            return View();
+        }
+
         public virtual ActionResult GetPendingBlendingInstructions()
         {
             this.AddRequireJsOptions();
