@@ -24,5 +24,6 @@ namespace TotalModel.Models
         public Nullable<decimal> ItemWidth { get; set; }
         public Nullable<decimal> ItemLength { get; set; }
         public Nullable<decimal> ItemHigh { get; set; }
+        public Nullable<decimal> Weight { get; set; }
     }
 }

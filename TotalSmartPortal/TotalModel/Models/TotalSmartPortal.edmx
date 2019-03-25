@@ -19366,6 +19366,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="ItemWidth" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="ItemLength" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="ItemHigh" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="18" Scale="3" />
         </ComplexType>
         <ComplexType Name="SemifinishedHandoverIndex">
           <Property Type="Int32" Name="SemifinishedHandoverID" Nullable="false" />
@@ -29324,6 +29325,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="ItemWidth" ColumnName="ItemWidth" />
                 <ScalarProperty Name="ItemLength" ColumnName="ItemLength" />
                 <ScalarProperty Name="ItemHigh" ColumnName="ItemHigh" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
