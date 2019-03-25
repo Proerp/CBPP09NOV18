@@ -44,7 +44,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      MoldID, Code, Name, Quantity, MoldWidth, MoldLength, ItemWidth, ItemLength, ItemHigh, Remarks, InActive " + "\r\n";
+            queryString = queryString + "       SELECT      MoldID, Code, Name, Quantity, MoldWidth, MoldLength, ItemWidth, ItemLength, ItemHigh, Weight, Remarks, InActive " + "\r\n";
             queryString = queryString + "       FROM        Molds " + "\r\n";
             queryString = queryString + "       " + "\r\n";
 

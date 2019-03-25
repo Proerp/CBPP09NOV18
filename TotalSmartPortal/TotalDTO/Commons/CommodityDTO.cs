@@ -92,6 +92,7 @@ namespace TotalDTO.Commons
 
         [Display(Name = "Trọng lượng (net)")]
         [UIHint("DecimalN3")]
+        [Range(0, 10000, ErrorMessage = "Vui lòng nhập hs trọng lượng")]
         Nullable<decimal> Weight { get; set; }
         [Display(Name = "Hạn sử dụng")]
         int Shelflife { get; set; }
@@ -197,6 +198,7 @@ namespace TotalDTO.Commons
             if (this.NMVNTaskID != GlobalEnums.NmvnTaskID.Item && (String.IsNullOrWhiteSpace(this.CodePartA) || this.CodePartA != TotalBase.CommonExpressions.AlphaNumericString(this.CodePartA))) yield return new ValidationResult("Vui lòng kiểm tra mã", new[] { "CodePartA" });
             if (this.NMVNTaskID == GlobalEnums.NmvnTaskID.Item && !decimal.TryParse(this.CodePartE, out decimalValidate)) yield return new ValidationResult("Lỗi độ dày phải là số", new[] { "CodePartE" });
             if (this.NMVNTaskID == GlobalEnums.NmvnTaskID.Item && !decimal.TryParse(this.CodePartF, out decimalValidate)) yield return new ValidationResult("Lỗi chiều rộng phải là số", new[] { "CodePartF" });
+            if (this.NMVNTaskID == GlobalEnums.NmvnTaskID.Item && !GlobalEnums.CBPP && this.Weight == 0) yield return new ValidationResult("Vui lòng nhập hs trọng lượng", new[] { "Weight" });
         }
 
         public override void PerformPresaveRule()

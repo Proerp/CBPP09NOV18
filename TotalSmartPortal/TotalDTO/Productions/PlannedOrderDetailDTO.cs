@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using TotalModel;
@@ -24,6 +25,7 @@ namespace TotalDTO.Productions
         public string MoldCode { get; set; }
         [Display(Name = "P/M")]
         [UIHint("DecimalN0")]
+        [Range(1, 200, ErrorMessage = "Vui lòng kiểm tra số cái/ khuôn [P/M]")]
         public decimal MoldQuantity { get; set; }
 
         public int BomID { get; set; }
@@ -79,6 +81,13 @@ namespace TotalDTO.Productions
         public string Description { get; set; }
 
         public string GetSpecs() { return this.CommodityName + (this.CombineIndex != null ? " [" + this.Quantity.ToString("N" + GlobalEnums.rndQuantity.ToString()) + "] " : ""); }
-        public string GetDescription() { return this.CommodityCode + (this.CombineIndex != null ? " [" + this.Quantity.ToString("N" + GlobalEnums.rndQuantity.ToString()) + "] " : ""); }        
+        public string GetDescription() { return this.CommodityCode + (this.CombineIndex != null ? " [" + this.Quantity.ToString("N" + GlobalEnums.rndQuantity.ToString()) + "] " : ""); }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            foreach (var result in base.Validate(validationContext)) { yield return result; }
+
+            if (this.MoldQuantity <= 0) yield return new ValidationResult("Vui lòng kiểm tra số cái/ khuôn [P/M]", new[] { "MoldQuantity" });
+        }
     }
 }

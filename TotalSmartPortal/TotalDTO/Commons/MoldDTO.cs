@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 using TotalModel;
@@ -57,7 +58,19 @@ namespace TotalDTO.Commons
         [Range(1, 10000, ErrorMessage = "Vui lòng nhập chiều cao SP")]
         public decimal ItemHigh { get; set; }
 
+        [Display(Name = "Trọng lượng (net)")]
+        [UIHint("DecimalN3")]
+        [Range(0, 10000, ErrorMessage = "Vui lòng nhập hs trọng lượng")]
+        public Nullable<decimal> Weight { get; set; }
+
         public override int PreparedPersonID { get { return 1; } }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            foreach (var result in base.Validate(validationContext)) { yield return result; }
+
+            if (this.Weight == 0) yield return new ValidationResult("Vui lòng nhập hs trọng lượng", new[] { "Weight" });
+        }
     }
 
 

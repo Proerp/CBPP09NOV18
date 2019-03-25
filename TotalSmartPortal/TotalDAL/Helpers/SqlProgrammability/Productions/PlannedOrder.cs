@@ -297,6 +297,15 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
+            queryString = queryString + "       DECLARE     @msg NVARCHAR(300); " + "\r\n";
+            queryString = queryString + "       SELECT TOP 1 @msg = N'Vui lòng kiểm tra hs trọng lượng khuôn: ' + Molds.Code + N'; hoặc hs màng nguyên liệu: ' + Commodities.Code FROM PlannedOrderDetails INNER JOIN BomDetails ON PlannedOrderDetails.PlannedOrderID = @EntityID AND PlannedOrderDetails.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.PlannedProduct + " AND PlannedOrderDetails.BomID = BomDetails.BomID INNER JOIN Molds ON PlannedOrderDetails.MoldID = Molds.MoldID INNER JOIN Commodities ON BomDetails.MaterialID = Commodities.CommodityID WHERE Molds.Weight = 0 OR Commodities.Weight = 0; " + "\r\n";
+            queryString = queryString + "       IF (NOT @msg IS NULL) " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               THROW       61001,  @msg, 1; " + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
+
+
+
             queryString = queryString + "       UPDATE      PlannedOrders  SET Approved = @Approved, ApprovedDate = GetDate() WHERE PlannedOrderID = @EntityID AND Approved = ~@Approved" + "\r\n";
 
             queryString = queryString + "       IF @@ROWCOUNT = 1 " + "\r\n";
@@ -336,8 +345,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
 
             queryString = queryString + "                       INSERT INTO     FirmOrderMaterials (FirmOrderID, PlannedOrderID, NMVNTaskID, EntryDate, LocationID, CustomerID, BomID, BomDetailID, BlockUnit, BlockQuantity, MaterialID, Quantity, QuantityIssued, VoidTypeID, Approved, InActive, InActivePartial, InActivePartialDate) " + "\r\n";
-            queryString = queryString + "                       SELECT          FirmOrderDetails.FirmOrderID, FirmOrderDetails.PlannedOrderID, FirmOrderDetails.NMVNTaskID, FirmOrderDetails.EntryDate, FirmOrderDetails.LocationID, FirmOrderDetails.CustomerID, FirmOrderDetails.BomID, BomDetails.BomDetailID, BomDetails.BlockUnit, BomDetails.BlockQuantity, BomDetails.MaterialID, ROUND(((FirmOrderDetails.QuantityMaterial * BomDetails.BlockUnit)/ 100) * (BomDetails.BlockQuantity/ BomDetails.LayerQuantity), " + (int)GlobalEnums.rndQuantity + ") AS Quantity, 0 AS QuantityIssued, FirmOrderDetails.VoidTypeID, FirmOrderDetails.Approved, FirmOrderDetails.InActive, FirmOrderDetails.InActivePartial, FirmOrderDetails.InActivePartialDate " + "\r\n";
-            queryString = queryString + "                       FROM            FirmOrderDetails INNER JOIN BomDetails ON FirmOrderDetails.PlannedOrderID = @EntityID AND FirmOrderDetails.BomID = BomDetails.BomID " + "\r\n";
+            queryString = queryString + "                       SELECT          FirmOrderDetails.FirmOrderID, FirmOrderDetails.PlannedOrderID, FirmOrderDetails.NMVNTaskID, FirmOrderDetails.EntryDate, FirmOrderDetails.LocationID, FirmOrderDetails.CustomerID, FirmOrderDetails.BomID, BomDetails.BomDetailID, BomDetails.BlockUnit, BomDetails.BlockQuantity, BomDetails.MaterialID, IIF(FirmOrderDetails.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.PlannedItem + ", ROUND(((FirmOrderDetails.QuantityMaterial * BomDetails.BlockUnit)/ 100) * (BomDetails.BlockQuantity/ BomDetails.LayerQuantity), " + (int)GlobalEnums.rndQuantity + "), ROUND((FirmOrderDetails.QuantityMaterial * Molds.Weight * Commodities.Weight)/ FirmOrderDetails.MoldQuantity, " + (int)GlobalEnums.rndQuantity + ")) AS Quantity, 0 AS QuantityIssued, FirmOrderDetails.VoidTypeID, FirmOrderDetails.Approved, FirmOrderDetails.InActive, FirmOrderDetails.InActivePartial, FirmOrderDetails.InActivePartialDate " + "\r\n";
+            queryString = queryString + "                       FROM            FirmOrderDetails  " + "\r\n";
+            queryString = queryString + "                                       INNER JOIN BomDetails ON FirmOrderDetails.PlannedOrderID = @EntityID AND FirmOrderDetails.BomID = BomDetails.BomID " + "\r\n";
+            queryString = queryString + "                                       INNER JOIN Molds ON FirmOrderDetails.MoldID = Molds.MoldID " + "\r\n";            
+            queryString = queryString + "                                       INNER JOIN Commodities ON BomDetails.MaterialID = Commodities.CommodityID " + "\r\n";
 
             queryString = queryString + "                   END " + "\r\n";
 
@@ -352,7 +364,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "           END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
-            queryString = queryString + "               DECLARE     @msg NVARCHAR(300) = N'Dữ liệu không tồn tại hoặc đã ' + iif(@Approved = 0, N'hủy', '')  + N' duyệt' ; " + "\r\n";
+            queryString = queryString + "               SET         @msg = N'Dữ liệu không tồn tại hoặc đã ' + iif(@Approved = 0, N'hủy', '')  + N' duyệt' ; " + "\r\n";
             queryString = queryString + "               THROW       61001,  @msg, 1; " + "\r\n";
             queryString = queryString + "           END " + "\r\n";
 

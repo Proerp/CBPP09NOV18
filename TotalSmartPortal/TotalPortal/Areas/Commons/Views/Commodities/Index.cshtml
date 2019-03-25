@@ -28,7 +28,7 @@
             columns.Bound(p => p.MoldCode).Title("M").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(20).Hidden(!@Model.IsProduct);
             columns.Bound(p => p.MoldQuantity).Title("P/M").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(10).Hidden(!@Model.IsProduct);
 
-            columns.Bound(p => p.Weight).Title("TL").Format(GlobalEnums.CBPP ? "{0:n0}" : "{0:n3}").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).Hidden(!GlobalEnums.CBPP);
+            columns.Bound(p => p.Weight).Title("TL").Format(GlobalEnums.CBPP ? "{0:n0}" : "{0:n3}").HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).Hidden(!((GlobalEnums.CBPP && @Model.IsMaterial) || (!GlobalEnums.CBPP && @Model.IsItem)));
             columns.Bound(p => p.Packing).Title("ĐD").Width(10).Hidden(!GlobalEnums.CBPP);
             
             columns.Bound(p => p.Specification).Title("Tồn trữ, bảo quản").Width(138).Hidden(@Model.IsProduct || !GlobalEnums.CBPP);
