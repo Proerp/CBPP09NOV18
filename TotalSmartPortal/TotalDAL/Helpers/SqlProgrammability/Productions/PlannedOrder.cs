@@ -345,11 +345,26 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
 
             queryString = queryString + "                       INSERT INTO     FirmOrderMaterials (FirmOrderID, PlannedOrderID, NMVNTaskID, EntryDate, LocationID, CustomerID, BomID, BomDetailID, BlockUnit, BlockQuantity, MaterialID, Quantity, QuantityIssued, VoidTypeID, Approved, InActive, InActivePartial, InActivePartialDate) " + "\r\n";
-            queryString = queryString + "                       SELECT          FirmOrderDetails.FirmOrderID, FirmOrderDetails.PlannedOrderID, FirmOrderDetails.NMVNTaskID, FirmOrderDetails.EntryDate, FirmOrderDetails.LocationID, FirmOrderDetails.CustomerID, FirmOrderDetails.BomID, BomDetails.BomDetailID, BomDetails.BlockUnit, BomDetails.BlockQuantity, BomDetails.MaterialID, IIF(FirmOrderDetails.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.PlannedItem + ", ROUND(((FirmOrderDetails.QuantityMaterial * BomDetails.BlockUnit)/ 100) * (BomDetails.BlockQuantity/ BomDetails.LayerQuantity), " + (int)GlobalEnums.rndQuantity + "), ROUND((FirmOrderDetails.QuantityMaterial * Molds.Weight * Commodities.Weight)/ FirmOrderDetails.MoldQuantity, " + (int)GlobalEnums.rndQuantity + ")) AS Quantity, 0 AS QuantityIssued, FirmOrderDetails.VoidTypeID, FirmOrderDetails.Approved, FirmOrderDetails.InActive, FirmOrderDetails.InActivePartial, FirmOrderDetails.InActivePartialDate " + "\r\n";
+            queryString = queryString + "                       SELECT          FirmOrderDetails.FirmOrderID, FirmOrderDetails.PlannedOrderID, FirmOrderDetails.NMVNTaskID, FirmOrderDetails.EntryDate, FirmOrderDetails.LocationID, FirmOrderDetails.CustomerID, FirmOrderDetails.BomID, BomDetails.BomDetailID, BomDetails.BlockUnit, BomDetails.BlockQuantity, BomDetails.MaterialID, ROUND(SUM(IIF(FirmOrderDetails.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.PlannedItem + ", ((FirmOrderDetails.QuantityMaterial * BomDetails.BlockUnit)/ 100) * (BomDetails.BlockQuantity/ BomDetails.LayerQuantity), (FirmOrderDetails.QuantityMaterial * Molds.Weight * Commodities.Weight)/ FirmOrderDetails.MoldQuantity)), " + (int)GlobalEnums.rndQuantity + ") AS Quantity, 0 AS QuantityIssued, FirmOrderDetails.VoidTypeID, FirmOrderDetails.Approved, FirmOrderDetails.InActive, FirmOrderDetails.InActivePartial, FirmOrderDetails.InActivePartialDate " + "\r\n";
             queryString = queryString + "                       FROM            FirmOrderDetails  " + "\r\n";
             queryString = queryString + "                                       INNER JOIN BomDetails ON FirmOrderDetails.PlannedOrderID = @EntityID AND FirmOrderDetails.BomID = BomDetails.BomID " + "\r\n";
             queryString = queryString + "                                       INNER JOIN Molds ON FirmOrderDetails.MoldID = Molds.MoldID " + "\r\n";            
             queryString = queryString + "                                       INNER JOIN Commodities ON BomDetails.MaterialID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                       GROUP BY        FirmOrderDetails.FirmOrderID, FirmOrderDetails.PlannedOrderID, FirmOrderDetails.NMVNTaskID, FirmOrderDetails.EntryDate, FirmOrderDetails.LocationID, FirmOrderDetails.CustomerID, FirmOrderDetails.BomID, BomDetails.BomDetailID, BomDetails.BlockUnit, BomDetails.BlockQuantity, BomDetails.MaterialID, FirmOrderDetails.VoidTypeID, FirmOrderDetails.Approved, FirmOrderDetails.InActive, FirmOrderDetails.InActivePartial, FirmOrderDetails.InActivePartialDate " + "\r\n";
+            //-----IMPORTANT------
+            //-----THIS GROUP BY IS CORRECT: BY USING GROUP BY: FirmOrderDetails.FirmOrderID AND BomDetails.BomDetailID. 
+            //-----BECAUSE OF: THERE ARE TWO THINS CONSIDER HERE:
+            //-----1) NMVNTaskID = NmvnTaskID.PlannedItem:      THERE IS ONLY ONE ROW IN FirmOrderDetails PER FirmOrderID, AND: THERE IS MUTIPLE ROW IN BomDetails ==> SO GROUP BY: FirmOrderDetails.FirmOrderID AND BomDetails.BomDetailID: WILL GROUP NOTHING
+            //-----1) NMVNTaskID = NmvnTaskID.PlannedProduct:   THERE MAY BE MULTIPLE ROW PER FirmOrderID (WHEN USING CombineIndex), AND: THERE IS ONLY ONE ROW IN BomDetails FOR THE SAME FirmOrderID (MUST SHARE THE SAME BomID WHEN USING CombineIndex + AND EACH BomID USING HERE - - HAVE ONLY ONE DETAIL ROW: MEAN ONLY BomDetailID) ===> SO GROUP BY: FirmOrderDetails.FirmOrderID AND BomDetails.BomDetailID: WILL GROUP INTO ONLY SINGLE RESULT PER EACH FirmOrderID (UNIQUE DATA ROW)
+
+            //-----!!!!!!!!!NOTE: HAVE MISTAKE!!!!!!!!!
+            //-----!!!!!!!!!THERE IS SOME FirmOrderMaterials HAVE THE WRONG UNIQUE DATA ROW FOR NMVNTaskID = NmvnTaskID.PlannedProduct
+            //-----!!!!!!!!!REASON: FORM MIDLE JAN/2019 - TO 26/MAR/2019: THIS INSERT STATEMENT HAD REMOVED GROUP BY CLAUSE (BY MISTAKE) ==> SO WHEN USING CombineIndex: IT DOES NOT GROUP AT ALL
+            
+
+
+            
+
 
             queryString = queryString + "                   END " + "\r\n";
 
