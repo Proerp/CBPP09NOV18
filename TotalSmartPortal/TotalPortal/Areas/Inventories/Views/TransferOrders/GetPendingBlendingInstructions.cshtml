@@ -10,6 +10,9 @@
     {
         columns.Bound(c => c.CommodityCode).Title("Mã").Width(30);
         columns.Bound(c => c.CommodityName).Title("Tên").Width(30);
+        columns.Bound(c => c.CustomerNames).Title("KH").Width(12);
+        columns.Bound(c => c.Codes).Title("ĐH").Width(30);
+        columns.Bound(c => c.Specs).Title("SP").Width(33);
         columns.Bound(c => c.QuantityRemains).Title("Tồn lệnh").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
         columns.Bound(c => c.QuantityAvailableL2).Title("Tồn kho").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
         columns.Bound(c => c.QuantityTransferOrders).Title("Đã điều").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
@@ -77,8 +80,9 @@
                 filters: [
                     { field: "CommodityCode", operator: "contains", value: filterText },
                     { field: "CommodityName", operator: "contains", value: filterText },
-
-                    { field: "GoodsReceiptReference", operator: "contains", value: filterText }
+                    { field: "CustomerNames", operator: "contains", value: filterText },
+                    { field: "Codes", operator: "contains", value: filterText },
+                    { field: "Specs", operator: "contains", value: filterText }
                 ]
             });
 

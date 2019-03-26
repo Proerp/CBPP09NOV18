@@ -9,19 +9,22 @@
     .Name("gridPendingWorkOrders")
     .Columns(columns =>
     {
-        columns.Bound(c => c.CommodityCode).Title("Mã").Width(30);
-        columns.Bound(c => c.CommodityName).Title("Tên").Width(30);
-        columns.Bound(c => c.QuantityRemains).Title("Tồn lệnh").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.CommodityCode).Title("Mã").Width(20);
+        columns.Bound(c => c.CommodityName).Title("Tên").Width(10);
+        columns.Bound(c => c.CustomerNames).Title("KH").Width(12);
+        columns.Bound(c => c.Codes).Title("ĐH").Width(30);
+        columns.Bound(c => c.Specs).Title("SP").Width(33);
+        columns.Bound(c => c.QuantityRemains).Title("Tồn lệnh").Format(Settings.kfmQuantity).Width(11).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
         columns.Bound(c => c.QuantityAvailableL2).Title("Tồn kho").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
         columns.Bound(c => c.QuantityTransferOrders).Title("Đã điều").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
 
-        columns.Template(t => { }).Title("&nbsp;").ClientTemplate("<input class='IsSelected' #= IsSelected ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center" }).Width(5);
+        columns.Template(t => { }).Title("&nbsp;").ClientTemplate("<input class='IsSelected' #= IsSelected ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center" }).Width(4);
     })
     .ToolBar(toolbar =>
     {
         toolbar.Template(@<text>
             <div class="toolbar" style="float: right;">
-                <label>Nhập số lô hoặc mã hay tên hàng</label>
+                <label>Lọc dữ liệu</label>
                 <input id="filterText" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="filterText_KeyUp()" />
             </div>
         </text>);
@@ -78,8 +81,9 @@
                 filters: [
                     { field: "CommodityCode", operator: "contains", value: filterText },
                     { field: "CommodityName", operator: "contains", value: filterText },
-
-                    { field: "GoodsReceiptReference", operator: "contains", value: filterText }
+                    { field: "CustomerNames", operator: "contains", value: filterText },
+                    { field: "Codes", operator: "contains", value: filterText },
+                    { field: "Specs", operator: "contains", value: filterText }
                 ]
             });
 

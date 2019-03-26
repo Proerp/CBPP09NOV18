@@ -2772,8 +2772,8 @@
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="VoidTypeID" Type="int" />
           <Property Name="Approved" Type="bit" Nullable="false" />
-          <Property Name="InActive" Type="bit" />
-          <Property Name="InActivePartial" Type="bit" />
+          <Property Name="InActive" Type="bit" Nullable="false" />
+          <Property Name="InActivePartial" Type="bit" Nullable="false" />
           <Property Name="InActivePartialDate" Type="datetime" />
         </EntityType>
         <EntityType Name="WorkOrders">
@@ -22876,6 +22876,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="OfficialCode" Nullable="true" MaxLength="50" />
           <Property Type="Int32" Name="CommodityTypeID" Nullable="true" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
+          <Property Type="String" Name="CustomerNames" Nullable="true" />
+          <Property Type="String" Name="Codes" Nullable="true" />
+          <Property Type="String" Name="Specs" Nullable="true" />
         </ComplexType>
         <ComplexType Name="WarehouseTransferAvailableWarehouse">
           <Property Type="Boolean" Name="HasTransferOrder" Nullable="true" />
@@ -24918,8 +24921,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="WorkOrder" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_WorkOrders" FromRole="WorkOrderDetail" ToRole="WorkOrder" />
           <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrderDetails" FromRole="WorkOrderDetail" ToRole="MaterialIssueDetail" />
           <Property Name="VoidTypeID" Type="Int32" />
-          <Property Name="InActive" Type="Boolean" />
-          <Property Name="InActivePartial" Type="Boolean" />
+          <Property Name="InActive" Type="Boolean" Nullable="false" />
+          <Property Name="InActivePartial" Type="Boolean" Nullable="false" />
           <Property Name="InActivePartialDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="WorkOrder">
@@ -25655,7 +25658,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="QuantityTransferOrders" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailableL2" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
-        </ComplexType>
+          <Property Type="String" Name="CustomerNames" Nullable="true" />
+          <Property Type="String" Name="Codes" Nullable="true" />
+          <Property Type="String" Name="Specs" Nullable="true" />
+          </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -31452,6 +31458,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="OfficialCode" ColumnName="OfficialCode" />
                 <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
+                <ScalarProperty Name="CustomerNames" ColumnName="CustomerNames" />
+                <ScalarProperty Name="Codes" ColumnName="Codes" />
+                <ScalarProperty Name="Specs" ColumnName="Specs" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -32549,7 +32558,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="QuantityTransferOrders" ColumnName="QuantityTransferOrders" />
                 <ScalarProperty Name="QuantityAvailableL2" ColumnName="QuantityAvailableL2" />
                 <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
-              </ComplexTypeMapping>
+                <ScalarProperty Name="CustomerNames" ColumnName="CustomerNames" />
+                <ScalarProperty Name="Codes" ColumnName="Codes" />
+                <ScalarProperty Name="Specs" ColumnName="Specs" />
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
         </EntityContainerMapping>

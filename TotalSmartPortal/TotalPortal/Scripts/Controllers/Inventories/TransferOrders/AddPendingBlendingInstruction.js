@@ -50,14 +50,14 @@ function handleOKEvent(transferOrderGridDataSource, pendingBlendingInstructionGr
 
         dataRow.QuantityAvailables = productionOrderGridDataItem.QuantityAvailableL2;
         //dataRow.QuantityRemains = productionOrderGridDataItem.QuantityRemains;
-        dataRow.Quantity = 0;
+        dataRow.Quantity = productionOrderGridDataItem.QuantityRemains - productionOrderGridDataItem.QuantityTransferOrders - productionOrderGridDataItem.QuantityAvailableL2;
 
         dataRow.QuantityIssued = 0;
         dataRow.QuantityRemains = 0;
 
         dataRow.InActivePartial = false;
         dataRow.VoidTypeName = null;
-        dataRow.Remarks = null;
+        dataRow.Remarks = productionOrderGridDataItem.Specs;
 
 
         transferOrderJSON.push(dataRow);

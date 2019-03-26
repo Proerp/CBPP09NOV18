@@ -22,5 +22,8 @@ namespace TotalModel.Models
         public string OfficialCode { get; set; }
         public Nullable<int> CommodityTypeID { get; set; }
         public Nullable<bool> IsSelected { get; set; }
+        public string CustomerNames { get; set; }
+        public string Codes { get; set; }
+        public string Specs { get; set; }
     }
 }
