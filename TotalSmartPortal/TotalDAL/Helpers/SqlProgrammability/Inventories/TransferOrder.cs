@@ -155,7 +155,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString;
 
             queryString = " @LocationID Int, @TransferOrderID Int, @CommodityIDs varchar(3999) " + "\r\n";
-            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "   BEGIN " + "\r\n";
@@ -164,7 +164,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
 
             queryString = queryString + "       INSERT INTO     @WorkOrderDetails (CommodityID, CustomerName, FirmOrderCode, FirmOrderSpecs, QuantityRemains, QuantityTransferOrders, QuantityAvailableL2) " + "\r\n";
-            queryString = queryString + "       SELECT          WorkOrderDetails.CommodityID, Customers.Name, FirmOrders.Code, FirmOrders.Specs, ROUND(WorkOrderDetails.Quantity - WorkOrderDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, 0 AS QuantityTransferOrders, 0 AS QuantityAvailableL2 FROM WorkOrderDetails INNER JOIN FirmOrders ON WorkOrderDetails.FirmOrderID = FirmOrders.FirmOrderID INNER JOIN Customers ON FirmOrders.CustomerID = Customers.CustomerID WHERE WorkOrderDetails.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ProductWorkOrder + " AND WorkOrderDetails.Approved = 1 AND WorkOrderDetails.InActive = 0 AND WorkOrderDetails.InActivePartial = 0 AND ROUND(WorkOrderDetails.Quantity - WorkOrderDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n";
+            queryString = queryString + "       SELECT          WorkOrderDetails.CommodityID, Customers.Name, FirmOrders.Code, FirmOrders.Specs, ROUND(WorkOrderDetails.Quantity - WorkOrderDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, 0 AS QuantityTransferOrders, 0 AS QuantityAvailableL2 FROM WorkOrderDetails INNER JOIN FirmOrders ON WorkOrderDetails.FirmOrderID = FirmOrders.FirmOrderID INNER JOIN Customers ON FirmOrders.CustomerID = Customers.CustomerID WHERE WorkOrderDetails.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ProductWorkOrder + " AND WorkOrderDetails.Approved = 1 AND WorkOrderDetails.InActive = 0 AND WorkOrderDetails.InActivePartial = 0 AND ROUND(WorkOrderDetails.Quantity - WorkOrderDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 AND WorkOrderDetails.FirmOrderID IN (           SELECT DISTINCT FirmOrderID FROM FirmOrderDetails WHERE NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.PlannedProduct + " AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - (QuantitySemifinished - QuantityShortage - QuantityFailure + QuantityExcess), " + (int)GlobalEnums.rndQuantity + ") > 0           ) " + "\r\n";
 
             queryString = queryString + "       INSERT INTO     @WorkOrderDetails (CommodityID, CustomerName, FirmOrderCode, FirmOrderSpecs, QuantityRemains, QuantityTransferOrders, QuantityAvailableL2) " + "\r\n";
             queryString = queryString + "       SELECT          CommodityID, NULL, NULL, NULL, 0 AS QuantityRemains, ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityTransferOrders, 0 AS QuantityAvailableL2 FROM TransferOrderDetails WHERE CommodityID IN (SELECT CommodityID FROM @WorkOrderDetails) AND LocationIssuedID = 1 AND LocationReceiptID = 2 AND TransferOrderID <> @TransferOrderID AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n"; //Approved = 1 AND 
