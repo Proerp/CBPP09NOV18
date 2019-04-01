@@ -2469,6 +2469,8 @@
           <Property Name="FoilUnitCounts" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="FoilUnitWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="FoilWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="RejectCounts" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="RejectWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="FailureWeights" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantityFinished" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -19957,6 +19959,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_SemifinishedProducts_GoodsReceiptDetails" FromRole="SemifinishedProduct" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsReceipt" Relationship="TotalSmartPortalModel.FK_SemifinishedProducts_GoodsReceipts" FromRole="SemifinishedProduct" ToRole="GoodsReceipt" />
           <NavigationProperty Name="SemifinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedProducts" FromRole="SemifinishedProduct" ToRole="SemifinishedHandoverDetail" />
+          <Property Name="RejectCounts" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="RejectWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_MaterialIssueDetails_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -29890,6 +29894,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="SemifinishedProducts">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedProduct">
               <MappingFragment StoreEntitySet="SemifinishedProducts">
+                <ScalarProperty Name="RejectWeights" ColumnName="RejectWeights" />
+                <ScalarProperty Name="RejectCounts" ColumnName="RejectCounts" />
                 <ScalarProperty Name="StopDate" ColumnName="StopDate" />
                 <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />

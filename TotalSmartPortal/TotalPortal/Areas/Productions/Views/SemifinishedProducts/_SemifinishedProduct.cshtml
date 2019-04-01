@@ -65,33 +65,30 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.StartSequenceNo)
-            <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => model.StartSequenceNo).Format(@Settings.kfmN0).HtmlAttributes(new { @class = "left-panel-input" }).Events(e => e.Change("updateFoilCounts").Spin("updateFoilCounts"))
+            <div class="div-input left-panel-input">
+                <span style="width: 47%;float: left;">@Html.Kendo().NumericTextBoxFor(model => model.StartSequenceNo).Format(@Settings.kfmN0).HtmlAttributes(new { @style = "width: 100%;" }).Events(e => e.Change("updateFoilCounts").Spin("updateFoilCounts")) </span>
+                <label style="width:6%; text-align:center; margin-top: 4px;"> - </label>
+                <span style="width: 47%;float: right;">@Html.Kendo().NumericTextBoxFor(model => model.StopSequenceNo).Format(@Settings.kfmN0).HtmlAttributes(new { @style = "width: 100%;" }).Events(e => e.Change("updateFoilCounts").Spin("updateFoilCounts")) </span>
             </div>
             <div class="div-validation-message">
                 @Html.ValidationMessageFor(model => model.StartSequenceNo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.StopSequenceNo)
-            <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => model.StopSequenceNo).Format(@Settings.kfmN0).HtmlAttributes(new { @class = "left-panel-input" }).Events(e => e.Change("updateFoilCounts").Spin("updateFoilCounts"))
-            </div>
-            <div class="div-validation-message">
                 @Html.ValidationMessageFor(model => model.StopSequenceNo, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.FoilCounts)
-            <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => model.FoilCounts).Format(@Settings.kfmN0).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" }).Events(e => e.Change("updateFoilWeights").Spin("updateFoilWeights"))
+            <div class="div-input left-panel-input">
+                <span style="width: 47%;float: left;">@Html.Kendo().NumericTextBoxFor(model => model.FoilCounts).Format(@Settings.kfmN0).HtmlAttributes(new { @style = "width: 100%;", @readonly = "readonly" }).Events(e => e.Change("updateFoilWeights").Spin("updateFoilWeights")) </span>
+                <label style="width:6%; text-align:center; margin-top: 4px;"> - </label>
+                <span style="width: 47%;float: right;">@Html.Kendo().NumericTextBoxFor(model => model.RejectCounts).Format(@Settings.kfmN0).HtmlAttributes(new { @style = "width: 100%;" }).Events(e => e.Change("updateFoilCounts").Spin("updateFoilCounts")) </span>
             </div>
             <div class="div-validation-message">
                 @Html.ValidationMessageFor(model => model.FoilCounts, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.RejectCounts, "", new { @class = "text-danger" })
             </div>
         </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.FoilUnitCounts)
@@ -107,13 +104,17 @@
 
         <div class="form-group">
             @Html.LabelFor(model => model.FoilWeights)
-            <div class="div-input">
-                @Html.Kendo().NumericTextBoxFor(model => model.FoilWeights).Format(@Settings.kfmQuantity).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            <div class="div-input left-panel-input">
+                <span style="width: 47%;float: left;">@Html.Kendo().NumericTextBoxFor(model => model.FoilWeights).Format(@Settings.kfmQuantity).HtmlAttributes(new { @style = "width: 100%;", @readonly = "readonly" }) </span>
+                <label style="width:6%; text-align:center; margin-top: 4px;"> - </label>
+                <span style="width: 47%;float: right;">@Html.Kendo().NumericTextBoxFor(model => model.RejectWeights).Format(@Settings.kfmQuantity).HtmlAttributes(new { @style = "width: 100%;", @readonly = "readonly" }) </span>
             </div>
             <div class="div-validation-message">
                 @Html.ValidationMessageFor(model => model.FoilWeights, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => model.RejectWeights, "", new { @class = "text-danger" })
             </div>
         </div>
+
 
         <div class="form-group">
             @Html.LabelFor(model => model.FailureWeights)
@@ -394,7 +395,7 @@
 <script type="text/javascript">
 
     function updateFoilCounts() {
-        var foilCounts = DoRound($("#StopSequenceNo").val() - $("#StartSequenceNo").val() + 1, requireConfig.websiteOptions.rndN0);
+        var foilCounts = DoRound($("#StopSequenceNo").val() - $("#StartSequenceNo").val() + 1 - $("#RejectCounts").val(), requireConfig.websiteOptions.rndN0);
         $("#FoilCounts").data("kendoNumericTextBox").value(foilCounts > 0 ? foilCounts : 0);
         $("#FoilCounts").data("kendoNumericTextBox").trigger("change");
 
@@ -403,7 +404,10 @@
 
     function updateFoilWeights() {
         $("#FoilWeights").data("kendoNumericTextBox").value(($("#FoilUnitCounts").val() * 1) > 0 ? DoRound($("#FoilCounts").val() * $("#FoilUnitWeights").val()/ $("#FoilUnitCounts").val(), requireConfig.websiteOptions.rndQuantity) : 0);
+        $("#RejectWeights").data("kendoNumericTextBox").value(($("#FoilUnitCounts").val() * 1) > 0 ? DoRound($("#RejectCounts").val() * $("#FoilUnitWeights").val()/ $("#FoilUnitCounts").val(), requireConfig.websiteOptions.rndQuantity) : 0);
+        
         $("#FoilWeights").data("kendoNumericTextBox").trigger("change");
+        $("#RejectWeights").data("kendoNumericTextBox").trigger("change");
     }
 
     function updateDetailQuantity () { //Define function to be called by action some button

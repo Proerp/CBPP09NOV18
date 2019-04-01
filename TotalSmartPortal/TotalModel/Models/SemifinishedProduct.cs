@@ -60,6 +60,8 @@ namespace TotalModel.Models
         public int PlannedOrderID { get; set; }
         public Nullable<System.DateTime> StartDate { get; set; }
         public Nullable<System.DateTime> StopDate { get; set; }
+        public decimal RejectCounts { get; set; }
+        public decimal RejectWeights { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
