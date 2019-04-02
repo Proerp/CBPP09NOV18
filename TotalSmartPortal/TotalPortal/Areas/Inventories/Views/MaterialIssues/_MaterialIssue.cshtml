@@ -65,7 +65,7 @@
 
         @if (Model.MaterialIssueTypeID == (int)GlobalEnums.MaterialIssueTypeID.FirmOrders)
         {
-            <div @{if (!Model.IsMaterial) { <text> class="SBT-Hidden" </text>    }}>
+            <div @{if (!Model.IsMaterial) { <text> class="SBT-Hidden" </text>     }}>
                 <div class="form-group">
                     @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).WorkOrderEntryDate)
                     <div class="div-input">
@@ -77,33 +77,35 @@
                 </div>
             </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderReference)
-                <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderReference).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            <div class="SBT-Hidden">
+                <div class="form-group">
+                    @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderReference)
+                    <div class="div-input">
+                        @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderReference).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderReference, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderReference, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderCode)
-                <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                <div class="form-group">
+                    @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderCode)
+                    <div class="div-input">
+                        @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderCode, "", new { @class = "text-danger" })
+                    </div>
                 </div>
-                <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderCode, "", new { @class = "text-danger" })
-                </div>
-            </div>
 
-            <div class="form-group">
-                @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderEntryDate)
-                <div class="div-input">
-                    @Html.Kendo().DateTimePickerFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
-                </div>
-                <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderEntryDate, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderEntryDate)
+                    <div class="div-input">
+                        @Html.Kendo().DateTimePickerFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderEntryDate, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             </div>
         }
@@ -113,9 +115,23 @@
 
     <div class="right-panel">
 
-        <div class="right-top-panel right-top-panel-H2">
+        <div class="right-top-panel right-top-panel-H4">
 
-            @Html.EditorFor(d => (d as IMaterialIssueDTO).Customer, new { CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Lệnh sản xuất tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
+            @Html.EditorFor(d => (d as IMaterialIssueDTO).Customer, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), CustomerIcon = "Customer Red 24.png", NullCustomer = (Model.CustomerID > 0 ? null : "Lệnh sản xuất tổng hợp của nhiều khách hàng"), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
+
+            <div class="right-first-panel">
+                <div class="form-group">
+                    <div class="right-panel-label">
+                        @Html.LabelFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderDescription)
+                    </div>
+                    <div class="div-input">
+                        @Html.Kendo().MaskedTextBoxFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderDescription).HtmlAttributes(new { @class = "right-panel-input", @readonly = "readonly" })
+                    </div>
+                    <div class="div-validation-message">
+                        @Html.ValidationMessageFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderDescription, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
 
             @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecs)
             @Html.HiddenFor(model => (model as IMaterialIssuePrimitiveDTO).FirmOrderSpecification)
@@ -133,7 +149,7 @@
                 </div>
             </div>
 
-            <div @{if (!Model.IsMaterial) { <text> class="SBT-Nonvisibility" </text>     }}>
+            <div @{if (!Model.IsMaterial) { <text> class="SBT-Nonvisibility" </text>      }}>
                 <div class="right-second-panel">
                     <div class="form-group">
                         <div class="right-panel-label">
@@ -269,12 +285,12 @@
                         {
                             if (Model.MaterialIssueTypeID == (int)GlobalEnums.MaterialIssueTypeID.FirmOrders)
                                 toolbar.Template(@<text>
-                    <button type="button" class="k-button" onclick="GetPendingFirmOrderMaterials()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Xuất từ tồn kho </button>
-                    @*<button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Xuất nguyên cuộn </button>*@
+                                    <button type="button" class="k-button" onclick="GetPendingFirmOrderMaterials()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Xuất từ tồn kho </button>
+                                    @*<button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Xuất nguyên cuộn </button>*@
                                 </text>);
                             else
                                 toolbar.Template(@<text>
-                                    <button type="button" class="k-button" onclick="$('#kendoGridDetails').data('kendoGrid').addRow()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm mặt hàng </button>
+                                <button type="button" class="k-button" onclick="$('#kendoGridDetails').data('kendoGrid').addRow()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm mặt hàng </button>
                                 </text>);
                         }
                         else
@@ -292,38 +308,38 @@
                     .Events(events =>
                     {
                         events.DataBound(@<text>
-                                function(e) {
+                            function(e) {
 
-                                var grid = $("#kendoGridDetails").data("kendoGrid");
-                                var data = grid.dataSource.data();
-                                $.each(data, function (i, row) {
-                                var isWarrantyClaim = row.VoidTypeName;
-                                if (isWarrantyClaim != null && isWarrantyClaim != '') {
-                                $('tr[data-uid="' + row.uid + '"]').addClass("isBonus");
-                                }
-                                });
-                                }
+                            var grid = $("#kendoGridDetails").data("kendoGrid");
+                            var data = grid.dataSource.data();
+                            $.each(data, function (i, row) {
+                            var isWarrantyClaim = row.VoidTypeName;
+                            if (isWarrantyClaim != null && isWarrantyClaim != '') {
+                            $('tr[data-uid="' + row.uid + '"]').addClass("isBonus");
+                            }
+                            });
+                            }
                         </text>);
                     }).DataSource(dataSource => dataSource
-                    .Ajax()
-                    .Batch(true)
-                    .ServerOperation(false)
-                    .Model(model =>
-                    {
-                        model.Id(x => x.MaterialIssueDetailID);
-                        model.Field(m => m.MaterialIssueDetailID).DefaultValue(0);
-                        model.Field(m => m.MaterialIssueID).DefaultValue(@Model.MaterialIssueID);
-                    })
-                    .Events(events =>
-                    {
-                        events.Error("kendGrid_ErrorHandler");
-                    })
-                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                    .Aggregates(a => a.Add(x => x.WorkOrderRemains).Sum())
-                    .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
-                    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
-                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                )
+                                            .Ajax()
+                                            .Batch(true)
+                                            .ServerOperation(false)
+                                            .Model(model =>
+                                            {
+                                                model.Id(x => x.MaterialIssueDetailID);
+                                                model.Field(m => m.MaterialIssueDetailID).DefaultValue(0);
+                                                model.Field(m => m.MaterialIssueID).DefaultValue(@Model.MaterialIssueID);
+                                            })
+                                            .Events(events =>
+                                            {
+                                                events.Error("kendGrid_ErrorHandler");
+                                            })
+                                            .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                                            .Aggregates(a => a.Add(x => x.WorkOrderRemains).Sum())
+                                            .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
+                                            .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                                            .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                                        )
             )
         </div>
 
@@ -337,31 +353,31 @@
                         .Selected(true)
                         .Expanded(false)
                         .Content(@<text>
-                    <div class="right-first-panel">
-                        <div class="form-group">
-                            @Html.LabelFor(model => (model as IBaseDTO).Description, new { @class = "right-panel-label" })
-                            <div class="div-input">
-                                @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "right-panel-input" })
+                            <div class="right-first-panel">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => (model as IBaseDTO).Description, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => (model as IBaseModel).Remarks, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => (model as IBaseModel).Remarks, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
                             </div>
-                            <div class="div-validation-message">
-                                @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => (model as IBaseModel).Remarks, new { @class = "right-panel-label" })
-                            <div class="div-input">
-                                @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Remarks).HtmlAttributes(new { @class = "right-panel-input" })
-                            </div>
-                            <div class="div-validation-message">
-                                @Html.ValidationMessageFor(model => (model as IBaseModel).Remarks, "", new { @class = "text-danger" })
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="right-second-panel">
-                        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PreparedPerson.cshtml")
-                        @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Approver.cshtml")
-                    </div>
+                            <div class="right-second-panel">
+                                @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PreparedPerson.cshtml")
+                                @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Approver.cshtml")
+                            </div>
 
                         </text>).HtmlAttributes(new { @class = "panel-class" });
                 })
@@ -382,7 +398,7 @@
             {
                 if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
                 {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.MaterialIssueID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt </button>
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.MaterialIssueID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt </button>
                 }
             }
 
@@ -394,7 +410,8 @@
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
         <div style="height:68px;"></div>
-        @if (@Model.IsItem) {@Html.Partial("~/Views/Helpers/Commons/_PlannedOrderLogs.cshtml")}
+        @if (@Model.IsItem)
+        {@Html.Partial("~/Views/Helpers/Commons/_PlannedOrderLogs.cshtml")}
     </div>
 }
 
@@ -418,5 +435,7 @@
 </script>
 
 <style>
-    .only-here {width: 39%;}
+    .only-here {
+        width: 39%;
+    }
 </style>

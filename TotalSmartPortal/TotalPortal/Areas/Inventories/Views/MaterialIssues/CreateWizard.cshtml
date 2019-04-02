@@ -78,12 +78,12 @@
             columns.Bound(c => c.FirmOrderEntryDate).Title("Ngày KHSX").Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(38);
             columns.Bound(c => c.WorkOrderEntryDate).Title("Y/C NVL").Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(38).Hidden(!@Model.IsMaterial);
             columns.Bound(c => c.CustomerName).Title("Khách hàng").Width(50);
-            columns.Bound(c => c.FirmOrderSpecification).Title(@Model.IsMaterial? "Mã màng" : "Mã thành phẩm").Width(92);
-            columns.Bound(c => c.FirmOrderSpecs).Title(@Model.IsMaterial ? "Mô tả tên màng" : "Tên thành phẩm").Width(60);
+            columns.Bound(c => c.FirmOrderSpecification).Title(@Model.IsMaterial? "Mã màng" : "Mã thành phẩm").Width(80);
+            columns.Bound(c => c.FirmOrderSpecs).Title(@Model.IsMaterial ? "Mô tả tên màng" : "Tên thành phẩm").Width(88);
             columns.Bound(p => p.TotalQuantity).Title("SL ĐH").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(31);
             columns.Bound(p => p.TotalQuantityRemains).Title("Tồn đơn").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(31);
 
-            columns.Bound(p => p.QuantityMaterialEstimatedRemains).Title("Tồn NVL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(36).Hidden(!@Model.IsMaterial);
+            columns.Bound(p => p.QuantityMaterialEstimatedRemains).Title("Tồn NVL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(36);
         })
         .ToolBar(toolbar =>
         {
@@ -94,7 +94,7 @@
                 </div>
             </text>);
         })
-        .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell); })
+        .Editable(editable => editable.Enabled(false))
         .Scrollable(s => s.Height(Settings.PopupContentHeight))
         .DataSource(ds => ds.Ajax()
             .Read(read => read.Action("GetFirmOrders", "MaterialIssueAPIs", new { area = "Inventories" }).Data(@<text>

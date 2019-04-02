@@ -45,7 +45,9 @@ namespace TotalDTO.Inventories
         string FirmOrderSpecification { get; set; }
         [Display(Name = "Thành phẩm")]
         string FirmOrderSpecificationSpecs { get; }
-        
+        [Display(Name = "Đơn hàng")]
+        string FirmOrderDescription { get; }
+
         int WorkOrderID { get; set; }
         [Display(Name = "Ngày yêu cầu NVL")]
         DateTime WorkOrderEntryDate { get; set; }
@@ -105,6 +107,8 @@ namespace TotalDTO.Inventories
         public string FirmOrderSpecification { get; set; }
         [Display(Name = "Thành phẩm")]
         public string FirmOrderSpecificationSpecs { get { return this.FirmOrderSpecs + " (" + this.FirmOrderSpecification + ")"; } }
+        [Display(Name = "Đơn hàng")]
+        public string FirmOrderDescription { get { return this.FirmOrderReference + ", Số CT: " + this.FirmOrderCode + ", Ngày CT: " + this.FirmOrderEntryDate.ToString("dd/MM/yyyy"); } }
 
         public int WorkOrderID { get; set; }
         public DateTime WorkOrderEntryDate { get; set; }
@@ -135,7 +139,9 @@ namespace TotalDTO.Inventories
 
             this.ShiftSaving(this.ShiftID);
             this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.MaterialIssueTypeID = this.MaterialIssueTypeID; e.PlannedOrderID = this.PlannedOrderID; e.FirmOrderID = this.FirmOrderID; e.WorkOrderID = this.WorkOrderID; e.ProductionOrderID = this.ProductionOrderID; e.ProductionOrderDetailID = this.ProductionOrderDetailID; e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.ProductionLineID = this.ProductionLineID; e.CrucialWorkerID = this.CrucialWorkerID; e.WarehouseID = this.WarehouseID; e.Code = this.Code; });
-        }
+
+            if (this.NMVNTaskID == GlobalEnums.NmvnTaskID.ItemStaging) this.QuantityMaterialEstimated = this.TotalQuantity;
+         }
     }
 
 

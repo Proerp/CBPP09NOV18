@@ -65,11 +65,14 @@ namespace TotalDTO.Productions
         [Display(Name = "Mã số máy")]
         public string ProductionLineCode { get; set; }
 
-        [Display(Name = "Mã số máy, ca sx")]
-        public string WorkDescription { get { return this.ProductionLineCode + ", " + this.MaterialIssueDetailWorkshiftCode + " [" + this.MaterialIssueDetailWorkshiftEntryDate.ToString("dd/MM/yyyy") + "]"; } }
+        [Display(Name = "Đơn hàng")]
+        public string FirmOrderDescription { get { return this.FirmOrderReference + ", Số CT: " + this.FirmOrderCode + ", Ngày CT: " + this.FirmOrderEntryDate.ToString("dd/MM/yyyy"); } }
 
-        [Display(Name = "Cuộn màng")]
-        public string GoodsReceiptDescription { get { return this.MaterialCode + ", " + this.GoodsReceiptReference + (this.GoodsReceiptEntryDate != null ? " [" + this.GoodsReceiptEntryDate.Value.ToString("dd/MM/yyyy") + "]" : "") + ", " + this.MaterialQuantity.ToString("N2") + ", " + this.MaterialQuantityRemains.ToString("N2"); } }
+        [Display(Name = "Mã số máy, ca sx")]
+        public string WorkDescription { get { return "Máy " + this.ProductionLineCode + ", " + this.MaterialIssueDetailWorkshiftCode + ", Ngày cấp màng: " + this.MaterialIssueDetailWorkshiftEntryDate.ToString("dd/MM/yyyy"); } }
+
+        [Display(Name = "Thông tin cuộn màng")]
+        public string GoodsReceiptDescription { get { return this.MaterialCode + ", Lô màng: " + this.GoodsReceiptReference + (this.GoodsReceiptEntryDate != null ? " [" + this.GoodsReceiptEntryDate.Value.ToString("dd/MM/yyyy") + "]" : "") + ", KL cuộn màng đã cấp: " + this.MaterialQuantity.ToString("N2") + " kg, KL còn lại: " + this.MaterialQuantityRemains.ToString("N2") + " kg"; } }
 
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; } // WHEN ADD NEW: THIS WILL BE ZERO. THEN, THE REAL VALUE OF WorkshiftID WILL BE UPDATE BY SemifinishedProductSaveRelative

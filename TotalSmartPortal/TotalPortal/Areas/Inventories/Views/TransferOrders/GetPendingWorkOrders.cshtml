@@ -9,11 +9,11 @@
     .Name("gridPendingWorkOrders")
     .Columns(columns =>
     {
-        columns.Bound(c => c.CommodityCode).Title("Mã").Width(20);
+        columns.Bound(c => c.CommodityCode).Title("Mã").Width(23);
         columns.Bound(c => c.CommodityName).Title("Tên").Width(10);
         columns.Bound(c => c.CustomerNames).Title("KH").Width(12);
-        columns.Bound(c => c.Codes).Title("ĐH").Width(30);
-        columns.Bound(c => c.Specs).Title("SP").Width(33);
+        columns.Bound(c => c.Codes).Title("ĐH").Width(29);
+        columns.Bound(c => c.Specs).Title("SP").Width(31);
         columns.Bound(c => c.QuantityRemains).Title("Tồn lệnh").Format(Settings.kfmQuantity).Width(11).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
         columns.Bound(c => c.QuantityAvailableL2).Title("Tồn kho").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
         columns.Bound(c => c.QuantityTransferOrders).Title("Đã điều").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });

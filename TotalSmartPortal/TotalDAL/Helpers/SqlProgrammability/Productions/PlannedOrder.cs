@@ -338,8 +338,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                               FETCH NEXT FROM CURSORPlannedOrderDetails INTO @CombineIndex, @PlannedOrderDetailID; " + "\r\n";
             queryString = queryString + "                           END " + "\r\n";
 
-            //--------FirmOrders.QuantityMaterialEstimated = FirmOrderDetails.TotalQuantity: CHỈ ĐÚNG VỚI MÀNG, CÒN VỚI KHAY: CHƯA ĐÚNG. CẦN PHẢI XEM LẠI
-            queryString = queryString + "                       UPDATE          FirmOrders SET FirmOrders.TotalQuantity = FirmOrderDetails.TotalQuantity, FirmOrders.TotalQuantityMaterial = FirmOrderDetails.TotalQuantityMaterial, FirmOrders.TotalQuantitySemifinished = FirmOrderDetails.TotalQuantitySemifinished, FirmOrders.QuantityMaterialEstimated = FirmOrderDetails.TotalQuantityMaterial, FirmOrders.BomID = FirmOrderDetails.BomID, FirmOrders.BlockUnit = FirmOrderDetails.BlockUnit, FirmOrders.BlockQuantity = FirmOrderDetails.BlockQuantity, FirmOrders.Specs = FirmOrderDetails.Specs, FirmOrders.Specification = FirmOrderDetails.Description " + "\r\n";
+
+            
+            queryString = queryString + "                       UPDATE          FirmOrders SET FirmOrders.TotalQuantity = FirmOrderDetails.TotalQuantity, FirmOrders.TotalQuantityMaterial = FirmOrderDetails.TotalQuantityMaterial, FirmOrders.TotalQuantitySemifinished = FirmOrderDetails.TotalQuantitySemifinished, FirmOrders.BomID = FirmOrderDetails.BomID, FirmOrders.BlockUnit = FirmOrderDetails.BlockUnit, FirmOrders.BlockQuantity = FirmOrderDetails.BlockQuantity, FirmOrders.Specs = FirmOrderDetails.Specs, FirmOrders.Specification = FirmOrderDetails.Description " + "\r\n";
             queryString = queryString + "                       FROM            FirmOrders " + "\r\n";
             queryString = queryString + "                                       INNER JOIN (SELECT FirmOrderID, SUM(Quantity) AS TotalQuantity, SUM(QuantityMaterial) AS TotalQuantityMaterial, SUM(QuantitySemifinished) AS TotalQuantitySemifinished, MIN(BomID) AS BomID, MIN(BlockUnit) AS BlockUnit, MIN(BlockQuantity) AS BlockQuantity, MIN(Description) AS Description, MIN(Specs) AS Specs FROM FirmOrderDetails WHERE PlannedOrderID = @EntityID GROUP BY FirmOrderID) FirmOrderDetails ON FirmOrders.PlannedOrderID = @EntityID AND FirmOrders.FirmOrderID = FirmOrderDetails.FirmOrderID; " + "\r\n";
 
@@ -351,6 +352,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                                       INNER JOIN Molds ON FirmOrderDetails.MoldID = Molds.MoldID " + "\r\n";            
             queryString = queryString + "                                       INNER JOIN Commodities ON BomDetails.MaterialID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                       GROUP BY        FirmOrderDetails.FirmOrderID, FirmOrderDetails.PlannedOrderID, FirmOrderDetails.NMVNTaskID, FirmOrderDetails.EntryDate, FirmOrderDetails.LocationID, FirmOrderDetails.CustomerID, FirmOrderDetails.BomID, BomDetails.BomDetailID, BomDetails.BlockUnit, BomDetails.BlockQuantity, BomDetails.MaterialID, FirmOrderDetails.VoidTypeID, FirmOrderDetails.Approved, FirmOrderDetails.InActive, FirmOrderDetails.InActivePartial, FirmOrderDetails.InActivePartialDate " + "\r\n";
+            //-----AFTER CALCULATE Quantity FOR FirmOrderMaterials ==> NEED TO UPDATE: [SUM(Quantity) AS TotalQuantity FROM FirmOrderMaterials] TO: [FirmOrders.QuantityMaterialEstimated]
+            queryString = queryString + "                       UPDATE          FirmOrders SET FirmOrders.QuantityMaterialEstimated = FirmOrderMaterials.TotalQuantity " + "\r\n";
+            queryString = queryString + "                       FROM            FirmOrders " + "\r\n";
+            queryString = queryString + "                                       INNER JOIN (SELECT FirmOrderID, SUM(Quantity) AS TotalQuantity FROM FirmOrderMaterials WHERE PlannedOrderID = @EntityID GROUP BY FirmOrderID) FirmOrderMaterials ON FirmOrders.PlannedOrderID = @EntityID AND FirmOrders.FirmOrderID = FirmOrderMaterials.FirmOrderID; " + "\r\n";
+
             //-----IMPORTANT------
             //-----THIS GROUP BY IS CORRECT: BY USING GROUP BY: FirmOrderDetails.FirmOrderID AND BomDetails.BomDetailID. 
             //-----BECAUSE OF: THERE ARE TWO THINS CONSIDER HERE:
