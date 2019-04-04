@@ -26,6 +26,11 @@ namespace TotalDAL.Repositories.Purchases
             return barcodeBases;
         }
 
+        public string GetBarcodeSymbologies(int barcodeID)
+        {
+            return base.TotalSmartPortalEntities.GetBarcodeSymbologies(barcodeID).FirstOrDefault();
+        }
+
         public void SetBarcodeSymbologies(int? barcodeID, string symbologies)
         {
             base.TotalSmartPortalEntities.SetBarcodeSymbologies(barcodeID, symbologies);

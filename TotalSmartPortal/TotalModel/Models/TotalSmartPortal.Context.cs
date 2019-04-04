@@ -5470,5 +5470,14 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SavePackageIssueImage", base64ImageParameter);
         }
+    
+        public virtual ObjectResult<string> GetBarcodeSymbologies(Nullable<int> barcodeID)
+        {
+            var barcodeIDParameter = barcodeID.HasValue ?
+                new ObjectParameter("BarcodeID", barcodeID) :
+                new ObjectParameter("BarcodeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetBarcodeSymbologies", barcodeIDParameter);
+        }
     }
 }

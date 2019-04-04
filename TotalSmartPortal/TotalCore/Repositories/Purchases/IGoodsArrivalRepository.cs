@@ -8,6 +8,7 @@ namespace TotalCore.Repositories.Purchases
     public interface IGoodsArrivalRepository : IGenericWithDetailRepository<GoodsArrival, GoodsArrivalDetail>
     {
         List<BarcodeBase> GetBarcodeBases(int? goodsArrivalID);
+        string GetBarcodeSymbologies(int barcodeID);
         void SetBarcodeSymbologies(int? barcodeID, string symbologies);
     }
 

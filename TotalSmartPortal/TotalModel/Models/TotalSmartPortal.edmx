@@ -7930,6 +7930,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="GetBarcodeBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetBarcodeSymbologies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BarcodeID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetBinLocationBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
@@ -16699,10 +16702,13 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="CommodityIDs" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetPackageIssueImage" ReturnType="Collection(String)">
-            <Parameter Name="PackageIssueImageID" Mode="In" Type="Int32" />
+          <Parameter Name="PackageIssueImageID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SavePackageIssueImage" ReturnType="Collection(Int32)">
-            <Parameter Name="Base64Image" Mode="In" Type="String" />
+          <Parameter Name="Base64Image" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetBarcodeSymbologies" ReturnType="Collection(String)">
+            <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -32590,6 +32596,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetPackageIssueImage" FunctionName="TotalSmartPortalModel.Store.GetPackageIssueImage" />
           <FunctionImportMapping FunctionImportName="SavePackageIssueImage" FunctionName="TotalSmartPortalModel.Store.SavePackageIssueImage" />
+          <FunctionImportMapping FunctionImportName="GetBarcodeSymbologies" FunctionName="TotalSmartPortalModel.Store.GetBarcodeSymbologies" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

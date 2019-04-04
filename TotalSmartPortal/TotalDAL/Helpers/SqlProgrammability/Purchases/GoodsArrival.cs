@@ -34,6 +34,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             this.GoodsArrivalToggleApproved();
 
             this.GetBarcodeBases();
+            this.GetBarcodeSymbologies();
             this.SetBarcodeSymbologies();
 
             this.GoodsArrivalInitReference();
@@ -441,6 +442,19 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "       WHERE           GoodsArrivalID = @GoodsArrivalID " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetBarcodeBases", queryString);
+        }
+
+        private void GetBarcodeSymbologies()
+        {
+            string queryString = " @BarcodeID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       SELECT          Symbologies " + "\r\n";
+            queryString = queryString + "       FROM            Barcodes " + "\r\n";
+            queryString = queryString + "       WHERE           BarcodeID = @BarcodeID " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetBarcodeSymbologies", queryString);
         }
 
         private void SetBarcodeSymbologies()
