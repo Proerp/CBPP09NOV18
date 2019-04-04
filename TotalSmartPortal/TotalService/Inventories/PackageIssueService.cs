@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 
+using TotalBase;
 using TotalModel.Models;
 using TotalDTO.Inventories;
 using TotalCore.Repositories.Inventories;
@@ -11,9 +12,11 @@ namespace TotalService.Inventories
 {
     public class PackageIssueService : GenericWithViewDetailService<PackageIssue, PackageIssueDetail, PackageIssueViewDetail, PackageIssueDTO, PackageIssuePrimitiveDTO, PackageIssueDetailDTO>, IPackageIssueService
     {
+        private IPackageIssueRepository packageIssueRepository;
         public PackageIssueService(IPackageIssueRepository packageIssueRepository)
             : base(packageIssueRepository, "PackageIssuePostSaveValidate", "PackageIssueSaveRelative", "PackageIssueToggleApproved", null, null, "GetPackageIssueViewDetails")
         {
+            this.packageIssueRepository = packageIssueRepository;
         }
 
         public override ICollection<PackageIssueViewDetail> GetViewDetails(int packageIssueID)
@@ -26,6 +29,20 @@ namespace TotalService.Inventories
         {
             packageIssueDTO.PackageIssueViewDetails.RemoveAll(x => x.Quantity == 0);
             return base.Save(packageIssueDTO);
+        }
+
+        protected override void UpdateDetail(PackageIssueDTO dto, PackageIssue entity)
+        {
+            if (dto.GetDetails() != null && dto.GetDetails().Count > 0)
+                dto.GetDetails().Each(detailDTO =>
+                {
+                    if (detailDTO.Base64Image1 != null)
+                        detailDTO.PackageIssueImage1ID = this.packageIssueRepository.SavePackageIssueImages(detailDTO.Base64Image1);
+                    if (detailDTO.Base64Image2 != null)
+                        detailDTO.PackageIssueImage2ID = this.packageIssueRepository.SavePackageIssueImages(detailDTO.Base64Image2);
+                });
+
+            base.UpdateDetail(dto, entity);
         }
     }
 }

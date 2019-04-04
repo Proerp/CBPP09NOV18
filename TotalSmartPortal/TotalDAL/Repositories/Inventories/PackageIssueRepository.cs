@@ -16,6 +16,11 @@ namespace TotalDAL.Repositories.Inventories
             : base(totalSmartPortalEntities, "PackageIssueEditable", "PackageIssueApproved")
         {
         }
+
+        public int SavePackageIssueImages(string base64Image)
+        {
+            return 1;
+        }
     }
 
 

@@ -27,6 +27,11 @@ namespace TotalDTO.Inventories
 
         public Nullable<int> WarehouseID { get; set; }
 
+        public Nullable<int> PackageIssueImage1ID { get; set; }
+        public Nullable<int> PackageIssueImage2ID { get; set; }
+        public string Base64Image1 { get; set; }
+        public string Base64Image2 { get; set; }
+
         public int GoodsReceiptID { get; set; }
         public int GoodsReceiptDetailID { get; set; }
 

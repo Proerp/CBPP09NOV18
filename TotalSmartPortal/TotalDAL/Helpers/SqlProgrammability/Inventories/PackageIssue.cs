@@ -33,6 +33,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             this.PackageIssueToggleApproved();
 
+            this.GetPackageIssueImage();
+            this.SavePackageIssueImage();
+
             this.PackageIssueInitReference();
 
             this.PackageIssueSheet();
@@ -338,6 +341,31 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.totalSmartPortalEntities.CreateStoredProcedure("PackageIssueToggleApproved", queryString);
         }
 
+
+        private void GetPackageIssueImage()
+        {
+            string queryString = " @PackageIssueImageID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       SELECT          Base64Image " + "\r\n";
+            queryString = queryString + "       FROM            PackageIssueImages " + "\r\n";
+            queryString = queryString + "       WHERE           PackageIssueImageID = @PackageIssueImageID " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetPackageIssueImage", queryString);
+        }
+
+        private void SavePackageIssueImage()
+        {
+            string queryString = " @Base64Image nvarchar(MAX) " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       INSERT INTO     PackageIssueImages (Base64Image) VALUES (@Base64Image) " + "\r\n";
+            queryString = queryString + "       SELECT          SCOPE_IDENTITY() " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("SavePackageIssueImage", queryString);
+        }
 
         private void PackageIssueInitReference()
         {

@@ -132,7 +132,11 @@
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='PackageIssueViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
-
+                    columns.Bound(p => p.PackageIssueImage1ID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (PackageIssueImage1ID == null)? '' : PackageIssueImage1ID #" + "<input type='hidden' name='PackageIssueViewDetails[#= index(data) #].PackageIssueImage1ID' value='#= (PackageIssueImage1ID == null) ? '' : PackageIssueImage1ID #' />");
+                    columns.Bound(p => p.PackageIssueImage2ID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (PackageIssueImage2ID == null)? '' : PackageIssueImage2ID #" + "<input type='hidden' name='PackageIssueViewDetails[#= index(data) #].PackageIssueImage2ID' value='#= (PackageIssueImage2ID == null) ? '' : PackageIssueImage2ID #' />");
+                    
 
                     columns.Bound(p => p.GoodsReceiptID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (GoodsReceiptID == null)? '' : GoodsReceiptID #" + "<input type='hidden' name='PackageIssueViewDetails[#= index(data) #].GoodsReceiptID' value='#= (GoodsReceiptID == null) ? '' : GoodsReceiptID #' />");
