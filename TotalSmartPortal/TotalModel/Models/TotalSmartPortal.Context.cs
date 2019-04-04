@@ -5452,5 +5452,23 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderPendingWorkOrder>("GetTransferOrderPendingWorkOrders", locationIDParameter, transferOrderIDParameter, commodityIDsParameter);
         }
+    
+        public virtual ObjectResult<string> GetPackageIssueImage(Nullable<int> packageIssueImageID)
+        {
+            var packageIssueImageIDParameter = packageIssueImageID.HasValue ?
+                new ObjectParameter("PackageIssueImageID", packageIssueImageID) :
+                new ObjectParameter("PackageIssueImageID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetPackageIssueImage", packageIssueImageIDParameter);
+        }
+    
+        public virtual ObjectResult<Nullable<int>> SavePackageIssueImage(string base64Image)
+        {
+            var base64ImageParameter = base64Image != null ?
+                new ObjectParameter("Base64Image", base64Image) :
+                new ObjectParameter("Base64Image", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Nullable<int>>("SavePackageIssueImage", base64ImageParameter);
+        }
     }
 }

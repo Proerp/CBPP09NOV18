@@ -17,9 +17,14 @@ namespace TotalDAL.Repositories.Inventories
         {
         }
 
-        public int SavePackageIssueImages(string base64Image)
+        public string GetPackageIssueImage(int packageIssueImageID)
         {
-            return 1;
+            return base.TotalSmartPortalEntities.GetPackageIssueImage(packageIssueImageID).FirstOrDefault();
+        }
+
+        public int? SavePackageIssueImage(string base64Image)
+        {
+            return base.TotalSmartPortalEntities.SavePackageIssueImage(base64Image).FirstOrDefault();
         }
     }
 

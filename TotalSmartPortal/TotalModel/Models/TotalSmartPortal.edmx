@@ -1662,6 +1662,8 @@
           <Property Name="ProductionLineID" Type="int" Nullable="false" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="BinLocationID" Type="int" Nullable="false" />
+          <Property Name="PackageIssueImage1ID" Type="int" />
+          <Property Name="PackageIssueImage2ID" Type="int" />
           <Property Name="SealCode" Type="nvarchar" MaxLength="60" />
           <Property Name="BatchCode" Type="nvarchar" MaxLength="60" />
           <Property Name="LabCode" Type="nvarchar" MaxLength="60" />
@@ -8372,6 +8374,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </CollectionType>
           </ReturnType>
         </Function>
+        <Function Name="GetPackageIssueImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PackageIssueImageID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetPackageIssueIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
@@ -9119,6 +9124,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="SalesReturnVoidable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="SavePackageIssueImage" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Base64Image" Type="nvarchar(max)" Mode="In" />
         </Function>
         <Function Name="SaveUserAccessControls" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="AccessControlID" Type="int" Mode="In" />
@@ -16690,6 +16698,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="TransferOrderID" Mode="In" Type="Int32" />
             <Parameter Name="CommodityIDs" Mode="In" Type="String" />
           </FunctionImport>
+          <FunctionImport Name="GetPackageIssueImage" ReturnType="Collection(String)">
+            <Parameter Name="PackageIssueImageID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SavePackageIssueImage" ReturnType="Collection(Int32)">
+            <Parameter Name="Base64Image" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -21848,6 +21862,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="ProductionLine" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_ProductionLines" FromRole="PackageIssueDetail" ToRole="ProductionLine" />
           <NavigationProperty Name="PackageIssue" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_PackageIssues" FromRole="PackageIssueDetail" ToRole="PackageIssue" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities" FromRole="PackageIssueDetail" ToRole="Commodity" />
+          <Property Name="PackageIssueImage1ID" Type="Int32" />
+          <Property Name="PackageIssueImage2ID" Type="Int32" />
         </EntityType>
         <Association Name="FK_PackageIssueDetails_Shifts">
           <End Type="TotalSmartPortalModel.Shift" Role="Shift" Multiplicity="1" />
@@ -30813,6 +30829,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="PackageIssueDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.PackageIssueDetail">
               <MappingFragment StoreEntitySet="PackageIssueDetails">
+                <ScalarProperty Name="PackageIssueImage2ID" ColumnName="PackageIssueImage2ID" />
+                <ScalarProperty Name="PackageIssueImage1ID" ColumnName="PackageIssueImage1ID" />
                 <ScalarProperty Name="ProductionLineID" ColumnName="ProductionLineID" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
@@ -32570,6 +32588,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetPackageIssueImage" FunctionName="TotalSmartPortalModel.Store.GetPackageIssueImage" />
+          <FunctionImportMapping FunctionImportName="SavePackageIssueImage" FunctionName="TotalSmartPortalModel.Store.SavePackageIssueImage" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -361,8 +361,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "       INSERT INTO     PackageIssueImages (Base64Image) VALUES (@Base64Image) " + "\r\n";
-            queryString = queryString + "       SELECT          SCOPE_IDENTITY() " + "\r\n";
+            queryString = queryString + "       DECLARE         @PackageIssueImageID int; " + "\r\n";
+            queryString = queryString + "       INSERT INTO     PackageIssueImages (Base64Image) VALUES (@Base64Image); " + "\r\n";
+            queryString = queryString + "       SELECT          @PackageIssueImageID = SCOPE_IDENTITY(); " + "\r\n";
+            queryString = queryString + "       SELECT          @PackageIssueImageID; " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("SavePackageIssueImage", queryString);
         }

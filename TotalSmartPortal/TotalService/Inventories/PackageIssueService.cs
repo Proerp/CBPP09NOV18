@@ -37,9 +37,9 @@ namespace TotalService.Inventories
                 dto.GetDetails().Each(detailDTO =>
                 {
                     if (detailDTO.Base64Image1 != null)
-                        detailDTO.PackageIssueImage1ID = this.packageIssueRepository.SavePackageIssueImages(detailDTO.Base64Image1);
+                        detailDTO.PackageIssueImage1ID = this.packageIssueRepository.SavePackageIssueImage(detailDTO.Base64Image1);
                     if (detailDTO.Base64Image2 != null)
-                        detailDTO.PackageIssueImage2ID = this.packageIssueRepository.SavePackageIssueImages(detailDTO.Base64Image2);
+                        detailDTO.PackageIssueImage2ID = this.packageIssueRepository.SavePackageIssueImage(detailDTO.Base64Image2);
                 });
 
             base.UpdateDetail(dto, entity);

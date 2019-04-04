@@ -76,6 +76,9 @@ function handleOKEvent(packageIssueGridDataSource, pendingProductionOrderDetailG
         dataRow.BatchID = productionOrderGridDataItem.BatchID;
         dataRow.BatchEntryDate = productionOrderGridDataItem.BatchEntryDate;
 
+        dataRow.PackageIssueImage1ID = null;
+        dataRow.PackageIssueImage2ID = null;
+
         dataRow.Remarks = null;
 
 

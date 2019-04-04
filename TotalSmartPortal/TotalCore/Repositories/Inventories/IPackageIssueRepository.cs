@@ -7,7 +7,8 @@ namespace TotalCore.Repositories.Inventories
 {
     public interface IPackageIssueRepository : IGenericWithDetailRepository<PackageIssue, PackageIssueDetail>
     {
-        int SavePackageIssueImages(string base64Image);
+        string GetPackageIssueImage(int packageIssueImageID);
+        int? SavePackageIssueImage(string base64Image);
     }
 
     public interface IPackageIssueAPIRepository : IGenericAPIRepository
