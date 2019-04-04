@@ -17,11 +17,6 @@ namespace TotalDAL.Repositories.Inventories
         {
         }
 
-        public string GetPackageIssueImage(int packageIssueImageID)
-        {
-            return base.TotalSmartPortalEntities.GetPackageIssueImage(packageIssueImageID).FirstOrDefault();
-        }
-
         public int? SavePackageIssueImage(string base64Image)
         {
             return base.TotalSmartPortalEntities.SavePackageIssueImage(base64Image).FirstOrDefault();
@@ -45,6 +40,11 @@ namespace TotalDAL.Repositories.Inventories
         public string GetReference(int packageIssueID)
         {
             return base.TotalSmartPortalEntities.PackageIssueGetReference(packageIssueID).FirstOrDefault();
+        }
+
+        public string GetPackageIssueImage(int packageIssueImageID)
+        {
+            return base.TotalSmartPortalEntities.GetPackageIssueImage(packageIssueImageID).FirstOrDefault();
         }
 
         public IEnumerable<PackageIssuePendingBlendingInstruction> GetBlendingInstructions(int? locationID, int? blendingInstructionID)

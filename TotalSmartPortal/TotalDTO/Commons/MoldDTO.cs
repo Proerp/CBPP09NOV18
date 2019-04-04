@@ -28,7 +28,7 @@ namespace TotalDTO.Commons
         [Required(ErrorMessage = "Vui lòng nhập tên khuôn")]
         public string Name { get; set; }
         [Display(Name = "Số sản phẩm/ khuôn")]
-        [Range(1, 100, ErrorMessage = "Vui lòng nhập số SP/ khuôn")]
+        [Range(1, 500, ErrorMessage = "Vui lòng nhập số SP/ khuôn")]
         public decimal Quantity { get; set; }
     }
 

@@ -16708,7 +16708,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="Base64Image" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetBarcodeSymbologies" ReturnType="Collection(String)">
-            <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
+          <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -21826,6 +21826,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
           <Property Type="Decimal" Name="QuantityBIS" Nullable="false" Precision="18" Scale="2" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="PackageIssueImage1ID" Nullable="true" />
+          <Property Type="Int32" Name="PackageIssueImage2ID" Nullable="true" />
         </ComplexType>
         <EntityType Name="PackageIssueDetail">
           <Key>
@@ -30824,6 +30826,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
                 <ScalarProperty Name="QuantityBIS" ColumnName="QuantityBIS" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="PackageIssueImage1ID" ColumnName="PackageIssueImage1ID" />
+                <ScalarProperty Name="PackageIssueImage2ID" ColumnName="PackageIssueImage2ID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

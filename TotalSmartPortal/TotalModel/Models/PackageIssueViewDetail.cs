@@ -39,5 +39,7 @@ namespace TotalModel.Models
         public string LabCode { get; set; }
         public decimal QuantityBIS { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public Nullable<int> PackageIssueImage1ID { get; set; }
+        public Nullable<int> PackageIssueImage2ID { get; set; }
     }
 }

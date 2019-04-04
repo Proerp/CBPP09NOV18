@@ -49,6 +49,13 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         }
 
         [HttpGet]
+        [Route("GetPackageIssueImage/{packageIssueImageID}")]
+        public string GetPackageIssueImage(int packageIssueImageID)
+        {
+            return this.packageIssueAPIRepository.GetPackageIssueImage(packageIssueImageID);
+        }
+
+        [HttpGet]
         [Route("GetPackageIssueIndexes/{fromDay}/{fromMonth}/{fromYear}/{toDay}/{toMonth}/{toYear}")]
         public ICollection<PackageIssueIndex> GetPackageIssueIndexes(int fromDay, int fromMonth, int fromYear, int toDay, int toMonth, int toYear)
         {

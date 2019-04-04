@@ -6,14 +6,14 @@ using TotalModel.Models;
 namespace TotalCore.Repositories.Inventories
 {
     public interface IPackageIssueRepository : IGenericWithDetailRepository<PackageIssue, PackageIssueDetail>
-    {
-        string GetPackageIssueImage(int packageIssueImageID);
+    {        
         int? SavePackageIssueImage(string base64Image);
     }
 
     public interface IPackageIssueAPIRepository : IGenericAPIRepository
     {
         string GetReference(int packageIssueID);
+        string GetPackageIssueImage(int packageIssueImageID);
 
         IEnumerable<PackageIssuePendingBlendingInstruction> GetBlendingInstructions(int? locationID, int? blendingInstructionID);
 

@@ -7,13 +7,14 @@ namespace TotalCore.Repositories.Purchases
 {
     public interface IGoodsArrivalRepository : IGenericWithDetailRepository<GoodsArrival, GoodsArrivalDetail>
     {
-        List<BarcodeBase> GetBarcodeBases(int? goodsArrivalID);
-        string GetBarcodeSymbologies(int barcodeID);
+        List<BarcodeBase> GetBarcodeBases(int? goodsArrivalID);        
         void SetBarcodeSymbologies(int? barcodeID, string symbologies);
     }
 
     public interface IGoodsArrivalAPIRepository : IGenericAPIRepository
     {
+        string GetBarcodeSymbologies(int barcodeID);
+
         IEnumerable<GoodsArrivalPendingCustomer> GetCustomers(int? locationID);
         IEnumerable<GoodsArrivalPendingPurchaseOrder> GetPurchaseOrders(int? locationID);
 

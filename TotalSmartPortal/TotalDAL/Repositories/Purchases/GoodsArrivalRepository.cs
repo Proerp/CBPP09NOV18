@@ -26,11 +26,6 @@ namespace TotalDAL.Repositories.Purchases
             return barcodeBases;
         }
 
-        public string GetBarcodeSymbologies(int barcodeID)
-        {
-            return base.TotalSmartPortalEntities.GetBarcodeSymbologies(barcodeID).FirstOrDefault();
-        }
-
         public void SetBarcodeSymbologies(int? barcodeID, string symbologies)
         {
             base.TotalSmartPortalEntities.SetBarcodeSymbologies(barcodeID, symbologies);
@@ -61,6 +56,11 @@ namespace TotalDAL.Repositories.Purchases
             return objectParameters;
         }
 
+        public string GetBarcodeSymbologies(int barcodeID)
+        {
+            return base.TotalSmartPortalEntities.GetBarcodeSymbologies(barcodeID).FirstOrDefault();
+        }
+
         public IEnumerable<GoodsArrivalPendingCustomer> GetCustomers(int? locationID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
@@ -87,7 +87,6 @@ namespace TotalDAL.Repositories.Purchases
 
             return pendingPurchaseOrderDetails;
         }
-
     }
 
 
