@@ -25,7 +25,7 @@ namespace TotalDTO.Productions
         public string MoldCode { get; set; }
         [Display(Name = "P/M")]
         [UIHint("DecimalN0")]
-        [Range(1, 200, ErrorMessage = "Vui lòng kiểm tra số cái/ khuôn [P/M]")]
+        [Range(1, 500, ErrorMessage = "Vui lòng kiểm tra số cái/ khuôn [P/M]")]
         public decimal MoldQuantity { get; set; }
 
         public int BomID { get; set; }

@@ -39,6 +39,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.PackageIssueInitReference();
 
             this.PackageIssueSheet();
+            this.PackageIssueDetailSheet();
         }
 
 
@@ -409,6 +410,33 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             //this.totalSmartPortalEntities.CreateStoredProcedure("PackageIssueSheet", queryString);
         }
 
+        private void PackageIssueDetailSheet()
+        {
+            string queryString = " @PackageIssueDetailID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "    BEGIN " + "\r\n";
+
+            queryString = queryString + "       DECLARE         @LocalPackageIssueDetailID int    SET @LocalPackageIssueDetailID = @PackageIssueDetailID " + "\r\n";
+
+            queryString = queryString + "       SELECT          BlendingInstructions.BlendingInstructionID, BlendingInstructions.EntryDate, BlendingInstructions.Reference, BlendingInstructions.Code, BlendingInstructions.VoucherDate, BlendingInstructions.Jobs, BlendingInstructions.Description, BlendingInstructions.CommodityID AS ProductID, Products.Code AS ProductCode, Products.Name AS ProductName, PackageIssueDetails.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, " + "\r\n";
+            queryString = queryString + "                       PackageIssueDetails.PackageIssueImage1ID, PackageIssueImage1s.Base64Image AS Base64Image1, PackageIssueDetails.PackageIssueImage2ID, PackageIssueImage2s.Base64Image AS Base64Image2, PackageIssueDetails.SealCode, PackageIssueDetails.BatchCode, PackageIssueDetails.LabCode, PackageIssueDetails.Barcode, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, PackageIssueDetails.Quantity AS PackageIssueQuantity " + "\r\n";
+
+            queryString = queryString + "       FROM            PackageIssueDetails " + "\r\n";
+            queryString = queryString + "                       INNER JOIN BlendingInstructions ON PackageIssueDetails.PackageIssueDetailID = @LocalPackageIssueDetailID AND PackageIssueDetails.BlendingInstructionID = BlendingInstructions.BlendingInstructionID " + "\r\n";
+
+            queryString = queryString + "                       INNER JOIN Commodities AS Products ON BlendingInstructions.CommodityID = Products.CommodityID  " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Commodities ON PackageIssueDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+
+            queryString = queryString + "                       INNER JOIN GoodsReceiptDetails ON PackageIssueDetails.GoodsReceiptDetailID = GoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
+
+            queryString = queryString + "                       LEFT JOIN PackageIssueImages AS PackageIssueImage1s ON PackageIssueDetails.PackageIssueImage1ID = PackageIssueImage1s.PackageIssueImageID " + "\r\n";
+            queryString = queryString + "                       LEFT JOIN PackageIssueImages AS PackageIssueImage2s ON PackageIssueDetails.PackageIssueImage2ID = PackageIssueImage2s.PackageIssueImageID " + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("PackageIssueDetailSheet", queryString);
+        }
     }
 }
 
