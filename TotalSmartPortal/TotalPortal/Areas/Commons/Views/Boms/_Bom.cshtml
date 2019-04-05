@@ -78,6 +78,9 @@
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='BomViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
 
+                    columns.Bound(p => p.SalesUnit).DisplayNameTitle().Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
+                        .ClientTemplate("<div> #= SalesUnit #</div>" + "<input type='hidden' name='BomViewDetails[#= index(data) #].SalesUnit' value='#= SalesUnit #' />");
+                    
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='BomViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 

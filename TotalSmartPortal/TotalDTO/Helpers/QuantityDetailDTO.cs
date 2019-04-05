@@ -9,6 +9,7 @@ namespace TotalDTO.Helpers
         int CommodityID { get; set; }
         string CommodityCode { get; set; }
         string CommodityName { get; set; }
+        string SalesUnit { get; set; }
         int CommodityTypeID { get; set; }
 
         decimal Quantity { get; set; }
@@ -26,6 +27,10 @@ namespace TotalDTO.Helpers
         [Display(Name = "Tên hàng")]
         [UIHint("StringReadonly")]
         public virtual string CommodityName { get; set; }
+
+        [Display(Name = "ĐVT")]
+        [UIHint("StringReadonly")]
+        public virtual string SalesUnit { get; set; }
 
         [Range(1, 99999999999, ErrorMessage = "Lỗi bắt buộc phải có id loại hàng hóa")]
         [Required(ErrorMessage = "Lỗi bắt buộc phải có loại hàng hóa")]

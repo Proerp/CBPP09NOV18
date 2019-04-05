@@ -25,5 +25,6 @@ namespace TotalModel.Models
         public decimal Quantity { get; set; }
         public string LayerCode { get; set; }
         public bool MajorStaple { get; set; }
+        public string SalesUnit { get; set; }
     }
 }

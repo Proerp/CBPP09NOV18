@@ -16785,6 +16785,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="MoldQuantity" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Int32" Name="PiecePerPack" Nullable="false" />
           <Property Type="Decimal" Name="QuantityAvailables" Nullable="false" Precision="1" Scale="1" />
+          <Property Type="String" Name="SalesUnit" Nullable="true" MaxLength="10" />
         </ComplexType>
         <ComplexType Name="CommodityPriceIndex">
           <Property Type="Int32" Name="CommodityPriceID" Nullable="false" />
@@ -23871,6 +23872,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="LayerCode" Nullable="false" MaxLength="5" />
           <Property Type="Boolean" Name="MajorStaple" Nullable="false" />
+          <Property Type="String" Name="SalesUnit" Nullable="true" MaxLength="10" />
         </ComplexType>
         <Association Name="FK_Boms_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -26895,6 +26897,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="MoldQuantity" ColumnName="MoldQuantity" />
                 <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
                 <ScalarProperty Name="QuantityAvailables" ColumnName="QuantityAvailables" />
+                <ScalarProperty Name="SalesUnit" ColumnName="SalesUnit" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -31848,6 +31851,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="LayerCode" ColumnName="LayerCode" />
                 <ScalarProperty Name="MajorStaple" ColumnName="MajorStaple" />
+                <ScalarProperty Name="SalesUnit" ColumnName="SalesUnit" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
