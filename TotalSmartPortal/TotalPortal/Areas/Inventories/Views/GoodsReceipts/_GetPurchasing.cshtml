@@ -5,8 +5,10 @@
     .Name("goodsReceiptPendingPurchasingGrid")
     .Columns(columns =>
     {
-        columns.Bound(c => c.PurchaseOrderCodes).Title("Số ĐH").Width(50);
+        columns.Bound(c => c.PurchaseOrderCodes).Title("Số ĐH").Width(60);
         columns.Bound(c => c.CustomerNames).Title("NCC").Width(80);
+        columns.Bound(c => c.PackageCount).Title("Số kiện").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
+        columns.Bound(c => c.TotalQuantityRemains).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(15);
     })
     .ToolBar(toolbar =>
     {

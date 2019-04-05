@@ -156,12 +156,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "       DECLARE         @GoodsArrivalCount int              DECLARE @PurchaseOrderCodes varchar(3999)           DECLARE @CustomerNames varchar(555) " + "\r\n";
-            queryString = queryString + "       DECLARE         @PendingPurchasings TABLE (PurchaseOrderCode nvarchar(60), CustomerName nvarchar(150) NOT NULL, WarehouseID int NOT NULL, WarehouseCode nvarchar(10) NOT NULL, WarehouseName nvarchar(60) NOT NULL)" + "\r\n";
+            queryString = queryString + "       DECLARE         @PendingPurchasings TABLE (PurchaseOrderCode nvarchar(60), CustomerName nvarchar(150) NOT NULL, WarehouseID int NOT NULL, WarehouseCode nvarchar(10) NOT NULL, WarehouseName nvarchar(60) NOT NULL, PackageCount int NULL, TotalQuantityRemains decimal(18, 2) NULL)" + "\r\n";
 
-            queryString = queryString + "       INSERT INTO     @PendingPurchasings (PurchaseOrderCode, CustomerName, WarehouseID, WarehouseCode, WarehouseName) " + "\r\n";
-            queryString = queryString + "       SELECT          ISNULL(GoodsArrivals.PurchaseOrderCodes, GoodsArrivals.Code) AS PurchaseOrderCode, Customers.Name AS CustomerName, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName " + "\r\n";
-            queryString = queryString + "       FROM            GoodsArrivals " + "\r\n";
-            queryString = queryString + "                       INNER JOIN Customers ON GoodsArrivals.GoodsArrivalID IN (SELECT GoodsArrivalID FROM GoodsArrivalPackages WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0) AND GoodsArrivals.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "       INSERT INTO     @PendingPurchasings (PurchaseOrderCode, CustomerName, WarehouseID, WarehouseCode, WarehouseName, PackageCount, TotalQuantityRemains) " + "\r\n";
+            queryString = queryString + "       SELECT          ISNULL(GoodsArrivals.PurchaseOrderCodes, GoodsArrivals.Code) AS PurchaseOrderCode, Customers.Name AS CustomerName, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, GoodsArrivalPackageSummaries.PackageCount, GoodsArrivalPackageSummaries.TotalQuantityRemains " + "\r\n";
+            queryString = queryString + "       FROM            (SELECT GoodsArrivalID, COUNT(GoodsArrivalPackageID) AS PackageCount, SUM(ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ")) AS TotalQuantityRemains FROM GoodsArrivalPackages WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY GoodsArrivalID) GoodsArrivalPackageSummaries " + "\r\n";
+            queryString = queryString + "                       INNER JOIN GoodsArrivals ON GoodsArrivalPackageSummaries.GoodsArrivalID = GoodsArrivals.GoodsArrivalID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Customers ON GoodsArrivals.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Warehouses ON GoodsArrivals.WarehouseID = Warehouses.WarehouseID " + "\r\n";
 
             queryString = queryString + "       SET @GoodsArrivalCount = @@ROWCOUNT " + "\r\n";
@@ -172,7 +173,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "           SELECT      @CustomerNames = LEFT(STUFF((SELECT ', ' + CustomerName FROM (SELECT DISTINCT CustomerName FROM @PendingPurchasings) DistinctCustomerNames FOR XML PATH('')) ,1,1,''), 100) " + "\r\n";
             queryString = queryString + "       END " + "\r\n";
 
-            queryString = queryString + "       SELECT          " + (int)@GlobalEnums.GoodsReceiptTypeID.GoodsArrival + " AS GoodsReceiptTypeID, @PurchaseOrderCodes AS PurchaseOrderCodes, @CustomerNames AS CustomerNames, WarehouseID, WarehouseCode, WarehouseName, '' AS Description FROM @PendingPurchasings GROUP BY WarehouseID, WarehouseCode, WarehouseName " + "\r\n";
+            queryString = queryString + "       SELECT          " + (int)@GlobalEnums.GoodsReceiptTypeID.GoodsArrival + " AS GoodsReceiptTypeID, @PurchaseOrderCodes AS PurchaseOrderCodes, @CustomerNames AS CustomerNames, WarehouseID, WarehouseCode, WarehouseName, SUM(PackageCount) AS PackageCount, SUM(TotalQuantityRemains) AS TotalQuantityRemains, '' AS Description FROM @PendingPurchasings GROUP BY WarehouseID, WarehouseCode, WarehouseName " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptPendingPurchasings", queryString);
         }

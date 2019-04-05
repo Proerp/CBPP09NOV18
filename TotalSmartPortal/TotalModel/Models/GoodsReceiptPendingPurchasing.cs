@@ -20,5 +20,7 @@ namespace TotalModel.Models
         public int WarehouseID { get; set; }
         public string WarehouseCode { get; set; }
         public string WarehouseName { get; set; }
+        public Nullable<int> PackageCount { get; set; }
+        public Nullable<decimal> TotalQuantityRemains { get; set; }
     }
 }

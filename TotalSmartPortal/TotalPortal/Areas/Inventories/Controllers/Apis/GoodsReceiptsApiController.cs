@@ -81,6 +81,39 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
         }
 
+        #region HELPER API
+        [HttpGet]
+        [Route("GetPendingPackages/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{barcode}/{goodsArrivalPackageIDs}")]
+        public IEnumerable<GoodsReceiptPendingPackage> GetPendingPackages(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
+        {
+            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs).Select(p => new GoodsReceiptPendingPackage() { GoodsArrivalPackageID = p.GoodsArrivalPackageID, PurchaseOrderCodes = p.PurchaseOrderCodes, CommodityCode = p.CommodityCode, BatchCode = p.BatchCode, Barcode = p.Barcode, QuantityRemains = p.QuantityRemains });
+        }
+
+        [HttpGet]
+        [Route("GetPendingSummary/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{barcode}/{goodsArrivalPackageIDs}")]
+        public GoodsReceiptPendingSummary GetPendingSummary(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
+        {
+            IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> goodsReceiptPendingGoodsArrivalPackages = this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
+            return new GoodsReceiptPendingSummary() { PackageCount = goodsReceiptPendingGoodsArrivalPackages.Count(), TotalQuantityRemains = goodsReceiptPendingGoodsArrivalPackages.Sum(a => a.QuantityRemains) };
+        }
+
+        public class GoodsReceiptPendingPackage
+        {
+            public int GoodsArrivalPackageID { get; set; }
+            public string PurchaseOrderCodes { get; set; }
+            public string CommodityCode { get; set; }
+            public string BatchCode { get; set; }
+            public string Barcode { get; set; }
+
+            public Nullable<decimal> QuantityRemains { get; set; }
+        }
+
+        public class GoodsReceiptPendingSummary
+        {
+            public int PackageCount { get; set; }
+            public Nullable<decimal> TotalQuantityRemains { get; set; }
+        }
+        #endregion HELPER API
 
 
         [HttpGet]
