@@ -4726,7 +4726,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionViewDetail>("GetBlendingInstructionViewDetails", blendingInstructionIDParameter);
         }
     
-        public virtual ObjectResult<TransferOrderPendingBlendingInstruction> GetTransferOrderPendingBlendingInstructions(Nullable<int> locationID, Nullable<int> transferOrderID, string commodityIDs)
+        public virtual ObjectResult<TransferOrderPendingBlendingInstruction> GetTransferOrderPendingBlendingInstructions(Nullable<int> locationID, Nullable<int> transferOrderID, Nullable<int> warehouseID, Nullable<int> warehouseReceiptID, string commodityIDs)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
@@ -4736,11 +4736,19 @@ namespace TotalModel.Models
                 new ObjectParameter("TransferOrderID", transferOrderID) :
                 new ObjectParameter("TransferOrderID", typeof(int));
     
+            var warehouseIDParameter = warehouseID.HasValue ?
+                new ObjectParameter("WarehouseID", warehouseID) :
+                new ObjectParameter("WarehouseID", typeof(int));
+    
+            var warehouseReceiptIDParameter = warehouseReceiptID.HasValue ?
+                new ObjectParameter("WarehouseReceiptID", warehouseReceiptID) :
+                new ObjectParameter("WarehouseReceiptID", typeof(int));
+    
             var commodityIDsParameter = commodityIDs != null ?
                 new ObjectParameter("CommodityIDs", commodityIDs) :
                 new ObjectParameter("CommodityIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderPendingBlendingInstruction>("GetTransferOrderPendingBlendingInstructions", locationIDParameter, transferOrderIDParameter, commodityIDsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderPendingBlendingInstruction>("GetTransferOrderPendingBlendingInstructions", locationIDParameter, transferOrderIDParameter, warehouseIDParameter, warehouseReceiptIDParameter, commodityIDsParameter);
         }
     
         public virtual ObjectResult<Nullable<int>> GetGoodsReceiptID(Nullable<int> goodsArrivalID, Nullable<int> plannedOrderID, Nullable<int> warehouseTransferID, Nullable<int> warehouseAdjustmentID)
@@ -5436,7 +5444,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPurchasing>("GetGoodsReceiptPendingPurchasings", locationIDParameter);
         }
     
-        public virtual ObjectResult<TransferOrderPendingWorkOrder> GetTransferOrderPendingWorkOrders(Nullable<int> locationID, Nullable<int> transferOrderID, string commodityIDs)
+        public virtual ObjectResult<TransferOrderPendingWorkOrder> GetTransferOrderPendingWorkOrders(Nullable<int> locationID, Nullable<int> transferOrderID, Nullable<int> warehouseID, Nullable<int> warehouseReceiptID, string commodityIDs)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
@@ -5446,11 +5454,19 @@ namespace TotalModel.Models
                 new ObjectParameter("TransferOrderID", transferOrderID) :
                 new ObjectParameter("TransferOrderID", typeof(int));
     
+            var warehouseIDParameter = warehouseID.HasValue ?
+                new ObjectParameter("WarehouseID", warehouseID) :
+                new ObjectParameter("WarehouseID", typeof(int));
+    
+            var warehouseReceiptIDParameter = warehouseReceiptID.HasValue ?
+                new ObjectParameter("WarehouseReceiptID", warehouseReceiptID) :
+                new ObjectParameter("WarehouseReceiptID", typeof(int));
+    
             var commodityIDsParameter = commodityIDs != null ?
                 new ObjectParameter("CommodityIDs", commodityIDs) :
                 new ObjectParameter("CommodityIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderPendingWorkOrder>("GetTransferOrderPendingWorkOrders", locationIDParameter, transferOrderIDParameter, commodityIDsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderPendingWorkOrder>("GetTransferOrderPendingWorkOrders", locationIDParameter, transferOrderIDParameter, warehouseIDParameter, warehouseReceiptIDParameter, commodityIDsParameter);
         }
     
         public virtual ObjectResult<string> GetPackageIssueImage(Nullable<int> packageIssueImageID)

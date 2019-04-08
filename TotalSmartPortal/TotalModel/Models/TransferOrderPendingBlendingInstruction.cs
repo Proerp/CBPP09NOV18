@@ -16,7 +16,6 @@ namespace TotalModel.Models
         public int CommodityID { get; set; }
         public Nullable<decimal> QuantityRemains { get; set; }
         public Nullable<decimal> QuantityTransferOrders { get; set; }
-        public Nullable<decimal> QuantityAvailableL2 { get; set; }
         public string CommodityCode { get; set; }
         public string CommodityName { get; set; }
         public string OfficialCode { get; set; }
@@ -25,5 +24,7 @@ namespace TotalModel.Models
         public string CustomerNames { get; set; }
         public string Codes { get; set; }
         public string Specs { get; set; }
+        public Nullable<decimal> QuantityAvailables { get; set; }
+        public Nullable<decimal> QuantityAvailableReceipts { get; set; }
     }
 }

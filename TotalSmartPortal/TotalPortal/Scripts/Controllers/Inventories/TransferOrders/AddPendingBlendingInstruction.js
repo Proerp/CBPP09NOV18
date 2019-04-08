@@ -49,7 +49,7 @@ function handleOKEvent(transferOrderGridDataSource, pendingBlendingInstructionGr
         dataRow.CommodityTypeID = productionOrderGridDataItem.CommodityTypeID;
 
         dataRow.QuantityAvailables = productionOrderGridDataItem.QuantityAvailableL2;
-        dataRow.Quantity = productionOrderGridDataItem.QuantityRemains - productionOrderGridDataItem.QuantityTransferOrders - productionOrderGridDataItem.QuantityAvailableL2;
+        dataRow.Quantity = DoRound(productionOrderGridDataItem.QuantityRemains - productionOrderGridDataItem.QuantityTransferOrders - productionOrderGridDataItem.QuantityAvailableL2, window.parent.requireConfig.websiteOptions.rndQuantity);
 
         dataRow.QuantityIssued = 0;
         dataRow.QuantityRemains = dataRow.Quantity;
