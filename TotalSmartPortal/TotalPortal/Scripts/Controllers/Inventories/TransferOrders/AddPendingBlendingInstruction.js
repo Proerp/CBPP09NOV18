@@ -48,8 +48,9 @@ function handleOKEvent(transferOrderGridDataSource, pendingBlendingInstructionGr
         dataRow.CommodityCode = productionOrderGridDataItem.CommodityCode;
         dataRow.CommodityTypeID = productionOrderGridDataItem.CommodityTypeID;
 
-        dataRow.QuantityAvailables = productionOrderGridDataItem.QuantityAvailableL2;
-        dataRow.Quantity = DoRound(productionOrderGridDataItem.QuantityRemains - productionOrderGridDataItem.QuantityTransferOrders - productionOrderGridDataItem.QuantityAvailableL2, window.parent.requireConfig.websiteOptions.rndQuantity);
+        dataRow.QuantityAvailables = productionOrderGridDataItem.QuantityAvailables;
+        dataRow.QuantityAvailableReceipts = productionOrderGridDataItem.QuantityAvailableReceipts;
+        dataRow.Quantity = DoRound(productionOrderGridDataItem.QuantityRemains - productionOrderGridDataItem.QuantityTransferOrders - productionOrderGridDataItem.QuantityAvailableReceipts, window.parent.requireConfig.websiteOptions.rndQuantity);
 
         dataRow.QuantityIssued = 0;
         dataRow.QuantityRemains = dataRow.Quantity;

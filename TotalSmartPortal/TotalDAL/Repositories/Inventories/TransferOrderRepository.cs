@@ -50,19 +50,19 @@ namespace TotalDAL.Repositories.Inventories
             return availableWarehouses;
         }
 
-        public IEnumerable<TransferOrderPendingWorkOrder> GetTransferOrderPendingWorkOrders(int? locationID, int? transferOrderID, string commodityIDs)
+        public IEnumerable<TransferOrderPendingWorkOrder> GetTransferOrderPendingWorkOrders(int? locationID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string commodityIDs)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<TransferOrderPendingWorkOrder> transferOrderPendingWorkOrders = base.TotalSmartPortalEntities.GetTransferOrderPendingWorkOrders(locationID, transferOrderID, commodityIDs).ToList();
+            IEnumerable<TransferOrderPendingWorkOrder> transferOrderPendingWorkOrders = base.TotalSmartPortalEntities.GetTransferOrderPendingWorkOrders(locationID, transferOrderID, warehouseID, warehouseReceiptID, commodityIDs).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return transferOrderPendingWorkOrders;
         }
 
-        public IEnumerable<TransferOrderPendingBlendingInstruction> GetTransferOrderPendingBlendingInstructions(int? locationID, int? transferOrderID, string commodityIDs)
+        public IEnumerable<TransferOrderPendingBlendingInstruction> GetTransferOrderPendingBlendingInstructions(int? locationID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string commodityIDs)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<TransferOrderPendingBlendingInstruction> transferOrderPendingBlendingInstructions = base.TotalSmartPortalEntities.GetTransferOrderPendingBlendingInstructions(locationID, transferOrderID, commodityIDs).ToList();
+            IEnumerable<TransferOrderPendingBlendingInstruction> transferOrderPendingBlendingInstructions = base.TotalSmartPortalEntities.GetTransferOrderPendingBlendingInstructions(locationID, transferOrderID, warehouseID, warehouseReceiptID, commodityIDs).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return transferOrderPendingBlendingInstructions;

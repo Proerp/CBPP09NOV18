@@ -109,10 +109,15 @@
 
 
                     columns.Bound(p => p.QuantityAvailables).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
-                     .Format(Settings.kfmQuantity)
-                     .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                     .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityAvailables) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].QuantityAvailables' value='#= QuantityAvailables #' />");
+                         .Format(Settings.kfmQuantity)
+                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityAvailables) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].QuantityAvailables' value='#= QuantityAvailables #' />");
 
+                    columns.Bound(p => p.QuantityAvailableReceipts).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                         .Format(Settings.kfmQuantity)
+                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityAvailableReceipts) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].QuantityAvailableReceipts' value='#= QuantityAvailableReceipts #' />");
+                    
                     columns.Bound(p => p.Quantity).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
@@ -193,6 +198,7 @@
                     })
                     .Aggregates(a => a.Add(x => x.CommodityCode).Count())
                     .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityAvailableReceipts).Sum())
                     .Aggregates(a => a.Add(x => x.Quantity).Sum())
                     .Aggregates(a => a.Add(x => x.QuantityIssued).Sum())
                     .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())

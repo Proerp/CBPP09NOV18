@@ -41,15 +41,15 @@ namespace TotalPortal.Areas.Inventories.APIs
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetTransferOrderPendingWorkOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? transferOrderID, string commodityIDs)
+        public JsonResult GetTransferOrderPendingWorkOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string commodityIDs)
         {
-            var result = this.transferOrderAPIRepository.GetTransferOrderPendingWorkOrders(locationID, transferOrderID, commodityIDs);
+            var result = this.transferOrderAPIRepository.GetTransferOrderPendingWorkOrders(locationID, transferOrderID, warehouseID, warehouseReceiptID, commodityIDs);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetTransferOrderPendingBlendingInstructions([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? transferOrderID, string commodityIDs)
+        public JsonResult GetTransferOrderPendingBlendingInstructions([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string commodityIDs)
         {
-            var result = this.transferOrderAPIRepository.GetTransferOrderPendingBlendingInstructions(locationID, transferOrderID, commodityIDs);
+            var result = this.transferOrderAPIRepository.GetTransferOrderPendingBlendingInstructions(locationID, transferOrderID, warehouseID, warehouseReceiptID, commodityIDs);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
