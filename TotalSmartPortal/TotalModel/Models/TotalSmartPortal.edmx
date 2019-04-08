@@ -16794,6 +16794,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="PiecePerPack" Nullable="false" />
           <Property Type="Decimal" Name="QuantityAvailables" Nullable="false" Precision="1" Scale="1" />
           <Property Type="String" Name="SalesUnit" Nullable="true" MaxLength="10" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="18" Scale="3" />
         </ComplexType>
         <ComplexType Name="CommodityPriceIndex">
           <Property Type="Int32" Name="CommodityPriceID" Nullable="false" />
@@ -20495,6 +20496,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Boolean" Name="InActivePartial" Nullable="true" />
           <Property Type="Decimal" Name="QuantityIssued" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailableReceipts" Nullable="false" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="18" Scale="3" />
         </ComplexType>
         <ComplexType Name="WarehouseTransferIndex">
           <Property Type="Int32" Name="WarehouseTransferID" Nullable="false" />
@@ -22918,6 +22920,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Specs" Nullable="true" />
           <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailableReceipts" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="18" Scale="3" />
         </ComplexType>
         <ComplexType Name="WarehouseTransferAvailableWarehouse">
           <Property Type="Boolean" Name="HasTransferOrder" Nullable="true" />
@@ -25704,6 +25707,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Specs" Nullable="true" />
           <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailableReceipts" Nullable="true" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="18" Scale="3" />
           </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -26909,6 +26913,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
                 <ScalarProperty Name="QuantityAvailables" ColumnName="QuantityAvailables" />
                 <ScalarProperty Name="SalesUnit" ColumnName="SalesUnit" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -30060,6 +30065,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
                 <ScalarProperty Name="QuantityIssued" ColumnName="QuantityIssued" />
                 <ScalarProperty Name="QuantityAvailableReceipts" ColumnName="QuantityAvailableReceipts" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -31513,6 +31519,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Specs" ColumnName="Specs" />
                 <ScalarProperty Name="QuantityAvailables" ColumnName="QuantityAvailables" />
                 <ScalarProperty Name="QuantityAvailableReceipts" ColumnName="QuantityAvailableReceipts" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -32617,6 +32624,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Specs" ColumnName="Specs" />
                 <ScalarProperty Name="QuantityAvailables" ColumnName="QuantityAvailables" />
                 <ScalarProperty Name="QuantityAvailableReceipts" ColumnName="QuantityAvailableReceipts" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -45,6 +45,11 @@ namespace TotalDTO.Inventories
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get { return this.Quantity - QuantityIssued; } set { } }
 
+        [Display(Name = "Số kiện")]
+        [UIHint("QuantityReadonly")]
+        public decimal Packages { get { return this.Weight > 0 ? this.QuantityRemains / this.Weight : this.QuantityRemains; } set { } }
+
+
         public string VoidTypeCode { get; set; }
         [Display(Name = "Lý do")]
         [UIHint("AutoCompletes/VoidTypeBase")]

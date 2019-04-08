@@ -34,5 +34,6 @@ namespace TotalModel.Models
         public int PiecePerPack { get; set; }
         public decimal QuantityAvailables { get; set; }
         public string SalesUnit { get; set; }
+        public Nullable<decimal> Weight { get; set; }
     }
 }

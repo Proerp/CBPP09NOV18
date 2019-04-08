@@ -29,5 +29,6 @@ namespace TotalModel.Models
         public Nullable<bool> InActivePartial { get; set; }
         public decimal QuantityIssued { get; set; }
         public decimal QuantityAvailableReceipts { get; set; }
+        public Nullable<decimal> Weight { get; set; }
     }
 }

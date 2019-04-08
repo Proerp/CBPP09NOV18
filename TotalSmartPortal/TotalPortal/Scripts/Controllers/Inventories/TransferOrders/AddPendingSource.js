@@ -47,13 +47,15 @@ function handleOKEvent(transferOrderGridDataSource, pendingGridDataSource) {
         dataRow.CommodityName = pendingGridDataItem.CommodityName;
         dataRow.CommodityCode = pendingGridDataItem.CommodityCode;
         dataRow.CommodityTypeID = pendingGridDataItem.CommodityTypeID;
+        dataRow.Weight = pendingGridDataItem.Weight;
 
         dataRow.QuantityAvailables = pendingGridDataItem.QuantityAvailables;
         dataRow.QuantityAvailableReceipts = pendingGridDataItem.QuantityAvailableReceipts;
         dataRow.Quantity = DoRound(pendingGridDataItem.QuantityRemains - pendingGridDataItem.QuantityTransferOrders - pendingGridDataItem.QuantityAvailableReceipts, window.parent.requireConfig.websiteOptions.rndQuantity);
 
         dataRow.QuantityIssued = 0;
-        dataRow.QuantityRemains = dataRow.Quantity;
+        dataRow.QuantityRemains = dataRow.Quantity;        
+        dataRow.Packages = dataRow.Weight * 1 > 0 ? DoRound(dataRow.QuantityRemains / dataRow.Weight, window.parent.requireConfig.websiteOptions.rndQuantity) : dataRow.QuantityRemains;
 
         dataRow.InActivePartial = false;
         dataRow.VoidTypeName = null;

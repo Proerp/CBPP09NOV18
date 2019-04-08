@@ -32,6 +32,10 @@ namespace TotalDTO.Helpers
         [UIHint("StringReadonly")]
         public virtual string SalesUnit { get; set; }
 
+        [Display(Name = "TL Net")]
+        [UIHint("DecimalN0Readonly")]
+        public virtual decimal Weight { get; set; }
+
         [Range(1, 99999999999, ErrorMessage = "Lỗi bắt buộc phải có id loại hàng hóa")]
         [Required(ErrorMessage = "Lỗi bắt buộc phải có loại hàng hóa")]
         public virtual int CommodityTypeID { get; set; }

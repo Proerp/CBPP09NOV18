@@ -24,6 +24,9 @@
             if (currentDataSourceRow.SalesUnit != undefined) {
                 currentDataSourceRow.set("SalesUnit", dataItem.SalesUnit);
             }
+            if (currentDataSourceRow.Weight != undefined) {
+                currentDataSourceRow.set("Weight", dataItem.Weight);
+            }
             //currentDataSourceRow.set("Quantity", 0);
 
             currentDataSourceRow.set("TradeDiscountRate", currentDataSourceRow.VATbyRow === true ? dataItem.TradeDiscountRate : $("#TradeDiscountRate").val());

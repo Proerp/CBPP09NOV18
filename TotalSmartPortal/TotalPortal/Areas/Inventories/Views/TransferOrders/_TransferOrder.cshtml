@@ -95,15 +95,15 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(196)
-                        .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)")
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(GlobalEnums.CBPP? 108: 196)                        
                         .ClientTemplate("<div> #= CommodityCode #</div>" +
                             "<div> #= (VoidTypeName == null)? '' : VoidTypeName #</div>" +
                             "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
 
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(160).HtmlAttributes(new { style = "" })
-                        .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
-
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(GlobalEnums.CBPP ? 260 : 160).HtmlAttributes(new { style = "" })
+                        .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />")
+                        .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
+                        
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
@@ -113,7 +113,7 @@
                          .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                          .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityAvailables) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].QuantityAvailables' value='#= QuantityAvailables #' />");
 
-                    columns.Bound(p => p.QuantityAvailableReceipts).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                    columns.Bound(p => p.QuantityAvailableReceipts).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
                          .Format(Settings.kfmQuantity)
                          .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                          .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityAvailableReceipts) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].QuantityAvailableReceipts' value='#= QuantityAvailableReceipts #' />");
@@ -133,6 +133,15 @@
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
 
+                    columns.Bound(p => p.Weight).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(!GlobalEnums.CBPP)
+                        .Format(Settings.kfmN0)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', Weight) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].Weight' value='#= Weight #' />");
+
+                    columns.Bound(p => p.Packages).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(!GlobalEnums.CBPP)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Packages) #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].Packages' value='#= Packages #' />");
+                    
                     columns.Bound(p => p.Remarks).DisplayNameTitle().Width(330)
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='TransferOrderViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
@@ -196,12 +205,13 @@
                         events.Change("dataSourceChange");
                         events.Error("kendGrid_ErrorHandler");
                     })
-                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                    .Aggregates(a => a.Add(x => x.CommodityName).Count())
                     .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
                     .Aggregates(a => a.Add(x => x.QuantityAvailableReceipts).Sum())
                     .Aggregates(a => a.Add(x => x.Quantity).Sum())
                     .Aggregates(a => a.Add(x => x.QuantityIssued).Sum())
                     .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                    .Aggregates(a => a.Add(x => x.Packages).Sum())
                 )
             )
         </div>
@@ -280,15 +290,12 @@
     <button type="button" class="k-button" onclick="$('#kendoGridDetails').data('kendoGrid').addRow()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm mặt hàng </button>
     if ((!GlobalEnums.CBPP && @Model.IsItem) || (GlobalEnums.CBPP && @Model.IsMaterial))
     {
-        <button type="button" class="k-button" onclick="GetPendingMaterials()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Điều hàng theo lệnh sx </button>
-    }
-    
-    <span style="float:right"> @Html.Partial("~/Views/Helpers/Commons/_Import.cshtml") </span>
+        <button type="button" class="k-button" onclick="GetPendingMaterials()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Điều hàng theo lệnh sản xuất </button>
+    }    
 }
 
 
 <script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
-<script src="@Url.Content("~/Scripts/Controllers/Inventories/TransferOrders/Import.js")"></script>
 
 <script type="text/javascript">
     function GetPendingMaterials() {
@@ -306,11 +313,12 @@
     }
 
     dataSourceChange = function (e) {
+        var dataRow = e.items[0];
         if (e.field === "Quantity") {
-            var dataRow = e.items[0];
             dataRow.set("QuantityRemains", DoRound(dataRow.Quantity - dataRow.QuantityIssued, requireConfig.websiteOptions.rndQuantity));
         }
-    }
-
-    window.urlCommoditiesApi = '@Url.Action("GetCommodityBasesImport", "CommodityAPIs", new { area = "Commons" })';
+        if (e.field === "QuantityRemains") {
+            dataRow.set("Packages", dataRow["Weight"] * 1 > 0 ? DoRound(dataRow.QuantityRemains / dataRow["Weight"], requireConfig.websiteOptions.rndQuantity) : dataRow.QuantityRemains);
+        }
+    }    
 </script>

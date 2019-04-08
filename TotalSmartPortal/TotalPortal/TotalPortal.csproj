@@ -2169,7 +2169,6 @@
     <Content Include="Scripts\Controllers\Inventories\TransferOrders\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Inventories\TransferOrders\Delete.js" />
     <Content Include="Scripts\Controllers\Inventories\TransferOrders\Edit.js" />
-    <Content Include="Scripts\Controllers\Inventories\TransferOrders\Import.js" />
     <Content Include="Scripts\Controllers\Inventories\TransferOrders\Index.js" />
     <Content Include="Scripts\Controllers\Inventories\TransferOrders\Open.js" />
     <Content Include="Scripts\Controllers\Inventories\TransferOrders\Print.js" />
@@ -3269,6 +3268,8 @@
     <Content Include="Views\Shared\EditorTemplates\DropDowns\CommodityIcon.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DecimalN3.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\PercentN0.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DecimalN3Readonly.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\DecimalN0Readonly.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
