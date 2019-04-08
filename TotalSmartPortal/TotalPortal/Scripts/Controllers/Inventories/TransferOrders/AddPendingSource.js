@@ -2,13 +2,13 @@
     window.parent.$("#myWindow").data("kendoWindow").close();
 }
 
-function handleOKEvent(transferOrderGridDataSource, pendingBlendingInstructionGridDataSource) {
-    if (transferOrderGridDataSource != undefined && pendingBlendingInstructionGridDataSource != undefined) {
-        var pendingBlendingInstructionGridDataItems = pendingBlendingInstructionGridDataSource.view();
+function handleOKEvent(transferOrderGridDataSource, pendingGridDataSource) {
+    if (transferOrderGridDataSource != undefined && pendingGridDataSource != undefined) {
+        var pendingGridDataItems = pendingGridDataSource.view();
         var transferOrderJSON = transferOrderGridDataSource.data().toJSON();
-        for (var i = 0; i < pendingBlendingInstructionGridDataItems.length; i++) {
-            if (pendingBlendingInstructionGridDataItems[i].IsSelected === true)
-                _setParentInput(transferOrderJSON, pendingBlendingInstructionGridDataItems[i]);
+        for (var i = 0; i < pendingGridDataItems.length; i++) {
+            if (pendingGridDataItems[i].IsSelected === true)
+                _setParentInput(transferOrderJSON, pendingGridDataItems[i]);
         }
 
         transferOrderJSON.push(new Object()); //Add a temporary empty row
@@ -34,7 +34,7 @@ function handleOKEvent(transferOrderGridDataSource, pendingBlendingInstructionGr
     //grid.dataSource.data(data); //set changed data as data of the Grid
 
 
-    function _setParentInput(transferOrderJSON, productionOrderGridDataItem) {
+    function _setParentInput(transferOrderJSON, pendingGridDataItem) {
 
         //var dataRow = transferOrderJSON.add({});
 
@@ -43,21 +43,21 @@ function handleOKEvent(transferOrderGridDataSource, pendingBlendingInstructionGr
         dataRow.TransferOrderDetailID = 0;
         dataRow.TransferOrderID = window.parent.$("#TransferOrderID").val();
 
-        dataRow.CommodityID = productionOrderGridDataItem.CommodityID;
-        dataRow.CommodityName = productionOrderGridDataItem.CommodityName;
-        dataRow.CommodityCode = productionOrderGridDataItem.CommodityCode;
-        dataRow.CommodityTypeID = productionOrderGridDataItem.CommodityTypeID;
+        dataRow.CommodityID = pendingGridDataItem.CommodityID;
+        dataRow.CommodityName = pendingGridDataItem.CommodityName;
+        dataRow.CommodityCode = pendingGridDataItem.CommodityCode;
+        dataRow.CommodityTypeID = pendingGridDataItem.CommodityTypeID;
 
-        dataRow.QuantityAvailables = productionOrderGridDataItem.QuantityAvailables;
-        dataRow.QuantityAvailableReceipts = productionOrderGridDataItem.QuantityAvailableReceipts;
-        dataRow.Quantity = DoRound(productionOrderGridDataItem.QuantityRemains - productionOrderGridDataItem.QuantityTransferOrders - productionOrderGridDataItem.QuantityAvailableReceipts, window.parent.requireConfig.websiteOptions.rndQuantity);
+        dataRow.QuantityAvailables = pendingGridDataItem.QuantityAvailables;
+        dataRow.QuantityAvailableReceipts = pendingGridDataItem.QuantityAvailableReceipts;
+        dataRow.Quantity = DoRound(pendingGridDataItem.QuantityRemains - pendingGridDataItem.QuantityTransferOrders - pendingGridDataItem.QuantityAvailableReceipts, window.parent.requireConfig.websiteOptions.rndQuantity);
 
         dataRow.QuantityIssued = 0;
         dataRow.QuantityRemains = dataRow.Quantity;
 
         dataRow.InActivePartial = false;
         dataRow.VoidTypeName = null;
-        dataRow.Remarks = productionOrderGridDataItem.Specs;
+        dataRow.Remarks = pendingGridDataItem.Specs;
 
 
         transferOrderJSON.push(dataRow);

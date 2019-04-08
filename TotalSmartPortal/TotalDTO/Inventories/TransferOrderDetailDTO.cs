@@ -29,7 +29,7 @@ namespace TotalDTO.Inventories
         [UIHint("QuantityReadonly")]
         public decimal QuantityAvailables { get; set; }
 
-        [Display(Name = "Tồn kho")]
+        [Display(Name = "TK nhập")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityAvailableReceipts { get; set; }
 

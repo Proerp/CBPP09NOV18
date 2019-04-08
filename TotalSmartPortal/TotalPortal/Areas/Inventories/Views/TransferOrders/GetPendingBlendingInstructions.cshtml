@@ -14,7 +14,7 @@
         columns.Bound(c => c.Codes).Title("ĐH").Width(23);
         columns.Bound(c => c.Specs).Title("SP").Width(36);
         columns.Bound(c => c.QuantityRemains).Title("Tồn lệnh").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
-        columns.Bound(c => c.QuantityAvailableReceipts).Title("Tồn kho").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.QuantityAvailableReceipts).Title("Tồn sx").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
         columns.Bound(c => c.QuantityTransferOrders).Title("Đã điều").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
 
         columns.Template(t => { }).Title("&nbsp;").ClientTemplate("<input class='IsSelected' #= IsSelected ? checked='checked':'' #  type='checkbox' />").HtmlAttributes(new { @class = "grid-column-center" }).Width(5);
@@ -38,8 +38,8 @@
             return {
             locationID: window.parent.requireConfig.pageOptions.LocationID,
             transferOrderID: window.parent.$("#TransferOrderID").val(),
-            warehouseID: window.parent.$("#WarehouseID").val(),
-            warehouseReceiptID: window.parent.$("#WarehouseReceiptID").val(),
+            warehouseID: window.parent.$("#Warehouse_WarehouseID").val(),
+            warehouseReceiptID: window.parent.$("#WarehouseReceipt_WarehouseID").val(),
             commodityIDs : packageIssueJSON.map(function(elem){return elem.CommodityID;}).join(",")
             };}
             </text>))
@@ -55,7 +55,7 @@
     </div>
 </div>
 
-<script src="@Url.Content("~/Scripts/Controllers/Inventories/TransferOrders/AddPendingBlendingInstruction.js")"></script>
+<script src="@Url.Content("~/Scripts/Controllers/Inventories/TransferOrders/AddPendingSource.js")"></script>
 
 <script type="text/javascript">
     function okButton_Click() {
