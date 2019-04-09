@@ -62,6 +62,15 @@ namespace TotalDTO.Productions
         [Display(Name = "Tổng SL")]
         [Required(ErrorMessage = "Vui lòng nhập chi tiết phiếu")]
         public virtual decimal TotalQuantity { get; set; }
+
+        public override void PerformPresaveRule()
+        {
+            base.PerformPresaveRule();
+
+            string caption = "";
+            this.DtoDetails().ToList().ForEach(e => { if (caption.IndexOf(e.Caption) < 0) caption = caption + (caption != "" ? ", " : "") + e.Caption; });
+            this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
+        }
     }
 
     public interface ISemifinishedHandoverDTO : ISemifinishedHandoverPrimitiveDTO

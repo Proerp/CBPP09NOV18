@@ -110,28 +110,29 @@
                     columns.Bound(p => p.FirmOrderCode).DisplayNameTitle().Width(20)
                         .ClientTemplate("#= FirmOrderCode #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FirmOrderCode' value='#= FirmOrderCode #' />");
 
-                    columns.Bound(p => p.SemifinishedProtemReferences).Title(@Model.IsItem ? "Cuộn màng" : "Pallet").Width(20)
+                    columns.Bound(p => p.SemifinishedProtemReferences).Title(@Model.IsItem ? "Cuộn" : "Pallet").Width(20)
                         .ClientTemplate("#= SemifinishedProtemReferences #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].SemifinishedProtemReferences' value='#= SemifinishedProtemReferences #' />");
-                    columns.Bound(p => p.FinishedProtemEntryDate).Title(@Model.IsItem? "Ngày Tạo" : "Ngày ĐG").Width(20)
+                    columns.Bound(p => p.FinishedProtemEntryDate).Title(@Model.IsItem? "Ngày Tạo" : "Ngày ĐG").Width(15)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (FinishedProtemEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProtemEntryDate) #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].FinishedProtemEntryDate' value='#= (FinishedProtemEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProtemEntryDate) #' />");
 
 
                     columns.Bound(p => p.CustomerID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CustomerID #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].CustomerID' value='#= CustomerID #' />");
-                    columns.Bound(p => p.CustomerName).DisplayNameTitle().Width(106)
+                    columns.Bound(p => p.CustomerName).DisplayNameTitle().Width(@Model.IsItem ? 206 : 106)
                         .ClientTemplate("#= CustomerName #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].CustomerName' value='#= CustomerName #' />");
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                       .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(96)
-                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(126)
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(@Model.IsItem ? 168 : 126)
+                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
+                        .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(126).Hidden(@Model.IsItem)
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                      .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");                               
 
-                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
+                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(25)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='FinishedHandoverViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");              
@@ -176,6 +177,7 @@
                         {
                             events.Error("kendGrid_ErrorHandler");
                         })                                                
+                        .Aggregates(a => a.Add(x => x.CommodityCode).Count())
                         .Aggregates(a => a.Add(x => x.Quantity).Sum())                        
                     )
             )

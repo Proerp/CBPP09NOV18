@@ -1,3 +1,3 @@
-﻿require(["kendoWidgetReadonly", "commonEditWithDetailInvoked", "gridWidgetQuantityRemainsSubscribeChange", "gridWidgetSubscribeChange", "gridDatasourceQuantitySubscribe", "gridEditorCommodityInvoked", "gridEditorBinLocationInvoked"], function (kendoWidgetReadonly, commonEditWithDetailInvoked, gridWidgetQuantityRemainsSubscribeChange, gridWidgetSubscribeChange, gridDatasourceQuantitySubscribe, gridEditorCommodityInvoked, gridEditorBinLocationInvoked) {
+﻿require(["kendoWidgetReadonly", "commonEditBasicInvoked", "gridWidgetQuantityRemainsSubscribeChange", "gridWidgetSubscribeChange", "gridDatasourceQuantitySubscribe", "gridEditorCommodityInvoked", "gridEditorBinLocationInvoked"], function (kendoWidgetReadonly, commonEditWithDetailInvoked, gridWidgetQuantityRemainsSubscribeChange, gridWidgetSubscribeChange, gridDatasourceQuantitySubscribe, gridEditorCommodityInvoked, gridEditorBinLocationInvoked) {
 
 });

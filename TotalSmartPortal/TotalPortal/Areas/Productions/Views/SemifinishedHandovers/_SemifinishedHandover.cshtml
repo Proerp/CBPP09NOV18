@@ -77,7 +77,7 @@
 
                     columns.Bound(p => p.ProductionLineID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= ProductionLineID #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].ProductionLineID' value='#= ProductionLineID #' />");
-                    columns.Bound(p => p.ProductionLineCode).DisplayNameTitle().Width(100)
+                    columns.Bound(p => p.ProductionLineCode).DisplayNameTitle().Width(30)
                         .ClientTemplate("#= (ProductionLineCode == null)? '' : ProductionLineCode #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].ProductionLineCode' value='#= (ProductionLineCode == null) ? '' : ProductionLineCode #' />");
 
                     columns.Bound(p => p.SemifinishedItemID).DisplayNameTitle().Hidden()
@@ -85,7 +85,7 @@
                     columns.Bound(p => p.SemifinishedProductID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (SemifinishedProductID == null)? '' : SemifinishedProductID #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].SemifinishedProductID' value='#= (SemifinishedProductID == null) ? '' : SemifinishedProductID #' />");
                     
-                    columns.Bound(p => p.SemifinishedProtemReference).Title(@Model.IsItem? "Phiếu trộn" : "Phiếu phôi").Width(80)
+                    columns.Bound(p => p.SemifinishedProtemReference).Title("Số phiếu").Width(36)
                         .ClientTemplate("#= (SemifinishedProtemReference == null)? '' : SemifinishedProtemReference #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].SemifinishedProtemReference' value='#= (SemifinishedProtemReference == null) ? '' : SemifinishedProtemReference #' />");
                     columns.Bound(p => p.SemifinishedProtemEntryDate).DisplayNameTitle().Width(80)
                         .Format("{0:" + @Settings.DateFormat + "}")
@@ -96,8 +96,11 @@
                     columns.Bound(p => p.CustomerCode).DisplayNameTitle().Width(80)
                         .ClientTemplate("#= CustomerCode #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].CustomerCode' value='#= CustomerCode #' />");
 
+                    columns.Bound(p => p.Caption).Title(@Model.IsItem ? "Hỗn hợp" : "Thành phẩm").Width(160)
+                        .ClientTemplate("#= (Caption == null)? '' : Caption #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].Caption' value='#= (Caption == null) ? '' : Caption #' />");
+
                     columns.Bound(p => p.CrucialWorkerID).DisplayNameTitle().Hidden();
-                    columns.Bound(p => p.CrucialWorkerName).DisplayNameTitle().Width(100)
+                    columns.Bound(p => p.CrucialWorkerName).DisplayNameTitle().Width(120)
                        .ClientTemplate("#= CrucialWorkerName #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].CrucialWorkerName' value='#= CrucialWorkerName #' />");
 
                     columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(50)
@@ -105,10 +108,10 @@
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
 
-                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(120)
+                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(110)
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='SemifinishedHandoverViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
-                    columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(50).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center" });
+                    columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(10).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center" });
                 })
                     .Filterable(f => f.Enabled(false))
                     .Navigatable()

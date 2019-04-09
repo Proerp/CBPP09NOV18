@@ -366,11 +366,11 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? "StringReadonly" : "AutoCompletes/CommodityAvailable")                        
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(180).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? "StringReadonly" : "AutoCompletes/CommodityAvailable")                        
                         .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
 
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(268).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null) ? true : false)
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(208).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null) ? true : false)
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()

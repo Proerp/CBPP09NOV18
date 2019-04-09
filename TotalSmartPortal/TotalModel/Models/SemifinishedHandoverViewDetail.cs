@@ -28,5 +28,6 @@ namespace TotalModel.Models
         public Nullable<int> SemifinishedItemID { get; set; }
         public System.DateTime SemifinishedProtemEntryDate { get; set; }
         public string SemifinishedProtemReference { get; set; }
+        public string Caption { get; set; }
     }
 }

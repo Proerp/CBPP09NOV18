@@ -61,6 +61,8 @@ function handleOKEvent(semifinishedHandoverGridDataSource, pendingDetailGridData
         dataRow.CrucialWorkerID = semifinishedHandoverGridDataItem.CrucialWorkerID;
         dataRow.CrucialWorkerName = semifinishedHandoverGridDataItem.CrucialWorkerName;
 
+        dataRow.Caption = semifinishedHandoverGridDataItem.Caption;
+
         dataRow.Quantity = semifinishedHandoverGridDataItem.Quantity;
 
         dataRow.Remarks = null;        

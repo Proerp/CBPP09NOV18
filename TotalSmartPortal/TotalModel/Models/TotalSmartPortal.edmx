@@ -2333,6 +2333,7 @@
           <Property Name="ApproverID" Type="int" Nullable="false" />
           <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="TotalQuantityIssue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Caption" Type="nvarchar" MaxLength="800" />
           <Property Name="Description" Type="nvarchar" MaxLength="100" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="CreatedDate" Type="datetime" Nullable="false" />
@@ -19430,6 +19431,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
           <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Boolean" Name="Approved" Nullable="false" />
+          <Property Type="String" Name="Caption" Nullable="true" MaxLength="800" />
         </ComplexType>
         <ComplexType Name="SemifinishedHandoverViewDetail">
           <Property Type="Int32" Name="SemifinishedHandoverDetailID" Nullable="false" />
@@ -19447,6 +19449,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="SemifinishedItemID" Nullable="true" />
           <Property Type="DateTime" Name="SemifinishedProtemEntryDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="SemifinishedProtemReference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Caption" Nullable="true" MaxLength="800" />
           </ComplexType>
         <ComplexType Name="SemifinishedHandoverPendingCustomer">
           <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
@@ -19470,6 +19473,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="SemifinishedItemID" Nullable="true" />
           <Property Type="DateTime" Name="SemifinishedProtemEntryDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="SemifinishedProtemReference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Caption" Nullable="true" MaxLength="800" />
         </ComplexType>
         <ComplexType Name="SemifinishedHandoverPendingWorkshift">
           <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
@@ -20696,6 +20700,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_SemifinishedHandovers_Workshifts" FromRole="SemifinishedHandover" ToRole="Workshift" />
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="SemifinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedHandoverDetails_SemifinishedHandovers" FromRole="SemifinishedHandover" ToRole="SemifinishedHandoverDetail" />
+          <Property Name="Caption" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_SemifinishedHandovers_Employees">
           <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
@@ -29440,6 +29445,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -29461,6 +29467,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
                 <ScalarProperty Name="SemifinishedProtemEntryDate" ColumnName="SemifinishedProtemEntryDate" />
                 <ScalarProperty Name="SemifinishedProtemReference" ColumnName="SemifinishedProtemReference" />
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -29494,6 +29501,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="SemifinishedItemID" ColumnName="SemifinishedItemID" />
                 <ScalarProperty Name="SemifinishedProtemEntryDate" ColumnName="SemifinishedProtemEntryDate" />
                 <ScalarProperty Name="SemifinishedProtemReference" ColumnName="SemifinishedProtemReference" />
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -30284,6 +30292,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="SemifinishedHandovers">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedHandover">
               <MappingFragment StoreEntitySet="SemifinishedHandovers">
+                <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />

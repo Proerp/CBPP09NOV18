@@ -85,7 +85,7 @@ namespace TotalDTO.Productions
             base.PerformPresaveRule();
 
             this.ShiftSaving(this.ShiftID); string caption = "";
-            this.DtoDetails().ToList().ForEach(e => { e.MaterialIssueID = this.MaterialIssueID; e.FirmOrderID = this.FirmOrderID; e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.ProductionLineID = this.ProductionLineID; e.CrucialWorkerID = this.CrucialWorkerID; caption = caption + (caption != "" ? ", " : "") + e.GetCaption(this.DtoDetails().Count()); });
+            this.DtoDetails().ToList().ForEach(e => { e.MaterialIssueID = this.MaterialIssueID; e.FirmOrderID = this.FirmOrderID; e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.ProductionLineID = this.ProductionLineID; e.CrucialWorkerID = this.CrucialWorkerID; if (caption.IndexOf(e.CommodityCode) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityCode; });
             this.Caption = caption;
         }
     }
