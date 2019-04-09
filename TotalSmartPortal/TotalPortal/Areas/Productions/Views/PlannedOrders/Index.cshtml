@@ -21,18 +21,19 @@
                 columns.Bound(p => p.Code).Title("Số CT").Width(10).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                 columns.Bound(p => p.DisplayDate).Title("ĐH/GH").Format("{0:dd/MM}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                 columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(118);
-                columns.Bound(p => p.CommodityCode).Title("Mặt hàng").Width(208).Hidden(!Model.IsItem);
-                columns.Bound(p => p.CommodityName).Title("Mặt hàng").Width(208).Hidden(!Model.IsProduct);
+                columns.Bound(p => p.CommodityCode).ClientTemplate("<div> #= CommodityCode #</div>" + "<div class = 'multiline-grid'> #= BomCode #</div>").Title("Mặt hàng").Width(208).Hidden(!Model.IsItem);
+                columns.Bound(p => p.CommodityName).ClientTemplate("<div> #= CommodityName #</div>" + "<div class = 'multiline-grid'> #= BomCode #</div>").Title("Mặt hàng").Width(208).Hidden(!Model.IsProduct);
                                 
                 columns.Bound(p => p.QuantityRequested).Title("SL Y/C").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 columns.Bound(p => p.Quantity).Title("Phải SX").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                columns.Bound(p => p.QuantityProduced).Title(Model.IsItem ? "Đã Trộn" : "Đã SX").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                columns.Bound(p => p.QuantitySemifinishedRemains).Title(Model.IsItem ? "Chưa TM" : "Chưa ĐG").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-
+                columns.Bound(p => p.QuantityProduced).Title(Model.IsItem ? "Hỗn Hợp" : "Đã SX").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantityAndExcess).Title("Màng TP").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" }).Hidden(Model.IsProduct);
+                columns.Bound(p => p.QuantitySemifinishedRemains).Title(Model.IsItem ? "Chưa TM" : "Chưa ĐG").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });                
+                
                 columns.Bound(p => p.ItemEntryDate).Title(Model.IsItem ? "Cấp NL" : "Cấp M").Format("{0:dd/MM HH:mm}").Width(68).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
 
                 columns.Bound(p => p.ItemQuantityNet).Title(Model.IsItem ? "NVL Kg" : "Màng Kg").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                columns.Bound(p => p.ItemQuantitySemifinished).Title(Model.IsItem ? "HH Kg" : "Phôi Kg").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.ItemQuantitySemifinished).Title(Model.IsItem ? "HH Kg" : "Phôi Kg").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" }).Hidden(Model.IsItem);
 
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
@@ -60,7 +61,7 @@
                                             new SelectListItem { Text = "ĐH cần sản xuất", Value = "10"},
                                             new SelectListItem { Text = "ĐH cần sản xuất [Chưa SX]", Value = "11"},
                                             new SelectListItem { Text = "ĐH cần sản xuất [Đang SX]", Value = "12"},
-                                            new SelectListItem { Text = "ĐH chưa đóng gói", Value = "30"},
+                                            new SelectListItem { Text = Model.IsItem ? "ĐH chưa tạo màng" : "ĐH chưa đóng gói", Value = "30"},
                                             new SelectListItem { Text = "ĐH đã sản xuất [Từ ... Đến]", Value = "20"},
                                             new SelectListItem { Text = "Tất cả [Từ ... Đến]", Value = "0"}
                                       })
@@ -121,6 +122,7 @@
                 .Aggregates(a => a.Add(x => x.QuantityRequested).Sum())
                 .Aggregates(a => a.Add(x => x.QuantityOnhand).Sum())
                 .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityAndExcess).Sum())
                 .Aggregates(a => a.Add(x => x.QuantityProduced).Sum())
                 .Aggregates(a => a.Add(x => x.QuantitySemifinishedRemains).Sum())                
                 .Aggregates(a => a.Add(x => x.ItemQuantityNet).Sum())
@@ -203,7 +205,9 @@
                 filters: [
                     { field: "Reference", operator: "contains", value: indexFilterText },
                     { field: "Code", operator: "contains", value: indexFilterText },
+                    { field: "BomCode", operator: "contains", value: indexFilterText },
                     { field: "CustomerName", operator: "contains", value: indexFilterText },
+                    { field: "CommodityCode", operator: "contains", value: indexFilterText },
                     { field: "CommodityName", operator: "contains", value: indexFilterText }
                 ]
             });

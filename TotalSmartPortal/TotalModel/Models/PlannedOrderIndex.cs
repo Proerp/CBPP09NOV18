@@ -58,6 +58,7 @@ namespace TotalModel.Models
         public Nullable<decimal> MoldWeight { get; set; }
         public Nullable<decimal> ItemWeight { get; set; }
         public Nullable<decimal> MoldQuantity { get; set; }
-        public Nullable<decimal> ItemQuantityEstimated { get; set; }
+        public string BomCode { get; set; }
+        public Nullable<decimal> QuantityMaterialEstimated { get; set; }
     }
 }

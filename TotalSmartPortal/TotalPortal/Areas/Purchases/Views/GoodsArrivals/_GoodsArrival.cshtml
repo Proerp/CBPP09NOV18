@@ -160,7 +160,7 @@
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
                     columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(227).EditorTemplateName(@Model.HasPurchaseOrder ? "StringReadonly" : "AutoCompletes/CommodityAvailable")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)")
-                        .ClientTemplate("<div class = 'multiline-grid'> #= CommodityCode #</div>" + "<div> #= CommodityName #</div>" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
+                        .ClientTemplate("<div> #= CommodityCode #</div>" + "<div class = 'multiline-grid'> #= CommodityName #</div>" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");

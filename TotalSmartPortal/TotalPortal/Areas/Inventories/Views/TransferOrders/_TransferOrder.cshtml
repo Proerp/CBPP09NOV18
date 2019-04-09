@@ -287,11 +287,11 @@
 
 @helper MakeToolbar()
 {
-    <button type="button" class="k-button" onclick="$('#kendoGridDetails').data('kendoGrid').addRow()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm mặt hàng </button>
     if ((!GlobalEnums.CBPP && @Model.IsItem) || (GlobalEnums.CBPP && @Model.IsMaterial))
     {
         <button type="button" class="k-button" onclick="GetPendingMaterials()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Điều hàng theo lệnh sản xuất </button>
-    }    
+    }
+    <button type="button" class="k-button" onclick="$('#kendoGridDetails').data('kendoGrid').addRow()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm mặt hàng </button>
 }
 
 
