@@ -80,7 +80,7 @@
                             @Html.Kendo().DatePickerFor(m => (m as IBaseDTO).GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
                             @Html.Kendo().DatePickerFor(m => (m as IBaseDTO).GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
 
-                            @(Html.Kendo().DropDownList()
+                            @*@(Html.Kendo().DropDownList()
                                 .Name("ShowApproved")
                                 .DataTextField("Text")
                                 .DataValueField("Value")
@@ -91,7 +91,7 @@
                                         new SelectListItem { Text = "!", Value = "-1"}
                                     })
                                 .Events(e => e.Change("indexFilterText_KeyUp"))
-                            )
+                            )*@
                         </span>
                        
                     </div>
