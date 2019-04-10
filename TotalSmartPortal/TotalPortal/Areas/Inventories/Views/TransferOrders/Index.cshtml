@@ -14,16 +14,14 @@
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
 
                 columns.Bound(p => p.Reference).Title("Phiếu").Width(1).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= TransferOrderID #'>#=Reference#</a>");
-                columns.Bound(p => p.TransferOrderTypeName).Title("PL").Width(10).Hidden();
 
                 columns.Bound(p => p.WarehouseCode).Title("Kho xuất").Width(30);
                 columns.Bound(p => p.WarehouseReceiptCode).Title("Kho nhập").Width(30);
-                columns.Bound(p => p.Caption).Title("Mặt hàng").Width(368);
+                columns.Bound(p => p.CommodityCode).Title("Mặt hàng").Width(368);
                 
-                columns.Bound(p => p.TransferOrderJobs).Title("Mục đích").Width(127);
                 columns.Bound(p => p.VoidTypeName).Title("Hủy lệnh").Width(20);
                 
-                columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
+                columns.Bound(p => p.Quantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
 
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
@@ -34,9 +32,46 @@
             {
                 toolbar.Template(@<text>
                     <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu mới </button>
+                    <button type="button" title="Cập nhật số liệu chuyển kho" class="k-button" onclick="indexFilterText_KeyUp(true)"> <img src="~/Content/Images/New/Refresh-icon.png" /> </button>
+                    
                     <div class="toolbar" style="float: right;">
-                        <label>Nhập số phiếu hoặc phân loại để tìm</label>
-                        <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                        <label>Lọc dữ liệu</label>
+                        <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 108px; " onkeyup="indexFilterText_KeyUp()" />
+
+                        <span id="filterExtended">
+                            @(Html.Kendo().DropDownList()
+                                .Name("ShowFilterOptionID")
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
+                                .BindTo(new List<SelectListItem>()
+                                    {
+                                        new SelectListItem { Text = "Đang theo dõi", Value = "10"},
+                                        new SelectListItem { Text = "Đang theo dõi [Chưa CK]", Value = "11"},
+                                        new SelectListItem { Text = "Đang theo dõi [Đang CK]", Value = "12"},
+                                        new SelectListItem { Text = "Đã hoàn tất [Từ ... Đến]", Value = "20"},
+                                        new SelectListItem { Text = "Tất cả [Từ ... Đến]", Value = "0"}
+                                    })
+                                .Events(e => e.Change("indexFilterText_KeyUp"))
+                            )
+
+                            @(Html.Kendo().DropDownList()
+                                .Name("ShowLabOptionID")
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .HtmlAttributes(new { @style = "width: 118px; text-align: center; " })
+                                .BindTo(new List<SelectListItem>()
+                                    {
+                                        new SelectListItem { Text = "Đã kiểm định", Value = "1"},
+                                        new SelectListItem { Text = "BG chưa QC", Value = "0"}
+                                    })
+                                .Events(e => e.Change("indexFilterText_KeyUp"))
+                            )
+
+                            @Html.Kendo().DatePickerFor(m => m.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                            @Html.Kendo().DatePickerFor(m => m.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                        </span>
+                       
                     </div>
                 </text>);
             })
@@ -74,7 +109,12 @@
 <script type="text/javascript">
     function onTransferOrderIndexes(e) {
         return {
-            nmvnTaskID: requireConfig.pageOptions.NmvnTaskID
+            withExtendedSearch: true,
+            nmvnTaskID: requireConfig.pageOptions.NmvnTaskID,
+            extendedFromDate: $("#GlobalFromDate").val(),
+            extendedToDate: $("#GlobalToDate").val(),
+            labOptionID: $("#ShowLabOptionID").val(),
+            filterOptionID: $("#ShowFilterOptionID").val()
         };
     }
 
@@ -98,8 +138,7 @@
         if (elem.Approved == null || elem.Approved == false) {
             $('tr[data-uid="' + elem.uid + '"]').addClass("NotApproved");
         }
-        else
-        {
+        else {
             if (elem.InActive != null && elem.InActive == true) {
                 $('tr[data-uid="' + elem.uid + '"]').addClass("isBonus");
             }

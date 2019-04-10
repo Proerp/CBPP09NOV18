@@ -14,20 +14,22 @@ namespace TotalModel.Models
     public partial class TransferOrderIndex
     {
         public int TransferOrderID { get; set; }
-        public Nullable<System.DateTime> EntryDate { get; set; }
+        public System.DateTime EntryDate { get; set; }
         public string Reference { get; set; }
-        public string LocationCode { get; set; }
-        public int TransferOrderTypeID { get; set; }
-        public string TransferOrderTypeName { get; set; }
         public string Description { get; set; }
-        public decimal TotalQuantity { get; set; }
         public bool Approved { get; set; }
         public string VoidTypeName { get; set; }
         public bool InActive { get; set; }
         public bool InActivePartial { get; set; }
-        public string Caption { get; set; }
         public string TransferOrderJobs { get; set; }
         public string WarehouseCode { get; set; }
         public string WarehouseReceiptCode { get; set; }
+        public Nullable<int> TransferOrderDetailID { get; set; }
+        public string CommodityCode { get; set; }
+        public string CommodityName { get; set; }
+        public Nullable<decimal> Quantity { get; set; }
+        public Nullable<decimal> QuantityIssued { get; set; }
+        public Nullable<decimal> QuantityRemains { get; set; }
+        public Nullable<decimal> QuantityAvailables { get; set; }
     }
 }

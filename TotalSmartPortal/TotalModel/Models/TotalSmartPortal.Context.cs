@@ -3772,7 +3772,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPlannedOrder>("GetGoodsReceiptPendingPlannedOrders", locationIDParameter);
         }
     
-        public virtual ObjectResult<TransferOrderIndex> GetTransferOrderIndexes(Nullable<int> nMVNTaskID, string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        public virtual ObjectResult<TransferOrderIndex> GetTransferOrderIndexes(Nullable<int> nMVNTaskID, string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<int> labOptionID, Nullable<int> filterOptionID)
         {
             var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
                 new ObjectParameter("NMVNTaskID", nMVNTaskID) :
@@ -3790,7 +3790,15 @@ namespace TotalModel.Models
                 new ObjectParameter("ToDate", toDate) :
                 new ObjectParameter("ToDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderIndex>("GetTransferOrderIndexes", nMVNTaskIDParameter, aspUserIDParameter, fromDateParameter, toDateParameter);
+            var labOptionIDParameter = labOptionID.HasValue ?
+                new ObjectParameter("LabOptionID", labOptionID) :
+                new ObjectParameter("LabOptionID", typeof(int));
+    
+            var filterOptionIDParameter = filterOptionID.HasValue ?
+                new ObjectParameter("FilterOptionID", filterOptionID) :
+                new ObjectParameter("FilterOptionID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderIndex>("GetTransferOrderIndexes", nMVNTaskIDParameter, aspUserIDParameter, fromDateParameter, toDateParameter, labOptionIDParameter, filterOptionIDParameter);
         }
     
         public virtual ObjectResult<TransferOrderViewDetail> GetTransferOrderViewDetails(Nullable<int> transferOrderID)

@@ -42,25 +42,106 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            queryString = " @NMVNTaskID int, @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime " + "\r\n";
+            queryString = " @NMVNTaskID int, @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime, @LabOptionID int, @FilterOptionID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      TransferOrders.TransferOrderID, CAST(TransferOrders.EntryDate AS DATE) AS EntryDate, TransferOrders.Reference, Locations.Code AS LocationCode, Warehouses.Code AS WarehouseCode, WarehouseReceipts.Code AS WarehouseReceiptCode, TransferOrders.TransferOrderTypeID, TransferOrderTypes.Name AS TransferOrderTypeName, TransferOrders.TransferOrderJobs, TransferOrders.Caption, ISNULL(VoidTypes.Name, CASE TransferOrders.InActivePartial WHEN 1 THEN N'Hủy một phần đh' ELSE N'' END) AS VoidTypeName, TransferOrders.Description, TransferOrders.TotalQuantity, TransferOrders.Approved, TransferOrders.InActive, TransferOrders.InActivePartial " + "\r\n";
-            queryString = queryString + "       FROM        TransferOrders " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Locations ON TransferOrders.NMVNTaskID = @NMVNTaskID AND TransferOrders.EntryDate >= @FromDate AND TransferOrders.EntryDate <= @ToDate AND TransferOrders.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = @NMVNTaskID AND AccessControls.AccessLevel > 0) AND Locations.LocationID = TransferOrders.LocationID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Warehouses ON TransferOrders.WarehouseID = Warehouses.WarehouseID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Warehouses WarehouseReceipts ON TransferOrders.WarehouseReceiptID = WarehouseReceipts.WarehouseID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN TransferOrderTypes ON TransferOrders.TransferOrderTypeID = TransferOrderTypes.TransferOrderTypeID " + "\r\n";
-            queryString = queryString + "                   LEFT JOIN VoidTypes ON TransferOrders.VoidTypeID = VoidTypes.VoidTypeID" + "\r\n";
-            queryString = queryString + "       " + "\r\n";
+            queryString = queryString + "       DECLARE     @LocalAspUserID nvarchar(128), @LocalFromDate DateTime, @LocalToDate DateTime, @LocalLabOptionID int, @LocalFilterOptionID int " + "\r\n";
+            queryString = queryString + "       SET         @LocalAspUserID = @AspUserID       SET @LocalFromDate = @FromDate      SET @LocalToDate = @ToDate          SET @LocalLabOptionID = @LabOptionID            SET @LocalFilterOptionID = @FilterOptionID" + "\r\n";
+
+            queryString = queryString + "       DECLARE     @TransferOrderIndexes TABLE (TransferOrderID int NOT NULL, EntryDate datetime NOT NULL, Reference nvarchar(10) NOT NULL, WarehouseCode nvarchar(10) NULL, WarehouseReceiptCode nvarchar(10) NULL, Description nvarchar(100) NULL, TransferOrderJobs nvarchar(100) NULL, " + "\r\n";
+            queryString = queryString + "                                                TransferOrderDetailID int NULL, CommodityCode nvarchar(50) NULL, CommodityName nvarchar(200) NULL, Approved bit NOT NULL, InActive bit NOT NULL, InActivePartial bit NOT NULL, VoidTypeName nvarchar(50) NULL, " + "\r\n";
+            queryString = queryString + "                                                Quantity decimal(18, 2) NULL, QuantityIssued decimal(18, 2) NULL, QuantityRemains decimal(18, 2) NULL, QuantityAvailables decimal(18, 2) NULL) " + "\r\n";
+
+            queryString = queryString + "       IF  (@LocalFilterOptionID = 0) " + "\r\n";
+            queryString = queryString + "           " + this.GetTransferOrderIndexSQL(0) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               IF  (@LocalFilterOptionID = 10) " + "\r\n";
+            queryString = queryString + "                   " + this.GetTransferOrderIndexSQL(10) + "\r\n";
+            queryString = queryString + "               ELSE " + "\r\n";
+            queryString = queryString + "                   BEGIN " + "\r\n";
+            queryString = queryString + "                       IF  (@LocalFilterOptionID = 11) " + "\r\n";
+            queryString = queryString + "                           " + this.GetTransferOrderIndexSQL(11) + "\r\n";
+            queryString = queryString + "                       ELSE " + "\r\n";
+            queryString = queryString + "                           BEGIN " + "\r\n";
+            queryString = queryString + "                               IF  (@LocalFilterOptionID = 12) " + "\r\n";
+            queryString = queryString + "                                   " + this.GetTransferOrderIndexSQL(12) + "\r\n";
+            queryString = queryString + "                               ELSE " + "\r\n";
+            queryString = queryString + "                                   " + this.GetTransferOrderIndexSQL(20) + "\r\n";
+            queryString = queryString + "                           END " + "\r\n";
+            queryString = queryString + "                   END " + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
+
+
+            queryString = queryString + "       SELECT      TransferOrderID, EntryDate, Reference, WarehouseCode, WarehouseReceiptCode, Description, TransferOrderJobs, " + "\r\n";
+            queryString = queryString + "                   TransferOrderDetailID, CommodityCode, CommodityName, Approved, InActive, InActivePartial, VoidTypeName, " + "\r\n";
+            queryString = queryString + "                   Quantity, IIF(QuantityIssued = 0, NULL, QuantityIssued) AS QuantityIssued, IIF(QuantityRemains = 0, NULL, QuantityRemains) AS QuantityRemains, IIF(QuantityAvailables = 0, NULL, QuantityAvailables) AS QuantityAvailables " + "\r\n";
+
+            queryString = queryString + "       FROM        @TransferOrderIndexes " + "\r\n";
+            queryString = queryString + "       ORDER BY    EntryDate DESC, Reference DESC, CommodityCode " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetTransferOrderIndexes", queryString);
         }
 
+        private string GetTransferOrderIndexSQL(int filterOptionID)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+            queryString = queryString + "       IF  (@LocalLabOptionID = 1) " + "\r\n";
+            queryString = queryString + "           " + this.GetTransferOrderIndexSQL(filterOptionID, true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.GetTransferOrderIndexSQL(filterOptionID, false) + "\r\n";
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string GetTransferOrderIndexSQL(int filterOptionID, bool labOptionID)
+        {
+
+            //filterOptionID: 0: NORMAL  TransferOrderDetails LEFT JOIN TransferOrderDetails: FROM TO
+            //filterOptionID: 10: PENDING TransferOrderDetails LEFT JOIN TransferOrderDetails WITH: NOT InActive AND (TransferOrderDetails IS NULL (NOT APPROVED YET) OR TransferOrderDetails.QuantityPending > 0))
+            //filterOptionID: 11: 10 AND NOT MATERIAL
+            //filterOptionID: 12: 10 AND WITH MATERIAL
+            //filterOptionID: 20: FINISH  TransferOrderDetails INNER JOIN TransferOrderDetails: FROM TO
+
+            string queryString = "";
+
+            queryString = queryString + "    BEGIN " + "\r\n";
+
+            queryString = queryString + "       INSERT INTO @TransferOrderIndexes (TransferOrderID, EntryDate, Reference, WarehouseCode, WarehouseReceiptCode, Description, TransferOrderJobs, " + "\r\n";
+            queryString = queryString + "                                                TransferOrderDetailID, CommodityCode, CommodityName, Approved, InActive, InActivePartial, VoidTypeName, " + "\r\n";
+            queryString = queryString + "                                                Quantity, QuantityIssued, QuantityRemains, QuantityAvailables) " + "\r\n";
+
+            queryString = queryString + "       SELECT      TransferOrders.TransferOrderID, CAST(" + "TransferOrders.EntryDate" + " AS DATE) AS EntryDate, TransferOrders.Reference, Warehouses.Code AS WarehouseCode, WarehouseReceipts.Code AS WarehouseReceiptCode, TransferOrderDetails.Remarks, TransferOrders.TransferOrderJobs, " + "\r\n";
+            queryString = queryString + "                   TransferOrderDetails.TransferOrderDetailID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, TransferOrders.Approved, TransferOrders.InActive, TransferOrderDetails.InActivePartial, ISNULL(VoidTypes.Name, VoidTypeDetails.Name) AS VoidTypeName, " + "\r\n";
+            queryString = queryString + "                   TransferOrderDetails.Quantity, TransferOrderDetails.QuantityIssued, ROUND(TransferOrderDetails.Quantity - TransferOrderDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, GoodsReceiptAvailables.QuantityAvailables " + "\r\n";
+
+            queryString = queryString + "       FROM        TransferOrders " + "\r\n";
+            queryString = queryString + "                   INNER JOIN  Warehouses ON " + (filterOptionID == 0 || filterOptionID == 20 ? "TransferOrders.EntryDate" + " >= @LocalFromDate AND " + "TransferOrders.EntryDate" + " <= @LocalToDate AND" : "") + " TransferOrders.NMVNTaskID = @NMVNTaskID AND TransferOrders.OrganizationalUnitID IN (SELECT DISTINCT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @LocalAspUserID AND AccessControls.NMVNTaskID = @NMVNTaskID AND AccessControls.AccessLevel > 0) AND TransferOrders.WarehouseID = Warehouses.WarehouseID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN  TransferOrderDetails ON " + this.SQLPendingVsFinished(filterOptionID) + (filterOptionID == 11 || filterOptionID == 12 ? " TransferOrders.TransferOrderID " + (filterOptionID == 11 ? "NOT IN" : "IN") + "(SELECT TransferOrderID FROM TransferOrderDetails WHERE QuantityIssued <> 0)" + " AND " : "") + " TransferOrders.TransferOrderID = TransferOrderDetails.TransferOrderID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN  Warehouses WarehouseReceipts ON TransferOrders.WarehouseReceiptID = WarehouseReceipts.WarehouseID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN  Commodities ON TransferOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+            
+            queryString = queryString + "                   LEFT JOIN  (SELECT WarehouseID, CommodityID, ROUND(SUM(Quantity - QuantityIssued), " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables FROM GoodsReceiptDetails WHERE ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + (labOptionID ? " AND LabID IN (SELECT LabID FROM Labs WHERE Approved = 1 AND InActive = 0)" : "") + " GROUP BY WarehouseID, CommodityID) AS GoodsReceiptAvailables ON TransferOrderDetails.WarehouseID = GoodsReceiptAvailables.WarehouseID AND TransferOrderDetails.CommodityID = GoodsReceiptAvailables.CommodityID " + "\r\n";
+
+            queryString = queryString + "                   LEFT JOIN   VoidTypes ON TransferOrders.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
+            queryString = queryString + "                   LEFT JOIN   VoidTypes VoidTypeDetails ON TransferOrderDetails.VoidTypeID = VoidTypeDetails.VoidTypeID " + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string SQLPendingVsFinished(int filterOptionID)
+        {
+            bool pendingVsFinished = filterOptionID == 10 || filterOptionID == 11 || filterOptionID == 12;
+            return filterOptionID == 0 ? "" : ("(TransferOrderDetails.InActive " + (pendingVsFinished ? "=" : "<>") + " 0 " + (pendingVsFinished ? "AND" : "OR") + " TransferOrderDetails.InActivePartial " + (pendingVsFinished ? "=" : "<>") + " 0 " + (pendingVsFinished ? "AND" : "OR") + " ROUND(TransferOrderDetails.Quantity - TransferOrderDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") " + (pendingVsFinished ? ">" : "<=") + " 0) AND ");
+        }
 
         #region X
 
