@@ -20489,6 +20489,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="QuantityIssued" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="Decimal" Name="Packages" Nullable="true" Precision="38" Scale="19" />
         </ComplexType>
         <ComplexType Name="TransferOrderViewDetail">
           <Property Type="Int32" Name="TransferOrderDetailID" Nullable="false" />
@@ -30061,6 +30063,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="QuantityIssued" ColumnName="QuantityIssued" />
                 <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
                 <ScalarProperty Name="QuantityAvailables" ColumnName="QuantityAvailables" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Packages" ColumnName="Packages" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

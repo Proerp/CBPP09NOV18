@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using System.Data.Entity;
 using System.Collections.Generic;
 
@@ -25,10 +26,12 @@ namespace TotalPortal.Areas.Inventories.APIs
         }
 
 
-        public JsonResult GetTransferOrderIndexes([DataSourceRequest] DataSourceRequest request, string nmvnTaskID)
+        public JsonResult GetTransferOrderIndexes([DataSourceRequest] DataSourceRequest request, bool withExtendedSearch, string nmvnTaskID, DateTime extendedFromDate, DateTime extendedToDate, int filterOptionID, int labOptionID)
         {
             this.transferOrderAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
-            ICollection<TransferOrderIndex> transferOrderIndexes = this.transferOrderAPIRepository.GetEntityIndexes<TransferOrderIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext));
+            this.transferOrderAPIRepository.RepositoryBag["LabOptionID"] = labOptionID;
+            this.transferOrderAPIRepository.RepositoryBag["FilterOptionID"] = filterOptionID;
+            ICollection<TransferOrderIndex> transferOrderIndexes = this.transferOrderAPIRepository.GetEntityIndexes<TransferOrderIndex>(User.Identity.GetUserId(), (withExtendedSearch ? extendedFromDate : HomeSession.GetGlobalFromDate(this.HttpContext)), (withExtendedSearch ? extendedToDate : HomeSession.GetGlobalToDate(this.HttpContext)));
 
             DataSourceResult response = transferOrderIndexes.ToDataSourceResult(request);
 

@@ -1,4 +1,5 @@
-﻿@using TotalBase.Enums
+﻿@using TotalDTO;
+@using TotalBase.Enums
 @using TotalPortal.Configuration
 
 @model TotalPortal.Areas.Inventories.ViewModels.ITransferOrderViewModel
@@ -15,17 +16,25 @@
 
                 columns.Bound(p => p.Reference).Title("Phiếu").Width(1).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= TransferOrderID #'>#=Reference#</a>");
 
-                columns.Bound(p => p.WarehouseCode).Title("Kho xuất").Width(30);
-                columns.Bound(p => p.WarehouseReceiptCode).Title("Kho nhập").Width(30);
-                columns.Bound(p => p.CommodityCode).Title("Mặt hàng").Width(368);
-                
+                columns.Bound(p => p.WarehouseCode).Title("KX").Width(10);
+                columns.Bound(p => p.WarehouseReceiptCode).Title("KN").Width(10);
+                columns.Bound(p => p.CommodityCode).Title("Mặt hàng").Width(GlobalEnums.CBPP? 50 : 168);
+
+                columns.Bound(p => p.QuantityAvailables).Title("Tồn kho").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);
+
+                columns.Bound(p => p.Quantity).Title("KL Y/C").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantityIssued).Title("Đã C/K").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                columns.Bound(p => p.QuantityRemains).Title("Còn lại").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+
+                columns.Bound(p => p.Weight).Title("TL Net").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).Hidden(!GlobalEnums.CBPP);
+                columns.Bound(p => p.Packages).Title("Số kiện").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" }).Hidden(!GlobalEnums.CBPP);
+
+                columns.Bound(p => p.Description).Title("Ghi chú").Width(196);
                 columns.Bound(p => p.VoidTypeName).Title("Hủy lệnh").Width(20);
                 
-                columns.Bound(p => p.Quantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10);
-
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
-                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(50)
+                columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(52)
                     .ClientTemplate("<a class='k-button' title='Hủy phiếu' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Void" }) + "/#= TransferOrderID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Delete" }) + "/#= TransferOrderID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>
@@ -43,7 +52,7 @@
                                 .Name("ShowFilterOptionID")
                                 .DataTextField("Text")
                                 .DataValueField("Value")
-                                .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
+                                .HtmlAttributes(new { @style = "width: 188px; text-align: center; " })
                                 .BindTo(new List<SelectListItem>()
                                     {
                                         new SelectListItem { Text = "Đang theo dõi", Value = "10"},
@@ -68,8 +77,21 @@
                                 .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
 
-                            @Html.Kendo().DatePickerFor(m => m.GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
-                            @Html.Kendo().DatePickerFor(m => m.GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                            @Html.Kendo().DatePickerFor(m => (m as IBaseDTO).GlobalFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                            @Html.Kendo().DatePickerFor(m => (m as IBaseDTO).GlobalToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+
+                            @(Html.Kendo().DropDownList()
+                                .Name("ShowApproved")
+                                .DataTextField("Text")
+                                .DataValueField("Value")
+                                .HtmlAttributes(new { @style = "width: 45px; text-align: center; " })
+                                .BindTo(new List<SelectListItem>()
+                                    {
+                                        new SelectListItem { Text = "A", Value = "0"},
+                                        new SelectListItem { Text = "!", Value = "-1"}
+                                    })
+                                .Events(e => e.Change("indexFilterText_KeyUp"))
+                            )
                         </span>
                        
                     </div>
@@ -100,6 +122,10 @@
                     model.Field(m => m.TransferOrderID).DefaultValue(0);
                 })
                 .ServerOperation(true)
+                .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityIssued).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                .Aggregates(a => a.Add(x => x.Packages).Sum())
                 )
             .HtmlAttributes(new { @class = "grid-class" }))
 </div>
@@ -155,25 +181,26 @@
 
 
 
-    function indexFilterText_KeyUp() {
+    function indexFilterText_KeyUp(readDataSource) {
         var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
 
-        if (indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") {
+        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastLabOptionID").val() != $("#ShowLabOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val()) {
+            $("#LastLabOptionID").val($("#ShowLabOptionID").val());
+            $("#LastFilterOptionID").val($("#ShowFilterOptionID").val());
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [
-                    { field: "TransferOrderTypeName", operator: "contains", value: indexFilterText },
                     { field: "Reference", operator: "contains", value: indexFilterText },
                     { field: "WarehouseCode", operator: "contains", value: indexFilterText },
                     { field: "WarehouseReceiptCode", operator: "contains", value: indexFilterText },
-                    { field: "Caption", operator: "contains", value: indexFilterText },
-                    { field: "Description", operator: "contains", value: indexFilterText }
+                    { field: "CommodityCode", operator: "contains", value: indexFilterText },
+                    { field: "CommodityName", operator: "contains", value: indexFilterText }
                 ]
             });
 
 
         } else {
-            if (gridDetails.dataSource.filter() != undefined)
+            if (indexFilterText && indexFilterText.length && gridDetails.dataSource.filter() != undefined)
                 gridDetails.dataSource.filter({});
         }
     }

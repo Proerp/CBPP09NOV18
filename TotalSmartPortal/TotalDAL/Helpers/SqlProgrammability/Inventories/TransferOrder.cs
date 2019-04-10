@@ -51,7 +51,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       SET         @LocalAspUserID = @AspUserID       SET @LocalFromDate = @FromDate      SET @LocalToDate = @ToDate          SET @LocalLabOptionID = @LabOptionID            SET @LocalFilterOptionID = @FilterOptionID" + "\r\n";
 
             queryString = queryString + "       DECLARE     @TransferOrderIndexes TABLE (TransferOrderID int NOT NULL, EntryDate datetime NOT NULL, Reference nvarchar(10) NOT NULL, WarehouseCode nvarchar(10) NULL, WarehouseReceiptCode nvarchar(10) NULL, Description nvarchar(100) NULL, TransferOrderJobs nvarchar(100) NULL, " + "\r\n";
-            queryString = queryString + "                                                TransferOrderDetailID int NULL, CommodityCode nvarchar(50) NULL, CommodityName nvarchar(200) NULL, Approved bit NOT NULL, InActive bit NOT NULL, InActivePartial bit NOT NULL, VoidTypeName nvarchar(50) NULL, " + "\r\n";
+            queryString = queryString + "                                                TransferOrderDetailID int NULL, CommodityCode nvarchar(50) NULL, CommodityName nvarchar(200) NULL, Weight decimal(18, 3) NOT NULL, Approved bit NOT NULL, InActive bit NOT NULL, InActivePartial bit NOT NULL, VoidTypeName nvarchar(50) NULL, " + "\r\n";
             queryString = queryString + "                                                Quantity decimal(18, 2) NULL, QuantityIssued decimal(18, 2) NULL, QuantityRemains decimal(18, 2) NULL, QuantityAvailables decimal(18, 2) NULL) " + "\r\n";
 
             queryString = queryString + "       IF  (@LocalFilterOptionID = 0) " + "\r\n";
@@ -76,8 +76,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
 
             queryString = queryString + "       SELECT      TransferOrderID, EntryDate, Reference, WarehouseCode, WarehouseReceiptCode, Description, TransferOrderJobs, " + "\r\n";
-            queryString = queryString + "                   TransferOrderDetailID, CommodityCode, CommodityName, Approved, InActive, InActivePartial, VoidTypeName, " + "\r\n";
-            queryString = queryString + "                   Quantity, IIF(QuantityIssued = 0, NULL, QuantityIssued) AS QuantityIssued, IIF(QuantityRemains = 0, NULL, QuantityRemains) AS QuantityRemains, IIF(QuantityAvailables = 0, NULL, QuantityAvailables) AS QuantityAvailables " + "\r\n";
+            queryString = queryString + "                   TransferOrderDetailID, CommodityCode, CommodityName, IIF(Weight = 0, NULL, Weight) AS Weight, Approved, InActive, InActivePartial, VoidTypeName, " + "\r\n";
+            queryString = queryString + "                   Quantity, IIF(QuantityIssued = 0, NULL, QuantityIssued) AS QuantityIssued, IIF(QuantityRemains = 0, NULL, QuantityRemains) AS QuantityRemains, IIF(QuantityRemains = 0, NULL, IIF(Weight = 0, QuantityRemains, QuantityRemains / Weight)) AS Packages, IIF(QuantityAvailables = 0, NULL, QuantityAvailables) AS QuantityAvailables " + "\r\n";
 
             queryString = queryString + "       FROM        @TransferOrderIndexes " + "\r\n";
             queryString = queryString + "       ORDER BY    EntryDate DESC, Reference DESC, CommodityCode " + "\r\n";
@@ -114,11 +114,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "    BEGIN " + "\r\n";
 
             queryString = queryString + "       INSERT INTO @TransferOrderIndexes (TransferOrderID, EntryDate, Reference, WarehouseCode, WarehouseReceiptCode, Description, TransferOrderJobs, " + "\r\n";
-            queryString = queryString + "                                                TransferOrderDetailID, CommodityCode, CommodityName, Approved, InActive, InActivePartial, VoidTypeName, " + "\r\n";
+            queryString = queryString + "                                                TransferOrderDetailID, CommodityCode, CommodityName, Weight, Approved, InActive, InActivePartial, VoidTypeName, " + "\r\n";
             queryString = queryString + "                                                Quantity, QuantityIssued, QuantityRemains, QuantityAvailables) " + "\r\n";
 
             queryString = queryString + "       SELECT      TransferOrders.TransferOrderID, CAST(" + "TransferOrders.EntryDate" + " AS DATE) AS EntryDate, TransferOrders.Reference, Warehouses.Code AS WarehouseCode, WarehouseReceipts.Code AS WarehouseReceiptCode, TransferOrderDetails.Remarks, TransferOrders.TransferOrderJobs, " + "\r\n";
-            queryString = queryString + "                   TransferOrderDetails.TransferOrderDetailID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, TransferOrders.Approved, TransferOrders.InActive, TransferOrderDetails.InActivePartial, ISNULL(VoidTypes.Name, VoidTypeDetails.Name) AS VoidTypeName, " + "\r\n";
+            queryString = queryString + "                   TransferOrderDetails.TransferOrderDetailID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, ISNULL(Commodities.Weight, 0) AS Weight, TransferOrders.Approved, TransferOrders.InActive, TransferOrderDetails.InActivePartial, ISNULL(VoidTypes.Name, VoidTypeDetails.Name) AS VoidTypeName, " + "\r\n";
             queryString = queryString + "                   TransferOrderDetails.Quantity, TransferOrderDetails.QuantityIssued, ROUND(TransferOrderDetails.Quantity - TransferOrderDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, GoodsReceiptAvailables.QuantityAvailables " + "\r\n";
 
             queryString = queryString + "       FROM        TransferOrders " + "\r\n";

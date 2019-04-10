@@ -31,5 +31,7 @@ namespace TotalModel.Models
         public Nullable<decimal> QuantityIssued { get; set; }
         public Nullable<decimal> QuantityRemains { get; set; }
         public Nullable<decimal> QuantityAvailables { get; set; }
+        public Nullable<decimal> Weight { get; set; }
+        public Nullable<decimal> Packages { get; set; }
     }
 }
