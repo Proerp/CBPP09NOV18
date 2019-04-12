@@ -80,7 +80,7 @@ namespace TotalDTO.Commons
         public override void PerformPresaveRule()
         {
             base.PerformPresaveRule();
-            this.DtoDetails().ToList().ForEach(e => { e.LayerQuantity = this.DtoDetails().Where(w => w.LayerCode == e.LayerCode).Select(o => o.Quantity).Sum(); });
+            this.DtoDetails().ToList().ForEach(e => { e.LayerQuantity = Math.Round(this.DtoDetails().Where(w => w.LayerCode == e.LayerCode).Select(o => o.Quantity / o.UnitRate).Sum(), GlobalEnums.rndQuantity, MidpointRounding.AwayFromZero); });
         }
     }
 

@@ -26,6 +26,7 @@ namespace TotalDTO.Commons
         [Display(Name = "Tên NVL")]
         public override string CommodityName { get; set; }
 
+        public decimal UnitRate { get { return this.SalesUnit.ToUpper() == "GR" ? 1000 : 1; } }
 
         [Display(Name = "KL")]
         [UIHint("Quantity")]
