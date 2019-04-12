@@ -31,6 +31,7 @@ namespace TotalModel.Models
         public decimal Quantity { get; set; }
         public decimal LayerQuantity { get; set; }
         public bool MajorStaple { get; set; }
+        public decimal UnitRate { get; set; }
     
         public virtual Bom Bom { get; set; }
         public virtual Commodity Commodity { get; set; }

@@ -222,6 +222,7 @@
           <Property Name="MaterialID" Type="int" Nullable="false" />
           <Property Name="LayerCode" Type="varchar" MaxLength="5" Nullable="false" />
           <Property Name="LayerQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="UnitRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BlockUnit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BlockQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
@@ -954,6 +955,7 @@
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="BomID" Type="int" Nullable="false" />
           <Property Name="BomDetailID" Type="int" Nullable="false" />
+          <Property Name="UnitRate" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BlockUnit" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="BlockQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="MaterialID" Type="int" Nullable="false" />
@@ -19197,6 +19199,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BomDetails_Materials" FromRole="BomDetail" ToRole="Commodity" />
           <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_BomDetails" FromRole="BomDetail" ToRole="MaterialIssueDetail" />
           <Property Name="MajorStaple" Type="Boolean" Nullable="false" />
+          <Property Name="UnitRate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="Bom">
           <Key>
@@ -19314,6 +19317,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
           <Property Name="BomDetailID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="WorkOrderDetails" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_FirmOrderMaterials" FromRole="FirmOrderMaterial" ToRole="WorkOrderDetail" />
+          <Property Name="UnitRate" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_FirmOrderMaterials_Boms">
           <End Type="TotalSmartPortalModel.Bom" Role="Bom" Multiplicity="1" />
@@ -29278,6 +29282,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="BomDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.BomDetail">
               <MappingFragment StoreEntitySet="BomDetails">
+                <ScalarProperty Name="UnitRate" ColumnName="UnitRate" />
                 <ScalarProperty Name="MajorStaple" ColumnName="MajorStaple" />
                 <ScalarProperty Name="LayerQuantity" ColumnName="LayerQuantity" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
@@ -29341,6 +29346,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="FirmOrderMaterials">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.FirmOrderMaterial">
               <MappingFragment StoreEntitySet="FirmOrderMaterials">
+                <ScalarProperty Name="UnitRate" ColumnName="UnitRate" />
                 <ScalarProperty Name="BomDetailID" ColumnName="BomDetailID" />
                 <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="BlockQuantity" ColumnName="BlockQuantity" />

@@ -40,6 +40,7 @@ namespace TotalModel.Models
         public decimal BlockQuantity { get; set; }
         public int NMVNTaskID { get; set; }
         public int BomDetailID { get; set; }
+        public decimal UnitRate { get; set; }
     
         public virtual Bom Bom { get; set; }
         public virtual Customer Customer { get; set; }
