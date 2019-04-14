@@ -288,6 +288,7 @@
           <Property Name="Packing" Type="nvarchar" MaxLength="60" />
           <Property Name="Origin" Type="nvarchar" MaxLength="60" />
           <Property Name="Weight" Type="decimal" Precision="18" Scale="3" />
+          <Property Name="TareWeight" Type="decimal" Precision="18" Scale="3" />
           <Property Name="Shelflife" Type="int" />
           <Property Name="LeadTime" Type="int" />
           <Property Name="HSCode" Type="nvarchar" MaxLength="20" />
@@ -1036,6 +1037,7 @@
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="UnitWeight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TareWeight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Packages" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="VoidTypeID" Type="int" />
@@ -1074,6 +1076,7 @@
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="UnitWeight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TareWeight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Packages" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
           <Property Name="VoidTypeID" Type="int" />
@@ -21650,6 +21653,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" FromRole="GoodsArrivalDetail" ToRole="Commodity" />
           <Property Name="BatchID" Type="Int32" Nullable="false" />
           <Property Name="BatchEntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TareWeight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_GoodsArrivalDetails_GoodsArrivals">
           <End Type="TotalSmartPortalModel.GoodsArrival" Role="GoodsArrival" Multiplicity="1" />
@@ -22210,6 +22214,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
           <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="TareWeight" Nullable="true" Precision="18" Scale="3" />
         </ComplexType>
         <ComplexType Name="GoodsArrivalPendingPurchaseOrder">
           <Property Type="Int32" Name="PurchaseOrderID" Nullable="false" />
@@ -22270,6 +22275,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="BatchID" Nullable="false" />
           <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Decimal" Name="TareWeight" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingGoodsArrivalPackage">
           <Property Type="Int32" Name="GoodsArrivalID" Nullable="false" />
@@ -22521,6 +22527,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_Commodities" FromRole="GoodsArrivalPackage" ToRole="Commodity" />
           <Property Name="BatchID" Type="Int32" Nullable="false" />
           <Property Name="BatchEntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="TareWeight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_GoodsArrivalPackages_GoodsArrivals">
           <End Type="TotalSmartPortalModel.GoodsArrival" Role="GoodsArrival" Multiplicity="1" />
@@ -23995,6 +24002,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="WorkOrderDetails" Relationship="TotalSmartPortalModel.FK_WorkOrderDetails_Commodities" FromRole="Commodity" ToRole="WorkOrderDetail" />
           <NavigationProperty Name="FinishedHandoverDetails" Relationship="TotalSmartPortalModel.FK_FinishedHandoverDetails_Commodities" FromRole="Commodity" ToRole="FinishedHandoverDetail" />
           <NavigationProperty Name="FinishedItemDetails" Relationship="TotalSmartPortalModel.FK_FinishedItemDetails_Commodities" FromRole="Commodity" ToRole="FinishedItemDetail" />
+          <Property Name="TareWeight" Type="Decimal" Precision="18" Scale="3" />
         </EntityType>
         <Association Name="FK_AccountInvoiceDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -30704,6 +30712,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsArrivalDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrivalDetail">
               <MappingFragment StoreEntitySet="GoodsArrivalDetails">
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
@@ -31130,6 +31139,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -31198,6 +31208,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -31294,6 +31305,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsArrivalPackages">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrivalPackage">
               <MappingFragment StoreEntitySet="GoodsArrivalPackages">
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="LabID" ColumnName="LabID" />
@@ -31909,6 +31921,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="Commodities">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.Commodity">
               <MappingFragment StoreEntitySet="Commodities">
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
                 <ScalarProperty Name="CommodityIconID" ColumnName="CommodityIconID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />

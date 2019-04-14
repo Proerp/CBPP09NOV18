@@ -158,9 +158,9 @@
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
                     columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(90).HtmlAttributes(new { style = "" }).Hidden()
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(227).EditorTemplateName(@Model.HasPurchaseOrder ? "StringReadonly" : "AutoCompletes/CommodityAvailable")
-                        .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)")
-                        .ClientTemplate("<div> #= CommodityCode #</div>" + "<div class = 'multiline-grid'> #= CommodityName #</div>" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118).EditorTemplateName(@Model.HasPurchaseOrder ? "StringReadonly" : "AutoCompletes/CommodityAvailable")
+                        .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) #)")
+                        .ClientTemplate((GlobalEnums.CBPP ? "#= CommodityCode #" : "<div> #= CommodityCode #</div>" + "<div class = 'multiline-grid'> #= CommodityName #</div>") + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
@@ -170,7 +170,7 @@
                     
                     columns.Bound(p => p.SealCode).DisplayNameTitle().Width(60)
                         .ClientTemplate("#= (SealCode == null)? '' : SealCode #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].SealCode' value='#= (SealCode == null) ? '' : SealCode #' />");
-                    columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(60)
+                    columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(180)
                         .ClientTemplate("#= (BatchCode == null)? '' : BatchCode #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].BatchCode' value='#= (BatchCode == null) ? '' : BatchCode #' />");
                     columns.Bound(p => p.LabCode).DisplayNameTitle().Width(50)
                         .ClientTemplate("#= (LabCode == null)? '' : LabCode #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].LabCode' value='#= (LabCode == null) ? '' : LabCode #' />");
@@ -203,6 +203,10 @@
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Packages) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].Packages' value='#= Packages #' />");
 
+                    columns.Bound(p => p.TareWeight).DisplayNameTitle().Filterable(false).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
+                        .Format(Settings.kfmQuantity)
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', TareWeight) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].TareWeight' value='#= TareWeight #' />");
+                    
                     columns.Bound(p => p.Remarks).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 

@@ -94,6 +94,12 @@ namespace TotalDTO.Commons
         [UIHint("DecimalN3")]
         [Range(0, 10000, ErrorMessage = "Vui lòng nhập hs trọng lượng")]
         Nullable<decimal> Weight { get; set; }
+
+        [Display(Name = "Trọng lượng (net)")]
+        [UIHint("Quantity")]
+        [Range(0, 10000, ErrorMessage = "Vui lòng nhập trọng lượng bao bì")]
+        Nullable<decimal> TareWeight { get; set; }
+
         [Display(Name = "Hạn sử dụng")]
         int Shelflife { get; set; }
         int LeadTime { get; set; }
@@ -169,6 +175,7 @@ namespace TotalDTO.Commons
         public string Origin { get; set; }
 
         public Nullable<decimal> Weight { get; set; }
+        public Nullable<decimal> TareWeight { get; set; }
         public int Shelflife { get; set; }
         public int LeadTime { get; set; }
 
