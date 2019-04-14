@@ -117,6 +117,9 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingMaterialIssueDetailGri
         dataRow.ProductionDate = materialIssueGridDataItem.ProductionDate;
         dataRow.ExpiryDate = materialIssueGridDataItem.ExpiryDate;
 
+        dataRow.UnitWeight = 0;
+        dataRow.TareWeight = 0;
+
         dataRow.QuantityRemains = materialIssueGridDataItem.QuantityRemains;
         dataRow.Quantity = materialIssueGridDataItem.Quantity;
 

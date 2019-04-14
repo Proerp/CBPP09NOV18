@@ -107,6 +107,9 @@ namespace TotalService.Inventories
                             BinLocationID = pendingWarehouseTransferDetail.BinLocationID,
                             BinLocationCode = pendingWarehouseTransferDetail.BinLocationCode,
 
+                            UnitWeight = pendingWarehouseTransferDetail.UnitWeight,
+                            TareWeight = pendingWarehouseTransferDetail.TareWeight,
+
                             QuantityRemains = (decimal)pendingWarehouseTransferDetail.QuantityRemains,
                             Quantity = (decimal)pendingWarehouseTransferDetail.QuantityRemains,
                         };

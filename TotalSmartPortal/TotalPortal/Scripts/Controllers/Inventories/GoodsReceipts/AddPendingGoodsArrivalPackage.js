@@ -116,6 +116,9 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingGoodsArrivalPackageGri
         dataRow.ProductionDate = goodsArrivalGridDataItem.ProductionDate;
         dataRow.ExpiryDate = goodsArrivalGridDataItem.ExpiryDate;
 
+        dataRow.UnitWeight = goodsArrivalGridDataItem.UnitWeight;
+        dataRow.TareWeight = goodsArrivalGridDataItem.TareWeight;
+
         dataRow.QuantityRemains = goodsArrivalGridDataItem.QuantityRemains;
         dataRow.Quantity = goodsArrivalGridDataItem.QuantityRemains; //SET DEFAULT TOO!
 

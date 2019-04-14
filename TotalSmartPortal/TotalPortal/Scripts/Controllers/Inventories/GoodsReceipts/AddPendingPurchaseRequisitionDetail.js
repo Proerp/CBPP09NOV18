@@ -117,6 +117,9 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingPurchaseRequisitionDet
         dataRow.ProductionDate = null;
         dataRow.ExpiryDate = null;
 
+        dataRow.UnitWeight = 0;
+        dataRow.TareWeight = 0;
+
         dataRow.QuantityRemains = purchaseRequisitionGridDataItem.QuantityRemains;
         dataRow.Quantity = purchaseRequisitionGridDataItem.Quantity;
 

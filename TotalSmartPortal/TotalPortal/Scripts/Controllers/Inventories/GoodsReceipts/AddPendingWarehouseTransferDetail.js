@@ -117,6 +117,9 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetai
         dataRow.ProductionDate = warehouseTransferGridDataItem.ProductionDate;
         dataRow.ExpiryDate = warehouseTransferGridDataItem.ExpiryDate;
 
+        dataRow.UnitWeight = warehouseTransferGridDataItem.UnitWeight;
+        dataRow.TareWeight = warehouseTransferGridDataItem.TareWeight;
+
         dataRow.QuantityRemains = warehouseTransferGridDataItem.QuantityRemains;
         dataRow.Quantity = warehouseTransferGridDataItem.Quantity;
 
