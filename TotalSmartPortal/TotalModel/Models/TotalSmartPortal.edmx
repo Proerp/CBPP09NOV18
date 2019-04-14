@@ -21813,6 +21813,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="BinLocationID" Nullable="true" />
           <Property Type="Decimal" Name="QuantityBIS" Nullable="false" Precision="18" Scale="2" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="TareWeight" Nullable="true" Precision="20" Scale="2" />
         </ComplexType>
         <ComplexType Name="PackageIssuePendingBlendingInstruction">
           <Property Type="Int32" Name="BlendingInstructionID" Nullable="false" />
@@ -30827,6 +30828,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
                 <ScalarProperty Name="QuantityBIS" ColumnName="QuantityBIS" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
