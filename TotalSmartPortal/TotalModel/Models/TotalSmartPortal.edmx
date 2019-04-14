@@ -1320,6 +1320,8 @@
           <Property Name="Barcode" Type="nvarchar" MaxLength="60" />
           <Property Name="ProductionDate" Type="datetime" />
           <Property Name="ExpiryDate" Type="datetime" />
+          <Property Name="UnitWeight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="TareWeight" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="QuantityIssued" Type="decimal" Precision="18" Scale="2" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
@@ -20669,6 +20671,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="BatchID" Nullable="false" />
+          <Property Type="Decimal" Name="UnitWeight" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TareWeight" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="GoodsReceiptPendingWarehouseTransfer">
           <Property Type="Int32" Name="GoodsReceiptTypeID" Nullable="false" />
@@ -20827,6 +20831,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="SemifinishedItemReferences" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="PurchaseOrderCodes" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="CustomerCode" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="UnitWeight" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TareWeight" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <EntityType Name="ModuleDetail">
           <Key>
@@ -21817,7 +21823,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="BinLocationID" Nullable="true" />
           <Property Type="Decimal" Name="QuantityBIS" Nullable="false" Precision="18" Scale="2" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
-          <Property Type="Decimal" Name="TareWeight" Nullable="true" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="TareWeight" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="UnitWeight" Nullable="true" Precision="18" Scale="2" />
         </ComplexType>
         <ComplexType Name="PackageIssuePendingBlendingInstruction">
           <Property Type="Int32" Name="BlendingInstructionID" Nullable="false" />
@@ -22305,6 +22312,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="BatchID" Nullable="false" />
           <Property Type="String" Name="PurchaseOrderCodes" Nullable="true" MaxLength="200" />
           <Property Type="String" Name="CustomerCode" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="UnitWeight" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TareWeight" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <EntityType Name="GoodsReceiptDetail">
           <Key>
@@ -22375,6 +22384,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="FinishedItemID" Type="Int32" />
           <Property Name="FinishedItemPackageID" Type="Int32" />
           <NavigationProperty Name="FinishedItemPackage" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedItemPackages" FromRole="GoodsReceiptDetail" ToRole="FinishedItemPackage" />
+          <Property Name="UnitWeight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="TareWeight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
         </EntityType>
         <Association Name="FK_GoodsReceiptDetails_BinLocations">
           <End Type="TotalSmartPortalModel.BinLocation" Role="BinLocation" Multiplicity="1" />
@@ -30294,6 +30305,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -30408,6 +30421,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="SemifinishedItemReferences" ColumnName="SemifinishedItemReferences" />
                 <ScalarProperty Name="PurchaseOrderCodes" ColumnName="PurchaseOrderCodes" />
                 <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -30838,6 +30853,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="QuantityBIS" ColumnName="QuantityBIS" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -31247,12 +31263,16 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="PurchaseOrderCodes" ColumnName="PurchaseOrderCodes" />
                 <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <EntitySetMapping Name="GoodsReceiptDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptDetail">
               <MappingFragment StoreEntitySet="GoodsReceiptDetails">
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
                 <ScalarProperty Name="FinishedItemPackageID" ColumnName="FinishedItemPackageID" />
                 <ScalarProperty Name="FinishedItemID" ColumnName="FinishedItemID" />
                 <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />

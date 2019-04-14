@@ -186,6 +186,14 @@ namespace TotalDTO.Inventories
         [Display(Name = "HSD")]
         public Nullable<System.DateTime> ExpiryDate { get; set; }
 
+        [Display(Name = "Kg/kiện")]
+        [UIHint("Quantity")]
+        public decimal UnitWeight { get; set; }
+
+        [Display(Name = "BB")]
+        [UIHint("Quantity")]
+        public decimal TareWeight { get; set; }
+
         [Display(Name = "SL Tồn")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }

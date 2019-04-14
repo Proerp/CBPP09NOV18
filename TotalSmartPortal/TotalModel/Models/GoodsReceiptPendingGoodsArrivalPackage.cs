@@ -40,5 +40,7 @@ namespace TotalModel.Models
         public int BatchID { get; set; }
         public string PurchaseOrderCodes { get; set; }
         public string CustomerCode { get; set; }
+        public decimal UnitWeight { get; set; }
+        public decimal TareWeight { get; set; }
     }
 }

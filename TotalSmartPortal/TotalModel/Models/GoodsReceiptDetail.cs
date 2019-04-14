@@ -70,6 +70,8 @@ namespace TotalModel.Models
         public int WorkshiftID { get; set; }
         public Nullable<int> FinishedItemID { get; set; }
         public Nullable<int> FinishedItemPackageID { get; set; }
+        public decimal UnitWeight { get; set; }
+        public decimal TareWeight { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }

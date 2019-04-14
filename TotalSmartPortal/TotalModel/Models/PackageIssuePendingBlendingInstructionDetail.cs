@@ -39,5 +39,6 @@ namespace TotalModel.Models
         public decimal QuantityBIS { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public Nullable<decimal> TareWeight { get; set; }
+        public Nullable<decimal> UnitWeight { get; set; }
     }
 }
