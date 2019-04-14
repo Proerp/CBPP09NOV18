@@ -207,6 +207,7 @@ namespace TotalDTO.Inventories
         {
             foreach (var result in base.Validate(validationContext)) { yield return result; }
 
+            if (this.GoodsArrivalPackageID != null && this.GoodsArrivalPackageID > 0 && (this.UnitWeight <= 0 || this.TareWeight <= 0)) yield return new ValidationResult("Vui lòng nhập trọng lượng net và bao bì [" + this.CommodityName + "]", new[] { "CommodityCode" });
             if (this.MaterialIssueDetailID == 0 && this.Quantity > this.QuantityRemains) yield return new ValidationResult("Số lượng nhập kho không được lớn hơn số lượng còn lại [" + this.CommodityName + "]", new[] { "Quantity" });
         }
     }
