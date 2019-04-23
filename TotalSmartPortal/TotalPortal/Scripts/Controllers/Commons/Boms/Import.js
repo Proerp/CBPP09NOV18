@@ -68,6 +68,7 @@
                         dataRow.CommodityName = result.CommodityName;
                         dataRow.CommodityCode = result.CommodityCode;
                         dataRow.CommodityTypeID = result.CommodityTypeID;
+                        dataRow.SalesUnit = result.SalesUnit;
 
                         dataRow.set("Quantity", DoRound(dataRow.Remarks, requireConfig.websiteOptions.rndQuantity));
                     }

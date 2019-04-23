@@ -126,11 +126,11 @@ namespace TotalPortal.Areas.Commons.APIs
         {
             try
             {
-                var commodityResult = new { CommodityID = 0, CommodityCode = "", CommodityName = "", CommodityTypeID = 0 };
+                var commodityResult = new { CommodityID = 0, CommodityCode = "", CommodityName = "", CommodityTypeID = 0, SalesUnit = "" };
 
-                var result = commodityRepository.GetCommodityBases(commodityTypeIDList, nmvnTaskID, warehouseID, searchText, isOnlyAlphaNumericString).Select(s => new { s.CommodityID, s.CommodityCode, s.CommodityName, s.CommodityTypeID });
+                var result = commodityRepository.GetCommodityBases(commodityTypeIDList, nmvnTaskID, warehouseID, searchText, isOnlyAlphaNumericString).Select(s => new { s.CommodityID, s.CommodityCode, s.CommodityName, s.CommodityTypeID, s.SalesUnit });
                 if (result.Count() > 0)
-                    commodityResult = new { CommodityID = result.First().CommodityID, CommodityCode = result.First().CommodityCode, CommodityName = result.First().CommodityName, CommodityTypeID = result.First().CommodityTypeID };
+                    commodityResult = new { CommodityID = result.First().CommodityID, CommodityCode = result.First().CommodityCode, CommodityName = result.First().CommodityName, CommodityTypeID = result.First().CommodityTypeID, SalesUnit = result.First().SalesUnit };
 
                 return Json(commodityResult, JsonRequestBehavior.AllowGet);
             }
