@@ -1882,6 +1882,7 @@
     <Content Include="Areas\Inventories\Views\GoodsReceipts\_GetPurchasing.cshtml" />
     <Content Include="Areas\Inventories\Views\TransferOrders\GetPendingWorkOrders.cshtml" />
     <Content Include="Areas\Inventories\Views\ItemTransferOrders\GetPendingWorkOrders.cshtml" />
+    <Content Include="Areas\Productions\Views\BlendingInstructions\CreateWizard.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -2194,6 +2195,7 @@
     <Content Include="Scripts\Controllers\Inventories\WarehouseTransfers\Void.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Approve.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Create.js" />
+    <Content Include="Scripts\Controllers\Productions\BlendingInstructions\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Delete.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Edit.js" />
     <Content Include="Scripts\Controllers\Productions\BlendingInstructions\Index.js" />

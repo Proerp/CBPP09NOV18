@@ -19,7 +19,7 @@ namespace TotalPortal.Areas.Productions.Controllers
     public class BlendingInstructionsController : GenericViewDetailController<BlendingInstruction, BlendingInstructionDetail, BlendingInstructionViewDetail, BlendingInstructionDTO, BlendingInstructionPrimitiveDTO, BlendingInstructionDetailDTO, BlendingInstructionViewModel>
     {
         public BlendingInstructionsController(IBlendingInstructionService blendingInstructionService, IBlendingInstructionViewModelSelectListBuilder blendingInstructionViewModelSelectListBuilder)
-            : base(blendingInstructionService, blendingInstructionViewModelSelectListBuilder, false, true)
+            : base(blendingInstructionService, blendingInstructionViewModelSelectListBuilder, true)
         {
         }
 
