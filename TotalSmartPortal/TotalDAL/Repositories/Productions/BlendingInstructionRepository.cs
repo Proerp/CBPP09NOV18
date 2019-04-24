@@ -41,6 +41,15 @@ namespace TotalDAL.Repositories.Productions
             return objectParameters;
         }
 
+        public IEnumerable<BlendingInstructionRunning> GetRunnings(int? locationID)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            IEnumerable<BlendingInstructionRunning> blendingInstructionRunnings = base.TotalSmartPortalEntities.GetBlendingInstructionRunnings(locationID).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return blendingInstructionRunnings;
+        }
+
         public IEnumerable<BlendingInstructionLog> GetBlendingInstructionLogs(int? blendingInstructionID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;

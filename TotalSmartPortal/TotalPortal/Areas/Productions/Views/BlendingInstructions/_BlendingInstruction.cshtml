@@ -13,7 +13,8 @@
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTopB.cshtml")
 
     @Html.HiddenFor(model => model.BlendingInstructionID)
-
+    @Html.HiddenFor(model => model.ParentID)
+    
     <div class="left-panel">
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
@@ -22,7 +23,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Code)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
             </div>
             <div class="div-validation-message">
                 @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })

@@ -9,6 +9,7 @@ namespace TotalModel
         DateTime? EntryDate { get; set; }
         int LocationID { get; set; }
 
+        Nullable<int> ParentID { get; set; }
 
         bool Approved { get; set; }
         Nullable<System.DateTime> ApprovedDate { get; set; }
@@ -40,6 +41,8 @@ namespace TotalModel
         public DateTime? EntryDate { get; set; }
 
         public int LocationID { get; set; }
+
+        public Nullable<int> ParentID { get; set; }
 
         [Display(Name = "Mô tả")]
         public virtual string Caption { get; set; }

@@ -5503,5 +5503,14 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("GetBarcodeSymbologies", barcodeIDParameter);
         }
+    
+        public virtual ObjectResult<BlendingInstructionRunning> GetBlendingInstructionRunnings(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionRunning>("GetBlendingInstructionRunnings", locationIDParameter);
+        }
     }
 }

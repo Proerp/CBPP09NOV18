@@ -4,33 +4,52 @@
 
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
-    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")    
     @Html.Hidden("CommodityTypeID", (int)GlobalEnums.CommodityTypeID.Products)
     
-    <div style="margin-top: 39px; margin-right: 18px;">
-        @Html.EditorFor(d => d.Commodity, new { CommodityDescriptionHidden = "false", CommodityDisplayCode = @Model.GetDisplayName(m => m.Commodity) })
-    </div>
+    @Html.HiddenFor(model => model.ParentID)
+    @Html.HiddenFor(model => model.EntryDate)
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.Code, new { @class = "right-panel-label" })
-        <div class="div-input">
-            @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "right-panel-input" })
-        </div>
-        <div class="div-validation-message">
-            @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    @(Html.Kendo().TabStrip()
+        .HtmlAttributes(new { @style = "height: 468px; margin-left: 0px; margin-right: 0px;" })
+        .Name("tabStrip")
+        .Items(tabStrip =>
+        {
+            tabStrip.Add().Text("VCNB không có lệnh")
+                .Selected(true)
+                .Content(@<text>
+                    <div style="margin-top: 39px; margin-right: 18px;">
+                        @Html.EditorFor(d => d.Commodity, new { CommodityDescriptionHidden = "false", CommodityDisplayCode = @Model.GetDisplayName(m => m.Commodity) })
+                    </div>
 
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Code, new { @class = "right-panel-label" })
+                        <div class="div-input">
+                            @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "right-panel-input" })
+                        </div>
+                        <div class="div-validation-message">
+                            @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </text>);
+
+    
+            tabStrip.Add().Text("Xuất theo lệnh VCNB")
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Productions/Views/BlendingInstructions/_GetRunning.cshtml")
+                </text>);
+        })
+    )
+    
     <div class="background-bar" style="height: 45px;">
         <div class="popup-button-bar">
             <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "BlendingInstructions")" formtarget="_top" style="display:none" />
 
-            <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Tiếp tục </button>
+            <button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Tiếp tục </button>
             <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Thoát </button>
         </div>
     </div>
@@ -42,27 +61,33 @@
 <script type="text/javascript">
 
     function okButton_Click() {
-        handleOKEvent($($("#tabStrip").data("kendoTabStrip").select().index() === 0 ? "#gridPromotion" : "#gridXXXX_ReserveForLater").data("kendoGrid"));
-    }
-
-    function okWOSelectButton_Click() {
-        handleOKEvent();
+        handleOKEvent($("#tabStrip").data("kendoTabStrip").select().index() === 1 ? $("#blendingInstructionRunningGrid").data("kendoGrid") : undefined);
     }
 
     function handleOKEvent(selectedGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
-
-        if ($("#Project_ProjectID").val() === null || $("#Project_ProjectID").val() === "")
-            return false;
-
         if (selectedGrid === undefined)
             _setModelInput();
         else {
             var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
             if (selectedDataItem === undefined)
                 return false;
+            else
+            {
+                $("#ParentID").val(selectedDataItem === undefined || selectedDataItem.BlendingInstructionID === undefined ? null : selectedDataItem.BlendingInstructionID);
+                $("#Code").val(selectedDataItem === undefined || selectedDataItem.BlendingInstructionCode === undefined ? null : selectedDataItem.BlendingInstructionCode);                
+                $("#EntryDate").val(selectedDataItem === undefined || selectedDataItem.BlendingInstructionEntryDate === undefined ? null : kendo.toString(selectedDataItem.BlendingInstructionEntryDate, Settings.DateTimeFormat));
+
+                $("#Commodity_CommodityID").val(selectedDataItem === undefined || selectedDataItem.CommodityID === undefined ? null : selectedDataItem.CommodityID);
+                $("#Commodity_Code").val(selectedDataItem === undefined || selectedDataItem.CommodityCode === undefined ? null : selectedDataItem.CommodityCode);
+                $("#Commodity_Name").val(selectedDataItem === undefined || selectedDataItem.CommodityName === undefined ? null : selectedDataItem.CommodityName);
+            }
 
             _setModelInput(selectedDataItem);
         }
+
+        if ($("#Commodity_CommodityID").val() === null || $("#Commodity_CommodityID").val() === "")
+            return false;
+
         $("#submitCreateWizard").trigger("click");
 
 

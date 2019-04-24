@@ -38,6 +38,11 @@ namespace TotalPortal.Areas.Productions.APIs
         }
 
 
+        public JsonResult GetRunnings([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        {
+            var result = this.blendingInstructionAPIRepository.GetRunnings(locationID);
+            return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
+        }
 
         public JsonResult GetBlendingInstructionLogs([DataSourceRequest] DataSourceRequest dataSourceRequest, int? blendingInstructionID)
         {

@@ -1,0 +1,62 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<BlendingInstructionRunning>()
+    .Name("blendingInstructionRunningGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.BlendingInstructionEntryDate).Title("Ngày ĐH").Width(35).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.BlendingInstructionCode).Title("Số phiếu").Width(30);
+        columns.Bound(c => c.CommodityCode).Title("Kho xuất").Width(30);
+        columns.Bound(c => c.CommodityName).Title("Kho xuất").Width(30);
+        columns.Bound(c => c.Description).Title("Kho nhập").Width(30);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập số ĐH hoặc kho xuất, kho nhập hay Mã, Tên khách hàng</label>
+                <input id="blendingInstructionRunningFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="blendingInstructionRunningFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+    .Scrollable(s => s.Height(Settings.PopupContentHeight))
+    .DataSource(ds => ds.Ajax()
+        .Read(read => read.Action("GetRunnings", "BlendingInstructionAPIs", new { area = "Productions" }).Data("onGetRunnings"))
+        .ServerOperation(false)
+    )
+    .Selectable()
+)
+
+<script type="text/javascript">
+    function onGetRunnings(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID
+        };
+    }
+
+    function blendingInstructionRunningFilter_KeyUp() {
+        var blendingInstructionRunningFilter = $("#blendingInstructionRunningFilter").val(), gridDetails = $("#blendingInstructionRunningGrid").data("kendoGrid");
+
+        if (blendingInstructionRunningFilter && blendingInstructionRunningFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "BlendingInstructionCode", operator: "contains", value: blendingInstructionRunningFilter },
+                    { field: "CommodityCode", operator: "contains", value: blendingInstructionRunningFilter },
+                    { field: "CommodityName", operator: "contains", value: blendingInstructionRunningFilter },
+                    { field: "Description", operator: "contains", value: blendingInstructionRunningFilter }
+                ]
+            });
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+    $("#blendingInstructionRunningGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>
+

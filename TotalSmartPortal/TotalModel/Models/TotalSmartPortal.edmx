@@ -194,6 +194,7 @@
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="VoucherDate" Type="datetime" />
+          <Property Name="ParentID" Type="int" />
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="StorekeeperID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
@@ -7959,6 +7960,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="GetBlendingInstructionLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetBlendingInstructionRunnings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="LocationID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetBlendingInstructionViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
@@ -16730,6 +16734,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImport Name="GetBarcodeSymbologies" ReturnType="Collection(String)">
           <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="GetBlendingInstructionRunnings" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionRunning)">
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -22647,6 +22654,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="VoucherDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" FromRole="BlendingInstruction" ToRole="PackageIssue" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_Commodities" FromRole="BlendingInstruction" ToRole="Commodity" />
+          <Property Name="ParentID" Type="Int32" />
         </EntityType>
         <Association Name="FK_BlendingInstructionDetails_BlendingInstructions">
           <End Type="TotalSmartPortalModel.BlendingInstruction" Role="BlendingInstruction" Multiplicity="1" />
@@ -25747,6 +25755,17 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="QuantityAvailableReceipts" Nullable="true" Precision="38" Scale="2" />
           <Property Type="Decimal" Name="Weight" Nullable="true" Precision="18" Scale="3" />
           </ComplexType>
+        <ComplexType Name="BlendingInstructionRunning">
+          <Property Type="Int32" Name="BlendingInstructionID" Nullable="false" />
+          <Property Type="String" Name="BlendingInstructionCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BlendingInstructionReference" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="BlendingInstructionEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -31389,6 +31408,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="BlendingInstructions">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.BlendingInstruction">
               <MappingFragment StoreEntitySet="BlendingInstructions">
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
                 <ScalarProperty Name="InActiveDate" ColumnName="InActiveDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
@@ -32695,6 +32715,21 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImportMapping FunctionImportName="GetPackageIssueImage" FunctionName="TotalSmartPortalModel.Store.GetPackageIssueImage" />
           <FunctionImportMapping FunctionImportName="SavePackageIssueImage" FunctionName="TotalSmartPortalModel.Store.SavePackageIssueImage" />
           <FunctionImportMapping FunctionImportName="GetBarcodeSymbologies" FunctionName="TotalSmartPortalModel.Store.GetBarcodeSymbologies" />
+          <FunctionImportMapping FunctionImportName="GetBlendingInstructionRunnings" FunctionName="TotalSmartPortalModel.Store.GetBlendingInstructionRunnings">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BlendingInstructionRunning">
+                <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
+                <ScalarProperty Name="BlendingInstructionCode" ColumnName="BlendingInstructionCode" />
+                <ScalarProperty Name="BlendingInstructionReference" ColumnName="BlendingInstructionReference" />
+                <ScalarProperty Name="BlendingInstructionEntryDate" ColumnName="BlendingInstructionEntryDate" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

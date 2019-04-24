@@ -9,6 +9,7 @@ namespace TotalCore.Repositories.Productions
 
     public interface IBlendingInstructionAPIRepository : IGenericAPIRepository
     {
+        IEnumerable<BlendingInstructionRunning> GetRunnings(int? locationID);
         IEnumerable<BlendingInstructionLog> GetBlendingInstructionLogs(int? blendingInstructionID);
     }
 }

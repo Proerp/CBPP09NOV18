@@ -1883,6 +1883,7 @@
     <Content Include="Areas\Inventories\Views\TransferOrders\GetPendingWorkOrders.cshtml" />
     <Content Include="Areas\Inventories\Views\ItemTransferOrders\GetPendingWorkOrders.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\CreateWizard.cshtml" />
+    <Content Include="Areas\Productions\Views\BlendingInstructions\_GetRunning.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
