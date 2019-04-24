@@ -22,5 +22,6 @@ namespace TotalModel.Models
         public string CommodityName { get; set; }
         public string Description { get; set; }
         public decimal TotalQuantity { get; set; }
+        public string Jobs { get; set; }
     }
 }

@@ -178,7 +178,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "       SELECT          BlendingInstructions.BlendingInstructionID, BlendingInstructions.Code AS BlendingInstructionCode, BlendingInstructions.Reference AS BlendingInstructionReference, BlendingInstructions.EntryDate AS BlendingInstructionEntryDate, BlendingInstructions.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BlendingInstructions.Description, BlendingInstructions.TotalQuantity " + "\r\n";
+            queryString = queryString + "       SELECT          BlendingInstructions.BlendingInstructionID, BlendingInstructions.Code AS BlendingInstructionCode, BlendingInstructions.Reference AS BlendingInstructionReference, BlendingInstructions.EntryDate AS BlendingInstructionEntryDate, BlendingInstructions.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BlendingInstructions.Jobs, BlendingInstructions.Description, BlendingInstructions.TotalQuantity " + "\r\n";
             queryString = queryString + "       FROM            BlendingInstructions " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON BlendingInstructions.ParentID IS NULL AND BlendingInstructions.Approved = 1 AND BlendingInstructions.InActive = 0 AND BlendingInstructions.InActivePartial = 0 AND BlendingInstructions.CommodityID = Commodities.CommodityID " + "\r\n";
 

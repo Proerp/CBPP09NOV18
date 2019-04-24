@@ -5,17 +5,17 @@
     .Name("blendingInstructionRunningGrid")
     .Columns(columns =>
     {
-        columns.Bound(c => c.BlendingInstructionEntryDate).Title("Ngày ĐH").Width(35).Format("{0:" + Settings.DateFormat + "}");
-        columns.Bound(c => c.BlendingInstructionCode).Title("Số phiếu").Width(30);
-        columns.Bound(c => c.CommodityCode).Title("Kho xuất").Width(30);
-        columns.Bound(c => c.CommodityName).Title("Kho xuất").Width(30);
-        columns.Bound(c => c.Description).Title("Kho nhập").Width(30);
+        columns.Bound(c => c.BlendingInstructionEntryDate).Title("Ngày Lập").Width(15).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.BlendingInstructionCode).Title("Số BI").Width(15);
+        columns.Bound(c => c.CommodityCode).Title("Mã TP").Width(25);
+        columns.Bound(c => c.CommodityName).Title("Tên thành phẩm").Width(68);
+        columns.Bound(c => c.Jobs).Title("Diễn giải").Width(50);
     })
     .ToolBar(toolbar =>
     {
         toolbar.Template(@<text>
             <div class="toolbar" style="float: right;">
-                <label>Nhập số ĐH hoặc kho xuất, kho nhập hay Mã, Tên khách hàng</label>
+                <label>Tìm số BI, mã thành phẩm</label>
                 <input id="blendingInstructionRunningFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="blendingInstructionRunningFilter_KeyUp()" />
             </div>
         </text>);

@@ -29,7 +29,7 @@ namespace TotalDTO.Productions
         public Nullable<System.DateTime> VoucherDate { get; set; }
 
         [Display(Name = "Mô tả lệnh pha chế")]
-        public string Purposes { get; set; }
+        public string Jobs { get; set; }
 
         public virtual int CommodityID { get; set; }
 

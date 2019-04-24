@@ -171,6 +171,7 @@
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="ParentID" Type="int" />
           <Property Name="OrganizationalUnitID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="CommodityID" Type="int" Nullable="false" />
@@ -16735,7 +16736,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetBlendingInstructionRunnings" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionRunning)">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -22620,6 +22621,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="BlendingInstruction" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_BlendingInstructions" FromRole="BlendingInstructionDetail" ToRole="BlendingInstruction" />
           <NavigationProperty Name="PackageIssueDetails" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_BlendingInstructionDetails" FromRole="BlendingInstructionDetail" ToRole="PackageIssueDetail" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BlendingInstructionDetails_Commodities" FromRole="BlendingInstructionDetail" ToRole="Commodity" />
+          <Property Name="ParentID" Type="Int32" />
         </EntityType>
         <EntityType Name="BlendingInstruction">
           <Key>
@@ -25765,6 +25767,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
           <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="String" Name="Jobs" Nullable="true" MaxLength="100" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -31384,6 +31387,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="BlendingInstructionDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.BlendingInstructionDetail">
               <MappingFragment StoreEntitySet="BlendingInstructionDetails">
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="InActivePartialDate" ColumnName="InActivePartialDate" />
                 <ScalarProperty Name="InActivePartial" ColumnName="InActivePartial" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
@@ -32727,6 +32731,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+                <ScalarProperty Name="Jobs" ColumnName="Jobs" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
