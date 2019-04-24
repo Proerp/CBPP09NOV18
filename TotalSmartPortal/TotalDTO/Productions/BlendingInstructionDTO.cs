@@ -38,7 +38,7 @@ namespace TotalDTO.Productions
             base.PerformPresaveRule();
 
             string caption = "";
-            this.DtoDetails().ToList().ForEach(e => { e.Code = this.Code; if (caption.IndexOf(e.CommodityName) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityName; });
+            this.DtoDetails().ToList().ForEach(e => { e.ParentID = this.ParentID; e.Code = this.Code; if (caption.IndexOf(e.CommodityName) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityName; });
             this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
     }
@@ -52,7 +52,7 @@ namespace TotalDTO.Productions
 
         public override int CommodityID { get { return (this.Commodity != null ? this.Commodity.CommodityID : 0); } }
         [Display(Name = "Thành phẩm")]
-        [UIHint("AutoCompletes/Commodity")]
+        [UIHint("Commons/Commodity")]
         public CommodityBaseDTO Commodity { get; set; }
 
         public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }

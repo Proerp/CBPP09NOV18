@@ -363,7 +363,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                       PackageIssueDetails.PackageIssueDetailID, PackageIssueDetails.PackageIssueImage1ID, PackageIssueDetails.PackageIssueImage2ID, PackageIssueDetails.SealCode, PackageIssueDetails.BatchCode, PackageIssueDetails.LabCode, PackageIssueDetails.Barcode, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, PackageIssueDetails.Quantity AS PackageIssueQuantity " + "\r\n";
 
             queryString = queryString + "       FROM            BlendingInstructions " + "\r\n";
-            queryString = queryString + "                       INNER JOIN BlendingInstructionDetails ON BlendingInstructions.BlendingInstructionID = @LocalBlendingInstructionID AND BlendingInstructions.BlendingInstructionID = BlendingInstructionDetails.BlendingInstructionID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN BlendingInstructionDetails ON BlendingInstructions.BlendingInstructionID = @LocalBlendingInstructionID AND BlendingInstructions.BlendingInstructionID = ISNULL(BlendingInstructionDetails.ParentID, BlendingInstructionDetails.BlendingInstructionID) " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities AS Products ON BlendingInstructions.CommodityID = Products.CommodityID  " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON BlendingInstructionDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             
