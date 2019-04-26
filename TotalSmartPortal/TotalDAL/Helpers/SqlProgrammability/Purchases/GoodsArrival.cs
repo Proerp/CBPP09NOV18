@@ -276,6 +276,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       END " + "\r\n";
 
+            
+            queryString = queryString + "       UPDATE      Commodities SET Commodities.TareWeight = GoodsArrivalDetails.TareWeight FROM Commodities INNER JOIN (SELECT CommodityID, MIN(TareWeight) AS TareWeight FROM GoodsArrivalDetails WHERE GoodsArrivalID = @EntityID GROUP BY CommodityID) GoodsArrivalDetails ON Commodities.CommodityID = GoodsArrivalDetails.CommodityID; " + "\r\n";
+
 
             queryString = queryString + "       INSERT INTO Batches (EntryDate, GoodsArrivalID, GoodsArrivalDetailID) SELECT EntryDate, GoodsArrivalID, GoodsArrivalDetailID FROM GoodsArrivalDetails WHERE GoodsArrivalDetailID NOT IN (SELECT GoodsArrivalDetailID FROM Batches WHERE GoodsArrivalID = @EntityID) " + "\r\n";
             queryString = queryString + "       UPDATE GoodsArrivalDetails SET GoodsArrivalDetails.BatchID = Batches.BatchID FROM GoodsArrivalDetails INNER JOIN Batches ON GoodsArrivalDetails.GoodsArrivalID = @EntityID AND GoodsArrivalDetails.GoodsArrivalDetailID = Batches.GoodsArrivalDetailID " + "\r\n";
@@ -499,7 +502,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                       LEFT  JOIN CommodityIcons ON Commodities.CommodityIconID = CommodityIcons.CommodityIconID " + "\r\n";
             queryString = queryString + "                       LEFT  JOIN Barcodes ON GoodsArrivalPackages.GoodsArrivalPackageID = Barcodes.GoodsArrivalPackageID " + "\r\n";
 
-            queryString = queryString + "       ORDER BY        GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID " + "\r\n";
+            queryString = queryString + "       ORDER BY        GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID DESC " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
