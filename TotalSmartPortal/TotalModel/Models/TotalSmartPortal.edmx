@@ -22753,6 +22753,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="QuantityAvailableLocation1" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailableLocation2" Nullable="true" Precision="18" Scale="2" />
           <Property Type="String" Name="Jobs" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="ParentID" Nullable="false" />
           </ComplexType>
         <ComplexType Name="BlendingInstructionLog">
           <Property Type="Int32" Name="PackageIssueDetailID" Nullable="false" />
@@ -31472,6 +31473,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="QuantityAvailableLocation1" ColumnName="QuantityAvailableLocation1" />
                 <ScalarProperty Name="QuantityAvailableLocation2" ColumnName="QuantityAvailableLocation2" />
                 <ScalarProperty Name="Jobs" ColumnName="Jobs" />
+                <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
