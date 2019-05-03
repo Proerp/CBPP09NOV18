@@ -13,7 +13,7 @@ namespace TotalBase
             {
                 case GlobalEnums.NmvnTaskID.PurchaseRequisition:
                     return "PR";
-                case GlobalEnums.NmvnTaskID.PurchaseOrder:
+                case GlobalEnums.NmvnTaskID.PurchaseItem:
                     return "PO";
                 case GlobalEnums.NmvnTaskID.GoodsArrival:
                     return "GA";

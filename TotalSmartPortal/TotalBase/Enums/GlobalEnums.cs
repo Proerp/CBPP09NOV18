@@ -55,7 +55,11 @@ namespace TotalBase.Enums
             CommodityPrice = 8006,
 
             PurchaseRequisition = 8020,
-            PurchaseOrder = 8021,
+
+            PurchaseMaterial = 80210008,
+            PurchaseItem = 8021,
+            PurchaseProduct = 80210009,
+            
             PurchaseInvoice = 8022,
 
             GoodsArrival = 8026,

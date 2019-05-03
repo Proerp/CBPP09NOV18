@@ -14,7 +14,7 @@ namespace TotalDTO.Purchases
 {
     public class PurchaseOrderPrimitiveDTO : QuantityDTO<PurchaseOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
     {
-        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PurchaseOrder; } }
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PurchaseItem; } }
 
         public int GetID() { return this.PurchaseOrderID; }
         public void SetID(int id) { this.PurchaseOrderID = id; }

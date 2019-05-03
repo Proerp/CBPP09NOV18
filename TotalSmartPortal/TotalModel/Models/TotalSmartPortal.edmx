@@ -1932,6 +1932,7 @@
           <Property Name="PurchaseOrderID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="TransporterID" Type="int" Nullable="false" />
@@ -1958,6 +1959,7 @@
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="TransporterID" Type="int" Nullable="false" />
           <Property Name="VoucherDate" Type="datetime" />
@@ -8533,6 +8535,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
         </Function>
         <Function Name="GetPurchaseOrderIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
@@ -15644,6 +15647,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="PackageIssueDetail" EntitySet="PackageIssueDetails" />
           </AssociationSet>
           <FunctionImport Name="GetPurchaseOrderIndexes" ReturnType="Collection(TotalSmartPortalModel.PurchaseOrderIndex)">
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="AspUserID" Mode="In" Type="String" />
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
@@ -22019,6 +22023,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="LabCode" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
           <Property Name="ProductionDate" Type="DateTime" Precision="3" />
           <Property Name="ExpiryDate" Type="DateTime" Precision="3" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -22057,6 +22062,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_VoidTypes" FromRole="PurchaseOrder" ToRole="VoidType" />
           <Property Name="Caption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="VoucherDate" Type="DateTime" Precision="3" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_PurchaseOrders_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -31036,6 +31042,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="PurchaseOrderDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.PurchaseOrderDetail">
               <MappingFragment StoreEntitySet="PurchaseOrderDetails">
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
@@ -31063,6 +31070,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="PurchaseOrders">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.PurchaseOrder">
               <MappingFragment StoreEntitySet="PurchaseOrders">
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="InActiveDate" ColumnName="InActiveDate" />

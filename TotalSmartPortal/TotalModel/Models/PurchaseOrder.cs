@@ -48,6 +48,7 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> InActiveDate { get; set; }
         public string Caption { get; set; }
         public Nullable<System.DateTime> VoucherDate { get; set; }
+        public int NMVNTaskID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Customer Customer1 { get; set; }
