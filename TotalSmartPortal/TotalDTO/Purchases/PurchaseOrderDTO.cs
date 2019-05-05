@@ -12,6 +12,31 @@ using TotalDTO.Commons;
 
 namespace TotalDTO.Purchases
 {
+    public interface IPurchaseOption { GlobalEnums.NmvnTaskID NMVNTaskID { get; } }
+
+    public class PurchaseOptionMaterial : IPurchaseOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PurchaseMaterial; } } }
+    public class PurchaseOptionItem : IPurchaseOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PurchaseItem; } } }
+    public class PurchaseOptionProduct : IPurchaseOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PurchaseProduct; } } }
+
+    public interface IPurchaseOrderPrimitiveDTO : IQuantityDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
+    {
+        int PurchaseOrderID { get; set; }
+
+        virtual Nullable<int> CustomerID { get; set; }
+        virtual Nullable<int> TransporterID { get; set; }
+
+        [Display(Name = "Số PO")]
+        string Code { get; set; }
+
+        [Display(Name = "Mục đích")]
+        string Purposes { get; set; }
+
+        [Display(Name = "Ngày PO")]
+        Nullable<System.DateTime> VoucherDate { get; set; }
+        [Display(Name = "Ngày dự kiến giao hàng")]
+        Nullable<System.DateTime> DeliveryDate { get; set; }
+    }
+
     public class PurchaseOrderPrimitiveDTO : QuantityDTO<PurchaseOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
     {
         public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PurchaseItem; } }
@@ -43,6 +68,28 @@ namespace TotalDTO.Purchases
             this.DtoDetails().ToList().ForEach(e => { e.CustomerID = (int)this.CustomerID; e.TransporterID = (int)this.TransporterID; if (caption.IndexOf(e.CommodityCode) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityCode; });
             this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
+    }
+
+    public interface IPurchaseOrderDTO : IPurchaseOrderPrimitiveDTO
+    {
+        [Display(Name = "Khách hàng")]
+        [UIHint("Commons/CustomerBase")]
+        CustomerBaseDTO Customer { get; set; }
+
+        [Display(Name = "Đơn vị vận chuyển")]
+        [UIHint("Commons/CustomerBase")]
+        CustomerBaseDTO Transporter { get; set; }
+
+        [UIHint("AutoCompletes/VoidType")]
+        VoidTypeBaseDTO VoidType { get; set; }
+
+        List<PurchaseOrderDetailDTO> PurchaseOrderViewDetails { get; set; }
+        List<PurchaseOrderDetailDTO> ViewDetails { get; set; }
+
+        string ControllerName { get; }
+
+        bool IsItem { get; }
+        bool IsProduct { get; }
     }
 
     public class PurchaseOrderDTO : PurchaseOrderPrimitiveDTO, IBaseDetailEntity<PurchaseOrderDetailDTO>
@@ -80,6 +127,13 @@ namespace TotalDTO.Purchases
                 this.VoidType = new VoidTypeBaseDTO() { VoidTypeID = this.ViewDetails[0].VoidTypeID, Code = this.ViewDetails[0].VoidTypeCode, Name = this.ViewDetails[0].VoidTypeName, VoidClassID = this.ViewDetails[0].VoidClassID };
             base.PrepareVoidDetail(detailID);
         }
+
+
+        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
+
+        public bool IsMaterial { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.PurchaseMaterial; } }
+        public bool IsItem { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.PurchaseItem; } }
+        public bool IsProduct { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.PurchaseProduct; } }
     }
 
 }
