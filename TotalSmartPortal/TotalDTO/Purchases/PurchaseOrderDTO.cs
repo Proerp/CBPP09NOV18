@@ -37,7 +37,8 @@ namespace TotalDTO.Purchases
         Nullable<System.DateTime> DeliveryDate { get; set; }
     }
 
-    public class PurchaseOrderPrimitiveDTO : QuantityDTO<PurchaseOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+    public class PurchaseOrderPrimitiveDTO<TPurchaseOption> : QuantityDTO<PurchaseOrderDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+        where TPurchaseOption : IPurchaseOption, new()
     {
         public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.PurchaseItem; } }
 
@@ -92,7 +93,8 @@ namespace TotalDTO.Purchases
         bool IsProduct { get; }
     }
 
-    public class PurchaseOrderDTO : PurchaseOrderPrimitiveDTO, IBaseDetailEntity<PurchaseOrderDetailDTO>
+    public class PurchaseOrderDTO<TPurchaseOption> : PurchaseOrderPrimitiveDTO<TPurchaseOption>, IBaseDetailEntity<PurchaseOrderDetailDTO>
+        where TPurchaseOption : IPurchaseOption, new()
     {
         public PurchaseOrderDTO()
         {

@@ -26,8 +26,9 @@ namespace TotalPortal.Areas.Purchases.APIs
         }
 
 
-        public JsonResult GetPurchaseOrderIndexes([DataSourceRequest] DataSourceRequest request)
+        public JsonResult GetPurchaseOrderIndexes([DataSourceRequest] DataSourceRequest request, string nmvnTaskID)
         {
+            this.purchaseOrderAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
             ICollection<PurchaseOrderIndex> purchaseOrderIndexes = this.purchaseOrderAPIRepository.GetEntityIndexes<PurchaseOrderIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext));
 
             DataSourceResult response = purchaseOrderIndexes.ToDataSourceResult(request);

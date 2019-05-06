@@ -4,22 +4,31 @@ using System.Text;
 
 using RequireJsNet;
 
+using TotalModel;
+using TotalDTO;
 using TotalBase.Enums;
 using TotalDTO.Purchases;
 using TotalModel.Models;
 
 using TotalCore.Services.Purchases;
 
+using TotalDTO.Commons;
+
 using TotalPortal.Controllers;
+using TotalPortal.ViewModels.Helpers;
 using TotalPortal.Areas.Purchases.ViewModels;
 using TotalPortal.Areas.Purchases.Builders;
 
 namespace TotalPortal.Areas.Purchases.Controllers
 {
-    public class PurchaseOrdersController : GenericViewDetailController<PurchaseOrder, PurchaseOrderDetail, PurchaseOrderViewDetail, PurchaseOrderDTO, PurchaseOrderPrimitiveDTO, PurchaseOrderDetailDTO, PurchaseOrderViewModel>
+    public class PurchaseOrdersController<TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel> : GenericViewDetailController<PurchaseOrder, PurchaseOrderDetail, PurchaseOrderViewDetail, TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel>
+        where TDto : TPrimitiveDto, IBaseDetailEntity<TDtoDetail>
+        where TPrimitiveDto : BaseDTO, IPrimitiveEntity, IPrimitiveDTO, new()
+        where TDtoDetail : class, IPrimitiveEntity
+        where TViewDetailViewModel : TDto, IViewDetailViewModel<TDtoDetail>, IPurchaseOrderViewModel, new()
     {
-        public PurchaseOrdersController(IPurchaseOrderService purchaseOrderService, IPurchaseOrderViewModelSelectListBuilder purchaseOrderViewModelSelectListBuilder)
-            : base(purchaseOrderService, purchaseOrderViewModelSelectListBuilder)
+        public PurchaseOrdersController(IPurchaseOrderService<TDto, TPrimitiveDto, TDtoDetail> purchaseOrderService, IPurchaseOrderViewModelSelectListBuilder<TViewDetailViewModel> purchaseOrderViewModelSelectListBuilder)
+            : base(purchaseOrderService, purchaseOrderViewModelSelectListBuilder, true)
         {
         }
 
@@ -27,12 +36,46 @@ namespace TotalPortal.Areas.Purchases.Controllers
         {
             base.AddRequireJsOptions();
 
+            TViewDetailViewModel viewDetailViewModel = new TViewDetailViewModel();
+
             StringBuilder commodityTypeIDList = new StringBuilder();
-            commodityTypeIDList.Append((int)GlobalEnums.CommodityTypeID.Items);
-            commodityTypeIDList.Append(","); commodityTypeIDList.Append((int)GlobalEnums.CommodityTypeID.Materials);
+            commodityTypeIDList.Append((int)(viewDetailViewModel.IsItem ? GlobalEnums.CommodityTypeID.Items : (viewDetailViewModel.IsProduct ? GlobalEnums.CommodityTypeID.Products : GlobalEnums.CommodityTypeID.Unknown)));
 
             RequireJsOptions.Add("commodityTypeIDList", commodityTypeIDList.ToString(), RequireJsOptionsScope.Page);
         }
+
+        public virtual ActionResult Boms(int id, int detailID)
+        {
+            BomBaseDTO bomBaseDTO = new BomBaseDTO() { BomID = id, PrintOptionID = detailID };
+            return View(bomBaseDTO);
+        }
     }
 
+
+
+    public class PurchaseMaterialsController : PurchaseOrdersController<PurchaseOrderDTO<PurchaseOptionMaterial>, PurchaseOrderPrimitiveDTO<PurchaseOptionMaterial>, PurchaseOrderDetailDTO, PurchaseMaterialViewModel>
+    {
+        public PurchaseMaterialsController(IPurchaseMaterialService purchaseMaterialService, IPurchaseMaterialViewModelSelectListBuilder purchaseMaterialViewModelSelectListBuilder)
+            : base(purchaseMaterialService, purchaseMaterialViewModelSelectListBuilder)
+        {
+        }
+    }
+
+
+    public class PurchaseItemsController : PurchaseOrdersController<PurchaseOrderDTO<PurchaseOptionItem>, PurchaseOrderPrimitiveDTO<PurchaseOptionItem>, PurchaseOrderDetailDTO, PurchaseItemViewModel>
+    {
+        public PurchaseItemsController(IPurchaseItemService purchaseItemService, IPurchaseItemViewModelSelectListBuilder purchaseItemViewModelSelectListBuilder)
+            : base(purchaseItemService, purchaseItemViewModelSelectListBuilder)
+        {
+        }
+    }
+
+
+    public class PurchaseProductsController : PurchaseOrdersController<PurchaseOrderDTO<PurchaseOptionProduct>, PurchaseOrderPrimitiveDTO<PurchaseOptionProduct>, PurchaseOrderDetailDTO, PurchaseProductViewModel>
+    {
+        public PurchaseProductsController(IPurchaseProductService purchaseProductService, IPurchaseProductViewModelSelectListBuilder purchaseProductViewModelSelectListBuilder)
+            : base(purchaseProductService, purchaseProductViewModelSelectListBuilder)
+        {
+        }
+    }
 }
