@@ -47,6 +47,7 @@ namespace TotalModel.Models
         public int BatchID { get; set; }
         public System.DateTime BatchEntryDate { get; set; }
         public decimal TareWeight { get; set; }
+        public int NMVNTaskID { get; set; }
     
         public virtual GoodsArrival GoodsArrival { get; set; }
         public virtual VoidType VoidType { get; set; }

@@ -1017,6 +1017,7 @@
           <Property Name="GoodsArrivalDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="GoodsArrivalID" Type="int" Nullable="false" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="TransporterID" Type="int" Nullable="false" />
@@ -1056,6 +1057,7 @@
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="GoodsArrivalID" Type="int" Nullable="false" />
           <Property Name="GoodsArrivalDetailID" Type="int" Nullable="false" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="TransporterID" Type="int" Nullable="false" />
@@ -1101,6 +1103,7 @@
           <Property Name="InvoiceDate" Type="datetime" />
           <Property Name="DeliveryDate" Type="datetime" />
           <Property Name="HasPurchaseOrder" Type="bit" Nullable="false" />
+          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="PurchaseOrderID" Type="int" />
           <Property Name="PurchaseOrderCodes" Type="nvarchar" MaxLength="200" />
           <Property Name="PurchaseOrderReferences" Type="nvarchar" MaxLength="200" />
@@ -8149,6 +8152,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="IsReadonly" Type="bit" Mode="In" />
         </Function>
         <Function Name="GetGoodsArrivalIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
@@ -8156,9 +8160,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="GetGoodsArrivalPendingCustomers" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetGoodsArrivalPendingPurchaseOrderDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
           <Parameter Name="PurchaseOrderID" Type="int" Mode="In" />
           <Parameter Name="CustomerID" Type="int" Mode="In" />
@@ -8167,6 +8173,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="GetGoodsArrivalPendingPurchaseOrders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetGoodsArrivalViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
@@ -15721,6 +15728,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
           </AssociationSet>
           <FunctionImport Name="GetGoodsArrivalIndexes" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalIndex)">
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="AspUserID" Mode="In" Type="String" />
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
@@ -15728,9 +15736,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalPendingCustomers" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalPendingCustomer)">
           <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalPendingPurchaseOrderDetails" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalPendingPurchaseOrderDetail)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
             <Parameter Name="PurchaseOrderID" Mode="In" Type="Int32" />
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
@@ -15739,6 +15749,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalPendingPurchaseOrders" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalPendingPurchaseOrder)">
           <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalViewDetails" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalViewDetail)">
           <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
@@ -21537,6 +21548,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="CustomsDeclarationDate" Type="DateTime" Precision="3" />
           <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
           <Property Name="Caption" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_GoodsArrivals_Customers">
           <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
@@ -21672,6 +21684,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="BatchID" Type="Int32" Nullable="false" />
           <Property Name="BatchEntryDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TareWeight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_GoodsArrivalDetails_GoodsArrivals">
           <End Type="TotalSmartPortalModel.GoodsArrival" Role="GoodsArrival" Multiplicity="1" />
@@ -22553,6 +22566,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="BatchID" Type="Int32" Nullable="false" />
           <Property Name="BatchEntryDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="TareWeight" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_GoodsArrivalPackages_GoodsArrivals">
           <End Type="TotalSmartPortalModel.GoodsArrival" Role="GoodsArrival" Multiplicity="1" />
@@ -30690,6 +30704,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsArrivals">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrival">
               <MappingFragment StoreEntitySet="GoodsArrivals">
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="Caption" ColumnName="Caption" />
                 <ScalarProperty Name="DeliveryDate" ColumnName="DeliveryDate" />
                 <ScalarProperty Name="CustomsDeclarationDate" ColumnName="CustomsDeclarationDate" />
@@ -30756,6 +30771,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsArrivalDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrivalDetail">
               <MappingFragment StoreEntitySet="GoodsArrivalDetails">
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />
@@ -31356,6 +31372,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsArrivalPackages">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsArrivalPackage">
               <MappingFragment StoreEntitySet="GoodsArrivalPackages">
+                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
                 <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
                 <ScalarProperty Name="BatchID" ColumnName="BatchID" />

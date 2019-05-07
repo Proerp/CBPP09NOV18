@@ -4436,8 +4436,12 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("PurchaseOrderVoidable", entityIDParameter);
         }
     
-        public virtual ObjectResult<GoodsArrivalIndex> GetGoodsArrivalIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<bool> pendingOnly)
+        public virtual ObjectResult<GoodsArrivalIndex> GetGoodsArrivalIndexes(Nullable<int> nMVNTaskID, string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, Nullable<bool> pendingOnly)
         {
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
             var aspUserIDParameter = aspUserID != null ?
                 new ObjectParameter("AspUserID", aspUserID) :
                 new ObjectParameter("AspUserID", typeof(string));
@@ -4454,23 +4458,31 @@ namespace TotalModel.Models
                 new ObjectParameter("PendingOnly", pendingOnly) :
                 new ObjectParameter("PendingOnly", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalIndex>("GetGoodsArrivalIndexes", aspUserIDParameter, fromDateParameter, toDateParameter, pendingOnlyParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalIndex>("GetGoodsArrivalIndexes", nMVNTaskIDParameter, aspUserIDParameter, fromDateParameter, toDateParameter, pendingOnlyParameter);
         }
     
-        public virtual ObjectResult<GoodsArrivalPendingCustomer> GetGoodsArrivalPendingCustomers(Nullable<int> locationID)
+        public virtual ObjectResult<GoodsArrivalPendingCustomer> GetGoodsArrivalPendingCustomers(Nullable<int> locationID, Nullable<int> nMVNTaskID)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalPendingCustomer>("GetGoodsArrivalPendingCustomers", locationIDParameter);
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalPendingCustomer>("GetGoodsArrivalPendingCustomers", locationIDParameter, nMVNTaskIDParameter);
         }
     
-        public virtual ObjectResult<GoodsArrivalPendingPurchaseOrderDetail> GetGoodsArrivalPendingPurchaseOrderDetails(Nullable<int> locationID, Nullable<int> goodsArrivalID, Nullable<int> purchaseOrderID, Nullable<int> customerID, Nullable<int> transporterID, string purchaseOrderDetailIDs)
+        public virtual ObjectResult<GoodsArrivalPendingPurchaseOrderDetail> GetGoodsArrivalPendingPurchaseOrderDetails(Nullable<int> locationID, Nullable<int> nMVNTaskID, Nullable<int> goodsArrivalID, Nullable<int> purchaseOrderID, Nullable<int> customerID, Nullable<int> transporterID, string purchaseOrderDetailIDs)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
+    
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
     
             var goodsArrivalIDParameter = goodsArrivalID.HasValue ?
                 new ObjectParameter("GoodsArrivalID", goodsArrivalID) :
@@ -4492,16 +4504,20 @@ namespace TotalModel.Models
                 new ObjectParameter("PurchaseOrderDetailIDs", purchaseOrderDetailIDs) :
                 new ObjectParameter("PurchaseOrderDetailIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalPendingPurchaseOrderDetail>("GetGoodsArrivalPendingPurchaseOrderDetails", locationIDParameter, goodsArrivalIDParameter, purchaseOrderIDParameter, customerIDParameter, transporterIDParameter, purchaseOrderDetailIDsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalPendingPurchaseOrderDetail>("GetGoodsArrivalPendingPurchaseOrderDetails", locationIDParameter, nMVNTaskIDParameter, goodsArrivalIDParameter, purchaseOrderIDParameter, customerIDParameter, transporterIDParameter, purchaseOrderDetailIDsParameter);
         }
     
-        public virtual ObjectResult<GoodsArrivalPendingPurchaseOrder> GetGoodsArrivalPendingPurchaseOrders(Nullable<int> locationID)
+        public virtual ObjectResult<GoodsArrivalPendingPurchaseOrder> GetGoodsArrivalPendingPurchaseOrders(Nullable<int> locationID, Nullable<int> nMVNTaskID)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalPendingPurchaseOrder>("GetGoodsArrivalPendingPurchaseOrders", locationIDParameter);
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsArrivalPendingPurchaseOrder>("GetGoodsArrivalPendingPurchaseOrders", locationIDParameter, nMVNTaskIDParameter);
         }
     
         public virtual ObjectResult<GoodsArrivalViewDetail> GetGoodsArrivalViewDetails(Nullable<int> goodsArrivalID)

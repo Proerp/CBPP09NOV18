@@ -12,7 +12,7 @@ namespace TotalDTO.Purchases
 {
     public class GoodsArrivalPrimitiveDTO : QuantityDTO<GoodsArrivalDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
     {
-        public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.GoodsArrival; } }
+        public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemArrival; } }
 
         public int GetID() { return this.GoodsArrivalID; }
         public void SetID(int id) { this.GoodsArrivalID = id; }

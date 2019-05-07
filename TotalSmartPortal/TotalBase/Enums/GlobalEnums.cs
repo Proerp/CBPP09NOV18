@@ -62,7 +62,9 @@ namespace TotalBase.Enums
             
             PurchaseInvoice = 8022,
 
-            GoodsArrival = 8026,
+            MaterialArrival = 80210013,
+            ItemArrival = 8026,
+            ProductArrival = 80210014,
 
             BlendingInstruction = 6800160,
 

@@ -47,7 +47,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
         {
             string queryString;
 
-            queryString = " @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime, @PendingOnly bit " + "\r\n";
+            queryString = " @NMVNTaskID int, @AspUserID nvarchar(128), @FromDate DateTime, @ToDate DateTime, @PendingOnly bit " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
@@ -68,7 +68,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "       SELECT      GoodsArrivals.GoodsArrivalID, CAST(GoodsArrivals.EntryDate AS DATE) AS EntryDate, GoodsArrivals.Reference, GoodsArrivals.Code, GoodsArrivals.PackingList, GoodsArrivals.CustomsDeclaration, GoodsArrivals.PurchaseOrderID, GoodsArrivals.PurchaseOrderCodes, GoodsArrivals.PurchaseOrderReferences, PurchaseOrders.EntryDate AS PurchaseOrderEntryDate, Locations.Code AS LocationCode, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Transporters.Name AS TransporterName, GoodsArrivals.Caption, GoodsArrivals.Description, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, GoodsArrivalDetails.BatchCode, GoodsArrivalDetails.LabCode, GoodsArrivalDetails.Quantity, GoodsArrivalDetails.Packages, GoodsArrivals.TotalQuantity, GoodsArrivals.TotalQuantityReceipted, GoodsArrivals.TotalPackages, GoodsArrivals.Approved " + "\r\n";
             queryString = queryString + "       FROM        GoodsArrivals " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Locations ON " + (pendingOnly ? "GoodsArrivals.GoodsArrivalID IN (SELECT GoodsArrivalID FROM GoodsArrivalDetails WHERE ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0)" : "GoodsArrivals.EntryDate >= @FromDate AND GoodsArrivals.EntryDate <= @ToDate") + " AND GoodsArrivals.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.GoodsArrival + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = GoodsArrivals.LocationID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Locations ON GoodsArrivals.NMVNTaskID = @NMVNTaskID AND " + (pendingOnly ? "GoodsArrivals.GoodsArrivalID IN (SELECT GoodsArrivalID FROM GoodsArrivalDetails WHERE ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0)" : "GoodsArrivals.EntryDate >= @FromDate AND GoodsArrivals.EntryDate <= @ToDate") + " AND GoodsArrivals.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = @NMVNTaskID AND AccessControls.AccessLevel > 0) AND Locations.LocationID = GoodsArrivals.LocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN GoodsArrivalDetails ON GoodsArrivals.GoodsArrivalID = GoodsArrivalDetails.GoodsArrivalID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON GoodsArrivalDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON GoodsArrivals.CustomerID = Customers.CustomerID " + "\r\n";
@@ -117,7 +117,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
         private void GetGoodsArrivalPendingPurchaseOrders()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @LocationID int, @NMVNTaskID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -126,7 +126,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                       PurchaseOrders.TransporterID, Transporters.Code AS TransporterCode, Transporters.Name AS TransporterName, Transporters.OfficialName AS TransporterOfficialName, Transporters.Birthday AS TransporterBirthday, Transporters.VATCode AS TransporterVATCode, Transporters.AttentionName AS TransporterAttentionName, Transporters.Telephone AS TransporterTelephone, Transporters.BillingAddress AS TransporterBillingAddress, Transporters.ShippingAddress AS TransporterShippingAddress, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName " + "\r\n";
 
             queryString = queryString + "       FROM            PurchaseOrders " + "\r\n";
-            queryString = queryString + "                       INNER JOIN Customers ON PurchaseOrders.PurchaseOrderID IN (SELECT PurchaseOrderID FROM PurchaseOrderDetails WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0  AND ROUND(Quantity - QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") > 0) AND PurchaseOrders.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Customers ON PurchaseOrders.PurchaseOrderID IN (SELECT PurchaseOrderID FROM PurchaseOrderDetails WHERE LocationID = @LocationID AND NMVNTaskID = @NMVNTaskID - 5 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0  AND ROUND(Quantity - QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") > 0) AND PurchaseOrders.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers Transporters ON PurchaseOrders.TransporterID = Transporters.CustomerID " + "\r\n";
 
             queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = " + (GlobalEnums.CBPP ? 1 : 2) + "\r\n";
@@ -138,14 +138,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
         private void GetGoodsArrivalPendingCustomers()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @LocationID int, @NMVNTaskID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "       SELECT          CustomerTransporterPENDING.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Customers.OfficialName AS CustomerOfficialName, Customers.Birthday AS CustomerBirthday, Customers.VATCode AS CustomerVATCode, Customers.AttentionName AS CustomerAttentionName, Customers.Telephone AS CustomerTelephone, Customers.BillingAddress AS CustomerBillingAddress, Customers.ShippingAddress AS CustomerShippingAddress, " + "\r\n";
             queryString = queryString + "                       CustomerTransporterPENDING.TransporterID, Transporters.Code AS TransporterCode, Transporters.Name AS TransporterName, Transporters.OfficialName AS TransporterOfficialName, Transporters.Birthday AS TransporterBirthday, Transporters.VATCode AS TransporterVATCode, Transporters.AttentionName AS TransporterAttentionName, Transporters.Telephone AS TransporterTelephone, Transporters.BillingAddress AS TransporterBillingAddress, Transporters.ShippingAddress AS TransporterShippingAddress, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, N'' AS Description, N'' AS Remarks " + "\r\n";
 
-            queryString = queryString + "       FROM           (SELECT DISTINCT CustomerID, TransporterID FROM PurchaseOrders WHERE PurchaseOrderID IN (SELECT PurchaseOrderID FROM PurchaseOrderDetails WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0  AND ROUND(Quantity - QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") > 0)) CustomerTransporterPENDING " + "\r\n";
+            queryString = queryString + "       FROM           (SELECT DISTINCT CustomerID, TransporterID FROM PurchaseOrders WHERE PurchaseOrderID IN (SELECT PurchaseOrderID FROM PurchaseOrderDetails WHERE LocationID = @LocationID AND NMVNTaskID = @NMVNTaskID - 5 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0  AND ROUND(Quantity - QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") > 0)) CustomerTransporterPENDING " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON CustomerTransporterPENDING.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers Transporters ON CustomerTransporterPENDING.TransporterID = Transporters.CustomerID " + "\r\n";
 
@@ -160,7 +160,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
         {
             string queryString;
 
-            queryString = " @LocationID Int, @GoodsArrivalID Int, @PurchaseOrderID Int, @CustomerID Int, @TransporterID Int, @PurchaseOrderDetailIDs varchar(3999) " + "\r\n";
+            queryString = " @LocationID Int, @NMVNTaskID int, @GoodsArrivalID Int, @PurchaseOrderID Int, @CustomerID Int, @TransporterID Int, @PurchaseOrderDetailIDs varchar(3999) " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -222,7 +222,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                   0.0 AS Quantity, PurchaseOrderDetails.LabCode, PurchaseOrderDetails.ProductionDate, PurchaseOrderDetails.ExpiryDate, PurchaseOrders.Description, PurchaseOrderDetails.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        PurchaseOrders " + "\r\n";
-            queryString = queryString + "                   INNER JOIN PurchaseOrderDetails ON " + (isPurchaseOrderID ? " PurchaseOrders.PurchaseOrderID = @PurchaseOrderID " : "PurchaseOrders.LocationID = @LocationID AND PurchaseOrders.CustomerID = @CustomerID AND PurchaseOrders.TransporterID = @TransporterID ") + " AND PurchaseOrderDetails.Approved = 1 AND PurchaseOrderDetails.InActive = 0 AND PurchaseOrderDetails.InActivePartial = 0 AND ROUND(PurchaseOrderDetails.Quantity - PurchaseOrderDetails.QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") > 0 AND PurchaseOrders.PurchaseOrderID = PurchaseOrderDetails.PurchaseOrderID" + (isPurchaseOrderDetailIDs ? " AND PurchaseOrderDetails.PurchaseOrderDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@PurchaseOrderDetailIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN PurchaseOrderDetails ON " + (isPurchaseOrderID ? " PurchaseOrders.PurchaseOrderID = @PurchaseOrderID " : "PurchaseOrders.LocationID = @LocationID AND PurchaseOrders.NMVNTaskID = @NMVNTaskID - 5 AND PurchaseOrders.CustomerID = @CustomerID AND PurchaseOrders.TransporterID = @TransporterID ") + " AND PurchaseOrderDetails.Approved = 1 AND PurchaseOrderDetails.InActive = 0 AND PurchaseOrderDetails.InActivePartial = 0 AND ROUND(PurchaseOrderDetails.Quantity - PurchaseOrderDetails.QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") > 0 AND PurchaseOrders.PurchaseOrderID = PurchaseOrderDetails.PurchaseOrderID" + (isPurchaseOrderDetailIDs ? " AND PurchaseOrderDetails.PurchaseOrderDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@PurchaseOrderDetailIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON PurchaseOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
 
             return queryString;
@@ -476,7 +476,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
         private void GoodsArrivalInitReference()
         {
-            SimpleInitReference simpleInitReference = new SimpleInitReference("GoodsArrivals", "GoodsArrivalID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.GoodsArrival));
+            SimpleInitReference simpleInitReference = new SimpleInitReference("GoodsArrivals", "GoodsArrivalID", "Reference", ModelSettingManager.ReferenceLength, ModelSettingManager.ReferencePrefix(GlobalEnums.NmvnTaskID.ItemArrival));
             this.totalSmartPortalEntities.CreateTrigger("GoodsArrivalInitReference", simpleInitReference.CreateQuery());
         }
 

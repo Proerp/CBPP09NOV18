@@ -59,6 +59,7 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> CustomsDeclarationDate { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public string Caption { get; set; }
+        public int NMVNTaskID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Customer Customer1 { get; set; }
