@@ -15,10 +15,10 @@ namespace TotalCore.Repositories.Purchases
     {
         string GetBarcodeSymbologies(int barcodeID);
 
-        IEnumerable<GoodsArrivalPendingCustomer> GetCustomers(int? locationID);
-        IEnumerable<GoodsArrivalPendingPurchaseOrder> GetPurchaseOrders(int? locationID);
+        IEnumerable<GoodsArrivalPendingCustomer> GetCustomers(int? locationID, int? nmvnTaskID);
+        IEnumerable<GoodsArrivalPendingPurchaseOrder> GetPurchaseOrders(int? locationID, int? nmvnTaskID);
 
-        IEnumerable<GoodsArrivalPendingPurchaseOrderDetail> GetPendingPurchaseOrderDetails(int? locationID, int? goodsArrivalID, int? purchaseOrderID, int? customerID, int? transporterID, string purchaseOrderDetailIDs);
+        IEnumerable<GoodsArrivalPendingPurchaseOrderDetail> GetPendingPurchaseOrderDetails(int? locationID, int? nmvnTaskID, int? goodsArrivalID, int? purchaseOrderID, int? customerID, int? transporterID, string purchaseOrderDetailIDs);
     }
 
 }

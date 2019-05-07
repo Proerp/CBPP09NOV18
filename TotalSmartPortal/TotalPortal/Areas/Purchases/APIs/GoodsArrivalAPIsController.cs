@@ -33,8 +33,9 @@ namespace TotalPortal.Areas.Purchases.APIs
         }
 
 
-        public JsonResult GetGoodsArrivalIndexes([DataSourceRequest] DataSourceRequest request, bool withExtendedSearch, DateTime extendedFromDate, DateTime extendedToDate, bool pendingOnly)
+        public JsonResult GetGoodsArrivalIndexes([DataSourceRequest] DataSourceRequest request, string nmvnTaskID, bool withExtendedSearch, DateTime extendedFromDate, DateTime extendedToDate, bool pendingOnly)
         {
+            this.goodsArrivalAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
             this.goodsArrivalAPIRepository.RepositoryBag["PendingOnly"] = pendingOnly;
             ICollection<GoodsArrivalIndex> goodsArrivalIndexes = this.goodsArrivalAPIRepository.GetEntityIndexes<GoodsArrivalIndex>(User.Identity.GetUserId(), (withExtendedSearch ? extendedFromDate : HomeSession.GetGlobalFromDate(this.HttpContext)), (withExtendedSearch ? extendedToDate : HomeSession.GetGlobalToDate(this.HttpContext)));
 
@@ -47,22 +48,22 @@ namespace TotalPortal.Areas.Purchases.APIs
 
 
 
-        public JsonResult GetCustomers([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetCustomers([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
         {
-            var result = this.goodsArrivalAPIRepository.GetCustomers(locationID);
+            var result = this.goodsArrivalAPIRepository.GetCustomers(locationID, nmvnTaskID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPurchaseOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetPurchaseOrders([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
         {
-            var result = this.goodsArrivalAPIRepository.GetPurchaseOrders(locationID);
+            var result = this.goodsArrivalAPIRepository.GetPurchaseOrders(locationID, nmvnTaskID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
 
-        public JsonResult GetPendingPurchaseOrderDetails([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? goodsArrivalID, int? purchaseOrderID, int? customerID, int? transporterID, string purchaseOrderDetailIDs)
+        public JsonResult GetPendingPurchaseOrderDetails([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID, int? goodsArrivalID, int? purchaseOrderID, int? customerID, int? transporterID, string purchaseOrderDetailIDs)
         {
-            var result = this.goodsArrivalAPIRepository.GetPendingPurchaseOrderDetails(locationID, goodsArrivalID, purchaseOrderID, customerID, transporterID, purchaseOrderDetailIDs);
+            var result = this.goodsArrivalAPIRepository.GetPendingPurchaseOrderDetails(locationID, nmvnTaskID, goodsArrivalID, purchaseOrderID, customerID, transporterID, purchaseOrderDetailIDs);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
     }

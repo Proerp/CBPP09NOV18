@@ -130,10 +130,16 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IPurchaseProductViewModelSelectListBuilder>().To<PurchaseProductViewModelSelectListBuilder>();
 
 
-                kernel.Bind<IGoodsArrivalService>().To<GoodsArrivalService>();
                 kernel.Bind<IGoodsArrivalRepository>().To<GoodsArrivalRepository>();
                 kernel.Bind<IGoodsArrivalAPIRepository>().To<GoodsArrivalAPIRepository>();
-                kernel.Bind<IGoodsArrivalViewModelSelectListBuilder>().To<GoodsArrivalViewModelSelectListBuilder>();
+
+                kernel.Bind<IMaterialArrivalService>().To<MaterialArrivalService>();
+                kernel.Bind<IMaterialArrivalViewModelSelectListBuilder>().To<MaterialArrivalViewModelSelectListBuilder>();
+                kernel.Bind<IItemArrivalService>().To<ItemArrivalService>();
+                kernel.Bind<IItemArrivalViewModelSelectListBuilder>().To<ItemArrivalViewModelSelectListBuilder>();
+                kernel.Bind<IProductArrivalService>().To<ProductArrivalService>();
+                kernel.Bind<IProductArrivalViewModelSelectListBuilder>().To<ProductArrivalViewModelSelectListBuilder>();
+
 
 
                 kernel.Bind<ILabService>().To<LabService>();

@@ -55,11 +55,20 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<PurchaseOrder, PurchaseProductViewModel>();
 
 
-                cfg.CreateMap<GoodsArrival, GoodsArrivalViewModel>();
-                cfg.CreateMap<GoodsArrival, GoodsArrivalDTO>();
-                cfg.CreateMap<GoodsArrivalPrimitiveDTO, GoodsArrival>();
+                cfg.CreateMap<GoodsArrival, GoodsArrivalDTO<GoodsArrivalOptionMaterial>>();
+                cfg.CreateMap<GoodsArrival, GoodsArrivalDTO<GoodsArrivalOptionItem>>();
+                cfg.CreateMap<GoodsArrival, GoodsArrivalDTO<GoodsArrivalOptionProduct>>();
+
+                cfg.CreateMap<GoodsArrivalPrimitiveDTO<GoodsArrivalOptionMaterial>, GoodsArrival>();
+                cfg.CreateMap<GoodsArrivalPrimitiveDTO<GoodsArrivalOptionItem>, GoodsArrival>();
+                cfg.CreateMap<GoodsArrivalPrimitiveDTO<GoodsArrivalOptionProduct>, GoodsArrival>();
+
                 cfg.CreateMap<GoodsArrivalViewDetail, GoodsArrivalDetailDTO>();
                 cfg.CreateMap<GoodsArrivalDetailDTO, GoodsArrivalDetail>();
+
+                cfg.CreateMap<GoodsArrival, MaterialArrivalViewModel>();
+                cfg.CreateMap<GoodsArrival, ItemArrivalViewModel>();
+                cfg.CreateMap<GoodsArrival, ProductArrivalViewModel>();
 
 
                 cfg.CreateMap<Bom, BomViewModel>();
