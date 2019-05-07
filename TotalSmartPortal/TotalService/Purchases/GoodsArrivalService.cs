@@ -1,20 +1,23 @@
 ﻿using System;
-using System.Linq;
+using System.Drawing;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 
-using System.Drawing;
 using DataMatrix.net;
 
+using TotalModel;
+using TotalDTO;
 using TotalModel.Models;
 using TotalDTO.Purchases;
 using TotalCore.Repositories.Purchases;
 using TotalCore.Services.Purchases;
 
-
 namespace TotalService.Purchases
 {
-    public class GoodsArrivalService : GenericWithViewDetailService<GoodsArrival, GoodsArrivalDetail, GoodsArrivalViewDetail, GoodsArrivalDTO, GoodsArrivalPrimitiveDTO, GoodsArrivalDetailDTO>, IGoodsArrivalService
+    public class GoodsArrivalService<TDto, TPrimitiveDto, TDtoDetail> : GenericWithViewDetailService<GoodsArrival, GoodsArrivalDetail, GoodsArrivalViewDetail, TDto, TPrimitiveDto, TDtoDetail>, IGoodsArrivalService<TDto, TPrimitiveDto, TDtoDetail>
+        where TDto : TPrimitiveDto, IBaseDetailEntity<TDtoDetail>, IGoodsArrivalDTO
+        where TPrimitiveDto : BaseDTO, IPrimitiveEntity, IPrimitiveDTO, new()
+        where TDtoDetail : class, IPrimitiveEntity
     {
         private IGoodsArrivalRepository goodsArrivalRepository;
         public GoodsArrivalService(IGoodsArrivalRepository goodsArrivalRepository)
@@ -29,13 +32,13 @@ namespace TotalService.Purchases
             return this.GetViewDetails(parameters);
         }
 
-        public override bool Save(GoodsArrivalDTO goodsArrivalDTO)
+        public override bool Save(TDto goodsArrivalDTO)
         {
             goodsArrivalDTO.GoodsArrivalViewDetails.RemoveAll(x => x.Quantity == 0);
             return base.Save(goodsArrivalDTO);
         }
 
-        protected override GoodsArrival SaveThis(GoodsArrivalDTO dto)
+        protected override GoodsArrival SaveThis(TDto dto)
         {
             GoodsArrival goodsArrival = base.SaveThis(dto);
 
@@ -50,43 +53,6 @@ namespace TotalService.Purchases
             }
 
             return goodsArrival;
-
-
-
-
-            ////GoodsArrival goodsArrival = base.SaveThis(dto);
-
-            ////string[] queryArray = new string[15];
-
-            ////queryArray[0] = "1000";
-            ////queryArray[1] = "0100";
-            ////queryArray[2] = "1100";
-            ////queryArray[3] = "0010";
-            ////queryArray[4] = "0110";
-            ////queryArray[5] = "1010";
-            ////queryArray[6] = "1110";
-            ////queryArray[7] = "0001";
-            ////queryArray[8] = "1001";
-            ////queryArray[9] = "0101";
-            ////queryArray[10] = "1101";
-            ////queryArray[11] = "0011";
-            ////queryArray[12] = "0111";
-            ////queryArray[13] = "1011";
-            ////queryArray[14] = "1111";
-            ////int i = 0;
-
-            ////if (goodsArrival.Approved)
-            ////{
-            ////    List<BarcodeBase> barcodeBases = this.goodsArrivalRepository.GetBarcodeBases(goodsArrival.GoodsArrivalID);
-            ////    foreach (BarcodeBase barcodeBase in barcodeBases)
-            ////    {
-            ////        string symbologies = this.getSymbologies(queryArray[i]);
-            ////        this.goodsArrivalRepository.SetBarcodeSymbologies(barcodeBase.BarcodeID, queryArray[i] + symbologies);
-            ////        i++;
-            ////    }
-            ////}
-
-            ////return goodsArrival;
         }
 
         private string getSymbologies(string barcode)
@@ -103,19 +69,24 @@ namespace TotalService.Purchases
             }
 
             return Convert.ToBase64String(bitmapData);
-
-
-            ////Bitmap bmp = (Bitmap)Image.FromFile("D:\\MVC PROJECTS\\CBPP\\Documents\\BP\\Mr Hien\\Icons\\Icons\\FINALS\\" + barcode + ".jpg");
-
-            ////byte[] bitmapData;
-
-            ////using (System.IO.MemoryStream memoryStream = new System.IO.MemoryStream())
-            ////{
-            ////    bmp.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Bmp);
-            ////    bitmapData = memoryStream.ToArray();
-            ////}
-
-            ////return Convert.ToBase64String(bitmapData);
         }
+    }
+
+
+    public class MaterialArrivalService : GoodsArrivalService<GoodsArrivalDTO<GoodsArrivalOptionMaterial>, GoodsArrivalPrimitiveDTO<GoodsArrivalOptionMaterial>, GoodsArrivalDetailDTO>, IMaterialArrivalService
+    {
+        public MaterialArrivalService(IGoodsArrivalRepository goodsArrivalRepository)
+            : base(goodsArrivalRepository) { }
+    }
+
+    public class ItemArrivalService : GoodsArrivalService<GoodsArrivalDTO<GoodsArrivalOptionItem>, GoodsArrivalPrimitiveDTO<GoodsArrivalOptionItem>, GoodsArrivalDetailDTO>, IItemArrivalService
+    {
+        public ItemArrivalService(IGoodsArrivalRepository goodsArrivalRepository)
+            : base(goodsArrivalRepository) { }
+    }
+    public class ProductArrivalService : GoodsArrivalService<GoodsArrivalDTO<GoodsArrivalOptionProduct>, GoodsArrivalPrimitiveDTO<GoodsArrivalOptionProduct>, GoodsArrivalDetailDTO>, IProductArrivalService
+    {
+        public ProductArrivalService(IGoodsArrivalRepository goodsArrivalRepository)
+            : base(goodsArrivalRepository) { }
     }
 }
