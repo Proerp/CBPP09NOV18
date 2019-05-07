@@ -10,7 +10,54 @@ using TotalDTO.Commons;
 
 namespace TotalDTO.Purchases
 {
-    public class GoodsArrivalPrimitiveDTO : QuantityDTO<GoodsArrivalDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+    public interface IGoodsArrivalOption { GlobalEnums.NmvnTaskID NMVNTaskID { get; } }
+
+    public class GoodsArrivalOptionMaterial : IGoodsArrivalOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.MaterialArrival; } } }
+    public class GoodsArrivalOptionItem : IGoodsArrivalOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemArrival; } } }
+    public class GoodsArrivalOptionProduct : IGoodsArrivalOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ProductArrival; } } }
+
+    public interface IGoodsArrivalPrimitiveDTO : IQuantityDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
+    {
+        int GoodsArrivalID { get; set; }
+
+        int CustomerID { get; set; }
+        int TransporterID { get; set; }
+
+        Nullable<int> WarehouseID { get; set; }
+
+        bool HasPurchaseOrder { get; set; }
+        Nullable<int> PurchaseOrderID { get; set; }
+        string PurchaseOrderReference { get; set; }
+        string PurchaseOrderReferences { get; set; }
+        string PurchaseOrderCode { get; set; }
+        string PurchaseOrderCodes { get; set; }
+        [Display(Name = "Phiếu đặt hàng")]
+        string PurchaseOrderReferenceNote { get; }
+        [Display(Name = "Số đơn hàng")]
+        string PurchaseOrderCodeNote { get; }
+        [Display(Name = "Ngày đặt hàng")]
+        Nullable<System.DateTime> PurchaseOrderVoucherDate { get; set; }
+
+        [Display(Name = "Số hóa đơn")]
+        [UIHint("Commons/SOCode")]
+        string Code { get; set; }
+        [Display(Name = "Số packing list")]
+        string PackingList { get; set; }
+        [Display(Name = "Số tờ khai hải quan")]
+        string CustomsDeclaration { get; set; }
+        [Display(Name = "Ngày chứng từ")]
+        Nullable<System.DateTime> CustomsDeclarationDate { get; set; }
+        [Display(Name = "Ngày dự kiến giao hàng")]
+        Nullable<System.DateTime> DeliveryDate { get; set; }
+
+        int SalespersonID { get; set; }
+
+        [Display(Name = "Tổng trọng lượng")]
+        decimal TotalPackages { get; set; }
+    }
+
+    public class GoodsArrivalPrimitiveDTO<TGoodsArrivalOption> : QuantityDTO<GoodsArrivalDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+        where TGoodsArrivalOption : IGoodsArrivalOption, new()
     {
         public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemArrival; } }
 
@@ -73,8 +120,35 @@ namespace TotalDTO.Purchases
         }
     }
 
+    public interface IGoodsArrivalDTO : IGoodsArrivalPrimitiveDTO
+    {
+        [Display(Name = "Khách hàng")]
+        [UIHint("Commons/CustomerBase")]
+        CustomerBaseDTO Customer { get; set; }
 
-    public class GoodsArrivalDTO : GoodsArrivalPrimitiveDTO, IBaseDetailEntity<GoodsArrivalDetailDTO>
+        [Display(Name = "Đơn vị, người nhận hàng")]
+        [UIHint("Commons/CustomerBase")]
+        CustomerBaseDTO Transporter { get; set; }
+
+        [Display(Name = "Kho hàng")]
+        [UIHint("AutoCompletes/WarehouseBase")]
+        WarehouseBaseDTO Warehouse { get; set; }
+
+        [Display(Name = "Nhân viên nhận hàng")]
+        [UIHint("AutoCompletes/EmployeeBase")]
+        EmployeeBaseDTO Salesperson { get; set; }
+
+        List<GoodsArrivalDetailDTO> GoodsArrivalViewDetails { get; set; }
+        List<GoodsArrivalDetailDTO> ViewDetails { get; set; }
+
+        string ControllerName { get; }
+
+        bool IsItem { get; }
+        bool IsProduct { get; }
+    }
+
+    public class GoodsArrivalDTO<TGoodsArrivalOption> : GoodsArrivalPrimitiveDTO<TGoodsArrivalOption>, IBaseDetailEntity<GoodsArrivalDetailDTO>
+        where TGoodsArrivalOption : IGoodsArrivalOption, new()
     {
         public GoodsArrivalDTO()
         {
@@ -110,5 +184,13 @@ namespace TotalDTO.Purchases
         public ICollection<GoodsArrivalDetailDTO> GetDetails() { return this.GoodsArrivalViewDetails; }
 
         protected override IEnumerable<GoodsArrivalDetailDTO> DtoDetails() { return this.GoodsArrivalViewDetails; }
+
+
+
+        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
+
+        public bool IsMaterial { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.MaterialArrival; } }
+        public bool IsItem { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.ItemArrival; } }
+        public bool IsProduct { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.ProductArrival; } }
     }
 }
