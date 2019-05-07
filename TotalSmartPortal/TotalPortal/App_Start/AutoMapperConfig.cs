@@ -39,11 +39,21 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<PurchaseRequisitionDetailDTO, PurchaseRequisitionDetail>();
 
 
-                cfg.CreateMap<PurchaseOrder, PurchaseOrderViewModel>();
-                cfg.CreateMap<PurchaseOrder, PurchaseOrderDTO>();
-                cfg.CreateMap<PurchaseOrderPrimitiveDTO, PurchaseOrder>();
+                cfg.CreateMap<PurchaseOrder, PurchaseOrderDTO<PurchaseOptionMaterial>>();
+                cfg.CreateMap<PurchaseOrder, PurchaseOrderDTO<PurchaseOptionItem>>();
+                cfg.CreateMap<PurchaseOrder, PurchaseOrderDTO<PurchaseOptionProduct>>();
+
+                cfg.CreateMap<PurchaseOrderPrimitiveDTO<PurchaseOptionMaterial>, PurchaseOrder>();
+                cfg.CreateMap<PurchaseOrderPrimitiveDTO<PurchaseOptionItem>, PurchaseOrder>();
+                cfg.CreateMap<PurchaseOrderPrimitiveDTO<PurchaseOptionProduct>, PurchaseOrder>();
+
                 cfg.CreateMap<PurchaseOrderViewDetail, PurchaseOrderDetailDTO>();
                 cfg.CreateMap<PurchaseOrderDetailDTO, PurchaseOrderDetail>();
+
+                cfg.CreateMap<PurchaseOrder, PurchaseMaterialViewModel>();
+                cfg.CreateMap<PurchaseOrder, PurchaseItemViewModel>();
+                cfg.CreateMap<PurchaseOrder, PurchaseProductViewModel>();
+
 
                 cfg.CreateMap<GoodsArrival, GoodsArrivalViewModel>();
                 cfg.CreateMap<GoodsArrival, GoodsArrivalDTO>();

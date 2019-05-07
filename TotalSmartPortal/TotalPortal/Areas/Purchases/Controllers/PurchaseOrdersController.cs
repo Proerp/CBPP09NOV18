@@ -28,7 +28,7 @@ namespace TotalPortal.Areas.Purchases.Controllers
         where TViewDetailViewModel : TDto, IViewDetailViewModel<TDtoDetail>, IPurchaseOrderViewModel, new()
     {
         public PurchaseOrdersController(IPurchaseOrderService<TDto, TPrimitiveDto, TDtoDetail> purchaseOrderService, IPurchaseOrderViewModelSelectListBuilder<TViewDetailViewModel> purchaseOrderViewModelSelectListBuilder)
-            : base(purchaseOrderService, purchaseOrderViewModelSelectListBuilder, true)
+            : base(purchaseOrderService, purchaseOrderViewModelSelectListBuilder)
         {
         }
 
@@ -42,12 +42,6 @@ namespace TotalPortal.Areas.Purchases.Controllers
             commodityTypeIDList.Append((int)(viewDetailViewModel.IsItem ? GlobalEnums.CommodityTypeID.Items : (viewDetailViewModel.IsProduct ? GlobalEnums.CommodityTypeID.Products : GlobalEnums.CommodityTypeID.Unknown)));
 
             RequireJsOptions.Add("commodityTypeIDList", commodityTypeIDList.ToString(), RequireJsOptionsScope.Page);
-        }
-
-        public virtual ActionResult Boms(int id, int detailID)
-        {
-            BomBaseDTO bomBaseDTO = new BomBaseDTO() { BomID = id, PrintOptionID = detailID };
-            return View(bomBaseDTO);
         }
     }
 

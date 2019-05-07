@@ -22,8 +22,8 @@ namespace TotalDTO.Purchases
     {
         int PurchaseOrderID { get; set; }
 
-        virtual Nullable<int> CustomerID { get; set; }
-        virtual Nullable<int> TransporterID { get; set; }
+        Nullable<int> CustomerID { get; set; }
+        Nullable<int> TransporterID { get; set; }
 
         [Display(Name = "Số PO")]
         string Code { get; set; }
@@ -93,7 +93,7 @@ namespace TotalDTO.Purchases
         bool IsProduct { get; }
     }
 
-    public class PurchaseOrderDTO<TPurchaseOption> : PurchaseOrderPrimitiveDTO<TPurchaseOption>, IBaseDetailEntity<PurchaseOrderDetailDTO>
+    public class PurchaseOrderDTO<TPurchaseOption> : PurchaseOrderPrimitiveDTO<TPurchaseOption>, IBaseDetailEntity<PurchaseOrderDetailDTO>, IPurchaseOrderDTO
         where TPurchaseOption : IPurchaseOption, new()
     {
         public PurchaseOrderDTO()

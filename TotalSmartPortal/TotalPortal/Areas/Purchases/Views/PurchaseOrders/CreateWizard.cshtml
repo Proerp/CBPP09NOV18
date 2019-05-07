@@ -1,7 +1,8 @@
 ﻿@using TotalPortal.Configuration;
 
 @using TotalDTO.Purchases
-    @model TotalPortal.Areas.Purchases.ViewModels.PurchaseOrderViewModel
+@using TotalPortal.Areas.Purchases.ViewModels
+@model IPurchaseOrderViewModel
 
     @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
@@ -13,8 +14,8 @@
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
 
         <div style="margin-top: 8px; margin-left: -60px; margin-right: 18px;">
-            @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
-            @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
+            @Html.EditorFor(d => (d as IPurchaseOrderDTO).Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
+            @Html.EditorFor(d => (d as IPurchaseOrderDTO).Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
         </div> 
         
         <div class="background-bar" style="height: 45px;">

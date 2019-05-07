@@ -2,7 +2,10 @@
 
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
-@model TotalPortal.Areas.Purchases.ViewModels.PurchaseOrderViewModel
+@using TotalDTO.Purchases
+@using TotalPortal.Areas.Purchases.ViewModels
+
+@model IPurchaseOrderViewModel
 
 @using (Html.BeginForm())
 {

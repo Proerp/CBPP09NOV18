@@ -1,7 +1,12 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration
 
-@model TotalPortal.Areas.Purchases.ViewModels.PurchaseOrderViewModel
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Purchases
+@using TotalPortal.Areas.Purchases.ViewModels
+
+@model IPurchaseOrderViewModel
 
 <div id="popupWindow"></div>
 
@@ -12,7 +17,7 @@
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTopB.cshtml")
 
-    @Html.HiddenFor(model => model.PurchaseOrderID)
+    @Html.HiddenFor(model => (model as IPurchaseOrderPrimitiveDTO).PurchaseOrderID)
 
     <div class="left-panel">
 
@@ -20,39 +25,39 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Code)
+            @Html.LabelFor(model => (model as IPurchaseOrderPrimitiveDTO).Code)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IPurchaseOrderPrimitiveDTO).Code).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IPurchaseOrderPrimitiveDTO).Code, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.VoucherDate)
+            @Html.LabelFor(model => (model as IPurchaseOrderPrimitiveDTO).VoucherDate)
             <div class="div-input">
-                @Html.Kendo().DateTimePickerFor(model => model.VoucherDate).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().DateTimePickerFor(model => (model as IPurchaseOrderPrimitiveDTO).VoucherDate).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.VoucherDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IPurchaseOrderPrimitiveDTO).VoucherDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DeliveryDate)
+            @Html.LabelFor(model => (model as IPurchaseOrderPrimitiveDTO).DeliveryDate)
             <div class="div-input">
-                @Html.Kendo().DateTimePickerFor(model => model.DeliveryDate).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().DateTimePickerFor(model => (model as IPurchaseOrderPrimitiveDTO).DeliveryDate).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IPurchaseOrderPrimitiveDTO).DeliveryDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
         @if (@Model.Voidable || @Model.UnVoidable || @Model.VoidTypeID > 0)
         { //Don't render when in Edit Mode, so: do not add VoidType.VoidTypeID [Required] DataAnnotations to the view to submit to controller when edit
             <div class="form-group">
-                @Html.EditorFor(d => d.VoidType, (@Model.Voidable ? new { VoidTypeClassSpecialEditable = "SpecialEditable" } : null))
+                @Html.EditorFor(d => (d as IPurchaseOrderDTO).VoidType, (@Model.Voidable ? new { VoidTypeClassSpecialEditable = "SpecialEditable" } : null))
             </div>
         }
 
@@ -63,12 +68,12 @@
         <div class="right-top-panel right-top-panel-H3">
             @*
                 THIS IS USED FOR CREATEWIZARD. JUST ONLY HERE: REMOVE TEMPLATE: "AutoCompletes/CustomerBase" ==> TO USE THE DEFAULT UIHINT
-                @Html.EditorFor(d => d.Customer, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
-                @Html.EditorFor(d => d.Transporter, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
+                @Html.EditorFor(d => (d as IPurchaseOrderDTO).Customer, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
+                @Html.EditorFor(d => (d as IPurchaseOrderDTO).Transporter, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
             *@
 
-            @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
-            @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
+            @Html.EditorFor(d => (d as IPurchaseOrderDTO).Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+            @Html.EditorFor(d => (d as IPurchaseOrderDTO).Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID), CustomerIcon = "Customer Red 24.png" })
         </div>
 
 
@@ -184,25 +189,25 @@
                                 }
                         </text>);
                         }).DataSource(dataSource => dataSource
-                                                .Ajax()
-                                                .Batch(true)
-                                                .ServerOperation(false)
-                                                .Model(model =>
-                                                {
-                                                    model.Id(x => x.PurchaseOrderDetailID);
-                                                    model.Field(m => m.PurchaseOrderDetailID).DefaultValue(0);
-                                                    model.Field(m => m.PurchaseOrderID).DefaultValue(@Model.PurchaseOrderID);
-                                                })
-                                                .Events(events =>
-                                                {
-                                                    events.Change("dataSourceChange");
-                                                    events.Error("kendGrid_ErrorHandler");
-                                                })
-                                                .Aggregates(a => a.Add(x => x.CommodityName).Count())
-                                                .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                                                .Aggregates(a => a.Add(x => x.QuantityArrived).Sum())
-                                                .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
-                                                )
+                                .Ajax()
+                                .Batch(true)
+                                .ServerOperation(false)
+                                .Model(model =>
+                                {
+                                    model.Id(x => x.PurchaseOrderDetailID);
+                                    model.Field(m => m.PurchaseOrderDetailID).DefaultValue(0);
+                                    model.Field(m => m.PurchaseOrderID).DefaultValue(@Model.PurchaseOrderID);
+                                })
+                                .Events(events =>
+                                {
+                                    events.Change("dataSourceChange");
+                                    events.Error("kendGrid_ErrorHandler");
+                                })
+                                .Aggregates(a => a.Add(x => x.CommodityName).Count())
+                                .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                                .Aggregates(a => a.Add(x => x.QuantityArrived).Sum())
+                                .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                                )
             )
         </div>
 
@@ -218,21 +223,21 @@
                         .Content(@<text>
                             <div class="right-first-panel">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Description, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseDTO).Description, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Description).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Remarks, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseModel).Remarks, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Remarks).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseModel).Remarks, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -252,15 +257,15 @@
 
             @if (Model.Editable)
             {
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "PurchaseOrders")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Save" formaction="@Url.Action("Edit", "PurchaseOrders")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-verify-icon.png" /> Lưu, nhập tiếp </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "PurchaseOrders")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Save" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-verify-icon.png" /> Lưu, nhập tiếp </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
             }
             else
             {
                 if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
                 {
-                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "PurchaseOrders", new {id = @Model.PurchaseOrderID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.PurchaseOrderID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
                 }
             }
         </div>
@@ -288,7 +293,7 @@
     function callVoidDetail(purchaseOrderDetailID) {
         require(["kpopupWindow"], function (kpopupWindow) {
             var voidDetailWindow = new kpopupWindow();
-            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", "PurchaseOrders")" + "/" + $("#PurchaseOrderID").val() + "/" + purchaseOrderDetailID, "Hủy/ phục hồi một phần đơn hàng", @Settings.PopupWidthVoid,  @Settings.PopupHeightVoid);
+            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", Model.ControllerName)" + "/" + $("#PurchaseOrderID").val() + "/" + purchaseOrderDetailID, "Hủy/ phục hồi một phần đơn hàng", @Settings.PopupWidthVoid,  @Settings.PopupHeightVoid);
         });
     }
 

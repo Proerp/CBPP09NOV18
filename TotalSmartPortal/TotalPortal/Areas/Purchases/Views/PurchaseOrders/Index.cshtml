@@ -1,5 +1,7 @@
 ﻿@using TotalPortal.Configuration
 
+@model TotalPortal.Areas.Purchases.ViewModels.IPurchaseOrderViewModel
+
 <div id="popupWindow"></div>
 
 <div>
@@ -11,7 +13,7 @@
                 columns.Bound(p => p.EntryMonth).Title("Tháng").Hidden();
                 columns.Bound(p => p.Features).Title("PO").Hidden();
                 
-                columns.Bound(p => p.Reference).Title("PĐH").Width(10).Filterable(false).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseOrders", action = "Edit" }) + "/#= PurchaseOrderID #'>#=Reference#</a>");
+                columns.Bound(p => p.Reference).Title("PĐH").Width(10).Filterable(false).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/" + Model.ControllerName, action = "Edit" }) + "/#= PurchaseOrderID #'>#=Reference#</a>");
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                 columns.Bound(p => p.Code).Title("PO").Width(20);
                 
@@ -27,12 +29,12 @@
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                 
                 columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(68)
-                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseOrders", action = "Void" }) + "/#= PurchaseOrderID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseOrders", action = "Delete" }) + "/#= PurchaseOrderID #'><span class='k-icon sbt-delete'></span></a>");
+                    .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/" + Model.ControllerName, action = "Void" }) + "/#= PurchaseOrderID #'><span class='k-icon sbt-void'></span></a> <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/" + Model.ControllerName, action = "Delete" }) + "/#= PurchaseOrderID #'><span class='k-icon sbt-delete'></span></a>");
             })
             .ToolBar(toolbar =>
             {
                 toolbar.Template(@<text>                    
-                    <button type="button" class="k-button" onclick="location.href = '@Url.Action("Create", "PurchaseOrders")'"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" />  Lập phiếu đặt hàng </button>
+                    <button type="button" class="k-button" onclick="location.href = '@Url.Action("Create", Model.ControllerName)'"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" />  Lập phiếu đặt hàng </button>
                     <div class="toolbar" style="float: right;">
                         <label>Nhập số PO, tên NCC hoặc mặt hàng</label>
                         <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
@@ -50,7 +52,7 @@
                     .DataSource(dataSource => dataSource
                         .Ajax()
                         .Group(group => group.AddDescending(p => p.EntryMonth)).Group(group => group.Add(p => p.Features))
-                        .Read(read => read.Action("GetPurchaseOrderIndexes", "PurchaseOrderAPIs", new { area = "Purchases" }))
+                                                .Read(read => read.Action("GetPurchaseOrderIndexes", "PurchaseOrderAPIs", new { area = "Purchases" }).Data("onGetPurchaseOrderIndexes"))
                         .Sort(sort =>
                             {
                                 sort.Add(p => p.EntryDate).Descending();
@@ -75,6 +77,13 @@
 
 
 <script type="text/javascript">
+    function onGetPurchaseOrderIndexes(e) {
+        var indexFilterText = $("#indexFilterText").val();
+        return {
+            nmvnTaskID: requireConfig.pageOptions.NmvnTaskID
+        };
+    }
+
     function hightLightSelectedRow(e) {
         require(["kindexGrid"], function (kindexGrid) {
             var kindexGridInstance = new kindexGrid("kendoGridIndex");
@@ -85,7 +94,7 @@
     function createWizard() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "PurchaseOrders")", "Chọn nhà cung cấp", "838", "380");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", Model.ControllerName)", "Chọn nhà cung cấp", "838", "380");
         });
     }
 
