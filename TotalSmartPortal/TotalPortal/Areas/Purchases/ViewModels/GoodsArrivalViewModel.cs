@@ -10,8 +10,22 @@ using TotalPortal.Areas.Commons.ViewModels.Helpers;
 
 namespace TotalPortal.Areas.Purchases.ViewModels
 {
-    public class GoodsArrivalViewModel : GoodsArrivalDTO, IViewDetailViewModel<GoodsArrivalDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
+    public interface IGoodsArrivalViewModel : IGoodsArrivalDTO, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
+    {
+    }
+
+    public class MaterialArrivalViewModel : GoodsArrivalDTO<GoodsArrivalOptionMaterial>, IViewDetailViewModel<GoodsArrivalDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IGoodsArrivalViewModel
     {
         public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
     }
+
+    public class ItemArrivalViewModel : GoodsArrivalDTO<GoodsArrivalOptionItem>, IViewDetailViewModel<GoodsArrivalDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IGoodsArrivalViewModel
+    {
+        public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
+    }
+
+    public class ProductArrivalViewModel : GoodsArrivalDTO<GoodsArrivalOptionProduct>, IViewDetailViewModel<GoodsArrivalDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IGoodsArrivalViewModel
+    {
+        public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
+    }   
 }
