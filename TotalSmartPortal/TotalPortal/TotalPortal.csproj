@@ -2383,16 +2383,6 @@
     <Content Include="Scripts\Controllers\Purchases\PurchaseMaterials\Open.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseMaterials\Print.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseMaterials\Void.js" />
-    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Approve.js" />
-    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Create.js" />
-    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\CreateWizard.js" />
-    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Delete.js" />
-    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Edit.js" />
-    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Import.js" />
-    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Index.js" />
-    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Open.js" />
-    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Print.js" />
-    <Content Include="Scripts\Controllers\Purchases\PurchaseOrders\Void.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseRequisitions\Approve.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseRequisitions\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Purchases\PurchaseRequisitions\Delete.js" />

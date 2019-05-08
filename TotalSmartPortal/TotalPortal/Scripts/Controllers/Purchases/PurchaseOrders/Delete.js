@@ -1,3 +1,0 @@
-﻿require(["kendoWidgetReadonly"], function (kendoWidgetReadonly) {
-
-});
