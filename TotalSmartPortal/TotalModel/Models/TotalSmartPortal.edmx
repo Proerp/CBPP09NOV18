@@ -15735,7 +15735,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="PendingOnly" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalPendingCustomers" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalPendingCustomer)">
-          <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalPendingPurchaseOrderDetails" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalPendingPurchaseOrderDetail)">
@@ -15748,7 +15748,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="PurchaseOrderDetailIDs" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalPendingPurchaseOrders" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalPendingPurchaseOrder)">
-          <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsArrivalViewDetails" ReturnType="Collection(TotalSmartPortalModel.GoodsArrivalViewDetail)">

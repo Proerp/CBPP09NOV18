@@ -59,7 +59,7 @@ namespace TotalDTO.Purchases
     public class GoodsArrivalPrimitiveDTO<TGoodsArrivalOption> : QuantityDTO<GoodsArrivalDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
         where TGoodsArrivalOption : IGoodsArrivalOption, new()
     {
-        public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.ItemArrival; } }
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get { return new TGoodsArrivalOption().NMVNTaskID; } }
 
         public int GetID() { return this.GoodsArrivalID; }
         public void SetID(int id) { this.GoodsArrivalID = id; }
