@@ -1915,6 +1915,8 @@
     <Content Include="Areas\Purchases\Views\MaterialArrivals\Edit.cshtml" />
     <Content Include="Areas\Purchases\Views\MaterialArrivals\Index.cshtml" />
     <Content Include="Areas\Purchases\Views\MaterialArrivals\Print.cshtml" />
+    <Content Include="Areas\Purchases\Views\ItemArrivals\GetPendingPurchaseOrderDetails.cshtml" />
+    <Content Include="Areas\Purchases\Views\MaterialArrivals\GetPendingPurchaseOrderDetails.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">

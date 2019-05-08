@@ -147,7 +147,7 @@ namespace TotalDTO.Purchases
         bool IsProduct { get; }
     }
 
-    public class GoodsArrivalDTO<TGoodsArrivalOption> : GoodsArrivalPrimitiveDTO<TGoodsArrivalOption>, IBaseDetailEntity<GoodsArrivalDetailDTO>
+    public class GoodsArrivalDTO<TGoodsArrivalOption> : GoodsArrivalPrimitiveDTO<TGoodsArrivalOption>, IBaseDetailEntity<GoodsArrivalDetailDTO>, IGoodsArrivalDTO
         where TGoodsArrivalOption : IGoodsArrivalOption, new()
     {
         public GoodsArrivalDTO()
