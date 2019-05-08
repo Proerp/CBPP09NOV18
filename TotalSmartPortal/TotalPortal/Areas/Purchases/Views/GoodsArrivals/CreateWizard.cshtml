@@ -1,8 +1,12 @@
 ﻿@using TotalPortal.Configuration;
 
+@using TotalDTO
+@using TotalDTO.Purchases
+@using TotalPortal.Areas.Purchases.ViewModels
+
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
-@model TotalPortal.Areas.Purchases.ViewModels.GoodsArrivalViewModel
+@model IGoodsArrivalViewModel
 
 @using (Html.BeginForm())
 {
@@ -10,19 +14,17 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
 
-    @*@Html.HiddenFor(model => model.EntryDate) //TEMP ONLY*@
+    @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).HasPurchaseOrder)
+    @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderID)
+    @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderCode)
+    @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderReference)
+    @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderVoucherDate)
+    @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).DeliveryDate)
     
-    @Html.HiddenFor(model => model.HasPurchaseOrder)
-    @Html.HiddenFor(model => model.PurchaseOrderID)
-    @Html.HiddenFor(model => model.PurchaseOrderCode)
-    @Html.HiddenFor(model => model.PurchaseOrderReference)
-    @Html.HiddenFor(model => model.PurchaseOrderVoucherDate)
-    @Html.HiddenFor(model => model.DeliveryDate)
-    
-    @Html.HiddenFor(model => model.Salesperson.EmployeeID);
-    @Html.HiddenFor(model => model.Salesperson.Name);
+    @Html.HiddenFor(model => (model as IGoodsArrivalDTO).Salesperson.EmployeeID);
+    @Html.HiddenFor(model => (model as IGoodsArrivalDTO).Salesperson.Name);
 
-    @Html.HiddenFor(model => model.Description);
+    @Html.HiddenFor(model => (model as IBaseDTO).Description);
 
     @(Html.Kendo().TabStrip()
         .HtmlAttributes(new { @style = "height: 377px; margin-left: 0px; margin-right: 0px;" })
@@ -42,24 +44,24 @@
                 .Enabled(false)
                 .Visible(false)
                 .Content(@<text>
-                    @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
-                    @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID) })
-                    @Html.EditorFor(d => d.Warehouse, new { WarehouseDisplayName = @Model.GetDisplayName(m => m.Warehouse) })
+                    @Html.EditorFor(d => (d as IGoodsArrivalDTO).Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+                    @Html.EditorFor(d => (d as IGoodsArrivalDTO).Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID) })
+                    @Html.EditorFor(d => (d as IGoodsArrivalDTO).Warehouse, new { WarehouseDisplayName = @Model.GetDisplayName(m => m.Warehouse) })
                 </text>);*@
         })
     )
 
     <div class="SBT-Hidden"> @*WILL REMOVE, IF WE USE THE TAB ABOVE*@
-        @Html.EditorFor(d => d.Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
-        @Html.EditorFor(d => d.Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID) })
-        @Html.EditorFor(d => d.Warehouse, new { WarehouseDisplayName = @Model.GetDisplayName(m => m.Warehouse) })
+        @Html.EditorFor(d => (d as IGoodsArrivalDTO).Customer, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+        @Html.EditorFor(d => (d as IGoodsArrivalDTO).Transporter, "AutoCompletes/CustomerBase", new { CustomerDescriptionHidden = "false", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID) })
+        @Html.EditorFor(d => (d as IGoodsArrivalDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID) })
     </div>
 
     
     
     <div class="background-bar" style="height: 45px;">
         <div class="popup-button-bar">
-            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "GoodsArrivals")" formtarget="_top" style="display:none" />
+            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", Model.ControllerName)" formtarget="_top" style="display:none" />
 
             @*<button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Ok-1.png" /> Áp dụng CTKM đang chọn </button>   //At VCP DON'T ALLOW SELECT BY SINGLE PROMOTION *@
             <button type="button" class="k-button" onclick="okWOSelectButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Tiếp tục </button>

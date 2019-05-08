@@ -113,6 +113,7 @@
         function onGetGoodsArrivalIndexes(e) {
             var indexFilterText = $("#indexFilterText").val();
             return {
+                nmvnTaskID: requireConfig.pageOptions.NmvnTaskID,
                 withExtendedSearch: true, @*indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght" ? true : false,*@
                 extendedFromDate: $("#ExtendedFromDate").val(),
                 extendedToDate: $("#ExtendedToDate").val(),

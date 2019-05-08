@@ -33,7 +33,8 @@
             var goodsArrivalJSON = window.parent.$("#kendoGridDetails").data("kendoGrid").dataSource.data().toJSON();
 
             return {
-                locationID: window.parent.requireConfig.pageOptions.LocationID,                
+                locationID: window.parent.requireConfig.pageOptions.LocationID,
+                nmvnTaskID: window.parent.requireConfig.pageOptions.NmvnTaskID,                
                 goodsArrivalID: window.parent.$("#GoodsArrivalID").val(),
                 purchaseOrderID: window.parent.$("#PurchaseOrderID").val(),
                 customerID: window.parent.$("#Customer_CustomerID").val(),  

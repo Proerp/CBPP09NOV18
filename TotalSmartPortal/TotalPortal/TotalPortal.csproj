@@ -1694,7 +1694,6 @@
     <Content Include="Areas\Purchases\Views\PurchaseOrders\VoidDetail.cshtml" />
     <Content Include="Areas\Purchases\Views\PurchaseOrders\VoidDetailSuccess.cshtml" />
     <Content Include="Areas\Purchases\Views\PurchaseOrders\_PurchaseOrder.cshtml" />
-    <Content Include="Areas\Purchases\Views\GoodsArrivals\Create.cshtml" />
     <Content Include="Areas\Purchases\Views\GoodsArrivals\CreateWizard.cshtml" />
     <Content Include="Areas\Purchases\Views\GoodsArrivals\Delete.cshtml" />
     <Content Include="Areas\Purchases\Views\GoodsArrivals\Edit.cshtml" />
@@ -1904,6 +1903,18 @@
     <Content Include="Areas\Purchases\Views\PurchaseMaterials\VoidDetailSuccess.cshtml" />
     <Content Include="Areas\Purchases\Views\PurchaseItems\Create.cshtml" />
     <Content Include="Areas\Purchases\Views\PurchaseMaterials\Create.cshtml" />
+    <Content Include="Areas\Purchases\Views\ItemArrivals\Approve.cshtml" />
+    <Content Include="Areas\Purchases\Views\ItemArrivals\CreateWizard.cshtml" />
+    <Content Include="Areas\Purchases\Views\ItemArrivals\Delete.cshtml" />
+    <Content Include="Areas\Purchases\Views\ItemArrivals\Edit.cshtml" />
+    <Content Include="Areas\Purchases\Views\ItemArrivals\Index.cshtml" />
+    <Content Include="Areas\Purchases\Views\ItemArrivals\Print.cshtml" />
+    <Content Include="Areas\Purchases\Views\MaterialArrivals\Approve.cshtml" />
+    <Content Include="Areas\Purchases\Views\MaterialArrivals\CreateWizard.cshtml" />
+    <Content Include="Areas\Purchases\Views\MaterialArrivals\Delete.cshtml" />
+    <Content Include="Areas\Purchases\Views\MaterialArrivals\Edit.cshtml" />
+    <Content Include="Areas\Purchases\Views\MaterialArrivals\Index.cshtml" />
+    <Content Include="Areas\Purchases\Views\MaterialArrivals\Print.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">

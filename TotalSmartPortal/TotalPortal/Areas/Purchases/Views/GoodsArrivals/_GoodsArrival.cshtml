@@ -1,7 +1,13 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration
 
-@model TotalPortal.Areas.Purchases.ViewModels.GoodsArrivalViewModel
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Helpers;
+@using TotalDTO.Purchases
+@using TotalPortal.Areas.Purchases.ViewModels
+
+@model IGoodsArrivalViewModel
 
 <div id="popupWindow"></div>
 
@@ -10,111 +16,111 @@
     @Html.AntiForgeryToken()
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
-    @Html.HiddenFor(model => model.TotalQuantity)
-    @Html.HiddenFor(model => model.TotalPackages)
+    @Html.HiddenFor(model => (model as IQuantityDTO).TotalQuantity)
+    @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).TotalPackages)
 
-    @Html.HiddenFor(model => model.GoodsArrivalID)
-    @Html.HiddenFor(model => model.HasPurchaseOrder)
+    @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).GoodsArrivalID)
+    @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).HasPurchaseOrder)
 
     <div class="left-panel">
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml", @Model, new ViewDataDictionary { { "EntryDateReadonly", false }, { "EntryDateDisplayName", "Ngày nhận hàng" } })
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Code)
+            @Html.LabelFor(model => (model as IGoodsArrivalPrimitiveDTO).Code)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.Code).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsArrivalPrimitiveDTO).Code).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IGoodsArrivalPrimitiveDTO).Code, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.PackingList)
+            @Html.LabelFor(model => (model as IGoodsArrivalPrimitiveDTO).PackingList)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.PackingList).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsArrivalPrimitiveDTO).PackingList).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.PackingList, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IGoodsArrivalPrimitiveDTO).PackingList, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CustomsDeclaration)
+            @Html.LabelFor(model => (model as IGoodsArrivalPrimitiveDTO).CustomsDeclaration)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.CustomsDeclaration).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsArrivalPrimitiveDTO).CustomsDeclaration).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.CustomsDeclaration, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IGoodsArrivalPrimitiveDTO).CustomsDeclaration, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CustomsDeclarationDate)
+            @Html.LabelFor(model => (model as IGoodsArrivalPrimitiveDTO).CustomsDeclarationDate)
             <div class="div-input">
-                @Html.Kendo().DateTimePickerFor(model => model.CustomsDeclarationDate).HtmlAttributes(new { @class = "left-panel-input" })
+                @Html.Kendo().DateTimePickerFor(model => (model as IGoodsArrivalPrimitiveDTO).CustomsDeclarationDate).HtmlAttributes(new { @class = "left-panel-input" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.CustomsDeclarationDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IGoodsArrivalPrimitiveDTO).CustomsDeclarationDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.DeliveryDate)
+            @Html.LabelFor(model => (model as IGoodsArrivalPrimitiveDTO).DeliveryDate)
             <div class="div-input">
-                @Html.Kendo().DatePickerFor(model => model.DeliveryDate).HtmlAttributes(new { @class = "left-panel-input", type = "text" })
+                @Html.Kendo().DatePickerFor(model => (model as IGoodsArrivalPrimitiveDTO).DeliveryDate).HtmlAttributes(new { @class = "left-panel-input", type = "text" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IGoodsArrivalPrimitiveDTO).DeliveryDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        @Html.HiddenFor(model => model.PurchaseOrderID)
-        @Html.HiddenFor(model => model.PurchaseOrderCode)
-        @Html.HiddenFor(model => model.PurchaseOrderReference)
+        @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderID)
+        @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderCode)
+        @Html.HiddenFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderReference)
         @if (Model.HasPurchaseOrder)
         {
             <div class="form-group">
-                @Html.LabelFor(model => model.PurchaseOrderReferenceNote)
+                @Html.LabelFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderReferenceNote)
                 <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => model.PurchaseOrderReferenceNote).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderReferenceNote).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                 </div>
                 <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => model.PurchaseOrderReferenceNote, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderReferenceNote, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group">
-                @Html.LabelFor(model => model.PurchaseOrderCodeNote)
+                @Html.LabelFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderCodeNote)
                 <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => model.PurchaseOrderCodeNote).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderCodeNote).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                 </div>
                 <div class="div-validation-message">
-                    @Html.ValidationMessageFor(model => model.PurchaseOrderCodeNote, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderCodeNote, "", new { @class = "text-danger" })
                 </div>
             </div>
 
             if (Model.PurchaseOrderVoucherDate != null)
             {
                 <div class="form-group">
-                    @Html.LabelFor(model => model.PurchaseOrderVoucherDate)
+                    @Html.LabelFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderVoucherDate)
                     <div class="div-input">
-                        @Html.Kendo().DateTimePickerFor(model => model.PurchaseOrderVoucherDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                        @Html.Kendo().DateTimePickerFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderVoucherDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                     </div>
                     <div class="div-validation-message">
-                        @Html.ValidationMessageFor(model => model.PurchaseOrderVoucherDate, "", new { @class = "text-danger" })
+                        @Html.ValidationMessageFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderVoucherDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
             }
         }
         else
         {
-            @Html.EditorFor(d => d.Code)
+            @Html.EditorFor(d => (d as IGoodsArrivalPrimitiveDTO).Code)
         }
 
         <div @{if (GlobalEnums.CBPP) { <text> class="SBT-Hidden" </text>   } else { <text> class="form-group" </text>   } }>
-            @Html.EditorFor(d => d.Salesperson, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.Salesperson) })
+            @Html.EditorFor(d => (d as IGoodsArrivalDTO).Salesperson, new { EmployeeDisplayName = @Model.Salesperson.GetDisplayName(m => m.EmployeeID) })
         </div>
 
     </div>
@@ -123,10 +129,10 @@
 
         <div class="right-top-panel right-top-panel-H3">
 
-            @Html.EditorFor(d => d.Customer, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Customer) })
-            @Html.EditorFor(d => d.Transporter, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.GetDisplayName(m => m.Transporter), CustomerIcon = "Customer Red 24.png" })
+            @Html.EditorFor(d => (d as IGoodsArrivalDTO).Customer, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID) })
+            @Html.EditorFor(d => (d as IGoodsArrivalDTO).Transporter, new { CustomerDescriptionHidden = "true", CustomerDisplayName = @Model.Transporter.GetDisplayName(m => m.CustomerID), CustomerIcon = "Customer Red 24.png" })
 
-            @Html.DisplayFor(d => d.Warehouse, "Commons/WarehouseBase")
+            @Html.DisplayFor(d => (d as IGoodsArrivalDTO).Warehouse, "Commons/WarehouseBase")
         </div>
 
         <div class="div-k-grid-detail">
@@ -276,22 +282,22 @@
                         .Content(@<text>
                             <div class="right-first-panel">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Description, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseDTO).Description, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Description).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Remarks, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseModel).Remarks, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Remarks).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseModel).Remarks, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>
@@ -310,18 +316,18 @@
         <div class="right-botton-panel">
             @if (Model.Editable)
             {
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsArrivals")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Save" formaction="@Url.Action("Edit", "GoodsArrivals")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-verify-icon.png" /> Lưu, nhập tiếp </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsArrivals")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "GoodsArrivals")" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Save" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-verify-icon.png" /> Lưu, nhập tiếp </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in </button>
             }
             else
             {
-                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "GoodsArrivals", new { id = @Model.GoodsArrivalID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", Model.ControllerName, new { id = @Model.GoodsArrivalID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
                 
                 if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
                 {
-                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "GoodsArrivals", new {id = @Model.GoodsArrivalID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt </button>
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.GoodsArrivalID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt </button>
                 }                            
             }
             
@@ -345,7 +351,7 @@
     function GetPendingGoodsIssueDetails() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingPurchaseOrderDetails", "GoodsArrivals", new { area = "Purchases" })", "Chọn mặt hàng từ đơn đặt hàng", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingPurchaseOrderDetails", Model.ControllerName, new { area = "Purchases" })", "Chọn mặt hàng từ đơn đặt hàng", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
     }
   
