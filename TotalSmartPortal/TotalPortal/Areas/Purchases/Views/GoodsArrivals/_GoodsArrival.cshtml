@@ -209,7 +209,7 @@
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Packages) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].Packages' value='#= Packages #' />");
 
-                    columns.Bound(p => p.TareWeight).DisplayNameTitle().Filterable(false).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
+                    columns.Bound(p => p.TareWeight).DisplayNameTitle().Filterable(false).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30).Hidden(!GlobalEnums.CBPP)
                         .Format(Settings.kfmQuantity)
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', TareWeight) #" + "<input type='hidden' name='GoodsArrivalViewDetails[#= index(data) #].TareWeight' value='#= TareWeight #' />");
                     
