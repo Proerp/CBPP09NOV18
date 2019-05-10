@@ -66,7 +66,7 @@ namespace TotalDTO.Purchases
             base.PerformPresaveRule();
 
             string caption = "";
-            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = (int)this.CustomerID; e.TransporterID = (int)this.TransporterID; if (caption.IndexOf(e.CommodityCode) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityCode; });
+            this.DtoDetails().ToList().ForEach(e => { e.NMVNTaskID = this.NMVNTaskID; e.CustomerID = (int)this.CustomerID; e.TransporterID = (int)this.TransporterID; if (caption.IndexOf(e.CommodityCode) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityCode; });
             this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
     }

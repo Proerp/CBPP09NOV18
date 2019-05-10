@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 using TotalModel;
 using TotalDTO.Helpers;
+using TotalBase.Enums;
 
 namespace TotalDTO.Purchases
 {
@@ -12,6 +13,8 @@ namespace TotalDTO.Purchases
 
         public int PurchaseOrderDetailID { get; set; }
         public int PurchaseOrderID { get; set; }
+
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get; set; }
 
         public int CustomerID { get; set; }
         public int TransporterID { get; set; }

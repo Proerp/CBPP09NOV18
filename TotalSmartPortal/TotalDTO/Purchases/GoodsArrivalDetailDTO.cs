@@ -15,6 +15,8 @@ namespace TotalDTO.Purchases
         public int GoodsArrivalDetailID { get; set; }
         public int GoodsArrivalID { get; set; }
 
+        public GlobalEnums.NmvnTaskID NMVNTaskID { get; set; }
+
         public int CustomerID { get; set; }
         public int TransporterID { get; set; }
         public int SalespersonID { get; set; }
