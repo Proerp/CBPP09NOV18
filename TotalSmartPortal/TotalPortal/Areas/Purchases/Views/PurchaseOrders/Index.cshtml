@@ -51,8 +51,8 @@
                     })
                     .DataSource(dataSource => dataSource
                         .Ajax()
-                        .Group(group => group.AddDescending(p => p.EntryMonth)).Group(group => group.Add(p => p.Features))
-                                                .Read(read => read.Action("GetPurchaseOrderIndexes", "PurchaseOrderAPIs", new { area = "Purchases" }).Data("onGetPurchaseOrderIndexes"))
+                        .Group(group => group.AddDescending(p => p.EntryMonth)).Group(group => group.AddDescending(p => p.Features))
+                        .Read(read => read.Action("GetPurchaseOrderIndexes", "PurchaseOrderAPIs", new { area = "Purchases" }).Data("onGetPurchaseOrderIndexes"))
                         .Sort(sort =>
                             {
                                 sort.Add(p => p.EntryDate).Descending();

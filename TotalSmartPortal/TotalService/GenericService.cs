@@ -393,6 +393,8 @@ namespace TotalService
             if (!this.TryValidateModel(dto)) throw new System.ArgumentException("Lỗi lưu dữ liệu", "Dữ liệu không hợp lệ.");
             if (!this.Editable(dto)) throw new System.ArgumentException("Lỗi lưu dữ liệu", "Bạn không có quyền lưu lại dữ liệu này.");
 
+            if (dto.Approved && !this.GetApprovalPermitted(dto.OrganizationalUnitID)) throw new System.ArgumentException("Lỗi lưu và duyệt dữ liệu", "Bạn không có quyền duyệt. Vui lòng chọn Lưu để lưu dữ liệu.");
+
             dto.PerformPresaveRule();
 
             TEntity entity = this.SaveMe(dto);

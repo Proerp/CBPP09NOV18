@@ -39,7 +39,7 @@ namespace TotalPortal.Areas.Purchases.Controllers
             TViewDetailViewModel viewDetailViewModel = new TViewDetailViewModel();
 
             StringBuilder commodityTypeIDList = new StringBuilder();
-            commodityTypeIDList.Append((int)(viewDetailViewModel.IsItem ? GlobalEnums.CommodityTypeID.Items : (viewDetailViewModel.IsProduct ? GlobalEnums.CommodityTypeID.Products : GlobalEnums.CommodityTypeID.Unknown)));
+            commodityTypeIDList.Append((int)(viewDetailViewModel.IsItem ? GlobalEnums.CommodityTypeID.Items : (viewDetailViewModel.IsMaterial ? GlobalEnums.CommodityTypeID.Materials : GlobalEnums.CommodityTypeID.Unknown)));
 
             RequireJsOptions.Add("commodityTypeIDList", commodityTypeIDList.ToString(), RequireJsOptionsScope.Page);
         }

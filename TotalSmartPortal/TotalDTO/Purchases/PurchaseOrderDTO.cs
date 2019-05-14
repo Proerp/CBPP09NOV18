@@ -89,6 +89,7 @@ namespace TotalDTO.Purchases
 
         string ControllerName { get; }
 
+        bool IsMaterial { get; }
         bool IsItem { get; }
         bool IsProduct { get; }
     }
