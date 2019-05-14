@@ -392,7 +392,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "                       WHILE @@FETCH_STATUS = 0 " + "\r\n";
             queryString = queryString + "                           BEGIN " + "\r\n";
-            queryString = queryString + "                               SELECT @BarcodeSerialID = ISNULL(BarcodeSerialID, 0) FROM GoodsArrivalPackages WHERE CommodityID = @CommodityID AND LabCode = @LabCode " + "\r\n"; 
+            queryString = queryString + "                               SET @BarcodeSerialID = ISNULL((SELECT MAX(BarcodeSerialID) FROM GoodsArrivalPackages WHERE CommodityID = @CommodityID AND LabCode = @LabCode), 0) " + "\r\n"; 
 
             queryString = queryString + "                               WHILE @Packages > 0 " + "\r\n";
             queryString = queryString + "                                   BEGIN " + "\r\n";
