@@ -20,6 +20,7 @@
         columns.Bound(c => c.CommodityName).Title("Tên hàng").Width(45);
         columns.Bound(c => c.GoodsReceiptReference).Title("Lô").Width(10);
         columns.Bound(c => c.GoodsReceiptEntryDate).Title("Ngày").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(15).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.TransferOrderRemains).Title("Tồn Lệnh").Format(Settings.kfmQuantity).Width(12).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
         columns.Bound(c => c.QuantityAvailables).Title("Tồn Kho").Format(Settings.kfmQuantity).Width(12).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
 
         columns.Template(t => { }).Title("&nbsp;").ClientTemplate("<input class='IsSelected' #= IsSelected ? checked='checked':'' #  type='checkbox' />").Width(5);
