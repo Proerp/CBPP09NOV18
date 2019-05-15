@@ -503,7 +503,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                       LEFT  JOIN CommodityIcons ON Commodities.CommodityIconID = CommodityIcons.CommodityIconID " + "\r\n";
             queryString = queryString + "                       LEFT  JOIN Barcodes ON GoodsArrivalPackages.GoodsArrivalPackageID = Barcodes.GoodsArrivalPackageID " + "\r\n";
 
-            queryString = queryString + "       ORDER BY        GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.GoodsArrivalPackageID " + "\r\n";
+            queryString = queryString + "       ORDER BY        GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.Barcode " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
