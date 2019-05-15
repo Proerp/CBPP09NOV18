@@ -48,5 +48,6 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ProductionDate { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public decimal QuantityTO { get; set; }
+        public Nullable<decimal> Weight { get; set; }
     }
 }

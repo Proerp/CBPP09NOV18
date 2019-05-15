@@ -272,6 +272,7 @@ namespace TotalModel.Models
     public partial class WarehouseTransferPendingTransferOrderDetail
     {
         public virtual decimal? QuantityRemains { get { return this.QuantityAvailables; } }
+        public virtual decimal? TransferOrderRemainPackages { get { return this.TransferOrderRemains != null && this.Weight != null && this.Weight != 0 ? Math.Ceiling((decimal)(this.TransferOrderRemains / this.Weight)) : this.TransferOrderRemains; } }
     }
 
 
