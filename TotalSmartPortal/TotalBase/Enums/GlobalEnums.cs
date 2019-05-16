@@ -6,7 +6,7 @@ namespace TotalBase.Enums
 {
     public static class GlobalEnums
     {
-        public static bool CBPP = true;
+        public static bool CBPP = false;
 
         public static bool ERPConnected = false;
 
@@ -57,14 +57,14 @@ namespace TotalBase.Enums
             PurchaseRequisition = 8020,
 
             PurchaseMaterial = 80210008,
-            PurchaseItem = 8021,
-            PurchaseProduct = 80210009,
+            PurchaseItem = 80210009,
+            PurchaseProduct = 80210010,
             
             PurchaseInvoice = 8022,
 
             MaterialArrival = 80210013,
-            ItemArrival = 8026,
-            ProductArrival = 80210014,
+            ItemArrival = 80210014,
+            ProductArrival = 80210015,
 
             BlendingInstruction = 6800160,
 
