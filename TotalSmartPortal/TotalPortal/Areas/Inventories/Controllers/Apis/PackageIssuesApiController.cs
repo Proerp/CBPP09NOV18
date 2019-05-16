@@ -75,5 +75,26 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         {
             return this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(true, locationID, packageIssueID, blendingInstructionID, warehouseID, barcode, goodsReceiptDetailIDs);
         }
+
+
+        #region HELPER API
+        [HttpGet]
+        [Route("GetPendingBlendingInstructionSummaries/{locationID}/{packageIssueID}/{blendingInstructionID}/{warehouseID}/{barcode}/{goodsReceiptDetailIDs}")]
+        public IEnumerable<PendingBlendingInstructionSummary> GetPendingBlendingInstructionSummaries(int? locationID, int? packageIssueID, int? blendingInstructionID, int? warehouseID, string barcode, string goodsReceiptDetailIDs)
+        {
+            IEnumerable<PackageIssuePendingBlendingInstructionDetail> pendingBlendingInstructionSummaries = this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(true, locationID, packageIssueID, blendingInstructionID, warehouseID, barcode, goodsReceiptDetailIDs);
+            return pendingBlendingInstructionSummaries.GroupBy(g => g.CommodityCode).Select(s => new PendingBlendingInstructionSummary() { CommodityCode = s.Key, Weight = s.Min(f => f.Weight), QuantityRemains = s.Max(f => f.QuantityRemains), QuantityRemainPackages = s.Max(f => f.QuantityRemainPackages), QuantityAvailables = s.Sum(f => f.QuantityAvailables) });
+        }
+
+        public class PendingBlendingInstructionSummary
+        {
+            public string CommodityCode { get; set; }
+            public Nullable<decimal> Weight { get; set; }
+            public Nullable<decimal> QuantityRemains { get; set; }
+            public Nullable<decimal> QuantityRemainPackages { get; set; }
+            public Nullable<decimal> QuantityAvailables { get; set; }
+        }
+        #endregion HELPER API
+
     }
 }

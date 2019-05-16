@@ -21852,6 +21852,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           <Property Type="Decimal" Name="TareWeight" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="UnitWeight" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="Weight" Nullable="true" Precision="18" Scale="3" />
         </ComplexType>
         <ComplexType Name="PackageIssuePendingBlendingInstruction">
           <Property Type="Int32" Name="BlendingInstructionID" Nullable="false" />
@@ -30903,6 +30904,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
                 <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

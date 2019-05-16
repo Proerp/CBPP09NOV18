@@ -40,5 +40,6 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public Nullable<decimal> TareWeight { get; set; }
         public Nullable<decimal> UnitWeight { get; set; }
+        public Nullable<decimal> Weight { get; set; }
     }
 }

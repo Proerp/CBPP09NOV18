@@ -276,6 +276,11 @@ namespace TotalModel.Models
     }
 
 
+    public partial class PackageIssuePendingBlendingInstructionDetail
+    {
+        public virtual decimal? QuantityRemainPackages { get { return this.QuantityRemains != null && this.Weight != null && this.Weight != 0 ? Math.Ceiling((decimal)(this.QuantityRemains / this.Weight)) : this.QuantityRemains; } }
+    }
+
     public partial class InventoryControl
     {
         public string Features { get { return "[" + this.CommodityCode + "] " + this.CommodityName; } }
