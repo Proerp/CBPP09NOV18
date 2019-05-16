@@ -95,7 +95,7 @@ namespace TotalDTO.Commons
         [Range(0, 10000, ErrorMessage = "Vui lòng nhập hs trọng lượng")]
         Nullable<decimal> Weight { get; set; }
 
-        [Display(Name = "Trọng lượng (net)")]
+        [Display(Name = "Trọng lượng bao bì")]
         [UIHint("Quantity")]
         [Range(0, 10000, ErrorMessage = "Vui lòng nhập trọng lượng bao bì")]
         Nullable<decimal> TareWeight { get; set; }

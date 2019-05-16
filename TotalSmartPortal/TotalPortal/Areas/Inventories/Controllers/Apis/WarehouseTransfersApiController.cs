@@ -94,12 +94,13 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         public IEnumerable<TransferOrderPendingSummary> GetTransferOrderPendingSummaries(int? locationID, int? nmvnTaskID, int? warehouseTransferID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string barcode, string goodsReceiptDetailIDs)
         {
             IEnumerable<WarehouseTransferPendingTransferOrderDetail> transferOrderDetails = this.warehouseTransferAPIRepository.GetTransferOrderDetails(true, locationID, nmvnTaskID, warehouseTransferID, transferOrderID, warehouseID, warehouseReceiptID, barcode, goodsReceiptDetailIDs);
-            return transferOrderDetails.GroupBy(g => g.CommodityCode).Select(s => new TransferOrderPendingSummary() { CommodityCode = s.Key, TransferOrderRemains = s.Max(f => f.TransferOrderRemains), TransferOrderRemainPackages = s.Max(f => f.TransferOrderRemainPackages), QuantityAvailables = s.Sum(f => f.QuantityAvailables) });
+            return transferOrderDetails.GroupBy(g => g.CommodityCode).Select(s => new TransferOrderPendingSummary() { CommodityCode = s.Key, Weight = s.Min(f => f.Weight), TransferOrderRemains = s.Max(f => f.TransferOrderRemains), TransferOrderRemainPackages = s.Max(f => f.TransferOrderRemainPackages), QuantityAvailables = s.Sum(f => f.QuantityAvailables) });
         }
 
         public class TransferOrderPendingSummary
         {
             public string CommodityCode { get; set; }
+            public Nullable<decimal> Weight { get; set; }
             public Nullable<decimal> TransferOrderRemains { get; set; }
             public Nullable<decimal> TransferOrderRemainPackages { get; set; }
             public Nullable<decimal> QuantityAvailables { get; set; }
