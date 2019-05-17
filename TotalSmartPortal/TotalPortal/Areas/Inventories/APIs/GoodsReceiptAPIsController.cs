@@ -70,21 +70,21 @@ namespace TotalPortal.Areas.Inventories.APIs
 
 
 
-        public JsonResult GetPurchasings([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetPurchasings([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
         {
-            var result = this.goodsReceiptAPIRepository.GetPurchasings(locationID);
+            var result = this.goodsReceiptAPIRepository.GetPurchasings(locationID, nmvnTaskID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetGoodsArrivals([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetGoodsArrivals([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID)
         {
-            var result = this.goodsReceiptAPIRepository.GetGoodsArrivals(locationID);
+            var result = this.goodsReceiptAPIRepository.GetGoodsArrivals(locationID, nmvnTaskID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult GetPendingGoodsArrivalPackages([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
+        public JsonResult GetPendingGoodsArrivalPackages([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? nmvnTaskID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
         {
-            var result = this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(false, locationID, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
+            var result = this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(false, locationID, nmvnTaskID, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 

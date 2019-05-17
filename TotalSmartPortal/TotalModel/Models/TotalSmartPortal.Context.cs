@@ -4146,13 +4146,17 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("MoldDeletable", entityIDParameter);
         }
     
-        public virtual ObjectResult<GoodsReceiptPendingGoodsArrival> GetGoodsReceiptPendingGoodsArrivals(Nullable<int> locationID)
+        public virtual ObjectResult<GoodsReceiptPendingGoodsArrival> GetGoodsReceiptPendingGoodsArrivals(Nullable<int> locationID, Nullable<int> nMVNTaskID)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrival>("GetGoodsReceiptPendingGoodsArrivals", locationIDParameter);
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrival>("GetGoodsReceiptPendingGoodsArrivals", locationIDParameter, nMVNTaskIDParameter);
         }
     
         public virtual ObjectResult<BinLocationBase> GetBinLocationBases(Nullable<int> warehouseID, string searchText)
@@ -4582,7 +4586,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("GoodsArrivalToggleApproved", entityIDParameter, approvedParameter);
         }
     
-        public virtual ObjectResult<GoodsReceiptPendingGoodsArrivalPackage> GetGoodsReceiptPendingGoodsArrivalPackages(Nullable<bool> webAPI, Nullable<int> locationID, Nullable<int> goodsReceiptID, Nullable<int> goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
+        public virtual ObjectResult<GoodsReceiptPendingGoodsArrivalPackage> GetGoodsReceiptPendingGoodsArrivalPackages(Nullable<bool> webAPI, Nullable<int> locationID, Nullable<int> nMVNTaskID, Nullable<int> goodsReceiptID, Nullable<int> goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
         {
             var webAPIParameter = webAPI.HasValue ?
                 new ObjectParameter("WebAPI", webAPI) :
@@ -4591,6 +4595,10 @@ namespace TotalModel.Models
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
+    
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
     
             var goodsReceiptIDParameter = goodsReceiptID.HasValue ?
                 new ObjectParameter("GoodsReceiptID", goodsReceiptID) :
@@ -4608,7 +4616,7 @@ namespace TotalModel.Models
                 new ObjectParameter("GoodsArrivalPackageIDs", goodsArrivalPackageIDs) :
                 new ObjectParameter("GoodsArrivalPackageIDs", typeof(string));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrivalPackage>("GetGoodsReceiptPendingGoodsArrivalPackages", webAPIParameter, locationIDParameter, goodsReceiptIDParameter, goodsArrivalIDParameter, barcodeParameter, goodsArrivalPackageIDsParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingGoodsArrivalPackage>("GetGoodsReceiptPendingGoodsArrivalPackages", webAPIParameter, locationIDParameter, nMVNTaskIDParameter, goodsReceiptIDParameter, goodsArrivalIDParameter, barcodeParameter, goodsArrivalPackageIDsParameter);
         }
     
         public virtual ObjectResult<string> BlendingInstructionApproved(Nullable<int> entityID)
@@ -5463,13 +5471,17 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPlannedItem>("GetGoodsReceiptPendingPlannedItems", locationIDParameter);
         }
     
-        public virtual ObjectResult<GoodsReceiptPendingPurchasing> GetGoodsReceiptPendingPurchasings(Nullable<int> locationID)
+        public virtual ObjectResult<GoodsReceiptPendingPurchasing> GetGoodsReceiptPendingPurchasings(Nullable<int> locationID, Nullable<int> nMVNTaskID)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
                 new ObjectParameter("LocationID", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPurchasing>("GetGoodsReceiptPendingPurchasings", locationIDParameter);
+            var nMVNTaskIDParameter = nMVNTaskID.HasValue ?
+                new ObjectParameter("NMVNTaskID", nMVNTaskID) :
+                new ObjectParameter("NMVNTaskID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingPurchasing>("GetGoodsReceiptPendingPurchasings", locationIDParameter, nMVNTaskIDParameter);
         }
     
         public virtual ObjectResult<TransferOrderPendingWorkOrder> GetTransferOrderPendingWorkOrders(Nullable<int> locationID, Nullable<int> transferOrderID, Nullable<int> warehouseID, Nullable<int> warehouseReceiptID, string commodityIDs)

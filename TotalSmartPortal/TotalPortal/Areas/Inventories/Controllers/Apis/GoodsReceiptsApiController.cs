@@ -64,21 +64,21 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         [Route("GetPurchasings/{locationID}")]
         public IEnumerable<GoodsReceiptPendingPurchasing> GetPurchasings(int? locationID)
         {
-            return this.goodsReceiptAPIRepository.GetPurchasings(locationID);
+            return this.goodsReceiptAPIRepository.GetPurchasings(locationID, (int)GlobalEnums.NmvnTaskID.MaterialReceipt);
         }
 
         [HttpGet]
         [Route("GetGoodsArrivals/{locationID}")]
         public IEnumerable<GoodsReceiptPendingGoodsArrival> GetGoodsArrivals(int? locationID)
         {
-            return this.goodsReceiptAPIRepository.GetGoodsArrivals(locationID);
+            return this.goodsReceiptAPIRepository.GetGoodsArrivals(locationID, (int)GlobalEnums.NmvnTaskID.MaterialReceipt);
         }
 
         [HttpGet]
         [Route("GetPendingGoodsArrivalPackages/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{barcode}/{goodsArrivalPackageIDs}")]
         public IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
         {
-            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
+            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, (int)GlobalEnums.NmvnTaskID.MaterialReceipt, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
         }
 
         #region HELPER API
@@ -86,14 +86,14 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         [Route("GetPendingPackages/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{barcode}/{goodsArrivalPackageIDs}")]
         public IEnumerable<GoodsReceiptPendingPackage> GetPendingPackages(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
         {
-            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs).Select(p => new GoodsReceiptPendingPackage() { GoodsArrivalPackageID = p.GoodsArrivalPackageID, PurchaseOrderCodes = p.PurchaseOrderCodes, CommodityCode = p.CommodityCode, BatchCode = p.BatchCode, Barcode = p.Barcode, QuantityRemains = p.QuantityRemains });
+            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, (int)GlobalEnums.NmvnTaskID.MaterialReceipt, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs).Select(p => new GoodsReceiptPendingPackage() { GoodsArrivalPackageID = p.GoodsArrivalPackageID, PurchaseOrderCodes = p.PurchaseOrderCodes, CommodityCode = p.CommodityCode, BatchCode = p.BatchCode, Barcode = p.Barcode, QuantityRemains = p.QuantityRemains });
         }
 
         [HttpGet]
         [Route("GetPendingSummary/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{barcode}/{goodsArrivalPackageIDs}")]
         public GoodsReceiptPendingSummary GetPendingSummary(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
         {
-            IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> goodsReceiptPendingGoodsArrivalPackages = this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
+            IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> goodsReceiptPendingGoodsArrivalPackages = this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, (int)GlobalEnums.NmvnTaskID.MaterialReceipt, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
             return new GoodsReceiptPendingSummary() { PackageCount = goodsReceiptPendingGoodsArrivalPackages.Count(), TotalQuantityRemains = goodsReceiptPendingGoodsArrivalPackages.Sum(a => a.QuantityRemains) };
         }
 

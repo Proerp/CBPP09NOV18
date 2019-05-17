@@ -77,28 +77,28 @@ namespace TotalDAL.Repositories.Inventories
 
 
 
-        public IEnumerable<GoodsReceiptPendingPurchasing> GetPurchasings(int? locationID)
+        public IEnumerable<GoodsReceiptPendingPurchasing> GetPurchasings(int? locationID, int? nmvnTaskID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<GoodsReceiptPendingPurchasing> pendingPurchasings = base.TotalSmartPortalEntities.GetGoodsReceiptPendingPurchasings(locationID).ToList();
+            IEnumerable<GoodsReceiptPendingPurchasing> pendingPurchasings = base.TotalSmartPortalEntities.GetGoodsReceiptPendingPurchasings(locationID, nmvnTaskID).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingPurchasings;
         }
 
-        public IEnumerable<GoodsReceiptPendingGoodsArrival> GetGoodsArrivals(int? locationID)
+        public IEnumerable<GoodsReceiptPendingGoodsArrival> GetGoodsArrivals(int? locationID, int? nmvnTaskID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<GoodsReceiptPendingGoodsArrival> pendingGoodsArrivals = base.TotalSmartPortalEntities.GetGoodsReceiptPendingGoodsArrivals(locationID).ToList();
+            IEnumerable<GoodsReceiptPendingGoodsArrival> pendingGoodsArrivals = base.TotalSmartPortalEntities.GetGoodsReceiptPendingGoodsArrivals(locationID, nmvnTaskID).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingGoodsArrivals;
         }
 
-        public IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(bool webAPI, int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
+        public IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(bool webAPI, int? locationID, int? nmvnTaskID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> pendingGoodsArrivalPackages = base.TotalSmartPortalEntities.GetGoodsReceiptPendingGoodsArrivalPackages(webAPI, locationID, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs).ToList();
+            IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> pendingGoodsArrivalPackages = base.TotalSmartPortalEntities.GetGoodsReceiptPendingGoodsArrivalPackages(webAPI, locationID, nmvnTaskID, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingGoodsArrivalPackages;

@@ -151,7 +151,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void GetGoodsReceiptPendingPurchasings()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @LocationID int, @NMVNTaskID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -160,7 +160,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "       INSERT INTO     @PendingPurchasings (PurchaseOrderCode, CustomerName, WarehouseID, WarehouseCode, WarehouseName, PackageCount, TotalQuantityRemains) " + "\r\n";
             queryString = queryString + "       SELECT          ISNULL(GoodsArrivals.PurchaseOrderCodes, GoodsArrivals.Code) AS PurchaseOrderCode, Customers.Name AS CustomerName, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, GoodsArrivalPackageSummaries.PackageCount, GoodsArrivalPackageSummaries.TotalQuantityRemains " + "\r\n";
-            queryString = queryString + "       FROM            (SELECT GoodsArrivalID, COUNT(GoodsArrivalPackageID) AS PackageCount, SUM(ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ")) AS TotalQuantityRemains FROM GoodsArrivalPackages WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY GoodsArrivalID) GoodsArrivalPackageSummaries " + "\r\n";
+            queryString = queryString + "       FROM            (SELECT GoodsArrivalID, COUNT(GoodsArrivalPackageID) AS PackageCount, SUM(ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ")) AS TotalQuantityRemains FROM GoodsArrivalPackages WHERE LocationID = @LocationID AND NMVNTaskID = @NMVNTaskID + 70129005 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY GoodsArrivalID) GoodsArrivalPackageSummaries " + "\r\n";
             queryString = queryString + "                       INNER JOIN GoodsArrivals ON GoodsArrivalPackageSummaries.GoodsArrivalID = GoodsArrivals.GoodsArrivalID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers ON GoodsArrivals.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Warehouses ON GoodsArrivals.WarehouseID = Warehouses.WarehouseID " + "\r\n";
@@ -180,7 +180,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void GetGoodsReceiptPendingGoodsArrivals()
         {
-            string queryString = " @LocationID int " + "\r\n";
+            string queryString = " @LocationID int, @NMVNTaskID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -188,7 +188,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                       GoodsArrivals.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, Customers.OfficialName AS CustomerOfficialName, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, GoodsArrivals.CustomsDeclaration AS GoodsArrivalCustomsDeclaration, GoodsArrivals.CustomsDeclarationDate AS GoodsArrivalCustomsDeclarationDate, GoodsArrivals.PurchaseOrderCodes AS GoodsArrivalPurchaseOrderCodes, PurchaseOrders.VoucherDate AS GoodsArrivalPurchaseOrderVoucherDate " + "\r\n";
 
             queryString = queryString + "       FROM            GoodsArrivals " + "\r\n";
-            queryString = queryString + "                       INNER JOIN Customers ON GoodsArrivals.GoodsArrivalID IN (SELECT GoodsArrivalID FROM GoodsArrivalPackages WHERE LocationID = @LocationID AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0) AND GoodsArrivals.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Customers ON GoodsArrivals.GoodsArrivalID IN (SELECT GoodsArrivalID FROM GoodsArrivalPackages WHERE LocationID = @LocationID AND NMVNTaskID = @NMVNTaskID + 70129005 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0) AND GoodsArrivals.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN EntireTerritories CustomerEntireTerritories ON Customers.TerritoryID = CustomerEntireTerritories.TerritoryID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Warehouses ON GoodsArrivals.WarehouseID = Warehouses.WarehouseID " + "\r\n";
             queryString = queryString + "                       LEFT JOIN PurchaseOrders ON GoodsArrivals.PurchaseOrderID = PurchaseOrders.PurchaseOrderID " + "\r\n";
@@ -202,7 +202,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            queryString = " @WebAPI bit, @LocationID Int, @GoodsReceiptID Int, @GoodsArrivalID Int, @Barcode nvarchar(60), @GoodsArrivalPackageIDs varchar(3999) " + "\r\n";
+            queryString = " @WebAPI bit, @LocationID Int, @NMVNTaskID int, @GoodsReceiptID Int, @GoodsArrivalID Int, @Barcode nvarchar(60), @GoodsArrivalPackageIDs varchar(3999) " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -279,7 +279,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   0.0 AS Quantity, GoodsArrivals.Description, GoodsArrivalPackages.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        GoodsArrivals " + "\r\n";
-            queryString = queryString + "                   INNER JOIN GoodsArrivalPackages ON " + (isGoodsArrivalID ? "GoodsArrivals.GoodsArrivalID = @GoodsArrivalID AND " : "") + " GoodsArrivalPackages.Approved = 1 AND GoodsArrivalPackages.InActive = 0 AND GoodsArrivalPackages.InActivePartial = 0 AND ROUND(GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID" + (isBarcode ? " AND GoodsArrivalPackages.Barcode = @Barcode" : "") + (isGoodsArrivalPackageIDs ? " AND GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsArrivalPackageIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN GoodsArrivalPackages ON " + (isGoodsArrivalID ? "GoodsArrivals.GoodsArrivalID = @GoodsArrivalID AND " : "") + " GoodsArrivals.NMVNTaskID = @NMVNTaskID + 70129005 AND GoodsArrivalPackages.Approved = 1 AND GoodsArrivalPackages.InActive = 0 AND GoodsArrivalPackages.InActivePartial = 0 AND ROUND(GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID" + (isBarcode ? " AND GoodsArrivalPackages.Barcode = @Barcode" : "") + (isGoodsArrivalPackageIDs ? " AND GoodsArrivalPackages.GoodsArrivalPackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsArrivalPackageIDs))" : "") + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON GoodsArrivalPackages.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Customers ON GoodsArrivals.CustomerID = Customers.CustomerID " + "\r\n";
 

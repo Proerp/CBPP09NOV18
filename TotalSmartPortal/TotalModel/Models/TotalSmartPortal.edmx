@@ -8237,6 +8237,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="GetGoodsReceiptPendingGoodsArrivalPackages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="WebAPI" Type="bit" Mode="In" />
           <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="GoodsReceiptID" Type="int" Mode="In" />
           <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
           <Parameter Name="Barcode" Type="nvarchar" Mode="In" />
@@ -8244,6 +8245,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="GetGoodsReceiptPendingGoodsArrivals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetGoodsReceiptPendingMaterialIssueDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -8291,6 +8293,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="GetGoodsReceiptPendingPurchasings" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetGoodsReceiptPendingWarehouses" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
@@ -15568,6 +15571,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </AssociationSet>
           <FunctionImport Name="GetGoodsReceiptPendingGoodsArrivals" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingGoodsArrival)">
           <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="GoodsArrivalDetails" EntityType="TotalSmartPortalModel.GoodsArrivalDetail" />
           <AssociationSet Name="FK_GoodsArrivalDetails_GoodsArrivals" Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_GoodsArrivals">
@@ -15775,6 +15779,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImport Name="GetGoodsReceiptPendingGoodsArrivalPackages" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingGoodsArrivalPackage)">
             <Parameter Name="WebAPI" Mode="In" Type="Boolean" />
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsReceiptID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsArrivalID" Mode="In" Type="Int32" />
             <Parameter Name="Barcode" Mode="In" Type="String" />
@@ -16734,6 +16739,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </AssociationSet>
           <FunctionImport Name="GetGoodsReceiptPendingPurchasings" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingPurchasing)">
           <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTransferOrderPendingWorkOrders" ReturnType="Collection(TotalSmartPortalModel.TransferOrderPendingWorkOrder)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
