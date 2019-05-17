@@ -15570,7 +15570,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="GoodsArrival" EntitySet="GoodsArrivals" />
           </AssociationSet>
           <FunctionImport Name="GetGoodsReceiptPendingGoodsArrivals" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingGoodsArrival)">
-          <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
           </FunctionImport>
           <EntitySet Name="GoodsArrivalDetails" EntityType="TotalSmartPortalModel.GoodsArrivalDetail" />
@@ -16738,7 +16738,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="FinishedItemDetail" EntitySet="FinishedItemDetails" />
           </AssociationSet>
           <FunctionImport Name="GetGoodsReceiptPendingPurchasings" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingPurchasing)">
-          <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="NMVNTaskID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetTransferOrderPendingWorkOrders" ReturnType="Collection(TotalSmartPortalModel.TransferOrderPendingWorkOrder)">
