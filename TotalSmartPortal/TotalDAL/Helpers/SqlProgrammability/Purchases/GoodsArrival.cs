@@ -129,7 +129,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                       INNER JOIN Customers ON PurchaseOrders.PurchaseOrderID IN (SELECT PurchaseOrderID FROM PurchaseOrderDetails WHERE LocationID = @LocationID AND NMVNTaskID = @NMVNTaskID - 5 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0  AND ROUND(Quantity - QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") > 0) AND PurchaseOrders.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers Transporters ON PurchaseOrders.TransporterID = Transporters.CustomerID " + "\r\n";
 
-            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = " + (GlobalEnums.CBPP ? 1 : 2) + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = IIF(@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.MaterialArrival + ", 1, 2) " + "\r\n";
 
             queryString = queryString + "       ORDER BY        PurchaseOrders.PurchaseOrderID " + "\r\n";
 
@@ -149,7 +149,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                       INNER JOIN Customers ON CustomerTransporterPENDING.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers Transporters ON CustomerTransporterPENDING.TransporterID = Transporters.CustomerID " + "\r\n";
 
-            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = 1 " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = IIF(@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.MaterialArrival + ", 1, 2) " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsArrivalPendingCustomers", queryString);
         }
