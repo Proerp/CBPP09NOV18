@@ -86,7 +86,7 @@
         })
         .DataSource(dataSource => dataSource
             .Ajax()
-            .Group(group => group.AddDescending(p => p.EntryMonth))
+            .Group(group => group.AddDescending(p => p.EntryDate))
             .Read(read => read.Action("GetGoodsArrivalIndexes", "GoodsArrivalAPIs", new { area = "Purchases" }).Data("onGetGoodsArrivalIndexes"))
             .Sort(sort =>
                 {

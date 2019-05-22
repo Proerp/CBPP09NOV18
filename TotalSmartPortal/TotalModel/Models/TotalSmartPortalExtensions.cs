@@ -81,6 +81,8 @@ namespace TotalModel.Models
     {
         public string EntryMonth { get { return ((DateTime)this.EntryDate).ToString("yyyy/MM"); } }
         public string ApprovedStatus { get { return this.Approved ? "đã duyệt" : "chưa duyệt"; } }
+
+        public string Features { get { return this.Reference + " PO: " + this.PurchaseOrderCodes + ", NCC: " + this.CustomerName; } }
     }
 
     public partial class GoodsArrival : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<GoodsArrivalDetail>
