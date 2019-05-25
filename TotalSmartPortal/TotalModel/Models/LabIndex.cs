@@ -26,5 +26,7 @@ namespace TotalModel.Models
         public string GoodsArrivalReference { get; set; }
         public Nullable<int> GoodsArrivalID { get; set; }
         public bool Approved { get; set; }
+        public string ArrivalControllers { get; set; }
+        public decimal TotalPackages { get; set; }
     }
 }

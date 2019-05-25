@@ -142,6 +142,7 @@ namespace TotalDTO.Purchases
         List<GoodsArrivalDetailDTO> ViewDetails { get; set; }
 
         string ControllerName { get; }
+        string PurchaseController { get; }
 
         bool IsItem { get; }
         bool IsProduct { get; }
@@ -188,6 +189,7 @@ namespace TotalDTO.Purchases
 
 
         public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
+        public string PurchaseController { get { return this.IsMaterial ? "PurchaseMaterials" : (this.IsItem ? "PurchaseItems" : (this.IsProduct ? "PurchaseProducts" : "")); } }
 
         public bool IsMaterial { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.MaterialArrival; } }
         public bool IsItem { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.ItemArrival; } }

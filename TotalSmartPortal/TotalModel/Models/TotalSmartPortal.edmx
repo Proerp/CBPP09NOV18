@@ -1457,6 +1457,8 @@
           <Property Name="VoidTypeID" Type="int" />
           <Property Name="InActive" Type="bit" Nullable="false" />
           <Property Name="InActiveDate" Type="datetime" />
+          <Property Name="Hold" Type="bit" Nullable="false" />
+          <Property Name="HoldDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Locations">
           <Key>
@@ -8894,6 +8896,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="LabToggleApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
           <Parameter Name="Approved" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="LabToggleHold" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="Hold" Type="bit" Mode="In" />
+        </Function>
+        <Function Name="LabToggleVoid" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="InActive" Type="bit" Mode="In" />
+          <Parameter Name="VoidTypeID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="LabVoidable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
         <Function Name="MaterialIssueApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
@@ -16760,6 +16774,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImport Name="GetBlendingInstructionRunnings" ReturnType="Collection(TotalSmartPortalModel.BlendingInstructionRunning)">
           <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="LabToggleHold">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="Hold" Mode="In" Type="Boolean" />
+          </FunctionImport>
+          <FunctionImport Name="LabToggleVoid">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="InActive" Mode="In" Type="Boolean" />
+            <Parameter Name="VoidTypeID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="LabVoidable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -23804,6 +23830,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="GoodsArrivalReference" Nullable="true" MaxLength="10" />
           <Property Type="Int32" Name="GoodsArrivalID" Nullable="true" />
           <Property Type="Boolean" Name="Approved" Nullable="false" />
+          <Property Type="String" Name="ArrivalControllers" Nullable="false" MaxLength="16" />
+          <Property Type="Decimal" Name="TotalPackages" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <EntityType Name="Lab">
           <Key>
@@ -23840,6 +23868,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_Labs_Locations" FromRole="Lab" ToRole="Location" />
           <NavigationProperty Name="OrganizationalUnit" Relationship="TotalSmartPortalModel.FK_Labs_OrganizationalUnits" FromRole="Lab" ToRole="OrganizationalUnit" />
           <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Labs" FromRole="Lab" ToRole="MaterialIssueDetail" />
+          <Property Name="Hold" Type="Boolean" Nullable="false" />
+          <Property Name="HoldDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_GoodsArrivalDetails_Labs">
           <End Type="TotalSmartPortalModel.Lab" Role="Lab" Multiplicity="0..1" />
@@ -31901,12 +31931,16 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="GoodsArrivalReference" ColumnName="GoodsArrivalReference" />
                 <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="ArrivalControllers" ColumnName="ArrivalControllers" />
+                <ScalarProperty Name="TotalPackages" ColumnName="TotalPackages" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <EntitySetMapping Name="Labs">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.Lab">
               <MappingFragment StoreEntitySet="Labs">
+                <ScalarProperty Name="HoldDate" ColumnName="HoldDate" />
+                <ScalarProperty Name="Hold" ColumnName="Hold" />
                 <ScalarProperty Name="InActiveDate" ColumnName="InActiveDate" />
                 <ScalarProperty Name="InActive" ColumnName="InActive" />
                 <ScalarProperty Name="VoidTypeID" ColumnName="VoidTypeID" />
@@ -32775,6 +32809,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="LabToggleHold" FunctionName="TotalSmartPortalModel.Store.LabToggleHold" />
+          <FunctionImportMapping FunctionImportName="LabToggleVoid" FunctionName="TotalSmartPortalModel.Store.LabToggleVoid" />
+          <FunctionImportMapping FunctionImportName="LabVoidable" FunctionName="TotalSmartPortalModel.Store.LabVoidable" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

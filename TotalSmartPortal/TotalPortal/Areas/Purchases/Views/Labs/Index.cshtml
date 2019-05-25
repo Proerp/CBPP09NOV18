@@ -13,7 +13,7 @@
                 columns.Bound(p => p.EntryMonth).Title("Tháng").Hidden();
                 columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(50).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
 
-                columns.Bound(p => p.GoodsArrivalReference).Title("PNH").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/GoodsArrivals", action = "Edit" }) + "/#= GoodsArrivalID #'>#=GoodsArrivalReference#</a>");
+                columns.Bound(p => p.GoodsArrivalReference).Title("PNH").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/" + "#=ArrivalControllers#", action = "Edit" }) + "/#= GoodsArrivalID #'>#=GoodsArrivalReference#</a>");
 
                 columns.Bound(p => p.Code).Title("Lab code").Width(20);
                 columns.Bound(p => p.CommodityCodes).Title("Mã hàng").Width(190);
@@ -49,7 +49,7 @@
                     })
                     .DataSource(dataSource => dataSource
                         .Ajax()
-                        .Group(group => group.AddDescending(p => p.EntryMonth))
+                        .Group(group => group.AddDescending(p => p.EntryDate))
                         .Read(read => read.Action("GetLabIndexes", "LabAPIs", new { area = "Purchases" }))
                         .Sort(sort =>
                             {

@@ -47,6 +47,8 @@ namespace TotalModel.Models
         public Nullable<int> VoidTypeID { get; set; }
         public bool InActive { get; set; }
         public Nullable<System.DateTime> InActiveDate { get; set; }
+        public bool Hold { get; set; }
+        public Nullable<System.DateTime> HoldDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrivalDetail> GoodsArrivalDetails { get; set; }

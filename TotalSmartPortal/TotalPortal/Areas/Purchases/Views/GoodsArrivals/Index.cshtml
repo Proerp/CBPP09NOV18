@@ -12,13 +12,13 @@
         {
             columns.Bound(p => p.GoodsArrivalID).DisplayNameTitle().Hidden();
             columns.Bound(p => p.EntryMonth).Title("Tháng").Hidden();
-            columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(30).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+            columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(30).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Hidden();
 
             columns.Bound(p => p.Reference).Title("PNH").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/" + Model.ControllerName, action = "Edit" }) + "/#= GoodsArrivalID #'>#=Reference#</a>");
 
             columns.Bound(p => p.CustomerCode).Title("NCC").Width(!GlobalEnums.CBPP ? 107 : 60);
 
-            columns.Bound(p => p.PurchaseOrderReferences).Title("PĐH").Width(20).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/PurchaseOrders", action = "Edit" }) + "/#= PurchaseOrderID #' target='_blank'>#=PurchaseOrderReferences#</a>");
+            columns.Bound(p => p.PurchaseOrderReferences).Title("PĐH").Width(20).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/" + Model.PurchaseController, action = "Edit" }) + "/#= PurchaseOrderID #' target='_blank'>#=PurchaseOrderReferences#</a>");
             columns.Bound(p => p.PurchaseOrderCodes).Title("Số PO").Width(80);
 
             columns.Bound(p => p.Code).Title("Hóa đơn").Width(30);
@@ -35,7 +35,7 @@
 
             columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
 
-            columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(68)
+            columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(60)
                 .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/" + Model.ControllerName, action = "Print" }) + "/#= GoodsArrivalID #'><span class='k-icon sbt-printer'></span></a>  <a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Purchases/" + Model.ControllerName, action = "Delete" }) + "/#= GoodsArrivalID #'><span class='k-icon sbt-delete'></span></a>");
         })
         .ToolBar(toolbar =>

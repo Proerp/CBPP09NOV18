@@ -5544,5 +5544,44 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BlendingInstructionRunning>("GetBlendingInstructionRunnings", locationIDParameter);
         }
+    
+        public virtual int LabToggleHold(Nullable<int> entityID, Nullable<bool> hold)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var holdParameter = hold.HasValue ?
+                new ObjectParameter("Hold", hold) :
+                new ObjectParameter("Hold", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LabToggleHold", entityIDParameter, holdParameter);
+        }
+    
+        public virtual int LabToggleVoid(Nullable<int> entityID, Nullable<bool> inActive, Nullable<int> voidTypeID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var inActiveParameter = inActive.HasValue ?
+                new ObjectParameter("InActive", inActive) :
+                new ObjectParameter("InActive", typeof(bool));
+    
+            var voidTypeIDParameter = voidTypeID.HasValue ?
+                new ObjectParameter("VoidTypeID", voidTypeID) :
+                new ObjectParameter("VoidTypeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("LabToggleVoid", entityIDParameter, inActiveParameter, voidTypeIDParameter);
+        }
+    
+        public virtual ObjectResult<string> LabVoidable(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("LabVoidable", entityIDParameter);
+        }
     }
 }
