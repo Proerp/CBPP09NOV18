@@ -35,8 +35,16 @@ namespace TotalDTO.Purchases
         [Display(Name = "Tên hàng")]
         public string CommodityNames { get; set; }
 
+        [Display(Name = "Số lượng kiện")]
+        public decimal TotalPackages { get; set; }
+
         [Display(Name = "Khối lượng")]
         public decimal TotalQuantity { get; set; }
+
+
+        public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }
+        [UIHint("AutoCompletes/VoidType")]
+        public VoidTypeBaseDTO VoidType { get; set; }
     }
 
     public class LabDTO : LabPrimitiveDTO

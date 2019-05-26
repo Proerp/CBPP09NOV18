@@ -6,7 +6,7 @@ namespace TotalDAL.Repositories.Purchases
     public class LabRepository : GenericRepository<Lab>, ILabRepository
     {
         public LabRepository(TotalSmartPortalEntities totalSmartPortalEntities)
-            : base(totalSmartPortalEntities, "LabEditable", "LabApproved", "LabDeletable")
+            : base(totalSmartPortalEntities, "LabEditable", "LabApproved", "LabDeletable", "LabVoidable")
         {
         }
     }

@@ -10,7 +10,7 @@ namespace TotalService.Purchases
     public class LabService : GenericService<Lab, LabDTO, LabPrimitiveDTO>, ILabService
     {
         public LabService(ILabRepository labRepository)
-            : base(labRepository, null, null, "LabToggleApproved")
+            : base(labRepository, null, null, "LabToggleApproved", "LabToggleVoid")
         {
         }
     }

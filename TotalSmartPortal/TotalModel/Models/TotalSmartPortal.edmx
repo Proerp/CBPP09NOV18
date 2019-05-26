@@ -5167,6 +5167,18 @@ warning 6035: The relationship 'FK_Labs_AspNetUsers2' has columns that are not p
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Labs_VoidTypes">
+          <End Role="VoidTypes" Type="Self.VoidTypes" Multiplicity="0..1" />
+          <End Role="Labs" Type="Self.Labs" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoidTypes">
+              <PropertyRef Name="VoidTypeID" />
+            </Principal>
+            <Dependent Role="Labs">
+              <PropertyRef Name="VoidTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_MaterialIssueDetails_BomDetails">
           <End Role="BomDetails" Type="Self.BomDetails" Multiplicity="1" />
           <End Role="MaterialIssueDetails" Type="Self.MaterialIssueDetails" Multiplicity="*" />
@@ -10217,6 +10229,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="OrganizationalUnits" EntitySet="OrganizationalUnits" />
             <End Role="Labs" EntitySet="Labs" />
           </AssociationSet>
+          <AssociationSet Name="FK_Labs_VoidTypes" Association="Self.FK_Labs_VoidTypes">
+            <End Role="VoidTypes" EntitySet="VoidTypes" />
+            <End Role="Labs" EntitySet="Labs" />
+          </AssociationSet>
           <AssociationSet Name="FK_MaterialIssueDetails_BomDetails" Association="Self.FK_MaterialIssueDetails_BomDetails">
             <End Role="BomDetails" EntitySet="BomDetails" />
             <End Role="MaterialIssueDetails" EntitySet="MaterialIssueDetails" />
@@ -12352,6 +12368,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="PurchaseOrders" Relationship="TotalSmartPortalModel.FK_PurchaseOrders_VoidTypes" FromRole="VoidType" ToRole="PurchaseOrder" />
           <NavigationProperty Name="GoodsArrivalPackages" Relationship="TotalSmartPortalModel.FK_GoodsArrivalPackages_VoidTypes" FromRole="VoidType" ToRole="GoodsArrivalPackage" />
           <NavigationProperty Name="BlendingInstructions" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_VoidTypes" FromRole="VoidType" ToRole="BlendingInstruction" />
+          <NavigationProperty Name="Labs" Relationship="TotalSmartPortalModel.FK_Labs_VoidTypes" FromRole="VoidType" ToRole="Lab" />
         </EntityType>
         <Association Name="FK_AccessControls_OrganizationalUnits">
           <End Role="OrganizationalUnits" Type="Self.OrganizationalUnit" Multiplicity="1" />
@@ -16784,8 +16801,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="VoidTypeID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="LabVoidable" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <AssociationSet Name="FK_Labs_VoidTypes" Association="TotalSmartPortalModel.FK_Labs_VoidTypes">
+            <End Role="VoidType" EntitySet="VoidTypes" />
+            <End Role="Lab" EntitySet="Labs" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -23870,6 +23891,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="MaterialIssueDetails" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_Labs" FromRole="Lab" ToRole="MaterialIssueDetail" />
           <Property Name="Hold" Type="Boolean" Nullable="false" />
           <Property Name="HoldDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="VoidType" Relationship="TotalSmartPortalModel.FK_Labs_VoidTypes" FromRole="Lab" ToRole="VoidType" />
         </EntityType>
         <Association Name="FK_GoodsArrivalDetails_Labs">
           <End Type="TotalSmartPortalModel.Lab" Role="Lab" Multiplicity="0..1" />
@@ -25830,6 +25852,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="Jobs" Nullable="true" MaxLength="100" />
         </ComplexType>
+        <Association Name="FK_Labs_VoidTypes">
+          <End Type="TotalSmartPortalModel.VoidType" Role="VoidType" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.Lab" Role="Lab" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VoidType">
+              <PropertyRef Name="VoidTypeID" />
+            </Principal>
+            <Dependent Role="Lab">
+              <PropertyRef Name="VoidTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
