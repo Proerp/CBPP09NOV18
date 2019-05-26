@@ -576,6 +576,25 @@ namespace TotalDAL.Helpers.SqlProgrammability.Reports
             //////queryString = queryString + "                               Customers Suppliers ON PurchaseInvoices.SupplierID = Suppliers.CustomerID " + "\r\n";
 
 
+            //B.1.PENDING.ON FinishedProducts
+            queryString = queryString + "                   UNION ALL " + "\r\n";
+
+            queryString = queryString + "                   SELECT      " + (int)GlobalEnums.WarehouseAdjustmentTypeID.ReceiptPENDING + " AS JournalTypeID, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, FirmOrders.Specs, FirmOrders.Specification, FirmOrders.Code AS FirmOrderCode, 'FinishedProducts' AS ControllerName, FinishedProductPackages.FinishedProductID AS EntityID, N'TỒN SX [DỞ DANG]' AS GroupName, 'X.' + CONVERT(VARCHAR, @LocalToDate, 103) AS SubGroupName, FinishedProductPackages.EntryDate, FinishedProductPackages.CommodityID, NULL AS Reference, NULL AS ReceiptCode, 0 AS WarehouseID, Customers.Name + ', KHSX: ' + FirmOrders.Reference + ' SCT [' + ISNULL(FirmOrders.Code, '') + ' Ngày: ' + CONVERT(VARCHAR, FirmOrders.EntryDate, 103) + ']' AS Description, FinishedProductPackages.Quantity - FinishedProductPackages.QuantityReceipted AS QuantityDebit, 0 AS QuantityCredit " + "\r\n";
+            queryString = queryString + "                   FROM        FinishedProductPackages INNER JOIN " + "\r\n";
+            queryString = queryString + "                               Customers ON FinishedProductPackages.LocationID = @LocationID AND FinishedProductPackages.EntryDate <= @LocalToDate AND FinishedProductPackages.Quantity > FinishedProductPackages.QuantityReceipted AND FinishedProductPackages.CustomerID = Customers.CustomerID INNER JOIN " + "\r\n";
+            queryString = queryString + "                               FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+
+            queryString = queryString + "                   UNION ALL " + "\r\n";
+
+            queryString = queryString + "                   SELECT      " + (int)GlobalEnums.WarehouseAdjustmentTypeID.ReceiptPENDING + " AS JournalTypeID, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, FirmOrders.Specs, FirmOrders.Specification, FirmOrders.Code AS FirmOrderCode, 'FinishedProducts' AS ControllerName, FinishedProducts.FinishedProductID AS EntityID, N'TỒN SX [DỞ DANG]' AS GroupName, 'X.' + CONVERT(VARCHAR, @LocalToDate, 103) AS SubGroupName, FinishedProducts.EntryDate, GoodsReceiptDetails.CommodityID, NULL AS Reference, NULL AS ReceiptCode, 0 AS WarehouseID, Customers.Name + ', KHSX: ' + FirmOrders.Reference + ' SCT [' + ISNULL(FirmOrders.Code, '') + ' Ngày: ' + CONVERT(VARCHAR, FirmOrders.EntryDate, 103) + ']' AS Description, GoodsReceiptDetails.Quantity AS QuantityDebit, 0 AS QuantityCredit " + "\r\n";
+            queryString = queryString + "                   FROM        FinishedProducts INNER JOIN " + "\r\n";
+            queryString = queryString + "                               GoodsReceiptDetails ON FinishedProducts.LocationID = @LocationID AND FinishedProducts.FinishedProductID = GoodsReceiptDetails.FinishedProductID AND FinishedProducts.EntryDate <= @LocalToDate AND GoodsReceiptDetails.EntryDate > @LocalToDate INNER JOIN " + "\r\n";
+            queryString = queryString + "                               Customers ON FinishedProducts.CustomerID = Customers.CustomerID INNER JOIN " + "\r\n";
+            queryString = queryString + "                               FirmOrders ON FinishedProducts.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+
+
+
+
             ////MaterialIssueDetails
             queryString = queryString + "                   UNION ALL " + "\r\n";
 
