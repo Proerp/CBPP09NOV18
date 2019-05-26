@@ -1,0 +1,14 @@
+﻿@Html.Partial("Edit")
+
+<div class="single-full-panel">
+    @if (Model.Holdable || Model.Releasable)
+    {
+        <button type="submit" form="MainForm" class="k-button custom-button"> <img src="~/Content/Images/Mains/@(@Model.Hold ? "cancel-yellow-28.png" : "cancel-green-28.png")" alt="" style="padding-top:2px;padding-bottom:2px;" /> Xác nhận @(Model.Hold ? "release" : "hold") lab này </button>
+    }
+    else
+    {
+        <div id="div-DeleteConfirm">
+            <img src="~/Content/Images/New/alert1.png" alt="Alert" /><label>Dữ liệu này đã bị khóa.</label>
+        </div>
+    }
+</div>

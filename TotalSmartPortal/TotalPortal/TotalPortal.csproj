@@ -1918,6 +1918,7 @@
     <Content Include="Areas\Purchases\Views\ItemArrivals\GetPendingPurchaseOrderDetails.cshtml" />
     <Content Include="Areas\Purchases\Views\MaterialArrivals\GetPendingPurchaseOrderDetails.cshtml" />
     <Content Include="Areas\Purchases\Views\Labs\Void.cshtml" />
+    <Content Include="Areas\Purchases\Views\Labs\Hold.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -2362,6 +2363,7 @@
     <Content Include="Scripts\Controllers\Purchases\ItemArrivals\Print.js" />
     <Content Include="Scripts\Controllers\Purchases\Labs\Approve.js" />
     <Content Include="Scripts\Controllers\Purchases\Labs\Edit.js" />
+    <Content Include="Scripts\Controllers\Purchases\Labs\Hold.js" />
     <Content Include="Scripts\Controllers\Purchases\Labs\Index.js" />
     <Content Include="Scripts\Controllers\Purchases\Labs\Void.js" />
     <Content Include="Scripts\Controllers\Purchases\MaterialArrivals\Approve.js" />
