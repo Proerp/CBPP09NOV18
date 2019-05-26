@@ -45,6 +45,10 @@ namespace TotalDTO.Purchases
         public override Nullable<int> VoidTypeID { get { return (this.VoidType != null ? this.VoidType.VoidTypeID : null); } }
         [UIHint("AutoCompletes/VoidType")]
         public VoidTypeBaseDTO VoidType { get; set; }
+
+        public bool Holdable { get; set; }
+        public bool Releasable { get; set; }
+        public virtual bool Hold { get; set; }
     }
 
     public class LabDTO : LabPrimitiveDTO

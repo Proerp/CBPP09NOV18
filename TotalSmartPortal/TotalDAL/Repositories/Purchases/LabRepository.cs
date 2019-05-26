@@ -9,6 +9,11 @@ namespace TotalDAL.Repositories.Purchases
             : base(totalSmartPortalEntities, "LabEditable", "LabApproved", "LabDeletable", "LabVoidable")
         {
         }
+
+        public bool ToggleHold(int entityID, bool hold)
+        {
+            return this.TotalSmartPortalEntities.LabToggleHold(entityID, hold) == 1;
+        }
     }
 
 
