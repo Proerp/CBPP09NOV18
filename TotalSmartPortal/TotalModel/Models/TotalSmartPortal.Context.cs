@@ -2843,7 +2843,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("WarehouseAdjustmentToggleApproved", entityIDParameter, approvedParameter);
         }
     
-        public virtual ObjectResult<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(Nullable<int> locationID, Nullable<int> warehouseID, Nullable<int> commodityID, string commodityIDs, Nullable<int> batchID, string barcode, string goodsReceiptDetailIDs, Nullable<bool> onlyApproved, Nullable<bool> onlyIssuable)
+        public virtual ObjectResult<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(Nullable<int> locationID, Nullable<int> warehouseID, Nullable<int> warehouseReceiptID, Nullable<int> commodityID, string commodityIDs, Nullable<int> batchID, string barcode, string goodsReceiptDetailIDs, Nullable<bool> onlyApproved, Nullable<bool> onlyIssuable)
         {
             var locationIDParameter = locationID.HasValue ?
                 new ObjectParameter("LocationID", locationID) :
@@ -2852,6 +2852,10 @@ namespace TotalModel.Models
             var warehouseIDParameter = warehouseID.HasValue ?
                 new ObjectParameter("WarehouseID", warehouseID) :
                 new ObjectParameter("WarehouseID", typeof(int));
+    
+            var warehouseReceiptIDParameter = warehouseReceiptID.HasValue ?
+                new ObjectParameter("WarehouseReceiptID", warehouseReceiptID) :
+                new ObjectParameter("WarehouseReceiptID", typeof(int));
     
             var commodityIDParameter = commodityID.HasValue ?
                 new ObjectParameter("CommodityID", commodityID) :
@@ -2881,7 +2885,7 @@ namespace TotalModel.Models
                 new ObjectParameter("OnlyIssuable", onlyIssuable) :
                 new ObjectParameter("OnlyIssuable", typeof(bool));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptDetailAvailable>("GetGoodsReceiptDetailAvailables", locationIDParameter, warehouseIDParameter, commodityIDParameter, commodityIDsParameter, batchIDParameter, barcodeParameter, goodsReceiptDetailIDsParameter, onlyApprovedParameter, onlyIssuableParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptDetailAvailable>("GetGoodsReceiptDetailAvailables", locationIDParameter, warehouseIDParameter, warehouseReceiptIDParameter, commodityIDParameter, commodityIDsParameter, batchIDParameter, barcodeParameter, goodsReceiptDetailIDsParameter, onlyApprovedParameter, onlyIssuableParameter);
         }
     
         public virtual ObjectResult<PendingWarehouseAdjustmentDetail> GetPendingWarehouseAdjustmentDetails(Nullable<int> locationID, Nullable<int> goodsReceiptID, Nullable<int> warehouseAdjustmentID, Nullable<int> warehouseID, string warehouseAdjustmentDetailIDs, Nullable<bool> isReadonly)

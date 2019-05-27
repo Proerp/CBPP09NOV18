@@ -180,47 +180,67 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
 
+            if (GlobalEnums.CBPP)
+            {
+                queryString = queryString + "       IF  (@WarehouseReceiptID = 6) " + "\r\n"; //@WarehouseReceiptID = 6: KPC
+                queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, true) + "\r\n";
+                queryString = queryString + "       ELSE " + "\r\n";
+                queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, false) + "\r\n";
+            }
+            else
+                queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, false) + "\r\n";
+            
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string BuildSQLPendingDetails(bool isTransferOrderID, bool isLabOK)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
             queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '' AND @Barcode <> '0') " + "\r\n";
-            queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, true) + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, isLabOK, true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-            queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, false) + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, isLabOK, false) + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
 
             return queryString;
         }
 
-        private string BuildSQLPendingDetails(bool isTransferOrderID, bool isBarcode)
+        private string BuildSQLPendingDetails(bool isTransferOrderID, bool isLabOK, bool isBarcode)
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
 
             queryString = queryString + "       IF  (@GoodsReceiptDetailIDs <> '') " + "\r\n";
-            queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, isBarcode, true) + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, isLabOK, isBarcode, true) + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
-            queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, isBarcode, false) + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(isTransferOrderID, isLabOK, isBarcode, false) + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
 
             return queryString;
         }
 
-        private string BuildSQLPendingDetails(bool isTransferOrderID, bool isBarcode, bool isGoodsReceiptDetailIDs)
+        private string BuildSQLPendingDetails(bool isTransferOrderID, bool isLabOK, bool isBarcode, bool isGoodsReceiptDetailIDs)
         {
             string queryString = "";
             queryString = queryString + "   BEGIN " + "\r\n";
 
             queryString = queryString + "       IF (@WarehouseTransferID <= 0 OR @WebAPI = 1) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLNew(isTransferOrderID, isBarcode, isGoodsReceiptDetailIDs) + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLNew(isTransferOrderID, isLabOK, isBarcode, isGoodsReceiptDetailIDs) + "\r\n";
             queryString = queryString + "                   ORDER BY TransferOrderDetails.TransferOrderDetailID " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
 
             queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLNew(isTransferOrderID, isBarcode, isGoodsReceiptDetailIDs) + " WHERE TransferOrderDetails.TransferOrderDetailID NOT IN (SELECT TransferOrderDetailID FROM WarehouseTransferDetails WHERE WarehouseTransferID = @WarehouseTransferID) " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLNew(isTransferOrderID, isLabOK, isBarcode, isGoodsReceiptDetailIDs) + " WHERE TransferOrderDetails.TransferOrderDetailID NOT IN (SELECT TransferOrderDetailID FROM WarehouseTransferDetails WHERE WarehouseTransferID = @WarehouseTransferID) " + "\r\n";
             queryString = queryString + "                   UNION ALL " + "\r\n";
-            queryString = queryString + "                   " + this.BuildSQLEdit(isTransferOrderID, isBarcode, isGoodsReceiptDetailIDs) + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLEdit(isTransferOrderID, isLabOK, isBarcode, isGoodsReceiptDetailIDs) + "\r\n";
             queryString = queryString + "                   ORDER BY TransferOrderDetails.TransferOrderDetailID " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
 
@@ -229,7 +249,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             return queryString;
         }
 
-        private string BuildSQLNew(bool isTransferOrderID, bool isBarcode, bool isGoodsReceiptDetailIDs)
+        private string BuildSQLNew(bool isTransferOrderID, bool isLabOK, bool isBarcode, bool isGoodsReceiptDetailIDs)
         {
             string queryString = "";
 
@@ -240,14 +260,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       FROM        TransferOrderDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON " + (isTransferOrderID ? "TransferOrderDetails.TransferOrderID = @TransferOrderID" : "TransferOrderDetails.NMVNTaskID = @NMVNTaskID - 1000000 AND TransferOrderDetails.WarehouseID = @WarehouseID AND TransferOrderDetails.WarehouseReceiptID = @WarehouseReceiptID") + " AND TransferOrderDetails.Approved = 1 AND TransferOrderDetails.InActive = 0 AND TransferOrderDetails.InActivePartial = 0 AND ROUND(TransferOrderDetails.Quantity - TransferOrderDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 AND TransferOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
 
-            queryString = queryString + "                   LEFT JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND TransferOrderDetails.CommodityID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + (isBarcode ? " AND GoodsReceiptDetails.Barcode = @Barcode" : "") + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
+            queryString = queryString + "                   LEFT JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND TransferOrderDetails.CommodityID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + (isLabOK ? " AND GoodsReceiptDetails.LabID IN (SELECT LabID FROM Labs WHERE Approved = 1 AND InActive = 0 AND Hold = 0)" : "") + (isBarcode ? " AND GoodsReceiptDetails.Barcode = @Barcode" : "") + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
             queryString = queryString + "                   LEFT JOIN GoodsReceipts ON GoodsReceiptDetails.GoodsReceiptID = GoodsReceipts.GoodsReceiptID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN BinLocations ON GoodsReceiptDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";
 
             return queryString;
         }
 
-        private string BuildSQLEdit(bool isTransferOrderID, bool isBarcode, bool isGoodsReceiptDetailIDs)
+        private string BuildSQLEdit(bool isTransferOrderID, bool isLabOK, bool isBarcode, bool isGoodsReceiptDetailIDs)
         {
             string queryString = "";
 
@@ -259,7 +279,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                   INNER JOIN (SELECT TransferOrderDetailID, SUM(Quantity) AS Quantity FROM WarehouseTransferDetails WHERE WarehouseTransferID = @WarehouseTransferID GROUP BY TransferOrderDetailID) AS WarehouseTransferDetails ON TransferOrderDetails.TransferOrderDetailID = WarehouseTransferDetails.TransferOrderDetailID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON TransferOrderDetails.CommodityID = Commodities.CommodityID " + "\r\n";
 
-            queryString = queryString + "                   LEFT JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND TransferOrderDetails.CommodityID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND (ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 OR GoodsReceiptDetails.GoodsReceiptDetailID IN (SELECT GoodsReceiptDetailID FROM WarehouseTransferDetails WHERE WarehouseTransferID = @WarehouseTransferID)) " + (isBarcode ? " AND GoodsReceiptDetails.Barcode = @Barcode" : "") + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
+            queryString = queryString + "                   LEFT JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND TransferOrderDetails.CommodityID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND (ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 OR GoodsReceiptDetails.GoodsReceiptDetailID IN (SELECT GoodsReceiptDetailID FROM WarehouseTransferDetails WHERE WarehouseTransferID = @WarehouseTransferID)) " + (isLabOK ? " AND GoodsReceiptDetails.LabID IN (SELECT LabID FROM Labs WHERE Approved = 1 AND InActive = 0 AND Hold = 0)" : "") + (isBarcode ? " AND GoodsReceiptDetails.Barcode = @Barcode" : "") + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
             queryString = queryString + "                   LEFT JOIN (SELECT GoodsReceiptDetailID, SUM(Quantity) AS Quantity FROM WarehouseTransferDetails WHERE WarehouseTransferID = @WarehouseTransferID GROUP BY GoodsReceiptDetailID) AS IssuedGoodsReceiptDetails ON GoodsReceiptDetails.GoodsReceiptDetailID = IssuedGoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN GoodsReceipts ON GoodsReceiptDetails.GoodsReceiptID = GoodsReceipts.GoodsReceiptID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN BinLocations ON GoodsReceiptDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";

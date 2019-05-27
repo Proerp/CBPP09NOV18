@@ -8225,6 +8225,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="GetGoodsReceiptDetailAvailables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
+          <Parameter Name="WarehouseReceiptID" Type="int" Mode="In" />
           <Parameter Name="CommodityID" Type="int" Mode="In" />
           <Parameter Name="CommodityIDs" Type="varchar" Mode="In" />
           <Parameter Name="BatchID" Type="int" Mode="In" />
@@ -14765,6 +14766,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImport Name="GetGoodsReceiptDetailAvailables" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptDetailAvailable)">
             <Parameter Name="LocationID" Mode="In" Type="Int32" />
             <Parameter Name="WarehouseID" Mode="In" Type="Int32" />
+            <Parameter Name="WarehouseReceiptID" Mode="In" Type="Int32" />
             <Parameter Name="CommodityID" Mode="In" Type="Int32" />
             <Parameter Name="CommodityIDs" Mode="In" Type="String" />
             <Parameter Name="BatchID" Mode="In" Type="Int32" />

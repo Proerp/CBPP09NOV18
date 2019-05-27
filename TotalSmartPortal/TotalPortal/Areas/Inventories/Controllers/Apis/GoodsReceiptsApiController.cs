@@ -117,10 +117,10 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
 
 
         [HttpGet]
-        [Route("GetGoodsReceiptDetailAvailables/{locationID}/{warehouseID}/{commodityID}/{commodityIDs}/{batchID}/{barcode}/{goodsReceiptDetailIDs}/{onlyApproved}/{onlyIssuable}")]
-        public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? commodityID, string commodityIDs, int? batchID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
+        [Route("GetGoodsReceiptDetailAvailables/{locationID}/{warehouseID}/{warehouseReceiptID}/{commodityID}/{commodityIDs}/{batchID}/{barcode}/{goodsReceiptDetailIDs}/{onlyApproved}/{onlyIssuable}")]
+        public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
         {
-            return this.goodsReceiptAPIRepository.GetGoodsReceiptDetailAvailables(locationID, warehouseID, commodityID, commodityIDs, batchID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable);
+            return this.goodsReceiptAPIRepository.GetGoodsReceiptDetailAvailables(locationID, warehouseID, warehouseReceiptID, commodityID, commodityIDs, batchID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable);
         }
     }
 

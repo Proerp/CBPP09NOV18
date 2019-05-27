@@ -45,6 +45,7 @@
             return {
             locationID: window.parent.requireConfig.pageOptions.LocationID,
             warehouseID: window.parent.$("#Warehouse_WarehouseID").val(),
+            warehouseReceiptID: window.parent.$("#WarehouseReceipt_WarehouseID").val() != undefined? window.parent.$("#WarehouseReceipt_WarehouseID").val() : null,
             commodityID: null,
             commodityIDs: "",
             batchID: null,
