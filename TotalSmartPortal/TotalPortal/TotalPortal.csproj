@@ -788,6 +788,12 @@
     <Content Include="Content\Images\Mains\Size12\cross-icon-12-ok.png" />
     <Content Include="Content\Images\Mains\Size12\Cute-Tick-12.png" />
     <Content Include="Content\Images\Mains\Size12\erase-12-ok.png" />
+    <Content Include="Content\Images\Mains\Size12\key-011-12.png" />
+    <Content Include="Content\Images\Mains\Size12\key-012-12.png" />
+    <Content Include="Content\Images\Mains\Size12\key-5-12.png" />
+    <Content Include="Content\Images\Mains\Size12\key-6-12.png" />
+    <Content Include="Content\Images\Mains\Size12\key-61-12.png" />
+    <Content Include="Content\Images\Mains\Size12\key-blue-12.png" />
     <Content Include="Content\Images\Mains\Size12\printer-icon-12.png" />
     <Content Include="Content\Images\Mains\Size12\printer-icon-12x13.png" />
     <Content Include="Content\Images\Mains\Size12\Tick-12.png" />
