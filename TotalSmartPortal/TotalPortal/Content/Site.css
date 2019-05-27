@@ -659,6 +659,11 @@ tr:hover {
     background-position: center;
 }
 
+.sbt-hold {
+    background-image: url('Images/Mains/Size12/app-key-12.png');
+    background-position: center;
+}
+
 .sbt-printer {
     background-image: url('Images/Mains/Size12/printer-icon-12x13.png');
     background-position: center;
