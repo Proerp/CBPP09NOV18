@@ -16813,7 +16813,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Lab" EntitySet="Labs" />
           </AssociationSet>
           <FunctionImport Name="GetGoodsReceiptBarcodeAvailables" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptBarcodeAvailable)">
-            <Parameter Name="Barcode" Mode="In" Type="String" />
+          <Parameter Name="Barcode" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
