@@ -59,6 +59,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             this.GetGoodsReceiptID();
             this.GetGoodsReceiptDetailAvailables();
+
+            this.GetGoodsReceiptBarcodeAvailables();
         }
 
 
@@ -1303,7 +1305,28 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         }
 
 
+        private void GetGoodsReceiptBarcodeAvailables()
+        {
+            string queryString;
 
+            queryString = " @Barcode nvarchar(60) " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       SELECT      GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceiptDetails.Reference AS GoodsReceiptReference, GoodsReceiptDetails.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsReceiptDetails.ExpiryDate, GoodsReceiptDetails.SealCode, GoodsReceiptDetails.BatchCode, GoodsReceiptDetails.LabCode, GoodsReceiptDetails.Barcode, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, GoodsReceiptDetails.BinLocationID, BinLocations.Code AS BinLocationCode, GoodsReceiptDetails.UnitWeight, GoodsReceiptDetails.TareWeight, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, " + "\r\n";
+            queryString = queryString + "                   GoodsReceiptDetails.Approved, Labs.Approved AS LabApproved, Labs.Hold AS LabHold, Labs.InActive AS LabInActive, VoidTypes.Code AS LabInActiveCode " + "\r\n";
+
+            queryString = queryString + "       FROM        GoodsReceiptDetails " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Warehouses ON GoodsReceiptDetails.Barcode = @Barcode AND ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 AND GoodsReceiptDetails.WarehouseID = Warehouses.WarehouseID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON GoodsReceiptDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN BinLocations ON GoodsReceiptDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";
+
+            queryString = queryString + "                   INNER JOIN Labs ON GoodsReceiptDetails.LabID = Labs.LabID " + "\r\n";
+            queryString = queryString + "                   LEFT  JOIN VoidTypes ON Labs.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptBarcodeAvailables", queryString);
+        }
 
         #region Generate Pending
 

@@ -8222,6 +8222,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="VATPercent" Type="decimal" Mode="In" />
           <Parameter Name="IsReadonly" Type="bit" Mode="In" />
         </Function>
+        <Function Name="GetGoodsReceiptBarcodeAvailables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Barcode" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="GetGoodsReceiptDetailAvailables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="WarehouseID" Type="int" Mode="In" />
@@ -16809,6 +16812,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="VoidType" EntitySet="VoidTypes" />
             <End Role="Lab" EntitySet="Labs" />
           </AssociationSet>
+          <FunctionImport Name="GetGoodsReceiptBarcodeAvailables" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptBarcodeAvailable)">
+            <Parameter Name="Barcode" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -25866,6 +25872,32 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GoodsReceiptBarcodeAvailable">
+          <Property Type="Int32" Name="GoodsReceiptID" Nullable="false" />
+          <Property Type="Int32" Name="GoodsReceiptDetailID" Nullable="false" />
+          <Property Type="String" Name="GoodsReceiptReference" Nullable="true" MaxLength="10" />
+          <Property Type="DateTime" Name="GoodsReceiptEntryDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="BatchID" Nullable="false" />
+          <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
+          <Property Type="Int32" Name="BinLocationID" Nullable="false" />
+          <Property Type="String" Name="BinLocationCode" Nullable="false" MaxLength="50" />
+          <Property Type="Decimal" Name="UnitWeight" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TareWeight" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="Boolean" Name="Approved" Nullable="false" />
+          <Property Type="Boolean" Name="LabApproved" Nullable="false" />
+          <Property Type="Boolean" Name="LabHold" Nullable="false" />
+          <Property Type="Boolean" Name="LabInActive" Nullable="false" />
+          <Property Type="String" Name="LabInActiveCode" Nullable="true" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -32848,6 +32880,36 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImportMapping FunctionImportName="LabToggleHold" FunctionName="TotalSmartPortalModel.Store.LabToggleHold" />
           <FunctionImportMapping FunctionImportName="LabToggleVoid" FunctionName="TotalSmartPortalModel.Store.LabToggleVoid" />
           <FunctionImportMapping FunctionImportName="LabVoidable" FunctionName="TotalSmartPortalModel.Store.LabVoidable" />
+          <FunctionImportMapping FunctionImportName="GetGoodsReceiptBarcodeAvailables" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptBarcodeAvailables">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptBarcodeAvailable">
+                <ScalarProperty Name="GoodsReceiptID" ColumnName="GoodsReceiptID" />
+                <ScalarProperty Name="GoodsReceiptDetailID" ColumnName="GoodsReceiptDetailID" />
+                <ScalarProperty Name="GoodsReceiptReference" ColumnName="GoodsReceiptReference" />
+                <ScalarProperty Name="GoodsReceiptEntryDate" ColumnName="GoodsReceiptEntryDate" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
+                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
+                <ScalarProperty Name="LabCode" ColumnName="LabCode" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="BinLocationID" ColumnName="BinLocationID" />
+                <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
+                <ScalarProperty Name="QuantityAvailables" ColumnName="QuantityAvailables" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="LabApproved" ColumnName="LabApproved" />
+                <ScalarProperty Name="LabHold" ColumnName="LabHold" />
+                <ScalarProperty Name="LabInActive" ColumnName="LabInActive" />
+                <ScalarProperty Name="LabInActiveCode" ColumnName="LabInActiveCode" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

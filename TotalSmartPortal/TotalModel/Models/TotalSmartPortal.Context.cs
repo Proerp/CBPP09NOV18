@@ -5587,5 +5587,14 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("LabVoidable", entityIDParameter);
         }
+    
+        public virtual ObjectResult<GoodsReceiptBarcodeAvailable> GetGoodsReceiptBarcodeAvailables(string barcode)
+        {
+            var barcodeParameter = barcode != null ?
+                new ObjectParameter("Barcode", barcode) :
+                new ObjectParameter("Barcode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptBarcodeAvailable>("GetGoodsReceiptBarcodeAvailables", barcodeParameter);
+        }
     }
 }

@@ -122,6 +122,38 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         {
             return this.goodsReceiptAPIRepository.GetGoodsReceiptDetailAvailables(locationID, warehouseID, warehouseReceiptID, commodityID, commodityIDs, batchID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable);
         }
+
+
+        #region HELPER API
+        [HttpGet]
+        [Route("GetBarcodeAvailables/{barcode}")]
+        public BarcodeAvailableSummary GetBarcodeAvailables(string barcode)
+        {
+            IEnumerable<GoodsReceiptBarcodeAvailable> barcodeAvailables = this.goodsReceiptAPIRepository.GetGoodsReceiptBarcodeAvailables(barcode);
+            return new BarcodeAvailableSummary() { Reference = barcodeAvailables.Min(p => p.GoodsReceiptReference), EntryDate = barcodeAvailables.Min(p => p.GoodsReceiptEntryDate), BatchEntryDate = barcodeAvailables.Min(p => p.BatchEntryDate), ExpiryDate = barcodeAvailables.Min(p => p.ExpiryDate), BatchCode = barcodeAvailables.Min(p => p.BatchCode), LabCode = barcodeAvailables.Min(p => p.LabCode), Barcode = barcodeAvailables.Min(p => p.Barcode), CommodityCode = barcodeAvailables.Min(p => p.CommodityCode), BinLocationCode = barcodeAvailables.Min(p => p.BinLocationCode) + (barcodeAvailables.Count() > 1 ? "***(" + barcodeAvailables.Count().ToString("N0") + ")" : ""), UnitWeight = barcodeAvailables.Min(p => p.UnitWeight), TareWeight = barcodeAvailables.Min(p => p.TareWeight), QuantityAvailables = barcodeAvailables.Min(p => p.QuantityAvailables), Approved = barcodeAvailables.Min(p => p.Approved), LabApproved = barcodeAvailables.Min(p => p.LabApproved), LabHold = barcodeAvailables.Min(p => p.LabHold), LabInActive = barcodeAvailables.Min(p => p.LabInActive), LabInActiveCode = barcodeAvailables.Min(p => p.LabInActiveCode) };
+        }
+
+        public class BarcodeAvailableSummary
+        {
+            public string Reference { get; set; }
+            public System.DateTime EntryDate { get; set; }
+            public System.DateTime BatchEntryDate { get; set; }
+            public Nullable<System.DateTime> ExpiryDate { get; set; }
+            public string BatchCode { get; set; }
+            public string LabCode { get; set; }
+            public string Barcode { get; set; }
+            public string CommodityCode { get; set; }
+            public string BinLocationCode { get; set; }
+            public decimal UnitWeight { get; set; }
+            public decimal TareWeight { get; set; }
+            public Nullable<decimal> QuantityAvailables { get; set; }
+            public bool Approved { get; set; }
+            public bool LabApproved { get; set; }
+            public bool LabHold { get; set; }
+            public bool LabInActive { get; set; }
+            public string LabInActiveCode { get; set; }
+        }
+        #endregion HELPER API
     }
 
 
