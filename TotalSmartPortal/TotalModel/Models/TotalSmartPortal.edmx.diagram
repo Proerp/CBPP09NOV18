@@ -518,6 +518,7 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users2" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Workshifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

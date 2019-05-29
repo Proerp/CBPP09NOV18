@@ -274,6 +274,7 @@
           <Property Name="OfficialName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="OriginalName" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="PreviousCommodityID" Type="int" />
+          <Property Name="RecycleCommodityID" Type="int" />
           <Property Name="CommodityBrandID" Type="int" Nullable="false" />
           <Property Name="CommodityCategoryID" Type="int" Nullable="false" />
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
@@ -7256,6 +7257,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SemifinishedRecyclates_Employees1">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="SemifinishedRecyclates">
+              <PropertyRef Name="StorekeeperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SemifinishedRecyclates_Locations">
           <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
           <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="*" />
@@ -8895,17 +8908,14 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="FromDate" Type="datetime" Mode="In" />
           <Parameter Name="ToDate" Type="datetime" Mode="In" />
         </Function>
-        <Function Name="GetSemifinishedRecyclatePendingSemifinishedProducts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="LocationID" Type="int" Mode="In" />
-          <Parameter Name="SemifinishedRecyclateID" Type="int" Mode="In" />
-          <Parameter Name="WorkshiftID" Type="int" Mode="In" />
-          <Parameter Name="SemifinishedProductIDs" Type="varchar" Mode="In" />
-        </Function>
         <Function Name="GetSemifinishedRecyclatePendingWorkshifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetSemifinishedRecyclateViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="SemifinishedRecyclateID" Type="int" Mode="In" />
+          <Parameter Name="LocationID" Type="int" Mode="In" />
+          <Parameter Name="WorkshiftID" Type="int" Mode="In" />
+          <Parameter Name="IsReadonly" Type="bit" Mode="In" />
         </Function>
         <Function Name="GetShippingAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerID" Type="int" Mode="In" />
@@ -9492,9 +9502,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="SemifinishedRecyclateEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SemifinishedRecyclateGetReference" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SemifinishedRecyclateID" Type="int" Mode="In" />
         </Function>
         <Function Name="SemifinishedRecyclatePostSaveValidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
@@ -11125,6 +11132,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Employees" EntitySet="Employees" />
             <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
           </AssociationSet>
+          <AssociationSet Name="FK_SemifinishedRecyclates_Employees1" Association="Self.FK_SemifinishedRecyclates_Employees1">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
+          </AssociationSet>
           <AssociationSet Name="FK_SemifinishedRecyclates_Locations" Association="Self.FK_SemifinishedRecyclates_Locations">
             <End Role="Locations" EntitySet="Locations" />
             <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
@@ -11859,6 +11870,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Employees" FromRole="Employee" ToRole="SemifinishedItem" />
           <NavigationProperty Name="FinishedItems" Relationship="TotalSmartPortalModel.FK_FinishedItems_Employees" FromRole="Employee" ToRole="FinishedItem" />
           <NavigationProperty Name="SemifinishedRecyclates" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees" FromRole="Employee" ToRole="SemifinishedRecyclate" />
+          <NavigationProperty Name="SemifinishedRecyclates1" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees1" FromRole="Employee" ToRole="SemifinishedRecyclate" />
           </EntityType>
         <EntityType Name="EntireTerritory">
           <Key>
@@ -17172,29 +17184,23 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="GetSemifinishedRecyclatePendingSemifinishedProducts" ReturnType="Collection(TotalSmartPortalModel.SemifinishedRecyclatePendingSemifinishedProduct)">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
-            <Parameter Name="SemifinishedRecyclateID" Mode="In" Type="Int32" />
-            <Parameter Name="WorkshiftID" Mode="In" Type="Int32" />
-            <Parameter Name="SemifinishedProductIDs" Mode="In" Type="String" />
-          </FunctionImport>
           <FunctionImport Name="GetSemifinishedRecyclatePendingWorkshifts" ReturnType="Collection(TotalSmartPortalModel.SemifinishedRecyclatePendingWorkshift)">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="GetSemifinishedRecyclateViewDetails" ReturnType="Collection(TotalSmartPortalModel.SemifinishedRecyclateViewDetail)">
             <Parameter Name="SemifinishedRecyclateID" Mode="In" Type="Int32" />
+            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+            <Parameter Name="WorkshiftID" Mode="In" Type="Int32" />
+            <Parameter Name="IsReadonly" Mode="In" Type="Boolean" />
           </FunctionImport>
           <FunctionImport Name="SemifinishedRecyclateApproved" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SemifinishedRecyclateEditable" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SemifinishedRecyclateGetReference" ReturnType="Collection(String)">
-            <Parameter Name="SemifinishedRecyclateID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SemifinishedRecyclatePostSaveValidate" ReturnType="Collection(String)">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="SemifinishedRecyclateSaveRelative">
             <Parameter Name="EntityID" Mode="In" Type="Int32" />
@@ -17204,6 +17210,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="EntityID" Mode="In" Type="Int32" />
             <Parameter Name="Approved" Mode="In" Type="Boolean" />
           </FunctionImport>
+          <AssociationSet Name="FK_SemifinishedRecyclates_Employees1" Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees1">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -24516,6 +24526,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="FinishedItemDetails" Relationship="TotalSmartPortalModel.FK_FinishedItemDetails_Commodities" FromRole="Commodity" ToRole="FinishedItemDetail" />
           <Property Name="TareWeight" Type="Decimal" Precision="18" Scale="3" />
           <NavigationProperty Name="SemifinishedRecyclateDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities" FromRole="Commodity" ToRole="SemifinishedRecyclateDetail" />
+          <Property Name="RecycleCommodityID" Type="Int32" />
         </EntityType>
         <Association Name="FK_AccountInvoiceDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -26359,6 +26370,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="User2" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users2" FromRole="SemifinishedRecyclate" ToRole="User" />
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Warehouses" FromRole="SemifinishedRecyclate" ToRole="Warehouse" />
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Workshifts" FromRole="SemifinishedRecyclate" ToRole="Workshift" />
+          <NavigationProperty Name="Employee1" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees1" FromRole="SemifinishedRecyclate" ToRole="Employee" />
         </EntityType>
         <Association Name="FK_SemifinishedRecyclateDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -26568,11 +26580,23 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
           <Property Type="Decimal" Name="RejectWeights" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="FailureWeights" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="RecycleWeights" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="21" Scale="2" />
-          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="20" Scale="2" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="1" Scale="1" />
+          <Property Type="Int32" Name="RecycleCommodityID" Nullable="true" />
+          <Property Type="String" Name="RecycleCommodityCode" Nullable="true" MaxLength="50" />
         </ComplexType>
+        <Association Name="FK_SemifinishedRecyclates_Employees1">
+          <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeID" />
+            </Principal>
+            <Dependent Role="SemifinishedRecyclate">
+              <PropertyRef Name="StorekeeperID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -32784,6 +32808,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="Commodities">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.Commodity">
               <MappingFragment StoreEntitySet="Commodities">
+                <ScalarProperty Name="RecycleCommodityID" ColumnName="RecycleCommodityID" />
                 <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
                 <ScalarProperty Name="CommodityIconID" ColumnName="CommodityIconID" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
@@ -33654,27 +33679,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetSemifinishedRecyclatePendingSemifinishedProducts" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedRecyclatePendingSemifinishedProducts">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedRecyclatePendingSemifinishedProduct">
-                <ScalarProperty Name="SemifinishedProductID" ColumnName="SemifinishedProductID" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="Reference" ColumnName="Reference" />
-                <ScalarProperty Name="ShiftCode" ColumnName="ShiftCode" />
-                <ScalarProperty Name="ProductionLineCode" ColumnName="ProductionLineCode" />
-                <ScalarProperty Name="FirmOrderCode" ColumnName="FirmOrderCode" />
-                <ScalarProperty Name="Specification" ColumnName="Specification" />
-                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
-                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
-                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
-                <ScalarProperty Name="RejectWeights" ColumnName="RejectWeights" />
-                <ScalarProperty Name="FailureWeights" ColumnName="FailureWeights" />
-                <ScalarProperty Name="RecycleWeights" ColumnName="RecycleWeights" />
-                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
-                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetSemifinishedRecyclatePendingWorkshifts" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedRecyclatePendingWorkshifts">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedRecyclatePendingWorkshift">
@@ -33702,16 +33706,15 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
                 <ScalarProperty Name="RejectWeights" ColumnName="RejectWeights" />
                 <ScalarProperty Name="FailureWeights" ColumnName="FailureWeights" />
-                <ScalarProperty Name="RecycleWeights" ColumnName="RecycleWeights" />
                 <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="RecycleCommodityID" ColumnName="RecycleCommodityID" />
+                <ScalarProperty Name="RecycleCommodityCode" ColumnName="RecycleCommodityCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SemifinishedRecyclateApproved" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclateApproved" />
           <FunctionImportMapping FunctionImportName="SemifinishedRecyclateEditable" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclateEditable" />
-          <FunctionImportMapping FunctionImportName="SemifinishedRecyclateGetReference" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclateGetReference" />
           <FunctionImportMapping FunctionImportName="SemifinishedRecyclatePostSaveValidate" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclatePostSaveValidate" />
           <FunctionImportMapping FunctionImportName="SemifinishedRecyclateSaveRelative" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclateSaveRelative" />
           <FunctionImportMapping FunctionImportName="SemifinishedRecyclateToggleApproved" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclateToggleApproved" />

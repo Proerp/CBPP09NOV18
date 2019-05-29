@@ -89,6 +89,7 @@ namespace TotalModel.Models
         public string Description { get; set; }
         public Nullable<int> CommodityIconID { get; set; }
         public Nullable<decimal> TareWeight { get; set; }
+        public Nullable<int> RecycleCommodityID { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AccountInvoiceDetail> AccountInvoiceDetails { get; set; }

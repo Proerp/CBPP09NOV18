@@ -27,9 +27,9 @@ namespace TotalModel.Models
         public int CommodityTypeID { get; set; }
         public decimal RejectWeights { get; set; }
         public decimal FailureWeights { get; set; }
-        public decimal RecycleWeights { get; set; }
         public Nullable<decimal> QuantityRemains { get; set; }
         public decimal Quantity { get; set; }
-        public string Remarks { get; set; }
+        public Nullable<int> RecycleCommodityID { get; set; }
+        public string RecycleCommodityCode { get; set; }
     }
 }

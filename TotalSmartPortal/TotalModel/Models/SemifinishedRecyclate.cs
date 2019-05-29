@@ -52,5 +52,6 @@ namespace TotalModel.Models
         public virtual User User2 { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual Employee Employee1 { get; set; }
     }
 }
