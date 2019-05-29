@@ -35,6 +35,7 @@ namespace TotalModel.Models
             this.FinishedItemLots = new HashSet<FinishedItemLot>();
             this.FinishedItemPackages = new HashSet<FinishedItemPackage>();
             this.FinishedItemDetails = new HashSet<FinishedItemDetail>();
+            this.SemifinishedRecyclateDetails = new HashSet<SemifinishedRecyclateDetail>();
         }
     
         public int ShiftID { get; set; }
@@ -79,5 +80,7 @@ namespace TotalModel.Models
         public virtual ICollection<FinishedItemPackage> FinishedItemPackages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SemifinishedRecyclateDetail> SemifinishedRecyclateDetails { get; set; }
     }
 }

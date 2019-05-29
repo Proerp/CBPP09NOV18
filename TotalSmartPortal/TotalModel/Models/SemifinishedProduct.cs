@@ -19,6 +19,7 @@ namespace TotalModel.Models
         {
             this.SemifinishedProductDetails = new HashSet<SemifinishedProductDetail>();
             this.SemifinishedHandoverDetails = new HashSet<SemifinishedHandoverDetail>();
+            this.SemifinishedRecyclateDetails = new HashSet<SemifinishedRecyclateDetail>();
         }
     
         public int SemifinishedProductID { get; set; }
@@ -62,6 +63,8 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> StopDate { get; set; }
         public decimal RejectCounts { get; set; }
         public decimal RejectWeights { get; set; }
+        public decimal RecycleWeights { get; set; }
+        public decimal RecycleLoss { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
@@ -77,5 +80,7 @@ namespace TotalModel.Models
         public virtual GoodsReceipt GoodsReceipt { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedHandoverDetail> SemifinishedHandoverDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SemifinishedRecyclateDetail> SemifinishedRecyclateDetails { get; set; }
     }
 }

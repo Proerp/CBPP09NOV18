@@ -133,6 +133,8 @@ namespace TotalModel.Models
         public virtual DbSet<FinishedItemPackage> FinishedItemPackages { get; set; }
         public virtual DbSet<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }
         public virtual DbSet<FinishedItemDetail> FinishedItemDetails { get; set; }
+        public virtual DbSet<SemifinishedRecyclateDetail> SemifinishedRecyclateDetails { get; set; }
+        public virtual DbSet<SemifinishedRecyclate> SemifinishedRecyclates { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {
@@ -5595,6 +5597,124 @@ namespace TotalModel.Models
                 new ObjectParameter("Barcode", typeof(string));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptBarcodeAvailable>("GetGoodsReceiptBarcodeAvailables", barcodeParameter);
+        }
+    
+        public virtual ObjectResult<SemifinishedRecyclateIndex> GetSemifinishedRecyclateIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        {
+            var aspUserIDParameter = aspUserID != null ?
+                new ObjectParameter("AspUserID", aspUserID) :
+                new ObjectParameter("AspUserID", typeof(string));
+    
+            var fromDateParameter = fromDate.HasValue ?
+                new ObjectParameter("FromDate", fromDate) :
+                new ObjectParameter("FromDate", typeof(System.DateTime));
+    
+            var toDateParameter = toDate.HasValue ?
+                new ObjectParameter("ToDate", toDate) :
+                new ObjectParameter("ToDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedRecyclateIndex>("GetSemifinishedRecyclateIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
+        }
+    
+        public virtual ObjectResult<SemifinishedRecyclatePendingSemifinishedProduct> GetSemifinishedRecyclatePendingSemifinishedProducts(Nullable<int> locationID, Nullable<int> semifinishedRecyclateID, Nullable<int> workshiftID, string semifinishedProductIDs)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var semifinishedRecyclateIDParameter = semifinishedRecyclateID.HasValue ?
+                new ObjectParameter("SemifinishedRecyclateID", semifinishedRecyclateID) :
+                new ObjectParameter("SemifinishedRecyclateID", typeof(int));
+    
+            var workshiftIDParameter = workshiftID.HasValue ?
+                new ObjectParameter("WorkshiftID", workshiftID) :
+                new ObjectParameter("WorkshiftID", typeof(int));
+    
+            var semifinishedProductIDsParameter = semifinishedProductIDs != null ?
+                new ObjectParameter("SemifinishedProductIDs", semifinishedProductIDs) :
+                new ObjectParameter("SemifinishedProductIDs", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedRecyclatePendingSemifinishedProduct>("GetSemifinishedRecyclatePendingSemifinishedProducts", locationIDParameter, semifinishedRecyclateIDParameter, workshiftIDParameter, semifinishedProductIDsParameter);
+        }
+    
+        public virtual ObjectResult<SemifinishedRecyclatePendingWorkshift> GetSemifinishedRecyclatePendingWorkshifts(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedRecyclatePendingWorkshift>("GetSemifinishedRecyclatePendingWorkshifts", locationIDParameter);
+        }
+    
+        public virtual ObjectResult<SemifinishedRecyclateViewDetail> GetSemifinishedRecyclateViewDetails(Nullable<int> semifinishedRecyclateID)
+        {
+            var semifinishedRecyclateIDParameter = semifinishedRecyclateID.HasValue ?
+                new ObjectParameter("SemifinishedRecyclateID", semifinishedRecyclateID) :
+                new ObjectParameter("SemifinishedRecyclateID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedRecyclateViewDetail>("GetSemifinishedRecyclateViewDetails", semifinishedRecyclateIDParameter);
+        }
+    
+        public virtual ObjectResult<string> SemifinishedRecyclateApproved(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SemifinishedRecyclateApproved", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> SemifinishedRecyclateEditable(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SemifinishedRecyclateEditable", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> SemifinishedRecyclateGetReference(Nullable<int> semifinishedRecyclateID)
+        {
+            var semifinishedRecyclateIDParameter = semifinishedRecyclateID.HasValue ?
+                new ObjectParameter("SemifinishedRecyclateID", semifinishedRecyclateID) :
+                new ObjectParameter("SemifinishedRecyclateID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SemifinishedRecyclateGetReference", semifinishedRecyclateIDParameter);
+        }
+    
+        public virtual ObjectResult<string> SemifinishedRecyclatePostSaveValidate(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("SemifinishedRecyclatePostSaveValidate", entityIDParameter);
+        }
+    
+        public virtual int SemifinishedRecyclateSaveRelative(Nullable<int> entityID, Nullable<int> saveRelativeOption)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var saveRelativeOptionParameter = saveRelativeOption.HasValue ?
+                new ObjectParameter("SaveRelativeOption", saveRelativeOption) :
+                new ObjectParameter("SaveRelativeOption", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SemifinishedRecyclateSaveRelative", entityIDParameter, saveRelativeOptionParameter);
+        }
+    
+        public virtual int SemifinishedRecyclateToggleApproved(Nullable<int> entityID, Nullable<bool> approved)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var approvedParameter = approved.HasValue ?
+                new ObjectParameter("Approved", approved) :
+                new ObjectParameter("Approved", typeof(bool));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SemifinishedRecyclateToggleApproved", entityIDParameter, approvedParameter);
         }
     }
 }
