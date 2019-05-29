@@ -25,7 +25,7 @@ namespace TotalDTO.Productions
 
         public int SemifinishedProductID { get; set; }
 
-        public string Reference { get; set; }
+        public string SemifinishedProductReference { get; set; }
 
         public DateTime SemifinishedProductEntryDate { get; set; }
         
@@ -59,13 +59,48 @@ namespace TotalDTO.Productions
         public override string CommodityName { get; set; }
 
 
+        public Nullable<int> RecycleCommodityID { get; set; }
+        [Display(Name = "Mã phế phẩm")]
+        [UIHint("StringReadonly")]
+        public string RecycleCommodityCode { get; set; }
+        [Display(Name = "Tên phế phẩm")]
+        [UIHint("StringReadonly")]
+        public string RecycleCommodityName { get; set; }
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             foreach (var result in base.Validate(validationContext)) { yield return result; }
 
-            if (this.Quantity > (this.QuantityRemains * (decimal)1005)) yield return new ValidationResult("Số lượng xuất không được lớn hơn số lượng yêu cầu [" + this.CommodityName + "]", new[] { "Quantity" });
+            if (this.Quantity > this.QuantityRemains) yield return new ValidationResult("Số lượng xuất không được lớn hơn số lượng yêu cầu [" + this.CommodityName + "]", new[] { "Quantity" });
         }
     }
-}
 
+
+
+    public class SemifinishedRecyclatePackageDTO
+    {
+        public int CommodityID { get; set; }
+        [Display(Name = "Mã phế phẩm")]
+        [UIHint("StringReadonly")]
+        public string CommodityCode { get; set; }
+        [Display(Name = "Tên phế phẩm")]
+        [UIHint("StringReadonly")]
+        public string CommodityName { get; set; }
+
+
+        [Display(Name = "SỐ kg tấm hư")]
+        [UIHint("QuantityReadonly")]
+        public decimal RejectWeights { get; set; }
+        [Display(Name = "Số kg phế phẩm")]
+        [UIHint("QuantityReadonly")]
+        public decimal FailureWeights { get; set; }
+
+        [Display(Name = "Tổng tồn phế phẩm")]
+        [UIHint("QuantityReadonly")]
+        public decimal QuantityRemains { get; set; }
+
+        [Display(Name = "KL cân")]
+        [UIHint("Quantity")]
+        public decimal Quantity { get; set; }
+    }
+}

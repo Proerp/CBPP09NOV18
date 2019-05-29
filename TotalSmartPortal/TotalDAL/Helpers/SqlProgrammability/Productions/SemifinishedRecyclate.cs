@@ -115,7 +115,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      0 AS SemifinishedRecyclateDetailID, 0 AS SemifinishedRecyclateID, SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.EntryDate, SemifinishedProducts.Reference, Shifts.Code AS ShiftCode, ProductionLines.Code AS ProductionLineCode, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification, " + "\r\n";
+            queryString = queryString + "       SELECT      0 AS SemifinishedRecyclateDetailID, 0 AS SemifinishedRecyclateID, SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.EntryDate AS SemifinishedProductEntryDate, SemifinishedProducts.Reference AS SemifinishedProductReference, Shifts.Code AS ShiftCode, ProductionLines.Code AS ProductionLineCode, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.CommodityTypeID, Commodities.RecycleCommodityID, RecycleCommodities.Code AS RecycleCommodityCode, SemifinishedProducts.RejectWeights, SemifinishedProducts.FailureWeights, ROUND(SemifinishedProducts.RejectWeights + SemifinishedProducts.FailureWeights - SemifinishedProducts.RecycleWeights, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, 0.0 AS Quantity " + "\r\n"; //QuantityRemains NOT INCLUDED RecycleLoss, BUT: CHECK PENDING MUST MINUS RecycleLoss!!!!!!
 
             queryString = queryString + "       FROM        SemifinishedProducts " + "\r\n";
@@ -133,7 +133,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      SemifinishedRecyclateDetails.SemifinishedRecyclateDetailID, SemifinishedRecyclateDetails.SemifinishedRecyclateID, SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.EntryDate, SemifinishedProducts.Reference, Shifts.Code AS ShiftCode, ProductionLines.Code AS ProductionLineCode, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification, " + "\r\n";
+            queryString = queryString + "       SELECT      SemifinishedRecyclateDetails.SemifinishedRecyclateDetailID, SemifinishedRecyclateDetails.SemifinishedRecyclateID, SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.EntryDate AS SemifinishedProductEntryDate, SemifinishedProducts.Reference AS SemifinishedProductReference, Shifts.Code AS ShiftCode, ProductionLines.Code AS ProductionLineCode, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.CommodityTypeID, Commodities.RecycleCommodityID, RecycleCommodities.Code AS RecycleCommodityCode, SemifinishedProducts.RejectWeights, SemifinishedProducts.FailureWeights, ROUND(SemifinishedProducts.RejectWeights + SemifinishedProducts.FailureWeights - SemifinishedProducts.RecycleWeights + SemifinishedRecyclateDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, SemifinishedRecyclateDetails.Quantity " + "\r\n";
 
             queryString = queryString + "       FROM        SemifinishedRecyclateDetails " + "\r\n";
