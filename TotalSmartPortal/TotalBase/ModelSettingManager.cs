@@ -51,6 +51,8 @@ namespace TotalBase
                 case GlobalEnums.NmvnTaskID.SemifinishedProduct:
                     return "P";
 
+                case GlobalEnums.NmvnTaskID.SemifinishedRecyclate:
+                    return "RP";
                 case GlobalEnums.NmvnTaskID.SemifinishedHandover:
                     return @"CASE WHEN @NmvnTaskID = 
                                     " + (int)GlobalEnums.NmvnTaskID.SemifinishedItemHandover + @" THEN 'HI' ELSE 
