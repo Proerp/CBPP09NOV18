@@ -328,7 +328,7 @@ namespace TotalDAL.Repositories
             semifinishedRecyclate.RestoreProcedure();
 
             
-            return;
+            //return;
 
             Helpers.SqlProgrammability.Inventories.StockTake stockTake = new Helpers.SqlProgrammability.Inventories.StockTake(totalSmartPortalEntities);
             stockTake.RestoreProcedure();
