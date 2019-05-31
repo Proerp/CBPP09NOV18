@@ -16,8 +16,6 @@ namespace TotalModel.Models
         public int SemifinishedRecyclateDetailID { get; set; }
         public int SemifinishedRecyclateID { get; set; }
         public int SemifinishedProductID { get; set; }
-        public System.DateTime EntryDate { get; set; }
-        public string Reference { get; set; }
         public string ShiftCode { get; set; }
         public string ProductionLineCode { get; set; }
         public string FirmOrderCode { get; set; }
@@ -31,5 +29,7 @@ namespace TotalModel.Models
         public decimal Quantity { get; set; }
         public Nullable<int> RecycleCommodityID { get; set; }
         public string RecycleCommodityCode { get; set; }
+        public System.DateTime SemifinishedProductEntryDate { get; set; }
+        public string SemifinishedProductReference { get; set; }
     }
 }

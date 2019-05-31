@@ -26569,8 +26569,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="SemifinishedRecyclateDetailID" Nullable="false" />
           <Property Type="Int32" Name="SemifinishedRecyclateID" Nullable="false" />
           <Property Type="Int32" Name="SemifinishedProductID" Nullable="false" />
-          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Reference" Nullable="true" MaxLength="10" />
           <Property Type="String" Name="ShiftCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="ProductionLineCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="FirmOrderCode" Nullable="true" MaxLength="50" />
@@ -26584,6 +26582,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="1" Scale="1" />
           <Property Type="Int32" Name="RecycleCommodityID" Nullable="true" />
           <Property Type="String" Name="RecycleCommodityCode" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="SemifinishedProductEntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="SemifinishedProductReference" Nullable="true" MaxLength="10" />
         </ComplexType>
         <Association Name="FK_SemifinishedRecyclates_Employees1">
           <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
@@ -33695,8 +33695,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="SemifinishedRecyclateDetailID" ColumnName="SemifinishedRecyclateDetailID" />
                 <ScalarProperty Name="SemifinishedRecyclateID" ColumnName="SemifinishedRecyclateID" />
                 <ScalarProperty Name="SemifinishedProductID" ColumnName="SemifinishedProductID" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="ShiftCode" ColumnName="ShiftCode" />
                 <ScalarProperty Name="ProductionLineCode" ColumnName="ProductionLineCode" />
                 <ScalarProperty Name="FirmOrderCode" ColumnName="FirmOrderCode" />
@@ -33710,6 +33708,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="RecycleCommodityID" ColumnName="RecycleCommodityID" />
                 <ScalarProperty Name="RecycleCommodityCode" ColumnName="RecycleCommodityCode" />
+                <ScalarProperty Name="SemifinishedProductEntryDate" ColumnName="SemifinishedProductEntryDate" />
+                <ScalarProperty Name="SemifinishedProductReference" ColumnName="SemifinishedProductReference" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

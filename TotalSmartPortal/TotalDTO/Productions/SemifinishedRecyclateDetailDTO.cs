@@ -53,7 +53,6 @@ namespace TotalDTO.Productions
         [Display(Name = "Mã NVL")]
         [UIHint("StringReadonly")]
         public override string CommodityCode { get; set; }
-
         [Display(Name = "Tên NVL")]
         [UIHint("StringReadonly")]
         public override string CommodityName { get; set; }
