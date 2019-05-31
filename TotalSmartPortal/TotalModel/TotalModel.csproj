@@ -747,9 +747,6 @@
     <Compile Include="Models\SemifinishedRecyclateIndex.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SemifinishedRecyclatePendingSemifinishedProduct.cs">
-      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\SemifinishedRecyclatePendingWorkshift.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

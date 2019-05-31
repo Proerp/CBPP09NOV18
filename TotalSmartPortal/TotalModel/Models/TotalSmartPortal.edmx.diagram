@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="11d7aeb1b70644ed8a1d70fe9c5f52a3" Name="Diagram1" ZoomLevel="31">
+      <Diagram DiagramId="11d7aeb1b70644ed8a1d70fe9c5f52a3" Name="Diagram1" ZoomLevel="10">
         <EntityTypeShape EntityType="TotalSmartPortalModel.AccessControl" Width="1.5" PointX="30.625" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.AccountInvoiceDetail" Width="1.5" PointX="5" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.AccountInvoice" Width="1.5" PointX="2.75" PointY="11.5" IsExpanded="true" />
