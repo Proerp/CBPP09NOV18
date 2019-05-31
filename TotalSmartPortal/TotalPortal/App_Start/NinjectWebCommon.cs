@@ -290,6 +290,14 @@ namespace TotalPortal.App_Start
 
 
 
+                kernel.Bind<ISemifinishedRecyclateService>().To<SemifinishedRecyclateService>();
+                kernel.Bind<ISemifinishedRecyclateRepository>().To<SemifinishedRecyclateRepository>();
+                kernel.Bind<ISemifinishedRecyclateAPIRepository>().To<SemifinishedRecyclateAPIRepository>();
+                kernel.Bind<ISemifinishedRecyclateViewModelSelectListBuilder>().To<SemifinishedRecyclateViewModelSelectListBuilder>();
+
+
+
+
                 kernel.Bind<IFinishedItemService>().To<FinishedItemService>();
                 kernel.Bind<IFinishedItemRepository>().To<FinishedItemRepository>();
                 kernel.Bind<IFinishedItemAPIRepository>().To<FinishedItemAPIRepository>();

@@ -31,5 +31,6 @@ namespace TotalModel.Models
         public string RecycleCommodityCode { get; set; }
         public System.DateTime SemifinishedProductEntryDate { get; set; }
         public string SemifinishedProductReference { get; set; }
+        public string RecycleCommodityName { get; set; }
     }
 }

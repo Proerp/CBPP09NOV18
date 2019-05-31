@@ -26567,6 +26567,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="RecycleCommodityCode" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="SemifinishedProductEntryDate" Nullable="false" Precision="23" />
           <Property Type="String" Name="SemifinishedProductReference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="RecycleCommodityName" Nullable="true" MaxLength="200" />
         </ComplexType>
         <Association Name="FK_SemifinishedRecyclates_Employees1">
           <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
@@ -33693,6 +33694,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="RecycleCommodityCode" ColumnName="RecycleCommodityCode" />
                 <ScalarProperty Name="SemifinishedProductEntryDate" ColumnName="SemifinishedProductEntryDate" />
                 <ScalarProperty Name="SemifinishedProductReference" ColumnName="SemifinishedProductReference" />
+                <ScalarProperty Name="RecycleCommodityName" ColumnName="RecycleCommodityName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

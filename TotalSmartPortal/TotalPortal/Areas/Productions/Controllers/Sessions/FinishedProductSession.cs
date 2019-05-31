@@ -12,9 +12,9 @@ namespace TotalPortal.Areas.Productions.Controllers.Sessions
                 return (string)context.Session["FinishedProduct-CrucialWorker"];
         }
 
-        public static void SetCrucialWorker(HttpContextBase context, int storekeeperID, string storekeeperName)
+        public static void SetCrucialWorker(HttpContextBase context, int crucialWorkerID, string crucialWorkerName)
         {
-            context.Session["FinishedProduct-CrucialWorker"] = storekeeperID.ToString() + "#@#" + storekeeperName;
+            context.Session["FinishedProduct-CrucialWorker"] = crucialWorkerID.ToString() + "#@#" + crucialWorkerName;
         }
     }
 }

@@ -293,6 +293,14 @@ namespace TotalPortal.App_Start
 
 
 
+                cfg.CreateMap<SemifinishedRecyclate, SemifinishedRecyclateViewModel>();
+                cfg.CreateMap<SemifinishedRecyclate, SemifinishedRecyclateDTO>();
+                cfg.CreateMap<SemifinishedRecyclatePrimitiveDTO, SemifinishedRecyclate>();
+                cfg.CreateMap<SemifinishedRecyclateViewDetail, SemifinishedRecyclateDetailDTO>();
+                cfg.CreateMap<SemifinishedRecyclateDetailDTO, SemifinishedRecyclateDetail>();
+
+
+
 
                 cfg.CreateMap<FinishedItem, FinishedItemViewModel>();
                 cfg.CreateMap<FinishedItem, FinishedItemDTO>();
