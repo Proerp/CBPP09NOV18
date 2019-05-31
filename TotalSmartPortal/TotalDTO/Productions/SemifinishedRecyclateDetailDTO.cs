@@ -18,9 +18,10 @@ namespace TotalDTO.Productions
 
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
-                
-        public int CrucialWorkerID { get; set; }
+
         public int WarehouseID { get; set; }
+        public int CrucialWorkerID { get; set; }
+        public int StorekeeperID { get; set; }
 
 
         public int SemifinishedProductID { get; set; }
