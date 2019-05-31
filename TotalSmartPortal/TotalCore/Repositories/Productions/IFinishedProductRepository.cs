@@ -13,6 +13,5 @@ namespace TotalCore.Repositories.Productions
     public interface IFinishedProductAPIRepository : IGenericAPIRepository
     {
         IEnumerable<FinishedProductPendingFirmOrder> GetFirmOrders(int? locationID);
-
     }
 }
