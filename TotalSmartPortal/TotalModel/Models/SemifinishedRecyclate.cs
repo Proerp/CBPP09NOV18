@@ -23,7 +23,6 @@ namespace TotalModel.Models
         public int SemifinishedRecyclateID { get; set; }
         public System.DateTime EntryDate { get; set; }
         public string Reference { get; set; }
-        public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
         public int WarehouseID { get; set; }
         public int CrucialWorkerID { get; set; }
@@ -44,6 +43,7 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ApprovedDate { get; set; }
     
         public virtual Employee Employee { get; set; }
+        public virtual Employee Employee1 { get; set; }
         public virtual Location Location { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedRecyclateDetail> SemifinishedRecyclateDetails { get; set; }
@@ -52,6 +52,5 @@ namespace TotalModel.Models
         public virtual User User2 { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Workshift Workshift { get; set; }
-        public virtual Employee Employee1 { get; set; }
     }
 }

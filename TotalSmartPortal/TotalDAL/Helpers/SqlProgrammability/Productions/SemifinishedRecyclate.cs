@@ -68,7 +68,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, SemifinishedProductRemains.TotalQuantityRemains " + "\r\n";
 
-            queryString = queryString + "       FROM           (SELECT WorkshiftID, ROUND(SUM(RejectWeights + FailureWeights - RecycleWeights), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM SemifinishedProducts WHERE Approved = 1 AND ROUND(RejectWeights + FailureWeights - RecycleWeights - RecycleLoss, " + (int)GlobalEnums.rndQuantity + ") > 0 " + " GROUP BY WorkshiftID) AS SemifinishedProductRemains " + "\r\n";
+            queryString = queryString + "       FROM           (SELECT WorkshiftID, ROUND(SUM(RejectWeights + FailureWeights - RecycleWeights), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM SemifinishedProducts WHERE Approved = 1 AND EntryDate >= CONVERT(smalldatetime, '" + new DateTime(2019, 5, 1).ToString("dd/MM/yyyy") + "',103) AND ROUND(RejectWeights + FailureWeights - RecycleWeights - RecycleLoss, " + (int)GlobalEnums.rndQuantity + ") > 0 " + " GROUP BY WorkshiftID) AS SemifinishedProductRemains " + "\r\n";
             queryString = queryString + "                       INNER JOIN Workshifts ON SemifinishedProductRemains.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = 1 " + "\r\n";
 
@@ -141,10 +141,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                   INNER JOIN FirmOrders ON SemifinishedProducts.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON SemifinishedRecyclateDetails.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                   LEFT  JOIN Commodities AS RecycleCommodities ON Commodities.RecycleCommodityID = RecycleCommodities.CommodityID " + "\r\n";
-            
+
             return queryString;
         }
-        
+
         private void SemifinishedRecyclateSaveRelative()
         {
             string queryString = " @EntityID int, @SaveRelativeOption int " + "\r\n"; //SaveRelativeOption: 1: Update, -1:Undo

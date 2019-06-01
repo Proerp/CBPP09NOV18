@@ -47,7 +47,7 @@ namespace TotalPortal.Areas.Productions.Controllers
 
         protected override SemifinishedRecyclateViewModel TailorViewModel(SemifinishedRecyclateViewModel semifinishedRecyclateViewModel, bool forDelete, bool forAlter, bool forOpen)
         {
-            if (semifinishedRecyclateViewModel.ViewDetails.Where(w => w.RecycleCommodityID == null).Count() > 0)
+            if (semifinishedRecyclateViewModel.ViewDetails.Where(w => w.RecycleCommodityID == null).Count() == 0)
             {
                 var semifinishedRecyclatePackages = semifinishedRecyclateViewModel.ViewDetails
                                                 .GroupBy(g => g.RecycleCommodityID)

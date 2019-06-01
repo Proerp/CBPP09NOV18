@@ -17,9 +17,7 @@
     @Html.HiddenFor(model => model.WorkshiftCode)
     @Html.HiddenFor(model => model.WorkshiftEntryDate)
     
-    @Html.HiddenFor(model => model.Warehouse.WarehouseID)
-    @Html.HiddenFor(model => model.Warehouse.Code)
-    @Html.HiddenFor(model => model.Warehouse.Name)
+    @Html.HiddenFor(model => model.WarehouseID)
    
     @Html.HiddenFor(model => model.CrucialWorker.EmployeeID);
     @Html.HiddenFor(model => model.CrucialWorker.Name);
@@ -32,34 +30,32 @@
     @(Html.Kendo().Grid<SemifinishedRecyclatePendingWorkshift>()
            .Name("semifinishedRecyclatePendingWorkshiftGrid")
         .Columns(columns =>
-        {
-            columns.Bound(c => c.SemifinishedProductShiftID).Title("KHSX").Width(28);
-            //columns.Bound(c => c.FirmOrderCode).Title("Mã CT").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(25);
-            //columns.Bound(c => c.FirmOrderEntryDate).Title("Ngày KHSX").Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(38);                        
-            //columns.Bound(c => c.FirmOrderSpecification).Title("Mã thành phẩm").Width(80);            
-            //columns.Bound(c => c.CustomerName).Title("Khách hàng").Width(60);                       
+        {            
+            columns.Bound(c => c.WorkshiftEntryDate).Title("Ngày SX").Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(38);
+            columns.Bound(c => c.WorkshiftCode).Title("Ca SX").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(38);
+            columns.Bound(p => p.TotalQuantityRemains).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);                     
         })
         .ToolBar(toolbar =>
         {
             toolbar.Template(@<text>
                 <div class="toolbar" style="float: right;">
-                    <label>Nhập mã chừng từ, số KHSX, mã thành phẩm hoặc khách hàng</label>
+                    <label>Lọc dữ liệu</label>
                     <input id="semifinishedRecyclatePendingWorkshiftFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="semifinishedRecyclatePendingWorkshiftFilter_KeyUp()" />
                 </div>
             </text>);
         })
-        .Scrollable(s => s.Height(Settings.PopupContentHeight))
+        .Scrollable(s => s.Height(Settings.PopupContentHeightSmall))
         .DataSource(ds => ds.Ajax()
-                    .Read(read => read.Action("GetFirmOrders", "SemifinishedRecyclateAPIs", new { area = "Productions" }).Data(@<text>
-                function (e) {
-                    return {
-                        locationID: window.parent.requireConfig.pageOptions.LocationID
-                    };
-                }
-                </text>))
-                .ServerOperation(false)
-            )
-            .Selectable()
+            .Read(read => read.Action("GetPendingWorkshifts", "SemifinishedRecyclateAPIs", new { area = "Productions" }).Data(@<text>
+            function (e) {
+                return {
+                    locationID: window.parent.requireConfig.pageOptions.LocationID
+                };
+            }
+            </text>))
+            .ServerOperation(false)
+        )
+        .Selectable()
     )
 
 
@@ -99,14 +95,11 @@
 
 
         function _setModelInput(selectedDataItem) {            
-
             $("#WorkshiftID").val(selectedDataItem === undefined || selectedDataItem.WorkshiftID === undefined ? null : selectedDataItem.WorkshiftID);
             $("#WorkshiftCode").val(selectedDataItem === undefined || selectedDataItem.WorkshiftCode === undefined ? null : selectedDataItem.WorkshiftCode);
             $("#WorkshiftEntryDate").val(selectedDataItem === undefined || selectedDataItem.WorkshiftEntryDate === undefined ? null : kendo.toString(selectedDataItem.WorkshiftEntryDate, Settings.DateTimeFormat));
 
-            $("#Warehouse_WarehouseID").val(selectedDataItem === undefined || selectedDataItem.WarehouseID === undefined ? null : selectedDataItem.WarehouseID);
-            $("#Warehouse_Code").val(selectedDataItem === undefined || selectedDataItem.WarehouseCode === undefined ? null : selectedDataItem.WarehouseCode);
-            $("#Warehouse_Name").val(selectedDataItem === undefined || selectedDataItem.WarehouseName === undefined ? null : selectedDataItem.WarehouseName);            
+            $("#WarehouseID").val(selectedDataItem === undefined || selectedDataItem.WarehouseID === undefined ? null : selectedDataItem.WarehouseID);
         }
     }
 
@@ -118,9 +111,7 @@
             gridDetails.dataSource.filter({
                 logic: "or",
                 filters: [
-                    { field: "WorkshiftCode", operator: "contains", value: semifinishedRecyclatePendingWorkshiftFilter },
-                    { field: "WarehouseCode", operator: "contains", value: semifinishedRecyclatePendingWorkshiftFilter },
-                    { field: "WarehouseName", operator: "contains", value: semifinishedRecyclatePendingWorkshiftFilter }
+                    { field: "WorkshiftCode", operator: "contains", value: semifinishedRecyclatePendingWorkshiftFilter }
                 ]
             });
 

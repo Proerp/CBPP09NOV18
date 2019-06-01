@@ -13,9 +13,12 @@ namespace TotalModel.Models
     
     public partial class SemifinishedRecyclatePendingWorkshift
     {
-        public int SemifinishedProductWorkshiftID { get; set; }
-        public int SemifinishedProductShiftID { get; set; }
-        public System.DateTime SemifinishedProductEntryDate { get; set; }
         public Nullable<decimal> TotalQuantityRemains { get; set; }
+        public int WorkshiftID { get; set; }
+        public System.DateTime WorkshiftEntryDate { get; set; }
+        public string WorkshiftCode { get; set; }
+        public int WarehouseID { get; set; }
+        public string WarehouseCode { get; set; }
+        public string WarehouseName { get; set; }
     }
 }

@@ -18,7 +18,6 @@ namespace TotalModel.Models
         public int SemifinishedRecyclateID { get; set; }
         public System.DateTime EntryDate { get; set; }
         public int LocationID { get; set; }
-        public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
         public int WarehouseID { get; set; }
         public int CrucialWorkerID { get; set; }
@@ -33,7 +32,6 @@ namespace TotalModel.Models
         public virtual Commodity Commodity { get; set; }
         public virtual SemifinishedProduct SemifinishedProduct { get; set; }
         public virtual SemifinishedRecyclate SemifinishedRecyclate { get; set; }
-        public virtual Shift Shift { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Workshift Workshift { get; set; }
     }

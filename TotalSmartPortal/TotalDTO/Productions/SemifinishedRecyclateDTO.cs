@@ -51,11 +51,6 @@ namespace TotalDTO.Productions
             this.SemifinishedRecyclateViewDetails = new List<SemifinishedRecyclateDetailDTO>();
         }
 
-        public override Nullable<int> WarehouseID { get { return (this.Warehouse != null ? (this.Warehouse.WarehouseID > 0 ? (Nullable<int>)this.Warehouse.WarehouseID : null) : null); } }
-        [Display(Name = "Kho phế phẩm")]
-        [UIHint("Commons/WarehouseBase")]
-        public WarehouseBaseDTO Warehouse { get; set; }
-
         public override int CrucialWorkerID { get { return (this.CrucialWorker != null ? this.CrucialWorker.EmployeeID : 0); } }
         [Display(Name = "NV bàn giao")]
         [UIHint("AutoCompletes/EmployeeBase")]

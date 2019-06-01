@@ -16,7 +16,6 @@ namespace TotalModel.Models
         public int SemifinishedRecyclateDetailID { get; set; }
         public int SemifinishedRecyclateID { get; set; }
         public int SemifinishedProductID { get; set; }
-        public string ShiftCode { get; set; }
         public string ProductionLineCode { get; set; }
         public string FirmOrderCode { get; set; }
         public string Specification { get; set; }

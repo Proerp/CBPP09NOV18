@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="11d7aeb1b70644ed8a1d70fe9c5f52a3" Name="Diagram1" ZoomLevel="10">
+      <Diagram DiagramId="11d7aeb1b70644ed8a1d70fe9c5f52a3" Name="Diagram1" ZoomLevel="18">
         <EntityTypeShape EntityType="TotalSmartPortalModel.AccessControl" Width="1.5" PointX="30.625" PointY="5.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.AccountInvoiceDetail" Width="1.5" PointX="5" PointY="13.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.AccountInvoice" Width="1.5" PointX="2.75" PointY="11.5" IsExpanded="true" />
@@ -503,14 +503,14 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_Labs_VoidTypes" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedRecyclateDetail" Width="1.5" PointX="61.875" PointY="33.75" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedRecyclate" Width="1.5" PointX="59.625" PointY="10.625" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedRecyclateDetail" Width="1.5" PointX="62" PointY="33.25" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedRecyclate" Width="1.5" PointX="59.75" PointY="10.625" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees1" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Locations" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_SemifinishedProducts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_SemifinishedRecyclates" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users" />
@@ -518,7 +518,6 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users2" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Workshifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees1" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
