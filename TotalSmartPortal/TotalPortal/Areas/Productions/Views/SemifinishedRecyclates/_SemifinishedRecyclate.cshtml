@@ -246,7 +246,6 @@
                     })
                     .Events(events =>
                     {
-                        //events.Change("dataSourceChange");
                         events.Error("kendGrid_ErrorHandler");
                     })
                     .Aggregates(a => a.Add(x => x.CommodityCode).Count())
@@ -315,7 +314,7 @@
                 })
                 .Events(events =>
                     {
-                        //events.Change("dataSourceSummaryChange");
+                        events.Change("dataSourceSummaryChange");
                         events.Error("kendGrid_ErrorHandler");
                     })
                 .Aggregates(a => a.Add(x => x.CommodityCode).Count())
@@ -332,96 +331,16 @@
 <script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
 
 <script type="text/javascript">
-    //$("#TotalQuantity").change(function (e) { updateSemifinishedRecyclatePackages(); })
-    //$("#TotalQuantityFailure").change(function (e) { updateSemifinishedRecyclatePackages(); })
-    //$("#TotalQuantityExcess").change(function (e) { updateSemifinishedRecyclatePackages(); })
-    //$("#TotalQuantityShortage").change(function (e) { updateSemifinishedRecyclatePackages(); })
-    //$("#TotalSwarfs").change(function (e) { updateSemifinishedRecyclatePackages(); })
-
-    function updateSemifinishedRecyclatePackages() { //Define function to be called by action some button
-        var kenGrid = $("#kendoGridDetails").data("kendoGrid");
-        var kenGridSummaries = $("#kendoGridSummaries").data("kendoGrid");
-        kenGridSummaries.bind("dataBinding", function (e) { e.preventDefault(); }); //You can prevent the data bind action at the dataBinding event, when updating multiple model properties
-
-        var detailDataRows = kenGrid.dataSource.data();
-        var summaryDataRows = kenGridSummaries.dataSource.data();
-        for (var i = 0; i < summaryDataRows.length; i++) {
-            var summaryDataItem = summaryDataRows[i];
-
-            var commodityID = summaryDataItem["CommodityID"];
-            var quantity = 0; var quantityFailure = 0; var swarfs = 0;
-
-            detailDataRows.forEach(function (detailDataItem) {
-                if (detailDataItem["CommodityID"] === commodityID) {
-                    quantity = quantity + detailDataItem["Quantity"] + detailDataItem["QuantityExcess"];
-                    quantityFailure = quantityFailure + detailDataItem["QuantityFailure"];
-                    swarfs = swarfs + detailDataItem["Swarfs"];
-                }
-            })
-
-            summaryDataItem.set("Quantity", DoRound(quantity, requireConfig.websiteOptions.rndQuantity));
-            summaryDataItem.set("QuantityFailure", DoRound(quantityFailure, requireConfig.websiteOptions.rndQuantity));
-            summaryDataItem.set("Swarfs", DoRound(swarfs, requireConfig.websiteOptions.rndQuantity));
-
-            summaryDataItem.set("Packages", summaryDataItem["PiecePerPack"] * 1 > 0 ? Math.trunc(DoRound(quantity / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity)) : 0);
-            summaryDataItem.set("OddPackages", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantity % summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity) : 0);
-
-            summaryDataItem.set("QuantityWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantity * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndWeight) : 0);
-            summaryDataItem.set("QuantityFailureWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantityFailure * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndWeight) : 0);
-        }
-
-        kenGridSummaries.unbind("dataBinding"); //When finish modifying the data, unbind dataBinding event
-        kenGridSummaries.refresh(); //Then, finally, refresh grid
-    }
-
-    dataSourceChange = function (e) {
-
-        if (confirm("Vui lòng nhấn OK để phần mềm tự tính số lượng khay hư hoặc khay thành phẩm.")) {
-            var dataRow = e.items[0];
-
-            if (e.field === "Quantity") {
-                if (dataRow.Quantity <= dataRow.QuantityRemains) {
-                    dataRow.set("QuantityFailure", DoRound(dataRow.QuantityRemains - dataRow.Quantity, requireConfig.websiteOptions.rndQuantity));
-                }
-                else {
-                    dataRow.set("Quantity", dataRow.QuantityRemains);
-                    dataRow.set("QuantityFailure", 0);
-                }
-            }
-
-            if (e.field === "QuantityFailure") {
-                if (dataRow.QuantityFailure <= dataRow.QuantityRemains) {
-                    dataRow.set("Quantity", DoRound(dataRow.QuantityRemains - dataRow.QuantityFailure, requireConfig.websiteOptions.rndQuantity));
-                }
-                else {
-                    dataRow.set("Quantity", 0);
-                    dataRow.set("QuantityFailure", dataRow.QuantityRemains);
-                }
-            }
-        }
-    }
-
     dataSourceSummaryChange = function (e) {
-        var dataRow = e.items[0];
-        if (e.field === "PiecePerPack" || e.field === "PackageUnitWeights") {
+        if (e.field === "Quantity") {
+            _kenGrid = $("#kendoGridSummaries").data("kendoGrid");
 
-            var kenGrid = $("#kendoGridDetails").data("kendoGrid");
-            var detailDataRows = kenGrid.dataSource.data();
-
-            for (var i = 0; i < detailDataRows.length; i++) {
-                var detailDataItem = detailDataRows[i];
-                if (detailDataItem["CommodityID"] === dataRow["CommodityID"]) {
-                    if (e.field === "PiecePerPack")
-                        detailDataItem.set("PiecePerPack", dataRow["PiecePerPack"]);
-                    if (e.field === "PackageUnitWeights")
-                        detailDataItem.set("PackageUnitWeights", dataRow["PackageUnitWeights"]);
-                }
+            var footerTemplate = _kenGrid.footer.find(".k-footer-template");
+            if (footerTemplate != undefined) {//Footer template found
+                footerTemplate.replaceWith(_kenGrid.footerTemplate(_kenGrid.dataSource.aggregates()));
             }
-
-            updateSemifinishedRecyclatePackages();
         }
     }
-
 
     function newIndex(dataItem) {
         var data = $("#kendoGridSummaries").data("kendoGrid").dataSource.data();
