@@ -1,0 +1,403 @@
+﻿@using TotalBase.Enums;
+@using TotalPortal.Configuration
+
+@model TotalPortal.Areas.Productions.ViewModels.SemifinishedRecyclateViewModel
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MainForm" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTopB.cshtml")
+
+    @Html.HiddenFor(model => model.SemifinishedRecyclateID)
+
+    <div class="left-panel">
+
+        @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
+
+        @Html.HiddenFor(model => model.WorkshiftID)
+        <div class="form-group">
+            @Html.LabelFor(model => model.WorkshiftCode)
+            <div class="div-input">
+                @Html.Kendo().MaskedTextBoxFor(model => model.WorkshiftCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.WorkshiftCode, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.WorkshiftEntryDate)
+            <div class="div-input">
+                @Html.Kendo().DateTimePickerFor(model => model.WorkshiftEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+            </div>
+            <div class="div-validation-message">
+                @Html.ValidationMessageFor(model => model.WorkshiftEntryDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.EditorFor(d => d.CrucialWorker, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.CrucialWorker) })
+        </div>
+        <div class="form-group">
+            @Html.EditorFor(d => d.Storekeeper, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.Storekeeper) })
+        </div>
+
+    </div>
+
+    <div class="right-panel">
+        <div class="div-k-grid-detail">
+            @(Html.Kendo().Grid(Model.SemifinishedRecyclateViewDetails)
+                .Name("kendoGridDetails")
+                .Columns(columns =>
+                {
+
+                    columns.Bound(p => p.SemifinishedRecyclateDetailID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= SemifinishedRecyclateDetailID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].SemifinishedRecyclateDetailID' value='#= SemifinishedRecyclateDetailID #' />");
+                    columns.Bound(p => p.SemifinishedRecyclateID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= SemifinishedRecyclateID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].SemifinishedRecyclateID' value='#= SemifinishedRecyclateID #' />");
+
+
+                    columns.Bound(p => p.SemifinishedProductID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (SemifinishedProductID == null)? '' : SemifinishedProductID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].SemifinishedProductID' value='#= (SemifinishedProductID == null) ? '' : SemifinishedProductID #' />");
+                    columns.Bound(p => p.SemifinishedProductReference).DisplayNameTitle().Width(150).HtmlAttributes(new { style = "" }).Hidden()
+                        .ClientTemplate("#= SemifinishedProductReference #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].SemifinishedProductReference' value='#= SemifinishedProductReference #' />");
+                    columns.Bound(p => p.SemifinishedProductEntryDate).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(25).Hidden()
+                        .Format("{0:" + @Settings.DateFormat + "}")
+                        .ClientTemplate("#= (SemifinishedProductEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', SemifinishedProductEntryDate) #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].SemifinishedProductEntryDate' value='#= (SemifinishedProductEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', SemifinishedProductEntryDate) #' />");
+                    columns.Bound(p => p.ProductionLineCode).DisplayNameTitle().Width(150).HtmlAttributes(new { style = "" }).Hidden()
+                        .ClientTemplate("#= ProductionLineCode #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].ProductionLineCode' value='#= ProductionLineCode #' />");
+                    columns.Bound(p => p.FirmOrderCode).DisplayNameTitle().Width(150).HtmlAttributes(new { style = "" }).Hidden()
+                        .ClientTemplate("#= FirmOrderCode #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].FirmOrderCode' value='#= FirmOrderCode #' />");
+                    columns.Bound(p => p.Specification).DisplayNameTitle().Width(150).HtmlAttributes(new { style = "" }).Hidden()
+                        .ClientTemplate("#= Specification #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].Specification' value='#= Specification #' />");
+                    
+
+                    columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(128).EditorTemplateName("StringReadonly")
+                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
+                        .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
+                    columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
+                    
+                    columns.Bound(p => p.RecycleCommodityID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= RecycleCommodityID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].RecycleCommodityID' value='#= RecycleCommodityID #' />");
+                    columns.Bound(p => p.RecycleCommodityCode).DisplayNameTitle().Width(150).HtmlAttributes(new { style = "" }).Hidden()
+                        .ClientTemplate("#= RecycleCommodityCode #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].RecycleCommodityCode' value='#= RecycleCommodityCode #' />");
+                    columns.Bound(p => p.RecycleCommodityTypeID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= RecycleCommodityTypeID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].RecycleCommodityTypeID' value='#= RecycleCommodityTypeID #' />");
+
+                   
+                    columns.Bound(p => p.RejectWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', RejectWeights) #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].RejectWeights' value='#= RejectWeights #' />");
+                    columns.Bound(p => p.FailureWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', FailureWeights) #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].FailureWeights' value='#= FailureWeights #' />");
+                    
+                    columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
+
+                    columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
+                        .Format(Settings.kfmQuantity)
+                        .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
+                })
+                    .Filterable(f => f.Enabled(false))
+                    .Navigatable()
+                    .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
+                    .Selectable(settings =>
+                    {
+                        settings.Mode(GridSelectionMode.Multiple);
+                        settings.Type(GridSelectionType.Row);
+                    })
+                    .Events(events =>
+                    {
+                        events.DataBound(@<text>
+                            function(e) {
+
+                            var grid = $("#kendoGridDetails").data("kendoGrid");
+                            var data = grid.dataSource.data();
+                            $.each(data, function (i, row) {
+                            var isWarrantyClaim = row.VoidTypeName;
+                            if (isWarrantyClaim != null && isWarrantyClaim != '') {
+                            $('tr[data-uid="' + row.uid + '"]').addClass("isBonus");
+                            }
+                            });
+                            }
+                        </text>);
+                    }).DataSource(dataSource => dataSource
+                    .Ajax()
+                    .Batch(true)
+                    .ServerOperation(false)
+                    .Model(model =>
+                    {
+                        model.Id(x => x.SemifinishedRecyclateDetailID);
+                        model.Field(m => m.SemifinishedRecyclateDetailID).DefaultValue(0);
+                        model.Field(m => m.SemifinishedRecyclateID).DefaultValue(@Model.SemifinishedRecyclateID);
+                    })
+                    .Events(events =>
+                    {
+                        //events.Change("dataSourceChange");
+                        events.Error("kendGrid_ErrorHandler");
+                    })
+                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                    .Aggregates(a => a.Add(x => x.RejectWeights).Sum())
+                    .Aggregates(a => a.Add(x => x.FailureWeights).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                )
+            )
+        </div>
+
+
+
+        <div class="div-k-panel">
+            @(Html.Kendo().PanelBar()
+                .Name("IntroPanelBar")
+                .Items(items =>
+                {
+                    items.Add()
+                        .Text("Thông tin khác")
+                        .Selected(true)
+                        .Expanded(false)
+                        .Content(@<text>
+                            <div class="right-first-panel">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Description, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => model.Description).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Remarks, new { @class = "right-panel-label" })
+                                    <div class="div-input">
+                                        @Html.Kendo().MaskedTextBoxFor(model => model.Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                    </div>
+                                    <div class="div-validation-message">
+                                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="right-second-panel">
+                                @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/PreparedPerson.cshtml")
+                                @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/Approver.cshtml")
+                            </div>
+
+                        </text>).HtmlAttributes(new { @class = "panel-class" });
+                })
+            )
+        </div>
+
+        <div style="clear:both;"></div>
+
+        <div class="div-k-panel">
+            @(Html.Kendo().PanelBar()
+                .Name("SummartyPanelBar")
+                .Items(items =>
+                {
+                    items.Add()
+                        .Text("Tổng hợp phiếu đóng gói")
+                        .Selected(true)
+                        .Expanded(true)
+                        .Content(@<text>
+                            @kendoSummaryGrid()
+                        </text>).HtmlAttributes(new { @class = "panel-class" });
+                })
+            )
+        </div>
+
+        <div class="right-botton-panel">
+            @if (Model.Editable)
+            {
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedRecyclates")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedRecyclates")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
+            }
+            else
+            {
+                if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
+                {
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "SemifinishedRecyclates", new {id = @Model.SemifinishedRecyclateID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt phiếu </button>
+                }
+            }
+        </div>
+
+        @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
+
+    </div>
+
+    @helper kendoSummaryGrid()
+{
+    @(Html.Kendo().Grid(Model.SemifinishedRecyclateSummaries)
+            .Name("kendoGridSummaries")
+            .Columns(columns =>
+            {
+                columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
+                    .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='SemifinishedRecyclateSummaryViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
+                columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(110).EditorTemplateName("StringReadonly")
+                    .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='SemifinishedRecyclateSummaryViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
+                    .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
+                columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(160).HtmlAttributes(new { style = "" })
+                    .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='SemifinishedRecyclateSummaryViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
+                columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
+                    .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='SemifinishedRecyclateSummaryViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
+
+
+                columns.Bound(p => p.RejectWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                    .Format(Settings.kfmN0)
+                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
+                    .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', RejectWeights) #" + "<input type='hidden' name='SemifinishedRecyclateSummaryViewDetails[#= index(data) #].RejectWeights' value='#= RejectWeights #' />");
+                columns.Bound(p => p.FailureWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                    .Format(Settings.kfmN0)
+                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
+                    .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', FailureWeights) #" + "<input type='hidden' name='SemifinishedRecyclateSummaryViewDetails[#= index(data) #].FailureWeights' value='#= FailureWeights #' />");
+                
+                columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                    .Format(Settings.kfmN0)
+                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
+                    .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', QuantityRemains) #" + "<input type='hidden' name='SemifinishedRecyclateSummaryViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
+
+                columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(35)
+                    .Format(Settings.kfmN0)
+                    .ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #")
+                    .ClientTemplate("#= kendo.format('" + Settings.kfmN0 + "', Quantity) #" + "<input type='hidden' name='SemifinishedRecyclateSummaryViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
+
+            })
+            .Navigatable()
+            .Filterable(f => f.Enabled(false))
+            .Editable(editable => { editable.Enabled(Model.Editable); editable.Mode(GridEditMode.InCell).DisplayDeleteConfirmation(true).CreateAt(GridInsertRowPosition.Bottom); })
+            .Selectable(settings =>
+            {
+                settings.Mode(GridSelectionMode.Multiple);
+                settings.Type(GridSelectionType.Row);
+            })
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .Batch(true)
+                .ServerOperation(false)
+                .Model(model =>
+                {
+                    model.Id(x => x.CommodityID);
+                    model.Field(m => m.CommodityID).DefaultValue(0);
+                })
+                .Events(events =>
+                    {
+                        events.Change("dataSourceSummaryChange");
+                        events.Error("kendGrid_ErrorHandler");
+                    })
+                .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                .Aggregates(a => a.Add(x => x.RejectWeights).Sum())
+                .Aggregates(a => a.Add(x => x.FailureWeights).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                .Aggregates(a => a.Add(x => x.Quantity).Sum())                        
+            )
+    )
+}
+
+}
+
+<script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
+
+<script type="text/javascript">
+    $("#TotalQuantity").change(function (e) { updateSemifinishedRecyclateSummaries(); })
+    $("#TotalQuantityFailure").change(function (e) { updateSemifinishedRecyclateSummaries(); })
+    $("#TotalQuantityExcess").change(function (e) { updateSemifinishedRecyclateSummaries(); })
+    $("#TotalQuantityShortage").change(function (e) { updateSemifinishedRecyclateSummaries(); })
+    $("#TotalSwarfs").change(function (e) { updateSemifinishedRecyclateSummaries(); })
+
+    function updateSemifinishedRecyclateSummaries() { //Define function to be called by action some button
+        var kenGrid = $("#kendoGridDetails").data("kendoGrid");
+        var kenGridSummaries = $("#kendoGridSummaries").data("kendoGrid");
+        kenGridSummaries.bind("dataBinding", function (e) { e.preventDefault(); }); //You can prevent the data bind action at the dataBinding event, when updating multiple model properties
+
+        var detailDataRows = kenGrid.dataSource.data();
+        var summaryDataRows = kenGridSummaries.dataSource.data();
+        for (var i = 0; i < summaryDataRows.length; i++) {
+            var summaryDataItem = summaryDataRows[i];
+
+            var commodityID = summaryDataItem["CommodityID"];
+            var quantity = 0; var quantityFailure = 0; var swarfs = 0;
+
+            detailDataRows.forEach(function (detailDataItem) {
+                if (detailDataItem["CommodityID"] === commodityID) {
+                    quantity = quantity + detailDataItem["Quantity"] + detailDataItem["QuantityExcess"];
+                    quantityFailure = quantityFailure + detailDataItem["QuantityFailure"];
+                    swarfs = swarfs + detailDataItem["Swarfs"];
+                }
+            })
+
+            summaryDataItem.set("Quantity", DoRound(quantity, requireConfig.websiteOptions.rndQuantity));
+            summaryDataItem.set("QuantityFailure", DoRound(quantityFailure, requireConfig.websiteOptions.rndQuantity));
+            summaryDataItem.set("Swarfs", DoRound(swarfs, requireConfig.websiteOptions.rndQuantity));
+
+            summaryDataItem.set("Packages", summaryDataItem["PiecePerPack"] * 1 > 0 ? Math.trunc(DoRound(quantity / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity)) : 0);
+            summaryDataItem.set("OddPackages", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantity % summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndQuantity) : 0);
+
+            summaryDataItem.set("QuantityWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantity * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndWeight) : 0);
+            summaryDataItem.set("QuantityFailureWeights", summaryDataItem["PiecePerPack"] * 1 > 0 ? DoRound(quantityFailure * summaryDataItem["PackageUnitWeights"] / summaryDataItem["PiecePerPack"], requireConfig.websiteOptions.rndWeight) : 0);
+        }
+
+        kenGridSummaries.unbind("dataBinding"); //When finish modifying the data, unbind dataBinding event
+        kenGridSummaries.refresh(); //Then, finally, refresh grid
+    }
+
+    dataSourceChange = function (e) {
+
+        if (confirm("Vui lòng nhấn OK để phần mềm tự tính số lượng khay hư hoặc khay thành phẩm.")) {
+            var dataRow = e.items[0];
+
+            if (e.field === "Quantity") {
+                if (dataRow.Quantity <= dataRow.QuantityRemains) {
+                    dataRow.set("QuantityFailure", DoRound(dataRow.QuantityRemains - dataRow.Quantity, requireConfig.websiteOptions.rndQuantity));
+                }
+                else {
+                    dataRow.set("Quantity", dataRow.QuantityRemains);
+                    dataRow.set("QuantityFailure", 0);
+                }
+            }
+
+            if (e.field === "QuantityFailure") {
+                if (dataRow.QuantityFailure <= dataRow.QuantityRemains) {
+                    dataRow.set("Quantity", DoRound(dataRow.QuantityRemains - dataRow.QuantityFailure, requireConfig.websiteOptions.rndQuantity));
+                }
+                else {
+                    dataRow.set("Quantity", 0);
+                    dataRow.set("QuantityFailure", dataRow.QuantityRemains);
+                }
+            }
+        }
+    }
+
+    dataSourceSummaryChange = function (e) {
+        var dataRow = e.items[0];
+        if (e.field === "PiecePerPack" || e.field === "PackageUnitWeights") {
+
+            var kenGrid = $("#kendoGridDetails").data("kendoGrid");
+            var detailDataRows = kenGrid.dataSource.data();
+
+            for (var i = 0; i < detailDataRows.length; i++) {
+                var detailDataItem = detailDataRows[i];
+                if (detailDataItem["CommodityID"] === dataRow["CommodityID"]) {
+                    if (e.field === "PiecePerPack")
+                        detailDataItem.set("PiecePerPack", dataRow["PiecePerPack"]);
+                    if (e.field === "PackageUnitWeights")
+                        detailDataItem.set("PackageUnitWeights", dataRow["PackageUnitWeights"]);
+                }
+            }
+
+            updateSemifinishedRecyclateSummaries();
+        }
+    }
+
+</script>

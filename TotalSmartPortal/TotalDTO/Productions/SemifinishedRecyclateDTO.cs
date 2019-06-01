@@ -22,8 +22,12 @@ namespace TotalDTO.Productions
 
         public int SemifinishedRecyclateID { get; set; }
 
-        public int ShiftID { get; set; }
-        public int WorkshiftID { get; set; } // WHEN ADD NEW: THIS WILL BE ZERO. THEN, THE REAL VALUE OF WorkshiftID WILL BE UPDATE BY MaterialIssueSaveRelative
+        public virtual int WorkshiftID { get; set; }
+        [Display(Name = "Ca sản xuất")]
+        public string WorkshiftCode { get; set; }
+        [Display(Name = "Ngày sản xuất")]
+        public DateTime WorkshiftEntryDate { get; set; }
+
 
         [Required(ErrorMessage = "Vui lòng chọn kho nhập")]
         public virtual Nullable<int> WarehouseID { get; set; }
@@ -35,8 +39,7 @@ namespace TotalDTO.Productions
         {
             base.PerformPresaveRule();
 
-            this.ShiftSaving(this.ShiftID);
-            this.DtoDetails().ToList().ForEach(e => { e.WarehouseID = (int)this.WarehouseID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; e.StorekeeperID = this.StorekeeperID; });
+            this.DtoDetails().ToList().ForEach(e => { e.WarehouseID = (int)this.WarehouseID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; e.StorekeeperID = this.StorekeeperID; });
         }
     }
 

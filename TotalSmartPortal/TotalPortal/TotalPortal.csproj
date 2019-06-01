@@ -1933,6 +1933,13 @@
     <Content Include="Areas\Purchases\Views\MaterialArrivals\GetPendingPurchaseOrderDetails.cshtml" />
     <Content Include="Areas\Purchases\Views\Labs\Void.cshtml" />
     <Content Include="Areas\Purchases\Views\Labs\Hold.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedRecyclates\Approve.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedRecyclates\CreateWizard.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedRecyclates\Delete.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedRecyclates\Edit.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedRecyclates\Index.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedRecyclates\Print.cshtml" />
+    <Content Include="Areas\Productions\Views\SemifinishedRecyclates\_SemifinishedRecyclate.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">

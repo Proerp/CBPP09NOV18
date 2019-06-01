@@ -1,0 +1,134 @@
+﻿@using TotalBase.Enums;
+@using TotalPortal.Configuration;
+@using TotalModel.Models;
+
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+
+@model TotalPortal.Areas.Productions.ViewModels.SemifinishedRecyclateViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
+
+    @Html.HiddenFor(model => model.WorkshiftID)
+    @Html.HiddenFor(model => model.WorkshiftCode)
+    @Html.HiddenFor(model => model.WorkshiftEntryDate)
+    
+    @Html.HiddenFor(model => model.Warehouse.WarehouseID)
+    @Html.HiddenFor(model => model.Warehouse.Code)
+    @Html.HiddenFor(model => model.Warehouse.Name)
+   
+    @Html.HiddenFor(model => model.CrucialWorker.EmployeeID);
+    @Html.HiddenFor(model => model.CrucialWorker.Name);
+
+    @Html.HiddenFor(model => model.Storekeeper.EmployeeID);
+    @Html.HiddenFor(model => model.Storekeeper.Name);
+
+    @Html.HiddenFor(model => model.Description);
+
+    @(Html.Kendo().Grid<SemifinishedRecyclatePendingWorkshift>()
+           .Name("semifinishedRecyclatePendingWorkshiftGrid")
+        .Columns(columns =>
+        {
+            columns.Bound(c => c.SemifinishedProductShiftID).Title("KHSX").Width(28);
+            //columns.Bound(c => c.FirmOrderCode).Title("Mã CT").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(25);
+            //columns.Bound(c => c.FirmOrderEntryDate).Title("Ngày KHSX").Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(38);                        
+            //columns.Bound(c => c.FirmOrderSpecification).Title("Mã thành phẩm").Width(80);            
+            //columns.Bound(c => c.CustomerName).Title("Khách hàng").Width(60);                       
+        })
+        .ToolBar(toolbar =>
+        {
+            toolbar.Template(@<text>
+                <div class="toolbar" style="float: right;">
+                    <label>Nhập mã chừng từ, số KHSX, mã thành phẩm hoặc khách hàng</label>
+                    <input id="semifinishedRecyclatePendingWorkshiftFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="semifinishedRecyclatePendingWorkshiftFilter_KeyUp()" />
+                </div>
+            </text>);
+        })
+        .Scrollable(s => s.Height(Settings.PopupContentHeight))
+        .DataSource(ds => ds.Ajax()
+                    .Read(read => read.Action("GetFirmOrders", "SemifinishedRecyclateAPIs", new { area = "Productions" }).Data(@<text>
+                function (e) {
+                    return {
+                        locationID: window.parent.requireConfig.pageOptions.LocationID
+                    };
+                }
+                </text>))
+                .ServerOperation(false)
+            )
+            .Selectable()
+    )
+
+
+    <div class="background-bar" style="height: 45px;">
+        <div class="popup-button-bar">
+            <input id="submitCreateWizard" type="submit" formaction="@Url.Action("CreateWizard", "SemifinishedRecyclates")" formtarget="_top" style="display:none" />
+
+            <button type="button" class="k-button" onclick="okButton_Click()"> <img src="~/Content/Images/Mains/Size24/Accept-Total.png" /> Tiếp tục </button>
+            <button type="button" class="k-button" onclick="window.parent.$('#myWindow').data('kendoWindow').close()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Thoát </button>
+        </div>
+    </div>
+
+}
+
+<link href="@Url.Content("~/Content/CustomCss/GeneralPopup.css")" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript">
+    $("#semifinishedRecyclatePendingWorkshiftGrid").dblclick(function (e) {
+        okButton_Click();
+    })   
+
+    function okButton_Click() {
+        handleOKEvent();
+    }
+
+    function handleOKEvent(promotionGrid) { //This javascript is now used only here. Later, if it is used somewhere else, it should be break into a standalone js file, and then just only add a link here
+
+        var selectedGrid = $("#semifinishedRecyclatePendingWorkshiftGrid").data("kendoGrid");
+        var selectedDataItem = selectedGrid.dataItem(selectedGrid.select());
+        if (selectedDataItem === undefined || selectedDataItem === null)
+            return false;
+        
+        _setModelInput(selectedDataItem);
+
+
+        $("#submitCreateWizard").trigger("click");
+
+
+        function _setModelInput(selectedDataItem) {            
+
+            $("#WorkshiftID").val(selectedDataItem === undefined || selectedDataItem.WorkshiftID === undefined ? null : selectedDataItem.WorkshiftID);
+            $("#WorkshiftCode").val(selectedDataItem === undefined || selectedDataItem.WorkshiftCode === undefined ? null : selectedDataItem.WorkshiftCode);
+            $("#WorkshiftEntryDate").val(selectedDataItem === undefined || selectedDataItem.WorkshiftEntryDate === undefined ? null : kendo.toString(selectedDataItem.WorkshiftEntryDate, Settings.DateTimeFormat));
+
+            $("#Warehouse_WarehouseID").val(selectedDataItem === undefined || selectedDataItem.WarehouseID === undefined ? null : selectedDataItem.WarehouseID);
+            $("#Warehouse_Code").val(selectedDataItem === undefined || selectedDataItem.WarehouseCode === undefined ? null : selectedDataItem.WarehouseCode);
+            $("#Warehouse_Name").val(selectedDataItem === undefined || selectedDataItem.WarehouseName === undefined ? null : selectedDataItem.WarehouseName);            
+        }
+    }
+
+
+    function semifinishedRecyclatePendingWorkshiftFilter_KeyUp() {
+        var semifinishedRecyclatePendingWorkshiftFilter = $("#semifinishedRecyclatePendingWorkshiftFilter").val(), gridDetails = $("#semifinishedRecyclatePendingWorkshiftGrid").data("kendoGrid");
+
+        if (semifinishedRecyclatePendingWorkshiftFilter && semifinishedRecyclatePendingWorkshiftFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "WorkshiftCode", operator: "contains", value: semifinishedRecyclatePendingWorkshiftFilter },
+                    { field: "WarehouseCode", operator: "contains", value: semifinishedRecyclatePendingWorkshiftFilter },
+                    { field: "WarehouseName", operator: "contains", value: semifinishedRecyclatePendingWorkshiftFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+</script>

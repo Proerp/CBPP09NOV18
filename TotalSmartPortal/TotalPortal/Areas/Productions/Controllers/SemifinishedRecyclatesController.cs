@@ -73,12 +73,6 @@ namespace TotalPortal.Areas.Productions.Controllers
         {
             simpleViewModel = base.InitViewModelByDefault(simpleViewModel);
 
-            if (simpleViewModel.ShiftID == 0)
-            {
-                string shiftSession = ShiftSession.GetShift(this.HttpContext);
-                if (HomeSession.TryParseID(shiftSession) > 0) simpleViewModel.ShiftID = (int)HomeSession.TryParseID(shiftSession);
-            }
-
             if (simpleViewModel.CrucialWorker == null)
             {
                 string storekeeperSession = SemifinishedRecyclateSession.GetCrucialWorker(this.HttpContext);
@@ -109,7 +103,6 @@ namespace TotalPortal.Areas.Productions.Controllers
         protected override void BackupViewModelToSession(SemifinishedRecyclateViewModel simpleViewModel)
         {
             base.BackupViewModelToSession(simpleViewModel);
-            ShiftSession.SetShift(this.HttpContext, simpleViewModel.ShiftID);
             SemifinishedRecyclateSession.SetCrucialWorker(this.HttpContext, simpleViewModel.CrucialWorker.EmployeeID, simpleViewModel.CrucialWorker.Name);
             SemifinishedRecyclateSession.SetStorekeeper(this.HttpContext, simpleViewModel.Storekeeper.EmployeeID, simpleViewModel.Storekeeper.Name);
         }

@@ -16,7 +16,6 @@ namespace TotalDTO.Productions
         public int SemifinishedRecyclateDetailID { get; set; }
         public int SemifinishedRecyclateID { get; set; }
 
-        public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
 
         public int WarehouseID { get; set; }
@@ -30,7 +29,6 @@ namespace TotalDTO.Productions
 
         public DateTime SemifinishedProductEntryDate { get; set; }
         
-        public string ShiftCode { get; set; }
         public string ProductionLineCode { get; set; }
         public string FirmOrderCode { get; set; }
         public string Specification { get; set; }
@@ -60,6 +58,9 @@ namespace TotalDTO.Productions
 
 
         public Nullable<int> RecycleCommodityID { get; set; }
+        [Range(1, 99999999999, ErrorMessage = "Lỗi bắt buộc phải có id loại hàng hóa")]
+        [Required(ErrorMessage = "Lỗi bắt buộc phải có loại hàng hóa")]
+        public virtual int RecycleCommodityTypeID { get; set; }
         [Display(Name = "Mã phế phẩm")]
         [UIHint("StringReadonly")]
         public string RecycleCommodityCode { get; set; }
@@ -86,7 +87,9 @@ namespace TotalDTO.Productions
         [Display(Name = "Tên phế phẩm")]
         [UIHint("StringReadonly")]
         public string CommodityName { get; set; }
-
+        [Range(1, 99999999999, ErrorMessage = "Lỗi bắt buộc phải có id loại hàng hóa")]
+        [Required(ErrorMessage = "Lỗi bắt buộc phải có loại hàng hóa")]
+        public virtual int CommodityTypeID { get; set; }
 
         [Display(Name = "SỐ kg tấm hư")]
         [UIHint("QuantityReadonly")]

@@ -66,7 +66,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "       SELECT          Workshifts.WorkshiftID AS SemifinishedProductWorkshiftID, Workshifts.ShiftID AS SemifinishedProductShiftID, Workshifts.EntryDate AS SemifinishedProductEntryDate, SemifinishedProductRemains.TotalQuantityRemains " + "\r\n";
+            queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, SemifinishedProductRemains.TotalQuantityRemains " + "\r\n";
 
             queryString = queryString + "       FROM           (SELECT WorkshiftID, ROUND(SUM(RejectWeights + FailureWeights - RecycleWeights), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM SemifinishedProducts WHERE Approved = 1 AND ROUND(RejectWeights + FailureWeights - RecycleWeights - RecycleLoss, " + (int)GlobalEnums.rndQuantity + ") > 0 " + " GROUP BY WorkshiftID) AS SemifinishedProductRemains " + "\r\n";
             queryString = queryString + "                       INNER JOIN Workshifts ON SemifinishedProductRemains.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
@@ -115,12 +115,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      0 AS SemifinishedRecyclateDetailID, 0 AS SemifinishedRecyclateID, SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.EntryDate AS SemifinishedProductEntryDate, SemifinishedProducts.Reference AS SemifinishedProductReference, Shifts.Code AS ShiftCode, ProductionLines.Code AS ProductionLineCode, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification, " + "\r\n";
+            queryString = queryString + "       SELECT      0 AS SemifinishedRecyclateDetailID, 0 AS SemifinishedRecyclateID, SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.EntryDate AS SemifinishedProductEntryDate, SemifinishedProducts.Reference AS SemifinishedProductReference, ProductionLines.Code AS ProductionLineCode, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.CommodityTypeID, Commodities.RecycleCommodityID, RecycleCommodities.Code AS RecycleCommodityCode, RecycleCommodities.Name AS RecycleCommodityName, SemifinishedProducts.RejectWeights, SemifinishedProducts.FailureWeights, ROUND(SemifinishedProducts.RejectWeights + SemifinishedProducts.FailureWeights - SemifinishedProducts.RecycleWeights, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, 0.0 AS Quantity " + "\r\n"; //QuantityRemains NOT INCLUDED RecycleLoss, BUT: CHECK PENDING MUST MINUS RecycleLoss!!!!!!
 
             queryString = queryString + "       FROM        SemifinishedProducts " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Shifts ON SemifinishedProducts.WorkshiftID = @WorkshiftID AND SemifinishedProducts.Approved = 1 AND ROUND(SemifinishedProducts.RejectWeights + SemifinishedProducts.FailureWeights - SemifinishedProducts.RecycleWeights - SemifinishedProducts.RecycleLoss, " + (int)GlobalEnums.rndQuantity + ") > 0 AND SemifinishedProducts.ShiftID = Shifts.ShiftID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN ProductionLines ON SemifinishedProducts.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN ProductionLines ON SemifinishedProducts.WorkshiftID = @WorkshiftID AND SemifinishedProducts.Approved = 1 AND ROUND(SemifinishedProducts.RejectWeights + SemifinishedProducts.FailureWeights - SemifinishedProducts.RecycleWeights - SemifinishedProducts.RecycleLoss, " + (int)GlobalEnums.rndQuantity + ") > 0 AND SemifinishedProducts.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
             queryString = queryString + "                   INNER JOIN FirmOrders ON SemifinishedProducts.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
             queryString = queryString + "                   INNER JOIN MaterialIssueDetails ON SemifinishedProducts.MaterialIssueDetailID = MaterialIssueDetails.MaterialIssueDetailID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON MaterialIssueDetails.CommodityID = Commodities.CommodityID " + "\r\n";
@@ -133,12 +132,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         {
             string queryString = "";
 
-            queryString = queryString + "       SELECT      SemifinishedRecyclateDetails.SemifinishedRecyclateDetailID, SemifinishedRecyclateDetails.SemifinishedRecyclateID, SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.EntryDate AS SemifinishedProductEntryDate, SemifinishedProducts.Reference AS SemifinishedProductReference, Shifts.Code AS ShiftCode, ProductionLines.Code AS ProductionLineCode, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification, " + "\r\n";
+            queryString = queryString + "       SELECT      SemifinishedRecyclateDetails.SemifinishedRecyclateDetailID, SemifinishedRecyclateDetails.SemifinishedRecyclateID, SemifinishedProducts.SemifinishedProductID, SemifinishedProducts.EntryDate AS SemifinishedProductEntryDate, SemifinishedProducts.Reference AS SemifinishedProductReference, ProductionLines.Code AS ProductionLineCode, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.CommodityTypeID, Commodities.RecycleCommodityID, RecycleCommodities.Code AS RecycleCommodityCode, RecycleCommodities.Name AS RecycleCommodityName, SemifinishedProducts.RejectWeights, SemifinishedProducts.FailureWeights, ROUND(SemifinishedProducts.RejectWeights + SemifinishedProducts.FailureWeights - SemifinishedProducts.RecycleWeights + SemifinishedRecyclateDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, SemifinishedRecyclateDetails.Quantity " + "\r\n";
 
             queryString = queryString + "       FROM        SemifinishedRecyclateDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN SemifinishedProducts ON SemifinishedRecyclateDetails.SemifinishedRecyclateID = @SemifinishedRecyclateID AND SemifinishedRecyclateDetails.SemifinishedProductID = SemifinishedProducts.SemifinishedProductID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Shifts ON SemifinishedProducts.ShiftID = Shifts.ShiftID " + "\r\n";
             queryString = queryString + "                   INNER JOIN ProductionLines ON SemifinishedProducts.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
             queryString = queryString + "                   INNER JOIN FirmOrders ON SemifinishedProducts.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON SemifinishedRecyclateDetails.CommodityID = Commodities.CommodityID " + "\r\n";
@@ -156,27 +154,6 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "       BEGIN  " + "\r\n";
 
             queryString = queryString + "           DECLARE @msg NVARCHAR(300) ";
-
-            queryString = queryString + "           IF (@SaveRelativeOption = 1) " + "\r\n";
-            queryString = queryString + "               BEGIN " + "\r\n";
-
-            #region UPDATE WorkshiftID
-            queryString = queryString + "                   DECLARE         @EntryDate Datetime, @ShiftID int, @WorkshiftID int " + "\r\n";
-            queryString = queryString + "                   SELECT          @EntryDate = CONVERT(date, EntryDate), @ShiftID = ShiftID FROM SemifinishedRecyclates WHERE SemifinishedRecyclateID = @EntityID " + "\r\n";
-            queryString = queryString + "                   SET             @WorkshiftID = (SELECT TOP 1 WorkshiftID FROM Workshifts WHERE EntryDate = @EntryDate AND ShiftID = @ShiftID) " + "\r\n";
-
-            queryString = queryString + "                   IF             (@WorkshiftID IS NULL) " + "\r\n";
-            queryString = queryString + "                       BEGIN ";
-            queryString = queryString + "                           INSERT INTO     Workshifts(EntryDate, ShiftID, Code, Name, WorkingHours, Remarks) SELECT @EntryDate, ShiftID, Code, Name, WorkingHours, Remarks FROM Shifts WHERE ShiftID = @ShiftID " + "\r\n";
-            queryString = queryString + "                           SELECT          @WorkshiftID = SCOPE_IDENTITY(); " + "\r\n";
-            queryString = queryString + "                       END ";
-
-            queryString = queryString + "                   UPDATE          SemifinishedRecyclates        SET WorkshiftID = @WorkshiftID WHERE SemifinishedRecyclateID = @EntityID " + "\r\n";
-            queryString = queryString + "                   UPDATE          SemifinishedRecyclateDetails  SET WorkshiftID = @WorkshiftID WHERE SemifinishedRecyclateID = @EntityID " + "\r\n";
-            #endregion UPDATE WorkshiftID
-
-            queryString = queryString + "               END " + "\r\n";
-
 
             queryString = queryString + "           UPDATE          SemifinishedProducts " + "\r\n";
             queryString = queryString + "           SET             SemifinishedProducts.RecycleWeights = ROUND(SemifinishedProducts.RecycleWeights + SemifinishedRecyclateDetails.Quantity * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + "), " + "\r\n";
