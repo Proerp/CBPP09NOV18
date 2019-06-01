@@ -26,11 +26,5 @@ namespace TotalService.Productions
             ObjectParameter[] parameters = new ObjectParameter[] { new ObjectParameter("SemifinishedRecyclateID", semifinishedRecyclateID), new ObjectParameter("LocationID", locationID), new ObjectParameter("WorkshiftID", workshiftID), new ObjectParameter("IsReadonly", isReadonly) };
             return this.GetViewDetails(parameters);
         }
-
-        public override bool Save(SemifinishedRecyclateDTO semifinishedRecyclateDTO)
-        {
-            semifinishedRecyclateDTO.SemifinishedRecyclateViewDetails.RemoveAll(x => (x.Quantity == 0));
-            return base.Save(semifinishedRecyclateDTO);
-        }
     }
 }

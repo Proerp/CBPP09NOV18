@@ -49,6 +49,8 @@ namespace TotalDTO.Productions
         public SemifinishedRecyclateDTO()
         {
             this.SemifinishedRecyclateViewDetails = new List<SemifinishedRecyclateDetailDTO>();
+
+            this.SemifinishedRecyclatePackages = new List<SemifinishedRecyclatePackageDTO>();
         }
 
         public override int CrucialWorkerID { get { return (this.CrucialWorker != null ? this.CrucialWorker.EmployeeID : 0); } }
@@ -69,6 +71,6 @@ namespace TotalDTO.Productions
         protected override IEnumerable<SemifinishedRecyclateDetailDTO> DtoDetails() { return this.SemifinishedRecyclateViewDetails; }
 
 
-        public List<SemifinishedRecyclatePackageDTO> SemifinishedRecyclateSummaries { get; set; }
+        public List<SemifinishedRecyclatePackageDTO> SemifinishedRecyclatePackages { get; set; }
     }
 }

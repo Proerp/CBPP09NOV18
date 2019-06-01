@@ -64,7 +64,7 @@ namespace TotalPortal.Areas.Productions.Controllers
                                                     Quantity = sl.Sum(s => s.Quantity)
                                                 });
 
-                semifinishedRecyclateViewModel.SemifinishedRecyclateSummaries = semifinishedRecyclatePackages.ToList();
+                semifinishedRecyclateViewModel.SemifinishedRecyclatePackages = semifinishedRecyclatePackages.ToList();
             }
             return base.TailorViewModel(semifinishedRecyclateViewModel, forDelete, forAlter, forOpen);
         }

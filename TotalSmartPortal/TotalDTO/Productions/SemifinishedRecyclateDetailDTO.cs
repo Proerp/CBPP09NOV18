@@ -41,18 +41,18 @@ namespace TotalDTO.Productions
         [UIHint("StringReadonly")]
         public string Specification { get; set; }
 
-        [Display(Name = "Kg hư")]
+        [Display(Name = "Tấm hư")]
         [UIHint("QuantityReadonly")]        
         public decimal RejectWeights { get; set; }
-        [Display(Name = "Kg pp")]
+        [Display(Name = "Biên, pp")]
         [UIHint("QuantityReadonly")]        
         public decimal FailureWeights { get; set; }
 
-        [Display(Name = "TC")]
+        [Display(Name = "TC pp")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
 
-        [Display(Name = "KL cân")]
+        [Display(Name = "KL thực giao")]
         [UIHint("Quantity")]
         public override decimal Quantity { get; set; }
 
@@ -97,10 +97,10 @@ namespace TotalDTO.Productions
         [Required(ErrorMessage = "Lỗi bắt buộc phải có loại hàng hóa")]
         public virtual int CommodityTypeID { get; set; }
 
-        [Display(Name = "Kg tấm hư")]
+        [Display(Name = "Số kg tấm hư")]
         [UIHint("QuantityReadonly")]
         public decimal RejectWeights { get; set; }
-        [Display(Name = "Số kg phế phẩm")]
+        [Display(Name = "Số kg biên, pp")]
         [UIHint("QuantityReadonly")]
         public decimal FailureWeights { get; set; }
 
