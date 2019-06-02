@@ -16,6 +16,7 @@
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
 
+        @Html.HiddenFor(model => model.WarehouseID)
         @Html.HiddenFor(model => model.WorkshiftID)
         <div class="form-group">
             @Html.LabelFor(model => model.WorkshiftCode)
@@ -269,12 +270,14 @@
                 columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(210).EditorTemplateName("StringReadonly")
                     .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].CommodityCode' value='#= CommodityCode #' />")
                     .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
-                columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(270).HtmlAttributes(new { style = "" })
+                columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(200).HtmlAttributes(new { style = "" })
                     .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].CommodityName' value='#= CommodityName #' />");
                 columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                     .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
-
+                columns.Bound(p => p.Remarks).DisplayNameTitle().Width(208)
+                    .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
+                
                 columns.Bound(p => p.RejectWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                     .Format(Settings.kfmQuantity)
                     .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")

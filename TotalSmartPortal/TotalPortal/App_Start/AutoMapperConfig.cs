@@ -298,7 +298,9 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<SemifinishedRecyclatePrimitiveDTO, SemifinishedRecyclate>();
                 cfg.CreateMap<SemifinishedRecyclateViewDetail, SemifinishedRecyclateDetailDTO>();
                 cfg.CreateMap<SemifinishedRecyclateDetailDTO, SemifinishedRecyclateDetail>();
-
+                cfg.CreateMap<SemifinishedRecyclatePackage, SemifinishedRecyclatePackageDTO>();
+                cfg.CreateMap<SemifinishedRecyclateViewPackage, SemifinishedRecyclatePackageDTO>();
+                cfg.CreateMap<SemifinishedRecyclatePackageDTO, SemifinishedRecyclatePackage>();
 
 
 

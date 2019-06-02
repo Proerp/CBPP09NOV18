@@ -115,7 +115,7 @@ namespace TotalDTO.Productions
         [Range(0, 999999, ErrorMessage = "Tổng số kg >= 0")]
         public decimal RejectWeights { get; set; }
 
-        [Display(Name = "Số kg phế phẩm")]
+        [Display(Name = "Số kg biên, phế phẩm")]
         [Range(0, 999999, ErrorMessage = "Số kg >= 0")]
         public decimal FailureWeights { get; set; }
 

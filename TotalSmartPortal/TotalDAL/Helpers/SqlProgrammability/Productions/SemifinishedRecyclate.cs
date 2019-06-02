@@ -244,6 +244,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "       IF @@ROWCOUNT = 1 " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
             queryString = queryString + "               UPDATE          SemifinishedRecyclateDetails  SET Approved = @Approved WHERE SemifinishedRecyclateID = @EntityID ; " + "\r\n";
+            queryString = queryString + "               UPDATE          SemifinishedRecyclatePackages SET Approved = @Approved WHERE SemifinishedRecyclateID = @EntityID ; " + "\r\n";
             queryString = queryString + "           END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";

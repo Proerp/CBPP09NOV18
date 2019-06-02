@@ -64,6 +64,7 @@ namespace TotalDTO.Productions
         public override string CommodityName { get; set; }
 
 
+        [Required(ErrorMessage = "Vui lòng kiểm tra mã phế phẩm")]
         public Nullable<int> RecycleCommodityID { get; set; }
         public virtual int RecycleCommodityTypeID { get; set; }
         [Display(Name = "Mã phế phẩm")]
@@ -72,18 +73,11 @@ namespace TotalDTO.Productions
         [Display(Name = "Tên phế phẩm")]
         [UIHint("StringReadonly")]
         public string RecycleCommodityName { get; set; }
-
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            foreach (var result in base.Validate(validationContext)) { yield return result; }
-
-            if (this.Quantity > this.QuantityRemains) yield return new ValidationResult("Số lượng xuất không được lớn hơn số lượng yêu cầu [" + this.CommodityName + "]", new[] { "Quantity" });
-        }
     }
 
 
 
-    public class SemifinishedRecyclatePackageDTO
+    public class SemifinishedRecyclatePackageDTO : BaseModel
     {
         public int SemifinishedRecyclatePackageID { get; set; }
         public int SemifinishedRecyclateID { get; set; }
@@ -109,12 +103,17 @@ namespace TotalDTO.Productions
         [UIHint("QuantityReadonly")]
         public decimal FailureWeights { get; set; }
 
-        [Display(Name = "Tổng tồn phế phẩm")]
+        [Display(Name = "TC tồn pp")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
 
-        [Display(Name = "KL thực giao")]
+        [Display(Name = "Kg thực giao")]
         [UIHint("Quantity")]
         public decimal Quantity { get; set; }
+
+        public int BatchID { get; set; }
+        [Display(Name = "Ngày lô hàng")]
+        [UIHint("DateTimeReadonly")]
+        public DateTime BatchEntryDate { get; set; }
     }
 }
