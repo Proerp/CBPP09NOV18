@@ -10,12 +10,14 @@
             columns.Bound(p => p.SemifinishedRecyclateID).DisplayNameTitle().Hidden();            
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
 
-            columns.Bound(p => p.Reference).Title("ĐG").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedRecyclates", action = "Edit" }) + "/#= SemifinishedRecyclateID #'>#=Reference#</a>");
+            columns.Bound(p => p.Reference).Title("Số phiếu").Width(6).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedRecyclates", action = "Edit" }) + "/#= SemifinishedRecyclateID #'>#=Reference#</a>");
 
-            
-            columns.Bound(p => p.Description).Title("Diễn giải").Width(88);
+            columns.Bound(p => p.WorkshiftCode).Title("Ca SX").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(68);
+            columns.Bound(p => p.WorkshiftEntryDate).Title("Ngày SX").Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
+            columns.Bound(p => p.Caption).Title("Mặt hàng").Width(500);
+            columns.Bound(p => p.Description).Title("Diễn giải").Width(110);
 
-            columns.Bound(p => p.TotalQuantity).Title("TP").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+            columns.Bound(p => p.TotalQuantity).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(15).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
             
             columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
             
@@ -25,10 +27,9 @@
         .ToolBar(toolbar =>
         {
             toolbar.Template(@<text>
-                <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu đóng gói </button>
-                <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> In </button>
+                <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập phiếu giao phế phẩm </button>
                 <div class="toolbar" style="float: right;">
-                    <label>Nhập số phiếu, tên KH, thành phẩm hoặc diễn giải </label>
+                    <label>Nhập số phiếu, ca sản xuất, phế phẩm </label>
                     <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
                 </div>
             </text>);
@@ -44,7 +45,7 @@
             })
             .DataSource(dataSource => dataSource
                 .Ajax()
-                .Group(group => group.AddDescending(p => p.EntryDate)).Group(group => group.Add(p => p.WorkshiftName))
+                .Group(group => group.AddDescending(p => p.EntryDate))
                 .Read(read => read.Action("GetSemifinishedRecyclateIndexes", "SemifinishedRecyclateAPIs", new { area = "Productions" }))
                 .Sort(sort =>
                     {
@@ -83,14 +84,6 @@
     }
 
 
-    function callPrint() {
-        var grid = $("#kendoGridIndex").data("kendoGrid");
-        var selectedItem = grid.dataItem(grid.select());
-        if (selectedItem != undefined && selectedItem.WorkshiftID != undefined) {
-            window.open('@Url.Action("Print", "SemifinishedRecyclates", new { area = "Productions" })' + "/0/" + selectedItem.WorkshiftID)
-        }
-    }
-
     decoratingKindex = function (idx, elem) {
         if (elem.Approved == null || elem.Approved == false) {
             $('tr[data-uid="' + elem.uid + '"]').addClass("NotApproved");
@@ -110,12 +103,9 @@
                 logic: "or",
                 filters: [
                     { field: "Reference", operator: "contains", value: indexFilterText },                    
-                    { field: "Description", operator: "contains", value: indexFilterText },
-                    { field: "CustomerName", operator: "contains", value: indexFilterText },
-                    { field: "WorkshiftName", operator: "contains", value: indexFilterText },
-                    { field: "FirmOrderReference", operator: "contains", value: indexFilterText },
-                    { field: "FirmOrderCode", operator: "contains", value: indexFilterText },
-                    { field: "FirmOrderSpecs", operator: "contains", value: indexFilterText }
+                    { field: "WorkshiftCode", operator: "contains", value: indexFilterText },
+                    { field: "Caption", operator: "contains", value: indexFilterText },
+                    { field: "Description", operator: "contains", value: indexFilterText }
                 ]
             });
 

@@ -85,16 +85,18 @@ namespace TotalDTO.Productions
         {
             base.PerformPresaveRule();
 
-            this.DtoDetails().ToList().ForEach(e => e.Quantity = 0);
+            this.DtoDetails().ToList().ForEach(e => e.Quantity = 0); string caption = "";
             this.SemifinishedRecyclatePackages.ForEach(e =>
             {
                 e.LocationID = this.LocationID; e.EntryDate = this.EntryDate; e.BatchEntryDate = (DateTime)this.EntryDate; e.Approved = this.Approved; e.ApprovedDate = this.ApprovedDate; e.WarehouseID = (int)this.WarehouseID; e.WorkshiftID = this.WorkshiftID;
+                if (e.Quantity > 0 && caption.IndexOf(e.CommodityName) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityName;
 
                 decimal quantity = e.Quantity; //ALLOCATED SemifinishedRecyclatePackageDTO.Quantity TO SemifinishedRecyclateViewDetail.Quantity
                 this.DtoDetails().Where(w => w.RecycleCommodityID == e.CommodityID).Each(ea => { ea.Quantity = (ea.QuantityRemains <= quantity ? ea.QuantityRemains : quantity); quantity = Math.Round(quantity - ea.Quantity, GlobalEnums.rndQuantity, MidpointRounding.AwayFromZero); });
                 if (quantity > 0) { SemifinishedRecyclateDetailDTO demifinishedRecyclateDetailDTO = this.DtoDetails().Where(w => w.RecycleCommodityID == e.CommodityID).Last(); demifinishedRecyclateDetailDTO.Quantity = Math.Round(demifinishedRecyclateDetailDTO.Quantity + quantity, GlobalEnums.rndQuantity, MidpointRounding.AwayFromZero); }
             });
             this.TotalQuantity = this.GetTotalQuantity();
+            this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
     }
 }

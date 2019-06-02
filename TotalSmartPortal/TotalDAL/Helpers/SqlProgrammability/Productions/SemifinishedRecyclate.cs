@@ -48,12 +48,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      SemifinishedRecyclates.SemifinishedRecyclateID, CAST(SemifinishedRecyclates.EntryDate AS DATE) AS EntryDate, SemifinishedRecyclates.Reference, Locations.Code AS LocationCode, Workshifts.Name AS WorkshiftName, Users.FirstName AS UserFirstName, Users.LastName AS UserLastName, SemifinishedRecyclates.Description, SemifinishedRecyclates.Caption, SemifinishedRecyclates.TotalQuantity, SemifinishedRecyclates.Approved, " + "\r\n";
-            queryString = queryString + "                   Workshifts.EntryDate AS WorkshiftEntryDate " + "\r\n";
+            queryString = queryString + "       SELECT      SemifinishedRecyclates.SemifinishedRecyclateID, CAST(SemifinishedRecyclates.EntryDate AS DATE) AS EntryDate, SemifinishedRecyclates.Reference, Locations.Code AS LocationCode, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, SemifinishedRecyclates.Description, SemifinishedRecyclates.Caption, SemifinishedRecyclates.TotalQuantity, SemifinishedRecyclates.Approved " + "\r\n";
             queryString = queryString + "       FROM        SemifinishedRecyclates " + "\r\n";
             queryString = queryString + "                   INNER JOIN Locations ON SemifinishedRecyclates.EntryDate >= @FromDate AND SemifinishedRecyclates.EntryDate <= @ToDate AND SemifinishedRecyclates.OrganizationalUnitID IN (SELECT AccessControls.OrganizationalUnitID FROM AccessControls INNER JOIN AspNetUsers ON AccessControls.UserID = AspNetUsers.UserID WHERE AspNetUsers.Id = @AspUserID AND AccessControls.NMVNTaskID = " + (int)TotalBase.Enums.GlobalEnums.NmvnTaskID.SemifinishedRecyclate + " AND AccessControls.AccessLevel > 0) AND Locations.LocationID = SemifinishedRecyclates.LocationID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Workshifts ON SemifinishedRecyclates.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Users ON SemifinishedRecyclates.UserID = Users.UserID " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 

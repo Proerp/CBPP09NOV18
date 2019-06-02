@@ -17,13 +17,11 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> EntryDate { get; set; }
         public string Reference { get; set; }
         public string LocationCode { get; set; }
-        public string WorkshiftName { get; set; }
-        public string UserFirstName { get; set; }
-        public string UserLastName { get; set; }
         public string Description { get; set; }
         public string Caption { get; set; }
         public decimal TotalQuantity { get; set; }
         public bool Approved { get; set; }
         public System.DateTime WorkshiftEntryDate { get; set; }
+        public string WorkshiftCode { get; set; }
     }
 }
