@@ -5698,5 +5698,14 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SemifinishedRecyclateToggleApproved", entityIDParameter, approvedParameter);
         }
+    
+        public virtual ObjectResult<SemifinishedRecyclateViewPackage> GetSemifinishedRecyclateViewPackages(Nullable<int> semifinishedRecyclateID)
+        {
+            var semifinishedRecyclateIDParameter = semifinishedRecyclateID.HasValue ?
+                new ObjectParameter("SemifinishedRecyclateID", semifinishedRecyclateID) :
+                new ObjectParameter("SemifinishedRecyclateID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedRecyclateViewPackage>("GetSemifinishedRecyclateViewPackages", semifinishedRecyclateIDParameter);
+        }
     }
 }

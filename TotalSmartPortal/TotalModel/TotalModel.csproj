@@ -753,6 +753,9 @@
     <Compile Include="Models\SemifinishedRecyclateViewDetail.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SemifinishedRecyclateViewPackage.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Shift.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

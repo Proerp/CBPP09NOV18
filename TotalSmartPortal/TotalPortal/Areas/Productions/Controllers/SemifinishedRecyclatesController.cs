@@ -56,9 +56,10 @@ namespace TotalPortal.Areas.Productions.Controllers
                                                     CommodityID = (int)sl.First().RecycleCommodityID,
                                                     CommodityCode = sl.First().RecycleCommodityCode,
                                                     CommodityName = sl.First().RecycleCommodityName,
+                                                    CommodityTypeID = sl.First().RecycleCommodityTypeID,
 
-                                                    RejectWeights = sl.First().RejectWeights,
-                                                    FailureWeights = sl.First().FailureWeights,
+                                                    RejectWeights = sl.Sum(s => s.RejectWeights),
+                                                    FailureWeights = sl.Sum(s => s.FailureWeights),
 
                                                     QuantityRemains = sl.Sum(s => s.QuantityRemains),
                                                     Quantity = sl.Sum(s => s.Quantity)

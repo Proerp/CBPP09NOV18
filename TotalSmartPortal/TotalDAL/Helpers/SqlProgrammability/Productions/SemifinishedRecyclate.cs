@@ -23,6 +23,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.GetSemifinishedRecyclatePendingWorkshifts();
 
             this.GetSemifinishedRecyclateViewDetails();
+            this.GetSemifinishedRecyclateViewPackages();
 
             this.SemifinishedRecyclateSaveRelative();
             this.SemifinishedRecyclatePostSaveValidate();
@@ -90,21 +91,25 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                   ORDER BY ProductionLineCode, SemifinishedProducts.SemifinishedProductID " + "\r\n";
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   " + this.BUILDSQLEdit() + "\r\n";
+            queryString = queryString + "                   ORDER BY ProductionLineCode, SemifinishedProducts.SemifinishedProductID " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
 
-            queryString = queryString + "               IF (@IsReadonly = 1) " + "\r\n";
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.BUILDSQLEdit() + "\r\n";
-            queryString = queryString + "                       ORDER BY ProductionLineCode, SemifinishedProducts.SemifinishedProductID " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
+            ////queryString = queryString + "               IF (@IsReadonly = 1) " + "\r\n";
+            ////queryString = queryString + "                   BEGIN " + "\r\n";
+            ////queryString = queryString + "                       " + this.BUILDSQLEdit() + "\r\n";
+            ////queryString = queryString + "                       ORDER BY ProductionLineCode, SemifinishedProducts.SemifinishedProductID " + "\r\n";
+            ////queryString = queryString + "                   END " + "\r\n";
 
-            queryString = queryString + "               ELSE " + "\r\n"; //FULL SELECT FOR EDIT MODE
+            ////queryString = queryString + "               ELSE " + "\r\n"; //FULL SELECT FOR EDIT MODE
 
-            queryString = queryString + "                   BEGIN " + "\r\n";
-            queryString = queryString + "                       " + this.BUILDSQLNew() + " AND SemifinishedProducts.SemifinishedProductID NOT IN (SELECT SemifinishedProductID FROM SemifinishedRecyclateDetails WHERE SemifinishedRecyclateID = @SemifinishedRecyclateID) " + "\r\n";
-            queryString = queryString + "                       UNION ALL " + "\r\n";
-            queryString = queryString + "                       " + this.BUILDSQLEdit() + "\r\n";
-            queryString = queryString + "                       ORDER BY ProductionLineCode, SemifinishedProducts.SemifinishedProductID " + "\r\n";
-            queryString = queryString + "                   END " + "\r\n";
+            ////queryString = queryString + "                   BEGIN " + "\r\n";
+            ////queryString = queryString + "                       " + this.BUILDSQLNew() + " AND SemifinishedProducts.SemifinishedProductID NOT IN (SELECT SemifinishedProductID FROM SemifinishedRecyclateDetails WHERE SemifinishedRecyclateID = @SemifinishedRecyclateID) " + "\r\n";
+            ////queryString = queryString + "                       UNION ALL " + "\r\n";
+            ////queryString = queryString + "                       " + this.BUILDSQLEdit() + "\r\n";
+            ////queryString = queryString + "                       ORDER BY ProductionLineCode, SemifinishedProducts.SemifinishedProductID " + "\r\n";
+            ////queryString = queryString + "                   END " + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
 
@@ -140,9 +145,33 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                   INNER JOIN ProductionLines ON SemifinishedProducts.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
             queryString = queryString + "                   INNER JOIN FirmOrders ON SemifinishedProducts.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON SemifinishedRecyclateDetails.CommodityID = Commodities.CommodityID " + "\r\n";
-            queryString = queryString + "                   LEFT  JOIN Commodities AS RecycleCommodities ON Commodities.RecycleCommodityID = RecycleCommodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   LEFT  JOIN Commodities AS RecycleCommodities ON SemifinishedRecyclateDetails.RecycleCommodityID = RecycleCommodities.CommodityID " + "\r\n";
 
             return queryString;
+        }
+
+        private void GetSemifinishedRecyclateViewPackages()
+        {
+            string queryString;
+
+            queryString = " @SemifinishedRecyclateID Int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "        SELECT         SemifinishedRecyclatePackages.SemifinishedRecyclatePackageID, SemifinishedRecyclatePackages.SemifinishedRecyclateID, SemifinishedRecyclatePackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, SemifinishedRecyclatePackages.CommodityTypeID, SemifinishedRecyclatePackages.BatchID, SemifinishedRecyclatePackages.BatchEntryDate, " + "\r\n";
+            queryString = queryString + "                       SFP_TABLE.RejectWeights, SFP_TABLE.FailureWeights, SFP_TABLE.QuantityRemains, SemifinishedRecyclatePackages.Quantity, SemifinishedRecyclatePackages.Remarks " + "\r\n";
+            queryString = queryString + "        FROM           SemifinishedRecyclatePackages " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Commodities ON SemifinishedRecyclatePackages.SemifinishedRecyclateID = @SemifinishedRecyclateID AND SemifinishedRecyclatePackages.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT      SemifinishedRecyclateDetails.RecycleCommodityID, SUM(SemifinishedProducts.RejectWeights) AS RejectWeights, SUM(SemifinishedProducts.FailureWeights) AS FailureWeights, SUM(ROUND(SemifinishedProducts.RejectWeights + SemifinishedProducts.FailureWeights - SemifinishedProducts.RecycleWeights + SemifinishedRecyclateDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ")) AS QuantityRemains " + "\r\n";
+            queryString = queryString + "                                   FROM        SemifinishedRecyclateDetails " + "\r\n";
+            queryString = queryString + "                                   INNER JOIN  SemifinishedProducts ON SemifinishedRecyclateDetails.SemifinishedRecyclateID = @SemifinishedRecyclateID AND SemifinishedRecyclateDetails.SemifinishedProductID = SemifinishedProducts.SemifinishedProductID " + "\r\n";
+            queryString = queryString + "                                   GROUP BY    SemifinishedRecyclateDetails.RecycleCommodityID " + "\r\n";
+            queryString = queryString + "                                  )SFP_TABLE ON SemifinishedRecyclatePackages.CommodityID = SFP_TABLE.RecycleCommodityID " + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetSemifinishedRecyclateViewPackages", queryString);
         }
 
         private void SemifinishedRecyclateSaveRelative()

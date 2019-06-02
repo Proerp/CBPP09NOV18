@@ -28,11 +28,14 @@ namespace TotalModel.Models
         public decimal QuantityReceipted { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
+        public int StorekeeperID { get; set; }
+        public int RecycleCommodityID { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual SemifinishedProduct SemifinishedProduct { get; set; }
         public virtual SemifinishedRecyclate SemifinishedRecyclate { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Workshift Workshift { get; set; }
+        public virtual Commodity Commodity1 { get; set; }
     }
 }
