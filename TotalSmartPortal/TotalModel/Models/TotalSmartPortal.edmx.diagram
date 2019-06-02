@@ -519,6 +519,10 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities1" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedRecyclatePackage" Width="1.5" PointX="65" PointY="39" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_Commodities" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_SemifinishedRecyclates" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_Warehouses" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

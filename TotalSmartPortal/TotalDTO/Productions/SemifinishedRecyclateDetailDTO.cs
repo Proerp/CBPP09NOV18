@@ -17,7 +17,6 @@ namespace TotalDTO.Productions
         public int SemifinishedRecyclateID { get; set; }
 
         public int WorkshiftID { get; set; }
-
         public int WarehouseID { get; set; }
         public int CrucialWorkerID { get; set; }
         public int StorekeeperID { get; set; }
@@ -86,6 +85,12 @@ namespace TotalDTO.Productions
 
     public class SemifinishedRecyclatePackageDTO
     {
+        public int SemifinishedRecyclatePackageID { get; set; }
+        public int SemifinishedRecyclateID { get; set; }
+
+        public int WorkshiftID { get; set; }
+        public int WarehouseID { get; set; }
+
         public int CommodityID { get; set; }
         [Display(Name = "Mã phế phẩm")]
         [UIHint("StringReadonly")]

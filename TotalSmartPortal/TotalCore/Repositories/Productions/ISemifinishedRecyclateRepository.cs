@@ -8,6 +8,7 @@ namespace TotalCore.Repositories.Productions
 
     public interface ISemifinishedRecyclateRepository : IGenericWithDetailRepository<SemifinishedRecyclate, SemifinishedRecyclateDetail>
     {
+        List<SemifinishedRecyclateViewPackage> GetSemifinishedRecyclateViewPackages(int? semifinishedRecyclateID);
     }
 
     public interface ISemifinishedRecyclateAPIRepository : IGenericAPIRepository

@@ -135,6 +135,7 @@ namespace TotalModel.Models
         public virtual DbSet<FinishedItemDetail> FinishedItemDetails { get; set; }
         public virtual DbSet<SemifinishedRecyclateDetail> SemifinishedRecyclateDetails { get; set; }
         public virtual DbSet<SemifinishedRecyclate> SemifinishedRecyclates { get; set; }
+        public virtual DbSet<SemifinishedRecyclatePackage> SemifinishedRecyclatePackages { get; set; }
     
         public virtual ObjectResult<string> AccountInvoicePostSaveValidate(Nullable<int> entityID)
         {

@@ -24,12 +24,13 @@ namespace TotalModel.Models
         public int CommodityTypeID { get; set; }
         public decimal RejectWeights { get; set; }
         public decimal FailureWeights { get; set; }
-        public Nullable<decimal> QuantityRemains { get; set; }
+        public decimal QuantityRemains { get; set; }
         public decimal Quantity { get; set; }
         public Nullable<int> RecycleCommodityID { get; set; }
         public string RecycleCommodityCode { get; set; }
         public System.DateTime SemifinishedProductEntryDate { get; set; }
         public string SemifinishedProductReference { get; set; }
         public string RecycleCommodityName { get; set; }
+        public Nullable<int> RecycleCommodityTypeID { get; set; }
     }
 }

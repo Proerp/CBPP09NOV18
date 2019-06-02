@@ -42,33 +42,43 @@ namespace TotalPortal.Areas.Productions.Controllers
         {
             ICollection<SemifinishedRecyclateViewDetail> semifinishedRecyclateViewDetails = this.semifinishedRecyclateService.GetSemifinishedRecyclateViewDetails(semifinishedRecyclateViewModel.SemifinishedRecyclateID, this.semifinishedRecyclateService.LocationID, semifinishedRecyclateViewModel.WorkshiftID, false);
 
+            //1-TAO TABLE/ DTO COLLECTION / FUNCCTION GET COLLECTION
+            //2-TAI CHO NAY: CHIA 2 T/H: NEW/ EDIT: EDIT: GET FROM DATAABASE, ELSE: GIONG NHU HIEN TAI (TU DONG INIT)
+
+            //5-CHECK WHEN SAVE: KTRA TRA, BẮT BUỘC: semifinishedRecyclateViewModel.SemifinishedRecyclatePackages.Count > 0, SAU ĐÓ: PHÂN BỔ SemifinishedRecyclatePackageDTO.Quantity VÔ: SemifinishedRecyclateViewDetail.Quantity THEO TỪNG RecycleCommodityID
+
+            if (semifinishedRecyclateViewModel.SemifinishedRecyclateID > 0) //EDIT
+            {
+                List<SemifinishedRecyclateViewPackage> entityViewDetails = this.semifinishedRecyclateService.GetSemifinishedRecyclateViewPackages(semifinishedRecyclateViewModel.SemifinishedRecyclateID);
+                Mapper.Map<List<SemifinishedRecyclateViewPackage>, List<SemifinishedRecyclatePackageDTO>>(entityViewDetails, semifinishedRecyclateViewModel.SemifinishedRecyclatePackages);
+            }
+            else
+            { //NEW
+                if (semifinishedRecyclateViewDetails.Where(w => w.RecycleCommodityID == null).Count() == 0)
+                {
+                    var semifinishedRecyclatePackages = semifinishedRecyclateViewDetails
+                                                    .GroupBy(g => g.RecycleCommodityID)
+                                                    .Select(sl => new SemifinishedRecyclatePackageDTO
+                                                    {
+                                                        CommodityID = (int)sl.First().RecycleCommodityID,
+                                                        CommodityCode = sl.First().RecycleCommodityCode,
+                                                        CommodityName = sl.First().RecycleCommodityName,
+                                                        CommodityTypeID = (int)sl.First().RecycleCommodityTypeID,
+
+                                                        RejectWeights = sl.Sum(s => s.RejectWeights),
+                                                        FailureWeights = sl.Sum(s => s.FailureWeights),
+
+                                                        QuantityRemains = sl.Sum(s => s.QuantityRemains),
+                                                        Quantity = sl.Sum(s => s.Quantity)
+                                                    });
+
+                    semifinishedRecyclateViewModel.SemifinishedRecyclatePackages = semifinishedRecyclatePackages.ToList();
+                }
+            }
+
             return semifinishedRecyclateViewDetails;
         }
 
-        protected override SemifinishedRecyclateViewModel TailorViewModel(SemifinishedRecyclateViewModel semifinishedRecyclateViewModel, bool forDelete, bool forAlter, bool forOpen)
-        {
-            if (semifinishedRecyclateViewModel.ViewDetails.Where(w => w.RecycleCommodityID == null).Count() == 0)
-            {
-                var semifinishedRecyclatePackages = semifinishedRecyclateViewModel.ViewDetails
-                                                .GroupBy(g => g.RecycleCommodityID)
-                                                .Select(sl => new SemifinishedRecyclatePackageDTO
-                                                {
-                                                    CommodityID = (int)sl.First().RecycleCommodityID,
-                                                    CommodityCode = sl.First().RecycleCommodityCode,
-                                                    CommodityName = sl.First().RecycleCommodityName,
-                                                    CommodityTypeID = sl.First().RecycleCommodityTypeID,
-
-                                                    RejectWeights = sl.Sum(s => s.RejectWeights),
-                                                    FailureWeights = sl.Sum(s => s.FailureWeights),
-
-                                                    QuantityRemains = sl.Sum(s => s.QuantityRemains),
-                                                    Quantity = sl.Sum(s => s.Quantity)
-                                                });
-
-                semifinishedRecyclateViewModel.SemifinishedRecyclatePackages = semifinishedRecyclatePackages.ToList();
-            }
-            return base.TailorViewModel(semifinishedRecyclateViewModel, forDelete, forAlter, forOpen);
-        }
 
         protected override SemifinishedRecyclateViewModel InitViewModelByDefault(SemifinishedRecyclateViewModel simpleViewModel)
         {

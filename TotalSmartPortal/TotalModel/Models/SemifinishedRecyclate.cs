@@ -18,6 +18,7 @@ namespace TotalModel.Models
         public SemifinishedRecyclate()
         {
             this.SemifinishedRecyclateDetails = new HashSet<SemifinishedRecyclateDetail>();
+            this.SemifinishedRecyclatePackages = new HashSet<SemifinishedRecyclatePackage>();
         }
     
         public int SemifinishedRecyclateID { get; set; }
@@ -52,5 +53,7 @@ namespace TotalModel.Models
         public virtual User User2 { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Workshift Workshift { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SemifinishedRecyclatePackage> SemifinishedRecyclatePackages { get; set; }
     }
 }

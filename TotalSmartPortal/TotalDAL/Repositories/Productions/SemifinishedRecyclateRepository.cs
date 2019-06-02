@@ -16,6 +16,15 @@ namespace TotalDAL.Repositories.Productions
             : base(totalSmartPortalEntities, "SemifinishedRecyclateEditable", "SemifinishedRecyclateApproved")
         {
         }
+
+        public List<SemifinishedRecyclateViewPackage> GetSemifinishedRecyclateViewPackages(int? semifinishedRecyclateID)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            List<SemifinishedRecyclateViewPackage> semifinishedRecyclateViewLots = base.TotalSmartPortalEntities.GetSemifinishedRecyclateViewPackages(semifinishedRecyclateID).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return semifinishedRecyclateViewLots;
+        }
     }
 
     public class SemifinishedRecyclateAPIRepository : GenericAPIRepository, ISemifinishedRecyclateAPIRepository
