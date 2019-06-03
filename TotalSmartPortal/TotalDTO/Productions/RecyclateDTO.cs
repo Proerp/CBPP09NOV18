@@ -74,7 +74,7 @@ namespace TotalDTO.Productions
     {
         [Display(Name = "NV bàn giao")]
         [UIHint("AutoCompletes/EmployeeBase")]
-        public EmployeeBaseDTO CrucialWorker { get; set; }
+        EmployeeBaseDTO CrucialWorker { get; set; }
 
         [Display(Name = "Nhân viên kho")]
         [UIHint("AutoCompletes/EmployeeBase")]

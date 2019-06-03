@@ -45,7 +45,7 @@ namespace TotalPortal.Areas.Productions.Controllers
             this.recyclateService = recyclateService;
         }
 
-        protected override ICollection<RecyclateViewDetail> GetEntityViewDetails(RecyclateViewModel recyclateViewModel)
+        protected override ICollection<RecyclateViewDetail> GetEntityViewDetails(TViewDetailViewModel recyclateViewModel)
         {
             ICollection<RecyclateViewDetail> recyclateViewDetails = this.recyclateService.GetRecyclateViewDetails((int)recyclateViewModel.NMVNTaskID, recyclateViewModel.RecyclateID, this.recyclateService.LocationID, recyclateViewModel.WorkshiftID, false);
 
@@ -87,7 +87,7 @@ namespace TotalPortal.Areas.Productions.Controllers
         }
 
 
-        protected override RecyclateViewModel InitViewModelByDefault(RecyclateViewModel simpleViewModel)
+        protected override TViewDetailViewModel InitViewModelByDefault(TViewDetailViewModel simpleViewModel)
         {
             simpleViewModel = base.InitViewModelByDefault(simpleViewModel);
 
@@ -118,7 +118,7 @@ namespace TotalPortal.Areas.Productions.Controllers
             return simpleViewModel;
         }
 
-        protected override void BackupViewModelToSession(RecyclateViewModel simpleViewModel)
+        protected override void BackupViewModelToSession(TViewDetailViewModel simpleViewModel)
         {
             base.BackupViewModelToSession(simpleViewModel);
             RecyclateSession.SetCrucialWorker(this.HttpContext, simpleViewModel.CrucialWorker.EmployeeID, simpleViewModel.CrucialWorker.Name);

@@ -33,8 +33,9 @@ namespace TotalPortal.Areas.Productions.APIs
         }
 
 
-        public JsonResult GetRecyclateIndexes([DataSourceRequest] DataSourceRequest request)
+        public JsonResult GetRecyclateIndexes([DataSourceRequest] DataSourceRequest request, int nmvnTaskID)
         {
+            this.recyclateAPIRepository.RepositoryBag["NMVNTaskID"] = nmvnTaskID;
             ICollection<RecyclateIndex> recyclateIndexes = this.recyclateAPIRepository.GetEntityIndexes<RecyclateIndex>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext));
 
             DataSourceResult response = recyclateIndexes.ToDataSourceResult(request);
