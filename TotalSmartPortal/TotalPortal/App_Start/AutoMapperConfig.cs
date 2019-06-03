@@ -293,14 +293,26 @@ namespace TotalPortal.App_Start
 
 
 
-                cfg.CreateMap<Recyclate, RecyclateViewModel>();
-                cfg.CreateMap<Recyclate, RecyclateDTO>();
-                cfg.CreateMap<RecyclatePrimitiveDTO, Recyclate>();
+
+                cfg.CreateMap<Recyclate, RecyclateDTO<SemifinishedProductRecyclateOption>>();
+                cfg.CreateMap<Recyclate, RecyclateDTO<FinishedProductRecyclateOption>>();
+                cfg.CreateMap<Recyclate, RecyclateDTO<FinishedItemRecyclateOption>>();
+
+                cfg.CreateMap<RecyclatePrimitiveDTO<SemifinishedProductRecyclateOption>, Recyclate>();
+                cfg.CreateMap<RecyclatePrimitiveDTO<FinishedProductRecyclateOption>, Recyclate>();
+                cfg.CreateMap<RecyclatePrimitiveDTO<FinishedItemRecyclateOption>, Recyclate>();
+
                 cfg.CreateMap<RecyclateViewDetail, RecyclateDetailDTO>();
                 cfg.CreateMap<RecyclateDetailDTO, RecyclateDetail>();
+
+                cfg.CreateMap<Recyclate, FinishedItemHandoverViewModel>();
+                cfg.CreateMap<Recyclate, FinishedProductHandoverViewModel>();
+                                
                 cfg.CreateMap<RecyclatePackage, RecyclatePackageDTO>();
                 cfg.CreateMap<RecyclateViewPackage, RecyclatePackageDTO>();
                 cfg.CreateMap<RecyclatePackageDTO, RecyclatePackage>();
+
+
 
 
 

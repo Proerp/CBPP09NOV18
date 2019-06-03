@@ -11,9 +11,22 @@ using TotalPortal.Areas.Commons.ViewModels.Helpers;
 
 namespace TotalPortal.Areas.Productions.ViewModels
 {
-    public class RecyclateViewModel : RecyclateDTO, IViewDetailViewModel<RecyclateDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
+    public interface IRecyclateViewModel : IRecyclateDTO, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
+    {
+    }
+
+    public class SemifinishedProductRecyclateViewModel : RecyclateDTO<SemifinishedProductRecyclateOption>, IViewDetailViewModel<RecyclateDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IRecyclateViewModel
     {
         public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
-        public IEnumerable<SelectListItem> ShiftSelectList { get; set; }
+    }
+
+    public class FinishedProductRecyclateViewModel : RecyclateDTO<FinishedProductRecyclateOption>, IViewDetailViewModel<RecyclateDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IRecyclateViewModel
+    {
+        public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
+    }
+
+    public class FinishedItemRecyclateViewModel : RecyclateDTO<FinishedItemRecyclateOption>, IViewDetailViewModel<RecyclateDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel, IRecyclateViewModel
+    {
+        public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
     }
 }

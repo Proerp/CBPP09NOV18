@@ -11,6 +11,8 @@ using RequireJsNet;
 using TotalBase;
 using TotalBase.Enums;
 
+using TotalDTO;
+using TotalModel;
 using TotalModel.Models;
 
 using TotalCore.Services.Productions;
@@ -21,6 +23,7 @@ using TotalDTO.Productions;
 using TotalPortal.APIs.Sessions;
 
 using TotalPortal.Controllers;
+using TotalPortal.ViewModels.Helpers;
 using TotalPortal.Areas.Commons.Controllers.Sessions;
 using TotalPortal.Areas.Productions.ViewModels;
 using TotalPortal.Areas.Productions.Builders;
@@ -28,11 +31,15 @@ using TotalPortal.Areas.Productions.Controllers.Sessions;
 
 namespace TotalPortal.Areas.Productions.Controllers
 {
-    public class RecyclatesController : GenericViewDetailController<Recyclate, RecyclateDetail, RecyclateViewDetail, RecyclateDTO, RecyclatePrimitiveDTO, RecyclateDetailDTO, RecyclateViewModel>
+    public class RecyclatesController<TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel> : GenericViewDetailController<Recyclate, RecyclateDetail, RecyclateViewDetail, TDto, TPrimitiveDto, TDtoDetail, TViewDetailViewModel>
+        where TDto : TPrimitiveDto, IBaseDetailEntity<TDtoDetail>
+        where TPrimitiveDto : BaseDTO, IPrimitiveEntity, IPrimitiveDTO, new()
+        where TDtoDetail : class, IPrimitiveEntity
+        where TViewDetailViewModel : TDto, IViewDetailViewModel<TDtoDetail>, IRecyclateViewModel, new()
     {
-        private readonly IRecyclateService recyclateService;
+        private readonly IRecyclateService<TDto, TPrimitiveDto, TDtoDetail> recyclateService;
 
-        public RecyclatesController(IRecyclateService recyclateService, IRecyclateViewModelSelectListBuilder recyclateViewModelSelectListBuilder)
+        public RecyclatesController(IRecyclateService<TDto, TPrimitiveDto, TDtoDetail> recyclateService, IRecyclateViewModelSelectListBuilder<TViewDetailViewModel> recyclateViewModelSelectListBuilder)
             : base(recyclateService, recyclateViewModelSelectListBuilder, true)
         {
             this.recyclateService = recyclateService;
@@ -122,6 +129,32 @@ namespace TotalPortal.Areas.Productions.Controllers
         {
             this.AddRequireJsOptions();
             return View();
+        }
+    }
+
+
+
+    public class SemifinishedProductRecyclatesController : RecyclatesController<RecyclateDTO<SemifinishedProductRecyclateOption>, RecyclatePrimitiveDTO<SemifinishedProductRecyclateOption>, RecyclateDetailDTO, SemifinishedProductRecyclateViewModel>
+    {
+        public SemifinishedProductRecyclatesController(ISemifinishedProductRecyclateService semifinishedProductRecyclateService, ISemifinishedProductRecyclateViewModelSelectListBuilder semifinishedProductRecyclateViewModelSelectListBuilder)
+            : base(semifinishedProductRecyclateService, semifinishedProductRecyclateViewModelSelectListBuilder)
+        {
+        }
+    }
+
+    public class FinishedProductRecyclatesController : RecyclatesController<RecyclateDTO<FinishedProductRecyclateOption>, RecyclatePrimitiveDTO<FinishedProductRecyclateOption>, RecyclateDetailDTO, FinishedProductRecyclateViewModel>
+    {
+        public FinishedProductRecyclatesController(IFinishedProductRecyclateService finishedProductRecyclateService, IFinishedProductRecyclateViewModelSelectListBuilder finishedProductRecyclateViewModelSelectListBuilder)
+            : base(finishedProductRecyclateService, finishedProductRecyclateViewModelSelectListBuilder)
+        {
+        }
+    }
+
+    public class FinishedItemRecyclatesController : RecyclatesController<RecyclateDTO<FinishedItemRecyclateOption>, RecyclatePrimitiveDTO<FinishedItemRecyclateOption>, RecyclateDetailDTO, FinishedItemRecyclateViewModel>
+    {
+        public FinishedItemRecyclatesController(IFinishedItemRecyclateService finishedItemRecyclateService, IFinishedItemRecyclateViewModelSelectListBuilder finishedItemRecyclateViewModelSelectListBuilder)
+            : base(finishedItemRecyclateService, finishedItemRecyclateViewModelSelectListBuilder)
+        {
         }
     }
 }
