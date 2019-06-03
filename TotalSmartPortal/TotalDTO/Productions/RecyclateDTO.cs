@@ -38,7 +38,8 @@ namespace TotalDTO.Productions
         int StorekeeperID { get; set; }
     }
 
-    public class RecyclatePrimitiveDTO : QuantityDTO<RecyclateDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+    public class RecyclatePrimitiveDTO<TRecyclateOption> : QuantityDTO<RecyclateDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+        where TRecyclateOption : IRecyclateOption, new()
     {
         public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.SemifinishedProductRecyclate; } }
 
@@ -69,7 +70,32 @@ namespace TotalDTO.Productions
     }
 
 
-    public class RecyclateDTO : RecyclatePrimitiveDTO, IBaseDetailEntity<RecyclateDetailDTO>
+    public interface IRecyclateDTO : IRecyclatePrimitiveDTO
+    {
+        [Display(Name = "NV bàn giao")]
+        [UIHint("AutoCompletes/EmployeeBase")]
+        public EmployeeBaseDTO CrucialWorker { get; set; }
+
+        [Display(Name = "Nhân viên kho")]
+        [UIHint("AutoCompletes/EmployeeBase")]
+        EmployeeBaseDTO Storekeeper { get; set; }
+
+
+        List<RecyclateDetailDTO> RecyclateViewDetails { get; set; }
+        List<RecyclateDetailDTO> ViewDetails { get; set; }
+
+        List<RecyclatePackageDTO> RecyclatePackages { get; set; }
+
+
+        string ControllerName { get; }
+
+        bool IsSemifinishedProduct { get; }
+        bool IsFinishedProduct { get; }
+        bool IsFinishedItem { get; }
+    }
+
+    public class RecyclateDTO<TRecyclateOption> : RecyclatePrimitiveDTO<TRecyclateOption>, IBaseDetailEntity<RecyclateDetailDTO>, IRecyclateDTO
+        where TRecyclateOption : IRecyclateOption, new()
     {
         public RecyclateDTO()
         {
@@ -122,5 +148,15 @@ namespace TotalDTO.Productions
             this.TotalQuantity = this.GetTotalQuantity();
             this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;
         }
+
+
+
+
+
+        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
+
+        public bool IsSemifinishedProduct { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.SemifinishedProductRecyclate; } }
+        public bool IsFinishedProduct { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.FinishedProductRecyclate; } }
+        public bool IsFinishedItem { get { return this.NMVNTaskID == GlobalEnums.NmvnTaskID.FinishedItemRecyclate; } }
     }
 }
