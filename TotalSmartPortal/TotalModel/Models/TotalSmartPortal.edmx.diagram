@@ -503,26 +503,6 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_Labs_VoidTypes" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedRecyclateDetail" Width="1.5" PointX="62" PointY="33.25" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedRecyclate" Width="1.5" PointX="59.75" PointY="10.625" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees1" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Locations" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_SemifinishedProducts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_SemifinishedRecyclates" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Warehouses" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Workshifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users1" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users2" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Warehouses" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Workshifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities1" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.SemifinishedRecyclatePackage" Width="1.5" PointX="65" PointY="39" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_Commodities" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_SemifinishedRecyclates" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_Warehouses" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.RecyclatePackage" Width="1.5" PointX="69.875" PointY="35.375" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.Recyclate" Width="1.5" PointX="62.625" PointY="8.875" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_RecyclatePackages_Commodities" />

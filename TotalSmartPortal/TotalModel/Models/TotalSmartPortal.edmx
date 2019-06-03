@@ -2583,75 +2583,6 @@
           <Property Name="ApprovedDate" Type="datetime" />
           <Property Name="HandoverApproved" Type="bit" Nullable="false" />
         </EntityType>
-        <EntityType Name="SemifinishedRecyclateDetails">
-          <Key>
-            <PropertyRef Name="SemifinishedRecyclateDetailID" />
-          </Key>
-          <Property Name="SemifinishedRecyclateDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SemifinishedRecyclateID" Type="int" Nullable="false" />
-          <Property Name="EntryDate" Type="datetime" Nullable="false" />
-          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
-          <Property Name="LocationID" Type="int" Nullable="false" />
-          <Property Name="WorkshiftID" Type="int" Nullable="false" />
-          <Property Name="WarehouseID" Type="int" Nullable="false" />
-          <Property Name="CrucialWorkerID" Type="int" Nullable="false" />
-          <Property Name="StorekeeperID" Type="int" Nullable="false" />
-          <Property Name="SemifinishedProductID" Type="int" Nullable="false" />
-          <Property Name="CommodityID" Type="int" Nullable="false" />
-          <Property Name="CommodityTypeID" Type="int" Nullable="false" />
-          <Property Name="RecycleCommodityID" Type="int" Nullable="false" />
-          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="QuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
-          <Property Name="Approved" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SemifinishedRecyclatePackages">
-          <Key>
-            <PropertyRef Name="SemifinishedRecyclatePackageID" />
-          </Key>
-          <Property Name="SemifinishedRecyclatePackageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SemifinishedRecyclateID" Type="int" Nullable="false" />
-          <Property Name="EntryDate" Type="datetime" Nullable="false" />
-          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
-          <Property Name="LocationID" Type="int" Nullable="false" />
-          <Property Name="WorkshiftID" Type="int" Nullable="false" />
-          <Property Name="WarehouseID" Type="int" Nullable="false" />
-          <Property Name="CommodityID" Type="int" Nullable="false" />
-          <Property Name="CommodityTypeID" Type="int" Nullable="false" />
-          <Property Name="BatchID" Type="int" Nullable="false" />
-          <Property Name="BatchEntryDate" Type="datetime" Nullable="false" />
-          <Property Name="Quantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="QuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
-          <Property Name="Approved" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SemifinishedRecyclates">
-          <Key>
-            <PropertyRef Name="SemifinishedRecyclateID" />
-          </Key>
-          <Property Name="SemifinishedRecyclateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="EntryDate" Type="datetime" Nullable="false" />
-          <Property Name="Reference" Type="nvarchar" MaxLength="10" />
-          <Property Name="NMVNTaskID" Type="int" Nullable="false" />
-          <Property Name="WorkshiftID" Type="int" Nullable="false" />
-          <Property Name="WarehouseID" Type="int" Nullable="false" />
-          <Property Name="CrucialWorkerID" Type="int" Nullable="false" />
-          <Property Name="StorekeeperID" Type="int" Nullable="false" />
-          <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="PreparedPersonID" Type="int" Nullable="false" />
-          <Property Name="OrganizationalUnitID" Type="int" Nullable="false" />
-          <Property Name="LocationID" Type="int" Nullable="false" />
-          <Property Name="ApproverID" Type="int" Nullable="false" />
-          <Property Name="TotalQuantity" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="TotalQuantityReceipted" Type="decimal" Precision="18" Scale="2" Nullable="false" />
-          <Property Name="Caption" Type="nvarchar" MaxLength="800" />
-          <Property Name="Description" Type="nvarchar" MaxLength="100" />
-          <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
-          <Property Name="CreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="EditedDate" Type="datetime" Nullable="false" />
-          <Property Name="Approved" Type="bit" Nullable="false" />
-          <Property Name="ApprovedDate" Type="datetime" />
-        </EntityType>
         <EntityType Name="Shifts">
           <Key>
             <PropertyRef Name="ShiftID" />
@@ -7512,210 +7443,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_Commodities">
-          <End Role="Commodities" Type="Self.Commodities" Multiplicity="1" />
-          <End Role="SemifinishedRecyclateDetails" Type="Self.SemifinishedRecyclateDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodities">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetails">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_Commodities1">
-          <End Role="Commodities" Type="Self.Commodities" Multiplicity="1" />
-          <End Role="SemifinishedRecyclateDetails" Type="Self.SemifinishedRecyclateDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodities">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetails">
-              <PropertyRef Name="RecycleCommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_SemifinishedProducts">
-          <End Role="SemifinishedProducts" Type="Self.SemifinishedProducts" Multiplicity="1" />
-          <End Role="SemifinishedRecyclateDetails" Type="Self.SemifinishedRecyclateDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SemifinishedProducts">
-              <PropertyRef Name="SemifinishedProductID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetails">
-              <PropertyRef Name="SemifinishedProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_SemifinishedRecyclates">
-          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="1" />
-          <End Role="SemifinishedRecyclateDetails" Type="Self.SemifinishedRecyclateDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SemifinishedRecyclates">
-              <PropertyRef Name="SemifinishedRecyclateID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetails">
-              <PropertyRef Name="SemifinishedRecyclateID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_Warehouses">
-          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1" />
-          <End Role="SemifinishedRecyclateDetails" Type="Self.SemifinishedRecyclateDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouses">
-              <PropertyRef Name="WarehouseID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetails">
-              <PropertyRef Name="WarehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_Workshifts">
-          <End Role="Workshifts" Type="Self.Workshifts" Multiplicity="1" />
-          <End Role="SemifinishedRecyclateDetails" Type="Self.SemifinishedRecyclateDetails" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Workshifts">
-              <PropertyRef Name="WorkshiftID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetails">
-              <PropertyRef Name="WorkshiftID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclatePackages_Commodities">
-          <End Role="Commodities" Type="Self.Commodities" Multiplicity="1" />
-          <End Role="SemifinishedRecyclatePackages" Type="Self.SemifinishedRecyclatePackages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodities">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclatePackages">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclatePackages_SemifinishedRecyclates">
-          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="1" />
-          <End Role="SemifinishedRecyclatePackages" Type="Self.SemifinishedRecyclatePackages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SemifinishedRecyclates">
-              <PropertyRef Name="SemifinishedRecyclateID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclatePackages">
-              <PropertyRef Name="SemifinishedRecyclateID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclatePackages_Warehouses">
-          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1" />
-          <End Role="SemifinishedRecyclatePackages" Type="Self.SemifinishedRecyclatePackages" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouses">
-              <PropertyRef Name="WarehouseID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclatePackages">
-              <PropertyRef Name="WarehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Employees">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
-          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclates">
-              <PropertyRef Name="CrucialWorkerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Employees1">
-          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
-          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employees">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclates">
-              <PropertyRef Name="StorekeeperID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Locations">
-          <End Role="Locations" Type="Self.Locations" Multiplicity="1" />
-          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Locations">
-              <PropertyRef Name="LocationID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclates">
-              <PropertyRef Name="LocationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Users">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclates">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Users1">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclates">
-              <PropertyRef Name="PreparedPersonID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Users2">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclates">
-              <PropertyRef Name="ApproverID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Warehouses">
-          <End Role="Warehouses" Type="Self.Warehouses" Multiplicity="1" />
-          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouses">
-              <PropertyRef Name="WarehouseID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclates">
-              <PropertyRef Name="WarehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Workshifts">
-          <End Role="Workshifts" Type="Self.Workshifts" Multiplicity="1" />
-          <End Role="SemifinishedRecyclates" Type="Self.SemifinishedRecyclates" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Workshifts">
-              <PropertyRef Name="WorkshiftID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclates">
-              <PropertyRef Name="WorkshiftID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Territories_Territories">
           <End Role="Territories" Type="Self.Territories" Multiplicity="0..1" />
           <End Role="Territories1" Type="Self.Territories" Multiplicity="*" />
@@ -9299,23 +9026,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="SemifinishedProductID" Type="int" Mode="In" />
           <Parameter Name="FirmOrderID" Type="int" Mode="In" />
         </Function>
-        <Function Name="GetSemifinishedRecyclateIndexes" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="AspUserID" Type="nvarchar" Mode="In" />
-          <Parameter Name="FromDate" Type="datetime" Mode="In" />
-          <Parameter Name="ToDate" Type="datetime" Mode="In" />
-        </Function>
-        <Function Name="GetSemifinishedRecyclatePendingWorkshifts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="LocationID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="GetSemifinishedRecyclateViewDetails" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SemifinishedRecyclateID" Type="int" Mode="In" />
-          <Parameter Name="LocationID" Type="int" Mode="In" />
-          <Parameter Name="WorkshiftID" Type="int" Mode="In" />
-          <Parameter Name="IsReadonly" Type="bit" Mode="In" />
-        </Function>
-        <Function Name="GetSemifinishedRecyclateViewPackages" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="SemifinishedRecyclateID" Type="int" Mode="In" />
-        </Function>
         <Function Name="GetShippingAddress" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="CustomerID" Type="int" Mode="In" />
           <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
@@ -9913,23 +9623,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="EntityID" Type="int" Mode="In" />
           <Parameter Name="Approved" Type="bit" Mode="In" />
         </Function>
-        <Function Name="SemifinishedRecyclateApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EntityID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SemifinishedRecyclateEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EntityID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SemifinishedRecyclatePostSaveValidate" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EntityID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SemifinishedRecyclateSaveRelative" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EntityID" Type="int" Mode="In" />
-          <Parameter Name="SaveRelativeOption" Type="int" Mode="In" />
-        </Function>
-        <Function Name="SemifinishedRecyclateToggleApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EntityID" Type="int" Mode="In" />
-          <Parameter Name="Approved" Type="bit" Mode="In" />
-        </Function>
         <Function Name="SetBarcodeSymbologies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BarcodeID" Type="int" Mode="In" />
           <Parameter Name="Symbologies" Type="nvarchar(max)" Mode="In" />
@@ -10144,9 +9837,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySet Name="SemifinishedItems" EntityType="Self.SemifinishedItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SemifinishedProductDetails" EntityType="Self.SemifinishedProductDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SemifinishedProducts" EntityType="Self.SemifinishedProducts" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SemifinishedRecyclateDetails" EntityType="Self.SemifinishedRecyclateDetails" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SemifinishedRecyclatePackages" EntityType="Self.SemifinishedRecyclatePackages" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="SemifinishedRecyclates" EntityType="Self.SemifinishedRecyclates" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Shifts" EntityType="Self.Shifts" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Territories" EntityType="Self.Territories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TransferOrderDetails" EntityType="Self.TransferOrderDetails" Schema="dbo" store:Type="Tables" />
@@ -11604,74 +11294,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Workshifts" EntitySet="Workshifts" />
             <End Role="SemifinishedProducts" EntitySet="SemifinishedProducts" />
           </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_Commodities" Association="Self.FK_SemifinishedRecyclateDetails_Commodities">
-            <End Role="Commodities" EntitySet="Commodities" />
-            <End Role="SemifinishedRecyclateDetails" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_Commodities1" Association="Self.FK_SemifinishedRecyclateDetails_Commodities1">
-            <End Role="Commodities" EntitySet="Commodities" />
-            <End Role="SemifinishedRecyclateDetails" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_SemifinishedProducts" Association="Self.FK_SemifinishedRecyclateDetails_SemifinishedProducts">
-            <End Role="SemifinishedProducts" EntitySet="SemifinishedProducts" />
-            <End Role="SemifinishedRecyclateDetails" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_SemifinishedRecyclates" Association="Self.FK_SemifinishedRecyclateDetails_SemifinishedRecyclates">
-            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
-            <End Role="SemifinishedRecyclateDetails" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_Warehouses" Association="Self.FK_SemifinishedRecyclateDetails_Warehouses">
-            <End Role="Warehouses" EntitySet="Warehouses" />
-            <End Role="SemifinishedRecyclateDetails" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_Workshifts" Association="Self.FK_SemifinishedRecyclateDetails_Workshifts">
-            <End Role="Workshifts" EntitySet="Workshifts" />
-            <End Role="SemifinishedRecyclateDetails" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclatePackages_Commodities" Association="Self.FK_SemifinishedRecyclatePackages_Commodities">
-            <End Role="Commodities" EntitySet="Commodities" />
-            <End Role="SemifinishedRecyclatePackages" EntitySet="SemifinishedRecyclatePackages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclatePackages_SemifinishedRecyclates" Association="Self.FK_SemifinishedRecyclatePackages_SemifinishedRecyclates">
-            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
-            <End Role="SemifinishedRecyclatePackages" EntitySet="SemifinishedRecyclatePackages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclatePackages_Warehouses" Association="Self.FK_SemifinishedRecyclatePackages_Warehouses">
-            <End Role="Warehouses" EntitySet="Warehouses" />
-            <End Role="SemifinishedRecyclatePackages" EntitySet="SemifinishedRecyclatePackages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Employees" Association="Self.FK_SemifinishedRecyclates_Employees">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Employees1" Association="Self.FK_SemifinishedRecyclates_Employees1">
-            <End Role="Employees" EntitySet="Employees" />
-            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Locations" Association="Self.FK_SemifinishedRecyclates_Locations">
-            <End Role="Locations" EntitySet="Locations" />
-            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Users" Association="Self.FK_SemifinishedRecyclates_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Users1" Association="Self.FK_SemifinishedRecyclates_Users1">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Users2" Association="Self.FK_SemifinishedRecyclates_Users2">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Warehouses" Association="Self.FK_SemifinishedRecyclates_Warehouses">
-            <End Role="Warehouses" EntitySet="Warehouses" />
-            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Workshifts" Association="Self.FK_SemifinishedRecyclates_Workshifts">
-            <End Role="Workshifts" EntitySet="Workshifts" />
-            <End Role="SemifinishedRecyclates" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
           <AssociationSet Name="FK_Territories_Territories" Association="Self.FK_Territories_Territories">
             <End Role="Territories" EntitySet="Territories" />
             <End Role="Territories1" EntitySet="Territories" />
@@ -12381,8 +12003,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="WarehouseTransfers" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Employees" FromRole="Employee" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Employees" FromRole="Employee" ToRole="SemifinishedItem" />
           <NavigationProperty Name="FinishedItems" Relationship="TotalSmartPortalModel.FK_FinishedItems_Employees" FromRole="Employee" ToRole="FinishedItem" />
-          <NavigationProperty Name="SemifinishedRecyclates" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees" FromRole="Employee" ToRole="SemifinishedRecyclate" />
-          <NavigationProperty Name="SemifinishedRecyclates1" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees1" FromRole="Employee" ToRole="SemifinishedRecyclate" />
           <NavigationProperty Name="Recyclates" Relationship="TotalSmartPortalModel.FK_Recyclates_Employees" FromRole="Employee" ToRole="Recyclate" />
           <NavigationProperty Name="Recyclates1" Relationship="TotalSmartPortalModel.FK_Recyclates_Employees1" FromRole="Employee" ToRole="Recyclate" />
           </EntityType>
@@ -12694,7 +12314,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Locations" FromRole="Location" ToRole="SemifinishedItem" />
           <NavigationProperty Name="WorkOrders" Relationship="TotalSmartPortalModel.FK_WorkOrders_Locations" FromRole="Location" ToRole="WorkOrder" />
           <NavigationProperty Name="FinishedItems" Relationship="TotalSmartPortalModel.FK_FinishedItems_Locations" FromRole="Location" ToRole="FinishedItem" />
-          <NavigationProperty Name="SemifinishedRecyclates" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Locations" FromRole="Location" ToRole="SemifinishedRecyclate" />
           <NavigationProperty Name="Recyclates" Relationship="TotalSmartPortalModel.FK_Recyclates_Locations" FromRole="Location" ToRole="Recyclate" />
         </EntityType>
         <EntityType Name="Module">
@@ -15727,10 +15346,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
           </FunctionImport>
-          <FunctionImport Name="GetSemifinishedProductViewDetails" ReturnType="Collection(TotalSmartPortalModel.SemifinishedProductViewDetail)">
-            <Parameter Name="SemifinishedProductID" Mode="In" Type="Int32" />
-            <Parameter Name="FirmOrderID" Mode="In" Type="Int32" />
-          </FunctionImport>
           <FunctionImport Name="SemifinishedProductApproved" ReturnType="Collection(String)">
           <Parameter Name="EntityID" Mode="In" Type="Int32" />
           </FunctionImport>
@@ -17640,111 +17255,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImport Name="GetGoodsReceiptBarcodeAvailables" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptBarcodeAvailable)">
           <Parameter Name="Barcode" Mode="In" Type="String" />
           </FunctionImport>
-          <FunctionImport Name="GetSemifinishedRecyclateIndexes" ReturnType="Collection(TotalSmartPortalModel.SemifinishedRecyclateIndex)">
-            <Parameter Name="AspUserID" Mode="In" Type="String" />
-            <Parameter Name="FromDate" Mode="In" Type="DateTime" />
-            <Parameter Name="ToDate" Mode="In" Type="DateTime" />
-          </FunctionImport>
-          <FunctionImport Name="GetSemifinishedRecyclatePendingWorkshifts" ReturnType="Collection(TotalSmartPortalModel.SemifinishedRecyclatePendingWorkshift)">
-          <Parameter Name="LocationID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="GetSemifinishedRecyclateViewDetails" ReturnType="Collection(TotalSmartPortalModel.SemifinishedRecyclateViewDetail)">
-            <Parameter Name="SemifinishedRecyclateID" Mode="In" Type="Int32" />
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
-            <Parameter Name="WorkshiftID" Mode="In" Type="Int32" />
-            <Parameter Name="IsReadonly" Mode="In" Type="Boolean" />
-          </FunctionImport>
-          <FunctionImport Name="SemifinishedRecyclateApproved" ReturnType="Collection(String)">
-          <Parameter Name="EntityID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SemifinishedRecyclateEditable" ReturnType="Collection(String)">
-          <Parameter Name="EntityID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SemifinishedRecyclatePostSaveValidate" ReturnType="Collection(String)">
-          <Parameter Name="EntityID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SemifinishedRecyclateSaveRelative">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
-            <Parameter Name="SaveRelativeOption" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="SemifinishedRecyclateToggleApproved">
-            <Parameter Name="EntityID" Mode="In" Type="Int32" />
-            <Parameter Name="Approved" Mode="In" Type="Boolean" />
-          </FunctionImport>
-          <EntitySet Name="SemifinishedRecyclateDetails" EntityType="TotalSmartPortalModel.SemifinishedRecyclateDetail" />
-          <EntitySet Name="SemifinishedRecyclates" EntityType="TotalSmartPortalModel.SemifinishedRecyclate" />
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_Commodities" Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="SemifinishedRecyclateDetail" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Employees" Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Employees1" Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees1">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Locations" Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Locations">
-            <End Role="Location" EntitySet="Locations" />
-            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_SemifinishedProducts" Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_SemifinishedProducts">
-            <End Role="SemifinishedProduct" EntitySet="SemifinishedProducts" />
-            <End Role="SemifinishedRecyclateDetail" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_SemifinishedRecyclates" Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_SemifinishedRecyclates">
-            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
-            <End Role="SemifinishedRecyclateDetail" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_Warehouses" Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Warehouses">
-            <End Role="Warehouse" EntitySet="Warehouses" />
-            <End Role="SemifinishedRecyclateDetail" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_Workshifts" Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Workshifts">
-            <End Role="Workshift" EntitySet="Workshifts" />
-            <End Role="SemifinishedRecyclateDetail" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Users" Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users">
-            <End Role="User" EntitySet="Users" />
-            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Users1" Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users1">
-            <End Role="User" EntitySet="Users" />
-            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Users2" Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users2">
-            <End Role="User" EntitySet="Users" />
-            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Warehouses" Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Warehouses">
-            <End Role="Warehouse" EntitySet="Warehouses" />
-            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclates_Workshifts" Association="TotalSmartPortalModel.FK_SemifinishedRecyclates_Workshifts">
-            <End Role="Workshift" EntitySet="Workshifts" />
-            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclateDetails_Commodities1" Association="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities1">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="SemifinishedRecyclateDetail" EntitySet="SemifinishedRecyclateDetails" />
-          </AssociationSet>
-          <FunctionImport Name="GetSemifinishedRecyclateViewPackages" ReturnType="Collection(TotalSmartPortalModel.SemifinishedRecyclateViewPackage)">
-          <Parameter Name="SemifinishedRecyclateID" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <EntitySet Name="SemifinishedRecyclatePackages" EntityType="TotalSmartPortalModel.SemifinishedRecyclatePackage" />
-          <AssociationSet Name="FK_SemifinishedRecyclatePackages_Commodities" Association="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_Commodities">
-            <End Role="Commodity" EntitySet="Commodities" />
-            <End Role="SemifinishedRecyclatePackage" EntitySet="SemifinishedRecyclatePackages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclatePackages_SemifinishedRecyclates" Association="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_SemifinishedRecyclates">
-            <End Role="SemifinishedRecyclate" EntitySet="SemifinishedRecyclates" />
-            <End Role="SemifinishedRecyclatePackage" EntitySet="SemifinishedRecyclatePackages" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SemifinishedRecyclatePackages_Warehouses" Association="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_Warehouses">
-            <End Role="Warehouse" EntitySet="Warehouses" />
-            <End Role="SemifinishedRecyclatePackage" EntitySet="SemifinishedRecyclatePackages" />
-          </AssociationSet>
           <EntitySet Name="RecyclatePackages" EntityType="TotalSmartPortalModel.RecyclatePackage" />
           <EntitySet Name="Recyclates" EntityType="TotalSmartPortalModel.Recyclate" />
           <AssociationSet Name="FK_RecyclatePackages_Commodities" Association="TotalSmartPortalModel.FK_RecyclatePackages_Commodities">
@@ -17866,6 +17376,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="ProductionLine" EntitySet="ProductionLines" />
             <End Role="FinishedItem" EntitySet="FinishedItems" />
           </AssociationSet>
+          <FunctionImport Name="GetSemifinishedProductViewDetails" ReturnType="Collection(TotalSmartPortalModel.SemifinishedProductViewDetail)">
+            <Parameter Name="SemifinishedProductID" Mode="In" Type="Int32" />
+            <Parameter Name="FirmOrderID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -19191,8 +18705,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="FinishedItemLots" Relationship="TotalSmartPortalModel.FK_FinishedItemLots_Workshifts" FromRole="Workshift" ToRole="FinishedItemLot" />
           <NavigationProperty Name="FinishedItemPackages" Relationship="TotalSmartPortalModel.FK_FinishedItemPackages_Workshifts" FromRole="Workshift" ToRole="FinishedItemPackage" />
           <NavigationProperty Name="FinishedItemDetails" Relationship="TotalSmartPortalModel.FK_FinishedItemDetails_Workshifts" FromRole="Workshift" ToRole="FinishedItemDetail" />
-          <NavigationProperty Name="SemifinishedRecyclateDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Workshifts" FromRole="Workshift" ToRole="SemifinishedRecyclateDetail" />
-          <NavigationProperty Name="SemifinishedRecyclates" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Workshifts" FromRole="Workshift" ToRole="SemifinishedRecyclate" />
           <NavigationProperty Name="Recyclates" Relationship="TotalSmartPortalModel.FK_Recyclates_Workshifts" FromRole="Workshift" ToRole="Recyclate" />
           <NavigationProperty Name="RecyclateDetails" Relationship="TotalSmartPortalModel.FK_RecyclateDetails_Workshifts" FromRole="Workshift" ToRole="RecyclateDetail" />
         </EntityType>
@@ -19554,9 +19066,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="GoodsReceipts" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_Warehouses" FromRole="Warehouse" ToRole="GoodsReceipt" />
           <NavigationProperty Name="GoodsReceipts1" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_Warehouses1" FromRole="Warehouse" ToRole="GoodsReceipt" />
           <NavigationProperty Name="WorkOrders" Relationship="TotalSmartPortalModel.FK_WorkOrders_Warehouses" FromRole="Warehouse" ToRole="WorkOrder" />
-          <NavigationProperty Name="SemifinishedRecyclateDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Warehouses" FromRole="Warehouse" ToRole="SemifinishedRecyclateDetail" />
-          <NavigationProperty Name="SemifinishedRecyclates" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Warehouses" FromRole="Warehouse" ToRole="SemifinishedRecyclate" />
-          <NavigationProperty Name="SemifinishedRecyclatePackages" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_Warehouses" FromRole="Warehouse" ToRole="SemifinishedRecyclatePackage" />
           <NavigationProperty Name="RecyclatePackages" Relationship="TotalSmartPortalModel.FK_RecyclatePackages_Warehouses" FromRole="Warehouse" ToRole="RecyclatePackage" />
           <NavigationProperty Name="Recyclates" Relationship="TotalSmartPortalModel.FK_Recyclates_Warehouses" FromRole="Warehouse" ToRole="Recyclate" />
           <NavigationProperty Name="RecyclateDetails" Relationship="TotalSmartPortalModel.FK_RecyclateDetails_Warehouses" FromRole="Warehouse" ToRole="RecyclateDetail" />
@@ -21158,7 +20667,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="RejectWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="RecycleWeights" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
           <Property Name="RecycleLoss" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <NavigationProperty Name="SemifinishedRecyclateDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_SemifinishedProducts" FromRole="SemifinishedProduct" ToRole="SemifinishedRecyclateDetail" />
           <NavigationProperty Name="RecyclateDetails" Relationship="TotalSmartPortalModel.FK_RecyclateDetails_SemifinishedProducts" FromRole="SemifinishedProduct" ToRole="RecyclateDetail" />
         </EntityType>
         <Association Name="FK_MaterialIssueDetails_Customers">
@@ -24713,9 +24221,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_Users" FromRole="User" ToRole="PackageIssue" />
           <NavigationProperty Name="WarehouseTransfers" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Users" FromRole="User" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="WorkOrders" Relationship="TotalSmartPortalModel.FK_WorkOrders_Users" FromRole="User" ToRole="WorkOrder" />
-          <NavigationProperty Name="SemifinishedRecyclates" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users" FromRole="User" ToRole="SemifinishedRecyclate" />
-          <NavigationProperty Name="SemifinishedRecyclates1" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users1" FromRole="User" ToRole="SemifinishedRecyclate" />
-          <NavigationProperty Name="SemifinishedRecyclates2" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users2" FromRole="User" ToRole="SemifinishedRecyclate" />
           <NavigationProperty Name="Recyclates" Relationship="TotalSmartPortalModel.FK_Recyclates_Users" FromRole="User" ToRole="Recyclate" />
           <NavigationProperty Name="Recyclates1" Relationship="TotalSmartPortalModel.FK_Recyclates_Users1" FromRole="User" ToRole="Recyclate" />
           <NavigationProperty Name="Recyclates2" Relationship="TotalSmartPortalModel.FK_Recyclates_Users2" FromRole="User" ToRole="Recyclate" />
@@ -25191,9 +24696,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="FinishedItemDetails" Relationship="TotalSmartPortalModel.FK_FinishedItemDetails_Commodities" FromRole="Commodity" ToRole="FinishedItemDetail" />
           <Property Name="TareWeight" Type="Decimal" Precision="18" Scale="3" />
           <Property Name="RecycleCommodityID" Type="Int32" />
-          <NavigationProperty Name="SemifinishedRecyclateDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities" FromRole="Commodity" ToRole="SemifinishedRecyclateDetail" />
-          <NavigationProperty Name="SemifinishedRecyclateDetails1" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities1" FromRole="Commodity" ToRole="SemifinishedRecyclateDetail" />
-          <NavigationProperty Name="SemifinishedRecyclatePackages" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_Commodities" FromRole="Commodity" ToRole="SemifinishedRecyclatePackage" />
           <NavigationProperty Name="RecyclatePackages" Relationship="TotalSmartPortalModel.FK_RecyclatePackages_Commodities" FromRole="Commodity" ToRole="RecyclatePackage" />
           <NavigationProperty Name="RecyclateDetails" Relationship="TotalSmartPortalModel.FK_RecyclateDetails_Commodities" FromRole="Commodity" ToRole="RecyclateDetail" />
           <NavigationProperty Name="RecyclateDetails1" Relationship="TotalSmartPortalModel.FK_RecyclateDetails_Commodities1" FromRole="Commodity" ToRole="RecyclateDetail" />
@@ -26986,355 +26488,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Boolean" Name="LabInActive" Nullable="false" />
           <Property Type="String" Name="LabInActiveCode" Nullable="true" MaxLength="50" />
         </ComplexType>
-        <ComplexType Name="SemifinishedRecyclateIndex">
-          <Property Type="Int32" Name="SemifinishedRecyclateID" Nullable="false" />
-          <Property Type="DateTime" Name="EntryDate" Nullable="true" />
-          <Property Type="String" Name="Reference" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="LocationCode" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
-          <Property Type="String" Name="Caption" Nullable="true" MaxLength="800" />
-          <Property Type="Decimal" Name="TotalQuantity" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Boolean" Name="Approved" Nullable="false" />
-          <Property Type="DateTime" Name="WorkshiftEntryDate" Nullable="false" Precision="23" />
-          <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
-        </ComplexType>
-        <ComplexType Name="SemifinishedRecyclatePendingWorkshift">
-          <Property Type="Decimal" Name="TotalQuantityRemains" Nullable="true" Precision="38" Scale="2" />
-          <Property Type="Int32" Name="WorkshiftID" Nullable="false" />
-          <Property Type="DateTime" Name="WorkshiftEntryDate" Nullable="false" Precision="23" />
-          <Property Type="String" Name="WorkshiftCode" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
-          <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
-          <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
-        </ComplexType>
-        <ComplexType Name="SemifinishedRecyclateViewDetail">
-          <Property Type="Int32" Name="SemifinishedRecyclateDetailID" Nullable="false" />
-          <Property Type="Int32" Name="SemifinishedRecyclateID" Nullable="false" />
-          <Property Type="Int32" Name="SemifinishedProductID" Nullable="false" />
-          <Property Type="String" Name="ProductionLineCode" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="FirmOrderCode" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Specification" Nullable="true" MaxLength="800" />
-          <Property Type="Int32" Name="CommodityID" Nullable="false" />
-          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
-          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
-          <Property Type="Decimal" Name="RejectWeights" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="FailureWeights" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="QuantityRemains" Nullable="false" Precision="20" Scale="2" />
-          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="1" Scale="1" />
-          <Property Type="Int32" Name="RecycleCommodityID" Nullable="true" />
-          <Property Type="String" Name="RecycleCommodityCode" Nullable="true" MaxLength="50" />
-          <Property Type="DateTime" Name="SemifinishedProductEntryDate" Nullable="false" Precision="23" />
-          <Property Type="String" Name="SemifinishedProductReference" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="RecycleCommodityName" Nullable="true" MaxLength="200" />
-          <Property Type="Int32" Name="RecycleCommodityTypeID" Nullable="true" />
-        </ComplexType>
-        <EntityType Name="SemifinishedRecyclateDetail">
-          <Key>
-            <PropertyRef Name="SemifinishedRecyclateDetailID" />
-          </Key>
-          <Property Name="SemifinishedRecyclateDetailID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SemifinishedRecyclateID" Type="Int32" Nullable="false" />
-          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LocationID" Type="Int32" Nullable="false" />
-          <Property Name="WorkshiftID" Type="Int32" Nullable="false" />
-          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
-          <Property Name="CrucialWorkerID" Type="Int32" Nullable="false" />
-          <Property Name="SemifinishedProductID" Type="Int32" Nullable="false" />
-          <Property Name="CommodityID" Type="Int32" Nullable="false" />
-          <Property Name="CommodityTypeID" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="QuantityReceipted" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Approved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities" FromRole="SemifinishedRecyclateDetail" ToRole="Commodity" />
-          <NavigationProperty Name="SemifinishedProduct" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_SemifinishedProducts" FromRole="SemifinishedRecyclateDetail" ToRole="SemifinishedProduct" />
-          <NavigationProperty Name="SemifinishedRecyclate" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_SemifinishedRecyclates" FromRole="SemifinishedRecyclateDetail" ToRole="SemifinishedRecyclate" />
-          <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Warehouses" FromRole="SemifinishedRecyclateDetail" ToRole="Warehouse" />
-          <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Workshifts" FromRole="SemifinishedRecyclateDetail" ToRole="Workshift" />
-          <Property Name="StorekeeperID" Type="Int32" Nullable="false" />
-          <Property Name="RecycleCommodityID" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Commodity1" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_Commodities1" FromRole="SemifinishedRecyclateDetail" ToRole="Commodity" />
-          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
-        </EntityType>
-        <EntityType Name="SemifinishedRecyclate">
-          <Key>
-            <PropertyRef Name="SemifinishedRecyclateID" />
-          </Key>
-          <Property Name="SemifinishedRecyclateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="WorkshiftID" Type="Int32" Nullable="false" />
-          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
-          <Property Name="CrucialWorkerID" Type="Int32" Nullable="false" />
-          <Property Name="StorekeeperID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="PreparedPersonID" Type="Int32" Nullable="false" />
-          <Property Name="OrganizationalUnitID" Type="Int32" Nullable="false" />
-          <Property Name="LocationID" Type="Int32" Nullable="false" />
-          <Property Name="ApproverID" Type="Int32" Nullable="false" />
-          <Property Name="TotalQuantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="TotalQuantityReceipted" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Caption" Type="String" MaxLength="800" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="EditedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Approved" Type="Boolean" Nullable="false" />
-          <Property Name="ApprovedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Employee" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees" FromRole="SemifinishedRecyclate" ToRole="Employee" />
-          <NavigationProperty Name="Employee1" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Employees1" FromRole="SemifinishedRecyclate" ToRole="Employee" />
-          <NavigationProperty Name="Location" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Locations" FromRole="SemifinishedRecyclate" ToRole="Location" />
-          <NavigationProperty Name="SemifinishedRecyclateDetails" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclateDetails_SemifinishedRecyclates" FromRole="SemifinishedRecyclate" ToRole="SemifinishedRecyclateDetail" />
-          <NavigationProperty Name="User" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users" FromRole="SemifinishedRecyclate" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users1" FromRole="SemifinishedRecyclate" ToRole="User" />
-          <NavigationProperty Name="User2" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Users2" FromRole="SemifinishedRecyclate" ToRole="User" />
-          <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Warehouses" FromRole="SemifinishedRecyclate" ToRole="Warehouse" />
-          <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclates_Workshifts" FromRole="SemifinishedRecyclate" ToRole="Workshift" />
-          <NavigationProperty Name="SemifinishedRecyclatePackages" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_SemifinishedRecyclates" FromRole="SemifinishedRecyclate" ToRole="SemifinishedRecyclatePackage" />
-          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_SemifinishedRecyclateDetails_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclateDetail" Role="SemifinishedRecyclateDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetail">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Employees">
-          <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclate">
-              <PropertyRef Name="CrucialWorkerID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Employees1">
-          <End Type="TotalSmartPortalModel.Employee" Role="Employee" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Employee">
-              <PropertyRef Name="EmployeeID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclate">
-              <PropertyRef Name="StorekeeperID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Locations">
-          <End Type="TotalSmartPortalModel.Location" Role="Location" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Location">
-              <PropertyRef Name="LocationID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclate">
-              <PropertyRef Name="LocationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_SemifinishedProducts">
-          <End Type="TotalSmartPortalModel.SemifinishedProduct" Role="SemifinishedProduct" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclateDetail" Role="SemifinishedRecyclateDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SemifinishedProduct">
-              <PropertyRef Name="SemifinishedProductID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetail">
-              <PropertyRef Name="SemifinishedProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_SemifinishedRecyclates">
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclateDetail" Role="SemifinishedRecyclateDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SemifinishedRecyclate">
-              <PropertyRef Name="SemifinishedRecyclateID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetail">
-              <PropertyRef Name="SemifinishedRecyclateID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_Warehouses">
-          <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclateDetail" Role="SemifinishedRecyclateDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="WarehouseID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetail">
-              <PropertyRef Name="WarehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_Workshifts">
-          <End Type="TotalSmartPortalModel.Workshift" Role="Workshift" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclateDetail" Role="SemifinishedRecyclateDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Workshift">
-              <PropertyRef Name="WorkshiftID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetail">
-              <PropertyRef Name="WorkshiftID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Users">
-          <End Type="TotalSmartPortalModel.User" Role="User" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclate">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Users1">
-          <End Type="TotalSmartPortalModel.User" Role="User" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclate">
-              <PropertyRef Name="PreparedPersonID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Users2">
-          <End Type="TotalSmartPortalModel.User" Role="User" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclate">
-              <PropertyRef Name="ApproverID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Warehouses">
-          <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="WarehouseID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclate">
-              <PropertyRef Name="WarehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclates_Workshifts">
-          <End Type="TotalSmartPortalModel.Workshift" Role="Workshift" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Workshift">
-              <PropertyRef Name="WorkshiftID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclate">
-              <PropertyRef Name="WorkshiftID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclateDetails_Commodities1">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclateDetail" Role="SemifinishedRecyclateDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclateDetail">
-              <PropertyRef Name="RecycleCommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <ComplexType Name="SemifinishedRecyclateViewPackage">
-          <Property Type="Int32" Name="SemifinishedRecyclatePackageID" Nullable="false" />
-          <Property Type="Int32" Name="SemifinishedRecyclateID" Nullable="false" />
-          <Property Type="Int32" Name="CommodityID" Nullable="false" />
-          <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
-          <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
-          <Property Type="Int32" Name="BatchID" Nullable="false" />
-          <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
-          <Property Type="Decimal" Name="RejectWeights" Nullable="true" Precision="38" Scale="2" />
-          <Property Type="Decimal" Name="FailureWeights" Nullable="true" Precision="38" Scale="2" />
-          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="38" Scale="2" />
-          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
-        </ComplexType>
-        <EntityType Name="SemifinishedRecyclatePackage">
-          <Key>
-            <PropertyRef Name="SemifinishedRecyclatePackageID" />
-          </Key>
-          <Property Name="SemifinishedRecyclatePackageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SemifinishedRecyclateID" Type="Int32" Nullable="false" />
-          <Property Name="EntryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="LocationID" Type="Int32" Nullable="false" />
-          <Property Name="WorkshiftID" Type="Int32" Nullable="false" />
-          <Property Name="WarehouseID" Type="Int32" Nullable="false" />
-          <Property Name="CommodityID" Type="Int32" Nullable="false" />
-          <Property Name="CommodityTypeID" Type="Int32" Nullable="false" />
-          <Property Name="BatchID" Type="Int32" Nullable="false" />
-          <Property Name="BatchEntryDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Quantity" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="QuantityReceipted" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
-          <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Approved" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_Commodities" FromRole="SemifinishedRecyclatePackage" ToRole="Commodity" />
-          <NavigationProperty Name="SemifinishedRecyclate" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_SemifinishedRecyclates" FromRole="SemifinishedRecyclatePackage" ToRole="SemifinishedRecyclate" />
-          <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_SemifinishedRecyclatePackages_Warehouses" FromRole="SemifinishedRecyclatePackage" ToRole="Warehouse" />
-          <Property Name="NMVNTaskID" Type="Int32" Nullable="false" />
-        </EntityType>
-        <Association Name="FK_SemifinishedRecyclatePackages_Commodities">
-          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclatePackage" Role="SemifinishedRecyclatePackage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Commodity">
-              <PropertyRef Name="CommodityID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclatePackage">
-              <PropertyRef Name="CommodityID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclatePackages_SemifinishedRecyclates">
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclate" Role="SemifinishedRecyclate" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclatePackage" Role="SemifinishedRecyclatePackage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SemifinishedRecyclate">
-              <PropertyRef Name="SemifinishedRecyclateID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclatePackage">
-              <PropertyRef Name="SemifinishedRecyclateID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SemifinishedRecyclatePackages_Warehouses">
-          <End Type="TotalSmartPortalModel.Warehouse" Role="Warehouse" Multiplicity="1" />
-          <End Type="TotalSmartPortalModel.SemifinishedRecyclatePackage" Role="SemifinishedRecyclatePackage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="WarehouseID" />
-            </Principal>
-            <Dependent Role="SemifinishedRecyclatePackage">
-              <PropertyRef Name="WarehouseID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="RecyclatePackage">
           <Key>
             <PropertyRef Name="RecyclatePackageID" />
@@ -31191,26 +30344,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetSemifinishedProductViewDetails" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedProductViewDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedProductViewDetail">
-                <ScalarProperty Name="SemifinishedProductDetailID" ColumnName="SemifinishedProductDetailID" />
-                <ScalarProperty Name="FirmOrderDetailID" ColumnName="FirmOrderDetailID" />
-                <ScalarProperty Name="PlannedOrderDetailID" ColumnName="PlannedOrderDetailID" />
-                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
-                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
-                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
-                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
-                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="SemifinishedProductID" ColumnName="SemifinishedProductID" />
-                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
-                <ScalarProperty Name="MoldQuantity" ColumnName="MoldQuantity" />
-                <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SemifinishedProductApproved" FunctionName="TotalSmartPortalModel.Store.SemifinishedProductApproved" />
           <FunctionImportMapping FunctionImportName="SemifinishedProductEditable" FunctionName="TotalSmartPortalModel.Store.SemifinishedProductEditable" />
           <FunctionImportMapping FunctionImportName="SemifinishedProductPostSaveValidate" FunctionName="TotalSmartPortalModel.Store.SemifinishedProductPostSaveValidate" />
@@ -34747,156 +33880,6 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetSemifinishedRecyclateIndexes" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedRecyclateIndexes">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedRecyclateIndex">
-                <ScalarProperty Name="SemifinishedRecyclateID" ColumnName="SemifinishedRecyclateID" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="Reference" ColumnName="Reference" />
-                <ScalarProperty Name="LocationCode" ColumnName="LocationCode" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Caption" ColumnName="Caption" />
-                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
-                <ScalarProperty Name="Approved" ColumnName="Approved" />
-                <ScalarProperty Name="WorkshiftEntryDate" ColumnName="WorkshiftEntryDate" />
-                <ScalarProperty Name="WorkshiftCode" ColumnName="WorkshiftCode" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetSemifinishedRecyclatePendingWorkshifts" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedRecyclatePendingWorkshifts">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedRecyclatePendingWorkshift">
-                <ScalarProperty Name="TotalQuantityRemains" ColumnName="TotalQuantityRemains" />
-                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
-                <ScalarProperty Name="WorkshiftEntryDate" ColumnName="WorkshiftEntryDate" />
-                <ScalarProperty Name="WorkshiftCode" ColumnName="WorkshiftCode" />
-                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
-                <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
-                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="GetSemifinishedRecyclateViewDetails" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedRecyclateViewDetails">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedRecyclateViewDetail">
-                <ScalarProperty Name="SemifinishedRecyclateDetailID" ColumnName="SemifinishedRecyclateDetailID" />
-                <ScalarProperty Name="SemifinishedRecyclateID" ColumnName="SemifinishedRecyclateID" />
-                <ScalarProperty Name="SemifinishedProductID" ColumnName="SemifinishedProductID" />
-                <ScalarProperty Name="ProductionLineCode" ColumnName="ProductionLineCode" />
-                <ScalarProperty Name="FirmOrderCode" ColumnName="FirmOrderCode" />
-                <ScalarProperty Name="Specification" ColumnName="Specification" />
-                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
-                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
-                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
-                <ScalarProperty Name="RejectWeights" ColumnName="RejectWeights" />
-                <ScalarProperty Name="FailureWeights" ColumnName="FailureWeights" />
-                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="RecycleCommodityID" ColumnName="RecycleCommodityID" />
-                <ScalarProperty Name="RecycleCommodityCode" ColumnName="RecycleCommodityCode" />
-                <ScalarProperty Name="SemifinishedProductEntryDate" ColumnName="SemifinishedProductEntryDate" />
-                <ScalarProperty Name="SemifinishedProductReference" ColumnName="SemifinishedProductReference" />
-                <ScalarProperty Name="RecycleCommodityName" ColumnName="RecycleCommodityName" />
-                <ScalarProperty Name="RecycleCommodityTypeID" ColumnName="RecycleCommodityTypeID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="SemifinishedRecyclateApproved" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclateApproved" />
-          <FunctionImportMapping FunctionImportName="SemifinishedRecyclateEditable" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclateEditable" />
-          <FunctionImportMapping FunctionImportName="SemifinishedRecyclatePostSaveValidate" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclatePostSaveValidate" />
-          <FunctionImportMapping FunctionImportName="SemifinishedRecyclateSaveRelative" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclateSaveRelative" />
-          <FunctionImportMapping FunctionImportName="SemifinishedRecyclateToggleApproved" FunctionName="TotalSmartPortalModel.Store.SemifinishedRecyclateToggleApproved" />
-          <EntitySetMapping Name="SemifinishedRecyclateDetails">
-            <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedRecyclateDetail">
-              <MappingFragment StoreEntitySet="SemifinishedRecyclateDetails">
-                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
-                <ScalarProperty Name="RecycleCommodityID" ColumnName="RecycleCommodityID" />
-                <ScalarProperty Name="StorekeeperID" ColumnName="StorekeeperID" />
-                <ScalarProperty Name="Approved" ColumnName="Approved" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="QuantityReceipted" ColumnName="QuantityReceipted" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
-                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
-                <ScalarProperty Name="SemifinishedProductID" ColumnName="SemifinishedProductID" />
-                <ScalarProperty Name="CrucialWorkerID" ColumnName="CrucialWorkerID" />
-                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
-                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="SemifinishedRecyclateID" ColumnName="SemifinishedRecyclateID" />
-                <ScalarProperty Name="SemifinishedRecyclateDetailID" ColumnName="SemifinishedRecyclateDetailID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SemifinishedRecyclates">
-            <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedRecyclate">
-              <MappingFragment StoreEntitySet="SemifinishedRecyclates">
-                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
-                <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
-                <ScalarProperty Name="Approved" ColumnName="Approved" />
-                <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Caption" ColumnName="Caption" />
-                <ScalarProperty Name="TotalQuantityReceipted" ColumnName="TotalQuantityReceipted" />
-                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
-                <ScalarProperty Name="ApproverID" ColumnName="ApproverID" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="OrganizationalUnitID" ColumnName="OrganizationalUnitID" />
-                <ScalarProperty Name="PreparedPersonID" ColumnName="PreparedPersonID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="StorekeeperID" ColumnName="StorekeeperID" />
-                <ScalarProperty Name="CrucialWorkerID" ColumnName="CrucialWorkerID" />
-                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
-                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
-                <ScalarProperty Name="Reference" ColumnName="Reference" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="SemifinishedRecyclateID" ColumnName="SemifinishedRecyclateID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="GetSemifinishedRecyclateViewPackages" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedRecyclateViewPackages">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedRecyclateViewPackage">
-                <ScalarProperty Name="SemifinishedRecyclatePackageID" ColumnName="SemifinishedRecyclatePackageID" />
-                <ScalarProperty Name="SemifinishedRecyclateID" ColumnName="SemifinishedRecyclateID" />
-                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
-                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
-                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
-                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
-                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
-                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
-                <ScalarProperty Name="RejectWeights" ColumnName="RejectWeights" />
-                <ScalarProperty Name="FailureWeights" ColumnName="FailureWeights" />
-                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <EntitySetMapping Name="SemifinishedRecyclatePackages">
-            <EntityTypeMapping TypeName="TotalSmartPortalModel.SemifinishedRecyclatePackage">
-              <MappingFragment StoreEntitySet="SemifinishedRecyclatePackages">
-                <ScalarProperty Name="NMVNTaskID" ColumnName="NMVNTaskID" />
-                <ScalarProperty Name="Approved" ColumnName="Approved" />
-                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
-                <ScalarProperty Name="QuantityReceipted" ColumnName="QuantityReceipted" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
-                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
-                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
-                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
-                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
-                <ScalarProperty Name="WorkshiftID" ColumnName="WorkshiftID" />
-                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
-                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
-                <ScalarProperty Name="SemifinishedRecyclateID" ColumnName="SemifinishedRecyclateID" />
-                <ScalarProperty Name="SemifinishedRecyclatePackageID" ColumnName="SemifinishedRecyclatePackageID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="RecyclatePackages">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.RecyclatePackage">
               <MappingFragment StoreEntitySet="RecyclatePackages">
@@ -35051,6 +34034,26 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetSemifinishedProductViewDetails" FunctionName="TotalSmartPortalModel.Store.GetSemifinishedProductViewDetails">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.SemifinishedProductViewDetail">
+                <ScalarProperty Name="SemifinishedProductDetailID" ColumnName="SemifinishedProductDetailID" />
+                <ScalarProperty Name="FirmOrderDetailID" ColumnName="FirmOrderDetailID" />
+                <ScalarProperty Name="PlannedOrderDetailID" ColumnName="PlannedOrderDetailID" />
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="CommodityCode" ColumnName="CommodityCode" />
+                <ScalarProperty Name="CommodityName" ColumnName="CommodityName" />
+                <ScalarProperty Name="CommodityTypeID" ColumnName="CommodityTypeID" />
+                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="SemifinishedProductID" ColumnName="SemifinishedProductID" />
+                <ScalarProperty Name="PlannedOrderID" ColumnName="PlannedOrderID" />
+                <ScalarProperty Name="MoldQuantity" ColumnName="MoldQuantity" />
+                <ScalarProperty Name="PiecePerPack" ColumnName="PiecePerPack" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

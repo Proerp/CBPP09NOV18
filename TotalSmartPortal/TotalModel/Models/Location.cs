@@ -51,7 +51,6 @@ namespace TotalModel.Models
             this.SemifinishedItems = new HashSet<SemifinishedItem>();
             this.WorkOrders = new HashSet<WorkOrder>();
             this.FinishedItems = new HashSet<FinishedItem>();
-            this.SemifinishedRecyclates = new HashSet<SemifinishedRecyclate>();
             this.Recyclates = new HashSet<Recyclate>();
         }
     
@@ -135,8 +134,6 @@ namespace TotalModel.Models
         public virtual ICollection<WorkOrder> WorkOrders { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedItem> FinishedItems { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SemifinishedRecyclate> SemifinishedRecyclates { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recyclate> Recyclates { get; set; }
     }

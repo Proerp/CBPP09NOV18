@@ -46,9 +46,6 @@ namespace TotalModel.Models
             this.WorkOrderDetails = new HashSet<WorkOrderDetail>();
             this.FinishedHandoverDetails = new HashSet<FinishedHandoverDetail>();
             this.FinishedItemDetails = new HashSet<FinishedItemDetail>();
-            this.SemifinishedRecyclateDetails = new HashSet<SemifinishedRecyclateDetail>();
-            this.SemifinishedRecyclateDetails1 = new HashSet<SemifinishedRecyclateDetail>();
-            this.SemifinishedRecyclatePackages = new HashSet<SemifinishedRecyclatePackage>();
             this.RecyclatePackages = new HashSet<RecyclatePackage>();
             this.RecyclateDetails = new HashSet<RecyclateDetail>();
             this.RecyclateDetails1 = new HashSet<RecyclateDetail>();
@@ -159,12 +156,6 @@ namespace TotalModel.Models
         public virtual ICollection<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SemifinishedRecyclateDetail> SemifinishedRecyclateDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SemifinishedRecyclateDetail> SemifinishedRecyclateDetails1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SemifinishedRecyclatePackage> SemifinishedRecyclatePackages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecyclatePackage> RecyclatePackages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
