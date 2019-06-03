@@ -41,7 +41,7 @@ namespace TotalDTO.Productions
     public class RecyclatePrimitiveDTO<TRecyclateOption> : QuantityDTO<RecyclateDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
         where TRecyclateOption : IRecyclateOption, new()
     {
-        public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.SemifinishedProductRecyclate; } }
+        public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return new TRecyclateOption().NMVNTaskID; } }
 
         public int GetID() { return this.RecyclateID; }
         public void SetID(int id) { this.RecyclateID = id; }

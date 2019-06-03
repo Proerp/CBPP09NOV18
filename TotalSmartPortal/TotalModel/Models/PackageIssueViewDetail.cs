@@ -41,5 +41,7 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public Nullable<int> PackageIssueImage1ID { get; set; }
         public Nullable<int> PackageIssueImage2ID { get; set; }
+        public decimal UnitWeight { get; set; }
+        public decimal TareWeight { get; set; }
     }
 }

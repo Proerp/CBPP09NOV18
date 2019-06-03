@@ -170,6 +170,11 @@
 
                     columns.Bound(p => p.SemifinishedProductID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (SemifinishedProductID == null)? '' : SemifinishedProductID #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].SemifinishedProductID' value='#= (SemifinishedProductID == null) ? '' : SemifinishedProductID #' />");
+                    columns.Bound(p => p.FinishedProductPackageID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (FinishedProductPackageID == null)? '' : FinishedProductPackageID #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].FinishedProductPackageID' value='#= (FinishedProductPackageID == null) ? '' : FinishedProductPackageID #' />");
+                    columns.Bound(p => p.FinishedItemDetailID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (FinishedItemDetailID == null)? '' : FinishedItemDetailID #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].FinishedItemDetailID' value='#= (FinishedItemDetailID == null) ? '' : FinishedItemDetailID #' />");
+                    
                     columns.Bound(p => p.RootReference).DisplayNameTitle().Width(15).HtmlAttributes(new { style = "" })
                         .ClientTemplate("#= RootReference #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].RootReference' value='#= RootReference #' />");
                     columns.Bound(p => p.RootEntryDate).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(15)

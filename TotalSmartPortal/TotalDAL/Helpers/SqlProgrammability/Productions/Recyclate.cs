@@ -101,7 +101,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       SELECT          Workshifts.WorkshiftID, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, NMVNTaskRemains.TotalQuantityRemains " + "\r\n";
 
-            queryString = queryString + "       FROM           (SELECT WorkshiftID, ROUND(SUM(" + this.nmvnTaskFailures(nmvnTaskID) + " + " + this.nmvnTaskSwarfs(nmvnTaskID) + " - RecycleWeights), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM " + this.nmvnTaskTable(nmvnTaskID) + " WHERE Approved = 1 AND EntryDate >= CONVERT(smalldatetime, '" + new DateTime(2019, 5, 1).ToString("dd/MM/yyyy") + "',103) AND ROUND(" + this.nmvnTaskFailures(nmvnTaskID) + " + " + this.nmvnTaskSwarfs(nmvnTaskID) + " - RecycleWeights - RecycleLoss, " + (int)GlobalEnums.rndQuantity + ") > 0 " + " GROUP BY WorkshiftID) AS NMVNTaskRemains " + "\r\n";
+            queryString = queryString + "       FROM           (SELECT WorkshiftID, ROUND(SUM(" + this.nmvnTaskFailures(nmvnTaskID) + " + " + this.nmvnTaskSwarfs(nmvnTaskID) + " - RecycleWeights), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM " + this.nmvnTaskTable(nmvnTaskID) + " WHERE Approved = 1 AND EntryDate >= CONVERT(smalldatetime, '" + new DateTime(2019, 6, 1).ToString("dd/MM/yyyy") + "',103) AND ROUND(" + this.nmvnTaskFailures(nmvnTaskID) + " + " + this.nmvnTaskSwarfs(nmvnTaskID) + " - RecycleWeights - RecycleLoss, " + (int)GlobalEnums.rndQuantity + ") > 0 " + " GROUP BY WorkshiftID) AS NMVNTaskRemains " + "\r\n";
             queryString = queryString + "                       INNER JOIN Workshifts ON NMVNTaskRemains.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = 1 " + "\r\n";
 
@@ -135,31 +135,16 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             string queryString = "" + "\r\n";
             queryString = queryString + "   BEGIN " + "\r\n";
 
-            queryString = queryString + "       IF (@RecyclateID <= 0) " + "\r\n";
-            queryString = queryString + "               BEGIN " + "\r\n";
-            queryString = queryString + "                   " + this.BUILDSQLNew(nmvnTaskID) + "\r\n";
-            queryString = queryString + "                   ORDER BY ProductionLineCode, " + this.nmvnTaskTable(nmvnTaskID) + "." + this.nmvnTaskPrimaryKey(nmvnTaskID) + "\r\n";
-            queryString = queryString + "               END " + "\r\n";
-            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "       IF (@RecyclateID > 0) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
             queryString = queryString + "                   " + this.BUILDSQLEdit(nmvnTaskID) + "\r\n";
             queryString = queryString + "                   ORDER BY ProductionLineCode, " + this.nmvnTaskTable(nmvnTaskID) + "." + this.nmvnTaskPrimaryKey(nmvnTaskID) + "\r\n";
             queryString = queryString + "               END " + "\r\n";
-
-            ////queryString = queryString + "               IF (@IsReadonly = 1) " + "\r\n";
-            ////queryString = queryString + "                   BEGIN " + "\r\n";
-            ////queryString = queryString + "                       " + this.BUILDSQLEdit() + "\r\n";
-            ////queryString = queryString + "                       ORDER BY ProductionLineCode, SemifinishedProducts.SemifinishedProductID " + "\r\n";
-            ////queryString = queryString + "                   END " + "\r\n";
-
-            ////queryString = queryString + "               ELSE " + "\r\n"; //FULL SELECT FOR EDIT MODE
-
-            ////queryString = queryString + "                   BEGIN " + "\r\n";
-            ////queryString = queryString + "                       " + this.BUILDSQLNew() + " AND SemifinishedProducts.SemifinishedProductID NOT IN (SELECT SemifinishedProductID FROM RecyclateDetails WHERE RecyclateID = @RecyclateID) " + "\r\n";
-            ////queryString = queryString + "                       UNION ALL " + "\r\n";
-            ////queryString = queryString + "                       " + this.BUILDSQLEdit() + "\r\n";
-            ////queryString = queryString + "                       ORDER BY ProductionLineCode, SemifinishedProducts.SemifinishedProductID " + "\r\n";
-            ////queryString = queryString + "                   END " + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   " + this.BUILDSQLNew(nmvnTaskID) + "\r\n";
+            queryString = queryString + "                   ORDER BY ProductionLineCode, " + this.nmvnTaskTable(nmvnTaskID) + "." + this.nmvnTaskPrimaryKey(nmvnTaskID) + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
 
             queryString = queryString + "   END " + "\r\n";
             return queryString;
@@ -216,7 +201,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             if (nmvnTaskID == GlobalEnums.NmvnTaskID.SemifinishedProductRecyclate)
             {
                 queryString = queryString + "       SELECT      RecyclateDetails.RecyclateDetailID, RecyclateDetails.RecyclateID, RecyclateDetails.SemifinishedProductID, RecyclateDetails.FinishedProductPackageID, RecyclateDetails.FinishedItemDetailID, SemifinishedProducts.EntryDate AS RootEntryDate, SemifinishedProducts.Reference AS RootReference, ProductionLines.Code AS ProductionLineCode, FirmOrders.Code AS FirmOrderCode, FirmOrders.Specification, " + "\r\n";
-                queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.CommodityTypeID, Commodities.RecycleCommodityID, RecycleCommodities.Code AS RecycleCommodityCode, RecycleCommodities.Name AS RecycleCommodityName, RecycleCommodities.CommodityTypeID AS RecycleCommodityTypeID, SemifinishedProducts.RejectWeights AS QuantityFailures, SemifinishedProducts.FailureWeights AS QuantitySwarfs, 0 AS QuantityFailureWeights, 0 AS Swarfs, ISNULL(ROUND(SemifinishedProducts.RejectWeights + SemifinishedProducts.FailureWeights - SemifinishedProducts.RecycleWeights + RecyclateDetails.Quantity, " + (int)GlobalEnums.rndQuantity + "), 0) AS QuantityRemains, RecyclateDetails.Quantity " + "\r\n";
+                queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.CommodityTypeID, Commodities.RecycleCommodityID, RecycleCommodities.Code AS RecycleCommodityCode, RecycleCommodities.Name AS RecycleCommodityName, RecycleCommodities.CommodityTypeID AS RecycleCommodityTypeID, SemifinishedProducts.RejectWeights AS QuantityFailures, SemifinishedProducts.FailureWeights AS QuantitySwarfs, ISNULL(ROUND(SemifinishedProducts.RejectWeights + SemifinishedProducts.FailureWeights - SemifinishedProducts.RecycleWeights + RecyclateDetails.Quantity, " + (int)GlobalEnums.rndQuantity + "), 0) AS QuantityRemains, RecyclateDetails.Quantity " + "\r\n";
 
                 queryString = queryString + "       FROM        RecyclateDetails " + "\r\n";
                 queryString = queryString + "                   INNER JOIN SemifinishedProducts ON RecyclateDetails.RecyclateID = @RecyclateID AND RecyclateDetails.SemifinishedProductID = SemifinishedProducts.SemifinishedProductID " + "\r\n";

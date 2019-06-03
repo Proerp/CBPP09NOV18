@@ -22,7 +22,10 @@ namespace TotalDTO.Productions
         public int StorekeeperID { get; set; }
 
 
-        public int SemifinishedProductID { get; set; }
+        public Nullable<int> SemifinishedProductID { get; set; }
+        public Nullable<int> FinishedProductPackageID { get; set; }
+        public Nullable<int> FinishedItemDetailID { get; set; }
+
         [Display(Name = "Phôi")]
         [UIHint("StringReadonly")]
         public string RootReference { get; set; }

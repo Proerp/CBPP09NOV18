@@ -22533,6 +22533,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="PackageIssueImage1ID" Nullable="true" />
           <Property Type="Int32" Name="PackageIssueImage2ID" Nullable="true" />
+          <Property Type="Decimal" Name="UnitWeight" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Decimal" Name="TareWeight" Nullable="false" Precision="18" Scale="2" />
         </ComplexType>
         <EntityType Name="PackageIssueDetail">
           <Key>
@@ -26704,7 +26706,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <ComplexType Name="RecyclateViewDetail">
           <Property Type="Int32" Name="RecyclateDetailID" Nullable="false" />
           <Property Type="Int32" Name="RecyclateID" Nullable="false" />
-          <Property Type="Int32" Name="SemifinishedProductID" Nullable="false" />
+          <Property Type="Int32" Name="SemifinishedProductID" Nullable="true" />
           <Property Type="Int32" Name="FinishedProductPackageID" Nullable="true" />
           <Property Type="Int32" Name="FinishedItemDetailID" Nullable="true" />
           <Property Type="DateTime" Name="RootEntryDate" Nullable="false" Precision="23" />
@@ -26721,9 +26723,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="RecycleCommodityTypeID" Nullable="true" />
           <Property Type="Decimal" Name="QuantityFailures" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantitySwarfs" Nullable="false" Precision="18" Scale="2" />
-          <Property Type="Decimal" Name="QuantityRemains" Nullable="false" Precision="20" Scale="2" />
-          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="1" Scale="1" />
-        </ComplexType>
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="false" Precision="21" Scale="2" />
+          <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
+          </ComplexType>
         <ComplexType Name="RecyclateViewPackage">
           <Property Type="Int32" Name="RecyclatePackageID" Nullable="false" />
           <Property Type="Int32" Name="RecyclateID" Nullable="false" />
@@ -32025,6 +32027,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="PackageIssueImage1ID" ColumnName="PackageIssueImage1ID" />
                 <ScalarProperty Name="PackageIssueImage2ID" ColumnName="PackageIssueImage2ID" />
+                <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -33982,7 +33986,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="QuantitySwarfs" ColumnName="QuantitySwarfs" />
                 <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-              </ComplexTypeMapping>
+                </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetRecyclateViewPackages" FunctionName="TotalSmartPortalModel.Store.GetRecyclateViewPackages">

@@ -15,7 +15,7 @@ namespace TotalModel.Models
     {
         public int RecyclateDetailID { get; set; }
         public int RecyclateID { get; set; }
-        public int SemifinishedProductID { get; set; }
+        public Nullable<int> SemifinishedProductID { get; set; }
         public Nullable<int> FinishedProductPackageID { get; set; }
         public Nullable<int> FinishedItemDetailID { get; set; }
         public System.DateTime RootEntryDate { get; set; }
