@@ -43,9 +43,9 @@ namespace TotalModel.Models
             this.SemifinishedRecyclateDetails = new HashSet<SemifinishedRecyclateDetail>();
             this.SemifinishedRecyclates = new HashSet<SemifinishedRecyclate>();
             this.SemifinishedRecyclatePackages = new HashSet<SemifinishedRecyclatePackage>();
-            this.RecyclateDetails = new HashSet<RecyclateDetail>();
             this.RecyclatePackages = new HashSet<RecyclatePackage>();
             this.Recyclates = new HashSet<Recyclate>();
+            this.RecyclateDetails = new HashSet<RecyclateDetail>();
         }
     
         public int WarehouseID { get; set; }
@@ -113,10 +113,10 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedRecyclatePackage> SemifinishedRecyclatePackages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RecyclateDetail> RecyclateDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecyclatePackage> RecyclatePackages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recyclate> Recyclates { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RecyclateDetail> RecyclateDetails { get; set; }
     }
 }

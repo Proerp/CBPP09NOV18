@@ -23,9 +23,9 @@ namespace TotalModel.Models
         public int WarehouseID { get; set; }
         public int CrucialWorkerID { get; set; }
         public int StorekeeperID { get; set; }
-        public int SemifinishedProductID { get; set; }
-        public int FinishedProductPackageID { get; set; }
-        public int FinishedItemDetailID { get; set; }
+        public Nullable<int> SemifinishedProductID { get; set; }
+        public Nullable<int> FinishedProductPackageID { get; set; }
+        public Nullable<int> FinishedItemDetailID { get; set; }
         public int CommodityID { get; set; }
         public int CommodityTypeID { get; set; }
         public int RecycleCommodityID { get; set; }

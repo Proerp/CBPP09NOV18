@@ -305,8 +305,9 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<RecyclateViewDetail, RecyclateDetailDTO>();
                 cfg.CreateMap<RecyclateDetailDTO, RecyclateDetail>();
 
-                cfg.CreateMap<Recyclate, FinishedItemHandoverViewModel>();
-                cfg.CreateMap<Recyclate, FinishedProductHandoverViewModel>();
+                cfg.CreateMap<Recyclate, SemifinishedProductRecyclateViewModel>();
+                cfg.CreateMap<Recyclate, FinishedProductRecyclateViewModel>();
+                cfg.CreateMap<Recyclate, FinishedItemRecyclateViewModel>();
                                 
                 cfg.CreateMap<RecyclatePackage, RecyclatePackageDTO>();
                 cfg.CreateMap<RecyclateViewPackage, RecyclatePackageDTO>();

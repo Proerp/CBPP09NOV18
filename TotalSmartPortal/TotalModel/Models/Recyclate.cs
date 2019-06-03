@@ -17,8 +17,8 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Recyclate()
         {
-            this.RecyclateDetails = new HashSet<RecyclateDetail>();
             this.RecyclatePackages = new HashSet<RecyclatePackage>();
+            this.RecyclateDetails = new HashSet<RecyclateDetail>();
         }
     
         public int RecyclateID { get; set; }
@@ -48,13 +48,13 @@ namespace TotalModel.Models
         public virtual Employee Employee1 { get; set; }
         public virtual Location Location { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<RecyclateDetail> RecyclateDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<RecyclatePackage> RecyclatePackages { get; set; }
         public virtual User User { get; set; }
         public virtual User User1 { get; set; }
         public virtual User User2 { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual Workshift Workshift { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RecyclateDetail> RecyclateDetails { get; set; }
     }
 }

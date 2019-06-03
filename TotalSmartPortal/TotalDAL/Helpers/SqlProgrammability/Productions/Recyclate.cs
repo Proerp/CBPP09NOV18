@@ -319,7 +319,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                   " + this.RecyclateSaveRelativeSQL(GlobalEnums.NmvnTaskID.FinishedItemRecyclate) + "\r\n";
 
 
-            queryString = queryString + "           IF @@ROWCOUNT <> (SELECT COUNT(*) FROM RecyclateDetails WHERE RecyclateID = @EntityID) " + "\r\n";
+            queryString = queryString + "           IF @affectedRows <> (SELECT COUNT(*) FROM RecyclateDetails WHERE RecyclateID = @EntityID) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
             queryString = queryString + "                   SET         @msg = N'Chứng từ đã hủy, hoặc chưa duyệt; hoặc số lượng không phù hợp' ; " + "\r\n";
             queryString = queryString + "                   THROW       61001,  @msg, 1; " + "\r\n";
