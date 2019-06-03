@@ -2372,6 +2372,13 @@
     <Content Include="Scripts\Controllers\Productions\SemifinishedProductHandovers\Index.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProductHandovers\Open.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProductHandovers\Print.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedProductRecyclates\Approve.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedProductRecyclates\CreateWizard.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedProductRecyclates\Delete.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedProductRecyclates\Edit.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedProductRecyclates\Index.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedProductRecyclates\Open.js" />
+    <Content Include="Scripts\Controllers\Productions\SemifinishedProductRecyclates\Print.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\AddPendingMaterialIssueDetail.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\Approve.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\CreateWizard.js" />
@@ -2380,13 +2387,6 @@
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\Index.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\Open.js" />
     <Content Include="Scripts\Controllers\Productions\SemifinishedProducts\Print.js" />
-    <Content Include="Scripts\Controllers\Productions\SemifinishedRecyclates\Approve.js" />
-    <Content Include="Scripts\Controllers\Productions\SemifinishedRecyclates\CreateWizard.js" />
-    <Content Include="Scripts\Controllers\Productions\SemifinishedRecyclates\Delete.js" />
-    <Content Include="Scripts\Controllers\Productions\SemifinishedRecyclates\Edit.js" />
-    <Content Include="Scripts\Controllers\Productions\SemifinishedRecyclates\Index.js" />
-    <Content Include="Scripts\Controllers\Productions\SemifinishedRecyclates\Open.js" />
-    <Content Include="Scripts\Controllers\Productions\SemifinishedRecyclates\Print.js" />
     <Content Include="Scripts\Controllers\Purchases\GoodsArrivals\AddPendingPurchaseOrderDetail.js" />
     <Content Include="Scripts\Controllers\Purchases\ItemArrivals\Approve.js" />
     <Content Include="Scripts\Controllers\Purchases\ItemArrivals\CreateWizard.js" />
