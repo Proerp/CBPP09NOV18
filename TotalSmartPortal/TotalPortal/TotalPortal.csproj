@@ -388,7 +388,7 @@
     <Compile Include="Areas\Productions\APIs\SemifinishedHandoverAPIsController.cs" />
     <Compile Include="Areas\Productions\APIs\SemifinishedItemAPIsController.cs" />
     <Compile Include="Areas\Productions\APIs\SemifinishedProductAPIsController.cs" />
-    <Compile Include="Areas\Productions\APIs\SemifinishedRecyclateAPIsController.cs" />
+    <Compile Include="Areas\Productions\APIs\RecyclateAPIsController.cs" />
     <Compile Include="Areas\Productions\APIs\WorkOrderAPIsController.cs" />
     <Compile Include="Areas\Productions\Builders\BlendingInstructionViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Productions\Builders\FinishedHandoverViewModelSelectListBuilder.cs" />
@@ -399,7 +399,7 @@
     <Compile Include="Areas\Productions\Builders\ProductionOrderViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Productions\Builders\SemifinishedItemViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Productions\Builders\SemifinishedProductViewModelSelectListBuilder.cs" />
-    <Compile Include="Areas\Productions\Builders\SemifinishedRecyclateViewModelSelectListBuilder.cs" />
+    <Compile Include="Areas\Productions\Builders\RecyclateViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Productions\Builders\WorkOrderViewModelSelectListBuilder.cs" />
     <Compile Include="Areas\Productions\Controllers\BlendingInstructionsController.cs" />
     <Compile Include="Areas\Productions\Controllers\FinishedHandoversController.cs" />
@@ -410,7 +410,7 @@
     <Compile Include="Areas\Productions\Controllers\SemifinishedHandoversController.cs" />
     <Compile Include="Areas\Productions\Controllers\SemifinishedItemsController.cs" />
     <Compile Include="Areas\Productions\Controllers\SemifinishedProductsController.cs" />
-    <Compile Include="Areas\Productions\Controllers\SemifinishedRecyclatesController.cs" />
+    <Compile Include="Areas\Productions\Controllers\RecyclatesController.cs" />
     <Compile Include="Areas\Productions\Controllers\Sessions\FinishedItemSession.cs" />
     <Compile Include="Areas\Productions\Controllers\Sessions\FinishedProductSession.cs" />
     <Compile Include="Areas\Productions\Controllers\Sessions\SemifinishedRecyclateSession.cs" />
@@ -425,7 +425,7 @@
     <Compile Include="Areas\Productions\ViewModels\SemifinishedHandoverViewModel.cs" />
     <Compile Include="Areas\Productions\ViewModels\SemifinishedItemViewModel.cs" />
     <Compile Include="Areas\Productions\ViewModels\SemifinishedProductViewModel.cs" />
-    <Compile Include="Areas\Productions\ViewModels\SemifinishedRecyclateViewModel.cs" />
+    <Compile Include="Areas\Productions\ViewModels\RecyclateViewModel.cs" />
     <Compile Include="Areas\Productions\ViewModels\WorkOrderViewModel.cs" />
     <Compile Include="Areas\Purchases\APIs\GoodsArrivalAPIsController.cs" />
     <Compile Include="Areas\Purchases\APIs\LabAPIsController.cs" />

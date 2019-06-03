@@ -9,12 +9,12 @@ using TotalDTO.Helpers;
 
 namespace TotalDTO.Productions
 {
-    public class SemifinishedRecyclateDetailDTO : QuantityDetailDTO, IPrimitiveEntity
+    public class RecyclateDetailDTO : QuantityDetailDTO, IPrimitiveEntity
     {
-        public int GetID() { return this.SemifinishedRecyclateDetailID; }
+        public int GetID() { return this.RecyclateDetailID; }
 
-        public int SemifinishedRecyclateDetailID { get; set; }
-        public int SemifinishedRecyclateID { get; set; }
+        public int RecyclateDetailID { get; set; }
+        public int RecyclateID { get; set; }
 
         public int WorkshiftID { get; set; }
         public int WarehouseID { get; set; }
@@ -25,10 +25,10 @@ namespace TotalDTO.Productions
         public int SemifinishedProductID { get; set; }
         [Display(Name = "Phôi")]
         [UIHint("StringReadonly")]
-        public string SemifinishedProductReference { get; set; }
+        public string RootReference { get; set; }
         [Display(Name = "Giờ SX")]
         [UIHint("TimeReadonly")]
-        public DateTime SemifinishedProductEntryDate { get; set; }
+        public DateTime RootEntryDate { get; set; }
 
         [Display(Name = "Máy")]
         [UIHint("StringReadonly")]
@@ -42,10 +42,10 @@ namespace TotalDTO.Productions
 
         [Display(Name = "Tấm hư")]
         [UIHint("QuantityReadonly")]        
-        public decimal RejectWeights { get; set; }
+        public decimal QuantityFailures { get; set; }
         [Display(Name = "Biên, pp")]
         [UIHint("QuantityReadonly")]        
-        public decimal FailureWeights { get; set; }
+        public decimal QuantitySwarfs { get; set; }
 
         [Display(Name = "TC pp")]
         [UIHint("QuantityReadonly")]
@@ -77,10 +77,10 @@ namespace TotalDTO.Productions
 
 
 
-    public class SemifinishedRecyclatePackageDTO : BaseModel
+    public class RecyclatePackageDTO : BaseModel
     {
-        public int SemifinishedRecyclatePackageID { get; set; }
-        public int SemifinishedRecyclateID { get; set; }
+        public int RecyclatePackageID { get; set; }
+        public int RecyclateID { get; set; }
 
         public int WorkshiftID { get; set; }
         public int WarehouseID { get; set; }
@@ -98,10 +98,10 @@ namespace TotalDTO.Productions
 
         [Display(Name = "Số kg tấm hư")]
         [UIHint("QuantityReadonly")]
-        public decimal RejectWeights { get; set; }
+        public decimal QuantityFailures { get; set; }
         [Display(Name = "Số kg biên, pp")]
         [UIHint("QuantityReadonly")]
-        public decimal FailureWeights { get; set; }
+        public decimal QuantitySwarfs { get; set; }
 
         [Display(Name = "TC tồn pp")]
         [UIHint("QuantityReadonly")]

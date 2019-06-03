@@ -1,7 +1,7 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration
 
-@model TotalPortal.Areas.Productions.ViewModels.SemifinishedRecyclateViewModel
+@model TotalPortal.Areas.Productions.ViewModels.RecyclateViewModel
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MainForm" }))
 {
@@ -10,7 +10,7 @@
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTopB.cshtml")
 
-    @Html.HiddenFor(model => model.SemifinishedRecyclateID)
+    @Html.HiddenFor(model => model.RecyclateID)
 
     <div class="left-panel">
 
@@ -112,14 +112,14 @@
         <div class="right-botton-panel">
             @if (Model.Editable)
             {
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedRecyclates")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "SemifinishedRecyclates")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "Recyclates")" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "Recyclates")" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
             }
             else
             {
                 if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
                 {
-                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "SemifinishedRecyclates", new {id = @Model.SemifinishedRecyclateID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt phiếu </button>
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "Recyclates", new {id = @Model.RecyclateID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt phiếu </button>
                 }
             }
         </div>
@@ -149,68 +149,68 @@
 @helper kendoDetailGrid()
 {
     <div class="div-k-grid-detail">
-        @(Html.Kendo().Grid(Model.SemifinishedRecyclateViewDetails)
+        @(Html.Kendo().Grid(Model.RecyclateViewDetails)
                 .Name("kendoGridDetails")
                 .Columns(columns =>
                 {
 
-                    columns.Bound(p => p.SemifinishedRecyclateDetailID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= SemifinishedRecyclateDetailID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].SemifinishedRecyclateDetailID' value='#= SemifinishedRecyclateDetailID #' />");
-                    columns.Bound(p => p.SemifinishedRecyclateID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= SemifinishedRecyclateID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].SemifinishedRecyclateID' value='#= SemifinishedRecyclateID #' />");
+                    columns.Bound(p => p.RecyclateDetailID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= RecyclateDetailID #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].RecyclateDetailID' value='#= RecyclateDetailID #' />");
+                    columns.Bound(p => p.RecyclateID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= RecyclateID #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].RecyclateID' value='#= RecyclateID #' />");
 
 
                     columns.Bound(p => p.ProductionLineCode).DisplayNameTitle().Width(15).HtmlAttributes(new { style = "" })
-                        .ClientTemplate("#= ProductionLineCode #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].ProductionLineCode' value='#= ProductionLineCode #' />");
+                        .ClientTemplate("#= ProductionLineCode #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].ProductionLineCode' value='#= ProductionLineCode #' />");
 
                     columns.Bound(p => p.SemifinishedProductID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (SemifinishedProductID == null)? '' : SemifinishedProductID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].SemifinishedProductID' value='#= (SemifinishedProductID == null) ? '' : SemifinishedProductID #' />");
-                    columns.Bound(p => p.SemifinishedProductReference).DisplayNameTitle().Width(15).HtmlAttributes(new { style = "" })
-                        .ClientTemplate("#= SemifinishedProductReference #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].SemifinishedProductReference' value='#= SemifinishedProductReference #' />");
-                    columns.Bound(p => p.SemifinishedProductEntryDate).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(15)
+                        .ClientTemplate("#= (SemifinishedProductID == null)? '' : SemifinishedProductID #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].SemifinishedProductID' value='#= (SemifinishedProductID == null) ? '' : SemifinishedProductID #' />");
+                    columns.Bound(p => p.RootReference).DisplayNameTitle().Width(15).HtmlAttributes(new { style = "" })
+                        .ClientTemplate("#= RootReference #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].RootReference' value='#= RootReference #' />");
+                    columns.Bound(p => p.RootEntryDate).DisplayNameTitle().HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(15)
                         .Format("{0:" + @Settings.TimeFormat + "}")
-                        .ClientTemplate("#= (SemifinishedProductEntryDate == null)? '' : kendo.format('{0:" + @Settings.TimeFormat + "}', SemifinishedProductEntryDate) #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].SemifinishedProductEntryDate' value='#= (SemifinishedProductEntryDate == null) ? '' : kendo.format('{0:" + @Settings.TimeFormat + "}', SemifinishedProductEntryDate) #' />");
+                        .ClientTemplate("#= (RootEntryDate == null)? '' : kendo.format('{0:" + @Settings.TimeFormat + "}', RootEntryDate) #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].RootEntryDate' value='#= (RootEntryDate == null) ? '' : kendo.format('{0:" + @Settings.TimeFormat + "}', RootEntryDate) #' />");
 
                     columns.Bound(p => p.FirmOrderCode).DisplayNameTitle().Width(20).HtmlAttributes(new { style = "" })
-                        .ClientTemplate("#= FirmOrderCode #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].FirmOrderCode' value='#= FirmOrderCode #' />");
+                        .ClientTemplate("#= FirmOrderCode #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].FirmOrderCode' value='#= FirmOrderCode #' />");
                     columns.Bound(p => p.Specification).DisplayNameTitle().Width(118).HtmlAttributes(new { style = "" })
-                        .ClientTemplate("#= Specification #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].Specification' value='#= Specification #' />");
+                        .ClientTemplate("#= Specification #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].Specification' value='#= Specification #' />");
 
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
+                        .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
                     columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(160).EditorTemplateName("StringReadonly")
-                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
+                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
+                        .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
                     columns.Bound(p => p.RecycleCommodityID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= RecycleCommodityID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].RecycleCommodityID' value='#= RecycleCommodityID #' />");
+                        .ClientTemplate("#= RecycleCommodityID #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].RecycleCommodityID' value='#= RecycleCommodityID #' />");
                     columns.Bound(p => p.RecycleCommodityCode).DisplayNameTitle().Width(139)
-                        .ClientTemplate("#= (RecycleCommodityCode == null)? '' : RecycleCommodityCode #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].RecycleCommodityCode' value='#= (RecycleCommodityCode == null) ? '' : RecycleCommodityCode #' />");
+                        .ClientTemplate("#= (RecycleCommodityCode == null)? '' : RecycleCommodityCode #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].RecycleCommodityCode' value='#= (RecycleCommodityCode == null) ? '' : RecycleCommodityCode #' />");
                     columns.Bound(p => p.RecycleCommodityTypeID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= RecycleCommodityTypeID #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].RecycleCommodityTypeID' value='#= RecycleCommodityTypeID #' />");
+                        .ClientTemplate("#= RecycleCommodityTypeID #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].RecycleCommodityTypeID' value='#= RecycleCommodityTypeID #' />");
 
 
-                    columns.Bound(p => p.RejectWeights).DisplayNameTitle().Width(20).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                    columns.Bound(p => p.QuantityFailures).DisplayNameTitle().Width(20).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', RejectWeights) #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].RejectWeights' value='#= RejectWeights #' />");
-                    columns.Bound(p => p.FailureWeights).DisplayNameTitle().Width(20).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityFailures) #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].QuantityFailures' value='#= QuantityFailures #' />");
+                    columns.Bound(p => p.QuantitySwarfs).DisplayNameTitle().Width(20).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', FailureWeights) #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].FailureWeights' value='#= FailureWeights #' />");
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantitySwarfs) #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].QuantitySwarfs' value='#= QuantitySwarfs #' />");
 
                     columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(20).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
 
                     columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).Hidden()
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='SemifinishedRecyclateViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='RecyclateViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
                 })
                     .Filterable(f => f.Enabled(false))
                     .Navigatable()
@@ -241,17 +241,17 @@
                     .ServerOperation(false)
                     .Model(model =>
                     {
-                        model.Id(x => x.SemifinishedRecyclateDetailID);
-                        model.Field(m => m.SemifinishedRecyclateDetailID).DefaultValue(0);
-                        model.Field(m => m.SemifinishedRecyclateID).DefaultValue(@Model.SemifinishedRecyclateID);
+                        model.Id(x => x.RecyclateDetailID);
+                        model.Field(m => m.RecyclateDetailID).DefaultValue(0);
+                        model.Field(m => m.RecyclateID).DefaultValue(@Model.RecyclateID);
                     })
                     .Events(events =>
                     {
                         events.Error("kendGrid_ErrorHandler");
                     })
                     .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                    .Aggregates(a => a.Add(x => x.RejectWeights).Sum())
-                    .Aggregates(a => a.Add(x => x.FailureWeights).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantityFailures).Sum())
+                    .Aggregates(a => a.Add(x => x.QuantitySwarfs).Sum())
                     .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
                     .Aggregates(a => a.Add(x => x.Quantity).Sum())
                 )
@@ -261,41 +261,41 @@
     
 @helper kendoSummaryGrid()
 {
-    @(Html.Kendo().Grid(Model.SemifinishedRecyclatePackages)
+    @(Html.Kendo().Grid(Model.RecyclatePackages)
             .Name("kendoGridSummaries")
             .Columns(columns =>
             {
                 columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
-                    .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].CommodityID' value='#= CommodityID #' />");
+                    .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].CommodityID' value='#= CommodityID #' />");
                 columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(210).EditorTemplateName("StringReadonly")
-                    .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].CommodityCode' value='#= CommodityCode #' />")
+                    .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].CommodityCode' value='#= CommodityCode #' />")
                     .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
                 columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(200).HtmlAttributes(new { style = "" })
-                    .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].CommodityName' value='#= CommodityName #' />");
+                    .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].CommodityName' value='#= CommodityName #' />");
                 columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
-                    .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
+                    .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
                 columns.Bound(p => p.Remarks).DisplayNameTitle().Width(208)
-                    .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
+                    .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
                 
-                columns.Bound(p => p.RejectWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                columns.Bound(p => p.QuantityFailures).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                     .Format(Settings.kfmQuantity)
                     .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', RejectWeights) #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].RejectWeights' value='#= RejectWeights #' />");
-                columns.Bound(p => p.FailureWeights).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
+                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityFailures) #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].QuantityFailures' value='#= QuantityFailures #' />");
+                columns.Bound(p => p.QuantitySwarfs).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                     .Format(Settings.kfmQuantity)
                     .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', FailureWeights) #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].FailureWeights' value='#= FailureWeights #' />");
+                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantitySwarfs) #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].QuantitySwarfs' value='#= QuantitySwarfs #' />");
                 
                 columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" })
                     .Format(Settings.kfmQuantity)
                     .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].QuantityRemains' value='#= QuantityRemains #' />");
+                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].QuantityRemains' value='#= QuantityRemains #' />");
 
                 columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(35)
                     .Format(Settings.kfmQuantity)
                     .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='SemifinishedRecyclatePackages[#= newIndex(data) #].Quantity' value='#= Quantity #' />");
+                    .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].Quantity' value='#= Quantity #' />");
 
             })
             .Navigatable()
@@ -321,8 +321,8 @@
                         events.Error("kendGrid_ErrorHandler");
                     })
                 .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                .Aggregates(a => a.Add(x => x.RejectWeights).Sum())
-                .Aggregates(a => a.Add(x => x.FailureWeights).Sum())
+                .Aggregates(a => a.Add(x => x.QuantityFailures).Sum())
+                .Aggregates(a => a.Add(x => x.QuantitySwarfs).Sum())
                 .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
                 .Aggregates(a => a.Add(x => x.Quantity).Sum())                        
             )

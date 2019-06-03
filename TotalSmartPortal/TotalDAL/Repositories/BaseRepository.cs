@@ -323,9 +323,9 @@ namespace TotalDAL.Repositories
         public void CreateStoredProcedure()
         {
 
-            //SemifinishedRecyclate
-            Helpers.SqlProgrammability.Productions.Recyclate semifinishedRecyclate = new Helpers.SqlProgrammability.Productions.Recyclate(totalSmartPortalEntities);
-            semifinishedRecyclate.RestoreProcedure();
+            //Recyclate
+            Helpers.SqlProgrammability.Productions.Recyclate recyclate = new Helpers.SqlProgrammability.Productions.Recyclate(totalSmartPortalEntities);
+            recyclate.RestoreProcedure();
 
             
             //return;

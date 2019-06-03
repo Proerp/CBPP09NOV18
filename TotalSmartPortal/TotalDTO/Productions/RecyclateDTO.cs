@@ -14,14 +14,14 @@ using TotalDTO.Helpers.Interfaces;
 
 namespace TotalDTO.Productions
 {
-    public class SemifinishedRecyclatePrimitiveDTO : QuantityDTO<SemifinishedRecyclateDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
+    public class RecyclatePrimitiveDTO : QuantityDTO<RecyclateDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
     {
         public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.SemifinishedProductRecyclate; } }
 
-        public int GetID() { return this.SemifinishedRecyclateID; }
-        public void SetID(int id) { this.SemifinishedRecyclateID = id; }
+        public int GetID() { return this.RecyclateID; }
+        public void SetID(int id) { this.RecyclateID = id; }
 
-        public int SemifinishedRecyclateID { get; set; }
+        public int RecyclateID { get; set; }
 
         public virtual int WorkshiftID { get; set; }
         [Display(Name = "Ca sản xuất")]
@@ -45,13 +45,13 @@ namespace TotalDTO.Productions
     }
 
 
-    public class SemifinishedRecyclateDTO : SemifinishedRecyclatePrimitiveDTO, IBaseDetailEntity<SemifinishedRecyclateDetailDTO>
+    public class RecyclateDTO : RecyclatePrimitiveDTO, IBaseDetailEntity<RecyclateDetailDTO>
     {
-        public SemifinishedRecyclateDTO()
+        public RecyclateDTO()
         {
-            this.SemifinishedRecyclateViewDetails = new List<SemifinishedRecyclateDetailDTO>();
+            this.RecyclateViewDetails = new List<RecyclateDetailDTO>();
 
-            this.SemifinishedRecyclatePackages = new List<SemifinishedRecyclatePackageDTO>();
+            this.RecyclatePackages = new List<RecyclatePackageDTO>();
         }
 
         public override int CrucialWorkerID { get { return (this.CrucialWorker != null ? this.CrucialWorker.EmployeeID : 0); } }
@@ -64,21 +64,21 @@ namespace TotalDTO.Productions
         [UIHint("AutoCompletes/EmployeeBase")]
         public EmployeeBaseDTO Storekeeper { get; set; }
 
-        public List<SemifinishedRecyclateDetailDTO> SemifinishedRecyclateViewDetails { get; set; }
-        public List<SemifinishedRecyclateDetailDTO> ViewDetails { get { return this.SemifinishedRecyclateViewDetails; } set { this.SemifinishedRecyclateViewDetails = value; } }
+        public List<RecyclateDetailDTO> RecyclateViewDetails { get; set; }
+        public List<RecyclateDetailDTO> ViewDetails { get { return this.RecyclateViewDetails; } set { this.RecyclateViewDetails = value; } }
 
-        public ICollection<SemifinishedRecyclateDetailDTO> GetDetails() { return this.SemifinishedRecyclateViewDetails; }
+        public ICollection<RecyclateDetailDTO> GetDetails() { return this.RecyclateViewDetails; }
 
-        protected override IEnumerable<SemifinishedRecyclateDetailDTO> DtoDetails() { return this.SemifinishedRecyclateViewDetails; }
+        protected override IEnumerable<RecyclateDetailDTO> DtoDetails() { return this.RecyclateViewDetails; }
 
 
-        public List<SemifinishedRecyclatePackageDTO> SemifinishedRecyclatePackages { get; set; }
+        public List<RecyclatePackageDTO> RecyclatePackages { get; set; }
 
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             foreach (var result in base.Validate(validationContext)) { yield return result; }
 
-            if (this.SemifinishedRecyclatePackages.Count <= 0) yield return new ValidationResult("", new[] { "TotalQuantity" }); //SemifinishedRecyclatesController for more detail: WHERE THERE IS A RecycleCommodityID == null ===> THIS .SemifinishedRecyclatePackages.Count WILL BE 0
+            if (this.RecyclatePackages.Count <= 0) yield return new ValidationResult("", new[] { "TotalQuantity" }); //RecyclatesController for more detail: WHERE THERE IS A RecycleCommodityID == null ===> THIS .RecyclatePackages.Count WILL BE 0
         }
 
         public override void PerformPresaveRule()
@@ -86,14 +86,14 @@ namespace TotalDTO.Productions
             base.PerformPresaveRule();
 
             this.DtoDetails().ToList().ForEach(e => e.Quantity = 0); string caption = "";
-            this.SemifinishedRecyclatePackages.ForEach(e =>
+            this.RecyclatePackages.ForEach(e =>
             {
                 e.LocationID = this.LocationID; e.EntryDate = this.EntryDate; e.BatchEntryDate = (DateTime)this.EntryDate; e.Approved = this.Approved; e.ApprovedDate = this.ApprovedDate; e.WarehouseID = (int)this.WarehouseID; e.WorkshiftID = this.WorkshiftID;
                 if (e.Quantity > 0 && caption.IndexOf(e.CommodityName) < 0) caption = caption + (caption != "" ? ", " : "") + e.CommodityName;
 
-                decimal quantity = e.Quantity; //ALLOCATED SemifinishedRecyclatePackageDTO.Quantity TO SemifinishedRecyclateViewDetail.Quantity
+                decimal quantity = e.Quantity; //ALLOCATED RecyclatePackageDTO.Quantity TO RecyclateViewDetail.Quantity
                 this.DtoDetails().Where(w => w.RecycleCommodityID == e.CommodityID).Each(ea => { ea.Quantity = (ea.QuantityRemains <= quantity ? ea.QuantityRemains : quantity); quantity = Math.Round(quantity - ea.Quantity, GlobalEnums.rndQuantity, MidpointRounding.AwayFromZero); });
-                if (quantity > 0) { SemifinishedRecyclateDetailDTO demifinishedRecyclateDetailDTO = this.DtoDetails().Where(w => w.RecycleCommodityID == e.CommodityID).Last(); demifinishedRecyclateDetailDTO.Quantity = Math.Round(demifinishedRecyclateDetailDTO.Quantity + quantity, GlobalEnums.rndQuantity, MidpointRounding.AwayFromZero); }
+                if (quantity > 0) { RecyclateDetailDTO demifinishedRecyclateDetailDTO = this.DtoDetails().Where(w => w.RecycleCommodityID == e.CommodityID).Last(); demifinishedRecyclateDetailDTO.Quantity = Math.Round(demifinishedRecyclateDetailDTO.Quantity + quantity, GlobalEnums.rndQuantity, MidpointRounding.AwayFromZero); }
             });
             this.TotalQuantity = this.GetTotalQuantity();
             this.Caption = caption != "" ? (caption.Length > 98 ? caption.Substring(0, 95) + "..." : caption) : null;

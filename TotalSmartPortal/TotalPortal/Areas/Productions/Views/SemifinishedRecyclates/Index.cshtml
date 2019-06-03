@@ -3,14 +3,14 @@
 <div id="popupWindow"></div>
 
 <div>
-    @(Html.Kendo().Grid<TotalModel.Models.SemifinishedRecyclateIndex>()
+    @(Html.Kendo().Grid<TotalModel.Models.RecyclateIndex>()
         .Name("kendoGridIndex")
         .Columns(columns =>
         {
-            columns.Bound(p => p.SemifinishedRecyclateID).DisplayNameTitle().Hidden();            
+            columns.Bound(p => p.RecyclateID).DisplayNameTitle().Hidden();            
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
 
-            columns.Bound(p => p.Reference).Title("Số phiếu").Width(6).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedRecyclates", action = "Edit" }) + "/#= SemifinishedRecyclateID #'>#=Reference#</a>");
+            columns.Bound(p => p.Reference).Title("Số phiếu").Width(6).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/Recyclates", action = "Edit" }) + "/#= RecyclateID #'>#=Reference#</a>");
 
             columns.Bound(p => p.WorkshiftCode).Title("Ca SX").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(68);
             columns.Bound(p => p.WorkshiftEntryDate).Title("Ngày SX").Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10);
@@ -22,7 +22,7 @@
             columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
             
             columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(10)
-                .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/SemifinishedRecyclates", action = "Delete" }) + "/#= SemifinishedRecyclateID #'><span class='k-icon sbt-delete'></span></a>");
+                .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' href='" + Url.RouteUrl("Default", new { controller = "Productions/Recyclates", action = "Delete" }) + "/#= RecyclateID #'><span class='k-icon sbt-delete'></span></a>");
         })
         .ToolBar(toolbar =>
         {
@@ -46,17 +46,17 @@
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .Group(group => group.AddDescending(p => p.EntryDate))
-                .Read(read => read.Action("GetSemifinishedRecyclateIndexes", "SemifinishedRecyclateAPIs", new { area = "Productions" }))
+                .Read(read => read.Action("GetRecyclateIndexes", "RecyclateAPIs", new { area = "Productions" }))
                 .Sort(sort =>
                     {
                         sort.Add(p => p.EntryDate).Descending();
-                        sort.Add(p => p.SemifinishedRecyclateID).Descending();
+                        sort.Add(p => p.RecyclateID).Descending();
                     })
                 .PageSize(20)
                 .Model(model =>
                 {
-                    model.Id(x => x.SemifinishedRecyclateID);
-                    model.Field(m => m.SemifinishedRecyclateID).DefaultValue(0);
+                    model.Id(x => x.RecyclateID);
+                    model.Field(m => m.RecyclateID).DefaultValue(0);
                 })
                 .ServerOperation(true)
                 .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())                
@@ -72,14 +72,14 @@
     function hightLightSelectedRow(e) {
         require(["kindexGrid"], function (kindexGrid) {
             var kindexGridInstance = new kindexGrid("kendoGridIndex");
-            kindexGridInstance.setSelectedRow("SemifinishedRecyclateID", '@ViewBag.SelectedEntityID');
+            kindexGridInstance.setSelectedRow("RecyclateID", '@ViewBag.SelectedEntityID');
         });
     }
 
     function createWizard() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "SemifinishedRecyclates")", "Chọn ca sản xuất", "@Settings.PopupWidthVerySmall", "@Settings.PopupHeightSmall");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "Recyclates")", "Chọn ca sản xuất", "@Settings.PopupWidthVerySmall", "@Settings.PopupHeightSmall");
         });
     }
 

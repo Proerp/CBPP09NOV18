@@ -11,7 +11,7 @@ using TotalPortal.Areas.Commons.ViewModels.Helpers;
 
 namespace TotalPortal.Areas.Productions.ViewModels
 {
-    public class SemifinishedRecyclateViewModel : SemifinishedRecyclateDTO, IViewDetailViewModel<SemifinishedRecyclateDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
+    public class RecyclateViewModel : RecyclateDTO, IViewDetailViewModel<RecyclateDetailDTO>, IPreparedPersonDropDownViewModel, IApproverDropDownViewModel, IA01SimpleViewModel
     {
         public IEnumerable<SelectListItem> AspNetUserSelectList { get; set; }
         public IEnumerable<SelectListItem> ShiftSelectList { get; set; }

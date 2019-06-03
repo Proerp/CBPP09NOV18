@@ -424,20 +424,20 @@ namespace TotalModel.Models
 
 
 
-    public partial class SemifinishedRecyclate : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<SemifinishedRecyclateDetail>
+    public partial class Recyclate : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<RecyclateDetail>
     {
-        public int GetID() { return this.SemifinishedRecyclateID; }
+        public int GetID() { return this.RecyclateID; }
 
         public virtual Employee Storekeeper { get { return this.Employee; } }
         public virtual Employee CrucialWorker { get { return this.Employee1; } }
 
-        public ICollection<SemifinishedRecyclateDetail> GetDetails() { return this.SemifinishedRecyclateDetails; }
+        public ICollection<RecyclateDetail> GetDetails() { return this.RecyclateDetails; }
     }
 
 
-    public partial class SemifinishedRecyclateDetail : IPrimitiveEntity, IHelperEntryDate, IHelperCommodityID, IHelperCommodityTypeID
+    public partial class RecyclateDetail : IPrimitiveEntity, IHelperEntryDate, IHelperCommodityID, IHelperCommodityTypeID
     {
-        public int GetID() { return this.SemifinishedRecyclateDetailID; }
+        public int GetID() { return this.RecyclateDetailID; }
     }
 
 

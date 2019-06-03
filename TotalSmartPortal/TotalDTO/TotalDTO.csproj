@@ -151,8 +151,8 @@
     <Compile Include="Productions\SemifinishedItemDTO.cs" />
     <Compile Include="Productions\SemifinishedProductDetailDTO.cs" />
     <Compile Include="Productions\SemifinishedProductDTO.cs" />
-    <Compile Include="Productions\SemifinishedRecyclateDetailDTO.cs" />
-    <Compile Include="Productions\SemifinishedRecyclateDTO.cs" />
+    <Compile Include="Productions\RecyclateDetailDTO.cs" />
+    <Compile Include="Productions\RecyclateDTO.cs" />
     <Compile Include="Productions\WorkOrderDetailDTO.cs" />
     <Compile Include="Productions\WorkOrderDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
