@@ -57,6 +57,7 @@ namespace TotalDTO.Productions
         [Range(0, 999999, ErrorMessage = "Số kg >= 0")]
         public decimal ThicknessMax { get; set; }
 
+        public virtual int ProductionLineID { get; set; }
         public virtual int CrucialWorkerID { get; set; }
 
         public virtual decimal TotalQuantityFailure { get; set; }
@@ -85,7 +86,7 @@ namespace TotalDTO.Productions
 
             string purchaseOrderReferences = ""; 
             this.ShiftSaving(this.ShiftID);
-            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; if (purchaseOrderReferences.IndexOf(e.SemifinishedItemReference) < 0) purchaseOrderReferences = purchaseOrderReferences + (purchaseOrderReferences != "" ? ", " : "") + e.SemifinishedItemReference; });
+            this.DtoDetails().ToList().ForEach(e => { e.CustomerID = this.CustomerID; e.ShiftID = this.ShiftID; e.WorkshiftID = this.WorkshiftID; e.CrucialWorkerID = this.CrucialWorkerID; e.ProductionLineID = this.ProductionLineID; if (purchaseOrderReferences.IndexOf(e.SemifinishedItemReference) < 0) purchaseOrderReferences = purchaseOrderReferences + (purchaseOrderReferences != "" ? ", " : "") + e.SemifinishedItemReference; });
             this.SemifinishedItemReferences = purchaseOrderReferences; 
         }
 
@@ -105,6 +106,11 @@ namespace TotalDTO.Productions
         [Display(Name = "Khách hàng")]
         [UIHint("Commons/CustomerBase")]
         public CustomerBaseDTO Customer { get; set; }
+
+        public override int ProductionLineID { get { return (this.ProductionLine != null ? this.ProductionLine.ProductionLineID : 0); } }
+        [Display(Name = "Mã số máy")]
+        [UIHint("AutoCompletes/ProductionLine")]
+        public ProductionLineBaseDTO ProductionLine { get; set; }
 
         public override int CrucialWorkerID { get { return (this.CrucialWorker != null ? this.CrucialWorker.EmployeeID : 0); } }
         [Display(Name = "NV tạo màng")]

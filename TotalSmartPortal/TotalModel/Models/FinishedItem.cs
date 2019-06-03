@@ -53,7 +53,7 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public decimal TotalPackages { get; set; }
-        public Nullable<int> ProductionLineID { get; set; }
+        public int ProductionLineID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
@@ -69,5 +69,6 @@ namespace TotalModel.Models
         public virtual ICollection<FinishedItemPackage> FinishedItemPackages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedItemDetail> FinishedItemDetails { get; set; }
+        public virtual ProductionLine ProductionLine { get; set; }
     }
 }

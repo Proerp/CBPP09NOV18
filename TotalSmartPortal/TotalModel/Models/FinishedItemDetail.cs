@@ -47,7 +47,7 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public bool HandoverApproved { get; set; }
-        public Nullable<int> ProductionLineID { get; set; }
+        public int ProductionLineID { get; set; }
         public decimal RecycleWeights { get; set; }
         public decimal RecycleLoss { get; set; }
     

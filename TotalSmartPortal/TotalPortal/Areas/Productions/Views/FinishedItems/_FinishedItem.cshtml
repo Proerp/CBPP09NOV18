@@ -58,6 +58,10 @@
         </div>
 
         <div class="form-group">
+            @Html.EditorFor(d => d.ProductionLine)
+        </div>
+
+        <div class="form-group">
             @Html.EditorFor(d => d.CrucialWorker, new { EmployeeDisplayName = @Model.GetDisplayName(m => m.CrucialWorker) })
         </div>
 
