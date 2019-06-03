@@ -40,7 +40,7 @@ namespace TotalPortal.Areas.Productions.Controllers
 
         protected override ICollection<RecyclateViewDetail> GetEntityViewDetails(RecyclateViewModel recyclateViewModel)
         {
-            ICollection<RecyclateViewDetail> recyclateViewDetails = this.recyclateService.GetRecyclateViewDetails(recyclateViewModel.RecyclateID, this.recyclateService.LocationID, recyclateViewModel.WorkshiftID, false);
+            ICollection<RecyclateViewDetail> recyclateViewDetails = this.recyclateService.GetRecyclateViewDetails((int)recyclateViewModel.NMVNTaskID, recyclateViewModel.RecyclateID, this.recyclateService.LocationID, recyclateViewModel.WorkshiftID, false);
 
             //1-TAO TABLE/ DTO COLLECTION / FUNCCTION GET COLLECTION
             //2-TAI CHO NAY: CHIA 2 T/H: NEW/ EDIT: EDIT: GET FROM DATAABASE, ELSE: GIONG NHU HIEN TAI (TU DONG INIT)
@@ -49,7 +49,7 @@ namespace TotalPortal.Areas.Productions.Controllers
 
             if (recyclateViewModel.RecyclateID > 0) //EDIT
             {
-                List<RecyclateViewPackage> entityViewDetails = this.recyclateService.GetRecyclateViewPackages(recyclateViewModel.RecyclateID);
+                List<RecyclateViewPackage> entityViewDetails = this.recyclateService.GetRecyclateViewPackages((int)recyclateViewModel.NMVNTaskID, recyclateViewModel.RecyclateID);
                 Mapper.Map<List<RecyclateViewPackage>, List<RecyclatePackageDTO>>(entityViewDetails, recyclateViewModel.RecyclatePackages);
             }
             else

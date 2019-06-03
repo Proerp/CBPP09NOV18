@@ -14,6 +14,30 @@ using TotalDTO.Helpers.Interfaces;
 
 namespace TotalDTO.Productions
 {
+    public interface IRecyclateOption { GlobalEnums.NmvnTaskID NMVNTaskID { get; } }
+
+    public class SemifinishedProductRecyclateOption : IRecyclateOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.SemifinishedProductRecyclate; } } }
+    public class FinishedProductRecyclateOption : IRecyclateOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.FinishedProductRecyclate; } } }
+    public class FinishedItemRecyclateOption : IRecyclateOption { public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.FinishedItemRecyclate; } } }
+
+    public interface IRecyclatePrimitiveDTO : IQuantityDTO, IPrimitiveEntity, IPrimitiveDTO, IBaseDTO
+    {
+        int RecyclateID { get; set; }
+
+        int WorkshiftID { get; set; }
+        [Display(Name = "Ca sản xuất")]
+        string WorkshiftCode { get; set; }
+        [Display(Name = "Ngày sản xuất")]
+        DateTime WorkshiftEntryDate { get; set; }
+
+
+        [Required(ErrorMessage = "Vui lòng chọn kho nhập")]
+        Nullable<int> WarehouseID { get; set; }
+
+        int CrucialWorkerID { get; set; }
+        int StorekeeperID { get; set; }
+    }
+
     public class RecyclatePrimitiveDTO : QuantityDTO<RecyclateDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
     {
         public virtual GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.SemifinishedProductRecyclate; } }

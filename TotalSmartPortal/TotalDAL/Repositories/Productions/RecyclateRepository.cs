@@ -17,10 +17,10 @@ namespace TotalDAL.Repositories.Productions
         {
         }
 
-        public List<RecyclateViewPackage> GetRecyclateViewPackages(int? recyclateID)
+        public List<RecyclateViewPackage> GetRecyclateViewPackages(int? nmvnTaskID, int? recyclateID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            List<RecyclateViewPackage> recyclateViewLots = base.TotalSmartPortalEntities.GetRecyclateViewPackages(recyclateID).ToList();
+            List<RecyclateViewPackage> recyclateViewLots = base.TotalSmartPortalEntities.GetRecyclateViewPackages(nmvnTaskID, recyclateID).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return recyclateViewLots;
@@ -34,10 +34,10 @@ namespace TotalDAL.Repositories.Productions
         {
         }
 
-        public IEnumerable<RecyclatePendingWorkshift> GetPendingWorkshifts(int? locationID)
+        public IEnumerable<RecyclatePendingWorkshift> GetPendingWorkshifts(int? nmvnTaskID, int? locationID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<RecyclatePendingWorkshift> pendingWorkshifts = base.TotalSmartPortalEntities.GetRecyclatePendingWorkshifts(locationID).ToList();
+            IEnumerable<RecyclatePendingWorkshift> pendingWorkshifts = base.TotalSmartPortalEntities.GetRecyclatePendingWorkshifts(nmvnTaskID, locationID).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return pendingWorkshifts;

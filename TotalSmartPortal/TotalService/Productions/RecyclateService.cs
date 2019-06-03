@@ -27,15 +27,15 @@ namespace TotalService.Productions
             throw new System.ArgumentException("Invalid call GetViewDetails(id). Use GetRecyclateViewDetails instead.", "FinishProduct Service");
         }
 
-        public ICollection<RecyclateViewDetail> GetRecyclateViewDetails(int recyclateID, int locationID, int workshiftID, bool isReadonly)
+        public ICollection<RecyclateViewDetail> GetRecyclateViewDetails(int? nmvnTaskID, int recyclateID, int locationID, int workshiftID, bool isReadonly)
         {
-            ObjectParameter[] parameters = new ObjectParameter[] { new ObjectParameter("RecyclateID", recyclateID), new ObjectParameter("LocationID", locationID), new ObjectParameter("WorkshiftID", workshiftID), new ObjectParameter("IsReadonly", isReadonly) };
+            ObjectParameter[] parameters = new ObjectParameter[] { new ObjectParameter("nmvnTaskID", nmvnTaskID), new ObjectParameter("RecyclateID", recyclateID), new ObjectParameter("LocationID", locationID), new ObjectParameter("WorkshiftID", workshiftID), new ObjectParameter("IsReadonly", isReadonly) };
             return this.GetViewDetails(parameters);
         }
 
-        public List<RecyclateViewPackage> GetRecyclateViewPackages(int? recyclateID)
+        public List<RecyclateViewPackage> GetRecyclateViewPackages(int? nmvnTaskID, int? recyclateID)
         {
-            return this.recyclateRepository.GetRecyclateViewPackages(recyclateID);
+            return this.recyclateRepository.GetRecyclateViewPackages(nmvnTaskID, recyclateID);
         }
 
         protected override void UpdateDetail(RecyclateDTO dto, Recyclate entity)

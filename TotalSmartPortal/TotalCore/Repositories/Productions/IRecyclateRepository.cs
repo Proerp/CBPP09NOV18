@@ -7,11 +7,11 @@ namespace TotalCore.Repositories.Productions
 {
     public interface IRecyclateRepository : IGenericWithDetailRepository<Recyclate, RecyclateDetail>
     {
-        List<RecyclateViewPackage> GetRecyclateViewPackages(int? recyclateID);
+        List<RecyclateViewPackage> GetRecyclateViewPackages(int? nmvnTaskID, int? recyclateID);
     }
 
     public interface IRecyclateAPIRepository : IGenericAPIRepository
     {
-        IEnumerable<RecyclatePendingWorkshift> GetPendingWorkshifts(int? locationID);
+        IEnumerable<RecyclatePendingWorkshift> GetPendingWorkshifts(int? nmvnTaskID, int? locationID);
     }
 }

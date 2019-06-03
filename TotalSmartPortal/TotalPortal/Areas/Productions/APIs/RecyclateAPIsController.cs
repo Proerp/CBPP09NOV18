@@ -45,9 +45,9 @@ namespace TotalPortal.Areas.Productions.APIs
 
 
 
-        public JsonResult GetPendingWorkshifts([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID)
+        public JsonResult GetPendingWorkshifts([DataSourceRequest] DataSourceRequest dataSourceRequest, int? nmvnTaskID, int? locationID)
         {
-            var result = this.recyclateAPIRepository.GetPendingWorkshifts(locationID);
+            var result = this.recyclateAPIRepository.GetPendingWorkshifts(nmvnTaskID, locationID);
             return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
