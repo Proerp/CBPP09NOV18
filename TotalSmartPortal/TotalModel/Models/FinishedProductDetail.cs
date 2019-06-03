@@ -44,6 +44,7 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public bool HandoverApproved { get; set; }
+        public string Reference { get; set; }
     
         public virtual FinishedProductPackage FinishedProductPackage { get; set; }
         public virtual FinishedProduct FinishedProduct { get; set; }

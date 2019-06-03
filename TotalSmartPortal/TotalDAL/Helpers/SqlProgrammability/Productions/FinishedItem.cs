@@ -174,8 +174,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "       IF (@SaveRelativeOption = 1) " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
             #region UPDATE WorkshiftID
-            queryString = queryString + "               DECLARE         @EntryDate Datetime, @ShiftID int, @WorkshiftID int " + "\r\n";
-            queryString = queryString + "               SELECT          @EntryDate = CONVERT(date, EntryDate), @ShiftID = ShiftID FROM FinishedItems WHERE FinishedItemID = @EntityID " + "\r\n";
+            queryString = queryString + "               DECLARE         @EntryDate Datetime, @Reference nvarchar(10), @ShiftID int, @WorkshiftID int " + "\r\n";
+            queryString = queryString + "               SELECT          @EntryDate = CONVERT(date, EntryDate), @Reference = Reference, @ShiftID = ShiftID FROM FinishedItems WHERE FinishedItemID = @EntityID " + "\r\n";
             queryString = queryString + "               SET             @WorkshiftID = (SELECT TOP 1 WorkshiftID FROM Workshifts WHERE EntryDate = @EntryDate AND ShiftID = @ShiftID) " + "\r\n";
 
             queryString = queryString + "               IF             (@WorkshiftID IS NULL) " + "\r\n";
@@ -185,7 +185,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                   END ";
 
             queryString = queryString + "               UPDATE          FinishedItems        SET WorkshiftID = @WorkshiftID WHERE FinishedItemID = @EntityID " + "\r\n";
-            queryString = queryString + "               UPDATE          FinishedItemDetails  SET WorkshiftID = @WorkshiftID WHERE FinishedItemID = @EntityID " + "\r\n";
+            queryString = queryString + "               UPDATE          FinishedItemDetails  SET WorkshiftID = @WorkshiftID, Reference = @Reference WHERE FinishedItemID = @EntityID " + "\r\n";
             queryString = queryString + "               UPDATE          FinishedItemLots SET WorkshiftID = @WorkshiftID WHERE FinishedItemID = @EntityID " + "\r\n";
             #endregion UPDATE WorkshiftID
             queryString = queryString + "           END " + "\r\n";

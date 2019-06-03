@@ -50,6 +50,7 @@ namespace TotalModel.Models
         public int ProductionLineID { get; set; }
         public decimal RecycleWeights { get; set; }
         public decimal RecycleLoss { get; set; }
+        public string Reference { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual FinishedItem FinishedItem { get; set; }

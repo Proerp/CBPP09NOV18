@@ -58,6 +58,7 @@ namespace TotalModel.Models
         public System.DateTime BatchEntryDate { get; set; }
         public decimal RecycleWeights { get; set; }
         public decimal RecycleLoss { get; set; }
+        public string Reference { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedProductDetail> FinishedProductDetails { get; set; }

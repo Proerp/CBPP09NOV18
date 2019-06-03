@@ -26,10 +26,10 @@ namespace TotalDTO.Productions
         public Nullable<int> FinishedProductPackageID { get; set; }
         public Nullable<int> FinishedItemDetailID { get; set; }
 
-        [Display(Name = "Phôi")]
+        [Display(Name = "Số phiếu")]
         [UIHint("StringReadonly")]
         public string RootReference { get; set; }
-        [Display(Name = "Giờ SX")]
+        [Display(Name = "Giờ lập")]
         [UIHint("TimeReadonly")]
         public DateTime RootEntryDate { get; set; }
 
@@ -43,14 +43,14 @@ namespace TotalDTO.Productions
         [UIHint("StringReadonly")]
         public string Specification { get; set; }
 
-        [Display(Name = "Tấm hư")]
+        [Display(Name = "Kg hư")]
         [UIHint("QuantityReadonly")]        
         public decimal QuantityFailures { get; set; }
-        [Display(Name = "Biên, pp")]
+        [Display(Name = "Kg biên")]
         [UIHint("QuantityReadonly")]        
         public decimal QuantitySwarfs { get; set; }
 
-        [Display(Name = "TC pp")]
+        [Display(Name = "Kg pp")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
 
@@ -59,10 +59,10 @@ namespace TotalDTO.Productions
         public override decimal Quantity { get; set; }
 
         
-        [Display(Name = "Mã NVL")]
+        [Display(Name = "Mã màng")]
         [UIHint("StringReadonly")]
         public override string CommodityCode { get; set; }
-        [Display(Name = "Tên NVL")]
+        [Display(Name = "Tên màng")]
         [UIHint("StringReadonly")]
         public override string CommodityName { get; set; }
 
@@ -99,14 +99,14 @@ namespace TotalDTO.Productions
         [Required(ErrorMessage = "Lỗi bắt buộc phải có loại hàng hóa")]
         public virtual int CommodityTypeID { get; set; }
 
-        [Display(Name = "Số kg tấm hư")]
+        [Display(Name = "Số kg hư")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityFailures { get; set; }
-        [Display(Name = "Số kg biên, pp")]
+        [Display(Name = "Số kg biên")]
         [UIHint("QuantityReadonly")]
         public decimal QuantitySwarfs { get; set; }
 
-        [Display(Name = "TC tồn pp")]
+        [Display(Name = "TC kg pp")]
         [UIHint("QuantityReadonly")]
         public decimal QuantityRemains { get; set; }
 
