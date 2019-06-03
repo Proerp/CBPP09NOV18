@@ -1,7 +1,12 @@
 ﻿@using TotalBase.Enums;
 @using TotalPortal.Configuration
 
-@model TotalPortal.Areas.Productions.ViewModels.RecyclateViewModel
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Productions
+@using TotalPortal.Areas.Productions.ViewModels
+
+@model IRecyclateViewModel
 
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "MainForm" }))
 {
@@ -10,31 +15,31 @@
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTopB.cshtml")
 
-    @Html.HiddenFor(model => model.RecyclateID)
+    @Html.HiddenFor(model => (model as IRecyclatePrimitiveDTO).RecyclateID)
 
     <div class="left-panel">
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSectionLeftA.cshtml")
 
-        @Html.HiddenFor(model => model.WarehouseID)
-        @Html.HiddenFor(model => model.WorkshiftID)
+        @Html.HiddenFor(model => (model as IRecyclatePrimitiveDTO).WarehouseID)
+        @Html.HiddenFor(model => (model as IRecyclatePrimitiveDTO).WorkshiftID)
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkshiftCode)
+            @Html.LabelFor(model => (model as IRecyclatePrimitiveDTO).WorkshiftCode)
             <div class="div-input">
-                @Html.Kendo().MaskedTextBoxFor(model => model.WorkshiftCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                @Html.Kendo().MaskedTextBoxFor(model => (model as IRecyclatePrimitiveDTO).WorkshiftCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.WorkshiftCode, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IRecyclatePrimitiveDTO).WorkshiftCode, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.WorkshiftEntryDate)
+            @Html.LabelFor(model => (model as IRecyclatePrimitiveDTO).WorkshiftEntryDate)
             <div class="div-input">
-                @Html.Kendo().DateTimePickerFor(model => model.WorkshiftEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                @Html.Kendo().DateTimePickerFor(model => (model as IRecyclatePrimitiveDTO).WorkshiftEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
             </div>
             <div class="div-validation-message">
-                @Html.ValidationMessageFor(model => model.WorkshiftEntryDate, "", new { @class = "text-danger" })
+                @Html.ValidationMessageFor(model => (model as IRecyclatePrimitiveDTO).WorkshiftEntryDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -80,21 +85,21 @@
                         .Content(@<text>
                             <div class="right-first-panel">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Description, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseDTO).Description, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Description).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseDTO).Description).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseDTO).Description, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Remarks, new { @class = "right-panel-label" })
+                                    @Html.LabelFor(model => (model as IBaseModel).Remarks, new { @class = "right-panel-label" })
                                     <div class="div-input">
-                                        @Html.Kendo().MaskedTextBoxFor(model => model.Remarks).HtmlAttributes(new { @class = "right-panel-input" })
+                                        @Html.Kendo().MaskedTextBoxFor(model => (model as IBaseModel).Remarks).HtmlAttributes(new { @class = "right-panel-input" })
                                     </div>
                                     <div class="div-validation-message">
-                                        @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                                        @Html.ValidationMessageFor(model => (model as IBaseModel).Remarks, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                             </div>

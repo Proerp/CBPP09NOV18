@@ -79,7 +79,7 @@
     function createWizard() {
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "Recyclates")", "Chọn ca sản xuất", "@Settings.PopupWidthVerySmall", "@Settings.PopupHeightSmall");
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", Model.ControllerName)", "Chọn ca sản xuất", "@Settings.PopupWidthVerySmall", "@Settings.PopupHeightSmall");
         });
     }
 

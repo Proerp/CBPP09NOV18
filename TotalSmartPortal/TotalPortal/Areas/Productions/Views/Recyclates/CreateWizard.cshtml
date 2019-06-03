@@ -5,7 +5,12 @@
 
 @{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
 
-@model TotalPortal.Areas.Productions.ViewModels.RecyclateViewModel
+@using TotalDTO;
+@using TotalModel
+@using TotalDTO.Productions
+@using TotalPortal.Areas.Productions.ViewModels
+
+@model IRecyclateViewModel
 
 @using (Html.BeginForm())
 {
@@ -13,19 +18,19 @@
 
     @Html.Partial("~/Views/Helpers/Bases/_BaseSectionTop.cshtml")
 
-    @Html.HiddenFor(model => model.WorkshiftID)
-    @Html.HiddenFor(model => model.WorkshiftCode)
-    @Html.HiddenFor(model => model.WorkshiftEntryDate)
+    @Html.HiddenFor(model => (model as IRecyclatePrimitiveDTO).WorkshiftID)
+    @Html.HiddenFor(model => (model as IRecyclatePrimitiveDTO).WorkshiftCode)
+    @Html.HiddenFor(model => (model as IRecyclatePrimitiveDTO).WorkshiftEntryDate)
     
-    @Html.HiddenFor(model => model.WarehouseID)
+    @Html.HiddenFor(model => (model as IRecyclatePrimitiveDTO).WarehouseID)
    
-    @Html.HiddenFor(model => model.CrucialWorker.EmployeeID);
-    @Html.HiddenFor(model => model.CrucialWorker.Name);
+    @Html.HiddenFor(model => (model as IRecyclateDTO).CrucialWorker.EmployeeID);
+    @Html.HiddenFor(model => (model as IRecyclateDTO).CrucialWorker.Name);
 
-    @Html.HiddenFor(model => model.Storekeeper.EmployeeID);
-    @Html.HiddenFor(model => model.Storekeeper.Name);
+    @Html.HiddenFor(model => (model as IRecyclateDTO).Storekeeper.EmployeeID);
+    @Html.HiddenFor(model => (model as IRecyclateDTO).Storekeeper.Name);
 
-    @Html.HiddenFor(model => model.Description);
+    @Html.HiddenFor(model => (model as IBaseDTO).Description);
 
     @(Html.Kendo().Grid<RecyclatePendingWorkshift>()
            .Name("recyclatePendingWorkshiftGrid")
