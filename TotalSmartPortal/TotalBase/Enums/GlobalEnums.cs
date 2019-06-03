@@ -85,8 +85,10 @@ namespace TotalBase.Enums
             SemifinishedItemHandover = 680026888,
             SemifinishedProductHandover = 680026,
 
-
-            SemifinishedRecyclate = 680020076,
+            Recyclate = 680020075,
+            SemifinishedProductRecyclate = 680020076,
+            FinishedProductRecyclate = 680020077,
+            FinishedItemRecyclate = 680020078,
 
 
             FinishedItem = 680028888,

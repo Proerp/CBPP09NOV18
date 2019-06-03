@@ -51,8 +51,15 @@ namespace TotalBase
                 case GlobalEnums.NmvnTaskID.SemifinishedProduct:
                     return "P";
 
-                case GlobalEnums.NmvnTaskID.SemifinishedRecyclate:
-                    return "RP";
+                case GlobalEnums.NmvnTaskID.Recyclate:
+                    return @"CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.SemifinishedProductRecyclate + @" THEN 'RP' ELSE 
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.FinishedProductRecyclate + @" THEN 'RK' ELSE
+                             CASE WHEN @NmvnTaskID = 
+                                    " + (int)GlobalEnums.NmvnTaskID.FinishedItemRecyclate + @" THEN 'RM' ELSE '#' END
+                             END END ";
+
                 case GlobalEnums.NmvnTaskID.SemifinishedHandover:
                     return @"CASE WHEN @NmvnTaskID = 
                                     " + (int)GlobalEnums.NmvnTaskID.SemifinishedItemHandover + @" THEN 'HI' ELSE 

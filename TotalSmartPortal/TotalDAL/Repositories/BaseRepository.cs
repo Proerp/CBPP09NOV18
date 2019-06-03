@@ -324,7 +324,7 @@ namespace TotalDAL.Repositories
         {
 
             //SemifinishedRecyclate
-            Helpers.SqlProgrammability.Productions.SemifinishedRecyclate semifinishedRecyclate = new Helpers.SqlProgrammability.Productions.SemifinishedRecyclate(totalSmartPortalEntities);
+            Helpers.SqlProgrammability.Productions.Recyclate semifinishedRecyclate = new Helpers.SqlProgrammability.Productions.Recyclate(totalSmartPortalEntities);
             semifinishedRecyclate.RestoreProcedure();
 
             

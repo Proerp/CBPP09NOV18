@@ -83,7 +83,7 @@
     <Compile Include="Helpers\SqlProgrammability\Productions\SemifinishedHandover.cs" />
     <Compile Include="Helpers\SqlProgrammability\Productions\SemifinishedItem.cs" />
     <Compile Include="Helpers\SqlProgrammability\Productions\SemifinishedProduct.cs" />
-    <Compile Include="Helpers\SqlProgrammability\Productions\SemifinishedRecyclate.cs" />
+    <Compile Include="Helpers\SqlProgrammability\Productions\Recyclate.cs" />
     <Compile Include="Helpers\SqlProgrammability\Productions\WorkOrder.cs" />
     <Compile Include="Helpers\SqlProgrammability\Purchases\GoodsArrival.cs" />
     <Compile Include="Helpers\SqlProgrammability\Purchases\Lab.cs" />

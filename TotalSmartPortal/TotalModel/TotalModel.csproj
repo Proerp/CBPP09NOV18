@@ -651,6 +651,27 @@
     <Compile Include="Models\ReceiptViewDetail.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Recyclate.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RecyclateDetail.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RecyclateIndex.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RecyclatePackage.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RecyclatePendingWorkshift.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RecyclateViewDetail.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RecyclateViewPackage.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Report.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

@@ -240,10 +240,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void FinishedProductEditable()
         {
-            string[] queryArray = new string[2];
+            string[] queryArray = new string[3];
 
             queryArray[0] = " SELECT TOP 1 @FoundEntity = FinishedProductID FROM FinishedProductDetails WHERE FinishedProductID = @EntityID AND NOT FinishedHandoverID IS NULL ";
             queryArray[1] = " SELECT TOP 1 @FoundEntity = FinishedProductID FROM FinishedHandoverDetails WHERE FinishedProductID = @EntityID ";
+            queryArray[2] = " SELECT TOP 1 @FoundEntity = FinishedProductPackages.FinishedProductID FROM RecyclateDetails INNER JOIN FinishedProductPackages ON RecyclateDetails.FinishedProductPackageID = FinishedProductPackages.FinishedProductPackageID WHERE FinishedProductPackages.FinishedProductID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("FinishedProductEditable", queryArray);
         }

@@ -20,6 +20,7 @@ namespace TotalModel.Models
             this.FinishedProductDetails = new HashSet<FinishedProductDetail>();
             this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
             this.FinishedHandoverDetails = new HashSet<FinishedHandoverDetail>();
+            this.RecyclateDetails = new HashSet<RecyclateDetail>();
         }
     
         public int FinishedProductPackageID { get; set; }
@@ -55,6 +56,8 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> FinishedHandoverDate { get; set; }
         public int BatchID { get; set; }
         public System.DateTime BatchEntryDate { get; set; }
+        public decimal RecycleWeights { get; set; }
+        public decimal RecycleLoss { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedProductDetail> FinishedProductDetails { get; set; }
@@ -64,5 +67,7 @@ namespace TotalModel.Models
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<FinishedHandoverDetail> FinishedHandoverDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RecyclateDetail> RecyclateDetails { get; set; }
     }
 }

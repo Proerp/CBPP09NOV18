@@ -259,6 +259,34 @@
 
 
 
+    public class RecyclateInitReference : SimpleInitReference
+    {
+        public RecyclateInitReference(string tableName, string identityName, string referenceName, int referenceLength, string prefixLetter)
+            : base(tableName, identityName, referenceName, referenceLength, prefixLetter)
+        { }
+
+        protected override string QueryDeclare()
+        {
+            string queryString = base.QueryDeclare() + "\r\n";
+            queryString = queryString + "   DECLARE     @NmvnTaskID int           SET @NmvnTaskID = (SELECT NmvnTaskID FROM Inserted) " + "\r\n";
+
+            return queryString;
+        }
+
+        protected override string QueryPrefix()
+        {
+            return "          DECLARE     @PrefixLetter varchar(10)   SET @PrefixLetter = " + this.prefixLetter + "\r\n";
+        }
+
+        protected override string QueryWhere()
+        {
+            string queryString = base.QueryWhere() + "\r\n";
+            queryString = queryString + "   AND     NmvnTaskID = @NmvnTaskID " + "\r\n";
+            return queryString;
+        }
+    }
+
+
     public class WorkOrderInitReference : SimpleInitReference
     {
         public WorkOrderInitReference(string tableName, string identityName, string referenceName, int referenceLength, string prefixLetter)

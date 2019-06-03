@@ -14,6 +14,12 @@ namespace TotalModel.Models
     
     public partial class FinishedItemDetail
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public FinishedItemDetail()
+        {
+            this.RecyclateDetails = new HashSet<RecyclateDetail>();
+        }
+    
         public int FinishedItemDetailID { get; set; }
         public int FinishedItemID { get; set; }
         public System.DateTime EntryDate { get; set; }
@@ -41,10 +47,15 @@ namespace TotalModel.Models
         public string Remarks { get; set; }
         public bool Approved { get; set; }
         public bool HandoverApproved { get; set; }
+        public Nullable<int> ProductionLineID { get; set; }
+        public decimal RecycleWeights { get; set; }
+        public decimal RecycleLoss { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual FinishedItem FinishedItem { get; set; }
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<RecyclateDetail> RecyclateDetails { get; set; }
     }
 }
