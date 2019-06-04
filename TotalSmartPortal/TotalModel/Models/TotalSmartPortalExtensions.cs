@@ -803,6 +803,8 @@ namespace TotalModel.Models
         public int OrganizationalUnitID { get; set; }
         public int LocationID { get; set; }
 
+        public virtual Commodity RecycleCommodity { get { return this.Commodity1; } }
+
         public System.DateTime CreatedDate { get; set; }
         public System.DateTime EditedDate { get; set; }
     }

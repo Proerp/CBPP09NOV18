@@ -1,6 +1,9 @@
-﻿using System.Net;
+﻿using System.Text;
+using System.Net;
 using System.Linq;
 using System.Web.Mvc;
+
+using RequireJsNet;
 
 using TotalModel;
 using TotalModel.Models;
@@ -29,6 +32,18 @@ namespace TotalPortal.Areas.Commons.Controllers
         public CommoditiesController(ICommodityService<TDto, TPrimitiveDto> commodityService, ICommoditySelectListBuilder<TSimpleViewModel> commodityViewModelSelectListBuilder)
             : base(commodityService, commodityViewModelSelectListBuilder)
         {
+        }
+
+        public override void AddRequireJsOptions()
+        {
+            base.AddRequireJsOptions();
+
+            TSimpleViewModel simpleViewModel = new TSimpleViewModel();
+
+            StringBuilder commodityTypeIDList = new StringBuilder();
+            commodityTypeIDList.Append((int)(simpleViewModel.IsItem ? GlobalEnums.CommodityTypeID.Materials : GlobalEnums.CommodityTypeID.Unknown));
+
+            RequireJsOptions.Add("masterCommodityTypeIDs", commodityTypeIDList.ToString(), RequireJsOptionsScope.Page);
         }
 
         public virtual ActionResult Boms(int id)

@@ -3195,6 +3195,18 @@ warning 6035: The relationship 'FK_AccountInvoices_AspNetUsers2' has columns tha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Commodities_Commodities">
+          <End Role="Commodities" Type="Self.Commodities" Multiplicity="0..1" />
+          <End Role="Commodities1" Type="Self.Commodities" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodities">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="Commodities1">
+              <PropertyRef Name="RecycleCommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Commodities_CommodityBrands">
           <End Role="CommodityBrands" Type="Self.CommodityBrands" Multiplicity="1" />
           <End Role="Commodities" Type="Self.Commodities" Multiplicity="*" />
@@ -9976,6 +9988,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <AssociationSet Name="FK_Boms_Commodities" Association="Self.FK_Boms_Commodities">
             <End Role="Commodities" EntitySet="Commodities" />
             <End Role="Boms" EntitySet="Boms" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Commodities_Commodities" Association="Self.FK_Commodities_Commodities">
+            <End Role="Commodities" EntitySet="Commodities" />
+            <End Role="Commodities1" EntitySet="Commodities" />
           </AssociationSet>
           <AssociationSet Name="FK_Commodities_CommodityBrands" Association="Self.FK_Commodities_CommodityBrands">
             <End Role="CommodityBrands" EntitySet="CommodityBrands" />
@@ -17444,6 +17460,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImport Name="GetGoodsReceiptPendingRecyclates" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingRecyclate)">
           <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <AssociationSet Name="FK_Commodities_Commodities" Association="TotalSmartPortalModel.FK_Commodities_Commodities">
+            <End Role="Commodity" EntitySet="Commodities" />
+            <End Role="Commodity1" EntitySet="Commodities" />
+          </AssociationSet>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -24775,6 +24795,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="RecyclatePackages" Relationship="TotalSmartPortalModel.FK_RecyclatePackages_Commodities" FromRole="Commodity" ToRole="RecyclatePackage" />
           <NavigationProperty Name="RecyclateDetails" Relationship="TotalSmartPortalModel.FK_RecyclateDetails_Commodities" FromRole="Commodity" ToRole="RecyclateDetail" />
           <NavigationProperty Name="RecyclateDetails1" Relationship="TotalSmartPortalModel.FK_RecyclateDetails_Commodities1" FromRole="Commodity" ToRole="RecyclateDetail" />
+          <NavigationProperty Name="Commodities1" Relationship="TotalSmartPortalModel.FK_Commodities_Commodities" FromRole="Commodity" ToRole="Commodity1" />
+          <NavigationProperty Name="Commodity1" Relationship="TotalSmartPortalModel.FK_Commodities_Commodities" FromRole="Commodity1" ToRole="Commodity" />
         </EntityType>
         <Association Name="FK_AccountInvoiceDetails_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -27010,6 +27032,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
           <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
+        <Association Name="FK_Commodities_Commodities">
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="0..1" />
+          <End Type="TotalSmartPortalModel.Commodity" Role="Commodity1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Commodity">
+              <PropertyRef Name="CommodityID" />
+            </Principal>
+            <Dependent Role="Commodity1">
+              <PropertyRef Name="RecycleCommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

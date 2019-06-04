@@ -3398,6 +3398,8 @@
     <Content Include="Views\Shared\EditorTemplates\DecimalN3Readonly.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DecimalN0Readonly.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\TimeReadonly.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AutoCompletes\CommodityLeft.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AutoCompletes\CommodityBasic.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

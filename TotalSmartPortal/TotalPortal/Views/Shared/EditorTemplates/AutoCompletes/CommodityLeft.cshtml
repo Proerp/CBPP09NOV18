@@ -1,0 +1,13 @@
+﻿@using TotalPortal.Configuration
+
+@model TotalDTO.Commons.ICommodityBaseDTO
+
+@Html.HiddenFor(model => model.CommodityID)
+@Html.HiddenFor(model => model.Name)
+
+@Html.Hidden("TempCode", (@Model != null ? @Model.Code : ""))
+
+
+@Html.Label((ViewData["CommodityDisplayName"] != null ? (ViewData["CommodityDisplayName"]).ToString() : @Model.GetDisplayName(m => m.Code)))
+
+@Html.Partial("~/Views/Shared/EditorTemplates/AutoCompletes/CommodityBasic.cshtml")

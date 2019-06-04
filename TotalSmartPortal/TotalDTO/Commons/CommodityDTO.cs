@@ -113,6 +113,8 @@ namespace TotalDTO.Commons
         [UIHint("AutoCompletes/Mold")]
         MoldBaseDTO Mold { get; set; }
 
+        Nullable<int> RecycleCommodityID { get; set; }
+
         string HSCode { get; set; }
         [Display(Name = "Qui định tồn trữ, bảo quản")]
         string Specification { get; set; }
@@ -188,6 +190,8 @@ namespace TotalDTO.Commons
         public Nullable<int> MoldID { get { return (this.Mold != null ? (Nullable<int>)this.Mold.MoldID : null); } }
         public MoldBaseDTO Mold { get; set; }
 
+        public virtual Nullable<int> RecycleCommodityID { get; set; }
+
         public string HSCode { get; set; }
         public string Specification { get; set; }
 
@@ -219,13 +223,21 @@ namespace TotalDTO.Commons
 
     public interface ICommodityDTO : ICommodityPrimitiveDTO
     {
+        [Display(Name = "Mã phế phẩm")]
+        [UIHint("AutoCompletes/CommodityLeft")]
+        CommodityBaseDTO RecycleCommodity { get; set; }
+
         string ControllerName { get; }
     }
 
     public class CommodityDTO<TCommodityOption> : CommodityPrimitiveDTO<TCommodityOption>, ICommodityDTO
         where TCommodityOption : ICMDOption, new()
     {
-        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
+        public override Nullable<int> RecycleCommodityID { get { return (this.RecycleCommodity != null ? this.RecycleCommodity.CommodityID : (Nullable<int>)null); } }
+        [Display(Name = "Mã phế phẩm")]
+        [UIHint("AutoCompletes/CommodityLeft")]
+        public CommodityBaseDTO RecycleCommodity { get; set; }
 
+        public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
     }
 }
