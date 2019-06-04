@@ -275,6 +275,11 @@
             .Name("kendoGridSummaries")
             .Columns(columns =>
             {
+                columns.Bound(p => p.RecyclatePackageID).DisplayNameTitle().Hidden()
+                    .ClientTemplate("#= RecyclatePackageID #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].RecyclatePackageID' value='#= RecyclatePackageID #' />");
+                columns.Bound(p => p.RecyclateID).DisplayNameTitle().Hidden()
+                    .ClientTemplate("#= RecyclateID #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].RecyclateID' value='#= RecyclateID #' />");
+                
                 columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                     .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='RecyclatePackages[#= newIndex(data) #].CommodityID' value='#= CommodityID #' />");
                 columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(210).EditorTemplateName("StringReadonly")

@@ -42,6 +42,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.GetGoodsReceiptPendingPlannedItemCustomers();
             this.GetGoodsReceiptPendingPlannedItemDetails();
 
+            this.GetGoodsReceiptPendingRecyclates();
+            this.GetGoodsReceiptPendingRecyclateDetails();
+
             this.GetGoodsReceiptPendingMaterialIssueDetails();
 
             GenerateSQLPendingDetails generatePendingWarehouseAdjustmentDetails = new GenerateSQLPendingDetails(this.totalSmartPortalEntities, GlobalEnums.GoodsReceiptTypeID.WarehouseAdjustments, "WarehouseAdjustments", "WarehouseAdjustmentDetails", "WarehouseAdjustmentID", "@WarehouseAdjustmentID", "WarehouseAdjustmentDetailID", "@WarehouseAdjustmentDetailIDs", "WarehouseReceiptID", "PrimaryReference", "PrimaryEntryDate");
@@ -105,11 +108,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       SELECT      GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.PurchaseRequisitionID, GoodsReceiptDetails.PurchaseRequisitionDetailID, PurchaseRequisitions.Reference AS PurchaseRequisitionReference, PurchaseRequisitions.Code AS PurchaseRequisitionCode, PurchaseRequisitions.EntryDate AS PurchaseRequisitionEntryDate, GoodsReceiptDetails.GoodsArrivalID, GoodsReceiptDetails.GoodsArrivalDetailID, GoodsReceiptDetails.GoodsArrivalPackageID, GoodsArrivals.Reference AS GoodsArrivalReference, GoodsArrivals.Code AS GoodsArrivalCode, GoodsArrivals.EntryDate AS GoodsArrivalEntryDate, GoodsArrivals.PurchaseOrderCodes, Customers.Code AS CustomerCode, " + "\r\n";
             queryString = queryString + "                   GoodsReceiptDetails.WarehouseTransferID, GoodsReceiptDetails.WarehouseTransferDetailID, WarehouseTransfers.Reference AS WarehouseTransferReference, WarehouseTransfers.EntryDate AS WarehouseTransferEntryDate, WarehouseTransferGoodsReceiptDetails.Reference AS GoodsReceiptReference, WarehouseTransferGoodsReceiptDetails.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsReceiptDetails.WarehouseAdjustmentID, GoodsReceiptDetails.WarehouseAdjustmentDetailID, WarehouseAdjustmentDetails.Reference AS WarehouseAdjustmentReference, WarehouseAdjustmentDetails.EntryDate AS WarehouseAdjustmentEntryDate, WarehouseAdjustmentDetails.WarehouseAdjustmentTypeID, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, GoodsReceiptDetails.CommodityTypeID, GoodsReceiptDetails.BinLocationID, BinLocations.Code AS BinLocationCode, GoodsReceiptDetails.Barcode, GoodsReceiptDetails.BatchCode, GoodsReceiptDetails.SealCode, GoodsReceiptDetails.LabCode, GoodsReceiptDetails.LabID, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, GoodsReceiptDetails.UnitWeight, GoodsReceiptDetails.TareWeight, " + "\r\n";
-            queryString = queryString + "                   ROUND(ISNULL(IIF(PurchaseRequisitionDetails.Approved = 1 AND PurchaseRequisitionDetails.InActive = 0 AND PurchaseRequisitionDetails.InActivePartial = 0, PurchaseRequisitionDetails.Quantity - PurchaseRequisitionDetails.QuantityReceipted, 0), 0) + ISNULL(IIF(GoodsArrivalPackages.Approved = 1 AND GoodsArrivalPackages.InActive = 0 AND GoodsArrivalPackages.InActivePartial = 0, GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, 0), 0) + ISNULL(WarehouseTransferDetails.Quantity - WarehouseTransferDetails.QuantityReceipted, 0) + ISNULL(MaterialIssueDetails.Quantity - MaterialIssueDetails.QuantitySemifinished - MaterialIssueDetails.QuantityFailure - MaterialIssueDetails.QuantityReceipted, 0) + ISNULL(WarehouseAdjustmentDetails.Quantity - WarehouseAdjustmentDetails.QuantityReceipted, 0) + ISNULL(FinishedProductPackages.Quantity - FinishedProductPackages.QuantityReceipted, 0) + ISNULL(FinishedItemPackages.Quantity - FinishedItemPackages.QuantityReceipted, 0) + GoodsReceiptDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, GoodsReceiptDetails.Quantity, GoodsReceiptDetails.Remarks, " + "\r\n";
+            queryString = queryString + "                   ROUND(ISNULL(IIF(PurchaseRequisitionDetails.Approved = 1 AND PurchaseRequisitionDetails.InActive = 0 AND PurchaseRequisitionDetails.InActivePartial = 0, PurchaseRequisitionDetails.Quantity - PurchaseRequisitionDetails.QuantityReceipted, 0), 0) + ISNULL(IIF(GoodsArrivalPackages.Approved = 1 AND GoodsArrivalPackages.InActive = 0 AND GoodsArrivalPackages.InActivePartial = 0, GoodsArrivalPackages.Quantity - GoodsArrivalPackages.QuantityReceipted, 0), 0) + ISNULL(WarehouseTransferDetails.Quantity - WarehouseTransferDetails.QuantityReceipted, 0) + ISNULL(MaterialIssueDetails.Quantity - MaterialIssueDetails.QuantitySemifinished - MaterialIssueDetails.QuantityFailure - MaterialIssueDetails.QuantityReceipted, 0) + ISNULL(WarehouseAdjustmentDetails.Quantity - WarehouseAdjustmentDetails.QuantityReceipted, 0) + ISNULL(FinishedProductPackages.Quantity - FinishedProductPackages.QuantityReceipted, 0) + ISNULL(FinishedItemPackages.Quantity - FinishedItemPackages.QuantityReceipted, 0) + ISNULL(RecyclatePackages.Quantity - RecyclatePackages.QuantityReceipted, 0) + GoodsReceiptDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, GoodsReceiptDetails.Quantity, GoodsReceiptDetails.Remarks, " + "\r\n";
             queryString = queryString + "                   GoodsReceiptDetails.MaterialIssueDetailID, MaterialIssueDetails.MaterialIssueID, MaterialIssueDetails.EntryDate AS MaterialIssueEntryDate, Workshifts.Name AS WorkshiftName, Workshifts.EntryDate AS WorkshiftEntryDate, ProductionLines.Code AS ProductionLinesCode, " + "\r\n";
 
             queryString = queryString + "                   GoodsReceiptDetails.FinishedProductPackageID, FinishedProductPackages.FinishedProductID, FinishedProductPackages.EntryDate AS FinishedProductEntryDate, FinishedProductPackages.SemifinishedProductReferences, " + "\r\n";
-            queryString = queryString + "                   GoodsReceiptDetails.FinishedItemPackageID, FinishedItemPackages.FinishedItemID, FinishedItemPackages.EntryDate AS FinishedItemEntryDate, FinishedItemPackages.SemifinishedItemReferences, ISNULL(FirmOrders.Reference, ISNULL(FinishedItemFirmOrders.Reference, MaterialIssueFirmOrders.Reference)) AS FirmOrderReference, ISNULL(FirmOrders.Code, ISNULL(FinishedItemFirmOrders.Code, MaterialIssueFirmOrders.Code)) AS FirmOrderCode, ISNULL(FirmOrders.Specs, ISNULL(FinishedItemFirmOrders.Specs, MaterialIssueFirmOrders.Specs)) AS FirmOrderSpecs " + "\r\n";
+            queryString = queryString + "                   GoodsReceiptDetails.FinishedItemPackageID, FinishedItemPackages.FinishedItemID, FinishedItemPackages.EntryDate AS FinishedItemEntryDate, FinishedItemPackages.SemifinishedItemReferences, " + "\r\n";
+            queryString = queryString + "                   GoodsReceiptDetails.RecyclatePackageID, RecyclatePackages.RecyclateID, RecyclatePackages.EntryDate AS RecyclateEntryDate, " + "\r\n"; //RecyclatePackages.SemiRecyclateReferences, 
+            queryString = queryString + "                   ISNULL(FirmOrders.Reference, ISNULL(FinishedItemFirmOrders.Reference, MaterialIssueFirmOrders.Reference)) AS FirmOrderReference, ISNULL(FirmOrders.Code, ISNULL(FinishedItemFirmOrders.Code, MaterialIssueFirmOrders.Code)) AS FirmOrderCode, ISNULL(FirmOrders.Specs, ISNULL(FinishedItemFirmOrders.Specs, MaterialIssueFirmOrders.Specs)) AS FirmOrderSpecs  " + "\r\n";
 
             queryString = queryString + "       FROM        GoodsReceiptDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN Commodities ON GoodsReceiptDetails.GoodsReceiptID = @GoodsReceiptID AND GoodsReceiptDetails.CommodityID = Commodities.CommodityID " + "\r\n";
@@ -135,6 +140,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "                   LEFT JOIN FinishedProductPackages ON GoodsReceiptDetails.FinishedProductPackageID = FinishedProductPackages.FinishedProductPackageID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN FirmOrders ON FinishedProductPackages.FirmOrderID = FirmOrders.FirmOrderID " + "\r\n";
+            queryString = queryString + "                   LEFT JOIN RecyclatePackages ON GoodsReceiptDetails.RecyclatePackageID = RecyclatePackages.RecyclatePackageID " + "\r\n";
 
             queryString = queryString + "                   LEFT JOIN FinishedItemPackages ON GoodsReceiptDetails.FinishedItemPackageID = FinishedItemPackages.FinishedItemPackageID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN FirmOrders FinishedItemFirmOrders ON FinishedItemPackages.FirmOrderID = FinishedItemFirmOrders.FirmOrderID " + "\r\n";
@@ -841,6 +847,101 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
 
 
+
+
+        #region Recyclate
+        private void GetGoodsReceiptPendingRecyclates()
+        {
+            string queryString = " @LocationID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "       SELECT          " + (int)@GlobalEnums.GoodsReceiptTypeID.Recyclate + " AS GoodsReceiptTypeID, Recyclates.RecyclateID, Recyclates.EntryDate AS RecyclateEntryDate, Recyclates.Reference AS RecyclateReference, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, Recyclates.Caption AS RecyclateCaption, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, RecyclatePackages.QuantityRemains " + "\r\n";
+            queryString = queryString + "       FROM            Recyclates " + "\r\n";
+            queryString = queryString + "                       INNER JOIN (SELECT RecyclateID, ROUND(SUM(Quantity - QuantityReceipted), " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains FROM RecyclatePackages WHERE Approved = 1 AND ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 GROUP BY RecyclateID) RecyclatePackages ON Recyclates.RecyclateID = RecyclatePackages.RecyclateID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Workshifts ON Recyclates.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses ON Recyclates.WarehouseID = Warehouses.WarehouseID " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptPendingRecyclates", queryString);
+        }
+
+        private void GetGoodsReceiptPendingRecyclateDetails()
+        {
+            string queryString;
+
+            queryString = " @LocationID Int, @GoodsReceiptID Int, @RecyclateID Int, @RecyclatePackageIDs varchar(3999) " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       IF  (@RecyclatePackageIDs <> '') " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLRecyclate(true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLRecyclate(false) + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptPendingRecyclateDetails", queryString);
+        }
+
+        private string BuildSQLRecyclate(bool isRecyclatePackageIDs)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       IF (@GoodsReceiptID <= 0) " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLRecyclateNew(isRecyclatePackageIDs) + "\r\n";
+            queryString = queryString + "                   ORDER BY RecyclatePackages.RecyclatePackageID " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLRecyclateNew(isRecyclatePackageIDs) + " WHERE RecyclatePackages.RecyclatePackageID NOT IN (SELECT RecyclatePackageID FROM GoodsReceiptDetails WHERE GoodsReceiptID = @GoodsReceiptID) " + "\r\n";
+            queryString = queryString + "                   UNION ALL " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLRecyclateEdit(isRecyclatePackageIDs) + "\r\n";
+            queryString = queryString + "                   ORDER BY RecyclatePackages.RecyclatePackageID " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string BuildSQLRecyclateNew(bool isRecyclatePackageIDs)
+        {
+            string queryString = "";
+
+            queryString = queryString + "       SELECT      RecyclatePackages.RecyclateID, RecyclatePackages.RecyclatePackageID, RecyclatePackages.EntryDate AS RecyclateEntryDate, RecyclatePackages.BatchID, RecyclatePackages.BatchEntryDate, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
+            queryString = queryString + "                   ROUND(RecyclatePackages.Quantity - RecyclatePackages.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
+            queryString = queryString + "                   0.0 AS Quantity, RecyclatePackages.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
+
+            queryString = queryString + "       FROM        Commodities " + "\r\n";
+            queryString = queryString + "                   INNER JOIN RecyclatePackages ON RecyclatePackages.RecyclateID = @RecyclateID AND RecyclatePackages.Approved = 1 AND ROUND(RecyclatePackages.Quantity - RecyclatePackages.QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") > 0 AND RecyclatePackages.CommodityID = Commodities.CommodityID " + (isRecyclatePackageIDs ? " AND RecyclatePackages.RecyclatePackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@RecyclatePackageIDs))" : "") + "\r\n";
+
+            return queryString;
+        }
+
+        private string BuildSQLRecyclateEdit(bool isRecyclatePackageIDs)
+        {
+            string queryString = "";
+
+            queryString = queryString + "       SELECT      RecyclatePackages.RecyclateID, RecyclatePackages.RecyclatePackageID, RecyclatePackages.EntryDate AS RecyclateEntryDate, RecyclatePackages.BatchID, RecyclatePackages.BatchEntryDate, " + "\r\n";
+            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
+            queryString = queryString + "                   ROUND(RecyclatePackages.Quantity - RecyclatePackages.QuantityReceipted + GoodsReceiptDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
+            queryString = queryString + "                   0.0 AS Quantity, RecyclatePackages.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
+
+            queryString = queryString + "       FROM        RecyclatePackages " + "\r\n";
+            queryString = queryString + "                   INNER JOIN GoodsReceiptDetails ON GoodsReceiptDetails.GoodsReceiptID = @GoodsReceiptID AND RecyclatePackages.RecyclatePackageID = GoodsReceiptDetails.RecyclatePackageID" + (isRecyclatePackageIDs ? " AND RecyclatePackages.RecyclatePackageID NOT IN (SELECT Id FROM dbo.SplitToIntList (@RecyclatePackageIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON RecyclatePackages.CommodityID = Commodities.CommodityID " + "\r\n";
+
+            return queryString;
+        }
+
+        #endregion Recyclate
+
+
+
         #region MaterialIssue
         private void GetGoodsReceiptPendingMaterialIssueDetails()
         {
@@ -1024,6 +1125,15 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                           SET @AffectedROWCOUNT = @@ROWCOUNT " + "\r\n";
             queryString = queryString + "                       END " + "\r\n";
 
+            queryString = queryString + "                   IF (@GoodsReceiptTypeID = " + (int)GlobalEnums.GoodsReceiptTypeID.Recyclate + ") " + "\r\n";
+            queryString = queryString + "                       BEGIN  " + "\r\n";
+            queryString = queryString + "                           UPDATE          RecyclatePackages " + "\r\n";
+            queryString = queryString + "                           SET             RecyclatePackages.QuantityReceipted = ROUND(RecyclatePackages.QuantityReceipted + GoodsReceiptDetails.Quantity * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";
+            queryString = queryString + "                           FROM            GoodsReceiptDetails " + "\r\n";
+            queryString = queryString + "                                           INNER JOIN RecyclatePackages ON (RecyclatePackages.Approved = 1 OR @SaveRelativeOption = -1) AND GoodsReceiptDetails.GoodsReceiptID = @EntityID AND GoodsReceiptDetails.RecyclatePackageID = RecyclatePackages.RecyclatePackageID " + "\r\n";
+            queryString = queryString + "                           SET @AffectedROWCOUNT = @@ROWCOUNT " + "\r\n";
+            queryString = queryString + "                       END " + "\r\n";
+
             //queryString = queryString + "                   IF (@GoodsReceiptTypeID = " + (int)GlobalEnums.GoodsReceiptTypeID.GoodsIssueTransfer + ") " + "\r\n";
             //queryString = queryString + "                       BEGIN  " + "\r\n";
             //queryString = queryString + "                           UPDATE          GoodsIssueTransferDetails " + "\r\n";
@@ -1070,7 +1180,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
         private void GoodsReceiptPostSaveValidate()
         {
-            string[] queryArray = new string[13];
+            string[] queryArray = new string[15];
 
             queryArray[0] = " SELECT TOP 1 @FoundEntity = N'Ngày đặt hàng: ' + CAST(PurchaseRequisitions.EntryDate AS nvarchar) FROM GoodsReceiptDetails INNER JOIN PurchaseRequisitions ON GoodsReceiptDetails.GoodsReceiptID = @EntityID AND GoodsReceiptDetails.PurchaseRequisitionID = PurchaseRequisitions.PurchaseRequisitionID AND GoodsReceiptDetails.EntryDate < PurchaseRequisitions.EntryDate ";
             queryArray[1] = " SELECT TOP 1 @FoundEntity = N'Số lượng xuất vượt quá số lượng đặt hàng: ' + CAST(ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM PurchaseRequisitionDetails WHERE (ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
@@ -1091,6 +1201,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryArray[11] = " SELECT TOP 1 @FoundEntity = N'Ngày đặt hàng: ' + CAST(WarehouseTransfers.EntryDate AS nvarchar) FROM GoodsReceiptDetails INNER JOIN WarehouseTransfers ON GoodsReceiptDetails.GoodsReceiptID = @EntityID AND GoodsReceiptDetails.WarehouseTransferID = WarehouseTransfers.WarehouseTransferID AND GoodsReceiptDetails.EntryDate < WarehouseTransfers.EntryDate ";
             queryArray[12] = " SELECT TOP 1 @FoundEntity = N'Số lượng xuất vượt quá số lượng đặt hàng: ' + CAST(ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM WarehouseTransferDetails WHERE (ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
 
+            queryArray[13] = " SELECT TOP 1 @FoundEntity = N'Ngày đặt hàng: ' + CAST(Recyclates.EntryDate AS nvarchar) FROM GoodsReceiptDetails INNER JOIN Recyclates ON GoodsReceiptDetails.GoodsReceiptID = @EntityID AND GoodsReceiptDetails.RecyclateID = Recyclates.RecyclateID AND GoodsReceiptDetails.EntryDate < Recyclates.EntryDate ";
+            queryArray[14] = " SELECT TOP 1 @FoundEntity = N'Số lượng xuất vượt quá số lượng đặt hàng: ' + CAST(ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") AS nvarchar) FROM RecyclatePackages WHERE (ROUND(Quantity - QuantityReceipted, " + (int)GlobalEnums.rndQuantity + ") < 0) ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("GoodsReceiptPostSaveValidate", queryArray);
         }

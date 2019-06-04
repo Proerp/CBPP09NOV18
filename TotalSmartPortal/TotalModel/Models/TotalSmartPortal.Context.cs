@@ -5724,5 +5724,35 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SemifinishedProductViewDetail>("GetSemifinishedProductViewDetails", semifinishedProductIDParameter, firmOrderIDParameter);
         }
+    
+        public virtual ObjectResult<GoodsReceiptPendingRecyclateDetail> GetGoodsReceiptPendingRecyclateDetails(Nullable<int> locationID, Nullable<int> goodsReceiptID, Nullable<int> recyclateID, string recyclatePackageIDs)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var goodsReceiptIDParameter = goodsReceiptID.HasValue ?
+                new ObjectParameter("GoodsReceiptID", goodsReceiptID) :
+                new ObjectParameter("GoodsReceiptID", typeof(int));
+    
+            var recyclateIDParameter = recyclateID.HasValue ?
+                new ObjectParameter("RecyclateID", recyclateID) :
+                new ObjectParameter("RecyclateID", typeof(int));
+    
+            var recyclatePackageIDsParameter = recyclatePackageIDs != null ?
+                new ObjectParameter("RecyclatePackageIDs", recyclatePackageIDs) :
+                new ObjectParameter("RecyclatePackageIDs", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingRecyclateDetail>("GetGoodsReceiptPendingRecyclateDetails", locationIDParameter, goodsReceiptIDParameter, recyclateIDParameter, recyclatePackageIDsParameter);
+        }
+    
+        public virtual ObjectResult<GoodsReceiptPendingRecyclate> GetGoodsReceiptPendingRecyclates(Nullable<int> locationID)
+        {
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingRecyclate>("GetGoodsReceiptPendingRecyclates", locationIDParameter);
+        }
     }
 }

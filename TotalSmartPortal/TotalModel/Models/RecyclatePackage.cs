@@ -14,6 +14,12 @@ namespace TotalModel.Models
     
     public partial class RecyclatePackage
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public RecyclatePackage()
+        {
+            this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
+        }
+    
         public int RecyclatePackageID { get; set; }
         public int RecyclateID { get; set; }
         public System.DateTime EntryDate { get; set; }
@@ -33,5 +39,7 @@ namespace TotalModel.Models
         public virtual Commodity Commodity { get; set; }
         public virtual Recyclate Recyclate { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
     }
 }

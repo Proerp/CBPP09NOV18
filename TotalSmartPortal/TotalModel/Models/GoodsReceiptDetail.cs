@@ -72,6 +72,8 @@ namespace TotalModel.Models
         public Nullable<int> FinishedItemPackageID { get; set; }
         public decimal UnitWeight { get; set; }
         public decimal TareWeight { get; set; }
+        public Nullable<int> RecyclateID { get; set; }
+        public Nullable<int> RecyclatePackageID { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }
@@ -97,5 +99,6 @@ namespace TotalModel.Models
         public virtual Lab Lab { get; set; }
         public virtual Commodity Commodity { get; set; }
         public virtual FinishedItemPackage FinishedItemPackage { get; set; }
+        public virtual RecyclatePackage RecyclatePackage { get; set; }
     }
 }

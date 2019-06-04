@@ -526,6 +526,8 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_RecyclateDetails_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_RecyclateDetails_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_ProductionLines" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_RecyclatePackages" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceipts_Recyclates" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

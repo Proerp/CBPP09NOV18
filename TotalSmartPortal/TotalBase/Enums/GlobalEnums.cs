@@ -207,6 +207,7 @@ namespace TotalBase.Enums
             MaterialIssue = 7,
             FinishedProduct = 8,
             FinishedItem = 18,
+            Recyclate = 19,
 
             WarehouseTransfer = 9,
 

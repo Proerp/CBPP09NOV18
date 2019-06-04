@@ -55,6 +55,7 @@ namespace TotalModel.Models
         public System.DateTime EditedDate { get; set; }
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
+        public Nullable<int> RecyclateID { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual GoodsArrival GoodsArrival { get; set; }
@@ -72,5 +73,6 @@ namespace TotalModel.Models
         public virtual Workshift Workshift { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedProduct> SemifinishedProducts { get; set; }
+        public virtual Recyclate Recyclate { get; set; }
     }
 }
