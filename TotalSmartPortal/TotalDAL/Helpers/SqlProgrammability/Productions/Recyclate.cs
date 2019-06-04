@@ -399,29 +399,28 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         private void RecyclateSheet()
         {
             string queryString = " @RecyclateID int " + "\r\n";
-            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
             queryString = queryString + "       DECLARE         @LocalRecyclateID int    SET @LocalRecyclateID = @RecyclateID" + "\r\n";
 
-            queryString = queryString + "       SELECT          Recyclates.RecyclateID, Recyclates.EntryDate AS RecyclateEntryDate, Recyclates.Reference, Workshifts.Code AS WorkshiftCode, ProductionLines.Code AS ProductionLineCode, " + "\r\n";
-            queryString = queryString + "                       SemifinishedProducts.EntryDate AS RootEntryDate, SemifinishedProducts.Reference AS RootReference, SemifinishedProducts.Code AS SemifinishedProductCode, SemifinishedProducts.Specs, SemifinishedProducts.Specification, SemifinishedProducts.TotalQuantity AS SemifinishedProductTotalQuantity, Customers.Name AS CustomerName, " + "\r\n";
-            queryString = queryString + "                       Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, RecyclateDetails.BatchEntryDate, RecyclateDetails.Quantity, ISNULL(SemifinishedProducts.Description, '') + ' ' + ISNULL(Recyclates.Description, '') AS Description " + "\r\n";
+            queryString = queryString + "       SELECT          Recyclates.RecyclateID, Recyclates.EntryDate, Recyclates.Reference, Workshifts.EntryDate AS WorkshiftEntryDate, Workshifts.Code AS WorkshiftCode, Recyclates.Description, " + "\r\n";
+            queryString = queryString + "                       NMVNTaskName = IIF(Recyclates.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.SemifinishedProductRecyclate + ", N'TỔ ĐỊNH HÌNH', IIF(Recyclates.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.FinishedProductRecyclate + ", N'TỔ ĐÓNG GÓI', N'TỔ TẠO MÀNG')), " + "\r\n";
+            queryString = queryString + "                       CrucialWorkers.Name AS CrucialWorkerName, Storekeepers.Name AS StorekeeperName, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, RecyclatePackages.BatchEntryDate, RecyclatePackages.Remarks, RecyclatePackages.Quantity " + "\r\n";
 
             queryString = queryString + "       FROM            Recyclates " + "\r\n";
-            queryString = queryString + "                       INNER JOIN RecyclateDetails ON Recyclates.RecyclateID = @LocalRecyclateID AND Recyclates.RecyclateID = RecyclateDetails.RecyclateID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN SemifinishedProducts ON Recyclates.SemifinishedProductID = SemifinishedProducts.SemifinishedProductID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN Customers ON Recyclates.CustomerID = Customers.CustomerID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN RecyclatePackages ON Recyclates.RecyclateID = @LocalRecyclateID AND Recyclates.RecyclateID = RecyclatePackages.RecyclateID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Workshifts ON Recyclates.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN ProductionLines ON Recyclates.ProductionLineID = ProductionLines.ProductionLineID" + "\r\n";
-            queryString = queryString + "                       INNER JOIN Commodities ON RecyclateDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Commodities ON RecyclatePackages.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Employees AS CrucialWorkers ON Recyclates.CrucialWorkerID = CrucialWorkers.EmployeeID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Employees AS Storekeepers ON Recyclates.StorekeeperID = Storekeepers.EmployeeID " + "\r\n";
 
-            queryString = queryString + "       ORDER BY        RecyclateDetails.RecyclateDetailID " + "\r\n";
+            queryString = queryString + "       ORDER BY        RecyclatePackages.RecyclatePackageID " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
-            //this.totalSmartPortalEntities.CreateStoredProcedure("RecyclateSheet", queryString);
+            this.totalSmartPortalEntities.CreateStoredProcedure("RecyclateSheet", queryString);
         }
     }
 }

@@ -119,13 +119,16 @@
             {
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(false);"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
                 <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true);"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", Model.ControllerName)" onclick="$('#Approved').val(true); $('#PrintAfterClosedSubmit').val(true);"> <img src="~/Content/Images/New/Print-Gray-32.png" /> Lưu, duyệt và in</button>
             }
             else
             {
-                if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
-                {
-                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.RecyclateID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt phiếu </button>
-                }
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", Model.ControllerName, new { id = @Model.RecyclateID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
+            }
+
+            @if (Model.RecyclateID > 0 && !Model.Approvable && !Model.UnApprovable)
+            {
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", Model.ControllerName, new {id = @Model.RecyclateID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt phiếu </button>
             }
         </div>
 
