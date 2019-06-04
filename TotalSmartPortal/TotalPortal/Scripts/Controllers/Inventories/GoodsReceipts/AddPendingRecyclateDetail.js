@@ -2,13 +2,13 @@
     window.parent.$("#myWindow").data("kendoWindow").close();
 }
 
-function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetailGridDataSource) {
-    if (goodsReceiptGridDataSource != undefined && pendingWarehouseTransferDetailGridDataSource != undefined) {
-        var pendingWarehouseTransferDetailGridDataItems = pendingWarehouseTransferDetailGridDataSource.view();
+function handleOKEvent(goodsReceiptGridDataSource, pendingRecyclateDetailGridDataSource) {
+    if (goodsReceiptGridDataSource != undefined && pendingRecyclateDetailGridDataSource != undefined) {
+        var pendingPurchaseRequisitionDetailGridDataItems = pendingRecyclateDetailGridDataSource.view();
         var goodsReceiptJSON = goodsReceiptGridDataSource.data().toJSON();
-        for (var i = 0; i < pendingWarehouseTransferDetailGridDataItems.length; i++) {
-            if (pendingWarehouseTransferDetailGridDataItems[i].IsSelected === true)
-                _setParentInput(goodsReceiptJSON, pendingWarehouseTransferDetailGridDataItems[i]);
+        for (var i = 0; i < pendingPurchaseRequisitionDetailGridDataItems.length; i++) {
+            if (pendingPurchaseRequisitionDetailGridDataItems[i].IsSelected === true)
+                _setParentInput(goodsReceiptJSON, pendingPurchaseRequisitionDetailGridDataItems[i]);
         }
 
         goodsReceiptJSON.push(new Object()); //Add a temporary empty row
@@ -34,7 +34,7 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetai
     //grid.dataSource.data(data); //set changed data as data of the Grid
 
 
-    function _setParentInput(goodsReceiptJSON, warehouseTransferGridDataItem) {
+    function _setParentInput(goodsReceiptJSON, recyclateGridDataItem) {
 
         //var dataRow = goodsReceiptJSON.add({});
 
@@ -68,12 +68,12 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetai
 
         dataRow.FirmOrderReference = null;
         dataRow.FirmOrderCode = null;
-        dataRow.FirmOrderSpecs = null;        
+        dataRow.FirmOrderSpecs = null;
 
 
-        dataRow.RecyclateID = null;
-        dataRow.RecyclatePackageID = null;
-        dataRow.RecyclateEntryDate = null;
+        dataRow.RecyclateID = recyclateGridDataItem.RecyclateID;
+        dataRow.RecyclatePackageID = recyclateGridDataItem.RecyclatePackageID;
+        dataRow.RecyclateEntryDate = recyclateGridDataItem.RecyclateEntryDate;
 
 
         dataRow.PurchaseRequisitionID = null;
@@ -93,40 +93,40 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingWarehouseTransferDetai
         dataRow.CustomerCode = null;
 
 
-        dataRow.WarehouseTransferID = warehouseTransferGridDataItem.WarehouseTransferID;
-        dataRow.WarehouseTransferDetailID = warehouseTransferGridDataItem.WarehouseTransferDetailID;
-        dataRow.WarehouseTransferReference = warehouseTransferGridDataItem.WarehouseTransferReference;
-        dataRow.WarehouseTransferEntryDate = warehouseTransferGridDataItem.WarehouseTransferEntryDate;
-        dataRow.GoodsReceiptReference = warehouseTransferGridDataItem.GoodsReceiptReference;
-        dataRow.GoodsReceiptEntryDate = warehouseTransferGridDataItem.GoodsReceiptEntryDate;
+        dataRow.WarehouseTransferID = null;
+        dataRow.WarehouseTransferDetailID = null;
+        dataRow.WarehouseTransferReference = null;
+        dataRow.WarehouseTransferEntryDate = null;
+        dataRow.GoodsReceiptReference = null;
+        dataRow.GoodsReceiptEntryDate = null;
 
-        dataRow.BatchID = warehouseTransferGridDataItem.BatchID;
-        dataRow.BatchEntryDate = warehouseTransferGridDataItem.BatchEntryDate;
+        dataRow.BatchID = recyclateGridDataItem.BatchID;
+        dataRow.BatchEntryDate = recyclateGridDataItem.RecyclateEntryDate;
 
 
-        dataRow.CommodityID = warehouseTransferGridDataItem.CommodityID;
-        dataRow.CommodityName = warehouseTransferGridDataItem.CommodityName;
-        dataRow.CommodityCode = warehouseTransferGridDataItem.CommodityCode;
-        dataRow.CommodityTypeID = warehouseTransferGridDataItem.CommodityTypeID;
+        dataRow.CommodityID = recyclateGridDataItem.CommodityID;
+        dataRow.CommodityName = recyclateGridDataItem.CommodityName;
+        dataRow.CommodityCode = recyclateGridDataItem.CommodityCode;
+        dataRow.CommodityTypeID = recyclateGridDataItem.CommodityTypeID;
 
-        dataRow.LabID = warehouseTransferGridDataItem.LabID;
+        dataRow.LabID = -1;
 
-        dataRow.Barcode = warehouseTransferGridDataItem.Barcode;
-        dataRow.BatchCode = warehouseTransferGridDataItem.BatchCode;
-        dataRow.SealCode = warehouseTransferGridDataItem.SealCode;
-        dataRow.LabCode = warehouseTransferGridDataItem.LabCode;
+        dataRow.Barcode = null;
+        dataRow.BatchCode = null;
+        dataRow.SealCode = null;
+        dataRow.LabCode = null;
 
-        dataRow.BinLocationID = warehouseTransferGridDataItem.BinLocationID;
-        dataRow.BinLocationCode = warehouseTransferGridDataItem.BinLocationCode;
+        dataRow.BinLocationID = 1;
+        dataRow.BinLocationCode = "DEFAULT";
 
-        dataRow.ProductionDate = warehouseTransferGridDataItem.ProductionDate;
-        dataRow.ExpiryDate = warehouseTransferGridDataItem.ExpiryDate;
+        dataRow.ProductionDate = null;
+        dataRow.ExpiryDate = null;
 
-        dataRow.UnitWeight = warehouseTransferGridDataItem.UnitWeight;
-        dataRow.TareWeight = warehouseTransferGridDataItem.TareWeight;
+        dataRow.UnitWeight = 0;
+        dataRow.TareWeight = 0;
 
-        dataRow.QuantityRemains = warehouseTransferGridDataItem.QuantityRemains;
-        dataRow.Quantity = warehouseTransferGridDataItem.Quantity;
+        dataRow.QuantityRemains = recyclateGridDataItem.QuantityRemains;
+        dataRow.Quantity = recyclateGridDataItem.Quantity;
 
         dataRow.Remarks = null;
 

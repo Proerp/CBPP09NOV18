@@ -1,0 +1,60 @@
+﻿@using TotalPortal.Configuration
+@using TotalModel.Models;
+
+@(Html.Kendo().Grid<GoodsReceiptPendingRecyclate>()
+    .Name("goodsReceiptPendingRecyclateGrid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.RecyclateReference).Title("Số phiếu").Width(20);
+        columns.Bound(c => c.RecyclateEntryDate).Title("Ngày giao").Width(30).Format("{0:" + Settings.DateFormat + "}");
+        columns.Bound(c => c.RecyclateCaption).Title("Mặt hàng").Width(210);
+        columns.Bound(p => p.QuantityRemains).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Template(@<text>
+            <div class="toolbar" style="float: right;">
+                <label>Nhập số phiếu hoặc mã, tên mặt hàng</label>
+                <input id="goodsReceiptPendingRecyclateFilter" class="k-textbox" style="text-align: center; margin-right: 13px;" onkeyup="goodsReceiptPendingRecyclateFilter_KeyUp()" />
+            </div>
+        </text>);
+    })
+        .Scrollable(s => s.Height(Settings.PopupContentHeight))
+        .DataSource(ds => ds.Ajax()
+            .Read(read => read.Action("GetRecyclates", "GoodsReceiptAPIs", new { area = "Inventories" }).Data("onAdditionalGetRecyclates"))
+            .ServerOperation(false)
+        )
+        .Selectable()
+)
+
+<script type="text/javascript">
+    function onAdditionalGetRecyclates(e) {
+        return {
+            locationID: window.parent.requireConfig.pageOptions.LocationID
+        };
+    }
+
+    function goodsReceiptPendingRecyclateFilter_KeyUp() {
+        var goodsReceiptPendingRecyclateFilter = $("#goodsReceiptPendingRecyclateFilter").val(), gridDetails = $("#goodsReceiptPendingRecyclateGrid").data("kendoGrid");
+
+        if (goodsReceiptPendingRecyclateFilter && goodsReceiptPendingRecyclateFilter.length >= "@Settings.AutoCompleteMinLenght") {
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "RecyclateCode", operator: "contains", value: goodsReceiptPendingRecyclateFilter },
+                    { field: "RecyclateCaption", operator: "contains", value: goodsReceiptPendingRecyclateFilter }
+                ]
+            });
+
+
+        } else {
+            if (gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }
+    }
+
+    $("#goodsReceiptPendingRecyclateGrid").dblclick(function (e) {
+        okButton_Click();
+    })
+</script>
+

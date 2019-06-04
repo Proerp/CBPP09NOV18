@@ -35,6 +35,10 @@ namespace TotalCore.Repositories.Inventories
         IEnumerable<GoodsReceiptPendingPlannedItem> GetPlannedItems(int? locationID);
         IEnumerable<GoodsReceiptPendingPlannedItemDetail> GetPendingPlannedItemDetails(int? locationID, int? goodsReceiptID, int? plannedOrderID, int? customerID, string finishedItemPackageIDs);
 
+        
+        IEnumerable<GoodsReceiptPendingRecyclate> GetRecyclates(int? locationID);
+        IEnumerable<GoodsReceiptPendingRecyclateDetail> GetPendingRecyclateDetails(int? locationID, int? goodsReceiptID, int? recyclateID, string recyclatePackageIDs);
+
 
         IEnumerable<GoodsReceiptPendingMaterialIssueDetail> GetPendingMaterialIssueDetails(int? locationID, int? goodsReceiptID, string materialIssueDetailIDs, bool isReadonly);
 

@@ -71,6 +71,11 @@ function handleOKEvent(goodsReceiptGridDataSource, pendingGoodsArrivalPackageGri
         dataRow.FirmOrderSpecs = null;        
 
 
+        dataRow.RecyclateID = null;
+        dataRow.RecyclatePackageID = null;
+        dataRow.RecyclateEntryDate = null;
+
+
         dataRow.PurchaseRequisitionID = null;
         dataRow.PurchaseRequisitionDetailID = null;
         dataRow.PurchaseRequisitionCode = null;

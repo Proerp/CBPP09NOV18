@@ -86,6 +86,14 @@ namespace TotalDTO.Inventories
         [Display(Name = "Ngày KHSX")]
         Nullable<System.DateTime> PlannedOrderEntryDate { get; set; }
 
+        
+        Nullable<int> RecyclateID { get; set; }
+        [Display(Name = "Phiếu giao phế phẩm")]
+        string RecyclateReference { get; set; }
+        [Display(Name = "Ngày giao")]
+        Nullable<System.DateTime> RecyclateEntryDate { get; set; }
+
+
         Nullable<int> WarehouseAdjustmentID { get; set; }
 
         [Display(Name = "Số đơn hàng")]
@@ -170,6 +178,16 @@ namespace TotalDTO.Inventories
         public string PlannedOrderCode { get; set; }
         [Display(Name = "Ngày đóng gói")]
         public Nullable<System.DateTime> PlannedOrderEntryDate { get; set; }
+
+
+
+        public Nullable<int> RecyclateID { get; set; }
+        [Display(Name = "Phiếu giao phế phẩm")]
+        public string RecyclateReference { get; set; }
+        [Display(Name = "Ngày giao")]
+        public Nullable<System.DateTime> RecyclateEntryDate { get; set; }
+
+
 
         public Nullable<int> WarehouseAdjustmentID { get; set; }
 
@@ -300,6 +318,8 @@ namespace TotalDTO.Inventories
                         return "Kho xuất: " + WarehouseIssue.Name + ", Phiếu VCNB: " + this.WarehouseTransferReferenceNote + (this.WarehouseTransferEntryDate != null ? " Ngày: " + this.WarehouseTransferEntryDate.ToString() : "");
                     case (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct:
                         return this.PlannedOrderReference + (this.PlannedOrderCode != null ? " [" + this.PlannedOrderCode + "] " : "") + (this.PlannedOrderEntryDate != null ? " Ngày: " + this.PlannedOrderEntryDate.ToString() : "");
+                    case (int)GlobalEnums.GoodsReceiptTypeID.Recyclate:
+                        return this.RecyclateReference + (this.RecyclateEntryDate != null ? " Ngày: " + this.RecyclateEntryDate.ToString() : "");
                     case (int)GlobalEnums.GoodsReceiptTypeID.WarehouseAdjustments:
                         return "[OTHER ADJUSTMENT]";
                     default:

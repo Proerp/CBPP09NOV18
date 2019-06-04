@@ -61,6 +61,11 @@
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderReference)
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderEntryDate)
 
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).RecyclateID)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).RecyclateReference)
+    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).RecyclateEntryDate)
+    
+    
     @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).WarehouseAdjustmentID)
 
     @Html.HiddenFor(model => model.Customer.CustomerID);
@@ -143,8 +148,14 @@
                 .Content(@<text>
                     @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetPlannedOrderCustomer.cshtml")
                 </text>);
+
+            tabStrip.Add().Text("Thu hồi phế phẩm")
+                .Visible(Model.IsMaterial)
+                .Content(@<text>
+                    @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetRecyclate.cshtml")
+                </text>);
         })
-    )
+)
 
 
 
@@ -251,6 +262,9 @@
                 case "Tổng hợp theo KH":
                     selectedGrid = $("#goodsReceiptPendingPlannedOrderCustomerGrid").data("kendoGrid");
                     break;
+                case "Thu hồi phế phẩm":
+                    selectedGrid = $("#goodsReceiptPendingRecyclateGrid").data("kendoGrid");
+                    break;
                 default:
                     return false;
             }
@@ -307,6 +321,12 @@
                 $("#PlannedOrderCode").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderCode === undefined ? null : selectedDataItem.PlannedOrderCode);
                 $("#PlannedOrderReference").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderReference === undefined ? null : selectedDataItem.PlannedOrderReference);
                 $("#PlannedOrderEntryDate").val(selectedDataItem === undefined || selectedDataItem.PlannedOrderEntryDate === undefined ? null : kendo.toString(selectedDataItem.PlannedOrderEntryDate, Settings.DateTimeFormat));
+
+
+                $("#RecyclateID").val(selectedDataItem === undefined || selectedDataItem.RecyclateID === undefined ? null : selectedDataItem.RecyclateID);
+                $("#RecyclateReference").val(selectedDataItem === undefined || selectedDataItem.RecyclateReference === undefined ? null : selectedDataItem.RecyclateReference);
+                $("#RecyclateEntryDate").val(selectedDataItem === undefined || selectedDataItem.RecyclateEntryDate === undefined ? null : kendo.toString(selectedDataItem.RecyclateEntryDate, Settings.DateTimeFormat));
+
 
                 $("#PurchaseRequisitionID").val(selectedDataItem === undefined || selectedDataItem.PurchaseRequisitionID === undefined ? null : selectedDataItem.PurchaseRequisitionID);
                 $("#PurchaseRequisitionCode").val(selectedDataItem === undefined || selectedDataItem.PurchaseRequisitionCode === undefined ? null : selectedDataItem.PurchaseRequisitionCode);

@@ -192,19 +192,46 @@
                         </div>
                     </div>
 
-                        if (Model.PlannedOrderEntryDate != null)
-                        {
-                            <div class="form-group">
-                                @Html.LabelFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderEntryDate)
-                                <div class="div-input">
-                                    @Html.Kendo().DateTimePickerFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
-                                </div>
-                                <div class="div-validation-message">
-                                    @Html.ValidationMessageFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderEntryDate, "", new { @class = "text-danger" })
-                                </div>
+                    if (Model.PlannedOrderEntryDate != null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderEntryDate)
+                            <div class="div-input">
+                                @Html.Kendo().DateTimePickerFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                             </div>
-                        }
+                            <div class="div-validation-message">
+                                @Html.ValidationMessageFor(model => (model as IGoodsReceiptPrimitiveDTO).PlannedOrderEntryDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
                     break;
+
+                case (int)GlobalEnums.GoodsReceiptTypeID.Recyclate:
+                    @Html.HiddenFor(model => (model as IGoodsReceiptPrimitiveDTO).RecyclateID)
+                    <div class="form-group">
+                        @Html.LabelFor(model => (model as IGoodsReceiptPrimitiveDTO).RecyclateReference)
+                        <div class="div-input">
+                            @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsReceiptPrimitiveDTO).RecyclateReference).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                        </div>
+                        <div class="div-validation-message">
+                            @Html.ValidationMessageFor(model => (model as IGoodsReceiptPrimitiveDTO).RecyclateReference, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    if (Model.RecyclateEntryDate != null)
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(model => (model as IGoodsReceiptPrimitiveDTO).RecyclateEntryDate)
+                            <div class="div-input">
+                                @Html.Kendo().DateTimePickerFor(model => (model as IGoodsReceiptPrimitiveDTO).RecyclateEntryDate).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                            </div>
+                            <div class="div-validation-message">
+                                @Html.ValidationMessageFor(model => (model as IGoodsReceiptPrimitiveDTO).RecyclateEntryDate, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    }
+                    break;
+                
                 default:
                     <div class="form-group">
                         @Html.LabelFor(model => (model as IGoodsReceiptPrimitiveDTO).Code)
@@ -232,7 +259,7 @@
             }
             else
             {
-                @Html.EditorFor(model => (model as IGoodsReceiptDTO).Customer, new { CustomerDescriptionHidden = "true", CustomerTelephoneHidden = "true", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), NullCustomer = (Model.CustomerID > 0 ? null : (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival ? (Model.Purposes != null ? Model.Purposes: "Nhập kho chung nhiều đơn hàng") : "")), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
+                @Html.EditorFor(model => (model as IGoodsReceiptDTO).Customer, new { CustomerDescriptionHidden = "true", CustomerTelephoneHidden = "true", CustomerDisplayName = @Model.Customer.GetDisplayName(m => m.CustomerID), NullCustomer = (Model.CustomerID > 0 ? null : (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival ? (Model.Purposes != null ? Model.Purposes: "Nhập kho chung nhiều đơn hàng") : (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.Recyclate ? "Thu hồi phế phẩm" : ""))), CustomerInfo = (Model.CustomerID > 0 ? null : "#") })
             }
 
             @Html.Partial("~/Views/Helpers/Commons/_Warehouse2019.cshtml")
@@ -328,6 +355,12 @@
                     columns.Bound(p => p.FinishedProductPackageID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= (FinishedProductPackageID == null)? '' : FinishedProductPackageID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedProductPackageID' value='#= (FinishedProductPackageID == null) ? '' : FinishedProductPackageID #' />");
 
+                    columns.Bound(p => p.RecyclateID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (RecyclateID == null)? '' : RecyclateID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].RecyclateID' value='#= (RecyclateID == null) ? '' : RecyclateID #' />");
+                    columns.Bound(p => p.RecyclatePackageID).DisplayNameTitle().Hidden()
+                        .ClientTemplate("#= (RecyclatePackageID == null)? '' : RecyclatePackageID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].RecyclatePackageID' value='#= (RecyclatePackageID == null) ? '' : RecyclatePackageID #' />");
+
+                    
                     columns.Bound(p => p.FirmOrderReference).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? false : true)
                         .ClientTemplate("#= (FirmOrderReference == null)? '' : FirmOrderReference #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FirmOrderReference' value='#= (FirmOrderReference == null) ? '' : FirmOrderReference #' />");
                     columns.Bound(p => p.FirmOrderCode).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? false : true)
@@ -348,6 +381,10 @@
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (FinishedProductEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProductEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedProductEntryDate' value='#= (FinishedProductEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProductEntryDate) #' />");
 
+
+                    columns.Bound(p => p.RecyclateEntryDate).DisplayNameTitle().Width(80).Hidden()
+                        .Format("{0:" + @Settings.DateFormat + "}")
+                        .ClientTemplate("#= (RecyclateEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', RecyclateEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].RecyclateEntryDate' value='#= (RecyclateEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', RecyclateEntryDate) #' />");
                     
                     
                     columns.Bound(p => p.MaterialIssueID).DisplayNameTitle().Hidden()
@@ -366,7 +403,7 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(180).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? "StringReadonly" : "AutoCompletes/CommodityAvailable")                        
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(180).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.Recyclate ? "StringReadonly" : "AutoCompletes/CommodityAvailable")                        
                         .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
 
@@ -474,6 +511,12 @@
                                 case (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct:
                                     toolbar.Template(@<text>
                                         <button type="button" class="k-button" onclick="GetPendingPlannedOrderDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng </button>
+                                        <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Nhập kho toàn bộ </button>
+                                    </text>);
+                                    break;
+                                case (int)GlobalEnums.GoodsReceiptTypeID.Recyclate:
+                                    toolbar.Template(@<text>
+                                        <button type="button" class="k-button" onclick="GetPendingRecyclateDetails()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Chọn mặt hàng </button>
                                         <button type="button" class="k-button" onclick="copyRemainsToQuantity()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Nhập kho toàn bộ </button>
                                     </text>);
                                     break;
@@ -627,6 +670,13 @@
         require(["kpopupWindow"], function (kpopupWindow) {
             var createWizardWindow = new kpopupWindow();
             createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingPlannedOrderDetails", Model.ControllerName, new { area = "Inventories" })", "Chọn mặt hàng ", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
+        });
+    }
+
+    function GetPendingRecyclateDetails() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("GetPendingRecyclateDetails", Model.ControllerName, new { area = "Inventories" })", "Chọn mặt hàng ", "@Settings.PopupWidthLarge", "@Settings.PopupHeightWithTab");
         });
     }
 </script>

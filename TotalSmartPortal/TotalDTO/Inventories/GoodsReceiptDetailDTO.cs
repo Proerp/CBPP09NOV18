@@ -86,6 +86,9 @@ namespace TotalDTO.Inventories
         public Nullable<int> FinishedProductID { get; set; }
         public Nullable<int> FinishedProductPackageID { get; set; }
 
+        public Nullable<int> RecyclateID { get; set; }
+        public Nullable<int> RecyclatePackageID { get; set; }
+
         [Display(Name = "KHSX")]
         [UIHint("StringReadonly")]
         public string FirmOrderReference { get; set; }
@@ -110,6 +113,9 @@ namespace TotalDTO.Inventories
         [UIHint("DateTimeReadonly")]
         public Nullable<System.DateTime> FinishedProductEntryDate { get; set; }
 
+        [Display(Name = "Ngày BG")]
+        [UIHint("DateTimeReadonly")]
+        public Nullable<System.DateTime> RecyclateEntryDate { get; set; }
 
         public Nullable<int> MaterialIssueID { get; set; }
         public Nullable<int> MaterialIssueDetailID { get; set; }

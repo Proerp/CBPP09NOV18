@@ -90,6 +90,12 @@ namespace TotalPortal.Areas.Inventories.Controllers
             return View("../GoodsReceipts/GetPendingPlannedOrderDetails", this.InitViewModel(new TViewDetailViewModel()));
         }
 
+        public virtual ActionResult GetPendingRecyclateDetails()
+        {
+            this.AddRequireJsOptions();
+            return View("../GoodsReceipts/GetPendingRecyclateDetails", this.InitViewModel(new TViewDetailViewModel()));
+        }
+
 
         protected override TViewDetailViewModel InitViewModelByDefault(TViewDetailViewModel simpleViewModel)
         {

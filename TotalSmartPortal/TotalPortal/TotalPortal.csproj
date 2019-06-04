@@ -1958,6 +1958,8 @@
     <Content Include="Areas\Productions\Views\FinishedItemRecyclates\Edit.cshtml" />
     <Content Include="Areas\Productions\Views\FinishedItemRecyclates\Index.cshtml" />
     <Content Include="Areas\Productions\Views\FinishedItemRecyclates\Print.cshtml" />
+    <Content Include="Areas\Inventories\Views\GoodsReceipts\GetPendingRecyclateDetails.cshtml" />
+    <Content Include="Areas\Inventories\Views\GoodsReceipts\_GetRecyclate.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -2055,6 +2057,7 @@
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingPlannedItemDetail.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingPlannedOrderDetail.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingPurchaseRequisitionDetail.js" />
+    <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingRecyclateDetail.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\AddPendingWarehouseTransferDetail.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\Approve.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsReceipts\CreateWizard.js" />

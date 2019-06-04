@@ -76,5 +76,8 @@ namespace TotalModel.Models
         public string CustomerCode { get; set; }
         public decimal UnitWeight { get; set; }
         public decimal TareWeight { get; set; }
+        public Nullable<int> RecyclatePackageID { get; set; }
+        public Nullable<int> RecyclateID { get; set; }
+        public Nullable<System.DateTime> RecyclateEntryDate { get; set; }
     }
 }

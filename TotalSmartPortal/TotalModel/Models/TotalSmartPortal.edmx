@@ -17442,7 +17442,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="RecyclatePackageIDs" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetGoodsReceiptPendingRecyclates" ReturnType="Collection(TotalSmartPortalModel.GoodsReceiptPendingRecyclate)">
-            <Parameter Name="LocationID" Mode="In" Type="Int32" />
+          <Parameter Name="LocationID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -21514,7 +21514,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
           <Property Type="Int32" Name="CommodityTypeID" Nullable="false" />
-          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="26" Scale="2" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="27" Scale="2" />
           <Property Type="Decimal" Name="Quantity" Nullable="false" Precision="18" Scale="2" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
           <Property Type="Int32" Name="MaterialIssueDetailID" Nullable="true" />
@@ -21557,6 +21557,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="CustomerCode" Nullable="true" MaxLength="50" />
           <Property Type="Decimal" Name="UnitWeight" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="TareWeight" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="RecyclatePackageID" Nullable="true" />
+          <Property Type="Int32" Name="RecyclateID" Nullable="true" />
+          <Property Type="DateTime" Name="RecyclateEntryDate" Nullable="true" Precision="23" />
         </ComplexType>
         <EntityType Name="ModuleDetail">
           <Key>
@@ -31666,6 +31669,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="CustomerCode" ColumnName="CustomerCode" />
                 <ScalarProperty Name="UnitWeight" ColumnName="UnitWeight" />
                 <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
+                <ScalarProperty Name="RecyclatePackageID" ColumnName="RecyclatePackageID" />
+                <ScalarProperty Name="RecyclateID" ColumnName="RecyclateID" />
+                <ScalarProperty Name="RecyclateEntryDate" ColumnName="RecyclateEntryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

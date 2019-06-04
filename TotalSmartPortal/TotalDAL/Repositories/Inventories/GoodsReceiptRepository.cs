@@ -194,6 +194,30 @@ namespace TotalDAL.Repositories.Inventories
         }
 
 
+
+
+
+        public IEnumerable<GoodsReceiptPendingRecyclate> GetRecyclates(int? locationID)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            IEnumerable<GoodsReceiptPendingRecyclate> pendingRecyclates = base.TotalSmartPortalEntities.GetGoodsReceiptPendingRecyclates(locationID).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return pendingRecyclates;
+        }
+
+        public IEnumerable<GoodsReceiptPendingRecyclateDetail> GetPendingRecyclateDetails(int? locationID, int? goodsReceiptID, int? recyclateID, string recyclatePackageIDs)
+        {
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
+            IEnumerable<GoodsReceiptPendingRecyclateDetail> pendingRecyclateDetails = base.TotalSmartPortalEntities.GetGoodsReceiptPendingRecyclateDetails(locationID, goodsReceiptID, recyclateID, recyclatePackageIDs).ToList();
+            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
+
+            return pendingRecyclateDetails;
+        }
+
+
+
+
         public IEnumerable<GoodsReceiptPendingMaterialIssueDetail> GetPendingMaterialIssueDetails(int? locationID, int? goodsReceiptID, string materialIssueDetailIDs, bool isReadonly)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
