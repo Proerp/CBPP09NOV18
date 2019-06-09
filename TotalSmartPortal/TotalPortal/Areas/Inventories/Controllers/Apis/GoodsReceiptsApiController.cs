@@ -126,11 +126,13 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
 
         #region HELPER API
         [HttpGet]
-        [Route("GetBarcodeAvailables/{barcode}")]
+        [Route("GetBarcodeAvailables/{barcode}/0")]
         public BarcodeAvailableSummary GetBarcodeAvailables(string barcode)
         {
             IEnumerable<GoodsReceiptBarcodeAvailable> barcodeAvailables = this.goodsReceiptAPIRepository.GetGoodsReceiptBarcodeAvailables(barcode);
-            return new BarcodeAvailableSummary() { Reference = barcodeAvailables.Min(p => p.GoodsReceiptReference), EntryDate = barcodeAvailables.Min(p => p.GoodsReceiptEntryDate), BatchEntryDate = barcodeAvailables.Min(p => p.BatchEntryDate), ExpiryDate = barcodeAvailables.Min(p => p.ExpiryDate), BatchCode = barcodeAvailables.Min(p => p.BatchCode), LabCode = barcodeAvailables.Min(p => p.LabCode), Barcode = barcodeAvailables.Min(p => p.Barcode), CommodityCode = barcodeAvailables.Min(p => p.CommodityCode), BinLocationCode = barcodeAvailables.Min(p => p.BinLocationCode) + (barcodeAvailables.Count() > 1 ? "***(" + barcodeAvailables.Count().ToString("N0") + ")" : ""), UnitWeight = barcodeAvailables.Min(p => p.UnitWeight), TareWeight = barcodeAvailables.Min(p => p.TareWeight), QuantityAvailables = barcodeAvailables.Min(p => p.QuantityAvailables), Approved = barcodeAvailables.Min(p => p.Approved), LabApproved = barcodeAvailables.Min(p => p.LabApproved), LabHold = barcodeAvailables.Min(p => p.LabHold), LabInActive = barcodeAvailables.Min(p => p.LabInActive), LabInActiveCode = barcodeAvailables.Min(p => p.LabInActiveCode) };
+            if (barcodeAvailables.Count() > 0)
+                return new BarcodeAvailableSummary() { Reference = barcodeAvailables.Min(p => p.GoodsReceiptReference), EntryDate = barcodeAvailables.Min(p => p.GoodsReceiptEntryDate), BatchEntryDate = barcodeAvailables.Min(p => p.BatchEntryDate), ExpiryDate = barcodeAvailables.Min(p => p.ExpiryDate), BatchCode = barcodeAvailables.Min(p => p.BatchCode), LabCode = barcodeAvailables.Min(p => p.LabCode), Barcode = barcodeAvailables.Min(p => p.Barcode), CommodityCode = barcodeAvailables.Min(p => p.CommodityCode), BinLocationCode = barcodeAvailables.Min(p => p.BinLocationCode) + (barcodeAvailables.Count() > 1 ? "***(" + barcodeAvailables.Count().ToString("N0") + ")" : ""), UnitWeight = barcodeAvailables.Min(p => p.UnitWeight), TareWeight = barcodeAvailables.Min(p => p.TareWeight), QuantityAvailables = barcodeAvailables.Min(p => p.QuantityAvailables), Approved = barcodeAvailables.Min(p => p.Approved), LabApproved = barcodeAvailables.Min(p => p.LabApproved), LabHold = barcodeAvailables.Min(p => p.LabHold), LabInActive = barcodeAvailables.Min(p => p.LabInActive), LabInActiveCode = barcodeAvailables.Min(p => p.LabInActiveCode) };
+            else return new BarcodeAvailableSummary();
         }
 
         public class BarcodeAvailableSummary
