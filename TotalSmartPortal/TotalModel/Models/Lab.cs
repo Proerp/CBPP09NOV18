@@ -19,8 +19,8 @@ namespace TotalModel.Models
         {
             this.GoodsArrivalDetails = new HashSet<GoodsArrivalDetail>();
             this.GoodsArrivalPackages = new HashSet<GoodsArrivalPackage>();
-            this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
             this.MaterialIssueDetails = new HashSet<MaterialIssueDetail>();
+            this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
         }
     
         public int LabID { get; set; }
@@ -55,12 +55,12 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsArrivalPackage> GoodsArrivalPackages { get; set; }
         public virtual GoodsArrival GoodsArrival { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
         public virtual Location Location { get; set; }
         public virtual OrganizationalUnit OrganizationalUnit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialIssueDetail> MaterialIssueDetails { get; set; }
         public virtual VoidType VoidType { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
     }
 }

@@ -392,7 +392,7 @@
         protected override string QueryWhere()
         {
             string queryString = base.QueryWhere() + "\r\n";
-            queryString = queryString + "   AND     NmvnTaskID = @NmvnTaskID " + "\r\n";
+            queryString = queryString + "   AND     NmvnTaskID = @NmvnTaskID        AND     WarehouseAdjustmentID IS NULL       AND     (WarehouseTransferID IS NULL OR OneStep = 0)" + "\r\n";
             return queryString;
         }
     }

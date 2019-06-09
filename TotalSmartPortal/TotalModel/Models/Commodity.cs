@@ -28,7 +28,6 @@ namespace TotalModel.Models
             this.GoodsArrivalDetails = new HashSet<GoodsArrivalDetail>();
             this.GoodsArrivalPackages = new HashSet<GoodsArrivalPackage>();
             this.GoodsIssueDetails = new HashSet<GoodsIssueDetail>();
-            this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
             this.MaterialIssueDetails = new HashSet<MaterialIssueDetail>();
             this.PackageIssueDetails = new HashSet<PackageIssueDetail>();
             this.PackageIssues = new HashSet<PackageIssue>();
@@ -50,6 +49,7 @@ namespace TotalModel.Models
             this.RecyclateDetails = new HashSet<RecyclateDetail>();
             this.RecyclateDetails1 = new HashSet<RecyclateDetail>();
             this.Commodities1 = new HashSet<Commodity>();
+            this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
         }
     
         public int CommodityID { get; set; }
@@ -122,8 +122,6 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsIssueDetail> GoodsIssueDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialIssueDetail> MaterialIssueDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PackageIssueDetail> PackageIssueDetails { get; set; }
@@ -166,5 +164,7 @@ namespace TotalModel.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Commodity> Commodities1 { get; set; }
         public virtual Commodity Commodity1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
     }
 }

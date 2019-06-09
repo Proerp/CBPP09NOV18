@@ -311,21 +311,10 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_PurchaseOrderDetails_PurchaseOrders" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PurchaseOrderDetails_VoidTypes" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PurchaseOrders_VoidTypes" />
-        <EntityTypeShape EntityType="TotalSmartPortalModel.GoodsReceiptDetail" Width="1.5" PointX="64.625" PointY="21.375" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_MaterialIssueDetails" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_PurchaseRequisitionDetails" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_WarehouseAdjustmentDetails" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Warehouses" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_GoodsReceiptDetails" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_GoodsReceiptDetails" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedProducts_GoodsReceiptDetails" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_GoodsReceiptDetails" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.GoodsArrivalPackage" Width="1.5" PointX="55" PointY="40.5" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalPackages_GoodsArrivals" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalPackages_PurchaseOrderDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalPackages_VoidTypes" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalPackages" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.BlendingInstructionDetail" Width="1.5" PointX="23.5" PointY="42.875" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.BlendingInstruction" Width="1.5" PointX="21.25" PointY="13.625" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_BlendingInstructionDetails_BlendingInstructions" />
@@ -342,17 +331,12 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProductDetails_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProductPackages_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedProductPackages_Workshifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedProductPackages" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.WarehouseTransferDetail" Width="1.5" PointX="66.875" PointY="29.625" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_BinLocations" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_WarehouseTransferDetails" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_GoodsReceiptDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_Shifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_TransferOrderDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_TransferOrders" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_Workshifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Shifts" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Workshifts" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.PackageIssue" Width="1.5" PointX="47.625" PointY="11.125" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.WarehouseTransfer" Width="1.5" PointX="51.875" PointY="11.875" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" />
@@ -378,7 +362,6 @@
         <EntityTypeShape EntityType="TotalSmartPortalModel.User" Width="1.5" PointX="45.375" PointY="13.875" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceipts_Customers" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceipts_GoodsArrivals" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsReceipts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceipts_Locations" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceipts_PlannedOrders" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceipts_PurchaseRequisitions" />
@@ -396,7 +379,6 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_Labs" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalPackages_Labs" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_Labs_GoodsArrivals" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Labs" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_Labs_Locations" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_Labs_OrganizationalUnits" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_Labs" />
@@ -418,7 +400,6 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsArrivalPackages_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssueDetails_Commodities" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssues_Commodities" />
@@ -496,7 +477,6 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandoverDetails_FinishedHandovers" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandoverDetails_FinishedItemPackages" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedHandoverDetails_FinishedProductPackages" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedItemPackages" />
         <EntityTypeShape EntityType="TotalSmartPortalModel.FinishedItemDetail" Width="1.5" PointX="59.5" PointY="36.625" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_Commodities" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItemDetails_FinishedItems" />
@@ -526,9 +506,29 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_RecyclateDetails_Warehouses" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_RecyclateDetails_Workshifts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_FinishedItems_ProductionLines" />
-        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_RecyclatePackages" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceipts_Recyclates" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_Commodities_Commodities" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.GoodsReceiptDetail" Width="1.5" PointX="73.125" PointY="23.25" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_BinLocations" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Commodities" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedItemPackages" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_FinishedProductPackages" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsArrivalPackages" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_GoodsReceipts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Labs" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_MaterialIssueDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_PurchaseRequisitionDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_RecyclatePackages" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Shifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_WarehouseAdjustmentDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Warehouses" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_WarehouseTransferDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsReceiptDetails_Workshifts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_MaterialIssueDetails_GoodsReceiptDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_PackageIssueDetails_GoodsReceiptDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedProducts_GoodsReceiptDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_GoodsReceiptDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_GoodsReceiptDetails" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

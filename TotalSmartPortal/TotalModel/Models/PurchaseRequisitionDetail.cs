@@ -39,8 +39,8 @@ namespace TotalModel.Models
     
         public virtual PurchaseRequisition PurchaseRequisition { get; set; }
         public virtual VoidType VoidType { get; set; }
+        public virtual Commodity Commodity { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
-        public virtual Commodity Commodity { get; set; }
     }
 }

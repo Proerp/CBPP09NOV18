@@ -30,6 +30,8 @@ namespace TotalModel.Models
         public string Reference { get; set; }
         public string Code { get; set; }
         public int NMVNTaskID { get; set; }
+        public int ShiftID { get; set; }
+        public int WorkshiftID { get; set; }
         public int LocationID { get; set; }
         public Nullable<int> LocationIssueID { get; set; }
         public int GoodsReceiptTypeID { get; set; }
@@ -38,8 +40,12 @@ namespace TotalModel.Models
         public Nullable<int> GoodsArrivalID { get; set; }
         public Nullable<int> GoodsArrivalDetailID { get; set; }
         public Nullable<int> GoodsArrivalPackageID { get; set; }
+        public Nullable<int> FinishedItemID { get; set; }
+        public Nullable<int> FinishedItemPackageID { get; set; }
         public Nullable<int> FinishedProductID { get; set; }
         public Nullable<int> FinishedProductPackageID { get; set; }
+        public Nullable<int> RecyclateID { get; set; }
+        public Nullable<int> RecyclatePackageID { get; set; }
         public Nullable<int> MaterialIssueID { get; set; }
         public Nullable<int> MaterialIssueDetailID { get; set; }
         public Nullable<int> WarehouseTransferID { get; set; }
@@ -55,32 +61,35 @@ namespace TotalModel.Models
         public int CommodityTypeID { get; set; }
         public int WarehouseID { get; set; }
         public Nullable<int> WarehouseIssueID { get; set; }
+        public int LabID { get; set; }
         public string SealCode { get; set; }
         public string BatchCode { get; set; }
         public string LabCode { get; set; }
         public string Barcode { get; set; }
+        public Nullable<System.DateTime> ProductionDate { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public decimal UnitWeight { get; set; }
+        public decimal TareWeight { get; set; }
         public decimal Quantity { get; set; }
         public decimal QuantityIssued { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
-        public int LabID { get; set; }
-        public Nullable<System.DateTime> ProductionDate { get; set; }
-        public Nullable<System.DateTime> ExpiryDate { get; set; }
-        public int ShiftID { get; set; }
-        public int WorkshiftID { get; set; }
-        public Nullable<int> FinishedItemID { get; set; }
-        public Nullable<int> FinishedItemPackageID { get; set; }
-        public decimal UnitWeight { get; set; }
-        public decimal TareWeight { get; set; }
-        public Nullable<int> RecyclateID { get; set; }
-        public Nullable<int> RecyclatePackageID { get; set; }
-        public string Referral { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
+        public virtual Commodity Commodity { get; set; }
+        public virtual FinishedItemPackage FinishedItemPackage { get; set; }
+        public virtual FinishedProductPackage FinishedProductPackage { get; set; }
+        public virtual GoodsArrivalPackage GoodsArrivalPackage { get; set; }
+        public virtual GoodsReceipt GoodsReceipt { get; set; }
+        public virtual Lab Lab { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }
         public virtual PurchaseRequisitionDetail PurchaseRequisitionDetail { get; set; }
+        public virtual RecyclatePackage RecyclatePackage { get; set; }
+        public virtual Shift Shift { get; set; }
         public virtual WarehouseAdjustmentDetail WarehouseAdjustmentDetail { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        public virtual WarehouseTransferDetail WarehouseTransferDetail { get; set; }
+        public virtual Workshift Workshift { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MaterialIssueDetail> MaterialIssueDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -89,17 +98,7 @@ namespace TotalModel.Models
         public virtual ICollection<SemifinishedProduct> SemifinishedProducts { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseAdjustmentDetail> WarehouseAdjustmentDetails { get; set; }
-        public virtual GoodsArrivalPackage GoodsArrivalPackage { get; set; }
-        public virtual FinishedProductPackage FinishedProductPackage { get; set; }
-        public virtual WarehouseTransferDetail WarehouseTransferDetail { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseTransferDetail> WarehouseTransferDetails { get; set; }
-        public virtual Shift Shift { get; set; }
-        public virtual Workshift Workshift { get; set; }
-        public virtual GoodsReceipt GoodsReceipt { get; set; }
-        public virtual Lab Lab { get; set; }
-        public virtual Commodity Commodity { get; set; }
-        public virtual FinishedItemPackage FinishedItemPackage { get; set; }
-        public virtual RecyclatePackage RecyclatePackage { get; set; }
     }
 }

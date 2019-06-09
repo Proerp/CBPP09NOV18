@@ -1044,11 +1044,32 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "       BEGIN " + "\r\n";
 
+            queryString = queryString + "           DECLARE @GoodsReceiptTypeID int, @OneStep bit, @AffectedROWCOUNT int ";
+            queryString = queryString + "           SELECT  @GoodsReceiptTypeID = GoodsReceiptTypeID, @OneStep = OneStep FROM GoodsReceipts WHERE GoodsReceiptID = @EntityID ";
+
+
             queryString = queryString + "           IF (@SaveRelativeOption = 1) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
 
+            queryString = queryString + "                   IF (@GoodsReceiptTypeID = " + (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer + " AND @OneStep = 1) " + "\r\n";
+            queryString = queryString + "                       BEGIN  " + "\r\n";
+            queryString = queryString + "                           UPDATE          GoodsReceipts " + "\r\n";
+            queryString = queryString + "                           SET             GoodsReceipts.Reference = WarehouseTransfers.Reference " + "\r\n";
+            queryString = queryString + "                           FROM            GoodsReceipts " + "\r\n";
+            queryString = queryString + "                                           INNER JOIN WarehouseTransfers ON GoodsReceipts.GoodsReceiptID = @EntityID AND GoodsReceipts.WarehouseTransferID = WarehouseTransfers.WarehouseTransferID " + "\r\n";
+            queryString = queryString + "                       END " + "\r\n";
+
+            queryString = queryString + "                   IF (@GoodsReceiptTypeID = " + (int)GlobalEnums.GoodsReceiptTypeID.WarehouseAdjustments + ") " + "\r\n";
+            queryString = queryString + "                       BEGIN  " + "\r\n";
+            queryString = queryString + "                           UPDATE          GoodsReceipts " + "\r\n";
+            queryString = queryString + "                           SET             GoodsReceipts.Reference = WarehouseAdjustments.Reference " + "\r\n";
+            queryString = queryString + "                           FROM            GoodsReceipts " + "\r\n";
+            queryString = queryString + "                                           INNER JOIN WarehouseAdjustments ON GoodsReceipts.GoodsReceiptID = @EntityID AND GoodsReceipts.WarehouseAdjustmentID = WarehouseAdjustments.WarehouseAdjustmentID " + "\r\n";
+            queryString = queryString + "                       END  " + "\r\n";
+
+
             queryString = queryString + "                   UPDATE          GoodsReceiptDetails " + "\r\n";
-            queryString = queryString + "                   SET             GoodsReceiptDetails.Reference = GoodsReceipts.Reference, GoodsReceiptDetails.Referral = GoodsReceipts.Reference " + "\r\n";
+            queryString = queryString + "                   SET             GoodsReceiptDetails.Reference = GoodsReceipts.Reference " + "\r\n";
             queryString = queryString + "                   FROM            GoodsReceipts INNER JOIN GoodsReceiptDetails ON GoodsReceipts.GoodsReceiptID = @EntityID AND GoodsReceipts.GoodsReceiptID = GoodsReceiptDetails.GoodsReceiptID " + "\r\n";
 
             #region UPDATE WorkshiftID
@@ -1069,8 +1090,6 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "               END " + "\r\n";
 
 
-            queryString = queryString + "           DECLARE @GoodsReceiptTypeID int, @AffectedROWCOUNT int ";
-            queryString = queryString + "           SELECT  @GoodsReceiptTypeID = GoodsReceiptTypeID FROM GoodsReceipts WHERE GoodsReceiptID = @EntityID ";
 
             queryString = queryString + "           IF (@GoodsReceiptTypeID > 0) " + "\r\n";
             queryString = queryString + "               BEGIN  " + "\r\n";
@@ -1156,14 +1175,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
 
             queryString = queryString + "                   IF (@GoodsReceiptTypeID = " + (int)GlobalEnums.GoodsReceiptTypeID.WarehouseAdjustments + ") " + "\r\n";
-            queryString = queryString + "                       BEGIN  " + "\r\n";
-
-            queryString = queryString + "                           UPDATE          GoodsReceiptDetails " + "\r\n";
-            queryString = queryString + "                           SET             GoodsReceiptDetails.Referral = WarehouseAdjustmentDetails.Reference " + "\r\n";
-            queryString = queryString + "                           FROM            GoodsReceiptDetails " + "\r\n";
-            queryString = queryString + "                                           INNER JOIN WarehouseAdjustmentDetails ON GoodsReceiptDetails.GoodsReceiptID = @EntityID AND WarehouseAdjustmentDetails.Quantity > 0 AND GoodsReceiptDetails.WarehouseAdjustmentDetailID = WarehouseAdjustmentDetails.WarehouseAdjustmentDetailID " + "\r\n";
-
-
+            queryString = queryString + "                       BEGIN  " + "\r\n";            
             queryString = queryString + "                           UPDATE          WarehouseAdjustmentDetails " + "\r\n";
             queryString = queryString + "                           SET             WarehouseAdjustmentDetails.QuantityReceipted = ROUND(WarehouseAdjustmentDetails.QuantityReceipted + GoodsReceiptDetails.Quantity * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";
             queryString = queryString + "                           FROM            GoodsReceiptDetails " + "\r\n";

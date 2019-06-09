@@ -77,14 +77,14 @@ namespace TotalModel.Models
         public virtual ICollection<SemifinishedProductDetail> SemifinishedProductDetails { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<SemifinishedProduct> SemifinishedProducts { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
-        public virtual GoodsReceiptDetail GoodsReceiptDetail { get; set; }
         public virtual Lab Lab { get; set; }
         public virtual Commodity Commodity { get; set; }
         public virtual BomDetail BomDetail { get; set; }
         public virtual Bom Bom { get; set; }
         public virtual WorkOrderDetail WorkOrderDetail { get; set; }
         public virtual WorkOrder WorkOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
+        public virtual GoodsReceiptDetail GoodsReceiptDetail { get; set; }
     }
 }
