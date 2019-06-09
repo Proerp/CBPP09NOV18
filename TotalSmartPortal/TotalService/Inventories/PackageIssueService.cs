@@ -27,7 +27,7 @@ namespace TotalService.Inventories
 
         public override bool Save(PackageIssueDTO packageIssueDTO)
         {
-            packageIssueDTO.PackageIssueViewDetails.RemoveAll(x => x.Quantity == 0);
+            packageIssueDTO.ViewDetails.RemoveAll(x => x.Quantity == 0);
             return base.Save(packageIssueDTO);
         }
 

@@ -45,6 +45,13 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             {
                 simpleViewModel.Reference = this.packageIssueAPIRepository.GetReference(simpleViewModel.PackageIssueID);
             }
+
+            simpleViewModel.ViewDetails.ForEach(e =>
+                {
+                    e.Base64Image1 = null;
+                    e.Base64Image2 = null;
+                });
+
             base.ReloadAfterSave(simpleViewModel);
         }
 

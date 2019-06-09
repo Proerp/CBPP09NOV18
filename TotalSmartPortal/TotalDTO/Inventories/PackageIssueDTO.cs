@@ -65,7 +65,7 @@ namespace TotalDTO.Inventories
     {
         public PackageIssueDTO()
         {
-            this.PackageIssueViewDetails = new List<PackageIssueDetailDTO>();
+            this.ViewDetails = new List<PackageIssueDetailDTO>();
             if (GlobalEnums.CBPP) { this.ProductionLine = new ProductionLineBaseDTO() { ProductionLineID = 10, Code = "UNKNOWN", Name = "UNKNOWN" }; this.Storekeeper = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; this.CrucialWorker = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; }
         }
 
@@ -94,11 +94,10 @@ namespace TotalDTO.Inventories
         [UIHint("AutoCompletes/EmployeeBase")]
         public EmployeeBaseDTO CrucialWorker { get; set; }
 
-        public List<PackageIssueDetailDTO> PackageIssueViewDetails { get; set; }
-        public List<PackageIssueDetailDTO> ViewDetails { get { return this.PackageIssueViewDetails; } set { this.PackageIssueViewDetails = value; } }
+        public List<PackageIssueDetailDTO> ViewDetails { get; set; }
 
-        public ICollection<PackageIssueDetailDTO> GetDetails() { return this.PackageIssueViewDetails; }
+        public ICollection<PackageIssueDetailDTO> GetDetails() { return this.ViewDetails; }
 
-        protected override IEnumerable<PackageIssueDetailDTO> DtoDetails() { return this.PackageIssueViewDetails; }
+        protected override IEnumerable<PackageIssueDetailDTO> DtoDetails() { return this.ViewDetails; }
     }
 }
