@@ -31,7 +31,7 @@ namespace TotalService.Inventories
 
         public override bool Save(TDto dto)
         {
-            dto.WarehouseTransferViewDetails.RemoveAll(x => x.Quantity == 0);
+            dto.ViewDetails.RemoveAll(x => x.Quantity == 0);
             return base.Save(dto);
         }
 

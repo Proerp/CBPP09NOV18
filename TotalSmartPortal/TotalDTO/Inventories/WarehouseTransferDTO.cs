@@ -103,7 +103,6 @@ namespace TotalDTO.Inventories
         [UIHint("AutoCompletes/EmployeeBase")]
         EmployeeBaseDTO Storekeeper { get; set; }
 
-        List<WarehouseTransferDetailDTO> WarehouseTransferViewDetails { get; set; }
         List<WarehouseTransferDetailDTO> ViewDetails { get; set; }
 
         [UIHint("AutoCompletes/VoidType")]
@@ -127,7 +126,7 @@ namespace TotalDTO.Inventories
     {
         public WarehouseTransferDTO()
         {
-            this.WarehouseTransferViewDetails = new List<WarehouseTransferDetailDTO>();
+            this.ViewDetails = new List<WarehouseTransferDetailDTO>();
 
             this.OneStep = GlobalEnums.CBPP;
             if (GlobalEnums.CBPP) { this.Storekeeper = new EmployeeBaseDTO() { EmployeeID = 1, PreparedPersonID = 1, Name = "NONAME" }; }
@@ -158,12 +157,11 @@ namespace TotalDTO.Inventories
         public string UserLastName { get; set; }
 
 
-        public List<WarehouseTransferDetailDTO> WarehouseTransferViewDetails { get; set; }
-        public List<WarehouseTransferDetailDTO> ViewDetails { get { return this.WarehouseTransferViewDetails; } set { this.WarehouseTransferViewDetails = value; } }
+        public List<WarehouseTransferDetailDTO> ViewDetails { get; set; }
 
-        public ICollection<WarehouseTransferDetailDTO> GetDetails() { return this.WarehouseTransferViewDetails; }
+        public ICollection<WarehouseTransferDetailDTO> GetDetails() { return this.ViewDetails; }
 
-        protected override IEnumerable<WarehouseTransferDetailDTO> DtoDetails() { return this.WarehouseTransferViewDetails; }
+        protected override IEnumerable<WarehouseTransferDetailDTO> DtoDetails() { return this.ViewDetails; }
 
 
         [Display(Name = "Lệnh VCNB")]
