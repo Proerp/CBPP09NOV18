@@ -219,7 +219,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         private void PackageIssueSaveRelative()
         {
             string queryString = " @EntityID int, @SaveRelativeOption int " + "\r\n"; //SaveRelativeOption: 1: Update, -1:Undo
-            //queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
             queryString = queryString + "       BEGIN  " + "\r\n";
@@ -231,6 +231,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             //SHOULD CHANGE!!!
             queryString = queryString + "                   UPDATE          PackageIssues        SET EntryDate = GetDate() WHERE PackageIssueID = @EntityID " + "\r\n";
+            queryString = queryString + "                   UPDATE          PackageIssueDetails " + "\r\n";
+            queryString = queryString + "                   SET             PackageIssueDetails.Reference = PackageIssues.Reference, PackageIssueDetails.EntryDate = PackageIssues.EntryDate " + "\r\n";
+            queryString = queryString + "                   FROM            PackageIssues INNER JOIN PackageIssueDetails ON PackageIssues.PackageIssueID = @EntityID AND PackageIssues.PackageIssueID = PackageIssueDetails.PackageIssueID " + "\r\n";
 
             #region UPDATE WorkshiftID
             queryString = queryString + "                   DECLARE         @EntryDate Datetime, @ShiftID int, @WorkshiftID int " + "\r\n";

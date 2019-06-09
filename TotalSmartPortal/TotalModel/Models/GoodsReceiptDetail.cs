@@ -74,6 +74,7 @@ namespace TotalModel.Models
         public decimal TareWeight { get; set; }
         public Nullable<int> RecyclateID { get; set; }
         public Nullable<int> RecyclatePackageID { get; set; }
+        public string Referral { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
         public virtual MaterialIssueDetail MaterialIssueDetail { get; set; }

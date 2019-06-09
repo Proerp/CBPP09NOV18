@@ -1048,7 +1048,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "               BEGIN " + "\r\n";
 
             queryString = queryString + "                   UPDATE          GoodsReceiptDetails " + "\r\n";
-            queryString = queryString + "                   SET             GoodsReceiptDetails.Reference = GoodsReceipts.Reference " + "\r\n";
+            queryString = queryString + "                   SET             GoodsReceiptDetails.Reference = GoodsReceipts.Reference, GoodsReceiptDetails.Referral = GoodsReceipts.Reference " + "\r\n";
             queryString = queryString + "                   FROM            GoodsReceipts INNER JOIN GoodsReceiptDetails ON GoodsReceipts.GoodsReceiptID = @EntityID AND GoodsReceipts.GoodsReceiptID = GoodsReceiptDetails.GoodsReceiptID " + "\r\n";
 
             #region UPDATE WorkshiftID
@@ -1157,6 +1157,13 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "                   IF (@GoodsReceiptTypeID = " + (int)GlobalEnums.GoodsReceiptTypeID.WarehouseAdjustments + ") " + "\r\n";
             queryString = queryString + "                       BEGIN  " + "\r\n";
+
+            queryString = queryString + "                           UPDATE          GoodsReceiptDetails " + "\r\n";
+            queryString = queryString + "                           SET             GoodsReceiptDetails.Referral = WarehouseAdjustmentDetails.Reference " + "\r\n";
+            queryString = queryString + "                           FROM            GoodsReceiptDetails " + "\r\n";
+            queryString = queryString + "                                           INNER JOIN WarehouseAdjustmentDetails ON GoodsReceiptDetails.GoodsReceiptID = @EntityID AND WarehouseAdjustmentDetails.Quantity > 0 AND GoodsReceiptDetails.WarehouseAdjustmentDetailID = WarehouseAdjustmentDetails.WarehouseAdjustmentDetailID " + "\r\n";
+
+
             queryString = queryString + "                           UPDATE          WarehouseAdjustmentDetails " + "\r\n";
             queryString = queryString + "                           SET             WarehouseAdjustmentDetails.QuantityReceipted = ROUND(WarehouseAdjustmentDetails.QuantityReceipted + GoodsReceiptDetails.Quantity * @SaveRelativeOption, " + (int)GlobalEnums.rndQuantity + ") " + "\r\n";
             queryString = queryString + "                           FROM            GoodsReceiptDetails " + "\r\n";

@@ -64,6 +64,7 @@ namespace TotalModel.Models
         public int BomDetailID { get; set; }
         public int WorkOrderID { get; set; }
         public int WorkOrderDetailID { get; set; }
+        public string Reference { get; set; }
     
         public virtual Customer Customer { get; set; }
         public virtual FirmOrderMaterial FirmOrderMaterial { get; set; }

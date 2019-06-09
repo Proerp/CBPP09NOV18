@@ -1298,6 +1298,7 @@
           <Property Name="GoodsReceiptID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
+          <Property Name="Referral" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="ShiftID" Type="int" Nullable="false" />
@@ -1496,6 +1497,7 @@
           <Property Name="MaterialIssueDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaterialIssueID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="LocationID" Type="int" Nullable="false" />
@@ -1675,6 +1677,7 @@
           <Property Name="PackageIssueDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="PackageIssueID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="ShiftID" Type="int" Nullable="false" />
           <Property Name="WorkshiftID" Type="int" Nullable="false" />
@@ -2799,6 +2802,7 @@
           <Property Name="WarehouseTransferDetailID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="WarehouseTransferID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="NMVNTaskID" Type="int" Nullable="false" />
           <Property Name="ShiftID" Type="int" Nullable="false" />
           <Property Name="WorkshiftID" Type="int" Nullable="false" />
@@ -20594,6 +20598,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="WorkOrderDetailID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="WorkOrderDetail" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrderDetails" FromRole="MaterialIssueDetail" ToRole="WorkOrderDetail" />
           <NavigationProperty Name="WorkOrder" Relationship="TotalSmartPortalModel.FK_MaterialIssueDetails_WorkOrders" FromRole="MaterialIssueDetail" ToRole="WorkOrder" />
+          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="MaterialIssue">
           <Key>
@@ -22666,6 +22671,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_PackageIssueDetails_Commodities" FromRole="PackageIssueDetail" ToRole="Commodity" />
           <Property Name="PackageIssueImage1ID" Type="Int32" />
           <Property Name="PackageIssueImage2ID" Type="Int32" />
+          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_PackageIssueDetails_Shifts">
           <End Type="TotalSmartPortalModel.Shift" Role="Shift" Multiplicity="1" />
@@ -23143,6 +23149,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="RecyclateID" Type="Int32" />
           <Property Name="RecyclatePackageID" Type="Int32" />
           <NavigationProperty Name="RecyclatePackage" Relationship="TotalSmartPortalModel.FK_GoodsReceiptDetails_RecyclatePackages" FromRole="GoodsReceiptDetail" ToRole="RecyclatePackage" />
+          <Property Name="Referral" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_GoodsReceiptDetails_BinLocations">
           <End Type="TotalSmartPortalModel.BinLocation" Role="BinLocation" Multiplicity="1" />
@@ -23821,6 +23828,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_Workshifts" FromRole="WarehouseTransferDetail" ToRole="Workshift" />
           <NavigationProperty Name="WarehouseTransfer" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_WarehouseTransfers" FromRole="WarehouseTransferDetail" ToRole="WarehouseTransfer" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_WarehouseTransferDetails_Commodities" FromRole="WarehouseTransferDetail" ToRole="Commodity" />
+          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_WarehouseTransferDetails_BinLocations">
           <End Type="TotalSmartPortalModel.BinLocation" Role="BinLocation" Multiplicity="1" />
@@ -31137,6 +31145,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="MaterialIssueDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.MaterialIssueDetail">
               <MappingFragment StoreEntitySet="MaterialIssueDetails">
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="WorkOrderDetailID" ColumnName="WorkOrderDetailID" />
                 <ScalarProperty Name="WorkOrderID" ColumnName="WorkOrderID" />
                 <ScalarProperty Name="BomDetailID" ColumnName="BomDetailID" />
@@ -32206,6 +32215,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="PackageIssueDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.PackageIssueDetail">
               <MappingFragment StoreEntitySet="PackageIssueDetails">
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="PackageIssueImage2ID" ColumnName="PackageIssueImage2ID" />
                 <ScalarProperty Name="PackageIssueImage1ID" ColumnName="PackageIssueImage1ID" />
                 <ScalarProperty Name="ProductionLineID" ColumnName="ProductionLineID" />
@@ -32561,6 +32571,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsReceiptDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptDetail">
               <MappingFragment StoreEntitySet="GoodsReceiptDetails">
+                <ScalarProperty Name="Referral" ColumnName="Referral" />
                 <ScalarProperty Name="RecyclatePackageID" ColumnName="RecyclatePackageID" />
                 <ScalarProperty Name="RecyclateID" ColumnName="RecyclateID" />
                 <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
@@ -32959,6 +32970,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="WarehouseTransferDetails">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.WarehouseTransferDetail">
               <MappingFragment StoreEntitySet="WarehouseTransferDetails">
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="QuantityReceipted" ColumnName="QuantityReceipted" />

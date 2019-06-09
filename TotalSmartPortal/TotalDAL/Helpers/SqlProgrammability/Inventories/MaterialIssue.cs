@@ -224,6 +224,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "                       SET         @msg = N'Lệnh sản xuất đã hủy, chưa duyệt hoặc đã xóa.' ; " + "\r\n";
             queryString = queryString + "                       THROW       61001,  @msg, 1; " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
+
+            queryString = queryString + "                   UPDATE          MaterialIssueDetails " + "\r\n";
+            queryString = queryString + "                   SET             MaterialIssueDetails.Reference = MaterialIssues.Reference " + "\r\n";
+            queryString = queryString + "                   FROM            MaterialIssues INNER JOIN MaterialIssueDetails ON MaterialIssues.MaterialIssueID = @EntityID AND MaterialIssues.MaterialIssueID = MaterialIssueDetails.MaterialIssueID " + "\r\n";
+
             #region UPDATE WorkshiftID
             queryString = queryString + "                   DECLARE         @EntryDate Datetime, @ShiftID int, @WorkshiftID int " + "\r\n";
             queryString = queryString + "                   SELECT          @EntryDate = CONVERT(date, EntryDate), @ShiftID = ShiftID FROM MaterialIssues WHERE MaterialIssueID = @EntityID " + "\r\n";

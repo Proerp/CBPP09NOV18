@@ -302,6 +302,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "           IF (@SaveRelativeOption = 1) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
 
+            queryString = queryString + "                   UPDATE          WarehouseTransferDetails " + "\r\n";
+            queryString = queryString + "                   SET             WarehouseTransferDetails.Reference = WarehouseTransfers.Reference " + "\r\n";
+            queryString = queryString + "                   FROM            WarehouseTransfers INNER JOIN WarehouseTransferDetails ON WarehouseTransfers.WarehouseTransferID = @EntityID AND WarehouseTransfers.WarehouseTransferID = WarehouseTransferDetails.WarehouseTransferID " + "\r\n";
+
             #region UPDATE WorkshiftID
             queryString = queryString + "                   DECLARE         @EntryDate Datetime, @ShiftID int, @WorkshiftID int " + "\r\n";
             queryString = queryString + "                   SELECT          @EntryDate = CONVERT(date, EntryDate), @ShiftID = ShiftID FROM WarehouseTransfers WHERE WarehouseTransferID = @EntityID " + "\r\n";

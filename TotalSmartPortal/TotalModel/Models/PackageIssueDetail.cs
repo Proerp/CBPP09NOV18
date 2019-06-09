@@ -45,6 +45,7 @@ namespace TotalModel.Models
         public int ProductionLineID { get; set; }
         public Nullable<int> PackageIssueImage1ID { get; set; }
         public Nullable<int> PackageIssueImage2ID { get; set; }
+        public string Reference { get; set; }
     
         public virtual Shift Shift { get; set; }
         public virtual Workshift Workshift { get; set; }

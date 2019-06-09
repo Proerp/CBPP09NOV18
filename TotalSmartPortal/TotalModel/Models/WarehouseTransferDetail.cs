@@ -46,6 +46,7 @@ namespace TotalModel.Models
         public decimal QuantityReceipted { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
+        public string Reference { get; set; }
     
         public virtual BinLocation BinLocation { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
