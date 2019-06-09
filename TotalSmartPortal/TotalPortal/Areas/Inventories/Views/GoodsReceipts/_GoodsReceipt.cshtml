@@ -279,189 +279,189 @@
         </div>
 
         <div class="div-k-grid-detail">
-            @(Html.Kendo().Grid(Model.GoodsReceiptViewDetails)
+            @(Html.Kendo().Grid(Model.ViewDetails)
                 .Name("kendoGridDetails")
                 .Columns(columns =>
                 {
 
                     columns.Bound(p => p.GoodsReceiptDetailID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= GoodsReceiptDetailID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsReceiptDetailID' value='#= GoodsReceiptDetailID #' />");
+                        .ClientTemplate("#= GoodsReceiptDetailID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsReceiptDetailID' value='#= GoodsReceiptDetailID #' />");
                     columns.Bound(p => p.GoodsReceiptID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= GoodsReceiptID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsReceiptID' value='#= GoodsReceiptID #' />");
+                        .ClientTemplate("#= GoodsReceiptID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsReceiptID' value='#= GoodsReceiptID #' />");
 
                     columns.Bound(p => p.PurchaseRequisitionID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (PurchaseRequisitionID == null)? '' : PurchaseRequisitionID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].PurchaseRequisitionID' value='#= (PurchaseRequisitionID == null) ? '' : PurchaseRequisitionID #' />");
+                        .ClientTemplate("#= (PurchaseRequisitionID == null)? '' : PurchaseRequisitionID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].PurchaseRequisitionID' value='#= (PurchaseRequisitionID == null) ? '' : PurchaseRequisitionID #' />");
                     columns.Bound(p => p.PurchaseRequisitionDetailID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (PurchaseRequisitionDetailID == null)? '' : PurchaseRequisitionDetailID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].PurchaseRequisitionDetailID' value='#= (PurchaseRequisitionDetailID == null) ? '' : PurchaseRequisitionDetailID #' />");
+                        .ClientTemplate("#= (PurchaseRequisitionDetailID == null)? '' : PurchaseRequisitionDetailID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].PurchaseRequisitionDetailID' value='#= (PurchaseRequisitionDetailID == null) ? '' : PurchaseRequisitionDetailID #' />");
 
                     columns.Bound(p => p.PurchaseRequisitionCode).DisplayNameTitle().Width(60).Hidden()
-                        .ClientTemplate("#= (PurchaseRequisitionCode == null)? '' : PurchaseRequisitionCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].PurchaseRequisitionCode' value='#= (PurchaseRequisitionCode == null) ? '' : PurchaseRequisitionCode #' />");
+                        .ClientTemplate("#= (PurchaseRequisitionCode == null)? '' : PurchaseRequisitionCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].PurchaseRequisitionCode' value='#= (PurchaseRequisitionCode == null) ? '' : PurchaseRequisitionCode #' />");
                     columns.Bound(p => p.PurchaseRequisitionReference).DisplayNameTitle().Width(60).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition && @Model.PurchaseRequisitionID == null ? false : true)
-                        .ClientTemplate("#= (PurchaseRequisitionReference == null)? '' : PurchaseRequisitionReference #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].PurchaseRequisitionReference' value='#= (PurchaseRequisitionReference == null) ? '' : PurchaseRequisitionReference #' />");
+                        .ClientTemplate("#= (PurchaseRequisitionReference == null)? '' : PurchaseRequisitionReference #" + "<input type='hidden' name='ViewDetails[#= index(data) #].PurchaseRequisitionReference' value='#= (PurchaseRequisitionReference == null) ? '' : PurchaseRequisitionReference #' />");
                     columns.Bound(p => p.PurchaseRequisitionEntryDate).DisplayNameTitle().Width(80).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition && @Model.PurchaseRequisitionID == null ? false : true)
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (PurchaseRequisitionEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', PurchaseRequisitionEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].PurchaseRequisitionEntryDate' value='#= (PurchaseRequisitionEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', PurchaseRequisitionEntryDate) #' />");
+                        .ClientTemplate("#= (PurchaseRequisitionEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', PurchaseRequisitionEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].PurchaseRequisitionEntryDate' value='#= (PurchaseRequisitionEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', PurchaseRequisitionEntryDate) #' />");
 
 
 
 
                     columns.Bound(p => p.GoodsArrivalID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (GoodsArrivalID == null)? '' : GoodsArrivalID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalID' value='#= (GoodsArrivalID == null) ? '' : GoodsArrivalID #' />");
+                        .ClientTemplate("#= (GoodsArrivalID == null)? '' : GoodsArrivalID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsArrivalID' value='#= (GoodsArrivalID == null) ? '' : GoodsArrivalID #' />");
                     columns.Bound(p => p.GoodsArrivalDetailID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (GoodsArrivalDetailID == null)? '' : GoodsArrivalDetailID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalDetailID' value='#= (GoodsArrivalDetailID == null) ? '' : GoodsArrivalDetailID #' />");
+                        .ClientTemplate("#= (GoodsArrivalDetailID == null)? '' : GoodsArrivalDetailID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsArrivalDetailID' value='#= (GoodsArrivalDetailID == null) ? '' : GoodsArrivalDetailID #' />");
                     columns.Bound(p => p.GoodsArrivalPackageID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (GoodsArrivalPackageID == null)? '' : GoodsArrivalPackageID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalPackageID' value='#= (GoodsArrivalPackageID == null) ? '' : GoodsArrivalPackageID #' />");
+                        .ClientTemplate("#= (GoodsArrivalPackageID == null)? '' : GoodsArrivalPackageID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsArrivalPackageID' value='#= (GoodsArrivalPackageID == null) ? '' : GoodsArrivalPackageID #' />");
 
                     columns.Bound(p => p.PurchaseOrderCodes).DisplayNameTitle().Width(60).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null ? false : true)
-                        .ClientTemplate("#= (PurchaseOrderCodes == null)? '' : PurchaseOrderCodes #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].PurchaseOrderCodes' value='#= (PurchaseOrderCodes == null) ? '' : PurchaseOrderCodes #' />");
+                        .ClientTemplate("#= (PurchaseOrderCodes == null)? '' : PurchaseOrderCodes #" + "<input type='hidden' name='ViewDetails[#= index(data) #].PurchaseOrderCodes' value='#= (PurchaseOrderCodes == null) ? '' : PurchaseOrderCodes #' />");
                     columns.Bound(p => p.CustomerCode).DisplayNameTitle().Width(60).Hidden()
-                        .ClientTemplate("#= (CustomerCode == null)? '' : CustomerCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CustomerCode' value='#= (CustomerCode == null) ? '' : CustomerCode #' />");
+                        .ClientTemplate("#= (CustomerCode == null)? '' : CustomerCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CustomerCode' value='#= (CustomerCode == null) ? '' : CustomerCode #' />");
                     
                     columns.Bound(p => p.GoodsArrivalCode).DisplayNameTitle().Width(60).Hidden()
-                        .ClientTemplate("#= (GoodsArrivalCode == null)? '' : GoodsArrivalCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalCode' value='#= (GoodsArrivalCode == null) ? '' : GoodsArrivalCode #' />");
+                        .ClientTemplate("#= (GoodsArrivalCode == null)? '' : GoodsArrivalCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsArrivalCode' value='#= (GoodsArrivalCode == null) ? '' : GoodsArrivalCode #' />");
                     columns.Bound(p => p.GoodsArrivalReference).DisplayNameTitle().Width(60).Hidden()
-                        .ClientTemplate("#= (GoodsArrivalReference == null)? '' : GoodsArrivalReference #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalReference' value='#= (GoodsArrivalReference == null) ? '' : GoodsArrivalReference #' />");
+                        .ClientTemplate("#= (GoodsArrivalReference == null)? '' : GoodsArrivalReference #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsArrivalReference' value='#= (GoodsArrivalReference == null) ? '' : GoodsArrivalReference #' />");
                     columns.Bound(p => p.GoodsArrivalEntryDate).DisplayNameTitle().Width(80).Hidden()
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (GoodsArrivalEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsArrivalEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsArrivalEntryDate' value='#= (GoodsArrivalEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsArrivalEntryDate) #' />");
+                        .ClientTemplate("#= (GoodsArrivalEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsArrivalEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsArrivalEntryDate' value='#= (GoodsArrivalEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsArrivalEntryDate) #' />");
 
                     
                     
                     
                     columns.Bound(p => p.WarehouseTransferID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (WarehouseTransferID == null)? '' : WarehouseTransferID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].WarehouseTransferID' value='#= (WarehouseTransferID == null) ? '' : WarehouseTransferID #' />");
+                        .ClientTemplate("#= (WarehouseTransferID == null)? '' : WarehouseTransferID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].WarehouseTransferID' value='#= (WarehouseTransferID == null) ? '' : WarehouseTransferID #' />");
                     columns.Bound(p => p.WarehouseTransferDetailID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (WarehouseTransferDetailID == null)? '' : WarehouseTransferDetailID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].WarehouseTransferDetailID' value='#= (WarehouseTransferDetailID == null) ? '' : WarehouseTransferDetailID #' />");
+                        .ClientTemplate("#= (WarehouseTransferDetailID == null)? '' : WarehouseTransferDetailID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].WarehouseTransferDetailID' value='#= (WarehouseTransferDetailID == null) ? '' : WarehouseTransferDetailID #' />");
 
                     columns.Bound(p => p.WarehouseTransferReference).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer && @Model.WarehouseTransferID == null ? false : true)
-                        .ClientTemplate("#= (WarehouseTransferReference == null)? '' : WarehouseTransferReference #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].WarehouseTransferReference' value='#= (WarehouseTransferReference == null) ? '' : WarehouseTransferReference #' />");
+                        .ClientTemplate("#= (WarehouseTransferReference == null)? '' : WarehouseTransferReference #" + "<input type='hidden' name='ViewDetails[#= index(data) #].WarehouseTransferReference' value='#= (WarehouseTransferReference == null) ? '' : WarehouseTransferReference #' />");
                     columns.Bound(p => p.WarehouseTransferEntryDate).DisplayNameTitle().Width(80).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer && @Model.WarehouseTransferID == null ? false : true)
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (WarehouseTransferEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', WarehouseTransferEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].WarehouseTransferEntryDate' value='#= (WarehouseTransferEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', WarehouseTransferEntryDate) #' />");
+                        .ClientTemplate("#= (WarehouseTransferEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', WarehouseTransferEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].WarehouseTransferEntryDate' value='#= (WarehouseTransferEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', WarehouseTransferEntryDate) #' />");
                     columns.Bound(p => p.GoodsReceiptReference).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer ? false : true)
-                        .ClientTemplate("#= (GoodsReceiptReference == null)? '' : GoodsReceiptReference #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsReceiptReference' value='#= (GoodsReceiptReference == null) ? '' : GoodsReceiptReference #' />");
+                        .ClientTemplate("#= (GoodsReceiptReference == null)? '' : GoodsReceiptReference #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsReceiptReference' value='#= (GoodsReceiptReference == null) ? '' : GoodsReceiptReference #' />");
                     columns.Bound(p => p.GoodsReceiptEntryDate).DisplayNameTitle().Width(38).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer ? false : true)
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (GoodsReceiptEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].GoodsReceiptEntryDate' value='#= (GoodsReceiptEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #' />");
+                        .ClientTemplate("#= (GoodsReceiptEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsReceiptEntryDate' value='#= (GoodsReceiptEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #' />");
 
 
                     columns.Bound(p => p.FinishedItemID).DisplayNameTitle().Hidden()
-                       .ClientTemplate("#= (FinishedItemID == null)? '' : FinishedItemID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedItemID' value='#= (FinishedItemID == null) ? '' : FinishedItemID #' />");
+                       .ClientTemplate("#= (FinishedItemID == null)? '' : FinishedItemID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].FinishedItemID' value='#= (FinishedItemID == null) ? '' : FinishedItemID #' />");
                     columns.Bound(p => p.FinishedItemPackageID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (FinishedItemPackageID == null)? '' : FinishedItemPackageID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedItemPackageID' value='#= (FinishedItemPackageID == null) ? '' : FinishedItemPackageID #' />");
+                        .ClientTemplate("#= (FinishedItemPackageID == null)? '' : FinishedItemPackageID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].FinishedItemPackageID' value='#= (FinishedItemPackageID == null) ? '' : FinishedItemPackageID #' />");
 
                     columns.Bound(p => p.FinishedProductID).DisplayNameTitle().Hidden()
-                       .ClientTemplate("#= (FinishedProductID == null)? '' : FinishedProductID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedProductID' value='#= (FinishedProductID == null) ? '' : FinishedProductID #' />");
+                       .ClientTemplate("#= (FinishedProductID == null)? '' : FinishedProductID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].FinishedProductID' value='#= (FinishedProductID == null) ? '' : FinishedProductID #' />");
                     columns.Bound(p => p.FinishedProductPackageID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (FinishedProductPackageID == null)? '' : FinishedProductPackageID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedProductPackageID' value='#= (FinishedProductPackageID == null) ? '' : FinishedProductPackageID #' />");
+                        .ClientTemplate("#= (FinishedProductPackageID == null)? '' : FinishedProductPackageID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].FinishedProductPackageID' value='#= (FinishedProductPackageID == null) ? '' : FinishedProductPackageID #' />");
 
                     columns.Bound(p => p.RecyclateID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (RecyclateID == null)? '' : RecyclateID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].RecyclateID' value='#= (RecyclateID == null) ? '' : RecyclateID #' />");
+                        .ClientTemplate("#= (RecyclateID == null)? '' : RecyclateID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].RecyclateID' value='#= (RecyclateID == null) ? '' : RecyclateID #' />");
                     columns.Bound(p => p.RecyclatePackageID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (RecyclatePackageID == null)? '' : RecyclatePackageID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].RecyclatePackageID' value='#= (RecyclatePackageID == null) ? '' : RecyclatePackageID #' />");
+                        .ClientTemplate("#= (RecyclatePackageID == null)? '' : RecyclatePackageID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].RecyclatePackageID' value='#= (RecyclatePackageID == null) ? '' : RecyclatePackageID #' />");
 
                     
                     columns.Bound(p => p.FirmOrderReference).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? false : true)
-                        .ClientTemplate("#= (FirmOrderReference == null)? '' : FirmOrderReference #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FirmOrderReference' value='#= (FirmOrderReference == null) ? '' : FirmOrderReference #' />");
+                        .ClientTemplate("#= (FirmOrderReference == null)? '' : FirmOrderReference #" + "<input type='hidden' name='ViewDetails[#= index(data) #].FirmOrderReference' value='#= (FirmOrderReference == null) ? '' : FirmOrderReference #' />");
                     columns.Bound(p => p.FirmOrderCode).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? false : true)
-                        .ClientTemplate("#= (FirmOrderCode == null)? '' : FirmOrderCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FirmOrderCode' value='#= (FirmOrderCode == null) ? '' : FirmOrderCode #' />");
+                        .ClientTemplate("#= (FirmOrderCode == null)? '' : FirmOrderCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].FirmOrderCode' value='#= (FirmOrderCode == null) ? '' : FirmOrderCode #' />");
 
                     columns.Bound(p => p.FirmOrderSpecs).DisplayNameTitle().Width(96).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? false : true)
-                        .ClientTemplate("#= (FirmOrderSpecs == null)? '' : FirmOrderSpecs #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FirmOrderSpecs' value='#= (FirmOrderSpecs == null) ? '' : FirmOrderSpecs #' />");
+                        .ClientTemplate("#= (FirmOrderSpecs == null)? '' : FirmOrderSpecs #" + "<input type='hidden' name='ViewDetails[#= index(data) #].FirmOrderSpecs' value='#= (FirmOrderSpecs == null) ? '' : FirmOrderSpecs #' />");
 
                     columns.Bound(p => p.SemifinishedItemReferences).DisplayNameTitle().Width(88).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem ? false : true)
-                        .ClientTemplate("#= (SemifinishedItemReferences == null)? '' : SemifinishedItemReferences #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].SemifinishedItemReferences' value='#= (SemifinishedItemReferences == null) ? '' : SemifinishedItemReferences #' />");
+                        .ClientTemplate("#= (SemifinishedItemReferences == null)? '' : SemifinishedItemReferences #" + "<input type='hidden' name='ViewDetails[#= index(data) #].SemifinishedItemReferences' value='#= (SemifinishedItemReferences == null) ? '' : SemifinishedItemReferences #' />");
                     columns.Bound(p => p.FinishedItemEntryDate).DisplayNameTitle().Width(60).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem ? false : true)
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (FinishedItemEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedItemEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedItemEntryDate' value='#= (FinishedItemEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedItemEntryDate) #' />");
+                        .ClientTemplate("#= (FinishedItemEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedItemEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].FinishedItemEntryDate' value='#= (FinishedItemEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedItemEntryDate) #' />");
                     
                     columns.Bound(p => p.SemifinishedProductReferences).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? false : true)
-                        .ClientTemplate("#= (SemifinishedProductReferences == null)? '' : SemifinishedProductReferences #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].SemifinishedProductReferences' value='#= (SemifinishedProductReferences == null) ? '' : SemifinishedProductReferences #' />");
+                        .ClientTemplate("#= (SemifinishedProductReferences == null)? '' : SemifinishedProductReferences #" + "<input type='hidden' name='ViewDetails[#= index(data) #].SemifinishedProductReferences' value='#= (SemifinishedProductReferences == null) ? '' : SemifinishedProductReferences #' />");
                     columns.Bound(p => p.FinishedProductEntryDate).DisplayNameTitle().Width(80).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct ? false : true)
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (FinishedProductEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProductEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].FinishedProductEntryDate' value='#= (FinishedProductEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProductEntryDate) #' />");
+                        .ClientTemplate("#= (FinishedProductEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProductEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].FinishedProductEntryDate' value='#= (FinishedProductEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', FinishedProductEntryDate) #' />");
 
 
                     columns.Bound(p => p.RecyclateEntryDate).DisplayNameTitle().Width(80).Hidden()
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (RecyclateEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', RecyclateEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].RecyclateEntryDate' value='#= (RecyclateEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', RecyclateEntryDate) #' />");
+                        .ClientTemplate("#= (RecyclateEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', RecyclateEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].RecyclateEntryDate' value='#= (RecyclateEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', RecyclateEntryDate) #' />");
                     
                     
                     columns.Bound(p => p.MaterialIssueID).DisplayNameTitle().Hidden()
-                    .ClientTemplate("#= (MaterialIssueID == null)? '' : MaterialIssueID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].MaterialIssueID' value='#= (MaterialIssueID == null) ? '' : MaterialIssueID #' />");
+                    .ClientTemplate("#= (MaterialIssueID == null)? '' : MaterialIssueID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].MaterialIssueID' value='#= (MaterialIssueID == null) ? '' : MaterialIssueID #' />");
                     columns.Bound(p => p.MaterialIssueDetailID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (MaterialIssueDetailID == null)? '' : MaterialIssueDetailID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].MaterialIssueDetailID' value='#= (MaterialIssueDetailID == null) ? '' : MaterialIssueDetailID #' />");
+                        .ClientTemplate("#= (MaterialIssueDetailID == null)? '' : MaterialIssueDetailID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].MaterialIssueDetailID' value='#= (MaterialIssueDetailID == null) ? '' : MaterialIssueDetailID #' />");
                     columns.Bound(p => p.MaterialIssueEntryDate).DisplayNameTitle().Width(108).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? false : true)
                         .Format("{0:" + @Settings.DateTimeFormat + "}")
-                        .ClientTemplate("#= (MaterialIssueEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateTimeFormat + "}', MaterialIssueEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].MaterialIssueEntryDate' value='#= (MaterialIssueEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateTimeFormat + "}', MaterialIssueEntryDate) #' />");
+                        .ClientTemplate("#= (MaterialIssueEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateTimeFormat + "}', MaterialIssueEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].MaterialIssueEntryDate' value='#= (MaterialIssueEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateTimeFormat + "}', MaterialIssueEntryDate) #' />");
 
                     columns.Bound(p => p.WorkshiftName).DisplayNameTitle().Width(68).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? false : true)
-                       .ClientTemplate("#= (WorkshiftName == null)? '' : WorkshiftName #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].WorkshiftName' value='#= (WorkshiftName == null) ? '' : WorkshiftName #' />");
+                       .ClientTemplate("#= (WorkshiftName == null)? '' : WorkshiftName #" + "<input type='hidden' name='ViewDetails[#= index(data) #].WorkshiftName' value='#= (WorkshiftName == null) ? '' : WorkshiftName #' />");
                     columns.Bound(p => p.ProductionLinesCode).DisplayNameTitle().Width(20).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue ? false : true)
-                        .ClientTemplate("#= (ProductionLinesCode == null)? '' : ProductionLinesCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].ProductionLinesCode' value='#= (ProductionLinesCode == null) ? '' : ProductionLinesCode #' />");
+                        .ClientTemplate("#= (ProductionLinesCode == null)? '' : ProductionLinesCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].ProductionLinesCode' value='#= (ProductionLinesCode == null) ? '' : ProductionLinesCode #' />");
 
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
+                        .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
                     columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(180).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.Recyclate ? "StringReadonly" : "AutoCompletes/CommodityAvailable")                        
-                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
+                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
 
                     columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(208).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null) ? true : false)
-                        .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
+                        .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
+                        .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
 
                     columns.Bound(p => p.LabID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= LabID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].LabID' value='#= LabID #' />");
+                        .ClientTemplate("#= LabID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].LabID' value='#= LabID #' />");
 
                     columns.Bound(p => p.BatchID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= BatchID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BatchID' value='#= BatchID #' />");                    
+                        .ClientTemplate("#= BatchID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].BatchID' value='#= BatchID #' />");                    
                     columns.Bound(p => p.BatchEntryDate).DisplayNameTitle().Width(38).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer ? false : true)
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (BatchEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BatchEntryDate' value='#= (BatchEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #' />");
+                        .ClientTemplate("#= (BatchEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].BatchEntryDate' value='#= (BatchEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #' />");
                     columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival ? false : true)
-                        .ClientTemplate("#= (BatchCode == null)? '' : BatchCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BatchCode' value='#= (BatchCode == null) ? '' : BatchCode #' />");
+                        .ClientTemplate("#= (BatchCode == null)? '' : BatchCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].BatchCode' value='#= (BatchCode == null) ? '' : BatchCode #' />");
                     columns.Bound(p => p.LabCode).DisplayNameTitle().Width(30).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival ? false : true)
-                        .ClientTemplate("#= (LabCode == null)? '' : LabCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].LabCode' value='#= (LabCode == null) ? '' : LabCode #' />");
+                        .ClientTemplate("#= (LabCode == null)? '' : LabCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].LabCode' value='#= (LabCode == null) ? '' : LabCode #' />");
 
                     columns.Bound(p => p.Barcode).DisplayNameTitle().Width(68).Hidden(GlobalEnums.CBPP && Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival ? false : true)
-                        .ClientTemplate("#= (Barcode == null)? '' : Barcode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].Barcode' value='#= (Barcode == null) ? '' : Barcode #' />");
+                        .ClientTemplate("#= (Barcode == null)? '' : Barcode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].Barcode' value='#= (Barcode == null) ? '' : Barcode #' />");
                     columns.Bound(p => p.SealCode).DisplayNameTitle().Width(30).Hidden(true)
-                        .ClientTemplate("#= (SealCode == null)? '' : SealCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].SealCode' value='#= (SealCode == null) ? '' : SealCode #' />");
+                        .ClientTemplate("#= (SealCode == null)? '' : SealCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].SealCode' value='#= (SealCode == null) ? '' : SealCode #' />");
 
                     columns.Bound(p => p.ProductionDate).DisplayNameTitle().Width(38).Hidden(true)
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (ProductionDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ProductionDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].ProductionDate' value='#= (ProductionDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ProductionDate) #' />");
+                        .ClientTemplate("#= (ProductionDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ProductionDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].ProductionDate' value='#= (ProductionDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ProductionDate) #' />");
 
                     columns.Bound(p => p.ExpiryDate).DisplayNameTitle().Width(38).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival ? false : true).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
                         .Format("{0:" + @Settings.DateFormat + "}")
-                        .ClientTemplate("#= (ExpiryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].ExpiryDate' value='#= (ExpiryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #' />");
+                        .ClientTemplate("#= (ExpiryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].ExpiryDate' value='#= (ExpiryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #' />");
 
                     columns.Bound(p => p.BinLocationID).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= BinLocationID #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BinLocationID' value='#= BinLocationID #' />");
+                        .ClientTemplate("#= BinLocationID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].BinLocationID' value='#= BinLocationID #' />");
                     columns.Bound(p => p.BinLocationCode).DisplayNameTitle().Width(80).Hidden(!GlobalEnums.CBPP).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
-                        .ClientTemplate("#= (BinLocationCode == null)? '' : BinLocationCode #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].BinLocationCode' value='#= (BinLocationCode == null) ? '' : BinLocationCode #' />");
+                        .ClientTemplate("#= (BinLocationCode == null)? '' : BinLocationCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].BinLocationCode' value='#= (BinLocationCode == null) ? '' : BinLocationCode #' />");
 
                     columns.Bound(p => p.UnitWeight).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
-                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', UnitWeight) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].UnitWeight' value='#= UnitWeight #' />");
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', UnitWeight) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].UnitWeight' value='#= UnitWeight #' />");
                     columns.Bound(p => p.TareWeight).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden()
-                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', TareWeight) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].TareWeight' value='#= TareWeight #' />");
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', TareWeight) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].TareWeight' value='#= TareWeight #' />");
                     
                     columns.Bound(p => p.QuantityRemains).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Hidden(GlobalEnums.CBPP ? true : false)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
                     columns.Bound(p => p.Quantity).DisplayNameTitle().HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30)
                         .Format(Settings.kfmQuantity)
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
-                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
+                        .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', Quantity) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].Quantity' value='#= Quantity #' />");
 
 
 
                     columns.Bound(p => p.Remarks).DisplayNameTitle().Hidden()
-                        .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='GoodsReceiptViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
+                        .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='ViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
 
                     columns.Command(command => { command.Destroy().Text("<span class='command' ></span>"); }).Width(10).Hidden(!@Model.Editable).HtmlAttributes(new { @class = "grid-column-center" });

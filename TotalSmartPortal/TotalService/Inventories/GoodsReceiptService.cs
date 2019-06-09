@@ -25,7 +25,7 @@ namespace TotalService.Inventories
 
         public override bool Save(TDto dto)
         {
-            dto.GoodsReceiptViewDetails.RemoveAll(x => x.Quantity == 0 && dto.GoodsReceiptTypeID != (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue);
+            dto.ViewDetails.RemoveAll(x => x.Quantity == 0 && dto.GoodsReceiptTypeID != (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue);
             return base.Save(dto);
         }
 
@@ -57,7 +57,7 @@ namespace TotalService.Inventories
 
         public new bool Save(TDto goodsReceiptDTO, bool useExistingTransaction)
         {
-            goodsReceiptDTO.GoodsReceiptViewDetails.RemoveAll(x => x.Quantity == 0);
+            goodsReceiptDTO.ViewDetails.RemoveAll(x => x.Quantity == 0);
             return base.Save(goodsReceiptDTO, useExistingTransaction);
         }
 

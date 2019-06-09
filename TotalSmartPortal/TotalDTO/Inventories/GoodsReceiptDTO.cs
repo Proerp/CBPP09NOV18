@@ -255,7 +255,6 @@ namespace TotalDTO.Inventories
         [Display(Name = "Số chứng từ")]
         string Features { get; }
 
-        List<GoodsReceiptDetailDTO> GoodsReceiptViewDetails { get; set; }
         List<GoodsReceiptDetailDTO> ViewDetails { get; set; }
 
         string ControllerName { get; }
@@ -268,7 +267,7 @@ namespace TotalDTO.Inventories
     {
         public GoodsReceiptDTO()
         {
-            this.GoodsReceiptViewDetails = new List<GoodsReceiptDetailDTO>();
+            this.ViewDetails = new List<GoodsReceiptDetailDTO>();
 
             if (!GlobalEnums.CBPP) { this.ShiftID = 1; }
         }
@@ -332,12 +331,11 @@ namespace TotalDTO.Inventories
 
 
 
-        public List<GoodsReceiptDetailDTO> GoodsReceiptViewDetails { get; set; }
-        public List<GoodsReceiptDetailDTO> ViewDetails { get { return this.GoodsReceiptViewDetails; } set { this.GoodsReceiptViewDetails = value; } }
+        public List<GoodsReceiptDetailDTO> ViewDetails { get; set; }
 
-        public ICollection<GoodsReceiptDetailDTO> GetDetails() { return this.GoodsReceiptViewDetails; }
+        public ICollection<GoodsReceiptDetailDTO> GetDetails() { return this.ViewDetails; }
 
-        protected override IEnumerable<GoodsReceiptDetailDTO> DtoDetails() { return this.GoodsReceiptViewDetails; }
+        protected override IEnumerable<GoodsReceiptDetailDTO> DtoDetails() { return this.ViewDetails; }
 
 
 
