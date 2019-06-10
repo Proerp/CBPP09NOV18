@@ -152,11 +152,12 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118)
-                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(268).HtmlAttributes(new { style = "" })
-                        .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />")
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(GlobalEnums.CBPP? 118 : 188)
+                        .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(268).Hidden(!GlobalEnums.CBPP)
+                        .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
+                        
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityTypeID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityTypeID' value='#= CommodityTypeID #' />");
@@ -170,7 +171,7 @@
                         .ClientTemplate("#= (GoodsReceiptCode == null)? '' : GoodsReceiptCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsReceiptCode' value='#= (GoodsReceiptCode == null) ? '' : GoodsReceiptCode #' />");
                     columns.Bound(p => p.GoodsReceiptReference).DisplayNameTitle().Width(30).Hidden(GlobalEnums.CBPP)
                         .ClientTemplate("#= (GoodsReceiptReference == null)? '' : GoodsReceiptReference #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsReceiptReference' value='#= (GoodsReceiptReference == null) ? '' : GoodsReceiptReference #' />");
-                    columns.Bound(p => p.GoodsReceiptEntryDate).DisplayNameTitle().Width(20).Hidden()
+                    columns.Bound(p => p.GoodsReceiptEntryDate).DisplayNameTitle().Width(20)
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (GoodsReceiptEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsReceiptEntryDate' value='#= (GoodsReceiptEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #' />");
 
@@ -265,7 +266,7 @@
                                             {
                                                 events.Error("kendGrid_ErrorHandler");
                                             })
-                                            .Aggregates(a => a.Add(x => x.CommodityName).Count())
+                                            .Aggregates(a => a.Add(x => x.CommodityCode).Count())
                                             .Aggregates(a => a.Add(x => x.QuantityAvailables).Sum())
                                             .Aggregates(a => a.Add(x => x.Quantity).Sum())
                                         )
