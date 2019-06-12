@@ -360,9 +360,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private void RecyclateEditable()
         {
-            string[] queryArray = new string[0];
+            string[] queryArray = new string[1];
 
-            //queryArray[0] = " SELECT TOP 1 @FoundEntity = RecyclateID FROM GoodsReceiptDetails WHERE RecyclateID = @EntityID ";
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = RecyclateID FROM GoodsReceiptDetails WHERE RecyclateID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("RecyclateEditable", queryArray);
         }
