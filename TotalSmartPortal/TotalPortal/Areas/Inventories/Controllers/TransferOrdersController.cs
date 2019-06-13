@@ -7,6 +7,7 @@ using RequireJsNet;
 using TotalBase.Enums;
 using TotalModel;
 using TotalDTO;
+using TotalDTO.Commons;
 using TotalDTO.Inventories;
 using TotalModel.Models;
 using TotalPortal.ViewModels.Helpers;
@@ -69,6 +70,14 @@ namespace TotalPortal.Areas.Inventories.Controllers
 
             ViewBag.WarehouseTaskID = (int)(viewDetailViewModel.IsMaterial ? GlobalEnums.WarehouseTaskID.MaterialAdjustment : (viewDetailViewModel.IsItem ? GlobalEnums.WarehouseTaskID.ItemAdjustment : (viewDetailViewModel.IsProduct ? GlobalEnums.WarehouseTaskID.ProductAdjustment : GlobalEnums.WarehouseTaskID.Unknown)));
             ViewBag.WarehouseTaskIDList = warehouseTaskIDList.ToString();
+        }
+
+        protected override TViewDetailViewModel TailorVoidModel(TViewDetailViewModel simpleViewModel)
+        {
+            if (!simpleViewModel.InActive)
+                simpleViewModel.VoidType = new VoidTypeBaseDTO() { VoidTypeID = 5, VoidClassID = 1, Name = "Thanh lý" };
+
+            return base.TailorVoidModel(simpleViewModel);
         }
 
         protected override PrintViewModel InitPrintViewModel(int? id, int? detailID)

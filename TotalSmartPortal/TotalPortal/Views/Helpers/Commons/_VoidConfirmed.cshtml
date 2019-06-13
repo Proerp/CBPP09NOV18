@@ -1,9 +1,11 @@
-﻿@model TotalDTO.BaseDTO
+﻿@using TotalBase.Enums
+
+@model TotalDTO.BaseDTO
 
 <div class="single-full-panel">
     @if (Model.Voidable || Model.UnVoidable)
     {
-        <button type="submit" form="MainForm" class="k-button custom-button"> <img src="~/Content/Images/Mains/@(@Model.InActive ? "cancel-yellow-28.png" : "cancel-green-28.png")" alt="" style="padding-top:2px;padding-bottom:2px;" /> Xác nhận @(Model.InActive ? "phục hồi" : "hủy") toàn bộ phiếu này </button>
+        <button type="submit" form="MainForm" class="k-button custom-button"> <img src="~/Content/Images/Mains/@(@Model.InActive ? "cancel-yellow-28.png" : "cancel-green-28.png")" alt="" style="padding-top:2px;padding-bottom:2px;" /> Xác nhận @(Model.InActive ? "phục hồi" : (GlobalEnums.CBPP? "thanh lý" : "hủy")) @(GlobalEnums.CBPP ? "" : "toàn bộ") phiếu này </button>
     }
     else
     {

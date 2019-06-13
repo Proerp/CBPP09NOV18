@@ -5,6 +5,7 @@ using System.Text;
 using RequireJsNet;
 
 using TotalBase.Enums;
+using TotalDTO.Commons;
 using TotalDTO.Productions;
 using TotalModel.Models;
 
@@ -33,6 +34,14 @@ namespace TotalPortal.Areas.Productions.Controllers
             RequireJsOptions.Add("commodityTypeIDList", commodityTypeIDList.ToString(), RequireJsOptionsScope.Page);
 
             RequireJsOptions.Add("masterCommodityTypeIDs", ((int)GlobalEnums.CommodityTypeID.Products).ToString(), RequireJsOptionsScope.Page);
+        }
+
+        protected override BlendingInstructionViewModel TailorVoidModel(BlendingInstructionViewModel simpleViewModel)
+        {
+            if (!simpleViewModel.InActive)
+                simpleViewModel.VoidType = new VoidTypeBaseDTO() { VoidTypeID = 1, VoidClassID = 1, Name = "Thanh lý" };
+
+            return base.TailorVoidModel(simpleViewModel);
         }
     }
 

@@ -371,6 +371,8 @@ namespace TotalPortal.Controllers
                 else //USER DON'T HAVE PERMISSION TO DO
                     return new HttpStatusCodeResult(HttpStatusCode.Unauthorized);
 
+            this.TailorVoidModel(simpleViewModel);
+
             return View(simpleViewModel);
         }
 
@@ -615,6 +617,11 @@ namespace TotalPortal.Controllers
         }
 
         protected virtual TSimpleViewModel DecorateViewModel(TSimpleViewModel simpleViewModel)
+        {
+            return simpleViewModel;
+        }
+
+        protected virtual TSimpleViewModel TailorVoidModel(TSimpleViewModel simpleViewModel)
         {
             return simpleViewModel;
         }

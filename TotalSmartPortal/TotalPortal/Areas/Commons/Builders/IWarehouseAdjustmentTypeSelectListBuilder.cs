@@ -17,7 +17,7 @@ namespace TotalPortal.Areas.Commons.Builders
     {
         public IEnumerable<SelectListItem> BuildSelectListItemsForWarehouseAdjustmentTypes(IEnumerable<WarehouseAdjustmentType> WarehouseAdjustmentTypes)
         {
-            return WarehouseAdjustmentTypes.Select(pt => new SelectListItem { Text = pt.Name, Value = pt.WarehouseAdjustmentTypeID.ToString() }).ToList();
+            return WarehouseAdjustmentTypes.Where(w => w.Enabled).Select(pt => new SelectListItem { Text = pt.Name, Value = pt.WarehouseAdjustmentTypeID.ToString() }).ToList();
         }
     }
 }

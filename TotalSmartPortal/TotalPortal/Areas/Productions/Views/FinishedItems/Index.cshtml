@@ -69,7 +69,8 @@
                 .Aggregates(a => a.Add(x => x.TotalQuantityFailure).Sum())
                 .Aggregates(a => a.Add(x => x.TotalQuantityShortage).Sum())
                 .Aggregates(a => a.Add(x => x.TotalSwarfs).Sum())
-                
+                .Aggregates(a => a.Add(x => x.TotalPackages).Sum())
+                        
                 )
             .HtmlAttributes(new { @class = "grid-class" })
     )
@@ -126,7 +127,7 @@
                     { field: "WorkshiftName", operator: "contains", value: indexFilterText },
                     { field: "FirmOrderReference", operator: "contains", value: indexFilterText },
                     { field: "FirmOrderCode", operator: "contains", value: indexFilterText },
-                    { field: "FirmOrderSpecs", operator: "contains", value: indexFilterText }
+                    { field: "FirmOrderSpecification", operator: "contains", value: indexFilterText }
                 ]
             });
 

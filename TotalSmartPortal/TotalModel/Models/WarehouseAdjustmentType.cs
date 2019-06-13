@@ -24,6 +24,7 @@ namespace TotalModel.Models
         public string Code { get; set; }
         public string Name { get; set; }
         public string Remarks { get; set; }
+        public bool Enabled { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<WarehouseAdjustment> WarehouseAdjustments { get; set; }

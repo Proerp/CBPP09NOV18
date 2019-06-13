@@ -2776,6 +2776,7 @@
           <Property Name="WarehouseAdjustmentTypeID" Type="int" Nullable="false" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Enabled" Type="bit" Nullable="false" />
           <Property Name="Remarks" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Warehouses">
@@ -19080,6 +19081,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Remarks" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="WarehouseAdjustments" Relationship="TotalSmartPortalModel.FK_WarehouseAdjustments_WarehouseAdjustmentTypes" FromRole="WarehouseAdjustmentType" ToRole="WarehouseAdjustment" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
         </EntityType>
         <ComplexType Name="WarehouseAdjustmentIndex">
           <Property Type="Int32" Name="WarehouseAdjustmentID" Nullable="false" />
@@ -30027,6 +30029,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="WarehouseAdjustmentTypes">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.WarehouseAdjustmentType">
               <MappingFragment StoreEntitySet="WarehouseAdjustmentTypes">
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
