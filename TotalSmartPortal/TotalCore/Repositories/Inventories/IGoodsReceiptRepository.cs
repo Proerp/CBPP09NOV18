@@ -49,7 +49,7 @@ namespace TotalCore.Repositories.Inventories
         
         int? GetGoodsReceiptID(int? goodsArrivalID, int? plannedOrderID, int? warehouseTransferID, int? warehouseAdjustmentID);
 
-        IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable);
+        IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, int? blendingInstructionID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable);
         IEnumerable<GoodsReceiptBarcodeAvailable> GetGoodsReceiptBarcodeAvailables(string barcode);
     }
 

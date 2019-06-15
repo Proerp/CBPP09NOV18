@@ -49,6 +49,7 @@
             commodityID: null,
             commodityIDs: "",
             batchID: null,
+            blendingInstructionID: window.parent.$("#BlendingInstructionID").val() != undefined? window.parent.$("#BlendingInstructionID").val() : null,
             barcode: "",
             goodsReceiptDetailIDs : materialIssueJSON.map(function(elem){return elem.GoodsReceiptDetailID;}).join(","),
             onlyApproved: true,

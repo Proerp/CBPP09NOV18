@@ -8598,6 +8598,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="CommodityID" Type="int" Mode="In" />
           <Parameter Name="CommodityIDs" Type="varchar" Mode="In" />
           <Parameter Name="BatchID" Type="int" Mode="In" />
+          <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
           <Parameter Name="Barcode" Type="nvarchar" Mode="In" />
           <Parameter Name="GoodsReceiptDetailIDs" Type="varchar" Mode="In" />
           <Parameter Name="OnlyApproved" Type="bit" Mode="In" />
@@ -15284,6 +15285,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="CommodityID" Mode="In" Type="Int32" />
             <Parameter Name="CommodityIDs" Mode="In" Type="String" />
             <Parameter Name="BatchID" Mode="In" Type="Int32" />
+            <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
             <Parameter Name="Barcode" Mode="In" Type="String" />
             <Parameter Name="GoodsReceiptDetailIDs" Mode="In" Type="String" />
             <Parameter Name="OnlyApproved" Mode="In" Type="Boolean" />

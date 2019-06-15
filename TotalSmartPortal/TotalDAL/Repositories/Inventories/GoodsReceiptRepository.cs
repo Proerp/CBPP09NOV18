@@ -242,10 +242,10 @@ namespace TotalDAL.Repositories.Inventories
             return base.TotalSmartPortalEntities.GetGoodsReceiptID(goodsArrivalID, plannedOrderID, warehouseTransferID, warehouseAdjustmentID).FirstOrDefault();
         }
 
-        public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
+        public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, int? blendingInstructionID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<GoodsReceiptDetailAvailable> goodsReceiptDetailAvailables = base.TotalSmartPortalEntities.GetGoodsReceiptDetailAvailables(locationID, warehouseID, warehouseReceiptID, commodityID, commodityIDs, batchID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable).ToList();
+            IEnumerable<GoodsReceiptDetailAvailable> goodsReceiptDetailAvailables = base.TotalSmartPortalEntities.GetGoodsReceiptDetailAvailables(locationID, warehouseID, warehouseReceiptID, commodityID, commodityIDs, batchID, blendingInstructionID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable).ToList();
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
 
             return goodsReceiptDetailAvailables;

@@ -25,6 +25,7 @@ namespace TotalDTO.Inventories
 
         bool OneStep { get; set; }
         bool HasTransferOrder { get; set; }
+        int? BlendingInstructionID { get; set; }
 
         int ShiftID { get; set; }
         int WorkshiftID { get; set; }
@@ -59,6 +60,7 @@ namespace TotalDTO.Inventories
 
         public bool OneStep { get; set; }
         public bool HasTransferOrder { get; set; }
+        public int? BlendingInstructionID { get; set; }
 
         public int ShiftID { get; set; }
         public int WorkshiftID { get; set; }
