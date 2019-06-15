@@ -72,7 +72,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                               IF  (@LocalFilterOptionID = 12) " + "\r\n";
             queryString = queryString + "                                   " + this.GetBlendingInstructionIndexSQL(12) + "\r\n";
             queryString = queryString + "                               ELSE " + "\r\n";
-            queryString = queryString + "                                   " + this.GetBlendingInstructionIndexSQL(20) + "\r\n";
+            queryString = queryString + "                                   BEGIN " + "\r\n";
+            queryString = queryString + "                                       IF  (@LocalFilterOptionID = 18) " + "\r\n";
+            queryString = queryString + "                                           " + this.GetBlendingInstructionIndexSQL(18) + "\r\n";
+            queryString = queryString + "                                       ELSE " + "\r\n";
+            queryString = queryString + "                                           " + this.GetBlendingInstructionIndexSQL(20) + "\r\n";
+            queryString = queryString + "                                   END " + "\r\n";
             queryString = queryString + "                           END " + "\r\n";
             queryString = queryString + "                   END " + "\r\n";
             queryString = queryString + "           END " + "\r\n";
@@ -110,6 +115,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             //filterOptionID: 10: PENDING BlendingInstructionDetails LEFT JOIN BlendingInstructionDetails WITH: NOT InActive AND (BlendingInstructionDetails IS NULL (NOT APPROVED YET) OR BlendingInstructionDetails.QuantityPending > 0))
             //filterOptionID: 11: 10 AND NOT MATERIAL
             //filterOptionID: 12: 10 AND WITH MATERIAL
+            //filterOptionID: 18: A SPECIAL VERSION OF 10: INCLUDE ALL BlendingInstructionDetails IF THERE IS ANYONE PENDING
             //filterOptionID: 20: FINISH  BlendingInstructionDetails INNER JOIN BlendingInstructionDetails: FROM TO
 
             string queryString = "";
@@ -142,8 +148,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
         private string SQLPendingVsFinished(int filterOptionID)
         {
-            bool pendingVsFinished = filterOptionID == 10 || filterOptionID == 11 || filterOptionID == 12;
-            return filterOptionID == 0 ? "" : ("(BlendingInstructionDetails.InActive " + (pendingVsFinished ? "=" : "<>") + " 0 " + (pendingVsFinished ? "AND" : "OR") + " BlendingInstructionDetails.InActivePartial " + (pendingVsFinished ? "=" : "<>") + " 0 " + (pendingVsFinished ? "AND" : "OR") + " ROUND(BlendingInstructionDetails.Quantity - BlendingInstructionDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") " + (pendingVsFinished ? ">" : "<=") + " 0) AND ");
+            bool pendingVsFinished = filterOptionID == 10 || filterOptionID == 11 || filterOptionID == 12 || filterOptionID == 18;
+            string pendingVsFinishedSQL = "(BlendingInstructionDetails.InActive " + (pendingVsFinished ? "=" : "<>") + " 0 " + (pendingVsFinished ? "AND" : "OR") + " BlendingInstructionDetails.InActivePartial " + (pendingVsFinished ? "=" : "<>") + " 0 " + (filterOptionID == 18 ? "" : (pendingVsFinished ? "AND" : "OR") + " ROUND(BlendingInstructionDetails.Quantity - BlendingInstructionDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") " + (pendingVsFinished ? ">" : "<=") + " 0") + ")"; //filterOptionID == 18: NOT CARE: AND ROUND(BlendingInstructionDetails.Quantity - BlendingInstructionDetails.QuantityIssued, 2) > 0
+            return filterOptionID == 0 ? "" : (filterOptionID == 18 ? "BlendingInstructionDetails.BlendingInstructionDetailID IN (SELECT DISTINCT BlendingInstructionDetailID FROM BlendingInstructionDetails WHERE " + pendingVsFinishedSQL + ") " : pendingVsFinishedSQL) + " AND ";
         }
 
 
@@ -366,7 +373,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                       INNER JOIN BlendingInstructionDetails ON BlendingInstructions.BlendingInstructionID = @LocalBlendingInstructionID AND BlendingInstructions.BlendingInstructionID = ISNULL(BlendingInstructionDetails.ParentID, BlendingInstructionDetails.BlendingInstructionID) " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities AS Products ON BlendingInstructions.CommodityID = Products.CommodityID  " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON BlendingInstructionDetails.CommodityID = Commodities.CommodityID " + "\r\n";
-            
+
             queryString = queryString + "                       LEFT  JOIN PackageIssueDetails ON BlendingInstructionDetails.BlendingInstructionDetailID = PackageIssueDetails.BlendingInstructionDetailID " + "\r\n";
             queryString = queryString + "                       LEFT  JOIN GoodsReceiptDetails ON PackageIssueDetails.GoodsReceiptDetailID = GoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
 

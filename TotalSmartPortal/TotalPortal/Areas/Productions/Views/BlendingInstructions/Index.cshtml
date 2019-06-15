@@ -6,7 +6,7 @@
 
 <div>
     @Html.Hidden("LastLabOptionID", "1")
-    @Html.Hidden("LastFilterOptionID", "10")
+    @Html.Hidden("LastFilterOptionID", "18")
     @Html.Hidden("SelectedFirmOrderID", "0")
 
         @(Html.Kendo().Grid<TotalModel.Models.BlendingInstructionIndex>()
@@ -54,6 +54,7 @@
                                     .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
+                                            new SelectListItem { Text = "Đang theo dõi", Value = "18"},  
                                             new SelectListItem { Text = "BIS cần pha chế", Value = "10"},
                                             new SelectListItem { Text = "BIS cần pc [Chưa PC]", Value = "11"},
                                             new SelectListItem { Text = "BIS cần pc [Đang PC]", Value = "12"},
