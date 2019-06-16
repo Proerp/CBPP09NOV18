@@ -114,6 +114,9 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             public Nullable<decimal> TransferOrderRemains { get; set; }
             public Nullable<decimal> TransferOrderRemainPackages { get; set; }
             public Nullable<decimal> QuantityAvailables { get; set; }
+
+            public Nullable<decimal> Quantity { get { return this.TransferOrderRemains; } }
+            public Nullable<decimal> Packages { get { return (this.Quantity != null && this.Weight != null && this.Weight > 0) ? Math.Truncate((decimal)(this.Quantity / this.Weight)) + (this.Quantity % this.Weight > 0 ? 1 : 0) : this.Quantity; } }
         }
         #endregion HELPER API
 
