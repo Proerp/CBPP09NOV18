@@ -322,6 +322,8 @@ namespace TotalDAL.Repositories
 
         public void CreateStoredProcedure()
         {
+            Helpers.SqlProgrammability.Commons.Barcode barcode = new Helpers.SqlProgrammability.Commons.Barcode(totalSmartPortalEntities);
+            barcode.RestoreProcedure();
 
             //Recyclate
             Helpers.SqlProgrammability.Productions.Recyclate recyclate = new Helpers.SqlProgrammability.Productions.Recyclate(totalSmartPortalEntities);

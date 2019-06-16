@@ -69,7 +69,12 @@ namespace TotalPortal.Controllers
             return View(optionViewModel);
         }
 
+        public ActionResult SearchBarcodes()
+        {
+            OptionViewModel optionViewModel = new OptionViewModel { GlobalFromDate = HomeSession.GetGlobalFromDate(this.HttpContext), GlobalToDate = HomeSession.GetGlobalToDate(this.HttpContext) };
 
+            return View(optionViewModel);
+        }
 
 
         public ActionResult UserGuide()

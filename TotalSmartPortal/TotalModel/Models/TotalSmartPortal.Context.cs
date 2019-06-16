@@ -5758,5 +5758,23 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsReceiptPendingRecyclate>("GetGoodsReceiptPendingRecyclates", locationIDParameter);
         }
+    
+        public virtual ObjectResult<BarcodeBasic> GetBarcodeBasics(string searchText)
+        {
+            var searchTextParameter = searchText != null ?
+                new ObjectParameter("SearchText", searchText) :
+                new ObjectParameter("SearchText", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BarcodeBasic>("GetBarcodeBasics", searchTextParameter);
+        }
+    
+        public virtual ObjectResult<BarcodeJournal> GetBarcodeJournals(string barcode)
+        {
+            var barcodeParameter = barcode != null ?
+                new ObjectParameter("Barcode", barcode) :
+                new ObjectParameter("Barcode", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BarcodeJournal>("GetBarcodeJournals", barcodeParameter);
+        }
     }
 }

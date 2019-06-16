@@ -8327,6 +8327,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="GetBarcodeBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetBarcodeBasics" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="SearchText" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="GetBarcodeJournals" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="Barcode" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="GetBarcodeSymbologies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BarcodeID" Type="int" Mode="In" />
         </Function>
@@ -17471,6 +17477,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="GoodsReceiptDetail" EntitySet="GoodsReceiptDetails" />
             <End Role="WarehouseTransferDetail" EntitySet="WarehouseTransferDetails" />
           </AssociationSet>
+          <FunctionImport Name="GetBarcodeBasics" ReturnType="Collection(TotalSmartPortalModel.BarcodeBasic)">
+            <Parameter Name="SearchText" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetBarcodeJournals" ReturnType="Collection(TotalSmartPortalModel.BarcodeJournal)">
+            <Parameter Name="Barcode" Mode="In" Type="String" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -27057,6 +27069,21 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="BarcodeBasic">
+          <Property Type="Int32" Name="BarcodeID" Nullable="false" />
+          <Property Type="String" Name="Code" Nullable="false" MaxLength="60" />
+        </ComplexType>
+        <ComplexType Name="BarcodeJournal">
+          <Property Type="String" Name="ControllerName" Nullable="false" MaxLength="31" />
+          <Property Type="Int32" Name="EntryID" Nullable="false" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Reference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
+          <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="BinLocationCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="BlendingInstructionCode" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ShortName" Nullable="true" MaxLength="50" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -34285,6 +34312,29 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetBarcodeBasics" FunctionName="TotalSmartPortalModel.Store.GetBarcodeBasics">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BarcodeBasic">
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBarcodeJournals" FunctionName="TotalSmartPortalModel.Store.GetBarcodeJournals">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BarcodeJournal">
+                <ScalarProperty Name="ControllerName" ColumnName="ControllerName" />
+                <ScalarProperty Name="EntryID" ColumnName="EntryID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="Barcode" ColumnName="Barcode" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
+                <ScalarProperty Name="BlendingInstructionCode" ColumnName="BlendingInstructionCode" />
+                <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

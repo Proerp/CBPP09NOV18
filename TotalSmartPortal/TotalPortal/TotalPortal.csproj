@@ -3401,6 +3401,8 @@
     <Content Include="Views\Shared\EditorTemplates\TimeReadonly.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AutoCompletes\CommodityLeft.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AutoCompletes\CommodityBasic.cshtml" />
+    <Content Include="Views\Home\SearchBarcodes.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\AutoCompletes\BarcodeBase.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

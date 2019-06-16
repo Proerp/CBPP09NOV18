@@ -51,6 +51,7 @@
     <Compile Include="EntityFrameworkExtension.cs" />
     <Compile Include="Helpers\SqlProgrammability\Accounts\CreditNote.cs" />
     <Compile Include="Helpers\SqlProgrammability\Analysis\Report.cs" />
+    <Compile Include="Helpers\SqlProgrammability\Commons\Barcode.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\BinLocation.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\Bom.cs" />
     <Compile Include="Helpers\SqlProgrammability\Commons\Commodity.cs" />

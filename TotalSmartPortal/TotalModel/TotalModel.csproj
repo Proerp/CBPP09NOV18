@@ -78,6 +78,12 @@
     <Compile Include="Models\BarcodeBase.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BarcodeBasic.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BarcodeJournal.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\BinLocation.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

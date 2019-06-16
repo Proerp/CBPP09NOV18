@@ -1,0 +1,63 @@
+﻿@using TotalPortal.Configuration
+
+@model TotalDTO.Commons.IBarcodeBaseDTO
+
+@Html.HiddenFor(model => model.BarcodeID)
+
+@Html.Hidden("TempCode", (@Model != null ? @Model.Code : ""))
+
+
+@Html.Label((ViewData["BarcodeDisplayCode"] != null ? (ViewData["BarcodeDisplayCode"]).ToString() : "Mã vạch"))
+<div class="div-input">
+
+    @(Html.Kendo().AutoCompleteFor(model => model.Code)
+        .DataTextField("Code")
+        .Filter("contains")
+        .MinLength(1)
+        .Placeholder("Vui lòng nhập mã vạch ...")
+        .DataSource(source =>
+        {
+            source.Read(read =>
+            {
+                read.Action("GetBarcodeBases", "BarcodeAPIs", new { area = "Commons" }).Data(@<text> function(e) {return {searchText: e.filter.filters[0].value};} </text>);//Send parameter to controller search action
+            })
+            .ServerFiltering(true);
+        })
+        .Events(e =>
+        {
+            e.Select("barcode_Select");
+        })
+        .HtmlAttributes(new { @class = "BarcodeBase_AutoComplete left-panel-input" })
+    )
+
+</div>
+<div class="div-validation-message">
+    @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
+</div>
+
+<script type="text/javascript">
+
+    getBarcodeModelID = function (modelID) {
+        return modelID.substring(0, modelID.length - 4); //At first: Pass: modelID = this.element.attr('id') = 'Barcode_Code', Then: Return: ('Barcode_Code').substring(0, modelID.length - 4) = 'Barcode_'
+    }
+
+    barcode_Select = function (e) {
+        var modelID = getBarcodeModelID(this.element.attr('id'));
+
+        var dataItem = e.sender.dataItem(e.item.index());
+
+        $("#" + modelID + "BarcodeID").val(dataItem.BarcodeID);
+
+        //Remember last AutoComplete value
+        $("#" + modelID + "TempCode").val(dataItem.Code);
+
+        //Trigger change event. This event is not used in this editor template. It will be catch out side of this editor template
+        $("#" + modelID + "BarcodeID").trigger("change");
+    }
+
+    $(".BarcodeBase_AutoComplete").focusout(function (e) {        
+        var modelID = getBarcodeModelID(this.id);
+        $(this).val($("#" + modelID + "TempCode").val());
+    });
+
+</script>

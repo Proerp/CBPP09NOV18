@@ -84,6 +84,7 @@
     <Compile Include="Accounts\ReceiptDTO.cs" />
     <Compile Include="BaseDTO.cs" />
     <Compile Include="BaseWithDetailDTO.cs" />
+    <Compile Include="Commons\BarcodeDTO.cs" />
     <Compile Include="Commons\BinLocationDTO.cs" />
     <Compile Include="Commons\BomDetailDTO.cs" />
     <Compile Include="Commons\BomDTO.cs" />
