@@ -1,0 +1,43 @@
+﻿@using TotalModel.Models;
+@using TotalPortal.Configuration;
+
+@{Layout = "~/Views/Shared/_LayoutPopup.cshtml";}
+
+@(Html.Kendo().Grid<TransferOrderPendingBlendingInstruction>()
+    .Name("gridPendingBlendingInstructions")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.CommodityCode).Title("Mã NVL").Width(16);
+        columns.Bound(c => c.QuantityRemains).Title("Tồn lệnh").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.QuantityAvailableReceipts).Title("Tồn kho PC").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.Quantity).Title("KL phải điều").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.Packages).Title("Số kiện").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+    })
+    .Scrollable(s => s.Height(320))
+    .DataSource(ds => ds.Ajax()
+            .Read(read => read.Action("GetTransferOrderPendingBlendingInstructions", "TransferOrderAPIs", new { area = "Inventories" }).Data(@<text>
+            function(e) {
+                return {
+                    locationID: window.parent.requireConfig.pageOptions.LocationID,
+                    transferOrderID: null,
+                    warehouseID: 1,
+                    warehouseReceiptID: 6,
+                    commodityIDs : null
+                };}
+            </text>))
+    .ServerOperation(false)) //If this is TRUE: Apply filter to datasource will call Ajax to get new datasource result. If this is FALSE: filter will run on client
+    .Selectable()
+)
+
+
+<div class="background-bar" style="height: 45px;">
+    <div class="popup-button-bar">
+        <button type="button" class="k-button" onclick="cancelButton_Click()"> <img src="~/Content/Images/Mains/Size24/Users-Exit-icon-24.png" /> Thoát </button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function cancelButton_Click() {
+        window.parent.$("#myWindow").data("kendoWindow").close();
+    }
+</script>

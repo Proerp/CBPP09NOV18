@@ -43,6 +43,12 @@ namespace TotalPortal.Areas.Productions.Controllers
 
             return base.TailorVoidModel(simpleViewModel);
         }
+
+
+        public virtual ActionResult CallCommodities()
+        {
+            return View();
+        }
     }
 
 }

@@ -47,8 +47,7 @@ namespace TotalDTO.Inventories
 
         [Display(Name = "Số kiện")]
         [UIHint("QuantityReadonly")]
-        public decimal Packages { get { return this.Weight > 0 ? this.QuantityRemains / this.Weight : this.QuantityRemains; } set { } }
-
+        public decimal Packages { get { return ((this.Quantity != null && this.Weight != null && this.Weight > 0) ? Math.Truncate((decimal)(this.Quantity / this.Weight)) + (this.Quantity % this.Weight > 0 ? 1 : 0) : this.Quantity); } set { } }
 
         public string VoidTypeCode { get; set; }
         [Display(Name = "Lý do")]

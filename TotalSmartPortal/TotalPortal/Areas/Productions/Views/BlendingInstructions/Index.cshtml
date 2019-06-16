@@ -40,10 +40,10 @@
             {
                 toolbar.Template(@<text>
                     <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập lệnh pha chế </button>
-                    <button type="button" title="Cập nhật số liệu sản xuất" class="k-button" onclick="indexFilterText_KeyUp(true)"> <img src="~/Content/Images/New/Refresh-icon.png" /> </button>            
-                    <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> In </button>
+                    <button type="button" class="k-button" onclick="callCommodities()"> <img src="~/Content/Images/Mains/Size24/Phone-icon-24.png" /> Gọi phụ gia </button>            
+                    <button type="button" title="Cập nhật số liệu sản xuất" class="k-button" onclick="indexFilterText_KeyUp(true)"> <img src="~/Content/Images/New/Refresh-icon.png" /> </button>                                
                     <div class="toolbar" style="float: right;">
-                        <label>Lọc theo số BIS, sản phẩm hoặc NVL</label>
+                        <label>Lọc dữ liệu</label>
                         <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 108px; " onkeyup="indexFilterText_KeyUp()" />
 
                         <span id="filterExtended">
@@ -145,9 +145,13 @@
         });
     }
 
-    function callPrint() {
-        window.open('@Url.Action("Print", "BlendingInstructions", new { area = "Productions" })' + "/" + $("#ShowLabOptionID").val() + "/" + $("#ShowFilterOptionID").val())
+    function callCommodities() {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var createWizardWindow = new kpopupWindow();
+            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CallCommodities", "BlendingInstructions")", "Danh sách NVL cần điều", "@Settings.PopupWidthVerySmall", "@Settings.PopupHeightSmall");
+        });
     }
+
 
     decoratingKindex = function (idx, elem) {
 

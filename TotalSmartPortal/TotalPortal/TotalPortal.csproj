@@ -1960,6 +1960,7 @@
     <Content Include="Areas\Productions\Views\FinishedItemRecyclates\Print.cshtml" />
     <Content Include="Areas\Inventories\Views\GoodsReceipts\GetPendingRecyclateDetails.cshtml" />
     <Content Include="Areas\Inventories\Views\GoodsReceipts\_GetRecyclate.cshtml" />
+    <Content Include="Areas\Productions\Views\BlendingInstructions\CallCommodities.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
