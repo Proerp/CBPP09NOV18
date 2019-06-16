@@ -23,5 +23,6 @@ namespace TotalModel.Models
         public string WarehouseReceiptCode { get; set; }
         public string WarehouseReceiptName { get; set; }
         public int LocationReceiptID { get; set; }
+        public Nullable<int> BlendingInstructionID { get; set; }
     }
 }

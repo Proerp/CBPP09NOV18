@@ -35,11 +35,13 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         where TDtoDetail : class, IPrimitiveEntity
         where TViewDetailViewModel : TDto, IViewDetailViewModel<TDtoDetail>, IWarehouseTransferViewModel, new()
     {
+        protected readonly ITransferOrderAPIRepository transferOrderAPIRepository;
         protected readonly IWarehouseTransferAPIRepository warehouseTransferAPIRepository;
 
-        public WarehouseTransfersApiController(IWarehouseTransferService<TDto, TPrimitiveDto, TDtoDetail> warehouseTransferService, IWarehouseTransferViewModelSelectListBuilder<TViewDetailViewModel> warehouseTransferViewModelSelectListBuilder, IWarehouseTransferAPIRepository warehouseTransferAPIRepository)
+        public WarehouseTransfersApiController(IWarehouseTransferService<TDto, TPrimitiveDto, TDtoDetail> warehouseTransferService, IWarehouseTransferViewModelSelectListBuilder<TViewDetailViewModel> warehouseTransferViewModelSelectListBuilder, ITransferOrderAPIRepository transferOrderAPIRepository, IWarehouseTransferAPIRepository warehouseTransferAPIRepository)
             : base(warehouseTransferService, warehouseTransferViewModelSelectListBuilder, true)
         {
+            this.transferOrderAPIRepository = transferOrderAPIRepository;
             this.warehouseTransferAPIRepository = warehouseTransferAPIRepository;
         }
 
@@ -64,7 +66,7 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         [Route("GetAvailableWarehouses/{locationID}/{nmvnTaskID}")]
         public IEnumerable<WarehouseTransferAvailableWarehouse> GetAvailableWarehouses(int? locationID, int? nmvnTaskID)
         {
-            return this.warehouseTransferAPIRepository.GetAvailableWarehouses(locationID, nmvnTaskID);
+            return this.warehouseTransferAPIRepository.GetAvailableWarehouses(locationID, nmvnTaskID).Where(w => w.BlendingInstructionID == null);
         }
 
         [HttpGet]
@@ -89,6 +91,14 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         }
 
         #region HELPER API
+        [HttpGet]
+        [Route("GetPendingBlendingInstructions/{locationID}/{warehouseID}/{warehouseReceiptID}")]
+        public IEnumerable<TransferOrderPendingBlendingInstruction> GetPendingBlendingInstructions(int? locationID, int? warehouseID, int? warehouseReceiptID)
+        {
+            return this.transferOrderAPIRepository.GetTransferOrderPendingBlendingInstructions(locationID, null, warehouseID, warehouseReceiptID, null);
+        }
+
+
         [HttpGet]
         [Route("GetTransferOrderPendingSummaries/{locationID}/{nmvnTaskID}/{warehouseTransferID}/{transferOrderID}/{warehouseID}/{warehouseReceiptID}/{barcode}/{goodsReceiptDetailIDs}")]
         public IEnumerable<TransferOrderPendingSummary> GetTransferOrderPendingSummaries(int? locationID, int? nmvnTaskID, int? warehouseTransferID, int? transferOrderID, int? warehouseID, int? warehouseReceiptID, string barcode, string goodsReceiptDetailIDs)
@@ -116,16 +126,16 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
     [RoutePrefix("Api/Inventories/MaterialTransfers")]
     public class MaterialTransfersApiController : WarehouseTransfersApiController<WarehouseTransferDTO<WTOptionMaterial>, WarehouseTransferPrimitiveDTO<WTOptionMaterial>, WarehouseTransferDetailDTO, MaterialTransferViewModel>
     {
-        public MaterialTransfersApiController(IMaterialTransferService materialTransferService, IMaterialTransferViewModelSelectListBuilder materialTransferViewModelSelectListBuilder, IWarehouseTransferAPIRepository warehouseTransferAPIRepository)
-            : base(materialTransferService, materialTransferViewModelSelectListBuilder, warehouseTransferAPIRepository)
+        public MaterialTransfersApiController(IMaterialTransferService materialTransferService, IMaterialTransferViewModelSelectListBuilder materialTransferViewModelSelectListBuilder, ITransferOrderAPIRepository transferOrderAPIRepository, IWarehouseTransferAPIRepository warehouseTransferAPIRepository)
+            : base(materialTransferService, materialTransferViewModelSelectListBuilder, transferOrderAPIRepository, warehouseTransferAPIRepository)
         {
         }
     }
 
     public class ItemTransfersApiController : WarehouseTransfersApiController<WarehouseTransferDTO<WTOptionItem>, WarehouseTransferPrimitiveDTO<WTOptionItem>, WarehouseTransferDetailDTO, ItemTransferViewModel>
     {
-        public ItemTransfersApiController(IItemTransferService itemTransferService, IItemTransferViewModelSelectListBuilder itemTransferViewModelSelectListBuilder, IWarehouseTransferAPIRepository warehouseTransferAPIRepository)
-            : base(itemTransferService, itemTransferViewModelSelectListBuilder, warehouseTransferAPIRepository)
+        public ItemTransfersApiController(IItemTransferService itemTransferService, IItemTransferViewModelSelectListBuilder itemTransferViewModelSelectListBuilder, ITransferOrderAPIRepository transferOrderAPIRepository, IWarehouseTransferAPIRepository warehouseTransferAPIRepository)
+            : base(itemTransferService, itemTransferViewModelSelectListBuilder, transferOrderAPIRepository, warehouseTransferAPIRepository)
         {
         }
     }
@@ -133,8 +143,8 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
 
     public class ProductTransfersApiController : WarehouseTransfersApiController<WarehouseTransferDTO<WTOptionProduct>, WarehouseTransferPrimitiveDTO<WTOptionProduct>, WarehouseTransferDetailDTO, ProductTransferViewModel>
     {
-        public ProductTransfersApiController(IProductTransferService productTransferService, IProductTransferViewModelSelectListBuilder productTransferViewModelSelectListBuilder, IWarehouseTransferAPIRepository warehouseTransferAPIRepository)
-            : base(productTransferService, productTransferViewModelSelectListBuilder, warehouseTransferAPIRepository)
+        public ProductTransfersApiController(IProductTransferService productTransferService, IProductTransferViewModelSelectListBuilder productTransferViewModelSelectListBuilder, ITransferOrderAPIRepository transferOrderAPIRepository, IWarehouseTransferAPIRepository warehouseTransferAPIRepository)
+            : base(productTransferService, productTransferViewModelSelectListBuilder, transferOrderAPIRepository, warehouseTransferAPIRepository)
         {
         }
     }

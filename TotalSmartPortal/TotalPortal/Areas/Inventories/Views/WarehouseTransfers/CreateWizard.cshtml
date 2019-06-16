@@ -140,7 +140,7 @@
 
         function _setModelInput(selectedDataItem) {
             $("#HasTransferOrder").val(selectedDataItem === undefined || selectedDataItem.HasTransferOrder === undefined ? false : selectedDataItem.HasTransferOrder);
-            $("#BlendingInstructionID").val(0);
+            $("#BlendingInstructionID").val(selectedDataItem === undefined || selectedDataItem.BlendingInstructionID === undefined ? null : selectedDataItem.BlendingInstructionID);
 
             $("#TransferOrderID").val(selectedDataItem === undefined || selectedDataItem.TransferOrderID === undefined ? null : selectedDataItem.TransferOrderID);
             $("#TransferOrderReference").val(selectedDataItem === undefined || selectedDataItem.TransferOrderReference === undefined ? null : selectedDataItem.TransferOrderReference);

@@ -248,6 +248,11 @@ namespace TotalModel.Models
     }
 
 
+    public partial class TransferOrderPendingBlendingInstruction
+    {
+        public Nullable<decimal> Quantity { get { return this.QuantityRemains - this.QuantityTransferOrders - this.QuantityAvailableReceipts; } }
+        public Nullable<decimal> Packages { get { return (this.Quantity != null && this.Weight != null && this.Weight > 0) ? Math.Truncate((decimal)(this.Quantity / this.Weight)) + (this.Quantity % this.Weight > 0 ? 1 : 0) : this.Quantity; } }
+    }
 
     public partial class WarehouseTransfer : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<WarehouseTransferDetail>
     {

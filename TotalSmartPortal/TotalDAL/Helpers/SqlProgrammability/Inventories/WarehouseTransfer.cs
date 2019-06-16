@@ -107,16 +107,23 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "       SELECT          CAST(0 AS bit) AS HasTransferOrder, N'Chuyển kho' AS Categories, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, WarehouseReceipts.WarehouseID AS WarehouseReceiptID, WarehouseReceipts.Code AS WarehouseReceiptCode, WarehouseReceipts.Name AS WarehouseReceiptName, WarehouseReceipts.LocationID AS LocationReceiptID " + "\r\n";
+            queryString = queryString + "       SELECT          CAST(0 AS bit) AS HasTransferOrder, NULL AS BlendingInstructionID, N'Chuyển kho' AS Categories, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, WarehouseReceipts.WarehouseID AS WarehouseReceiptID, WarehouseReceipts.Code AS WarehouseReceiptCode, WarehouseReceipts.Name AS WarehouseReceiptName, WarehouseReceipts.LocationID AS LocationReceiptID " + "\r\n";
             queryString = queryString + "       FROM            Warehouses  " + "\r\n";
             queryString = queryString + "                       INNER JOIN Warehouses AS WarehouseReceipts ON Warehouses.WarehouseID <> WarehouseReceipts.WarehouseID " + "\r\n";
             queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (1, 6) AND WarehouseReceipts.WarehouseID IN (1, 6) " + "\r\n";
 
             queryString = queryString + "       UNION ALL       " + "\r\n";
 
-            queryString = queryString + "       SELECT          CAST(0 AS bit) AS HasTransferOrder, N'Chuyển vị trí' AS Categories, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, Warehouses.WarehouseID AS WarehouseReceiptID, Warehouses.Code AS WarehouseReceiptCode, Warehouses.Name AS WarehouseReceiptName, Warehouses.LocationID AS LocationReceiptID " + "\r\n";
+            queryString = queryString + "       SELECT          CAST(0 AS bit) AS HasTransferOrder, NULL AS BlendingInstructionID, N'Chuyển vị trí' AS Categories, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, Warehouses.WarehouseID AS WarehouseReceiptID, Warehouses.Code AS WarehouseReceiptCode, Warehouses.Name AS WarehouseReceiptName, Warehouses.LocationID AS LocationReceiptID " + "\r\n";
             queryString = queryString + "       FROM            Warehouses  " + "\r\n";
-            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (1, 6) " + "\r\n";
+            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (6) " + "\r\n";
+
+            queryString = queryString + "       UNION ALL       " + "\r\n";
+
+            queryString = queryString + "       SELECT          CAST(0 AS bit) AS HasTransferOrder, 0 AS BlendingInstructionID, N'Chuyển kho theo lệnh' AS Categories, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, WarehouseReceipts.WarehouseID AS WarehouseReceiptID, WarehouseReceipts.Code AS WarehouseReceiptCode, WarehouseReceipts.Name AS WarehouseReceiptName, WarehouseReceipts.LocationID AS LocationReceiptID " + "\r\n";
+            queryString = queryString + "       FROM            Warehouses  " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses AS WarehouseReceipts ON Warehouses.WarehouseID <> WarehouseReceipts.WarehouseID " + "\r\n";
+            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (1) AND WarehouseReceipts.WarehouseID IN (6) " + "\r\n";
 
             queryString = queryString + "       ORDER BY        Categories DESC, WarehouseID " + "\r\n";
 

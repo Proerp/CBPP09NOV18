@@ -2839,6 +2839,7 @@
           <Property Name="WorkshiftID" Type="int" Nullable="false" />
           <Property Name="OneStep" Type="bit" Nullable="false" />
           <Property Name="HasTransferOrder" Type="bit" Nullable="false" />
+          <Property Name="BlendingInstructionID" Type="int" />
           <Property Name="TransferOrderID" Type="int" />
           <Property Name="WarehouseID" Type="int" Nullable="false" />
           <Property Name="LocationIssuedID" Type="int" Nullable="false" />
@@ -23530,7 +23531,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </ComplexType>
         <ComplexType Name="WarehouseTransferAvailableWarehouse">
           <Property Type="Boolean" Name="HasTransferOrder" Nullable="true" />
-          <Property Type="String" Name="Categories" Nullable="false" MaxLength="13" />
+          <Property Type="String" Name="Categories" Nullable="false" MaxLength="20" />
           <Property Type="Int32" Name="WarehouseID" Nullable="false" />
           <Property Type="String" Name="WarehouseCode" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="WarehouseName" Nullable="false" MaxLength="60" />
@@ -23539,6 +23540,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="WarehouseReceiptCode" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="WarehouseReceiptName" Nullable="false" MaxLength="60" />
           <Property Type="Int32" Name="LocationReceiptID" Nullable="false" />
+          <Property Type="Int32" Name="BlendingInstructionID" Nullable="true" />
         </ComplexType>
         <ComplexType Name="TransferOrderAvailableWarehouse">
           <Property Type="Int32" Name="WarehouseID" Nullable="false" />
@@ -23774,6 +23776,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="Workshift" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Workshifts" FromRole="WarehouseTransfer" ToRole="Workshift" />
           <NavigationProperty Name="GoodsReceipts" Relationship="TotalSmartPortalModel.FK_GoodsReceipts_WarehouseTransfers" FromRole="WarehouseTransfer" ToRole="GoodsReceipt" />
           <NavigationProperty Name="User" Relationship="TotalSmartPortalModel.FK_WarehouseTransfers_Users" FromRole="WarehouseTransfer" ToRole="User" />
+          <Property Name="BlendingInstructionID" Type="Int32" />
         </EntityType>
         <Association Name="FK_PackageIssues_BlendingInstructions">
           <End Type="TotalSmartPortalModel.BlendingInstruction" Role="BlendingInstruction" Multiplicity="1" />
@@ -32858,6 +32861,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="WarehouseReceiptCode" ColumnName="WarehouseReceiptCode" />
                 <ScalarProperty Name="WarehouseReceiptName" ColumnName="WarehouseReceiptName" />
                 <ScalarProperty Name="LocationReceiptID" ColumnName="LocationReceiptID" />
+                <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -32983,6 +32987,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="WarehouseTransfers">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.WarehouseTransfer">
               <MappingFragment StoreEntitySet="WarehouseTransfers">
+                <ScalarProperty Name="BlendingInstructionID" ColumnName="BlendingInstructionID" />
                 <ScalarProperty Name="ApprovedDate" ColumnName="ApprovedDate" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="EditedDate" ColumnName="EditedDate" />

@@ -50,6 +50,7 @@ namespace TotalModel.Models
         public System.DateTime EditedDate { get; set; }
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
+        public Nullable<int> BlendingInstructionID { get; set; }
     
         public virtual Employee Employee { get; set; }
         public virtual Location Location { get; set; }
