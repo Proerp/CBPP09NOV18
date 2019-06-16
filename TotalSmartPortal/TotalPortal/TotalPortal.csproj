@@ -257,6 +257,7 @@
     <Compile Include="Areas\Accounts\ViewModels\AccountInvoiceViewModel.cs" />
     <Compile Include="Areas\Accounts\ViewModels\CreditNoteViewModel.cs" />
     <Compile Include="Areas\Accounts\ViewModels\ReceiptViewModel.cs" />
+    <Compile Include="Areas\Commons\APIs\BarcodeAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\BinLocationAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\CommodityAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\BomAPIsController.cs" />

@@ -99,6 +99,7 @@
     <Compile Include="Helpers\SqlProgrammability\Sales\SalesReturn.cs" />
     <Compile Include="Repositories\Accounts\CreditNoteRepository.cs" />
     <Compile Include="Repositories\Analysis\ReportRepository.cs" />
+    <Compile Include="Repositories\Commons\BarcodeRepository.cs" />
     <Compile Include="Repositories\Commons\BinLocationRepository.cs" />
     <Compile Include="Repositories\Commons\BinTypeRepository.cs" />
     <Compile Include="Repositories\Commons\CommodityBrandRepository.cs" />

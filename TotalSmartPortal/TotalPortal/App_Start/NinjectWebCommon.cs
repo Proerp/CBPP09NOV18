@@ -399,6 +399,7 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IPromotionAPIRepository>().To<PromotionAPIRepository>();
                 kernel.Bind<IPromotionViewModelSelectListBuilder>().To<PromotionViewModelSelectListBuilder>();
 
+                kernel.Bind<IBarcodeAPIRepository>().To<BarcodeAPIRepository>();
                 kernel.Bind<ISearchAPIRepository>().To<SearchAPIRepository>();                
 
                 kernel.Bind<IInventoryRepository>().To<InventoryRepository>();

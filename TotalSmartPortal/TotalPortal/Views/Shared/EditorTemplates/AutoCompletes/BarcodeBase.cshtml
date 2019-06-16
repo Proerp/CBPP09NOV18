@@ -19,7 +19,7 @@
         {
             source.Read(read =>
             {
-                read.Action("GetBarcodeBases", "BarcodeAPIs", new { area = "Commons" }).Data(@<text> function(e) {return {searchText: e.filter.filters[0].value};} </text>);//Send parameter to controller search action
+                read.Action("GetBarcodeBasics", "BarcodeAPIs", new { area = "Commons" }).Data(@<text> function(e) {return {searchText: e.filter.filters[0].value};} </text>);//Send parameter to controller search action
             })
             .ServerFiltering(true);
         })
