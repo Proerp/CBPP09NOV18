@@ -8324,6 +8324,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="NMVNTaskID" Type="int" Mode="In" />
           <Parameter Name="OrganizationalUnitID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetBarcode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BarcodeID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetBarcodeBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
         </Function>
@@ -17482,6 +17485,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </FunctionImport>
           <FunctionImport Name="GetBarcodeJournals" ReturnType="Collection(TotalSmartPortalModel.BarcodeJournal)">
           <Parameter Name="Barcode" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetBarcode" ReturnType="Collection(TotalSmartPortalModel.BarcodeBasic)">
+            <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -27072,6 +27078,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <ComplexType Name="BarcodeBasic">
           <Property Type="Int32" Name="BarcodeID" Nullable="false" />
           <Property Type="String" Name="Code" Nullable="false" MaxLength="60" />
+          <Property Type="Int32" Name="GoodsArrivalID" Nullable="true" />
+          <Property Type="Int32" Name="GoodsArrivalDetailID" Nullable="true" />
+          <Property Type="Int32" Name="GoodsArrivalPackageID" Nullable="true" />
         </ComplexType>
         <ComplexType Name="BarcodeJournal">
           <Property Type="String" Name="ControllerName" Nullable="true" MaxLength="88" />
@@ -34328,6 +34337,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.BarcodeBasic">
                 <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
                 <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
+                <ScalarProperty Name="GoodsArrivalDetailID" ColumnName="GoodsArrivalDetailID" />
+                <ScalarProperty Name="GoodsArrivalPackageID" ColumnName="GoodsArrivalPackageID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -34354,6 +34366,17 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="PackageIssueImage1ID" ColumnName="PackageIssueImage1ID" />
                 <ScalarProperty Name="PackageIssueImage2ID" ColumnName="PackageIssueImage2ID" />
                 <ScalarProperty Name="PackageIssueDetailID" ColumnName="PackageIssueDetailID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetBarcode" FunctionName="TotalSmartPortalModel.Store.GetBarcode">
+          <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.BarcodeBasic">
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="GoodsArrivalID" ColumnName="GoodsArrivalID" />
+                <ScalarProperty Name="GoodsArrivalDetailID" ColumnName="GoodsArrivalDetailID" />
+                <ScalarProperty Name="GoodsArrivalPackageID" ColumnName="GoodsArrivalPackageID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

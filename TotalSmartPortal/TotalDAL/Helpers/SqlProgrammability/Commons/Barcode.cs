@@ -18,10 +18,27 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
         public void RestoreProcedure()
         {
+            this.GetBarcode();
             this.GetBarcodeBasics();
             this.GetBarcodeJournals();
         }
 
+
+        private void GetBarcode()
+        {
+            string queryString;
+
+            queryString = " @BarcodeID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "    BEGIN " + "\r\n";
+            queryString = queryString + "       SELECT      BarcodeID, Code, GoodsArrivalID, GoodsArrivalDetailID, GoodsArrivalPackageID " + "\r\n";
+            queryString = queryString + "       FROM        Barcodes " + "\r\n";
+            queryString = queryString + "       WHERE       BarcodeID = @BarcodeID " + "\r\n";
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetBarcode", queryString);
+        }
 
         private void GetBarcodeBasics()
         {
@@ -31,7 +48,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
-            queryString = queryString + "       SELECT      BarcodeID, Code " + "\r\n";
+            queryString = queryString + "       SELECT      BarcodeID, Code, GoodsArrivalID, GoodsArrivalDetailID, GoodsArrivalPackageID " + "\r\n";
             queryString = queryString + "       FROM        Barcodes " + "\r\n";
             queryString = queryString + "       WHERE       LEN(@SearchText) >= 6 AND Code LIKE '%' + @SearchText + '%' " + "\r\n";
             queryString = queryString + "    END " + "\r\n";

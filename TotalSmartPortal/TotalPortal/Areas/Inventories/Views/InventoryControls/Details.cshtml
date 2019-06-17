@@ -207,7 +207,7 @@
             window.open('@Url.Action("Edit", "PurchaseOrders", new { area = "Purchases" })' + "/" + purchaseOrderID)
         else {
             if (goodsArrivalID != null)
-                window.open('@Url.Action("Edit", "GoodsArrivals", new { area = "Purchases" })' + "/" + goodsArrivalID)
+                window.open('@Url.Action("Edit", "MaterialArrivals", new { area = "Purchases" })' + "/" + goodsArrivalID)
             else {
                 if (goodsReceiptID != null)
                     window.open('@Url.Action("Edit", "MaterialReceipts", new { area = "Inventories" })' + "/" + goodsReceiptID)
@@ -286,6 +286,7 @@
                     { field: "CommodityCode", operator: "contains", value: indexFilterText },
                     { field: "BatchCode", operator: "contains", value: indexFilterText },
                     { field: "LabCode", operator: "contains", value: indexFilterText },
+                    { field: "Barcode", operator: "contains", value: indexFilterText },
                     { field: "BinLocationCode", operator: "contains", value: indexFilterText }
                 ]
             });

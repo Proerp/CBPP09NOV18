@@ -15,5 +15,8 @@ namespace TotalModel.Models
     {
         public int BarcodeID { get; set; }
         public string Code { get; set; }
+        public Nullable<int> GoodsArrivalID { get; set; }
+        public Nullable<int> GoodsArrivalDetailID { get; set; }
+        public Nullable<int> GoodsArrivalPackageID { get; set; }
     }
 }

@@ -71,9 +71,10 @@ namespace TotalPortal.Controllers
             return View(optionViewModel);
         }
 
-        public ActionResult SearchBarcodes()
+        public ActionResult SearchBarcodes(int? id)
         {
-            SearchBarcodeDTO searchBarcodeDTO = new SearchBarcodeDTO { BarcodeBase = new BarcodeBaseDTO() };
+            BarcodeBasic barcodeBasic = null; if (id != null) barcodeBasic = this.baseRepository.TotalSmartPortalEntities.GetBarcode(id).FirstOrDefault();
+            SearchBarcodeDTO searchBarcodeDTO = new SearchBarcodeDTO { BarcodeBase = new BarcodeBaseDTO() { BarcodeID = barcodeBasic != null ? barcodeBasic.BarcodeID : 0, Code = barcodeBasic != null ? barcodeBasic.Code : null } };
 
             return View(searchBarcodeDTO);
         }

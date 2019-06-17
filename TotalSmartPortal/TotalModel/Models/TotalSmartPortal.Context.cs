@@ -5776,5 +5776,14 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BarcodeJournal>("GetBarcodeJournals", barcodeParameter);
         }
+    
+        public virtual ObjectResult<BarcodeBasic> GetBarcode(Nullable<int> barcodeID)
+        {
+            var barcodeIDParameter = barcodeID.HasValue ?
+                new ObjectParameter("BarcodeID", barcodeID) :
+                new ObjectParameter("BarcodeID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BarcodeBasic>("GetBarcode", barcodeIDParameter);
+        }
     }
 }
