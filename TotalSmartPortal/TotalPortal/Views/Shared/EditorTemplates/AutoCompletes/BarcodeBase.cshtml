@@ -3,6 +3,8 @@
 @model TotalDTO.Commons.IBarcodeBaseDTO
 
 @Html.HiddenFor(model => model.BarcodeID)
+@Html.HiddenFor(model => model.GoodsArrivalID)
+@Html.HiddenFor(model => model.GoodsArrivalPackageID)
 
 @Html.Hidden("TempCode", (@Model != null ? @Model.Code : ""))
 
@@ -46,6 +48,8 @@
         var dataItem = e.sender.dataItem(e.item.index());
 
         $("#" + modelID + "BarcodeID").val(dataItem.BarcodeID);
+        $("#" + modelID + "GoodsArrivalID").val(dataItem.GoodsArrivalID);
+        $("#" + modelID + "GoodsArrivalPackageID").val(dataItem.GoodsArrivalPackageID);
 
         //Remember last AutoComplete value
         $("#" + modelID + "TempCode").val(dataItem.Code);

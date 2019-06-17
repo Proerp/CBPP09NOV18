@@ -15,6 +15,9 @@ namespace TotalDTO.Commons
         [Display(Name = "Mã vạch")]
         [Required(ErrorMessage = "Vui lòng nhập mã vạch")]
         string Code { get; set; }
+
+        int GoodsArrivalID { get; set; }
+        int GoodsArrivalPackageID { get; set; }
     }
 
     public class BarcodeBaseDTO : BaseDTO, IBarcodeBaseDTO
@@ -24,6 +27,9 @@ namespace TotalDTO.Commons
         [Display(Name = "Mã vạch")]
         [Required(ErrorMessage = "Vui lòng nhập mã vạch")]
         public string Code { get; set; }
+
+        public int GoodsArrivalID { get; set; }
+        public int GoodsArrivalPackageID { get; set; }
     }
 
     public class SearchBarcodeDTO

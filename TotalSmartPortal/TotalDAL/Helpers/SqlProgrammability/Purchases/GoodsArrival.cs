@@ -276,7 +276,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "               END " + "\r\n";
             queryString = queryString + "       END " + "\r\n";
 
-            
+
             queryString = queryString + "       UPDATE      Commodities SET Commodities.TareWeight = GoodsArrivalDetails.TareWeight FROM Commodities INNER JOIN (SELECT CommodityID, MIN(TareWeight) AS TareWeight FROM GoodsArrivalDetails WHERE GoodsArrivalID = @EntityID GROUP BY CommodityID) GoodsArrivalDetails ON Commodities.CommodityID = GoodsArrivalDetails.CommodityID; " + "\r\n";
 
 
@@ -392,7 +392,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "                       WHILE @@FETCH_STATUS = 0 " + "\r\n";
             queryString = queryString + "                           BEGIN " + "\r\n";
-            queryString = queryString + "                               SET @BarcodeSerialID = ISNULL((SELECT MAX(BarcodeSerialID) FROM GoodsArrivalPackages WHERE CommodityID = @CommodityID AND LabCode = @LabCode), 0) " + "\r\n"; 
+            queryString = queryString + "                               SET @BarcodeSerialID = ISNULL((SELECT MAX(BarcodeSerialID) FROM GoodsArrivalPackages WHERE CommodityID = @CommodityID AND LabCode = @LabCode), 0) " + "\r\n";
 
             queryString = queryString + "                               WHILE @Packages > 0 " + "\r\n";
             queryString = queryString + "                                   BEGIN " + "\r\n";
@@ -484,19 +484,34 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
         private void GoodsArrivalSheet()
         {
-            string queryString = " @GoodsArrivalID int " + "\r\n";
+            string queryString = " @GoodsArrivalID int, @GoodsArrivalPackageID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       DECLARE         @LocalGoodsArrivalID int    SET @LocalGoodsArrivalID = @GoodsArrivalID" + "\r\n";
+            queryString = queryString + "       DECLARE         @LocalGoodsArrivalID int, @LocalGoodsArrivalPackageID int     SET @LocalGoodsArrivalID = @GoodsArrivalID    SET @LocalGoodsArrivalPackageID = @GoodsArrivalPackageID " + "\r\n";
+
+            queryString = queryString + "       IF  (@LocalGoodsArrivalPackageID > 0) " + "\r\n";
+            queryString = queryString + "           " + this.GoodsArrivalSheetSQL(true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.GoodsArrivalSheetSQL(false) + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GoodsArrivalSheet", queryString);
+        }
+
+        private string GoodsArrivalSheetSQL(bool isGoodsArrivalPackageID)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
 
             queryString = queryString + "       SELECT          GoodsArrivals.GoodsArrivalID, GoodsArrivals.EntryDate, GoodsArrivals.Reference, GoodsArrivals.Code, GoodsArrivals.InvoiceDate, GoodsArrivals.Description, " + "\r\n";
             queryString = queryString + "                       GoodsArrivalPackages.GoodsArrivalPackageID, GoodsArrivalPackages.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.OriginalName AS CommodityOriginalName, CommodityCategories.Name AS CommodityCategoryName, Commodities.Weight, Commodities.Origin, Commodities.Shelflife, Commodities.Specification, Commodities.Description AS CommodityDescription, Commodities.Remarks AS CommodityRemarks, Commodities.Caption AS CommodityCaption, CommodityIcons.Icons AS CommodityIcons, " + "\r\n";
             queryString = queryString + "                       GoodsArrivalPackages.SealCode, GoodsArrivalPackages.BatchCode, GoodsArrivalPackages.LabCode, GoodsArrivalPackages.Barcode, Barcodes.Symbologies, GoodsArrivalPackages.ProductionDate, GoodsArrivalPackages.ExpiryDate, GoodsArrivalPackages.Quantity, IIF(GoodsArrivals.CreatedDate < CONVERT(datetime, '2019-02-20 02:00:00', 120), Commodities.Weight, GoodsArrivalPackages.Quantity) AS UnitWeight, GoodsArrivalPackages.TareWeight " + "\r\n";
 
             queryString = queryString + "       FROM            GoodsArrivals " + "\r\n";
-            queryString = queryString + "                       INNER JOIN GoodsArrivalPackages ON GoodsArrivals.GoodsArrivalID = @LocalGoodsArrivalID AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID " + "\r\n";
+            queryString = queryString + "                       INNER JOIN GoodsArrivalPackages ON " + (isGoodsArrivalPackageID ? "GoodsArrivalPackages.GoodsArrivalPackageID = @LocalGoodsArrivalPackageID" : "GoodsArrivals.GoodsArrivalID = @LocalGoodsArrivalID") + " AND GoodsArrivals.GoodsArrivalID = GoodsArrivalPackages.GoodsArrivalID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON GoodsArrivalPackages.CommodityID = Commodities.CommodityID " + "\r\n";
             queryString = queryString + "                       INNER JOIN CommodityCategories ON Commodities.CommodityCategoryID = CommodityCategories.CommodityCategoryID " + "\r\n";
 
@@ -505,9 +520,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
             queryString = queryString + "       ORDER BY        GoodsArrivalPackages.GoodsArrivalDetailID, GoodsArrivalPackages.Barcode " + "\r\n";
 
-            queryString = queryString + "    END " + "\r\n";
+            queryString = queryString + "   END " + "\r\n";
 
-            this.totalSmartPortalEntities.CreateStoredProcedure("GoodsArrivalSheet", queryString);
+            return queryString;
         }
 
         #endregion
