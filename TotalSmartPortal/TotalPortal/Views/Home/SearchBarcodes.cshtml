@@ -10,18 +10,24 @@
         .Columns(columns =>
         {
             columns.Bound(p => p.EntryID).DisplayNameTitle().Hidden();
-            columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(50).Filterable(false);
+            columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Width(30);
+            columns.Bound(p => p.EntryDate).Title("Giờ").Format("{0:HH:mm}").Width(30);
+            columns.Bound(p => p.Reference).Title("Số phiếu").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "#= ControllerName #", action = "Edit" }) + "/#= EntryID #' target='_blank'>#=Reference#</a>");
+            columns.Bound(p => p.BinLocationCode).Title("Vị trí").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
+            columns.Bound(p => p.BlendingInstructionCode).Title("BIS").Width(60);
+            columns.Bound(p => p.ShortName).Title("Mã sp").Width(88);
 
-            columns.Bound(p => p.Reference).Title("Kho").Hidden().Width(10);
+            columns.Bound(p => p.Quantity).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
+            columns.Bound(p => p.QuantityRemains).Title("Tồn kho").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
+            columns.Bound(p => p.TareWeight).Title("Bao bì").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(30);
 
-            columns.Bound(p => p.Reference).Title("PXK").Width(10).Filterable(false).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "#= ControllerName #", action = "Edit" }) + "/#= EntryID #' target='_blank'>#=Reference#</a>");
-            columns.Bound(p => p.Barcode).Title("ĐNGH").Width(128).Filterable(false);
-            columns.Bound(p => p.BinLocationCode).Title("Mã KH").Width(60);
-            columns.Bound(p => p.BlendingInstructionCode).Title("Tên KH").Width(218);
-            columns.Bound(p => p.ShortName).Title("Diễn giải").Width(130);
+            columns.Template(t => { }).Title("Chưa hoàn tất").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
+            columns.Template(t => { }).Title("Lab chưa pass").ClientTemplate("<input class='IsSelected' #= LabApproved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
+            columns.Template(t => { }).Title("Hold").ClientTemplate("<input class='IsSelected' #= !LabHold ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
+            columns.Template(t => { }).Title("Quarantine").ClientTemplate("<input class='IsSelected' #= !LabInActive ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
 
-            columns.Bound(p => p.Quantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(50);
-            columns.Bound(p => p.QuantityRemains).Title("QT").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(50);
+            columns.Bound(p => p.UserFirstName).Title("U/M").Width(68);
+            columns.Bound(p => p.Description).Title("Diễn giải").Width(118);
         })
         .ToolBar(toolbar =>
         {
@@ -38,6 +44,12 @@
         .DataSource(dataSource => dataSource
             .Ajax()
             .Read(read => read.Action("GetBarcodeJournals", "BarcodeAPIs", new { area = "Commons" }).Data("onBarcodeJournals"))
+            .Sort(sort =>
+                    {
+                        //sort.Add(p => p.GoodsIssueID);
+                        sort.Add(p => p.EntryDate);
+                        //sort.Add(p => p.Identification);
+                    })
             .PageSize(20)
             .Model(model =>
             {
@@ -63,6 +75,3 @@
         $("#kendoGridIndex").data("kendoGrid").dataSource.read();
     }
 </script>
-
-
-

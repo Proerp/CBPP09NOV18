@@ -27074,20 +27074,23 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="Code" Nullable="false" MaxLength="60" />
         </ComplexType>
         <ComplexType Name="BarcodeJournal">
-          <Property Type="String" Name="ControllerName" Nullable="false" MaxLength="31" />
+          <Property Type="String" Name="ControllerName" Nullable="true" MaxLength="88" />
           <Property Type="Int32" Name="EntryID" Nullable="false" />
           <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
-          <Property Type="String" Name="Reference" Nullable="true" MaxLength="10" />
+          <Property Type="String" Name="Reference" Nullable="false" MaxLength="10" />
           <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
           <Property Type="Decimal" Name="Quantity" Nullable="true" Precision="18" Scale="2" />
           <Property Type="String" Name="BinLocationCode" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="BlendingInstructionCode" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ShortName" Nullable="true" MaxLength="50" />
-          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Boolean" Name="Approved" Nullable="true" />
           <Property Type="Boolean" Name="LabApproved" Nullable="true" />
           <Property Type="Boolean" Name="LabHold" Nullable="true" />
           <Property Type="Boolean" Name="LabInActive" Nullable="true" />
+          <Property Type="Decimal" Name="TareWeight" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
+          <Property Type="String" Name="UserFirstName" Nullable="true" MaxLength="60" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -34342,6 +34345,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="LabApproved" ColumnName="LabApproved" />
                 <ScalarProperty Name="LabHold" ColumnName="LabHold" />
                 <ScalarProperty Name="LabInActive" ColumnName="LabInActive" />
+                <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="UserFirstName" ColumnName="UserFirstName" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

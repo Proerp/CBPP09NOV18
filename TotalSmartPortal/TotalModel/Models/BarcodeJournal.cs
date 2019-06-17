@@ -27,5 +27,8 @@ namespace TotalModel.Models
         public Nullable<bool> LabApproved { get; set; }
         public Nullable<bool> LabHold { get; set; }
         public Nullable<bool> LabInActive { get; set; }
+        public Nullable<decimal> TareWeight { get; set; }
+        public string Description { get; set; }
+        public string UserFirstName { get; set; }
     }
 }
