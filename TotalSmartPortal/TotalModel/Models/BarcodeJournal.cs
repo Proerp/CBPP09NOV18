@@ -22,5 +22,10 @@ namespace TotalModel.Models
         public string BinLocationCode { get; set; }
         public string BlendingInstructionCode { get; set; }
         public string ShortName { get; set; }
+        public Nullable<decimal> QuantityRemains { get; set; }
+        public Nullable<bool> Approved { get; set; }
+        public Nullable<bool> LabApproved { get; set; }
+        public Nullable<bool> LabHold { get; set; }
+        public Nullable<bool> LabInActive { get; set; }
     }
 }

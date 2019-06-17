@@ -25,4 +25,11 @@ namespace TotalDTO.Commons
         [Required(ErrorMessage = "Vui lòng nhập mã vạch")]
         public string Code { get; set; }
     }
+
+    public class SearchBarcodeDTO
+    {
+        [Display(Name = "Mã vạch")]
+        [UIHint("AutoCompletes/BarcodeBase")]
+        public BarcodeBaseDTO BarcodeBase { get; set; }
+    }
 }

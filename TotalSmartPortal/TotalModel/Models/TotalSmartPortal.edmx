@@ -17478,10 +17478,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="WarehouseTransferDetail" EntitySet="WarehouseTransferDetails" />
           </AssociationSet>
           <FunctionImport Name="GetBarcodeBasics" ReturnType="Collection(TotalSmartPortalModel.BarcodeBasic)">
-            <Parameter Name="SearchText" Mode="In" Type="String" />
+          <Parameter Name="SearchText" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetBarcodeJournals" ReturnType="Collection(TotalSmartPortalModel.BarcodeJournal)">
-            <Parameter Name="Barcode" Mode="In" Type="String" />
+          <Parameter Name="Barcode" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -27083,6 +27083,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="String" Name="BinLocationCode" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="BlendingInstructionCode" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ShortName" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="QuantityRemains" Nullable="true" Precision="19" Scale="2" />
+          <Property Type="Boolean" Name="Approved" Nullable="true" />
+          <Property Type="Boolean" Name="LabApproved" Nullable="true" />
+          <Property Type="Boolean" Name="LabHold" Nullable="true" />
+          <Property Type="Boolean" Name="LabInActive" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -34332,6 +34337,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="BinLocationCode" ColumnName="BinLocationCode" />
                 <ScalarProperty Name="BlendingInstructionCode" ColumnName="BlendingInstructionCode" />
                 <ScalarProperty Name="ShortName" ColumnName="ShortName" />
+                <ScalarProperty Name="QuantityRemains" ColumnName="QuantityRemains" />
+                <ScalarProperty Name="Approved" ColumnName="Approved" />
+                <ScalarProperty Name="LabApproved" ColumnName="LabApproved" />
+                <ScalarProperty Name="LabHold" ColumnName="LabHold" />
+                <ScalarProperty Name="LabInActive" ColumnName="LabInActive" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

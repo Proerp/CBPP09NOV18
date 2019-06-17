@@ -2478,6 +2478,7 @@
     <Content Include="Scripts\Controllers\Root\Home\Index.js" />
     <Content Include="Scripts\Controllers\Root\Home\LockedDate.js" />
     <Content Include="Scripts\Controllers\Root\Home\Options.js" />
+    <Content Include="Scripts\Controllers\Root\Home\SearchBarcodes.js" />
     <Content Include="Scripts\Controllers\Root\Home\Searches.js" />
     <Content Include="Scripts\Controllers\Root\Account\UserReferences.js" />
     <Content Include="Scripts\Controllers\Root\Home\SmartBiztech.js" />

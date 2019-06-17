@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 using Microsoft.AspNet.Identity;
 
+using TotalDTO.Commons;
 using TotalCore.Repositories.Sales;
 using TotalPortal.Models;
 using TotalPortal.ViewModels.Home;
@@ -13,6 +14,7 @@ using TotalPortal.APIs.Sessions;
 using TotalModel.Models;
 using System.Data.Entity.Core.Objects;
 using TotalCore.Repositories;
+
 
 namespace TotalPortal.Controllers
 {
@@ -71,9 +73,9 @@ namespace TotalPortal.Controllers
 
         public ActionResult SearchBarcodes()
         {
-            OptionViewModel optionViewModel = new OptionViewModel { GlobalFromDate = HomeSession.GetGlobalFromDate(this.HttpContext), GlobalToDate = HomeSession.GetGlobalToDate(this.HttpContext) };
+            SearchBarcodeDTO searchBarcodeDTO = new SearchBarcodeDTO { BarcodeBase = new BarcodeBaseDTO() };
 
-            return View(optionViewModel);
+            return View(searchBarcodeDTO);
         }
 
 
