@@ -27091,6 +27091,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Decimal" Name="TareWeight" Nullable="true" Precision="18" Scale="2" />
           <Property Type="String" Name="Description" Nullable="true" MaxLength="100" />
           <Property Type="String" Name="UserFirstName" Nullable="true" MaxLength="60" />
+          <Property Type="Int32" Name="PackageIssueImage1ID" Nullable="true" />
+          <Property Type="Int32" Name="PackageIssueImage2ID" Nullable="true" />
+          <Property Type="Int32" Name="PackageIssueDetailID" Nullable="true" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -34348,6 +34351,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="UserFirstName" ColumnName="UserFirstName" />
+                <ScalarProperty Name="PackageIssueImage1ID" ColumnName="PackageIssueImage1ID" />
+                <ScalarProperty Name="PackageIssueImage2ID" ColumnName="PackageIssueImage2ID" />
+                <ScalarProperty Name="PackageIssueDetailID" ColumnName="PackageIssueDetailID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

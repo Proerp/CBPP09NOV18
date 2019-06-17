@@ -30,5 +30,8 @@ namespace TotalModel.Models
         public Nullable<decimal> TareWeight { get; set; }
         public string Description { get; set; }
         public string UserFirstName { get; set; }
+        public Nullable<int> PackageIssueImage1ID { get; set; }
+        public Nullable<int> PackageIssueImage2ID { get; set; }
+        public Nullable<int> PackageIssueDetailID { get; set; }
     }
 }

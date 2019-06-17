@@ -803,6 +803,8 @@
     <Content Include="Content\Images\Mains\Size12\printer-icon-12.png" />
     <Content Include="Content\Images\Mains\Size12\printer-icon-12x13.png" />
     <Content Include="Content\Images\Mains\Size12\Tick-12.png" />
+    <Content Include="Content\Images\Mains\Size16\Digit16-1.png" />
+    <Content Include="Content\Images\Mains\Size16\Digit16.png" />
     <Content Include="Content\Images\Mains\Size16\printer-icon-16.png" />
     <Content Include="Content\Images\Mains\Size24\A-Check-24.png" />
     <Content Include="Content\Images\Mains\Size24\A-Checked-24.png" />
