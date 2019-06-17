@@ -377,8 +377,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                       LEFT  JOIN PackageIssueDetails ON BlendingInstructionDetails.BlendingInstructionDetailID = PackageIssueDetails.BlendingInstructionDetailID " + "\r\n";
             queryString = queryString + "                       LEFT  JOIN GoodsReceiptDetails ON PackageIssueDetails.GoodsReceiptDetailID = GoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
 
-            queryString = queryString + "                       LEFT  JOIN   VoidTypes ON BlendingInstructions.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
-            queryString = queryString + "                       LEFT  JOIN   VoidTypes VoidTypeDetails ON BlendingInstructionDetails.VoidTypeID = VoidTypeDetails.VoidTypeID " + "\r\n";
+            queryString = queryString + "                       LEFT  JOIN VoidTypes ON BlendingInstructions.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
+            queryString = queryString + "                       LEFT  JOIN VoidTypes VoidTypeDetails ON BlendingInstructionDetails.VoidTypeID = VoidTypeDetails.VoidTypeID " + "\r\n";
 
             queryString = queryString + "       ORDER BY        BlendingInstructionDetails.BlendingInstructionDetailID, PackageIssueDetails.PackageIssueDetailID " + "\r\n";
 
