@@ -684,6 +684,11 @@ tr:hover {
     background-image: url('Images/Mains/Size12/add-icon-12.png');
     background-position: center;
 }
+
+.sbt-barcode {
+    background-image: url('Images/Mains/Size12/QR-code-12.png');
+    background-position: center;
+}
 /*BEGIN: CSS FOR DELETE BUTTON IN DETAIL GRID*/
 
 

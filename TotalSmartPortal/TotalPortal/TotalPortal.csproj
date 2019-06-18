@@ -802,6 +802,7 @@
     <Content Include="Content\Images\Mains\Size12\key-blue-12.png" />
     <Content Include="Content\Images\Mains\Size12\printer-icon-12.png" />
     <Content Include="Content\Images\Mains\Size12\printer-icon-12x13.png" />
+    <Content Include="Content\Images\Mains\Size12\QR-code-12.png" />
     <Content Include="Content\Images\Mains\Size12\Tick-12.png" />
     <Content Include="Content\Images\Mains\Size16\Digit16-1.png" />
     <Content Include="Content\Images\Mains\Size16\Digit16.png" />
