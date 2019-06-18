@@ -4832,11 +4832,15 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderAvailableWarehouse>("GetTransferOrderAvailableWarehouses", locationIDParameter, nMVNTaskIDParameter);
         }
     
-        public virtual ObjectResult<InventoryControl> GetInventoryControls(string aspUserID, Nullable<int> summaryOptionID, Nullable<int> labOptionID, Nullable<int> filterOptionID, Nullable<int> pendingOptionID, Nullable<int> shelfLife)
+        public virtual ObjectResult<InventoryControl> GetInventoryControls(string aspUserID, Nullable<int> locationID, Nullable<int> summaryOptionID, Nullable<int> labOptionID, Nullable<int> filterOptionID, Nullable<int> pendingOptionID, Nullable<int> shelfLife)
         {
             var aspUserIDParameter = aspUserID != null ?
                 new ObjectParameter("AspUserID", aspUserID) :
                 new ObjectParameter("AspUserID", typeof(string));
+    
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
     
             var summaryOptionIDParameter = summaryOptionID.HasValue ?
                 new ObjectParameter("SummaryOptionID", summaryOptionID) :
@@ -4858,7 +4862,7 @@ namespace TotalModel.Models
                 new ObjectParameter("ShelfLife", shelfLife) :
                 new ObjectParameter("ShelfLife", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InventoryControl>("GetInventoryControls", aspUserIDParameter, summaryOptionIDParameter, labOptionIDParameter, filterOptionIDParameter, pendingOptionIDParameter, shelfLifeParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<InventoryControl>("GetInventoryControls", aspUserIDParameter, locationIDParameter, summaryOptionIDParameter, labOptionIDParameter, filterOptionIDParameter, pendingOptionIDParameter, shelfLifeParameter);
         }
     
         public virtual ObjectResult<BarcodeBase> GetBarcodeBases(Nullable<int> goodsArrivalID)

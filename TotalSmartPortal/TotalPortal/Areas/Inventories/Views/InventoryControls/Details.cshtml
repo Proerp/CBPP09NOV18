@@ -67,18 +67,18 @@
             {
                 toolbar.Template(@<text>
                     <button type="button" title="Cập nhật số liệu sản xuất" class="k-button" onclick="indexFilterText_KeyUp(true)"> <img src="~/Content/Images/New/Refresh-icon.png" /> </button>
-                    <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> In nhập xuất tồn </button>
-                    <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/printer-D-24.png" /> In thẻ kho </button>
+                    <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/Printer-author-24.png" /> NXT </button>
+                    <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/printer-D-24.png" /> Thẻ kho </button>
                     <div class="toolbar" style="float: right;">
-                        <label>Lọc theo số BIS, sản phẩm hoặc NVL</label>
-                        <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 108px; " onkeyup="indexFilterText_KeyUp()" />
+                        <label>Lọc dữ liệu </label>
+                        <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 188px; " onkeyup="indexFilterText_KeyUp()" />
 
                         <span id="filterExtended">
                             @(Html.Kendo().DropDownList()
                                     .Name("ShowSummaryOptionID")
                                     .DataTextField("Text")
                                     .DataValueField("Value")
-                                    .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
+                                    .HtmlAttributes(new { @style = "width: 120px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
                                           new SelectListItem { Text = "Theo lô", Value = "20"},
@@ -93,8 +93,8 @@
                                     .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
-                                          new SelectListItem { Text = "Tất cả", Value = "1"},
-                                          new SelectListItem { Text = "Không hiển thị PO, TO và BIS", Value = "0"}
+                                          new SelectListItem { Text = "W/O PO, TO và BIS", Value = "0"},
+                                          new SelectListItem { Text = "Tất cả", Value = "1"}
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
@@ -103,12 +103,12 @@
                                     .Name("ShowFilterOptionID")
                                     .DataTextField("Text")
                                     .DataValueField("Value")
-                                    .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
+                                    .HtmlAttributes(new { @style = "width: 120px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
                                           new SelectListItem { Text = "Tất cả", Value = "0"},
-                                          new SelectListItem { Text = "NVL còn tồn BIS", Value = "10"},
-                                          new SelectListItem { Text = "NVL sắp đến HSD", Value = "20"}
+                                          new SelectListItem { Text = "Còn tồn BIS", Value = "10"},
+                                          new SelectListItem { Text = "Sắp đến HSD", Value = "20"}
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
@@ -129,6 +129,20 @@
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
 
+                            @(Html.Kendo().DropDownList()
+                                    .Name("ShowLocationID")
+                                    .DataTextField("Text")
+                                    .DataValueField("Value")
+                                    .Value(@Model.LocationID.ToString("N0"))
+                                    .HtmlAttributes(new { @style = "width: 88px; text-align: center; " })
+                                    .BindTo(new List<SelectListItem>()
+                                      {
+                                          new SelectListItem { Text = "Tất cả", Value = "0"},
+                                          new SelectListItem { Text = "Kho NVL", Value = "1"},
+                                          new SelectListItem { Text = "Kho PC", Value = "2"}
+                                      })
+                                    .Events(e => e.Change("indexFilterText_KeyUp"))
+                            )
                         </span>
 
 
@@ -152,7 +166,7 @@
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .Group(group => group.Add(p => p.CategoryName)).Group(group => group.Add(p => p.Features))
-                .Read(read => read.Action("GetBlendingInstructions", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
+                .Read(read => read.Action("GetInventoryControls", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
                 .Sort(sort => { sort.Add(p => p.CommodityCode); })
                 .PageSize(20)
                 .Model(model =>
@@ -186,6 +200,7 @@
     function onGetInventoryControls(e) {
         var indexFilterText = $("#indexFilterText").val();
         return {
+            locationID: $("#ShowLocationID").val(),
             summaryOptionID: $("#ShowSummaryOptionID").val(),
             labOptionID: $("#ShowLabOptionID").val(),
             filterOptionID: $("#ShowFilterOptionID").val(),

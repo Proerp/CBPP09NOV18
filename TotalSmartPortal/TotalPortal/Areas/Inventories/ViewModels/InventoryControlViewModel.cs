@@ -4,5 +4,8 @@
     {
         public int? CommodityID { get; set; }
         public string CommodityCode { get; set; }
+
+        public int LocationID { get; set; }
+        public string LocationCode { get; set; }
     }
 }

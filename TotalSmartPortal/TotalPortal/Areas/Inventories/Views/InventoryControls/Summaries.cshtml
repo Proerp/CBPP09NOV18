@@ -1,5 +1,7 @@
 ﻿@using TotalPortal.Configuration
 
+@model TotalPortal.Areas.Inventories.ViewModels.InventoryControlViewModel
+
 <div>
     @Html.Hidden("LastLabOptionID", "99")
     @Html.Hidden("LastFilterOptionID", "0")
@@ -65,19 +67,19 @@
                     <button type="button" class="k-button" onclick="callPrint()"> <img src="~/Content/Images/New/printer-D-24.png" /> In thẻ kho </button>
                     <div class="toolbar" style="float: right;">
                         <label>Lọc theo số BIS, sản phẩm hoặc NVL</label>
-                        <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 108px; " onkeyup="indexFilterText_KeyUp()" />
+                        <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 188px; " onkeyup="indexFilterText_KeyUp()" />
 
                         <span id="filterExtended">
                             @(Html.Kendo().DropDownList()
                                     .Name("ShowFilterOptionID")
                                     .DataTextField("Text")
                                     .DataValueField("Value")
-                                    .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
+                                    .HtmlAttributes(new { @style = "width: 120px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
                                           new SelectListItem { Text = "Tất cả", Value = "0"},  
-                                          new SelectListItem { Text = "NVL còn tồn BIS", Value = "10"},
-                                          new SelectListItem { Text = "NVL sắp đến HSD", Value = "20"}
+                                          new SelectListItem { Text = "Còn tồn BIS", Value = "10"},
+                                          new SelectListItem { Text = "Sắp đến HSD", Value = "20"}
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
@@ -98,6 +100,20 @@
                                     .Events(e => e.Change("indexFilterText_KeyUp"))
                             )
 
+                            @(Html.Kendo().DropDownList()
+                                    .Name("ShowLocationID")
+                                    .DataTextField("Text")
+                                    .DataValueField("Value")
+                                    .Value(@Model.LocationID.ToString("N0"))
+                                    .HtmlAttributes(new { @style = "width: 88px; text-align: center; " })
+                                    .BindTo(new List<SelectListItem>()
+                                      {
+                                          new SelectListItem { Text = "Tất cả", Value = "0"},
+                                          new SelectListItem { Text = "Kho NVL", Value = "1"},
+                                          new SelectListItem { Text = "Kho PC", Value = "2"}
+                                      })
+                                    .Events(e => e.Change("indexFilterText_KeyUp"))
+                            )
                         </span>
 
 
@@ -120,7 +136,7 @@
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .Group(group => group.Add(p => p.CategoryName))
-                                                .Read(read => read.Action("GetBlendingInstructions", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
+                .Read(read => read.Action("GetInventoryControls", "InventoryControlAPIs", new { area = "Inventories" }).Data("onGetInventoryControls"))
                 .PageSize(20)
                 .Model(model =>
                 {
@@ -150,6 +166,7 @@
     function onGetInventoryControls(e) {
         var indexFilterText = $("#indexFilterText").val();
         return {
+            locationID: $("#ShowLocationID").val(),
             summaryOptionID: 10,
             labOptionID: $("#ShowLabOptionID").val(),
             filterOptionID: $("#ShowFilterOptionID").val(),

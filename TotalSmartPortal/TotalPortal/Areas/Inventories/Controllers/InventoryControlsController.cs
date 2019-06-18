@@ -34,14 +34,17 @@ namespace TotalPortal.Areas.Inventories.Controllers
         public ActionResult Summaries()
         {
             this.AddRequireJsOptions(6668805);
-            return View();
+
+            InventoryControlViewModel inventoryControlViewModel = new InventoryControlViewModel() { LocationID = 1 };
+
+            return View(inventoryControlViewModel);
         }
 
         public ActionResult Details(int? id)
         {
             this.AddRequireJsOptions(6668809);
 
-            InventoryControlViewModel inventoryControlViewModel = new InventoryControlViewModel();
+            InventoryControlViewModel inventoryControlViewModel = new InventoryControlViewModel() { LocationID = 1 };
 
             if (id != null)
             {
