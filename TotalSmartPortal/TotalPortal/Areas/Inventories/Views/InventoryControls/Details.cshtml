@@ -78,6 +78,7 @@
                                     .Name("ShowSummaryOptionID")
                                     .DataTextField("Text")
                                     .DataValueField("Value")
+                                    .Value(@Model.SummaryOptionID.ToString("N0"))
                                     .HtmlAttributes(new { @style = "width: 120px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {

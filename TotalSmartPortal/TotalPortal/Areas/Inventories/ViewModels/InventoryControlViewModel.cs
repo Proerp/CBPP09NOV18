@@ -6,6 +6,7 @@
         public string CommodityCode { get; set; }
 
         public int LocationID { get; set; }
-        public string LocationCode { get; set; }
+
+        public int SummaryOptionID { get; set; }
     }
 }

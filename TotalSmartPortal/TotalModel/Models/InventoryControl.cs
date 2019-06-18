@@ -45,5 +45,6 @@ namespace TotalModel.Models
         public Nullable<int> TransferOrderID { get; set; }
         public Nullable<decimal> QuantityPurchaseOrders { get; set; }
         public Nullable<decimal> QuantityTransferOrders { get; set; }
+        public Nullable<int> BarcodeID { get; set; }
     }
 }

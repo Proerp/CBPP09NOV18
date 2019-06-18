@@ -23605,6 +23605,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="TransferOrderID" Nullable="true" />
           <Property Type="Decimal" Name="QuantityPurchaseOrders" Nullable="true" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityTransferOrders" Nullable="true" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="BarcodeID" Nullable="true" />
         </ComplexType>
         <EntityType Name="WarehouseTransferDetail">
           <Key>
@@ -32963,6 +32964,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="TransferOrderID" ColumnName="TransferOrderID" />
                 <ScalarProperty Name="QuantityPurchaseOrders" ColumnName="QuantityPurchaseOrders" />
                 <ScalarProperty Name="QuantityTransferOrders" ColumnName="QuantityTransferOrders" />
+                <ScalarProperty Name="BarcodeID" ColumnName="BarcodeID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
