@@ -481,7 +481,6 @@
     <Compile Include="Controllers\GenericViewDetailController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -2498,8 +2497,6 @@
     <Content Include="Scripts\Controllers\Root\Home\Searches.js" />
     <Content Include="Scripts\Controllers\Root\Account\UserReferences.js" />
     <Content Include="Scripts\Controllers\Root\Home\SmartBiztech.js" />
-    <Content Include="Scripts\Controllers\Root\Reports\Index.js" />
-    <Content Include="Scripts\Controllers\Root\Reports\Open.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Commons\kendoWidgetReadonly.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Commons\kpopupWindow.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Commons\superBase.js" />
@@ -3329,7 +3326,6 @@
     <Content Include="Views\Home\Options.cshtml" />
     <Content Include="Views\Home\UserGuide.cshtml" />
     <Content Include="Views\Home\LockedDate.cshtml" />
-    <Content Include="Views\Reports\Index.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AutoCompletes\VoidTypeBase.cshtml" />
     <Content Include="Views\Helpers\Commons\_ApproveConfirmed.cshtml" />
     <Content Include="Views\Helpers\Commons\_VoidConfirmed.cshtml" />
@@ -3346,7 +3342,6 @@
     <Content Include="Views\Helpers\Bases\_BaseSectionTop.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Commons\ReceiptBox.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\DropDowns\MonetaryAccount.cshtml" />
-    <Content Include="Views\Reports\Open.cshtml" />
     <Content Include="Views\Helpers\Commons\_SearchCustomer.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\AutoCompletes\WarehouseBase.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Commons\WarehouseBase.cshtml" />
