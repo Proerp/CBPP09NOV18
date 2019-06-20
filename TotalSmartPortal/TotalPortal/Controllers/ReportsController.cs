@@ -39,7 +39,7 @@ namespace TotalPortal.Controllers
             RequireJsOptions.Add("ModuleID", 9, RequireJsOptionsScope.Page);
             RequireJsOptions.Add("NmvnTaskID", 0, RequireJsOptionsScope.Page);
 
-            return View(this.reportRepository.GetEntityIndexes<Report>(User.Identity.GetUserId(), HomeSession.GetGlobalFromDate(this.HttpContext), HomeSession.GetGlobalToDate(this.HttpContext)));
+            return View();
         }
 
 

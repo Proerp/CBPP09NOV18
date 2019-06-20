@@ -128,6 +128,7 @@
     <Compile Include="Services\Accounts\IAccountInvoiceService.cs" />
     <Compile Include="Services\Accounts\ICreditNoteService.cs" />
     <Compile Include="Services\Accounts\IReceiptService.cs" />
+    <Compile Include="Services\Analysis\IReportService.cs" />
     <Compile Include="Services\Commons\IBinLocationService.cs" />
     <Compile Include="Services\Commons\IBomService.cs" />
     <Compile Include="Services\Commons\ICommodityPriceService.cs" />

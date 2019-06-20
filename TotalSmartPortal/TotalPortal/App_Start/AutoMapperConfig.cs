@@ -12,6 +12,7 @@ using TotalDTO.Productions;
 using TotalDTO.Inventories;
 using TotalDTO.Commons;
 using TotalDTO.Accounts;
+using TotalDTO.Analysis;
 
 using TotalPortal.Areas.Sales.ViewModels;
 using TotalPortal.Areas.Purchases.ViewModels;
@@ -19,6 +20,8 @@ using TotalPortal.Areas.Productions.ViewModels;
 using TotalPortal.Areas.Inventories.ViewModels;
 using TotalPortal.Areas.Accounts.ViewModels;
 using TotalPortal.Areas.Commons.ViewModels;
+using TotalPortal.Areas.Analysis.ViewModels;
+
 
 
 [assembly: WebActivatorEx.PreApplicationStartMethod(typeof(TotalPortal.App_Start.AutoMapperConfig), "SetupMappings")]
@@ -469,6 +472,11 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<BinLocation, BinLocationDTO>();
                 cfg.CreateMap<BinLocation, BinLocationBaseDTO>();
                 cfg.CreateMap<BinLocationPrimitiveDTO, BinLocation>();
+
+
+                cfg.CreateMap<Report, ReportViewModel>();
+                cfg.CreateMap<Report, ReportDTO>();
+                cfg.CreateMap<ReportPrimitiveDTO, Report>();
 
 
                 //cfg.CreateMap<Module, ModuleViewModel>();

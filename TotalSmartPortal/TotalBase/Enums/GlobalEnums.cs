@@ -38,6 +38,7 @@ namespace TotalBase.Enums
         public enum NmvnTaskID
         {
             UnKnown = 0,
+            Report = 1,
 
             Bom = 2002,
             Lab = 2001,

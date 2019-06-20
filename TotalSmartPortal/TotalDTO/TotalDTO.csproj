@@ -82,6 +82,7 @@
     <Compile Include="Accounts\CreditNoteDTO.cs" />
     <Compile Include="Accounts\ReceiptDetailDTO.cs" />
     <Compile Include="Accounts\ReceiptDTO.cs" />
+    <Compile Include="Analysis\ReportDTO.cs" />
     <Compile Include="BaseDTO.cs" />
     <Compile Include="BaseWithDetailDTO.cs" />
     <Compile Include="Commons\BarcodeDTO.cs" />

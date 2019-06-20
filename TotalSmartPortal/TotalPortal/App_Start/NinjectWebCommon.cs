@@ -10,7 +10,7 @@ namespace TotalPortal.App_Start
 
     using Ninject;
     using Ninject.Web.Common;
-
+    using Ninject.Web.Common.WebHost;
 
     using TotalModel.Models;
 
@@ -26,6 +26,7 @@ namespace TotalPortal.App_Start
     using TotalCore.Repositories.Analysis;
 
     using TotalCore.Services.Commons;
+    using TotalCore.Services.Analysis;
     using TotalCore.Services.Sales;
     using TotalCore.Services.Purchases;
     using TotalCore.Services.Productions;
@@ -46,6 +47,7 @@ namespace TotalPortal.App_Start
 
 
     using TotalService.Commons;
+    using TotalService.Analysis;
     using TotalService.Sales;
     using TotalService.Purchases;
     using TotalService.Productions;
@@ -59,7 +61,8 @@ namespace TotalPortal.App_Start
     using TotalPortal.Areas.Inventories.Builders;
     using TotalPortal.Areas.Commons.Builders;
     using TotalPortal.Areas.Accounts.Builders;
-    using Ninject.Web.Common.WebHost;
+    using TotalPortal.Areas.Analysis.Builders;
+    
     
         
         
@@ -109,7 +112,11 @@ namespace TotalPortal.App_Start
                 kernel.Bind<IModuleRepository>().To<ModuleRepository>();
                 kernel.Bind<IModuleDetailRepository>().To<ModuleDetailRepository>();
 
+                kernel.Bind<IReportService>().To<ReportService>();
+                kernel.Bind<IReportRepository>().To<ReportRepository>();
                 kernel.Bind<IReportAPIRepository>().To<ReportAPIRepository>();
+                kernel.Bind<IReportSelectListBuilder>().To<ReportSelectListBuilder>();
+
 
                 kernel.Bind<IInventoryControlAPIRepository>().To<InventoryControlAPIRepository>();
 

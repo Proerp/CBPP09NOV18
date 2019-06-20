@@ -782,10 +782,6 @@ namespace TotalModel.Models
         public System.DateTime EditedDate { get; set; }
     }
 
-    public partial class BinLocationIndex
-    {
-        public string Features { get { return this.WarehouseName + " [" + this.BinTypeName + "]"; } }
-    }
 
     public partial class Employee : IPrimitiveEntity, IBaseEntity
     {
@@ -925,6 +921,12 @@ namespace TotalModel.Models
     }
 
 
+    public partial class BinLocationIndex
+    {
+        public string Features { get { return this.WarehouseName + " [" + this.BinTypeName + "]"; } }
+    }
+
+
     public partial class BinLocation : IPrimitiveEntity, IBaseEntity
     {
         public int GetID() { return this.BinLocationID; }
@@ -934,4 +936,16 @@ namespace TotalModel.Models
     }
 
 
+    public partial class Report : IPrimitiveEntity, IBaseEntity
+    {
+        public int GetID() { return this.ReportID; }
+
+        public int UserID { get; set; }
+        public int PreparedPersonID { get; set; }
+        public int OrganizationalUnitID { get; set; }
+        public int LocationID { get; set; }
+
+        public System.DateTime CreatedDate { get; set; }
+        public System.DateTime EditedDate { get; set; }
+    }
 }

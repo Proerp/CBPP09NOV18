@@ -257,6 +257,11 @@
     <Compile Include="Areas\Accounts\ViewModels\AccountInvoiceViewModel.cs" />
     <Compile Include="Areas\Accounts\ViewModels\CreditNoteViewModel.cs" />
     <Compile Include="Areas\Accounts\ViewModels\ReceiptViewModel.cs" />
+    <Compile Include="Areas\Analysis\AnalysisAreaRegistration.cs" />
+    <Compile Include="Areas\Analysis\APIs\ReportAPIsController.cs" />
+    <Compile Include="Areas\Analysis\Builders\IReportSelectListBuilder.cs" />
+    <Compile Include="Areas\Analysis\Controllers\ReportsController.cs" />
+    <Compile Include="Areas\Analysis\ViewModels\ReportViewModel.cs" />
     <Compile Include="Areas\Commons\APIs\BarcodeAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\BinLocationAPIsController.cs" />
     <Compile Include="Areas\Commons\APIs\CommodityAPIsController.cs" />
@@ -1965,6 +1970,11 @@
     <Content Include="Areas\Inventories\Views\GoodsReceipts\GetPendingRecyclateDetails.cshtml" />
     <Content Include="Areas\Inventories\Views\GoodsReceipts\_GetRecyclate.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\CallCommodities.cshtml" />
+    <Content Include="Areas\Analysis\Views\Reports\Index.cshtml" />
+    <Content Include="Areas\Analysis\Views\web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Areas\Analysis\Views\_ViewStart.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -1995,6 +2005,7 @@
     <Content Include="Scripts\Controllers\Accounts\Receipts\Edit.js" />
     <Content Include="Scripts\Controllers\Accounts\Receipts\Index.js" />
     <Content Include="Scripts\Controllers\Accounts\Receipts\Open.js" />
+    <Content Include="Scripts\Controllers\Analysis\Reports\Index.js" />
     <Content Include="Scripts\Controllers\Commons\BinLocations\Create.js" />
     <Content Include="Scripts\Controllers\Commons\BinLocations\Delete.js" />
     <Content Include="Scripts\Controllers\Commons\BinLocations\Edit.js" />
