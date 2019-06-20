@@ -104,7 +104,7 @@
         var moduleID = $(e.item).attr("ModuleID");
 
         if (moduleID === "9") {
-            window.open('@Url.Action("Index", "Reports")', "_self");
+            window.open('@Url.Action("Index", "Analysis/Reports")', "_self");
         }
         else {
             var url = '@Url.Action("TaskMenu", "MenuAPIs", new { moduleID = "module-id" })';

@@ -6,8 +6,8 @@
         .Columns(columns =>
         {
             columns.Bound(p => p.ReportID).Hidden();
-            columns.Bound(p => p.ReportGroupName).Title("NHÓM").Width(10).Hidden();
-            columns.Bound(p => p.ReportName).Title("Tên báo cáo").Width(306).ClientTemplate("# if (ReportTypeID == 1) { #<a href=#=ReportURL# target='_blank'> #=ReportName# </a># } else { #<a href='" + Url.RouteUrl("Default", new { controller = "Analysis/Reports", action = "Viewer" }) + "/#= ReportID #' target='_blank'>#=ReportName#</a># } #");
+            columns.Bound(p => p.ReportGroupName).Title("CAT").Width(10).Hidden();
+            columns.Bound(p => p.ReportName).Title("Báo cáo").Width(306).ClientTemplate("# if (ReportTypeID == 1) { #<a href=#=ReportURL# target='_blank'> #=ReportName# </a># } else { #<a href='" + Url.RouteUrl("Default", new { controller = "Analysis/Reports", action = "Viewer" }) + "/#= ReportID #' target='_blank'>#=ReportName#</a># } #");
             columns.Bound(p => p.Remarks).Title("Diễn giải").Width(620);
         })
         .ToolBar(toolbar =>
