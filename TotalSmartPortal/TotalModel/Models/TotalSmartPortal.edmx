@@ -14754,7 +14754,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="CustomerID" Mode="In" Type="Int32" />
             <Parameter Name="IsReadonly" Mode="In" Type="Boolean" />
           </FunctionImport>
-          <FunctionImport Name="GetReportIndexes" EntitySet="Reports" ReturnType="Collection(TotalSmartPortalModel.Report)">
+          <FunctionImport Name="GetReportIndexes" ReturnType="Collection(TotalSmartPortalModel.ReportIndex)">
             <Parameter Name="AspUserID" Mode="In" Type="String" />
             <Parameter Name="FromDate" Mode="In" Type="DateTime" />
             <Parameter Name="ToDate" Mode="In" Type="DateTime" />
@@ -18256,6 +18256,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="ReportTypeID" Nullable="false" />
           <Property Type="Int32" Name="SerialID" Nullable="false" />
           <Property Type="String" Name="Remarks" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="PrintOptionID" Nullable="false" />
         </ComplexType>
         <ComplexType Name="SalesOrderIndex">
           <Property Type="Int32" Name="SalesOrderID" Nullable="false" />
@@ -29285,6 +29286,20 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetReportIndexes" FunctionName="TotalSmartPortalModel.Store.GetReportIndexes">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.ReportIndex">
+                <ScalarProperty Name="ReportID" ColumnName="ReportID" />
+                <ScalarProperty Name="ReportUniqueID" ColumnName="ReportUniqueID" />
+                <ScalarProperty Name="ReportGroupID" ColumnName="ReportGroupID" />
+                <ScalarProperty Name="ReportGroupName" ColumnName="ReportGroupName" />
+                <ScalarProperty Name="ReportName" ColumnName="ReportName" />
+                <ScalarProperty Name="ReportURL" ColumnName="ReportURL" />
+                <ScalarProperty Name="ReportTypeID" ColumnName="ReportTypeID" />
+                <ScalarProperty Name="SerialID" ColumnName="SerialID" />
+                <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+                <ScalarProperty Name="PrintOptionID" ColumnName="PrintOptionID" />
+              </ComplexTypeMapping>
+            </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="GetSalesOrderIndexes" FunctionName="TotalSmartPortalModel.Store.GetSalesOrderIndexes">
             <ResultMapping>

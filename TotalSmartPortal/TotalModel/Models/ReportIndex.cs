@@ -22,5 +22,6 @@ namespace TotalModel.Models
         public int ReportTypeID { get; set; }
         public int SerialID { get; set; }
         public string Remarks { get; set; }
+        public int PrintOptionID { get; set; }
     }
 }

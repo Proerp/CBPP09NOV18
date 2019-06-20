@@ -1215,7 +1215,7 @@ namespace TotalModel.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReceiptViewDetail>("GetReceiptViewDetails", receiptIDParameter, locationIDParameter, goodsIssueIDParameter, customerIDParameter, isReadonlyParameter);
         }
     
-        public virtual ObjectResult<Report> GetReportIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
+        public virtual ObjectResult<ReportIndex> GetReportIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)
         {
             var aspUserIDParameter = aspUserID != null ?
                 new ObjectParameter("AspUserID", aspUserID) :
@@ -1229,24 +1229,7 @@ namespace TotalModel.Models
                 new ObjectParameter("ToDate", toDate) :
                 new ObjectParameter("ToDate", typeof(System.DateTime));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Report>("GetReportIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
-        }
-    
-        public virtual ObjectResult<Report> GetReportIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate, MergeOption mergeOption)
-        {
-            var aspUserIDParameter = aspUserID != null ?
-                new ObjectParameter("AspUserID", aspUserID) :
-                new ObjectParameter("AspUserID", typeof(string));
-    
-            var fromDateParameter = fromDate.HasValue ?
-                new ObjectParameter("FromDate", fromDate) :
-                new ObjectParameter("FromDate", typeof(System.DateTime));
-    
-            var toDateParameter = toDate.HasValue ?
-                new ObjectParameter("ToDate", toDate) :
-                new ObjectParameter("ToDate", typeof(System.DateTime));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Report>("GetReportIndexes", mergeOption, aspUserIDParameter, fromDateParameter, toDateParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<ReportIndex>("GetReportIndexes", aspUserIDParameter, fromDateParameter, toDateParameter);
         }
     
         public virtual ObjectResult<SalesOrderIndex> GetSalesOrderIndexes(string aspUserID, Nullable<System.DateTime> fromDate, Nullable<System.DateTime> toDate)

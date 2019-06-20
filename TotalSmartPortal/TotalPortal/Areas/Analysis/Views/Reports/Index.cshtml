@@ -6,82 +6,39 @@
         .Columns(columns =>
         {
             columns.Bound(p => p.ReportID).Hidden();
-
-            columns.Bound(p => p.ReportName).Title("Mã vị trí").Width(96).HtmlAttributes(new { @class = "index-nav-column grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Commons/Reports", action = "Edit" }) + "/#= ReportID #'>#=Code#</a>");
-            columns.Bound(p => p.Remarks).Title("Ghi chú").Width(200);
-
+            columns.Bound(p => p.ReportGroupName).Title("NHÓM").Width(10).Hidden();
+            columns.Bound(p => p.ReportName).Title("Tên báo cáo").Width(306).ClientTemplate("# if (ReportTypeID == 1) { #<a href=#=ReportURL# target='_blank'> #=ReportName# </a># } else { #<a href='" + Url.RouteUrl("Default", new { controller = "Analysis/Reports", action = "Viewer" }) + "/#= ReportID #' target='_blank'>#=ReportName#</a># } #");
+            columns.Bound(p => p.Remarks).Title("Diễn giải").Width(620);
         })
         .ToolBar(toolbar =>
         {
             toolbar.Template(@<text>
-                <button type="button" class="k-button" onclick="location.href='@Url.Action("Create", "Reports")'"> <img src="~/Content/Images/Mains/Customer Orange 24.png" /> Thêm vị trí mới </button>
                 <div class="toolbar" style="float: right;">
                     <label>Nhập mã kho hoặc vị trí để tìm</label>
                     <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
                 </div>
             </text>);
         })
-            .Pageable()
-            //.Groupable()
-            .Filterable(f => f.Enabled(false))
-            .Selectable()
-            .Sortable()
-            .Events(e =>
-            {
-                e.DataBound("hightLightSelectedRow");
-            })
-            .DataSource(dataSource => dataSource
-                .Ajax()
-                .Group(group => group.Add(p => p.ReportGroupName))
-                .Read(read => read.Action("GetReportIndexes", "ReportAPIs", new { area = "Analysis" }))
-                .Sort(sort =>
-                    {
-                        sort.Add(p => p.ReportName);
-                    })
-                .PageSize(20)
-                .Model(model =>
+        .Filterable(f => f.Enabled(false))
+        .Selectable()
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .Group(group => group.Add(p => p.ReportGroupName))
+            .Read(read => read.Action("GetReportIndexes", "ReportAPIs", new { area = "Analysis" }))
+            .Sort(sort =>
                 {
-                    model.Id(x => x.ReportID);
-                    model.Field(m => m.ReportID).DefaultValue(0);
+                    sort.Add(p => p.ReportName);
                 })
-                .ServerOperation(true)
-            )
-            .HtmlAttributes(new { @class = "grid-class" }))
+            .PageSize(20)
+            .Model(model =>
+            {
+                model.Id(x => x.ReportID);
+                model.Field(m => m.ReportID).DefaultValue(0);
+            })
+            .ServerOperation(true)
+        )
+        .HtmlAttributes(new { @class = "grid-class" }))
 </div>
-
-
-
-<script type="text/javascript">
-    function hightLightSelectedRow(e) {
-        require(["kindexGrid"], function (kindexGrid) {
-            var kindexGridInstance = new kindexGrid("kendoGridIndex");
-            kindexGridInstance.setSelectedRow("ReportID", '@ViewBag.SelectedEntityID');
-        });
-    }
-
-    function indexFilterText_KeyUp() {
-        var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
-
-        if (indexFilterText && indexFilterText.length >= "@Settings.AutoCompleteMinLenght") {
-            gridDetails.dataSource.filter({
-                logic: "or",
-                filters: [
-                    { field: "Code", operator: "contains", value: indexFilterText },
-                    { field: "Features", operator: "contains", value: indexFilterText },
-                    { field: "Description", operator: "contains", value: indexFilterText },
-                    { field: "Caption", operator: "contains", value: indexFilterText },
-                    { field: "Remarks", operator: "contains", value: indexFilterText }
-                ]
-            });
-
-
-        } else {
-            if (gridDetails.dataSource.filter() != undefined)
-                gridDetails.dataSource.filter({});
-        }
-    }
-</script>
-
 
 
 <style>
