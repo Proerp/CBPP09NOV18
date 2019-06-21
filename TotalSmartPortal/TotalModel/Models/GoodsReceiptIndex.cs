@@ -33,5 +33,6 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> GoodsArrivalPurchaseOrderVoucherDate { get; set; }
         public string GoodsArrivalPurchaseOrderCodes { get; set; }
         public string CustomerCode { get; set; }
+        public int TotalRows { get; set; }
     }
 }

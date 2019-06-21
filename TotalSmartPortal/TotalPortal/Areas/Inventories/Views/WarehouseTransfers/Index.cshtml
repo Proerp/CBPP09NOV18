@@ -23,7 +23,8 @@
                 columns.Bound(p => p.WarehouseReceiptCode).Title("Kho nhập").Width(30);
                 columns.Bound(p => p.Caption).Title("Mặt hàng").Width(396);
                 columns.Bound(p => p.WarehouseTransferJobs).Title("Mục đích").Width(168);
-                
+
+                columns.Bound(p => p.TotalRows).Title("SK").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                 columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
                 columns.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
@@ -66,6 +67,7 @@
                     model.Field(m => m.WarehouseTransferID).DefaultValue(0);
                 })
                 .ServerOperation(true)
+                .Aggregates(a => a.Add(x => x.TotalRows).Sum())
                 .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
                 )
             .HtmlAttributes(new { @class = "grid-class" }))

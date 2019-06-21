@@ -7,11 +7,12 @@
     .Name("gridPendingBlendingInstructions")
     .Columns(columns =>
     {
-        columns.Bound(c => c.CommodityCode).Title("Mã NVL").Width(16);
+        columns.Bound(c => c.CommodityCode).Title("Mã NVL").Width(12);
         columns.Bound(c => c.QuantityRemains).Title("Tồn lệnh").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
-        columns.Bound(c => c.QuantityAvailableReceipts).Title("Tồn kho PC").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
-        columns.Bound(c => c.Quantity).Title("KL phải điều").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
-        columns.Bound(c => c.Packages).Title("Số kiện").Format(Settings.kfmQuantity).Width(10).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.QuantityAvailableReceipts).Title("Tồn kho PC").Format(Settings.kfmQuantity).Width(12).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.Quantity).Title("KL phải điều").Format(Settings.kfmQuantity).Width(12).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.Packages).Title("Số kiện").Format(Settings.kfmQuantity).Width(8).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" });
+        columns.Bound(c => c.BinLocationCodes).Title("Vị trí").Width(15);
     })
     .Scrollable(s => s.Height(320))
     .DataSource(ds => ds.Ajax()

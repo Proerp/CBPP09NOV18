@@ -27,5 +27,6 @@ namespace TotalModel.Models
         public Nullable<decimal> QuantityAvailables { get; set; }
         public Nullable<decimal> QuantityAvailableReceipts { get; set; }
         public Nullable<decimal> Weight { get; set; }
+        public string BinLocationCodes { get; set; }
     }
 }

@@ -20,6 +20,8 @@ namespace TotalDTO.Helpers
 
         public virtual decimal GetTotalQuantity() { return this.DtoDetails().Select(o => o.Quantity).Sum(); }
 
+        public int TotalRows { get { return this.DtoDetails().Count(); } }
+
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             foreach (var result in base.Validate(validationContext)) { yield return result; }

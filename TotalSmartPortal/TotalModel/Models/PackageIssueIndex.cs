@@ -31,5 +31,6 @@ namespace TotalModel.Models
         public string CommodityCode { get; set; }
         public string CommodityName { get; set; }
         public int BlendingInstructionID { get; set; }
+        public int TotalRows { get; set; }
     }
 }

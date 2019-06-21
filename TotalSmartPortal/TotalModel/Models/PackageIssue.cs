@@ -48,6 +48,7 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public Nullable<System.DateTime> ApprovedDate { get; set; }
         public string Caption { get; set; }
+        public int TotalRows { get; set; }
     
         public virtual BlendingInstruction BlendingInstruction { get; set; }
         public virtual Employee Employee { get; set; }

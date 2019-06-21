@@ -29,5 +29,6 @@ namespace TotalModel.Models
         public string WorkshiftName { get; set; }
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
+        public int TotalRows { get; set; }
     }
 }

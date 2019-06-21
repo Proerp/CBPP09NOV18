@@ -19,6 +19,8 @@
 
             columns.Bound(p => p.Caption).Title("NVL").Width(436);
             columns.Bound(p => p.Description).Title("Diễn giải").Width(200);
+
+            columns.Bound(p => p.TotalRows).Title("SL").Format(Settings.kfmN0).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmN0 + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
             columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 
             columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(80)
@@ -59,6 +61,7 @@
                     model.Field(m => m.PackageIssueID).DefaultValue(0);
                 })
                 .ServerOperation(true)
+                .Aggregates(a => a.Add(x => x.TotalRows).Sum())
                 .Aggregates(a => a.Add(x => x.TotalQuantity).Sum())
                 )
             .HtmlAttributes(new { @class = "grid-class" })
