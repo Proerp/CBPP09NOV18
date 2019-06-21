@@ -58,7 +58,7 @@ namespace TotalPortal.APIs.Sessions
         public static DateTime GetGlobalFromDate(HttpContextBase context)
         {
             if (context.Session["GlobalFromDate"] == null)
-                return DateTime.Today.AddDays(TotalBase.Enums.GlobalEnums.CBPP? - 1800: -10);
+                return DateTime.Today.AddDays(TotalBase.Enums.GlobalEnums.CBPP ? -1800 : -10);
             else
                 return (DateTime)context.Session["GlobalFromDate"];
         }
@@ -84,6 +84,46 @@ namespace TotalPortal.APIs.Sessions
         }
 
 
+
+
+
+
+
+        public static DateTime GetReportFromDate(HttpContextBase context)
+        {
+            if (context.Session["ReportFromDate"] == null)
+                return TotalBase.Enums.GlobalEnums.CBPP ? DateTime.Today : new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
+            else
+                return (DateTime)context.Session["ReportFromDate"];
+        }
+
+        public static void SetReportFromDate(HttpContextBase context, DateTime globalFromDate)
+        {
+            context.Session["ReportFromDate"] = globalFromDate;
+        }
+
+
+
+        public static DateTime GetReportToDate(HttpContextBase context)
+        {
+            if (context.Session["ReportToDate"] == null)
+            {
+                DateTime toDate = DateTime.Today;
+                if (!TotalBase.Enums.GlobalEnums.CBPP)
+                {
+                    toDate = toDate.AddMonths(1);
+                    toDate = (new DateTime(toDate.Year, toDate.Month, 1)).AddDays(-1);
+                }
+                return toDate.AddHours(23).AddMinutes(59).AddSeconds(59);
+            }
+            else
+                return (DateTime)context.Session["ReportToDate"];
+        }
+
+        public static void SetReportToDate(HttpContextBase context, DateTime globalToDate)
+        {
+            context.Session["ReportToDate"] = globalToDate;
+        }
 
 
 

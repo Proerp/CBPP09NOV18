@@ -20,6 +20,13 @@ namespace TotalDTO.Analysis
         public int ReportID { get; set; }
         [Display(Name = "Báo cáo")]
         public string ReportName { get; set; }
+
+
+        [Display(Name = "Ngày báo cáo")]
+        public DateTime ReportFromDate { get; set; }
+        [Display(Name = "Đến")]
+        public DateTime ReportToDate { get; set; }
+
     }
 
     public class ReportDTO : ReportPrimitiveDTO

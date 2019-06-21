@@ -1,5 +1,7 @@
 ﻿@using TotalPortal.Configuration
 
+@model TotalPortal.Areas.Analysis.ViewModels.ReportViewModel
+
 <div>
     @(Html.Kendo().Grid<TotalModel.Models.ReportIndex>()
         .Name("kendoGridIndex")
@@ -14,8 +16,9 @@
         {
             toolbar.Template(@<text>
                 <div class="toolbar" style="float: right;">
-                    <label>Nhập mã kho hoặc vị trí để tìm</label>
-                    <input id="indexFilterText" class="k-textbox" style="text-align: center; " onkeyup="indexFilterText_KeyUp()" />
+                    @Html.LabelFor(m => m.ReportFromDate)
+                    @Html.Kendo().DatePickerFor(m => m.ReportFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                    @Html.Kendo().DatePickerFor(m => m.ReportToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
                 </div>
             </text>);
         })
@@ -40,6 +43,31 @@
         .HtmlAttributes(new { @class = "grid-class" }))
 </div>
 
+
+<script>
+    function indexFilterText_KeyUp(readDataSource) {
+        @*var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+
+        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastLabOptionID").val() != $("#ShowLabOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val()) {
+            $("#LastLabOptionID").val($("#ShowLabOptionID").val());
+            $("#LastFilterOptionID").val($("#ShowFilterOptionID").val());
+            gridDetails.dataSource.filter({
+                logic: "or",
+                filters: [
+                    { field: "Reference", operator: "contains", value: indexFilterText },
+                    { field: "Features", operator: "contains", value: indexFilterText },
+                    { field: "CommodityCode", operator: "contains", value: indexFilterText },
+                    { field: "CommodityName", operator: "contains", value: indexFilterText }
+                ]
+            });
+
+
+        } else {
+            if (indexFilterText && indexFilterText.length && gridDetails.dataSource.filter() != undefined)
+                gridDetails.dataSource.filter({});
+        }*@
+    }
+</script>
 
 <style>
     .k-grid td {

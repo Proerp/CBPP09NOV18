@@ -32,6 +32,14 @@ namespace TotalPortal.Areas.Analysis.Controllers
             this.reportAPIRepository = reportAPIRepository;
         }
 
+        protected override ReportViewModel InitViewModel(ReportViewModel simpleViewModel)
+        {
+            simpleViewModel = base.InitViewModel(simpleViewModel);
+            simpleViewModel.ReportFromDate = HomeSession.GetReportFromDate(this.HttpContext);
+            simpleViewModel.ReportToDate = HomeSession.GetReportToDate(this.HttpContext);
+
+            return simpleViewModel;
+        }
 
         public ActionResult Viewer(int? id, int? detailID)
         {
