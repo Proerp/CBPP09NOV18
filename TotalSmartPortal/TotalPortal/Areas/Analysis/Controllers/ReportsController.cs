@@ -35,8 +35,8 @@ namespace TotalPortal.Areas.Analysis.Controllers
         protected override ReportViewModel InitViewModel(ReportViewModel simpleViewModel)
         {
             simpleViewModel = base.InitViewModel(simpleViewModel);
-            simpleViewModel.ReportFromDate = HomeSession.GetReportFromDate(this.HttpContext);
-            simpleViewModel.ReportToDate = HomeSession.GetReportToDate(this.HttpContext);
+            simpleViewModel.FromDate = HomeSession.GetReportFromDate(this.HttpContext);
+            simpleViewModel.ToDate = HomeSession.GetReportToDate(this.HttpContext);
 
             return simpleViewModel;
         }
@@ -49,6 +49,8 @@ namespace TotalPortal.Areas.Analysis.Controllers
             if (reportIndex == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
             PrintViewModel printViewModel = new PrintViewModel() { Id = id, DetailID = detailID, PrintOptionID = reportIndex.PrintOptionID, LocationID = this.reportService.LocationID, ReportPath = reportIndex.ReportURL };
+            printViewModel.FromDate = HomeSession.GetReportFromDate(this.HttpContext);
+            printViewModel.ToDate = HomeSession.GetReportToDate(this.HttpContext);
 
             return View(viewName: "Viewer", model: printViewModel);
         }

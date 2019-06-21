@@ -23,10 +23,9 @@ namespace TotalDTO.Analysis
 
 
         [Display(Name = "Ngày báo cáo")]
-        public DateTime ReportFromDate { get; set; }
+        public DateTime FromDate { get; set; }
         [Display(Name = "Đến")]
-        public DateTime ReportToDate { get; set; }
-
+        public DateTime ToDate { get; set; }
     }
 
     public class ReportDTO : ReportPrimitiveDTO

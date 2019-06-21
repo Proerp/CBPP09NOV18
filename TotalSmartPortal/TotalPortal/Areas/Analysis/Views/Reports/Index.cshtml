@@ -16,9 +16,9 @@
         {
             toolbar.Template(@<text>
                 <div class="toolbar" style="float: right;">
-                    @Html.LabelFor(m => m.ReportFromDate)
-                    @Html.Kendo().DatePickerFor(m => m.ReportFromDate).Events(e => e.Change("SetReportParameters")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
-                    @Html.Kendo().DatePickerFor(m => m.ReportToDate).Events(e => e.Change("SetReportParameters")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                    @Html.LabelFor(m => m.FromDate)
+                    @Html.Kendo().DatePickerFor(m => m.FromDate).Events(e => e.Change("SetReportParameters")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                    @Html.Kendo().DatePickerFor(m => m.ToDate).Events(e => e.Change("SetReportParameters")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
                 </div>
             </text>);
         })
@@ -48,7 +48,7 @@
     function SetReportParameters() {
         return $.ajax({
             url: window.urlSetReportParameters,
-            data: JSON.stringify({ "fromDate": $("#ReportFromDate").val(), "toDate": $("#ReportToDate").val() }),
+            data: JSON.stringify({ "fromDate": $("#FromDate").val(), "toDate": $("#ToDate").val() }),
 
             type: 'POST',
             contentType: 'application/json;',

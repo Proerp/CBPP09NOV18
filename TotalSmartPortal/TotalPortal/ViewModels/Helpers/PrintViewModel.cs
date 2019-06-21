@@ -1,4 +1,5 @@
-﻿using TotalBase.Enums;
+﻿using System;
+using TotalBase.Enums;
 
 namespace TotalPortal.ViewModels.Helpers
 {
@@ -8,6 +9,9 @@ namespace TotalPortal.ViewModels.Helpers
         public int? DetailID { get; set; }
 
         public int? FilterID { get; set; }
+
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
 
         public int LocationID { get; set; }
         public GlobalEnums.NmvnTaskID NmvnTaskID { get; set; }
