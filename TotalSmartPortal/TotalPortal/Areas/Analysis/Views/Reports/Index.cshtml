@@ -17,8 +17,8 @@
             toolbar.Template(@<text>
                 <div class="toolbar" style="float: right;">
                     @Html.LabelFor(m => m.ReportFromDate)
-                    @Html.Kendo().DatePickerFor(m => m.ReportFromDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
-                    @Html.Kendo().DatePickerFor(m => m.ReportToDate).Events(e => e.Change("indexFilterText_KeyUp")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                    @Html.Kendo().DatePickerFor(m => m.ReportFromDate).Events(e => e.Change("SetReportParameters")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
+                    @Html.Kendo().DatePickerFor(m => m.ReportToDate).Events(e => e.Change("SetReportParameters")).HtmlAttributes(new { @class = "input-class", type = "text", style = "text-align: center; width:118px" })
                 </div>
             </text>);
         })
@@ -45,28 +45,25 @@
 
 
 <script>
-    function indexFilterText_KeyUp(readDataSource) {
-        @*var indexFilterText = $("#indexFilterText").val(), gridDetails = $("#kendoGridIndex").data("kendoGrid");
+    function SetReportParameters() {
+        return $.ajax({
+            url: window.urlSetReportParameters,
+            data: JSON.stringify({ "fromDate": $("#ReportFromDate").val(), "toDate": $("#ReportToDate").val() }),
 
-        if (readDataSource == true || (indexFilterText === "" || indexFilterText.length >= "@Settings.AutoCompleteMinLenght03") || $("#LastLabOptionID").val() != $("#ShowLabOptionID").val() || $("#LastFilterOptionID").val() != $("#ShowFilterOptionID").val()) {
-            $("#LastLabOptionID").val($("#ShowLabOptionID").val());
-            $("#LastFilterOptionID").val($("#ShowFilterOptionID").val());
-            gridDetails.dataSource.filter({
-                logic: "or",
-                filters: [
-                    { field: "Reference", operator: "contains", value: indexFilterText },
-                    { field: "Features", operator: "contains", value: indexFilterText },
-                    { field: "CommodityCode", operator: "contains", value: indexFilterText },
-                    { field: "CommodityName", operator: "contains", value: indexFilterText }
-                ]
-            });
-
-
-        } else {
-            if (indexFilterText && indexFilterText.length && gridDetails.dataSource.filter() != undefined)
-                gridDetails.dataSource.filter({});
-        }*@
+            type: 'POST',
+            contentType: 'application/json;',
+            dataType: 'json',
+            success: function (result) {
+                if (!result.AddResult == "Successfully")
+                    alert(result.AddResult);
+            },
+            error: function (jqXHR, textStatus) {
+                alert(textStatus);
+            }
+        });
     }
+
+    window.urlSetReportParameters = '@Url.Action("SetReportParameters", "ReportAPIs", new { area = "Analysis" })';
 </script>
 
 <style>

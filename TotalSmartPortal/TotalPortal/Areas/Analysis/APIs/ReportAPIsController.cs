@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using System.Collections.Generic;
 
@@ -32,6 +33,23 @@ namespace TotalPortal.Areas.Analysis.APIs
 
             return Json(response, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public JsonResult SetReportParameters(DateTime fromDate, DateTime toDate)
+        {
+            try
+            {
+                HomeSession.SetReportFromDate(this.HttpContext, fromDate);
+                HomeSession.SetReportToDate(this.HttpContext, toDate);
+
+                return Json(new { AddResult = "Successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { AddResult = "Lỗi cài ngày xem báo cáo, hoặc " + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
     }
 }
 
