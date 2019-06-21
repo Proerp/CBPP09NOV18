@@ -40,7 +40,7 @@ namespace TotalPortal.Areas.Analysis.APIs
             try
             {
                 HomeSession.SetReportFromDate(this.HttpContext, fromDate);
-                HomeSession.SetReportToDate(this.HttpContext, toDate);
+                HomeSession.SetReportToDate(this.HttpContext, toDate.AddHours(23).AddMinutes(59).AddSeconds(59));
 
                 return Json(new { AddResult = "Successfully" }, JsonRequestBehavior.AllowGet);
             }

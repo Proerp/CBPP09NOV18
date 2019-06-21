@@ -2,7 +2,17 @@
 
 @model TotalPortal.ViewModels.Helpers.PrintViewModel
 
-
 @{Layout = null;}
 
-@Html.MvcReportViewerFluent("/" + @Model.ReportFolder + "/" + @Model.ReportPath).ReportParameters(new { Id = @Model.Id, DetailID = (@Model.DetailID != null ? @Model.DetailID : -1), PrintOptionID = @Model.PrintOptionID, FromDate = @Model.FromDate, ToDate = @Model.ToDate, CurrentHost = HttpContext.Current.Request.Url.Host + (HttpContext.Current.Request.Url.IsDefaultPort ? "" : ":" + HttpContext.Current.Request.Url.Port), LocationID = @Model.LocationID }).Attributes(new { Height = 636, Width = 1310, style = "border: 1px solid #00688B" }).ControlSettings(new ControlSettings() { PromptAreaCollapsed = true, ShowParameterPrompts = true })
+@{
+    List<Microsoft.Reporting.WebForms.ReportParameter> reportParameters = new List<Microsoft.Reporting.WebForms.ReportParameter>();
+    reportParameters.Add(new Microsoft.Reporting.WebForms.ReportParameter("Id", @Model.Id.ToString()));
+    reportParameters.Add(new Microsoft.Reporting.WebForms.ReportParameter("DetailID", (@Model.DetailID != null ? @Model.DetailID : -1).ToString()));
+    reportParameters.Add(new Microsoft.Reporting.WebForms.ReportParameter("PrintOptionID", @Model.PrintOptionID.ToString()));
+    reportParameters.Add(new Microsoft.Reporting.WebForms.ReportParameter("FromDate", @Model.FromDate.ToString()));
+    reportParameters.Add(new Microsoft.Reporting.WebForms.ReportParameter("ToDate", @Model.ToDate.ToString()));
+    reportParameters.Add(new Microsoft.Reporting.WebForms.ReportParameter("CurrentHost", HttpContext.Current.Request.Url.Host + (HttpContext.Current.Request.Url.IsDefaultPort ? "" : ":" + HttpContext.Current.Request.Url.Port)));
+    reportParameters.Add(new Microsoft.Reporting.WebForms.ReportParameter("LocationID", @Model.LocationID.ToString()));
+}
+
+@Html.MvcReportViewerFluent("/" + @Model.ReportFolder + "/" + @Model.ReportPath).ReportParameters(reportParameters).Attributes(new { Height = 636, Width = 1310, style = "border: 1px solid #00688B" }).ControlSettings(new ControlSettings() { PromptAreaCollapsed = true, ShowParameterPrompts = true })
