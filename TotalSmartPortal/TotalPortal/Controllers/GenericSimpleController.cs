@@ -252,7 +252,7 @@ namespace TotalPortal.Controllers
             try
             {
                 if (this.GenericService.ToggleApproved(simpleViewModel))
-                    return RedirectToAction("Index");
+                    return RedirectToAction(simpleViewModel.Approved ? "Edit" : "Index", new { id = simpleViewModel.GetID() });
                 else
                     throw new System.ArgumentException("Lỗi vô hiệu dữ liệu", "Dữ liệu này không thể vô hiệu.");
             }

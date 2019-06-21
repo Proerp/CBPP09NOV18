@@ -28,13 +28,18 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
         {
             string queryString;
 
-            queryString = " @BarcodeID int " + "\r\n";
+            queryString = " @BarcodeID int, @GoodsReceiptDetailID int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
-            queryString = queryString + "       SELECT      BarcodeID, Code, GoodsArrivalID, GoodsArrivalDetailID, GoodsArrivalPackageID " + "\r\n";
-            queryString = queryString + "       FROM        Barcodes " + "\r\n";
-            queryString = queryString + "       WHERE       BarcodeID = @BarcodeID " + "\r\n";
+            queryString = queryString + "       IF (@BarcodeID > 0) " + "\r\n";
+            queryString = queryString + "           SELECT      TOP 1 BarcodeID, Code, GoodsArrivalID, GoodsArrivalDetailID, GoodsArrivalPackageID " + "\r\n";
+            queryString = queryString + "           FROM        Barcodes " + "\r\n";
+            queryString = queryString + "           WHERE       BarcodeID = @BarcodeID " + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           SELECT      TOP 1 BarcodeID, Code, GoodsArrivalID, GoodsArrivalDetailID, GoodsArrivalPackageID " + "\r\n";
+            queryString = queryString + "           FROM        Barcodes " + "\r\n";
+            queryString = queryString + "           WHERE       Code = (SELECT TOP 1 Barcode FROM GoodsReceiptDetails WHERE GoodsReceiptDetailID = @GoodsReceiptDetailID) " + "\r\n";
             queryString = queryString + "    END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetBarcode", queryString);

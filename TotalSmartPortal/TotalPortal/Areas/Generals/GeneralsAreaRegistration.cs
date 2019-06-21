@@ -26,6 +26,11 @@ namespace TotalPortal.Areas.Generals
                 new { action = "Index", id = UrlParameter.Optional, detailId = UrlParameter.Optional }
             );
 
+            context.MapRoute(
+                "Generals_default_Three_Parameters",
+                "Generals/{controller}/{action}/{id}/{detailId}/{tokenid}",
+                new { action = "Index", id = UrlParameter.Optional, detailId = UrlParameter.Optional, tokenid = UrlParameter.Optional }
+            );
         }
     }
 }

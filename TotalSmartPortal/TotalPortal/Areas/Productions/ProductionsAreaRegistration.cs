@@ -24,6 +24,12 @@ namespace TotalPortal.Areas.Productions
                 "Productions/{controller}/{action}/{id}/{detailId}",
                 new { action = "Index", id = UrlParameter.Optional, detailId = UrlParameter.Optional }
             );
+
+            context.MapRoute(
+                "Productions_default_Three_Parameters",
+                "Productions/{controller}/{action}/{id}/{detailId}/{tokenid}",
+                new { action = "Index", id = UrlParameter.Optional, detailId = UrlParameter.Optional, tokenid = UrlParameter.Optional }
+            );
         }
     }
 }

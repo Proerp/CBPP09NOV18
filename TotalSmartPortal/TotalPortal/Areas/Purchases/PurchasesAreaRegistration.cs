@@ -24,6 +24,12 @@ namespace TotalPortal.Areas.Purchases
                 "Purchases/{controller}/{action}/{id}/{detailId}",
                 new { action = "Index", id = UrlParameter.Optional, detailId = UrlParameter.Optional }
             );
+
+            context.MapRoute(
+                "Purchases_default_Three_Parameters",
+                "Purchases/{controller}/{action}/{id}/{detailId}/{tokenid}",
+                new { action = "Index", id = UrlParameter.Optional, detailId = UrlParameter.Optional, tokenid = UrlParameter.Optional }
+            );
         }
     }
 }

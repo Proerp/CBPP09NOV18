@@ -15,14 +15,14 @@ namespace TotalPortal
 
             routes.MapRoute(
                 name: "Default",
-                url: "{controller}/{action}/{id}/{detailId}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, detailId = UrlParameter.Optional }
+                url: "{controller}/{action}/{id}/{detailId}/{tokenid}",
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional, detailId = UrlParameter.Optional, tokenid = UrlParameter.Optional }
             );
 
             routes.MapRoute(
                 name: "Default_Two_Parameters",
-                url: "{area}/{controller}/{action}/{id}/{detailId}",
-                defaults: new { area = "Inventories", controller = "GoodsIssues", action = "Index", id = UrlParameter.Optional, detailId = UrlParameter.Optional }
+                url: "{area}/{controller}/{action}/{id}/{detailId}/{tokenid}",
+                defaults: new { area = "Inventories", controller = "GoodsIssues", action = "Index", id = UrlParameter.Optional, detailId = UrlParameter.Optional, tokenid = UrlParameter.Optional }
             );
 
         }

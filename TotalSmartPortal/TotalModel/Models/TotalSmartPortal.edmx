@@ -8329,6 +8329,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         </Function>
         <Function Name="GetBarcode" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="BarcodeID" Type="int" Mode="In" />
+          <Parameter Name="GoodsReceiptDetailID" Type="int" Mode="In" />
         </Function>
         <Function Name="GetBarcodeBases" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="GoodsArrivalID" Type="int" Mode="In" />
@@ -17493,6 +17494,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </FunctionImport>
           <FunctionImport Name="GetBarcode" ReturnType="Collection(TotalSmartPortalModel.BarcodeBasic)">
           <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
+            <Parameter Name="GoodsReceiptDetailID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
