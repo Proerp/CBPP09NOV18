@@ -17493,7 +17493,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="Barcode" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="GetBarcode" ReturnType="Collection(TotalSmartPortalModel.BarcodeBasic)">
-          <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
+            <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsReceiptDetailID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
