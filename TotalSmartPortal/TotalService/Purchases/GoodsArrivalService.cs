@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Drawing;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 
-using DataMatrix.net;
+
 
 using TotalModel;
 using TotalDTO;
@@ -47,29 +46,13 @@ namespace TotalService.Purchases
                 List<BarcodeBase> barcodeBases = this.goodsArrivalRepository.GetBarcodeBases(goodsArrival.GoodsArrivalID);
                 foreach (BarcodeBase barcodeBase in barcodeBases)
                 {
-                    string symbologies = this.getSymbologies(barcodeBase.Code);
+                    string symbologies = this.goodsArrivalRepository.GetMatrixSymbologies(barcodeBase.Code);
                     this.goodsArrivalRepository.SetBarcodeSymbologies(barcodeBase.BarcodeID, symbologies);
                 }
             }
 
             return goodsArrival;
-        }
-
-        private string getSymbologies(string barcode)
-        {
-            DmtxImageEncoder encoder = new DmtxImageEncoder();
-            Bitmap bmp = encoder.EncodeImage(barcode);
-
-            byte[] bitmapData;
-
-            using (System.IO.MemoryStream memoryStream = new System.IO.MemoryStream())
-            {
-                bmp.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Bmp);
-                bitmapData = memoryStream.ToArray();
-            }
-
-            return Convert.ToBase64String(bitmapData);
-        }
+        }        
     }
 
 

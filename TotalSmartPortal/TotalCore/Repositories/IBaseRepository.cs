@@ -38,6 +38,8 @@ namespace TotalCore.Repositories
         String GetSystemInfos();
         String GetSystemInfos(bool secureEncoding);
 
+        string GetMatrixSymbologies(string barcode);
+
         bool SystemInfoValidate();
         bool VersionValidate(bool bothKeyID);
 

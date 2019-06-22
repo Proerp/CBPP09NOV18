@@ -23,5 +23,7 @@ namespace TotalPortal.ViewModels.Helpers
         public string ReportPath { get; set; }
 
         public int PrintOptionID { get; set; }
+
+        public string Remarks { get; set; }
     }
 }

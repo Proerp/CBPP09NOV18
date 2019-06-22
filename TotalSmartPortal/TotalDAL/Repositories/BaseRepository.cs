@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Drawing;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Core.Objects;
 using System.Collections.Generic;
+
+using DataMatrix.net;
 
 using TotalBase.Enums;
 using TotalModel.Models;
@@ -217,6 +220,22 @@ namespace TotalDAL.Repositories
         }
 
 
+
+        public string GetMatrixSymbologies(string barcode)
+        {
+            DmtxImageEncoder encoder = new DmtxImageEncoder();
+            Bitmap bmp = encoder.EncodeImage(barcode);
+
+            byte[] bitmapData;
+
+            using (System.IO.MemoryStream memoryStream = new System.IO.MemoryStream())
+            {
+                bmp.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Bmp);
+                bitmapData = memoryStream.ToArray();
+            }
+
+            return Convert.ToBase64String(bitmapData);
+        }
         #endregion Main
 
 
