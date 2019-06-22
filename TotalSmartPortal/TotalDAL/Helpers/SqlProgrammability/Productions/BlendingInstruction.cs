@@ -34,6 +34,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.BlendingInstructionToggleVoid();
             this.BlendingInstructionToggleVoidDetail();
 
+            this.SetBlendingInstructionSymbologies();
+
             this.BlendingInstructionInitReference();
 
             this.GetBlendingInstructionLogs();
@@ -204,6 +206,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "               SET             BlendingInstructionDetails.Reference = BlendingInstructions.Reference " + "\r\n";
             queryString = queryString + "               FROM            BlendingInstructions INNER JOIN BlendingInstructionDetails ON BlendingInstructions.BlendingInstructionID = @EntityID AND BlendingInstructions.BlendingInstructionID = BlendingInstructionDetails.BlendingInstructionID " + "\r\n";
             queryString = queryString + "           END ";
+            queryString = queryString + "       ELSE ";
+            queryString = queryString + "           DELETE FROM         BlendingInstructionSymbologies WHERE BlendingInstructionID = @EntityID ; " + "\r\n";
 
             queryString = queryString + "       IF ((SELECT Approved FROM BlendingInstructions WHERE BlendingInstructionID = @EntityID AND Approved = 1) = 1) " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
@@ -328,6 +332,18 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.totalSmartPortalEntities.CreateStoredProcedure("BlendingInstructionToggleVoidDetail", queryString);
         }
 
+
+        private void SetBlendingInstructionSymbologies()
+        {
+            string queryString = " @BlendingInstructionID int, @Code nvarchar(50), @Symbologies nvarchar(MAX) " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       INSERT INTO BlendingInstructionSymbologies (BlendingInstructionID, Code, Symbologies) " + "\r\n";
+            queryString = queryString + "       VALUES     (@BlendingInstructionID, @Code, @Symbologies)" + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("SetBlendingInstructionSymbologies", queryString);
+        }
 
         private void BlendingInstructionInitReference()
         {

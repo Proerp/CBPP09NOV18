@@ -30,5 +30,6 @@ namespace TotalCore.Services
         bool GetShowListedPrice(int? priceCategoryID);
         bool GetShowListedGrossPrice(int? priceCategoryID);
 
+        string GetMatrixSymbologies(string barcode);
     }
 }

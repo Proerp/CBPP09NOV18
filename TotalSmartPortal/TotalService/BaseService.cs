@@ -80,5 +80,8 @@ namespace TotalService
         public virtual bool GetShowListedGrossPrice(int? priceCategoryID)
         { return false; }
 
+
+        public string GetMatrixSymbologies(string barcode)
+        { return this.baseRepository.GetMatrixSymbologies(barcode); }
     }
 }
