@@ -14,6 +14,11 @@ namespace TotalDAL.Repositories.Productions
             : base(totalSmartPortalEntities, "BlendingInstructionEditable", "BlendingInstructionApproved", null, "BlendingInstructionVoidable")
         {
         }
+
+        public void SetBlendingInstructionSymbologies(int? blendingInstructionID, string code, string symbologies)
+        {
+            base.TotalSmartPortalEntities.SetBlendingInstructionSymbologies(blendingInstructionID, code, symbologies);
+        }
     }
 
 

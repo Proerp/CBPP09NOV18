@@ -5,6 +5,7 @@ namespace TotalCore.Repositories.Productions
 {
     public interface IBlendingInstructionRepository : IGenericWithDetailRepository<BlendingInstruction, BlendingInstructionDetail>
     {
+        void SetBlendingInstructionSymbologies(int? blendingInstructionID, string code, string symbologies);
     }
 
     public interface IBlendingInstructionAPIRepository : IGenericAPIRepository

@@ -11,9 +11,11 @@ namespace TotalService.Productions
 {
     public class BlendingInstructionService : GenericWithViewDetailService<BlendingInstruction, BlendingInstructionDetail, BlendingInstructionViewDetail, BlendingInstructionDTO, BlendingInstructionPrimitiveDTO, BlendingInstructionDetailDTO>, IBlendingInstructionService
     {
+        private IBlendingInstructionRepository blendingInstructionRepository;
         public BlendingInstructionService(IBlendingInstructionRepository blendingInstructionRepository)
             : base(blendingInstructionRepository, "BlendingInstructionPostSaveValidate", "BlendingInstructionSaveRelative", "BlendingInstructionToggleApproved", "BlendingInstructionToggleVoid", "BlendingInstructionToggleVoidDetail", "GetBlendingInstructionViewDetails")
         {
+            this.blendingInstructionRepository = blendingInstructionRepository;
         }
 
         public override ICollection<BlendingInstructionViewDetail> GetViewDetails(int blendingInstructionID)
@@ -26,6 +28,13 @@ namespace TotalService.Productions
         {
             blendingInstructionDTO.BlendingInstructionViewDetails.RemoveAll(x => x.Quantity == 0);
             return base.Save(blendingInstructionDTO);
+        }
+
+        protected override BlendingInstruction SaveThis(BlendingInstructionDTO dto)
+        {
+            BlendingInstruction blendingInstruction = base.SaveThis(dto);
+            this.blendingInstructionRepository.SetBlendingInstructionSymbologies(blendingInstruction.BlendingInstructionID, blendingInstruction.Code, this.blendingInstructionRepository.GetMatrixSymbologies(blendingInstruction.Code));
+            return blendingInstruction;
         }
     }
 }

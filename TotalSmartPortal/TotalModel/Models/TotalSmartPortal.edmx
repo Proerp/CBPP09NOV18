@@ -9698,6 +9698,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="BarcodeID" Type="int" Mode="In" />
           <Parameter Name="Symbologies" Type="nvarchar(max)" Mode="In" />
         </Function>
+        <Function Name="SetBlendingInstructionSymbologies" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="BlendingInstructionID" Type="int" Mode="In" />
+          <Parameter Name="Code" Type="nvarchar" Mode="In" />
+          <Parameter Name="Symbologies" Type="nvarchar(max)" Mode="In" />
+        </Function>
         <Function Name="TransferOrderApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
@@ -17495,6 +17500,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImport Name="GetBarcode" ReturnType="Collection(TotalSmartPortalModel.BarcodeBasic)">
             <Parameter Name="BarcodeID" Mode="In" Type="Int32" />
             <Parameter Name="GoodsReceiptDetailID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SetBlendingInstructionSymbologies">
+            <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
+            <Parameter Name="Code" Mode="In" Type="String" />
+            <Parameter Name="Symbologies" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -34418,6 +34428,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SetBlendingInstructionSymbologies" FunctionName="TotalSmartPortalModel.Store.SetBlendingInstructionSymbologies" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -5776,5 +5776,22 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<BarcodeBasic>("GetBarcode", barcodeIDParameter, goodsReceiptDetailIDParameter);
         }
+    
+        public virtual int SetBlendingInstructionSymbologies(Nullable<int> blendingInstructionID, string code, string symbologies)
+        {
+            var blendingInstructionIDParameter = blendingInstructionID.HasValue ?
+                new ObjectParameter("BlendingInstructionID", blendingInstructionID) :
+                new ObjectParameter("BlendingInstructionID", typeof(int));
+    
+            var codeParameter = code != null ?
+                new ObjectParameter("Code", code) :
+                new ObjectParameter("Code", typeof(string));
+    
+            var symbologiesParameter = symbologies != null ?
+                new ObjectParameter("Symbologies", symbologies) :
+                new ObjectParameter("Symbologies", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SetBlendingInstructionSymbologies", blendingInstructionIDParameter, codeParameter, symbologiesParameter);
+        }
     }
 }
