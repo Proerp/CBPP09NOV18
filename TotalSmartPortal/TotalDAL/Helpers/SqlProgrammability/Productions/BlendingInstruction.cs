@@ -35,6 +35,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.BlendingInstructionToggleVoidDetail();
 
             this.SetBlendingInstructionSymbologies();
+            this.GetBlendingInstructionSymbologies();
 
             this.BlendingInstructionInitReference();
 
@@ -343,6 +344,24 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "       VALUES     (@BlendingInstructionID, @Code, @Symbologies)" + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("SetBlendingInstructionSymbologies", queryString);
+        }
+
+        private void GetBlendingInstructionSymbologies()
+        {
+            string queryString = " @BlendingInstructionID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "    BEGIN " + "\r\n";
+
+            queryString = queryString + "       DECLARE         @LocalBlendingInstructionID int    SET @LocalBlendingInstructionID = @BlendingInstructionID" + "\r\n";
+
+            queryString = queryString + "       SELECT          TOP 1 BlendingInstructionID, Code, Symbologies " + "\r\n";
+            queryString = queryString + "       FROM            BlendingInstructionSymbologies " + "\r\n";
+            queryString = queryString + "       WHERE           BlendingInstructionID = @LocalBlendingInstructionID " + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetBlendingInstructionSymbologies", queryString);
         }
 
         private void BlendingInstructionInitReference()

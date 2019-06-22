@@ -33,7 +33,7 @@ namespace TotalService.Productions
         protected override BlendingInstruction SaveThis(BlendingInstructionDTO dto)
         {
             BlendingInstruction blendingInstruction = base.SaveThis(dto);
-            this.blendingInstructionRepository.SetBlendingInstructionSymbologies(blendingInstruction.BlendingInstructionID, blendingInstruction.Code, this.blendingInstructionRepository.GetMatrixSymbologies(blendingInstruction.Code));
+            this.blendingInstructionRepository.SetBlendingInstructionSymbologies(blendingInstruction.BlendingInstructionID, blendingInstruction.Code, this.blendingInstructionRepository.GetMatrixSymbologies("B" + blendingInstruction.Code));
             return blendingInstruction;
         }
     }
