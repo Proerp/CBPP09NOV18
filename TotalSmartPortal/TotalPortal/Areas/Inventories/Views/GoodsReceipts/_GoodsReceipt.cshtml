@@ -266,9 +266,9 @@
 
             <div class="form-group">
                 <div class="right-panel-label right-panel-label-whole-width">
-                    @if (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival)
+                    @if (Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && Model.GoodsArrivalID != null)
                     {
-                        <a style="color: #428bca; " href="@Url.Action("Edit", "GoodsArrivals", new { area = "Purchases", id = Model.GoodsArrivalID })" target="_blank"> Phiếu nhận hàng </a> }
+                        <a style="color: #428bca; " href="@Url.Action("Edit", @Model.ArrivalController, new { area = "Purchases", id = Model.GoodsArrivalID })" target="_blank"> Phiếu nhận hàng </a> }
                     else
                     {@Html.LabelFor(model => (model as IGoodsReceiptDTO).Features)}                    
                 </div>
@@ -319,8 +319,8 @@
                     
                     columns.Bound(p => p.GoodsArrivalCode).DisplayNameTitle().Width(60).Hidden()
                         .ClientTemplate("#= (GoodsArrivalCode == null)? '' : GoodsArrivalCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsArrivalCode' value='#= (GoodsArrivalCode == null) ? '' : GoodsArrivalCode #' />");
-                    columns.Bound(p => p.GoodsArrivalReference).DisplayNameTitle().Width(60).Hidden()
-                        .ClientTemplate("#= (GoodsArrivalReference == null)? '' : GoodsArrivalReference #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsArrivalReference' value='#= (GoodsArrivalReference == null) ? '' : GoodsArrivalReference #' />");
+                    columns.Bound(p => p.GoodsArrivalReference).DisplayNameTitle().Width(30).HtmlAttributes(new { @class = "index-nav-column" }).Hidden(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival && @Model.GoodsArrivalID == null ? false : true)
+                        .ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/" + Model.ArrivalController, action = "Edit" }) + "/#= GoodsArrivalID #' target='_blank'>#=GoodsArrivalReference#</a>" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsArrivalReference' value='#= (GoodsArrivalReference == null) ? '' : GoodsArrivalReference #' />");
                     columns.Bound(p => p.GoodsArrivalEntryDate).DisplayNameTitle().Width(80).Hidden()
                         .Format("{0:" + @Settings.DateFormat + "}")
                         .ClientTemplate("#= (GoodsArrivalEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsArrivalEntryDate) #" + "<input type='hidden' name='ViewDetails[#= index(data) #].GoodsArrivalEntryDate' value='#= (GoodsArrivalEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsArrivalEntryDate) #' />");
@@ -403,7 +403,7 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(180).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.Recyclate ? "StringReadonly" : "AutoCompletes/CommodityAvailable")                        
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(160).EditorTemplateName(Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.PurchaseRequisition || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.GoodsArrival || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.WarehouseTransfer || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.MaterialIssue || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedItem || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.FinishedProduct || Model.GoodsReceiptTypeID == (int)GlobalEnums.GoodsReceiptTypeID.Recyclate ? "StringReadonly" : "AutoCompletes/CommodityAvailable")                        
                         .ClientTemplate("#= CommodityCode #" + "<input type='hidden' name='ViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />")
                         .ClientFooterTemplate("TC (#= kendo.format('{0:n0}', count) # dòng)");
 

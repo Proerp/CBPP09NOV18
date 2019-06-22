@@ -82,7 +82,11 @@
         @if (Model.HasPurchaseOrder)
         {
             <div class="form-group">
-                @Html.LabelFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderReferenceNote)
+                @if (Model.PurchaseOrderID != null)
+                {
+                    <a style="color: #428bca; " href="@Url.Action("Edit", @Model.PurchaseController, new { area = "Purchases", id = Model.PurchaseOrderID })" target="_blank"> Phiếu đặt hàng </a> }
+                else
+                {@Html.LabelFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderReferenceNote)}
                 <div class="div-input">
                     @Html.Kendo().MaskedTextBoxFor(model => (model as IGoodsArrivalPrimitiveDTO).PurchaseOrderReferenceNote).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                 </div>

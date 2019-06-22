@@ -50,13 +50,13 @@ namespace TotalDTO.Inventories
         [UIHint("StringReadonly")]
         public string CustomerCode { get; set; }
 
-        [Display(Name = "Phiếu ĐH")]
+        [Display(Name = "Nhận hàng")]
         [UIHint("StringReadonly")]
         public string GoodsArrivalReference { get; set; }
-        [Display(Name = "Số ĐH")]
+        [Display(Name = "Số CT")]
         [UIHint("StringReadonly")]
         public string GoodsArrivalCode { get; set; }
-        [Display(Name = "Ngày ĐH")]
+        [Display(Name = "Ngày nhận")]
         [UIHint("DateTimeReadonly")]
         public Nullable<System.DateTime> GoodsArrivalEntryDate { get; set; }
 

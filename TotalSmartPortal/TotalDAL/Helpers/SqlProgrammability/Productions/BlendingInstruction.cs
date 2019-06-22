@@ -38,6 +38,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             this.GetBlendingInstructionLogs();
             this.BlendingInstructionSheet();
+            this.BlendingInstructionDetailSheet();
         }
 
 
@@ -387,6 +388,39 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "    END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("BlendingInstructionSheet", queryString);
+        }
+
+        private void BlendingInstructionDetailSheet()
+        {
+            string queryString = " @BlendingInstructionID int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "    BEGIN " + "\r\n";
+
+            queryString = queryString + "       DECLARE         @LocalBlendingInstructionID int    SET @LocalBlendingInstructionID = @BlendingInstructionID" + "\r\n";
+
+            queryString = queryString + "       SELECT          BlendingInstructions.BlendingInstructionID, BlendingInstructions.EntryDate, BlendingInstructions.Reference, BlendingInstructions.Code, BlendingInstructions.VoucherDate, BlendingInstructions.Jobs, BlendingInstructions.Description, BlendingInstructions.CommodityID AS ProductID, Products.Code AS ProductCode, Products.Name AS ProductName, " + "\r\n";
+            queryString = queryString + "                       BlendingInstructionDetails.BlendingInstructionDetailID, BlendingInstructionDetails.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BlendingInstructionDetails.Quantity, BlendingInstructionDetails.QuantityIssued, BlendingInstructionDetails.Quantity - BlendingInstructionDetails.QuantityIssued AS QuantityRemains, BlendingInstructionDetails.InActive, BlendingInstructionDetails.InActivePartial, ISNULL(VoidTypes.Name, VoidTypeDetails.Name) AS VoidTypeName, " + "\r\n";
+            queryString = queryString + "                       PackageIssueDetails.PackageIssueID, PackageIssueDetails.PackageIssueDetailID, PackageIssueDetails.PackageIssueImage1ID, PackageIssueDetails.PackageIssueImage2ID, PackageIssueDetails.SealCode, PackageIssueDetails.BatchCode, PackageIssueDetails.LabCode, Barcodes.BarcodeID, PackageIssueDetails.Barcode, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, PackageIssueDetails.Quantity AS PackageIssueQuantity " + "\r\n";
+
+            queryString = queryString + "       FROM            BlendingInstructions " + "\r\n";
+            queryString = queryString + "                       INNER JOIN BlendingInstructionDetails ON BlendingInstructions.BlendingInstructionID = @LocalBlendingInstructionID AND BlendingInstructions.BlendingInstructionID = ISNULL(BlendingInstructionDetails.ParentID, BlendingInstructionDetails.BlendingInstructionID) " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Commodities AS Products ON BlendingInstructions.CommodityID = Products.CommodityID  " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Commodities ON BlendingInstructionDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+
+            queryString = queryString + "                       LEFT  JOIN PackageIssueDetails ON BlendingInstructionDetails.BlendingInstructionDetailID = PackageIssueDetails.BlendingInstructionDetailID " + "\r\n";
+            queryString = queryString + "                       LEFT  JOIN GoodsReceiptDetails ON PackageIssueDetails.GoodsReceiptDetailID = GoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
+
+            queryString = queryString + "                       LEFT  JOIN VoidTypes ON BlendingInstructions.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
+            queryString = queryString + "                       LEFT  JOIN VoidTypes VoidTypeDetails ON BlendingInstructionDetails.VoidTypeID = VoidTypeDetails.VoidTypeID " + "\r\n";
+
+            queryString = queryString + "                       LEFT  JOIN Barcodes ON GoodsReceiptDetails.Barcode = Barcodes.Code " + "\r\n";
+
+            queryString = queryString + "       ORDER BY        BlendingInstructionDetails.BlendingInstructionDetailID, PackageIssueDetails.PackageIssueDetailID " + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("BlendingInstructionDetailSheet", queryString);
         }
 
         #endregion
