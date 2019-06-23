@@ -17,7 +17,7 @@
                 columns.Bound(p => p.EntryDate).Title("Ngày lập").Format("{0:dd/MM/yy}").Hidden();
                 columns.Bound(p => p.Features).Title("BIS").Hidden();
 
-                columns.Bound(p => p.Reference).Title("SP").Width(36).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Edit" }) + "/#= BlendingInstructionID #'>#=Reference#</a>");
+                columns.Bound(p => p.Code).Title("FT").Width(36).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Edit" }) + "/#= BlendingInstructionID #'>#=Code#</a>");
                 columns.Bound(p => p.CommodityCode).Title("Mã NVL").Width(60);
                 columns.Bound(p => p.CommodityName).Title("Tên nguyên liệu").Width(168);
                                 
@@ -39,7 +39,7 @@
             .ToolBar(toolbar =>
             {
                 toolbar.Template(@<text>
-                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập lệnh pha chế </button>
+                    <button type="button" class="k-button" onclick="createWizard()"> <img src="~/Content/Images/Mains/Size24/folder-documents-icon-24.png" /> Lập đơn hàng pha chế </button>
                     <button type="button" class="k-button" onclick="callCommodities()"> <img src="~/Content/Images/Mains/Size24/Phone-icon-24.png" /> Gọi phụ gia </button>            
                     <button type="button" title="Cập nhật số liệu sản xuất" class="k-button" onclick="indexFilterText_KeyUp(true)"> <img src="~/Content/Images/New/Refresh-icon.png" /> </button>                                
                     <div class="toolbar" style="float: right;">
