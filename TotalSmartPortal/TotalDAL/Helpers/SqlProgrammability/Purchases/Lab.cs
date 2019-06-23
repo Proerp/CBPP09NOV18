@@ -86,7 +86,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "       UPDATE      Labs  SET Approved = @Approved, ApprovedDate = GetDate(), InActive = 0, InActiveDate = NULL, VoidTypeID = NULL WHERE LabID = @EntityID AND Approved = ~@Approved" + "\r\n";
+            queryString = queryString + "       UPDATE      Labs  SET Approved = @Approved, ApprovedDate = GetDate() WHERE LabID = @EntityID AND Approved = ~@Approved" + "\r\n";
 
             queryString = queryString + "       IF @@ROWCOUNT <> 1 " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";

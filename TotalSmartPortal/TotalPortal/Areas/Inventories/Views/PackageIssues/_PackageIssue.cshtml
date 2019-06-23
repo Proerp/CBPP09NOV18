@@ -317,7 +317,7 @@
             {
                 if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
                 {
-                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "PackageIssues", new {id = @Model.PackageIssueID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> Hủy duyệt </button>
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "PackageIssues", new {id = @Model.PackageIssueID })'"> <img src="~/Content/Images/Mains/cloud-32-NoCheck.png" /> @Model.UnApproveWarning </button>
                 }
             }
 

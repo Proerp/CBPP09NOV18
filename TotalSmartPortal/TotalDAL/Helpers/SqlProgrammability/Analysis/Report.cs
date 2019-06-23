@@ -31,7 +31,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Analysis
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      Reports.ReportID, Reports.ReportUniqueID, Reports.ReportGroupID, Reports.ReportGroupName, Reports.ReportName, Reports.ReportURL, Reports.ReportTypeID, Reports.PrintOptionID, Reports.SerialID, Reports.Remarks " + "\r\n";
+            queryString = queryString + "       SELECT      Reports.ReportID, Reports.ReportUniqueID, Reports.ReportGroupID, " + (GlobalEnums.CBPP? "N'BÁO CÁO PHỤ GIA'" : " AS Reports.ReportGroupName") + " AS ReportGroupName, Reports.ReportName, Reports.ReportURL, Reports.ReportTypeID, Reports.PrintOptionID, Reports.SerialID, Reports.Remarks " + "\r\n";
             queryString = queryString + "       FROM        AspNetUsers " + "\r\n";
             queryString = queryString + "                   INNER JOIN ReportControls ON AspNetUsers.Id = @AspUserID AND ReportControls.Enabled = 1 AND AspNetUsers.UserID = ReportControls.UserID " + "\r\n";
             queryString = queryString + "                   INNER JOIN Reports ON ReportControls.ReportID = Reports.ReportID " + "\r\n";

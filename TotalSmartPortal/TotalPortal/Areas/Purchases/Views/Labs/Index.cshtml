@@ -15,11 +15,11 @@
 
                 columns.Bound(p => p.GoodsArrivalReference).Title("PNH").Width(10).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/" + "#=ArrivalControllers#", action = "Edit" }) + "/#= GoodsArrivalID #'>#=GoodsArrivalReference#</a>");
 
-                columns.Bound(p => p.Code).Title("Lab code").Width(20);
+                columns.Bound(p => p.Code).Title("Lab code").Width(96);
                 columns.Bound(p => p.CommodityCodes).Title("Mã hàng").Width(190);
 
-                columns.Bound(p => p.SealCodes).Title("Số cont").Width(80);
-                columns.Bound(p => p.BatchCodes).Title("Số lô").Width(80);
+                columns.Bound(p => p.SealCodes).Title("Số cont").Width(108);
+                columns.Bound(p => p.BatchCodes).Title("Số lô").Width(168);
 
                 columns.Bound(p => p.TotalQuantity).Title("KL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(60).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
 

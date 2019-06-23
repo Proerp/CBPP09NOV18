@@ -12,6 +12,11 @@ namespace TotalDTO.Purchases
 {
     public class LabPrimitiveDTO : BaseDTO, IPrimitiveEntity, IPrimitiveDTO
     {
+        public override bool EditAfterUnApprove { get { return false; } }
+        public override string VoidWarning { get { return "Quarantine"; } }
+        public override string ApproveWarning { get { return "PASS"; } }
+        public override string UnApproveWarning { get { return "CHƯA PASS"; } }
+
         public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.Lab; } }
 
         public int GetID() { return this.LabID; }

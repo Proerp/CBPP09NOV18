@@ -14,6 +14,8 @@ namespace TotalDTO.Productions
 {
     public class BlendingInstructionPrimitiveDTO : QuantityDTO<BlendingInstructionDetailDTO>, IPrimitiveEntity, IPrimitiveDTO
     {
+        public override string VoidWarning { get { return "Thanh lý"; } }
+
         public GlobalEnums.NmvnTaskID NMVNTaskID { get { return GlobalEnums.NmvnTaskID.BlendingInstruction; } }
 
         public int GetID() { return this.BlendingInstructionID; }

@@ -167,7 +167,7 @@ namespace TotalDTO.Inventories
 
 
         [Display(Name = "Lệnh VCNB")]
-        public string WarehouseTransferBriefs { get { return (this.TransferOrderID != null ? this.TransferOrderReference + " [" + ((DateTime)this.TransferOrderEntryDate).ToShortDateString() + "]" : (this.IsSameWarehouse ? "Chuyển vị trí tại kho " + (this.Warehouse != null ? this.Warehouse.Name : "") + " (không có lệnh)" : "VCNB không có lệnh điều chuyển")); } }
+        public string WarehouseTransferBriefs { get { return (this.TransferOrderID != null ? this.TransferOrderReference + " [" + ((DateTime)this.TransferOrderEntryDate).ToShortDateString() + "]" : (this.IsSameWarehouse ? "Chuyển vị trí tại kho " + (this.Warehouse != null ? this.Warehouse.Name : "") + " (không có lệnh)" : (GlobalEnums.CBPP ? "Chuyển kho nội bộ" : "VCNB không có lệnh điều chuyển"))); } }
 
         public string ControllerName { get { return this.NMVNTaskID.ToString() + "s"; } }
         public string ControllerTransferOrder { get { return this.IsMaterial ? "MaterialTransferOrders" : (this.IsItem ? "ItemTransferOrders" : "ProductTransferOrders"); } }

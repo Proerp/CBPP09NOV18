@@ -30,9 +30,15 @@ namespace TotalDTO
         bool ShowListedGrossPrice { get; set; }
 
 
+        bool EditAfterUnApprove { get; }
         bool PrintAfterClosedSubmit { get; set; }
         GlobalEnums.SubmitTypeOption SubmitTypeOption { get; set; }
 
+        string ApproveWarning { get; }
+        string UnApproveWarning { get; }
+
+        string VoidWarning { get; }
+        string UnVoidWarning { get; }
 
         void PerformPresaveRule();
 
@@ -96,12 +102,16 @@ namespace TotalDTO
         public bool ShowListedGrossPrice { get; set; }
 
 
+        public virtual bool EditAfterUnApprove { get { return true; } }
         //These properties are used as an implementation preservation of ISimpleViewModel for these ________ViewModel class (Those class ________ViewModel which is BOTH inheritance from this BaseDTO AND implementation of ISimpleViewModel)
         public virtual bool PrintAfterClosedSubmit { get; set; }
         public GlobalEnums.SubmitTypeOption SubmitTypeOption { get; set; }
 
+        public virtual string ApproveWarning { get { return "Duyệt"; } }
+        public virtual string UnApproveWarning { get { return "Hủy duyệt"; } }
 
-
+        public virtual string VoidWarning { get { return "Vô hiệu"; } }
+        public virtual string UnVoidWarning { get { return "Phục hồi"; } }
         
         public virtual void PerformPresaveRule() { }
 

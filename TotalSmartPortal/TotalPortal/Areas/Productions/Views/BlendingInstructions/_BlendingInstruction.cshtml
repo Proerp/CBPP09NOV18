@@ -240,7 +240,7 @@
             {
                 if (Model.Approved && !Model.Approvable && !Model.UnApprovable)
                 {
-                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "BlendingInstructions", new {id = @Model.BlendingInstructionID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? "Duyệt" : "Hủy duyệt") </button>
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "BlendingInstructions", new {id = @Model.BlendingInstructionID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? Model.ApproveWarning : Model.UnApproveWarning) </button>
                 }
             }
             @if (Model.BlendingInstructionID > 0)

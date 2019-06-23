@@ -58,7 +58,7 @@ namespace TotalPortal.APIs.Sessions
         public static DateTime GetGlobalFromDate(HttpContextBase context)
         {
             if (context.Session["GlobalFromDate"] == null)
-                return DateTime.Today.AddDays(TotalBase.Enums.GlobalEnums.CBPP ? -1800 : -10);
+                return DateTime.Today.AddDays(TotalBase.Enums.GlobalEnums.CBPP ? -10 : -10);
             else
                 return (DateTime)context.Session["GlobalFromDate"];
         }
