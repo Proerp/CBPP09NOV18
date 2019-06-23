@@ -24327,6 +24327,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Boolean" Name="Approved" Nullable="false" />
           <Property Type="String" Name="ArrivalControllers" Nullable="false" MaxLength="16" />
           <Property Type="Decimal" Name="TotalPackages" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Boolean" Name="InActive" Nullable="false" />
+          <Property Type="Boolean" Name="Hold" Nullable="false" />
         </ComplexType>
         <EntityType Name="Lab">
           <Key>
@@ -33199,6 +33201,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="ArrivalControllers" ColumnName="ArrivalControllers" />
                 <ScalarProperty Name="TotalPackages" ColumnName="TotalPackages" />
+                <ScalarProperty Name="InActive" ColumnName="InActive" />
+                <ScalarProperty Name="Hold" ColumnName="Hold" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

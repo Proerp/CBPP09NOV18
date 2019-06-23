@@ -27,6 +27,7 @@ namespace TotalDTO.Productions
 
         [Display(Name = "KL Y/C")]
         [UIHint("Quantity")]
+        [Range(0.01, 99999999999, ErrorMessage = "Khối lượng không hợp lệ")]
         public override decimal Quantity { get; set; }
 
         [Display(Name = "Đã X/K")]

@@ -39,7 +39,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       SELECT      Labs.LabID, Labs.EntryDate, Labs.Reference, Labs.Code, Labs.GoodsArrivalID, GoodsArrivals.Reference AS GoodsArrivalReference, IIF(GoodsArrivals.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.MaterialArrival + ", 'MaterialArrivals', IIF(GoodsArrivals.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemArrival + ", 'ItemArrivals', 'ProductArrivals')) AS ArrivalControllers, Labs.CommodityCodes, Labs.CommodityNames, Labs.SealCodes, Labs.BatchCodes, Labs.Description, GoodsArrivals.TotalPackages, Labs.TotalQuantity, Labs.Approved " + "\r\n";
+            queryString = queryString + "       SELECT      Labs.LabID, Labs.EntryDate, Labs.Reference, Labs.Code, Labs.GoodsArrivalID, GoodsArrivals.Reference AS GoodsArrivalReference, IIF(GoodsArrivals.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.MaterialArrival + ", 'MaterialArrivals', IIF(GoodsArrivals.NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.ItemArrival + ", 'ItemArrivals', 'ProductArrivals')) AS ArrivalControllers, Labs.CommodityCodes, Labs.CommodityNames, Labs.SealCodes, Labs.BatchCodes, Labs.Description, GoodsArrivals.TotalPackages, Labs.TotalQuantity, Labs.Approved, Labs.InActive, Labs.Hold " + "\r\n";
             queryString = queryString + "       FROM        Labs INNER JOIN GoodsArrivals ON Labs.GoodsArrivalID = GoodsArrivals.GoodsArrivalID " + "\r\n";
             queryString = queryString + "       WHERE       Labs.EntryDate >= @FromDate AND Labs.EntryDate <= @ToDate " + "\r\n";
 

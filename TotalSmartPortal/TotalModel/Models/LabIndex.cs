@@ -28,5 +28,7 @@ namespace TotalModel.Models
         public bool Approved { get; set; }
         public string ArrivalControllers { get; set; }
         public decimal TotalPackages { get; set; }
+        public bool InActive { get; set; }
+        public bool Hold { get; set; }
     }
 }
