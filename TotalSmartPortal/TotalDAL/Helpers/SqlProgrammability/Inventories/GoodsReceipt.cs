@@ -1466,21 +1466,41 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
+            string queryBUILD = "               SELECT      BarcodeAvailables.GoodsArrivalPackageID, BarcodeAvailables.GoodsReceiptDetailID, BarcodeAvailables.EntryDate, BarcodeAvailables.Reference, BarcodeAvailables.BatchEntryDate, BarcodeAvailables.ExpiryDate, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BarcodeAvailables.BinLocationID, BinLocations.Code AS BinLocationCode, " + "\r\n";
+            queryBUILD = queryBUILD + "                     BarcodeAvailables.BatchCode, BarcodeAvailables.LabCode, BarcodeAvailables.Barcode, BarcodeAvailables.UnitWeight, BarcodeAvailables.TareWeight, ROUND(BarcodeAvailables.Quantity - BarcodeAvailables.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, " + "\r\n";
+            queryBUILD = queryBUILD + "                     BarcodeAvailables.Approved, Labs.Approved AS LabApproved, Labs.Hold AS LabHold, Labs.InActive AS LabInActive, VoidTypes.Code AS LabInActiveCode " + "\r\n";
+            queryBUILD = queryBUILD + "         FROM        @BarcodeAvailables BarcodeAvailables " + "\r\n";
+            queryBUILD = queryBUILD + "                     INNER JOIN Commodities ON BarcodeAvailables.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryBUILD = queryBUILD + "                     LEFT  JOIN BinLocations ON BarcodeAvailables.BinLocationID = BinLocations.BinLocationID " + "\r\n";
+            queryBUILD = queryBUILD + "                     LEFT  JOIN Labs ON BarcodeAvailables.LabID = Labs.LabID " + "\r\n";
+            queryBUILD = queryBUILD + "                     LEFT  JOIN VoidTypes ON Labs.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
+            
+            
             queryString = " @Barcode nvarchar(60) " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
-            queryString = queryString + "       SELECT      GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceiptDetails.Reference AS GoodsReceiptReference, GoodsReceiptDetails.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsReceiptDetails.ExpiryDate, GoodsReceiptDetails.SealCode, GoodsReceiptDetails.BatchCode, GoodsReceiptDetails.LabCode, GoodsReceiptDetails.Barcode, " + "\r\n";
-            queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, GoodsReceiptDetails.BinLocationID, BinLocations.Code AS BinLocationCode, GoodsReceiptDetails.UnitWeight, GoodsReceiptDetails.TareWeight, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, " + "\r\n";
-            queryString = queryString + "                   GoodsReceiptDetails.Approved, Labs.Approved AS LabApproved, Labs.Hold AS LabHold, Labs.InActive AS LabInActive, VoidTypes.Code AS LabInActiveCode " + "\r\n";
+            queryString = queryString + "       DECLARE     @BarcodeAvailables TABLE (GoodsArrivalPackageID int NULL, GoodsReceiptDetailID int NULL, EntryID int NOT NULL, EntryDate datetime NOT NULL, Reference nvarchar(50) NULL, BatchEntryDate datetime NULL, ExpiryDate datetime NULL, BinLocationID int NULL, CommodityID int NOT NULL, WarehouseID int NULL, LabID int NOT NULL, BatchCode nvarchar(60) NULL, LabCode nvarchar(60) NULL, Barcode nvarchar(60) NULL, UnitWeight decimal(18, 2) NOT NULL, TareWeight decimal(18, 2) NOT NULL, Quantity decimal(18, 2) NOT NULL, QuantityIssued decimal(18, 2) NOT NULL, Approved bit NOT NULL) " + "\r\n";
 
-            queryString = queryString + "       FROM        GoodsReceiptDetails " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Warehouses ON GoodsReceiptDetails.Barcode = @Barcode AND ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 AND GoodsReceiptDetails.WarehouseID = Warehouses.WarehouseID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN Commodities ON GoodsReceiptDetails.CommodityID = Commodities.CommodityID " + "\r\n";
-            queryString = queryString + "                   INNER JOIN BinLocations ON GoodsReceiptDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";
+            queryString = queryString + "       INSERT INTO @BarcodeAvailables (GoodsArrivalPackageID, GoodsReceiptDetailID, EntryID, EntryDate, Reference, BatchEntryDate, ExpiryDate, BinLocationID, CommodityID, WarehouseID, LabID, BatchCode, LabCode, Barcode, UnitWeight, TareWeight, Quantity, QuantityIssued, Approved) " + "\r\n";
+            queryString = queryString + "       SELECT      NULL AS GoodsArrivalPackageID, GoodsReceiptDetailID, GoodsReceiptDetailID AS EntryID, EntryDate, Reference, BatchEntryDate, ExpiryDate, BinLocationID, CommodityID, WarehouseID, LabID, BatchCode, LabCode, Barcode, UnitWeight, TareWeight, Quantity, QuantityIssued, Approved " + "\r\n";
+            queryString = queryString + "       FROM        GoodsReceiptDetails WHERE Barcode = @Barcode " + "\r\n";
 
-            queryString = queryString + "                   INNER JOIN Labs ON GoodsReceiptDetails.LabID = Labs.LabID " + "\r\n";
-            queryString = queryString + "                   LEFT  JOIN VoidTypes ON Labs.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
+            queryString = queryString + "       IF (@@ROWCOUNT = 0) " + "\r\n";
+            queryString = queryString + "           INSERT INTO @BarcodeAvailables (GoodsArrivalPackageID, GoodsReceiptDetailID, EntryID, EntryDate, Reference, BatchEntryDate, ExpiryDate, BinLocationID, CommodityID, WarehouseID, LabID, BatchCode, LabCode, Barcode, UnitWeight, TareWeight, Quantity, QuantityIssued, Approved) " + "\r\n";
+            queryString = queryString + "           SELECT      GoodsArrivalPackageID, NULL AS GoodsReceiptDetailID, GoodsArrivalPackageID AS EntryID, EntryDate, Code AS Reference, BatchEntryDate, ExpiryDate, NULL AS BinLocationID, CommodityID, WarehouseID, LabID, BatchCode, LabCode, Barcode, UnitWeight, TareWeight, Quantity, QuantityReceipted AS QuantityIssued, Approved " + "\r\n";
+            queryString = queryString + "           FROM        GoodsArrivalPackages WHERE Barcode = @Barcode " + "\r\n";
+
+            queryString = queryString + "       IF ((SELECT COUNT(*) FROM @BarcodeAvailables WHERE ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0) > 0) " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               " + queryBUILD + "\r\n";
+            queryString = queryString + "               WHERE       ROUND(BarcodeAvailables.Quantity - BarcodeAvailables.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               " + queryBUILD + "\r\n";
+            queryString = queryString + "               WHERE       BarcodeAvailables.EntryID = (SELECT MAX(EntryID) FROM @BarcodeAvailables) " + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsReceiptBarcodeAvailables", queryString);
         }

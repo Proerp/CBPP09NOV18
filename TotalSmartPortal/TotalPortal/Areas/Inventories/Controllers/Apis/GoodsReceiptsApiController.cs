@@ -129,9 +129,25 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         [Route("GetBarcodeAvailables/{barcode}/0")]
         public BarcodeAvailableSummary GetBarcodeAvailables(string barcode)
         {
-            IEnumerable<GoodsReceiptBarcodeAvailable> barcodeAvailables = this.goodsReceiptAPIRepository.GetGoodsReceiptBarcodeAvailables(barcode);
+            List<GoodsReceiptBarcodeAvailable> barcodeAvailables = this.goodsReceiptAPIRepository.GetGoodsReceiptBarcodeAvailables(barcode).ToList();
             if (barcodeAvailables.Count() > 0)
-                return new BarcodeAvailableSummary() { Reference = barcodeAvailables.Min(p => p.GoodsReceiptReference), EntryDate = barcodeAvailables.Min(p => p.GoodsReceiptEntryDate), BatchEntryDate = barcodeAvailables.Min(p => p.BatchEntryDate), ExpiryDate = barcodeAvailables.Min(p => p.ExpiryDate), BatchCode = barcodeAvailables.Min(p => p.BatchCode), LabCode = barcodeAvailables.Min(p => p.LabCode), Barcode = barcodeAvailables.Min(p => p.Barcode), CommodityCode = barcodeAvailables.Min(p => p.CommodityCode), BinLocationCode = barcodeAvailables.Min(p => p.BinLocationCode) + (barcodeAvailables.Count() > 1 ? "***(" + barcodeAvailables.Count().ToString("N0") + ")" : ""), UnitWeight = barcodeAvailables.Min(p => p.UnitWeight), TareWeight = barcodeAvailables.Min(p => p.TareWeight), QuantityAvailables = barcodeAvailables.Min(p => p.QuantityAvailables), Approved = barcodeAvailables.Min(p => p.Approved), LabApproved = barcodeAvailables.Min(p => p.LabApproved), LabHold = barcodeAvailables.Min(p => p.LabHold), LabInActive = barcodeAvailables.Min(p => p.LabInActive), LabInActiveCode = barcodeAvailables.Min(p => p.LabInActiveCode) };
+                return new BarcodeAvailableSummary() {
+                    Reference = (barcodeAvailables.Min(p => p.GoodsArrivalPackageID) == null ? "PNK: " : "PO: ") + string.Join(",", barcodeAvailables.Select(d => d.Reference)), 
+                    EntryDate = barcodeAvailables.Max(p => p.EntryDate), BatchEntryDate = barcodeAvailables.Max(p => p.BatchEntryDate), ExpiryDate = barcodeAvailables.Min(p => p.ExpiryDate),
+                    BatchCode = barcodeAvailables.Min(p => p.BatchCode),
+                    LabCode = barcodeAvailables.Min(p => p.LabCode),
+                    Barcode = barcodeAvailables.Min(p => p.Barcode),
+                    CommodityCode = barcodeAvailables.Min(p => p.CommodityCode),
+                    BinLocationCode = string.Join(",", barcodeAvailables.Select(d => d.BinLocationCode)),
+                    UnitWeight = barcodeAvailables.Min(p => p.UnitWeight),
+                    TareWeight = barcodeAvailables.Min(p => p.TareWeight),
+                    QuantityAvailables = barcodeAvailables.Sum(p => p.QuantityAvailables),
+                    Approved = barcodeAvailables.Min(p => p.Approved),
+                    LabApproved = barcodeAvailables.Min(p => p.LabApproved),
+                    LabHold = barcodeAvailables.Max(p => p.LabHold),
+                    LabInActive = barcodeAvailables.Max(p => p.LabInActive),
+                    LabInActiveCode = barcodeAvailables.Max(p => p.LabInActiveCode)
+                };
             else return new BarcodeAvailableSummary();
         }
 
@@ -139,7 +155,7 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         {
             public string Reference { get; set; }
             public System.DateTime EntryDate { get; set; }
-            public System.DateTime BatchEntryDate { get; set; }
+            public Nullable<System.DateTime> BatchEntryDate { get; set; }
             public Nullable<System.DateTime> ExpiryDate { get; set; }
             public string BatchCode { get; set; }
             public string LabCode { get; set; }
@@ -150,9 +166,9 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             public decimal TareWeight { get; set; }
             public Nullable<decimal> QuantityAvailables { get; set; }
             public bool Approved { get; set; }
-            public bool LabApproved { get; set; }
-            public bool LabHold { get; set; }
-            public bool LabInActive { get; set; }
+            public Nullable<bool> LabApproved { get; set; }
+            public Nullable<bool> LabHold { get; set; }
+            public Nullable<bool> LabInActive { get; set; }
             public string LabInActiveCode { get; set; }
         }
         #endregion HELPER API

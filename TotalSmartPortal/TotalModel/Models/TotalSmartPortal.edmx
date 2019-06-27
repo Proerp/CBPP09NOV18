@@ -26318,30 +26318,28 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </ReferentialConstraint>
         </Association>
         <ComplexType Name="GoodsReceiptBarcodeAvailable">
-          <Property Type="Int32" Name="GoodsReceiptID" Nullable="false" />
-          <Property Type="Int32" Name="GoodsReceiptDetailID" Nullable="false" />
-          <Property Type="String" Name="GoodsReceiptReference" Nullable="true" MaxLength="10" />
-          <Property Type="DateTime" Name="GoodsReceiptEntryDate" Nullable="false" Precision="23" />
-          <Property Type="Int32" Name="BatchID" Nullable="false" />
-          <Property Type="DateTime" Name="BatchEntryDate" Nullable="false" Precision="23" />
-          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
-          <Property Type="String" Name="SealCode" Nullable="true" MaxLength="60" />
+          <Property Type="Int32" Name="GoodsReceiptDetailID" Nullable="true" />
+          <Property Type="DateTime" Name="BatchEntryDate" Nullable="true" Precision="23" />
           <Property Type="String" Name="BatchCode" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
           <Property Type="String" Name="Barcode" Nullable="true" MaxLength="60" />
           <Property Type="Int32" Name="CommodityID" Nullable="false" />
           <Property Type="String" Name="CommodityCode" Nullable="false" MaxLength="50" />
           <Property Type="String" Name="CommodityName" Nullable="false" MaxLength="200" />
-          <Property Type="Int32" Name="BinLocationID" Nullable="false" />
-          <Property Type="String" Name="BinLocationCode" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="BinLocationID" Nullable="true" />
+          <Property Type="String" Name="BinLocationCode" Nullable="true" MaxLength="50" />
           <Property Type="Decimal" Name="UnitWeight" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="TareWeight" Nullable="false" Precision="18" Scale="2" />
           <Property Type="Decimal" Name="QuantityAvailables" Nullable="true" Precision="19" Scale="2" />
           <Property Type="Boolean" Name="Approved" Nullable="false" />
-          <Property Type="Boolean" Name="LabApproved" Nullable="false" />
-          <Property Type="Boolean" Name="LabHold" Nullable="false" />
-          <Property Type="Boolean" Name="LabInActive" Nullable="false" />
+          <Property Type="Boolean" Name="LabApproved" Nullable="true" />
+          <Property Type="Boolean" Name="LabHold" Nullable="true" />
+          <Property Type="Boolean" Name="LabInActive" Nullable="true" />
           <Property Type="String" Name="LabInActiveCode" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="GoodsArrivalPackageID" Nullable="true" />
+          <Property Type="DateTime" Name="EntryDate" Nullable="false" Precision="23" />
+          <Property Type="String" Name="Reference" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
         </ComplexType>
         <EntityType Name="RecyclatePackage">
           <Key>
@@ -34091,14 +34089,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <FunctionImportMapping FunctionImportName="GetGoodsReceiptBarcodeAvailables" FunctionName="TotalSmartPortalModel.Store.GetGoodsReceiptBarcodeAvailables">
             <ResultMapping>
               <ComplexTypeMapping TypeName="TotalSmartPortalModel.GoodsReceiptBarcodeAvailable">
-                <ScalarProperty Name="GoodsReceiptID" ColumnName="GoodsReceiptID" />
                 <ScalarProperty Name="GoodsReceiptDetailID" ColumnName="GoodsReceiptDetailID" />
-                <ScalarProperty Name="GoodsReceiptReference" ColumnName="GoodsReceiptReference" />
-                <ScalarProperty Name="GoodsReceiptEntryDate" ColumnName="GoodsReceiptEntryDate" />
-                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
                 <ScalarProperty Name="BatchEntryDate" ColumnName="BatchEntryDate" />
-                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
-                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
                 <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
                 <ScalarProperty Name="LabCode" ColumnName="LabCode" />
                 <ScalarProperty Name="Barcode" ColumnName="Barcode" />
@@ -34115,6 +34107,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="LabHold" ColumnName="LabHold" />
                 <ScalarProperty Name="LabInActive" ColumnName="LabInActive" />
                 <ScalarProperty Name="LabInActiveCode" ColumnName="LabInActiveCode" />
+                <ScalarProperty Name="GoodsArrivalPackageID" ColumnName="GoodsArrivalPackageID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
+                <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

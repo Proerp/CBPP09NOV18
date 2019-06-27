@@ -13,29 +13,27 @@ namespace TotalModel.Models
     
     public partial class GoodsReceiptBarcodeAvailable
     {
-        public int GoodsReceiptID { get; set; }
-        public int GoodsReceiptDetailID { get; set; }
-        public string GoodsReceiptReference { get; set; }
-        public System.DateTime GoodsReceiptEntryDate { get; set; }
-        public int BatchID { get; set; }
-        public System.DateTime BatchEntryDate { get; set; }
-        public Nullable<System.DateTime> ExpiryDate { get; set; }
-        public string SealCode { get; set; }
+        public Nullable<int> GoodsReceiptDetailID { get; set; }
+        public Nullable<System.DateTime> BatchEntryDate { get; set; }
         public string BatchCode { get; set; }
         public string LabCode { get; set; }
         public string Barcode { get; set; }
         public int CommodityID { get; set; }
         public string CommodityCode { get; set; }
         public string CommodityName { get; set; }
-        public int BinLocationID { get; set; }
+        public Nullable<int> BinLocationID { get; set; }
         public string BinLocationCode { get; set; }
         public decimal UnitWeight { get; set; }
         public decimal TareWeight { get; set; }
         public Nullable<decimal> QuantityAvailables { get; set; }
         public bool Approved { get; set; }
-        public bool LabApproved { get; set; }
-        public bool LabHold { get; set; }
-        public bool LabInActive { get; set; }
+        public Nullable<bool> LabApproved { get; set; }
+        public Nullable<bool> LabHold { get; set; }
+        public Nullable<bool> LabInActive { get; set; }
         public string LabInActiveCode { get; set; }
+        public Nullable<int> GoodsArrivalPackageID { get; set; }
+        public System.DateTime EntryDate { get; set; }
+        public string Reference { get; set; }
+        public Nullable<System.DateTime> ExpiryDate { get; set; }
     }
 }
