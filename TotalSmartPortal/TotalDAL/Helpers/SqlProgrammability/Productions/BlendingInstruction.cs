@@ -355,9 +355,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       DECLARE         @LocalBlendingInstructionID int    SET @LocalBlendingInstructionID = @BlendingInstructionID" + "\r\n";
 
-            queryString = queryString + "       SELECT          TOP 1 BlendingInstructionID, Code, Symbologies " + "\r\n";
-            queryString = queryString + "       FROM            BlendingInstructionSymbologies " + "\r\n";
-            queryString = queryString + "       WHERE           BlendingInstructionID = @LocalBlendingInstructionID " + "\r\n";
+            queryString = queryString + "       SELECT          TOP 1 BlendingInstructionSymbologies.BlendingInstructionID, BlendingInstructionSymbologies.Code, BlendingInstructionSymbologies.Symbologies, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName " + "\r\n";
+            queryString = queryString + "       FROM            BlendingInstructionSymbologies INNER JOIN BlendingInstructions ON BlendingInstructionSymbologies.BlendingInstructionID = @LocalBlendingInstructionID AND BlendingInstructionSymbologies.BlendingInstructionID = BlendingInstructions.BlendingInstructionID INNER JOIN Commodities ON BlendingInstructions.CommodityID = Commodities.CommodityID " + "\r\n";
 
             queryString = queryString + "    END " + "\r\n";
 
