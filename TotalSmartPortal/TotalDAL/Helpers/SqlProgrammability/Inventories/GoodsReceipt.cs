@@ -1466,11 +1466,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         {
             string queryString;
 
-            string queryBUILD = "               SELECT      BarcodeAvailables.GoodsArrivalPackageID, BarcodeAvailables.GoodsReceiptDetailID, BarcodeAvailables.EntryDate, BarcodeAvailables.Reference, BarcodeAvailables.BatchEntryDate, BarcodeAvailables.ExpiryDate, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BarcodeAvailables.BinLocationID, BinLocations.Code AS BinLocationCode, " + "\r\n";
+            string queryBUILD = "               SELECT      BarcodeAvailables.GoodsArrivalPackageID, BarcodeAvailables.GoodsReceiptDetailID, BarcodeAvailables.EntryDate, BarcodeAvailables.Reference, BarcodeAvailables.BatchEntryDate, BarcodeAvailables.ExpiryDate, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BarcodeAvailables.WarehouseID, Warehouses.Code AS WarehouseCode, BarcodeAvailables.BinLocationID, BinLocations.Code AS BinLocationCode, " + "\r\n";
             queryBUILD = queryBUILD + "                     BarcodeAvailables.BatchCode, BarcodeAvailables.LabCode, BarcodeAvailables.Barcode, BarcodeAvailables.UnitWeight, BarcodeAvailables.TareWeight, ROUND(BarcodeAvailables.Quantity - BarcodeAvailables.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, " + "\r\n";
             queryBUILD = queryBUILD + "                     BarcodeAvailables.Approved, Labs.Approved AS LabApproved, Labs.Hold AS LabHold, Labs.InActive AS LabInActive, VoidTypes.Code AS LabInActiveCode " + "\r\n";
             queryBUILD = queryBUILD + "         FROM        @BarcodeAvailables BarcodeAvailables " + "\r\n";
             queryBUILD = queryBUILD + "                     INNER JOIN Commodities ON BarcodeAvailables.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryBUILD = queryBUILD + "                     LEFT  JOIN Warehouses ON BarcodeAvailables.WarehouseID = Warehouses.WarehouseID " + "\r\n";
             queryBUILD = queryBUILD + "                     LEFT  JOIN BinLocations ON BarcodeAvailables.BinLocationID = BinLocations.BinLocationID " + "\r\n";
             queryBUILD = queryBUILD + "                     LEFT  JOIN Labs ON BarcodeAvailables.LabID = Labs.LabID " + "\r\n";
             queryBUILD = queryBUILD + "                     LEFT  JOIN VoidTypes ON Labs.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";

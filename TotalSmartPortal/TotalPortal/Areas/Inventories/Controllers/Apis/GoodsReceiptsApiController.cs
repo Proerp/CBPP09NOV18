@@ -78,7 +78,13 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         [Route("GetPendingGoodsArrivalPackages/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{barcode}/{goodsArrivalPackageIDs}")]
         public IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
         {
-            return this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, (int)GlobalEnums.NmvnTaskID.MaterialReceipt, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
+            IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> pendingGoodsArrivalPackages = this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, (int)GlobalEnums.NmvnTaskID.MaterialReceipt, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
+            if (pendingGoodsArrivalPackages.Count() > 0)
+                return pendingGoodsArrivalPackages;
+            else
+            {
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "this item does not exist"));
+            }
         }
 
         #region HELPER API
@@ -120,7 +126,36 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         [Route("GetGoodsReceiptDetailAvailables/{locationID}/{warehouseID}/{warehouseReceiptID}/{commodityID}/{commodityIDs}/{batchID}/{blendingInstructionID}/{barcode}/{goodsReceiptDetailIDs}/{onlyApproved}/{onlyIssuable}")]
         public IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, int? blendingInstructionID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
         {
-            return this.goodsReceiptAPIRepository.GetGoodsReceiptDetailAvailables(locationID, warehouseID, warehouseReceiptID, commodityID, commodityIDs, batchID, blendingInstructionID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable);
+            IEnumerable<GoodsReceiptDetailAvailable> goodsReceiptDetailAvailables = this.goodsReceiptAPIRepository.GetGoodsReceiptDetailAvailables(locationID, warehouseID, warehouseReceiptID, commodityID, commodityIDs, batchID, blendingInstructionID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable);
+
+            if (goodsReceiptDetailAvailables.Count() > 0)
+                return goodsReceiptDetailAvailables;
+            else
+            {
+                List<GoodsReceiptBarcodeAvailable> barcodeAvailables = this.goodsReceiptAPIRepository.GetGoodsReceiptBarcodeAvailables(barcode).ToList(); string message = "";
+                if (barcodeAvailables.Count == 0) message = "Mã vạch không tồn tại";
+                else
+                    if (barcodeAvailables[0].GoodsReceiptDetailID == null) message = "Mã vạch mới in, chưa nhập kho";
+                    else
+                        if (barcodeAvailables[0].QuantityAvailables == 0) message = "Phuy đã xuất hết, không còn tồn";
+                        else
+                            if (barcodeAvailables.Where(w => w.WarehouseID == warehouseID).Count() == 0) message = "Sai kho xuất " + barcodeAvailables[0].WarehouseCode;
+                            else
+                            {
+                                if (barcodeAvailables.Where(w => w.WarehouseID == warehouseID && w.Approved).Count() == 0) message = "Phiếu nhập chưa hoàn tất";
+                                else
+                                    if (warehouseReceiptID == 6 && barcodeAvailables.Where(w => w.WarehouseID == warehouseID && w.Approved && (bool)w.LabApproved).Count() == 0) message = "Lab chưa PASS";
+                                    else
+                                        if (warehouseReceiptID == 6 && barcodeAvailables.Where(w => w.WarehouseID == warehouseID && w.Approved && (bool)w.LabApproved && !(bool)w.LabInActive).Count() == 0) message = "Lab đang quarantine";
+                                        else
+                                            if (warehouseReceiptID == 6 && barcodeAvailables.Where(w => w.WarehouseID == warehouseID && w.Approved && (bool)w.LabApproved && !(bool)w.LabInActive && !(bool)w.LabHold).Count() == 0) message = "Lab đang hold";
+                                            else
+                                                message = "";
+                            }
+                //if (blendingInstructionID != null)
+
+                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, message));
+            }
         }
 
 
@@ -131,9 +166,12 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
         {
             List<GoodsReceiptBarcodeAvailable> barcodeAvailables = this.goodsReceiptAPIRepository.GetGoodsReceiptBarcodeAvailables(barcode).ToList();
             if (barcodeAvailables.Count() > 0)
-                return new BarcodeAvailableSummary() {
-                    Reference = (barcodeAvailables.Min(p => p.GoodsArrivalPackageID) == null ? "PNK: " : "PO: ") + string.Join(",", barcodeAvailables.Select(d => d.Reference)), 
-                    EntryDate = barcodeAvailables.Max(p => p.EntryDate), BatchEntryDate = barcodeAvailables.Max(p => p.BatchEntryDate), ExpiryDate = barcodeAvailables.Min(p => p.ExpiryDate),
+                return new BarcodeAvailableSummary()
+                {
+                    Reference = (barcodeAvailables.Min(p => p.GoodsArrivalPackageID) == null ? "PNK: " : "PO: ") + string.Join(",", barcodeAvailables.Select(d => d.Reference)),
+                    EntryDate = barcodeAvailables.Max(p => p.EntryDate),
+                    BatchEntryDate = barcodeAvailables.Max(p => p.BatchEntryDate),
+                    ExpiryDate = barcodeAvailables.Min(p => p.ExpiryDate),
                     BatchCode = barcodeAvailables.Min(p => p.BatchCode),
                     LabCode = barcodeAvailables.Min(p => p.LabCode),
                     Barcode = barcodeAvailables.Min(p => p.Barcode),

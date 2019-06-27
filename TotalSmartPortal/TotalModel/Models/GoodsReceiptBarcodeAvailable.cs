@@ -35,5 +35,7 @@ namespace TotalModel.Models
         public System.DateTime EntryDate { get; set; }
         public string Reference { get; set; }
         public Nullable<System.DateTime> ExpiryDate { get; set; }
+        public Nullable<int> WarehouseID { get; set; }
+        public string WarehouseCode { get; set; }
     }
 }

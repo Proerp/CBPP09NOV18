@@ -25,6 +25,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.GetTransferOrderAvailableWarehouses();
             this.GetTransferOrderPendingWorkOrders();
             this.GetTransferOrderPendingBlendingInstructions();
+            this.CheckTransferOrderPendingBlendingInstructions();
 
             this.TransferOrderApproved();
             this.TransferOrderEditable();
@@ -191,6 +192,29 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       ORDER BY        WarehouseID " + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetTransferOrderAvailableWarehouses", queryString);
+        }
+
+        private void CheckTransferOrderPendingBlendingInstructions()
+        {
+            string queryString;
+
+            queryString = " @WarehouseReceiptID Int, @CommodityID Int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       DECLARE @BlendingInstructionDetails TABLE (CommodityID int NOT NULL, Quantity decimal(18, 2) NOT NULL) " + "\r\n";
+            queryString = queryString + "       INSERT INTO     @BlendingInstructionDetails (CommodityID, Quantity) " + "\r\n";
+            queryString = queryString + "       SELECT          CommodityID,  ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS Quantity FROM BlendingInstructionDetails WHERE Approved = 1 AND InActive = 0 AND InActivePartial = 0 AND (ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") >= 1 OR (ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 AND QuantityIssued = 0)) " + "\r\n";
+            queryString = queryString + "       INSERT INTO     @BlendingInstructionDetails (CommodityID, Quantity) " + "\r\n";
+            queryString = queryString + "       SELECT          CommodityID, -ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS Quantity FROM GoodsReceiptDetails WHERE WarehouseID = @WarehouseReceiptID AND CommodityID IN (SELECT CommodityID FROM @BlendingInstructionDetails) AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n";
+
+            queryString = queryString + "       SELECT TOP 1 CommodityID FROM @BlendingInstructionDetails BlendingInstructionDetails WHERE CommodityID = @CommodityID GROUP BY CommodityID HAVING ROUND(SUM(Quantity), " + (int)GlobalEnums.rndQuantity + ") > 0 ";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("CheckTransferOrderPendingBlendingInstructions", queryString);
         }
 
         private void GetTransferOrderPendingBlendingInstructions()
