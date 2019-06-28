@@ -54,40 +54,58 @@ namespace TotalDAL.Repositories
             return goodsReceiptBarcodeAvailables;
         }
 
-        public bool BarcodeNotFoundMessage(out int? foundCommodityID, out string message, int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, int? blendingInstructionID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
+        public bool BarcodeNotFoundMessage(out int? foundCommodityID, out string message, bool goodsArrival_VS_GoodsReceipt, int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, int? blendingInstructionID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable)
         {
             List<GoodsReceiptBarcodeAvailable> barcodeAvailables = this.GetBarcodeAvailables(barcode).ToList(); foundCommodityID = null; message = "";
 
-            if (barcodeAvailables.Count == 0) message = "Mã vạch không tồn tại";
+            if (barcodeAvailables.Count == 0) message = "Mã vạch không tồn tại" + (goodsArrival_VS_GoodsReceipt ? " hoặc Phiếu nhận hàng chưa duyệt" : "");
             else
-                if (barcodeAvailables[0].GoodsReceiptDetailID == null) message = "Mã vạch mới in, chưa nhập kho";
-                else
-                    if (barcodeAvailables[0].QuantityAvailables == 0) message = "Phuy đã xuất hết, không còn tồn";
+                if (goodsArrival_VS_GoodsReceipt)
+                {
+                    if (barcodeAvailables[0].GoodsReceiptDetailID != null) message = "Đã nhập kho";
                     else
-                        if (barcodeAvailables.Where(w => w.WarehouseID == warehouseID).Count() == 0) message = "NVL đang ở kho khác [" + barcodeAvailables[0].WarehouseCode + "]"; //HAVE NOT CHECKED THIS YET (@OnlyIssuable = 0 OR Warehouses.Issuable = 1)
+                        if (barcodeAvailables.Where(w => (!onlyApproved || w.Approved)).Count() == 0) message = "Phiếu nhận hàng chưa duyệt";
                         else
-                            if (barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved)).Count() == 0) message = "Phiếu nhập chưa hoàn tất";
+                            if (goodsReceiptDetailIDs != null && goodsReceiptDetailIDs != "" && goodsReceiptDetailIDs != "0")
+                            {
+                                foreach (GoodsReceiptBarcodeAvailable barcodeAvailable in barcodeAvailables)
+                                {
+                                    if ((goodsReceiptDetailIDs + ",").Contains(barcodeAvailable.GoodsArrivalPackageID.ToString() + ",")) message = "Phuy vừa mới quét xong";
+                                }
+                            }
+                }
+                else //goodsArrivalVSGoodsReceipt == false
+                {
+                    if (barcodeAvailables[0].GoodsReceiptDetailID == null) message = "Mã vạch mới in, chưa nhập kho";
+                    else
+                        if (barcodeAvailables[0].QuantityAvailables == 0) message = "Phuy đã xuất hết, không còn tồn";
+                        else
+                            if (barcodeAvailables.Where(w => w.WarehouseID == warehouseID).Count() == 0) message = "NVL đang ở kho khác [" + barcodeAvailables[0].WarehouseCode + "]"; //HAVE NOT CHECKED THIS YET (@OnlyIssuable = 0 OR Warehouses.Issuable = 1)
                             else
-                                if (warehouseReceiptID == 6 && barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved) && (bool)w.LabApproved).Count() == 0) message = "Lab chưa PASS";
+                                if (barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved)).Count() == 0) message = "Phiếu nhập chưa hoàn tất";
                                 else
-                                    if (warehouseReceiptID == 6 && barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved) && (bool)w.LabApproved && !(bool)w.LabInActive).Count() == 0) message = "Lab đang quarantine";
+                                    if (warehouseReceiptID == 6 && barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved) && (bool)w.LabApproved).Count() == 0) message = "Lab chưa PASS";
                                     else
-                                        if (warehouseReceiptID == 6 && barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved) && (bool)w.LabApproved && !(bool)w.LabInActive && !(bool)w.LabHold).Count() == 0) message = "Lab đang hold";
+                                        if (warehouseReceiptID == 6 && barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved) && (bool)w.LabApproved && !(bool)w.LabInActive).Count() == 0) message = "Lab đang quarantine";
                                         else
-                                        {
-                                            if (batchID != null || (commodityID != null && commodityID != 0) || (commodityIDs != null && commodityIDs != "" && commodityIDs != "0") || (goodsReceiptDetailIDs != null && goodsReceiptDetailIDs != ""))
+                                            if (warehouseReceiptID == 6 && barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved) && (bool)w.LabApproved && !(bool)w.LabInActive && !(bool)w.LabHold).Count() == 0) message = "Lab đang hold";
+                                            else
                                             {
-                                                foreach (GoodsReceiptBarcodeAvailable barcodeAvailable in barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved) && (warehouseReceiptID != 6 || ((bool)w.LabApproved && !(bool)w.LabInActive && !(bool)w.LabHold))).ToList())
+                                                if (batchID != null || (commodityID != null && commodityID != 0) || (commodityIDs != null && commodityIDs != "" && commodityIDs != "0") || (goodsReceiptDetailIDs != null && goodsReceiptDetailIDs != "" && goodsReceiptDetailIDs != "0"))
                                                 {
-                                                    if (batchID != null && barcodeAvailable.BatchID != batchID) message = "Không đúng BATCH yêu cầu";
-                                                    if (commodityID != null && commodityID != 0 && barcodeAvailable.CommodityID != commodityID) message = "Không đúng mã NVL yêu cầu";
-                                                    if ((commodityIDs != null && commodityIDs != "" && commodityIDs != "0") && !(commodityIDs + ",").Contains(barcodeAvailable.CommodityID.ToString() + ",")) message = "Không đúng mã NVL yêu cầu";
-                                                    if ((goodsReceiptDetailIDs != null && goodsReceiptDetailIDs != "") && (goodsReceiptDetailIDs + ",").Contains(barcodeAvailable.GoodsReceiptDetailID.ToString() + ",")) message = "Phuy vừa mới quét xong";
+                                                    foreach (GoodsReceiptBarcodeAvailable barcodeAvailable in barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved) && (warehouseReceiptID != 6 || ((bool)w.LabApproved && !(bool)w.LabInActive && !(bool)w.LabHold))).ToList())
+                                                    {
+                                                        if (batchID != null && barcodeAvailable.BatchID != batchID) message = "Không đúng BATCH yêu cầu";
+                                                        if (commodityID != null && commodityID != 0 && barcodeAvailable.CommodityID != commodityID) message = "Không đúng mã NVL yêu cầu";
+                                                        if ((commodityIDs != null && commodityIDs != "" && commodityIDs != "0") && !(commodityIDs + ",").Contains(barcodeAvailable.CommodityID.ToString() + ",")) message = "Không đúng mã NVL yêu cầu";
+                                                        if ((goodsReceiptDetailIDs != null && goodsReceiptDetailIDs != "" && goodsReceiptDetailIDs != "0") && (goodsReceiptDetailIDs + ",").Contains(barcodeAvailable.GoodsReceiptDetailID.ToString() + ",")) message = "Phuy vừa mới quét xong";
+                                                    }
                                                 }
                                             }
-                                        }
+                }
 
-            if (message == "") foundCommodityID = barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved) && (warehouseReceiptID != 6 || ((bool)w.LabApproved && !(bool)w.LabInActive && !(bool)w.LabHold))).ToList()[0].CommodityID;
+
+            if (message == "" && !goodsArrival_VS_GoodsReceipt && barcodeAvailables.Count > 0) foundCommodityID = barcodeAvailables.Where(w => w.WarehouseID == warehouseID && (!onlyApproved || w.Approved) && (warehouseReceiptID != 6 || ((bool)w.LabApproved && !(bool)w.LabInActive && !(bool)w.LabHold))).ToList()[0].CommodityID;
             return message != "";
         }
 

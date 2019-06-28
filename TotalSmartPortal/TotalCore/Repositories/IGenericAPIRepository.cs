@@ -19,7 +19,7 @@ namespace TotalCore.Repositories
 
         #region HELPERS
         IEnumerable<GoodsReceiptBarcodeAvailable> GetBarcodeAvailables(string barcode);
-        bool BarcodeNotFoundMessage(out int? foundCommodityID, out string message, int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, int? blendingInstructionID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable);
+        bool BarcodeNotFoundMessage(out int? foundCommodityID, out string message, bool goodsArrival_VS_GoodsReceipt, int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, int? blendingInstructionID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable);
         #endregion HELPERS
     }
 }

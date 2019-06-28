@@ -76,14 +76,17 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
 
         [HttpGet]
         [Route("GetPendingGoodsArrivalPackages/{locationID}/{goodsReceiptID}/{goodsArrivalID}/{barcode}/{goodsArrivalPackageIDs}")]
-        public IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> GetPendingGoodsArrivalPackages(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
+        public HttpResponseMessage GetPendingGoodsArrivalPackages(int? locationID, int? goodsReceiptID, int? goodsArrivalID, string barcode, string goodsArrivalPackageIDs)
         {
             IEnumerable<GoodsReceiptPendingGoodsArrivalPackage> pendingGoodsArrivalPackages = this.goodsReceiptAPIRepository.GetPendingGoodsArrivalPackages(true, locationID, (int)GlobalEnums.NmvnTaskID.MaterialReceipt, goodsReceiptID, goodsArrivalID, barcode, goodsArrivalPackageIDs);
             if (pendingGoodsArrivalPackages.Count() > 0)
-                return pendingGoodsArrivalPackages;
+                return Request.CreateResponse(HttpStatusCode.OK, pendingGoodsArrivalPackages);
             else
             {
-                throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound, "this item does not exist"));
+                int? foundCommodityID = null; string message = "";
+                this.goodsReceiptAPIRepository.BarcodeNotFoundMessage(out foundCommodityID, out message, true, locationID, 1, 1, null, null, null, null, barcode, goodsArrivalPackageIDs, true, true);
+                    
+                return Request.CreateResponse(HttpStatusCode.NotFound, message != "" ? message : "Mã vạch không đúng.");
             }
         }
 
@@ -133,7 +136,7 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             else
             {
                 int? foundCommodityID = null; string message = "";
-                if (!this.goodsReceiptAPIRepository.BarcodeNotFoundMessage(out foundCommodityID, out message, locationID, warehouseID, warehouseReceiptID, commodityID, commodityIDs, batchID, blendingInstructionID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable))
+                if (!this.goodsReceiptAPIRepository.BarcodeNotFoundMessage(out foundCommodityID, out message, false, locationID, warehouseID, warehouseReceiptID, commodityID, commodityIDs, batchID, blendingInstructionID, barcode, goodsReceiptDetailIDs, onlyApproved, onlyIssuable))
                     if (foundCommodityID != null && blendingInstructionID != null)
                     {
                         IEnumerable<TransferOrderPendingBlendingInstructionCompact> transferOrderPendingBlendingInstructionCompacts = this.goodsReceiptAPIRepository.GetTransferOrderPendingBlendingInstructionCompacts(warehouseReceiptID);

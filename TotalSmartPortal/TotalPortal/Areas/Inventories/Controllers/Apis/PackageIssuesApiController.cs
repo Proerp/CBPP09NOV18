@@ -88,14 +88,14 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
             else
             {
                 int? foundCommodityID = null; string message = "";
-                if (!this.packageIssueAPIRepository.BarcodeNotFoundMessage(out foundCommodityID, out message, locationID, warehouseID, 6, null, null, null, null, barcode, goodsReceiptDetailIDs, true, true))
+                if (!this.packageIssueAPIRepository.BarcodeNotFoundMessage(out foundCommodityID, out message, false, locationID, warehouseID, 6, null, null, null, null, barcode, goodsReceiptDetailIDs, true, true))
                     if (foundCommodityID != null)
                     {
                         IEnumerable<PackageIssuePendingBlendingInstructionDetail> packageIssuePendingBlendingInstructionDetails = this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(true, locationID, packageIssueID, blendingInstructionID, warehouseID, null, goodsReceiptDetailIDs);
 
-                        if (packageIssuePendingBlendingInstructionDetails.Where(w => w.CommodityID == foundCommodityID).Count() == 0) message = "Không có trong ĐH hoặc đã xuất đủ";
+                        if (packageIssuePendingBlendingInstructionDetails.Where(w => w.CommodityID == foundCommodityID).Count() == 0) message = "Không có trong đơn hàng hoặc đã xuất đủ";
                     }
-                return Request.CreateResponse(HttpStatusCode.NotFound, message != "" ? message : "Mã vạch không đúng.");
+                return Request.CreateResponse(HttpStatusCode.NotFound, message != "" ? message : "Mã vạch không đúng hoặc không phù hợp.");
             }
         }
 
