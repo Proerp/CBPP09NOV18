@@ -37,5 +37,6 @@ namespace TotalModel.Models
         public Nullable<System.DateTime> ExpiryDate { get; set; }
         public Nullable<int> WarehouseID { get; set; }
         public string WarehouseCode { get; set; }
+        public Nullable<int> BatchID { get; set; }
     }
 }

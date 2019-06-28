@@ -5793,5 +5793,14 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("SetBlendingInstructionSymbologies", blendingInstructionIDParameter, codeParameter, symbologiesParameter);
         }
+    
+        public virtual ObjectResult<TransferOrderPendingBlendingInstructionCompact> GetTransferOrderPendingBlendingInstructionCompacts(Nullable<int> warehouseReceiptID)
+        {
+            var warehouseReceiptIDParameter = warehouseReceiptID.HasValue ?
+                new ObjectParameter("WarehouseReceiptID", warehouseReceiptID) :
+                new ObjectParameter("WarehouseReceiptID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderPendingBlendingInstructionCompact>("GetTransferOrderPendingBlendingInstructionCompacts", warehouseReceiptIDParameter);
+        }
     }
 }

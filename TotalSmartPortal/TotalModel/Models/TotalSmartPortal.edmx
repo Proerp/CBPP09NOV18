@@ -9124,6 +9124,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="LabOptionID" Type="int" Mode="In" />
           <Parameter Name="FilterOptionID" Type="int" Mode="In" />
         </Function>
+        <Function Name="GetTransferOrderPendingBlendingInstructionCompacts" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="WarehouseReceiptID" Type="int" Mode="In" />
+        </Function>
         <Function Name="GetTransferOrderPendingBlendingInstructions" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="LocationID" Type="int" Mode="In" />
           <Parameter Name="TransferOrderID" Type="int" Mode="In" />
@@ -17505,6 +17508,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <Parameter Name="BlendingInstructionID" Mode="In" Type="Int32" />
             <Parameter Name="Code" Mode="In" Type="String" />
             <Parameter Name="Symbologies" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="GetTransferOrderPendingBlendingInstructionCompacts" ReturnType="Collection(TotalSmartPortalModel.TransferOrderPendingBlendingInstructionCompact)">
+          <Parameter Name="WarehouseReceiptID" Mode="In" Type="Int32" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -26342,6 +26348,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           <Property Type="Int32" Name="WarehouseID" Nullable="true" />
           <Property Type="String" Name="WarehouseCode" Nullable="true" MaxLength="10" />
+          <Property Type="Int32" Name="BatchID" Nullable="true" />
         </ComplexType>
         <EntityType Name="RecyclatePackage">
           <Key>
@@ -27131,6 +27138,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Int32" Name="PackageIssueImage1ID" Nullable="true" />
           <Property Type="Int32" Name="PackageIssueImage2ID" Nullable="true" />
           <Property Type="Int32" Name="PackageIssueDetailID" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="TransferOrderPendingBlendingInstructionCompact">
+          <Property Type="Int32" Name="CommodityID" Nullable="false" />
+          <Property Type="Decimal" Name="QuantityPendings" Nullable="true" Precision="38" Scale="2" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -34115,6 +34126,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
+                <ScalarProperty Name="BatchID" ColumnName="BatchID" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
@@ -34433,6 +34445,14 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="SetBlendingInstructionSymbologies" FunctionName="TotalSmartPortalModel.Store.SetBlendingInstructionSymbologies" />
+          <FunctionImportMapping FunctionImportName="GetTransferOrderPendingBlendingInstructionCompacts" FunctionName="TotalSmartPortalModel.Store.GetTransferOrderPendingBlendingInstructionCompacts">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="TotalSmartPortalModel.TransferOrderPendingBlendingInstructionCompact">
+                <ScalarProperty Name="CommodityID" ColumnName="CommodityID" />
+                <ScalarProperty Name="QuantityPendings" ColumnName="QuantityPendings" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

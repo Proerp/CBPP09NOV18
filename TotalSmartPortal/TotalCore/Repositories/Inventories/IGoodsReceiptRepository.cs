@@ -51,6 +51,7 @@ namespace TotalCore.Repositories.Inventories
 
         IEnumerable<GoodsReceiptDetailAvailable> GetGoodsReceiptDetailAvailables(int? locationID, int? warehouseID, int? warehouseReceiptID, int? commodityID, string commodityIDs, int? batchID, int? blendingInstructionID, string barcode, string goodsReceiptDetailIDs, bool onlyApproved, bool onlyIssuable);
         IEnumerable<GoodsReceiptBarcodeAvailable> GetGoodsReceiptBarcodeAvailables(string barcode);
+        IEnumerable<TransferOrderPendingBlendingInstructionCompact> GetTransferOrderPendingBlendingInstructionCompacts(int? warehouseReceiptID);
     }
 
 }

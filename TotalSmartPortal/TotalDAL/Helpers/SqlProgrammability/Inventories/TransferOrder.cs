@@ -25,7 +25,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.GetTransferOrderAvailableWarehouses();
             this.GetTransferOrderPendingWorkOrders();
             this.GetTransferOrderPendingBlendingInstructions();
-            this.CheckTransferOrderPendingBlendingInstructions();
+            this.GetTransferOrderPendingBlendingInstructionCompacts();
 
             this.TransferOrderApproved();
             this.TransferOrderEditable();
@@ -194,11 +194,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             this.totalSmartPortalEntities.CreateStoredProcedure("GetTransferOrderAvailableWarehouses", queryString);
         }
 
-        private void CheckTransferOrderPendingBlendingInstructions()
+        private void GetTransferOrderPendingBlendingInstructionCompacts()
         {
             string queryString;
 
-            queryString = " @WarehouseReceiptID Int, @CommodityID Int " + "\r\n";
+            queryString = " @WarehouseReceiptID Int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
@@ -210,11 +210,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       INSERT INTO     @BlendingInstructionDetails (CommodityID, Quantity) " + "\r\n";
             queryString = queryString + "       SELECT          CommodityID, -ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS Quantity FROM GoodsReceiptDetails WHERE WarehouseID = @WarehouseReceiptID AND CommodityID IN (SELECT CommodityID FROM @BlendingInstructionDetails) AND ROUND(Quantity - QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + "\r\n";
 
-            queryString = queryString + "       SELECT TOP 1 CommodityID FROM @BlendingInstructionDetails BlendingInstructionDetails WHERE CommodityID = @CommodityID GROUP BY CommodityID HAVING ROUND(SUM(Quantity), " + (int)GlobalEnums.rndQuantity + ") > 0 ";
+            queryString = queryString + "       SELECT CommodityID, ROUND(SUM(Quantity), " + (int)GlobalEnums.rndQuantity + ") AS QuantityPendings FROM @BlendingInstructionDetails BlendingInstructionDetails GROUP BY CommodityID HAVING ROUND(SUM(Quantity), " + (int)GlobalEnums.rndQuantity + ") > 0 ";
 
             queryString = queryString + "   END " + "\r\n";
 
-            this.totalSmartPortalEntities.CreateStoredProcedure("CheckTransferOrderPendingBlendingInstructions", queryString);
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetTransferOrderPendingBlendingInstructionCompacts", queryString);
         }
 
         private void GetTransferOrderPendingBlendingInstructions()
