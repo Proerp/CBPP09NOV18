@@ -78,9 +78,25 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
 
         [HttpGet]
         [Route("GetPendingBlendingInstructionDetails/{locationID}/{packageIssueID}/{blendingInstructionID}/{warehouseID}/{barcode}/{goodsReceiptDetailIDs}")]
-        public IEnumerable<PackageIssuePendingBlendingInstructionDetail> GetPendingBlendingInstructionDetails(int? locationID, int? packageIssueID, int? blendingInstructionID, int? warehouseID, string barcode, string goodsReceiptDetailIDs)
+        public HttpResponseMessage GetPendingBlendingInstructionDetails(int? locationID, int? packageIssueID, int? blendingInstructionID, int? warehouseID, string barcode, string goodsReceiptDetailIDs)
         {
-            return this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(true, locationID, packageIssueID, blendingInstructionID, warehouseID, barcode, goodsReceiptDetailIDs);
+            IEnumerable<PackageIssuePendingBlendingInstructionDetail> pendingBlendingInstructionDetails = this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(true, locationID, packageIssueID, blendingInstructionID, warehouseID, barcode, goodsReceiptDetailIDs);
+            if (pendingBlendingInstructionDetails.Count() > 0 && barcode != null && barcode != "" && barcode != "0") pendingBlendingInstructionDetails = pendingBlendingInstructionDetails.Where(w => w.Barcode == barcode);
+
+            if (pendingBlendingInstructionDetails.Count() > 0)
+                return Request.CreateResponse(HttpStatusCode.OK, pendingBlendingInstructionDetails);
+            else
+            {
+                int? foundCommodityID = null; string message = "";
+                if (!this.packageIssueAPIRepository.BarcodeNotFoundMessage(out foundCommodityID, out message, locationID, warehouseID, 6, null, null, null, null, barcode, goodsReceiptDetailIDs, true, true))
+                    if (foundCommodityID != null)
+                    {
+                        IEnumerable<PackageIssuePendingBlendingInstructionDetail> packageIssuePendingBlendingInstructionDetails = this.packageIssueAPIRepository.GetPendingBlendingInstructionDetails(true, locationID, packageIssueID, blendingInstructionID, warehouseID, null, goodsReceiptDetailIDs);
+
+                        if (packageIssuePendingBlendingInstructionDetails.Where(w => w.CommodityID == foundCommodityID).Count() == 0) message = "Không có trong ĐH hoặc đã xuất đủ";
+                    }
+                return Request.CreateResponse(HttpStatusCode.NotFound, message != "" ? message : "Mã vạch không đúng.");
+            }
         }
 
 

@@ -251,15 +251,6 @@ namespace TotalDAL.Repositories.Inventories
             return goodsReceiptDetailAvailables;
         }
 
-        public IEnumerable<GoodsReceiptBarcodeAvailable> GetGoodsReceiptBarcodeAvailables(string barcode)
-        {
-            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
-            IEnumerable<GoodsReceiptBarcodeAvailable> goodsReceiptBarcodeAvailables = base.TotalSmartPortalEntities.GetGoodsReceiptBarcodeAvailables(barcode).ToList();
-            this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = true;
-
-            return goodsReceiptBarcodeAvailables;
-        }
-
         public IEnumerable<TransferOrderPendingBlendingInstructionCompact> GetTransferOrderPendingBlendingInstructionCompacts(int? warehouseReceiptID)
         {
             this.TotalSmartPortalEntities.Configuration.ProxyCreationEnabled = false;
