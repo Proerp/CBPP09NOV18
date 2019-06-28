@@ -86,7 +86,7 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
                 int? foundCommodityID = null; string message = "";
                 this.goodsReceiptAPIRepository.BarcodeNotFoundMessage(out foundCommodityID, out message, true, locationID, 1, 1, null, null, null, null, barcode, goodsArrivalPackageIDs, true, true);
                     
-                return Request.CreateResponse(HttpStatusCode.NotFound, message != "" ? message : "Mã vạch không đúng.");
+                return Request.CreateResponse(HttpStatusCode.NotFound, message != "" ? message : "Mã vạch không đúng hoặc không phù hợp.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace TotalPortal.Areas.Inventories.Controllers.Apis
                         IEnumerable<TransferOrderPendingBlendingInstructionCompact> transferOrderPendingBlendingInstructionCompacts = this.goodsReceiptAPIRepository.GetTransferOrderPendingBlendingInstructionCompacts(warehouseReceiptID);
                         if (transferOrderPendingBlendingInstructionCompacts.Where(w => w.CommodityID == foundCommodityID).Count() == 0) message = "Không có lệnh chuyển pha chế";
                     }
-                return Request.CreateResponse(HttpStatusCode.NotFound, message != "" ? message : "Mã vạch không đúng.");
+                return Request.CreateResponse(HttpStatusCode.NotFound, message != "" ? message : "Mã vạch không đúng hoặc không phù hợp.");
             }
         }
 
