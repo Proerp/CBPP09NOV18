@@ -195,6 +195,7 @@
           <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="Code" Type="nvarchar" MaxLength="50" />
           <Property Name="VoucherDate" Type="datetime" />
+          <Property Name="IssuedDate" Type="datetime" />
           <Property Name="ParentID" Type="int" />
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="StorekeeperID" Type="int" Nullable="false" />
@@ -23268,6 +23269,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="PackageIssues" Relationship="TotalSmartPortalModel.FK_PackageIssues_BlendingInstructions" FromRole="BlendingInstruction" ToRole="PackageIssue" />
           <NavigationProperty Name="Commodity" Relationship="TotalSmartPortalModel.FK_BlendingInstructions_Commodities" FromRole="BlendingInstruction" ToRole="Commodity" />
           <Property Name="ParentID" Type="Int32" />
+          <Property Name="IssuedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <Association Name="FK_BlendingInstructionDetails_BlendingInstructions">
           <End Type="TotalSmartPortalModel.BlendingInstruction" Role="BlendingInstruction" Multiplicity="1" />
@@ -32747,6 +32749,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="BlendingInstructions">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.BlendingInstruction">
               <MappingFragment StoreEntitySet="BlendingInstructions">
+                <ScalarProperty Name="IssuedDate" ColumnName="IssuedDate" />
                 <ScalarProperty Name="ParentID" ColumnName="ParentID" />
                 <ScalarProperty Name="VoucherDate" ColumnName="VoucherDate" />
                 <ScalarProperty Name="InActiveDate" ColumnName="InActiveDate" />

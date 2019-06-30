@@ -96,7 +96,8 @@
 
             <div class="form-group">
                 <div class="right-panel-label right-panel-label-whole-width">
-                    @Html.LabelFor(model => model.BlendingInstructionBriefs)
+                    @*@Html.LabelFor(model => model.BlendingInstructionBriefs)*@
+                    <a style="color: #428bca; " href="@Url.Action("Edit", "BlendingInstructions", new { area = "Productions", id = Model.BlendingInstructionID })" target="_blank"> Số, ngày lệnh pha chế </a>
                 </div>
                 <div class="div-input">
                     @Html.Kendo().MaskedTextBoxFor(model => model.BlendingInstructionBriefs).HtmlAttributes(new { @class = "right-panel-input right-panel-input-whole-width", @readonly = "readonly" })

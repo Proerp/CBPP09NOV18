@@ -226,13 +226,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "           DECLARE @msg NVARCHAR(300) ";
 
+            queryString = queryString + "           DECLARE         @BlendingInstructionID int      SET @BlendingInstructionID = (SELECT BlendingInstructionID FROM PackageIssues WHERE PackageIssueID = @EntityID) " + "\r\n";
+            queryString = queryString + "           UPDATE          BlendingInstructions            SET IssuedDate = (SELECT MAX(EntryDate) FROM PackageIssues WHERE BlendingInstructionID = @BlendingInstructionID AND (@SaveRelativeOption = 1 OR PackageIssueID <> @EntityID)) WHERE BlendingInstructionID = @BlendingInstructionID " + "\r\n";
+
             queryString = queryString + "           IF (@SaveRelativeOption = 1) " + "\r\n";
             queryString = queryString + "               BEGIN " + "\r\n";
 
-            //SHOULD CHANGE!!!
-            queryString = queryString + "                   UPDATE          PackageIssues        SET EntryDate = GetDate() WHERE PackageIssueID = @EntityID " + "\r\n";
             queryString = queryString + "                   UPDATE          PackageIssueDetails " + "\r\n";
-            queryString = queryString + "                   SET             PackageIssueDetails.Reference = PackageIssues.Reference, PackageIssueDetails.EntryDate = PackageIssues.EntryDate " + "\r\n";
+            queryString = queryString + "                   SET             PackageIssueDetails.Reference = PackageIssues.Reference " + "\r\n"; //, PackageIssueDetails.EntryDate = PackageIssues.EntryDate                 UPDATE          PackageIssues        SET EntryDate = GetDate() WHERE PackageIssueID = @EntityID
             queryString = queryString + "                   FROM            PackageIssues INNER JOIN PackageIssueDetails ON PackageIssues.PackageIssueID = @EntityID AND PackageIssues.PackageIssueID = PackageIssueDetails.PackageIssueID " + "\r\n";
 
             #region UPDATE WorkshiftID

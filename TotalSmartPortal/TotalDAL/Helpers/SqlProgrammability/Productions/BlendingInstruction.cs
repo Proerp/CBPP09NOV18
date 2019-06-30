@@ -40,7 +40,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.BlendingInstructionInitReference();
 
             this.GetBlendingInstructionLogs();
-            this.BlendingInstructionSheet();
+            this.BlendingInstructionJournals();
         }
 
 
@@ -390,21 +390,34 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         }
 
 
-        private void BlendingInstructionSheet()
+        private void BlendingInstructionJournals()
         {
-            string queryString = " @BlendingInstructionID int " + "\r\n";
+            string queryString = " @BlendingInstructionID int, @FromDate DateTime, @ToDate DateTime " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       DECLARE         @LocalBlendingInstructionID int    SET @LocalBlendingInstructionID = @BlendingInstructionID" + "\r\n";
+            queryString = queryString + "       DECLARE         @LocalBlendingInstructionID int, @LocalFromDate DateTime, @LocalToDate DateTime    " + "\r\n";
+            queryString = queryString + "       SET             @LocalBlendingInstructionID = @BlendingInstructionID        SET @LocalFromDate = @FromDate      SET @LocalToDate = @ToDate " + "\r\n";
 
-            queryString = queryString + "       SELECT          BlendingInstructions.BlendingInstructionID, BlendingInstructions.EntryDate, BlendingInstructions.Reference, BlendingInstructions.Code, BlendingInstructions.VoucherDate, BlendingInstructions.Jobs, BlendingInstructions.Description, BlendingInstructions.CommodityID AS ProductID, Products.Code AS ProductCode, Products.Name AS ProductName, " + "\r\n";
+            queryString = queryString + "       IF  (@LocalBlendingInstructionID > 0) " + "\r\n";
+            queryString = queryString + "           " + this.BlendingInstructionJournalSQL(true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.BlendingInstructionJournalSQL(false) + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("BlendingInstructionJournals", queryString);
+        }
+
+        private string BlendingInstructionJournalSQL(bool isBlendingInstructionID)
+        {
+            string queryString = "              SELECT          BlendingInstructions.BlendingInstructionID, BlendingInstructions.EntryDate, BlendingInstructions.Reference, BlendingInstructions.Code, BlendingInstructions.VoucherDate, BlendingInstructions.IssuedDate, CAST(" + "BlendingInstructions.IssuedDate" + " AS DATE) AS IssuedDateOnly, BlendingInstructions.Jobs, BlendingInstructions.Description, BlendingInstructions.CommodityID AS ProductID, Products.Code AS ProductCode, Products.Name AS ProductName, " + "\r\n";
             queryString = queryString + "                       BlendingInstructionDetails.BlendingInstructionDetailID, BlendingInstructionDetails.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BlendingInstructionDetails.Quantity, BlendingInstructionDetails.QuantityIssued, BlendingInstructionDetails.Quantity - BlendingInstructionDetails.QuantityIssued AS QuantityRemains, BlendingInstructionDetails.InActive, BlendingInstructionDetails.InActivePartial, ISNULL(VoidTypes.Name, VoidTypeDetails.Name) AS VoidTypeName, " + "\r\n";
             queryString = queryString + "                       PackageIssueDetails.PackageIssueID, PackageIssueDetails.PackageIssueDetailID, PackageIssueDetails.PackageIssueImage1ID, PackageIssueDetails.PackageIssueImage2ID, PackageIssueDetails.SealCode, PackageIssueDetails.BatchCode, PackageIssueDetails.LabCode, Barcodes.BarcodeID, PackageIssueDetails.Barcode, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, PackageIssueDetails.Quantity AS PackageIssueQuantity " + "\r\n";
 
             queryString = queryString + "       FROM            BlendingInstructions " + "\r\n";
-            queryString = queryString + "                       INNER JOIN BlendingInstructionDetails ON BlendingInstructions.BlendingInstructionID = @LocalBlendingInstructionID AND BlendingInstructions.BlendingInstructionID = ISNULL(BlendingInstructionDetails.ParentID, BlendingInstructionDetails.BlendingInstructionID) " + "\r\n";
+            queryString = queryString + "                       INNER JOIN BlendingInstructionDetails ON " + (isBlendingInstructionID ? "BlendingInstructions.BlendingInstructionID = @LocalBlendingInstructionID" : "BlendingInstructions.IssuedDate >= @LocalFromDate AND BlendingInstructions.IssuedDate <= @LocalToDate") + " AND BlendingInstructions.BlendingInstructionID = ISNULL(BlendingInstructionDetails.ParentID, BlendingInstructionDetails.BlendingInstructionID) " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities AS Products ON BlendingInstructions.CommodityID = Products.CommodityID  " + "\r\n";
             queryString = queryString + "                       INNER JOIN Commodities ON BlendingInstructionDetails.CommodityID = Commodities.CommodityID " + "\r\n";
 
@@ -416,11 +429,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "                       LEFT  JOIN Barcodes ON GoodsReceiptDetails.Barcode = Barcodes.Code " + "\r\n";
 
-            queryString = queryString + "       ORDER BY        BlendingInstructionDetails.BlendingInstructionDetailID, PackageIssueDetails.PackageIssueDetailID " + "\r\n";
+            if (isBlendingInstructionID) queryString = queryString + "       ORDER BY        BlendingInstructionDetails.BlendingInstructionDetailID, PackageIssueDetails.PackageIssueDetailID " + "\r\n";
 
-            queryString = queryString + "    END " + "\r\n";
-
-            this.totalSmartPortalEntities.CreateStoredProcedure("BlendingInstructionSheet", queryString);
+            return queryString;
         }
 
         #endregion

@@ -517,6 +517,8 @@ namespace TotalPortal.Controllers.Apis
 
                 TDto dto = simpleViewModel;// Mapper.Map<TSimpleViewModel, TDto>(simpleViewModel);//Convert from Viewmodel to DTO
 
+                dto.EntryDate = DateTime.Now; //JUST ONLY FOR API: ALWAYS UPDATE BY NOW
+
                 //MVC: if (!this.TryValidateModel(dto)) return false;//Check DTO IsValid
                 //MVC: else
                 if (this.GenericService.Save(dto))
