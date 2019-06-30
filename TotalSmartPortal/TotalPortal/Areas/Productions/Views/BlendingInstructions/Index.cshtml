@@ -17,7 +17,8 @@
                 columns.Bound(p => p.EntryDate).Title("Ngày lập").Format("{0:dd/MM/yy}").Hidden();
                 columns.Bound(p => p.Features).Title("BIS").Hidden();
 
-                columns.Bound(p => p.Code).Title("FT").Width(36).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Edit" }) + "/#= BlendingInstructionID #'>#=Code#</a>");
+                columns.Bound(p => p.Reference).Title("FT").Width(36).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Productions/BlendingInstructions", action = "Edit" }) + "/#= BlendingInstructionID #'>#=Reference#</a>");
+                columns.Bound(p => p.Code).Title("BI").Width(36);
                 columns.Bound(p => p.CommodityCode).Title("Mã NVL").Width(60);
                 columns.Bound(p => p.CommodityName).Title("Tên nguyên liệu").Width(168);
                                 

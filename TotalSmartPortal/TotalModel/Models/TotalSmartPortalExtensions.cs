@@ -325,7 +325,7 @@ namespace TotalModel.Models
 
     public partial class BlendingInstructionIndex
     {
-        public string Features { get { return "[" + this.Reference + "] " + (this.Code != null ? this.Code : "") + " SP: " + this.ProductCode + " [" + this.ProductName + "]" + (this.Jobs != null ? " {" + this.Jobs + "}" : ""); } }
+        public string Features { get { return "[" + this.ParentReference + "] " + (this.Code != null ? this.Code : "") + " SP: " + this.ProductCode + " [" + this.ProductName + "]" + (this.Jobs != null ? " {" + this.Jobs + "}" : ""); } }
     }
 
     public partial class BlendingInstruction : IPrimitiveEntity, IBaseEntity, IBaseDetailEntity<BlendingInstructionDetail>

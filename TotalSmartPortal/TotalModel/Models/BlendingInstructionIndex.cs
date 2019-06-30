@@ -36,5 +36,6 @@ namespace TotalModel.Models
         public Nullable<decimal> QuantityAvailableLocation2 { get; set; }
         public string Jobs { get; set; }
         public int ParentID { get; set; }
+        public string ParentReference { get; set; }
     }
 }

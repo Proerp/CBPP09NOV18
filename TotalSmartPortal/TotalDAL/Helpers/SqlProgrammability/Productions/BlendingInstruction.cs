@@ -56,7 +56,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "       DECLARE     @LocalAspUserID nvarchar(128), @LocalFromDate DateTime, @LocalToDate DateTime, @LocalLabOptionID int, @LocalFilterOptionID int " + "\r\n";
             queryString = queryString + "       SET         @LocalAspUserID = @AspUserID       SET @LocalFromDate = @FromDate      SET @LocalToDate = @ToDate          SET @LocalLabOptionID = @LabOptionID            SET @LocalFilterOptionID = @FilterOptionID" + "\r\n";
 
-            queryString = queryString + "       DECLARE     @BlendingInstructionIndexes TABLE ( BlendingInstructionID int NOT NULL, ParentID int NOT NULL, EntryDate datetime NOT NULL, Reference nvarchar(10) NOT NULL, Code nvarchar(50) NULL, VoucherDate datetime NULL, ProductCode nvarchar(50) NULL, ProductName nvarchar(200) NULL, Description nvarchar(100) NULL, Jobs nvarchar(100) NULL, " + "\r\n";
+            queryString = queryString + "       DECLARE     @BlendingInstructionIndexes TABLE ( BlendingInstructionID int NOT NULL, ParentID int NOT NULL, EntryDate datetime NOT NULL, ParentReference nvarchar(10) NOT NULL, Reference nvarchar(10) NOT NULL, Code nvarchar(50) NULL, VoucherDate datetime NULL, ProductCode nvarchar(50) NULL, ProductName nvarchar(200) NULL, Description nvarchar(100) NULL, Jobs nvarchar(100) NULL, " + "\r\n";
             queryString = queryString + "                                                       BlendingInstructionDetailID int NULL, CommodityCode nvarchar(50) NULL, CommodityName nvarchar(200) NULL, Approved bit NOT NULL, InActive bit NOT NULL, InActivePartial bit NOT NULL, VoidTypeName nvarchar(50) NULL, " + "\r\n";
             queryString = queryString + "                                                       Quantity decimal(18, 2) NULL, QuantityIssued decimal(18, 2) NULL, QuantityRemains decimal(18, 2) NULL, QuantityAvailableArrivals decimal(18, 2) NULL, QuantityAvailableLocation1 decimal(18, 2) NULL, QuantityAvailableLocation2 decimal(18, 2) NULL) " + "\r\n";
 
@@ -86,7 +86,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "           END " + "\r\n";
 
 
-            queryString = queryString + "       SELECT      BlendingInstructionID, ParentID, EntryDate, Reference, Code, VoucherDate, ProductCode, ProductName, Description, Jobs, " + "\r\n";
+            queryString = queryString + "       SELECT      BlendingInstructionID, ParentID, EntryDate, ParentReference, Reference, Code, VoucherDate, ProductCode, ProductName, Description, Jobs, " + "\r\n";
             queryString = queryString + "                   BlendingInstructionDetailID, CommodityCode, CommodityName, Approved, InActive, InActivePartial, VoidTypeName, " + "\r\n";
             queryString = queryString + "                   Quantity, IIF(QuantityIssued = 0, NULL, QuantityIssued) AS QuantityIssued, IIF(QuantityRemains = 0, NULL, QuantityRemains) AS QuantityRemains, IIF(QuantityAvailableArrivals = 0, NULL, QuantityAvailableArrivals) AS QuantityAvailableArrivals, IIF(QuantityAvailableLocation1 = 0, NULL, QuantityAvailableLocation1) AS QuantityAvailableLocation1, IIF(QuantityAvailableLocation2 = 0, NULL, QuantityAvailableLocation2) AS QuantityAvailableLocation2 " + "\r\n";
 
@@ -125,11 +125,11 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       INSERT INTO @BlendingInstructionIndexes (BlendingInstructionID, ParentID, EntryDate, Reference, Code, VoucherDate, ProductCode, ProductName, Description, Jobs, " + "\r\n";
+            queryString = queryString + "       INSERT INTO @BlendingInstructionIndexes (BlendingInstructionID, ParentID, EntryDate, ParentReference, Reference, Code, VoucherDate, ProductCode, ProductName, Description, Jobs, " + "\r\n";
             queryString = queryString + "                                                BlendingInstructionDetailID, CommodityCode, CommodityName, Approved, InActive, InActivePartial, VoidTypeName, " + "\r\n";
             queryString = queryString + "                                                Quantity, QuantityIssued, QuantityRemains, QuantityAvailableArrivals, QuantityAvailableLocation1, QuantityAvailableLocation2) " + "\r\n";
 
-            queryString = queryString + "       SELECT      BlendingInstructions.BlendingInstructionID, ISNULL(BlendingInstructions.ParentID, BlendingInstructions.BlendingInstructionID) AS ParentID, CAST(" + "BlendingInstructions.EntryDate" + " AS DATE) AS EntryDate, BlendingInstructions.Reference, BlendingInstructions.Code, BlendingInstructions.VoucherDate, Products.Code AS ProductCode, Products.Name AS ProductName, BlendingInstructionDetails.Remarks, BlendingInstructions.Jobs, " + "\r\n";
+            queryString = queryString + "       SELECT      BlendingInstructions.BlendingInstructionID, ISNULL(BlendingInstructions.ParentID, BlendingInstructions.BlendingInstructionID) AS ParentID, CAST(" + "BlendingInstructions.EntryDate" + " AS DATE) AS EntryDate, ISNULL(ParentBlendingInstructions.Reference, BlendingInstructions.Reference) AS ParentReference, BlendingInstructions.Reference, BlendingInstructions.Code, BlendingInstructions.VoucherDate, Products.Code AS ProductCode, Products.Name AS ProductName, BlendingInstructionDetails.Remarks, BlendingInstructions.Jobs, " + "\r\n";
             queryString = queryString + "                   BlendingInstructionDetails.BlendingInstructionDetailID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BlendingInstructions.Approved, BlendingInstructions.InActive, BlendingInstructionDetails.InActivePartial, ISNULL(VoidTypes.Name, VoidTypeDetails.Name) AS VoidTypeName, " + "\r\n";
             queryString = queryString + "                   BlendingInstructionDetails.Quantity, BlendingInstructionDetails.QuantityIssued, ROUND(BlendingInstructionDetails.Quantity - BlendingInstructionDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, GoodsArrivalAvailables.QuantityAvailableArrivals, GoodsReceiptAvailables.QuantityAvailableLocation1, GoodsReceiptAvailables.QuantityAvailableLocation2 " + "\r\n";
 
@@ -138,6 +138,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + "                   INNER JOIN  BlendingInstructionDetails ON " + this.SQLPendingVsFinished(filterOptionID) + (filterOptionID == 11 || filterOptionID == 12 ? " BlendingInstructions.BlendingInstructionID " + (filterOptionID == 11 ? "NOT IN" : "IN") + "(SELECT BlendingInstructionID FROM BlendingInstructionDetails WHERE QuantityIssued <> 0)" + " AND " : "") + " BlendingInstructions.BlendingInstructionID = BlendingInstructionDetails.BlendingInstructionID " + "\r\n";
             queryString = queryString + "                   INNER JOIN  Commodities ON BlendingInstructionDetails.CommodityID = Commodities.CommodityID " + "\r\n";
 
+            queryString = queryString + "                   LEFT JOIN   BlendingInstructions AS ParentBlendingInstructions ON BlendingInstructions.ParentID = ParentBlendingInstructions.BlendingInstructionID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN   VoidTypes ON BlendingInstructions.VoidTypeID = VoidTypes.VoidTypeID " + "\r\n";
             queryString = queryString + "                   LEFT JOIN   VoidTypes VoidTypeDetails ON BlendingInstructionDetails.VoidTypeID = VoidTypeDetails.VoidTypeID " + "\r\n";
 
