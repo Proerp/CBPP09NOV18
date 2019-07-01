@@ -65,11 +65,11 @@ namespace TotalPortal.Areas.Inventories.Controllers
         //FOR SIMPLICITY, AT NOW (JUST FOR HIGHTLIGHT MENUONLY): JUST CALL THIS. BUT LATER, WE CAN INHERIT FROM BaseController
         public virtual void AddRequireJsOptions(int nmvnTaskID)
         {
-            MenuSession.SetModuleID(this.HttpContext, 3);
-            MenuSession.SetModuleDetailID(this.HttpContext, nmvnTaskID);
+            MenuSession.SetModuleID(this.HttpContext, (this.binLocationService.LocationID == 1? 6 : 3));
+            MenuSession.SetModuleDetailID(this.HttpContext, (nmvnTaskID == 6668805 ? (this.binLocationService.LocationID == 1 ? 666880501 : 6668805) : (this.binLocationService.LocationID == 1 ? 666880901 : 6668809)));
 
-            RequireJsOptions.Add("ModuleID", 3, RequireJsOptionsScope.Page);
-            RequireJsOptions.Add("ModuleDetailID", nmvnTaskID, RequireJsOptionsScope.Page);
+            RequireJsOptions.Add("ModuleID", (this.binLocationService.LocationID == 1 ? 6 : 3), RequireJsOptionsScope.Page);
+            RequireJsOptions.Add("ModuleDetailID", (nmvnTaskID == 6668805 ? (this.binLocationService.LocationID == 1 ? 666880501 : 6668805) : (this.binLocationService.LocationID == 1 ? 666880901 : 6668809)), RequireJsOptionsScope.Page);
             RequireJsOptions.Add("NmvnTaskID", nmvnTaskID, RequireJsOptionsScope.Page);
         }
     }
