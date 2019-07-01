@@ -103,7 +103,7 @@
                 .Ajax()
                 .Group(group => group.AddDescending(p => p.EntryDate)).Group(group => group.AddDescending(p => p.Features))
                 .Read(read => read.Action("GetBlendingInstructionIndexes", "BlendingInstructionAPIs", new { area = "Productions" }).Data("onGetBlendingInstructionIndexes"))
-                .PageSize(20)
+                .PageSize(6)
                 .Model(model =>
                 {
                     model.Id(x => x.BlendingInstructionID);
