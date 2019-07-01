@@ -18,8 +18,9 @@
                     .Title("Nguyên liệu").HeaderHtmlAttributes(new { style = "text-align:center" })
                     .Columns(g =>
                         {
-                            g.Bound(p => p.CommodityCode).Title("Mã").Width(88).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/InventoryControls", action = "Details" }) + "/#= CommodityID #' target='_blank'>#=CommodityCode#</a>");
-                            g.Bound(p => p.CommodityName).Title("Tên").Width(198);
+                            g.Bound(p => p.CommodityCode).Title("Mã").Width(88).ClientTemplate("<a onclick='openDetails(#= CommodityID #)'><span class='index-nav-column'>#=CommodityCode#</span></a>");
+                            
+                            g.Bound(p => p.CommodityName).Title("Tên").Width(208);
                             g.Bound(p => p.ExpiryDate).Title("HSD").Format("{0:dd/MM/yy}").Width(20).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
                         }
                     ));
@@ -51,11 +52,11 @@
                         }
                     ));
                 columns.Group(gr => gr
-                    .Title("Tồn Đặt hàng & VCNB").HeaderHtmlAttributes(new { style = "text-align:center" })
+                    .Title("Đặt").HeaderHtmlAttributes(new { style = "text-align:center" })
                     .Columns(g =>
                         {
-                            g.Bound(p => p.QuantityPurchaseOrders).Title("Đặt hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                            g.Bound(p => p.QuantityTransferOrders).Title("VCNB").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            g.Bound(p => p.QuantityPurchaseOrders).Title("hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            //g.Bound(p => p.QuantityTransferOrders).Title("VCNB").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                         }
                     ));                
             })
@@ -183,19 +184,9 @@
         });
     }
 
-    function createWizard() {
-        require(["kpopupWindow"], function (kpopupWindow) {
-            var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "InventoryControls")", "Lập đơn hàng sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeightWithTab");
-        });
-    }
-
-    function createMaterialIssue(firmOrderID) {
-        $("#SelectedFirmOrderID").val(firmOrderID);
-        require(["kpopupWindow"], function (kpopupWindow) {
-            var createWizardWindow = new kpopupWindow();
-            createWizardWindow.openWindow($("#popupWindow"), "@Url.Action("CreateWizard", "MaterialIssues", new { area = "Inventories" })", "Chọn lệnh sản xuất", "@Settings.PopupWidth", "@Settings.PopupHeight");
-        });
+    
+    function openDetails(commodityID) {
+        window.open('@Url.Action("Details", "InventoryControls", new { area = "Inventories" })' + "/" + commodityID + "/" + $("#ShowLocationID").val())
     }
 
     function callPrint(reportGroupID) {

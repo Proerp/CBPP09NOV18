@@ -47,13 +47,13 @@ namespace TotalPortal.Areas.Inventories.Controllers
             return View(inventoryControlViewModel);
         }
 
-        public ActionResult Details(int? id)
+        public ActionResult Details(int? id, int? detailID)
         {
             this.AddRequireJsOptions(6668809);
 
-            InventoryControlViewModel inventoryControlViewModel = new InventoryControlViewModel() { LocationID = this.binLocationService.LocationID, SummaryOptionID = this.binLocationService.LocationID == 2 ? 0 : 20 };
+            InventoryControlViewModel inventoryControlViewModel = new InventoryControlViewModel() { LocationID = (detailID != null ? (int)detailID : this.binLocationService.LocationID), SummaryOptionID = (detailID != null ? (int)detailID : this.binLocationService.LocationID) == 2 ? 0 : 20 };
 
-            if (id != null)
+            if (id != null && id > 0)
             {
                 Commodity commodity = this.inventoryControlAPIRepository.TotalSmartPortalEntities.Commodities.Where(w => w.CommodityID == id).FirstOrDefault();
                 if (commodity != null) { inventoryControlViewModel.CommodityID = commodity.CommodityID; inventoryControlViewModel.CommodityCode = commodity.Code; }
