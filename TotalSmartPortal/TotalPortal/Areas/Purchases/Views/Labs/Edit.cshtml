@@ -1,3 +1,10 @@
 ﻿@model TotalPortal.Areas.Purchases.ViewModels.LabViewModel
 
 @Html.Partial("_Lab")
+
+
+<div class="single-full-panel">
+    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Void", "Labs", new { area = "Purchases", id = @Model.LabID })'"> <img src="~/Content/Images/Mains/@(@Model.InActive ? "cancel-yellow-28.png" : "cancel-green-28.png")" alt="" /> @(Model.InActive ? Model.UnVoidWarning : Model.VoidWarning) Lab này </button>
+    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Hold", "Labs", new { area = "Purchases", id = @Model.LabID })'"> <img src="~/Content/Images/Mains/@(@Model.Hold ? "unlocked_10_28.png" : "locked_10_28.png")" alt="" /> @(Model.Hold ? "Release" : "Hold") Lab này </button>
+    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "Labs", new { area = "Purchases", id = @Model.LabID })'"> <img src="~/Content/Images/Mains/@(@Model.Approved ? "cloud-32-NoCheck.png" : "Check-32-CHY.png")" alt="" /> @(Model.Approved ? Model.UnApproveWarning : Model.ApproveWarning) Lab này </button>
+</div>

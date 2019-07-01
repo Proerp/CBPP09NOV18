@@ -31,12 +31,15 @@
                                 .ClientTemplate("# if (BarcodeID == null) { ## } else { #<a class='k-button' style='padding-left:0px; padding-right:0px;' href='" + Url.RouteUrl("Default", new { controller = "Home", action = "SearchBarcodes" }) + "/#= BarcodeID #' target='_blank'><span class='k-icon sbt-barcode'></span></a># } #");
                             
                             g.Bound(p => p.BatchCode).Title("Lô").Width(30);
-                            g.Bound(p => p.LabCode).Title("Lab").Width(30);
+                            g.Bound(p => p.LabCode).Title("Lab").Width(30).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Purchases/Labs", action = "Edit" }) + "/#= LabID #' target='_blank'>#=(LabCode == null)? '' : LabCode#</a>");
+                            
                             g.Bound(p => p.BinLocationCode).Title("Vị trí").Width(18);
                             g.Bound(p => p.ExpiryDate).Title("HSD").Width(10).Format("{0:dd/MM/yy}").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" });
 
                             g.Template(t => { }).Title("!").ClientTemplate("<input class='IsSelected' #= Approved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
-                            g.Template(t => { }).Title("Lab").ClientTemplate("<input class='IsSelected' #= LabApproved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
+                            g.Template(t => { }).Title("!P").ClientTemplate("<input class='IsSelected' #= LabApproved ? '':checked='checked' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
+                            g.Template(t => { }).Title("H").ClientTemplate("<input class='IsSelected' #= LabHold ? checked='checked':'' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
+                            g.Template(t => { }).Title("Q").ClientTemplate("<input class='IsSelected' #= LabInActive ? checked='checked':'' #  type='checkbox' disabled='disabled'/>").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(3);
                         }
                     ));
                 columns.Group(gr => gr
@@ -54,25 +57,25 @@
                         {
                             g.Bound(p => p.QuantityAvailableLocation2).Title("Kho PC").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                             g.Bound(p => p.QuantityAvailableLocation1).Title("Kho NVL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                            g.Bound(p => p.QuantityAvailableArrivals).Title("Mới về").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            g.Bound(p => p.QuantityAvailableArrivals).Title("Mới về").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                         }
                     ));
                 columns.Group(gr => gr
-                    .Title("Tồn ĐH & VCNB").HeaderHtmlAttributes(new { style = "text-align:center" })
+                    .Title("Đặt").HeaderHtmlAttributes(new { style = "text-align:center" })
                     .Columns(g =>
                         {
-                            g.Bound(p => p.QuantityPurchaseOrders).Title("Đặt hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
-                            g.Bound(p => p.QuantityTransferOrders).Title("VCNB").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(20).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            g.Bound(p => p.QuantityPurchaseOrders).Title("hàng").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
+                            //g.Bound(p => p.QuantityTransferOrders).Title("VCNB").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Width(5).ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #").FooterHtmlAttributes(new { @class = "grid-number-column" });
                         }
                     ));
 
             })
             .ToolBar(toolbar =>
             {
-                toolbar.Template(@<text>
-                    <button type="button" title="Cập nhật số liệu sản xuất" class="k-button" onclick="indexFilterText_KeyUp(true)"> <img src="~/Content/Images/New/Refresh-icon.png" /> </button>
+                toolbar.Template(@<text>                    
                     <button type="button" class="k-button" onclick="callPrint(6)"> <img src="~/Content/Images/New/Printer-author-24.png" /> NXT </button>
                     <button type="button" class="k-button" onclick="callPrint(3)"> <img src="~/Content/Images/New/printer-D-24.png" /> Thẻ kho </button>
+                    <button type="button" title="Cập nhật số liệu tồn kho" class="k-button" onclick="indexFilterText_KeyUp(true)"> <img src="~/Content/Images/New/Refresh-icon.png" /> </button>
                     <div class="toolbar" style="float: right;">
                         <label>Lọc dữ liệu </label>
                         <input id="indexFilterText" class="k-textbox" style="text-align: center; width: 188px; " onkeyup="indexFilterText_KeyUp()" />
@@ -98,7 +101,7 @@
                                     .HtmlAttributes(new { @style = "width: 168px; text-align: center; " })
                                     .BindTo(new List<SelectListItem>()
                                       {
-                                          new SelectListItem { Text = "W/O PO, TO và BIS", Value = "0"},
+                                          new SelectListItem { Text = "W/o PO, TO và BIS", Value = "0"},
                                           new SelectListItem { Text = "Tất cả", Value = "1"}
                                       })
                                     .Events(e => e.Change("indexFilterText_KeyUp"))

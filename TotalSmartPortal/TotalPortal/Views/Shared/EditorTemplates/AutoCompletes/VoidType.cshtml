@@ -9,7 +9,8 @@
 @Html.Hidden("TempName", (@Model != null ? @Model.Name : ""))
 
 
-@Html.LabelFor(model => model.Name)
+@if (ViewData["VoidTypeLabel"] != null) {@Html.Label((ViewData["VoidTypeLabel"]).ToString())} else { @Html.LabelFor(model => model.Name)}
+
 <div class="div-input">
     @Html.EditorFor(d => d.Name)
 </div>

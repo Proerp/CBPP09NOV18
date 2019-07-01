@@ -1,9 +1,11 @@
-﻿@Html.Partial("Edit")
+﻿@model TotalPortal.Areas.Purchases.ViewModels.LabViewModel
+
+@Html.Partial("_Lab")
 
 <div class="single-full-panel">
     @if (Model.Holdable || Model.Releasable)
     {
-        <button type="submit" form="MainForm" class="k-button custom-button"> <img src="~/Content/Images/Mains/@(@Model.Hold ? "unlock-28.png" : "lock-28.png")" alt="" style="padding-top:2px;padding-bottom:2px;" /> Xác nhận @(Model.Hold ? "release" : "hold") lab này </button>
+        <button type="submit" form="MainForm" class="k-button custom-button"> <img src="~/Content/Images/Mains/@(@Model.Hold ? "unlocked_10_28.png" : "locked_10_28.png")" alt="" style="padding-top:2px;padding-bottom:2px;" /> Xác nhận @(Model.Hold ? "release" : "hold") lab này </button>
     }
     else
     {

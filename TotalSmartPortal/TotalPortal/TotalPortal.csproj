@@ -763,6 +763,8 @@
     <Content Include="Content\Images\Mains\iSync-icon64.png" />
     <Content Include="Content\Images\Mains\Light-32-Nocheck.png" />
     <Content Include="Content\Images\Mains\lock-28.png" />
+    <Content Include="Content\Images\Mains\locked_10_28.png" />
+    <Content Include="Content\Images\Mains\locked_10_32.png" />
     <Content Include="Content\Images\Mains\Navigate-right.png" />
     <Content Include="Content\Images\Mains\Next-right.png" />
     <Content Include="Content\Images\Mains\Next-view.png" />
@@ -862,6 +864,8 @@
     <Content Include="Content\Images\Mains\tank-wagon.png" />
     <Content Include="Content\Images\Mains\tank.png" />
     <Content Include="Content\Images\Mains\unlock-28.png" />
+    <Content Include="Content\Images\Mains\unlocked_10_28.png" />
+    <Content Include="Content\Images\Mains\unlocked_10_32.png" />
     <Content Include="Content\Images\Mains\Users-Exit-icon.png" />
     <Content Include="Content\Images\Menu\arrow-down-16.png" />
     <Content Include="Content\Images\Menu\arrow-up-16.png" />

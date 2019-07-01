@@ -44,7 +44,7 @@
         @if (@Model.Voidable || @Model.UnVoidable || @Model.VoidTypeID > 0)
         { //Don't render when in Edit Mode, so: do not add VoidType.VoidTypeID [Required] DataAnnotations to the view to submit to controller when edit
             <div class="form-group">
-                @Html.EditorFor(d => d.VoidType, (@Model.Voidable ? new { VoidTypeClassSpecialEditable = "SpecialEditable" } : null))
+                @Html.EditorFor(d => d.VoidType, new { VoidTypeClassSpecialEditable = @Model.Voidable ? "SpecialEditable": null, VoidTypeLabel = "Lý do thanh lý" })
             </div>
         }
 

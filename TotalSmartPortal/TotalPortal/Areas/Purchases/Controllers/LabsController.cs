@@ -57,7 +57,7 @@ namespace TotalPortal.Areas.Purchases.Controllers
             try
             {
                 if (this.labService.ToggleHold(labViewModel))
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Edit", new { id = labViewModel.GetID() });
                 else
                     throw new System.ArgumentException("Lỗi hold hoặc release", "Dữ liệu này không thể hold hoặc release.");
             }
