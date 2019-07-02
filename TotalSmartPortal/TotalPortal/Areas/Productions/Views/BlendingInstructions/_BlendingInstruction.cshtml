@@ -246,6 +246,7 @@
             @if (Model.BlendingInstructionID > 0)
             {
                 <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "BlendingInstructions", new { id = @Model.BlendingInstructionID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In </button>
+                <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "BlendingInstructions", new { id = @Model.BlendingInstructionID })/1'"> <img src="~/Content/Images/New/Print-Gray-32.png" /> In chi tiết phụ gia </button>
             }
 
         </div>
