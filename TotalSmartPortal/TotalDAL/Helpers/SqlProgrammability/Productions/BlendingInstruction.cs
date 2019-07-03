@@ -342,6 +342,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
 
+            queryString = queryString + "       IF (NOT @Remarks IS NULL) BEGIN SET @Remarks = LTRIM(RTRIM(@Remarks)) IF (@Remarks = '') SET @Remarks = NULL END " + "\r\n";
             queryString = queryString + "       UPDATE      BlendingInstructionDetails     SET Remarks = @Remarks WHERE BlendingInstructionID = @EntityID AND BlendingInstructionDetailID = @EntityDetailID ; " + "\r\n";
 
             queryString = queryString + "       IF @@ROWCOUNT <> 1 " + "\r\n";

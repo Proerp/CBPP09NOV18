@@ -701,6 +701,7 @@
     <Content Include="Content\Images\Mains\Actions-bookmark-add-icon-32.png" />
     <Content Include="Content\Images\Mains\Actions-ok-icon32.png" />
     <Content Include="Content\Images\Mains\Actions-ok-icon64.png" />
+    <Content Include="Content\Images\Mains\add-64.png" />
     <Content Include="Content\Images\Mains\add-contact-blue.png" />
     <Content Include="Content\Images\Mains\add-contact-darkblue.png" />
     <Content Include="Content\Images\Mains\add-contact-yellow.png" />
@@ -766,6 +767,7 @@
     <Content Include="Content\Images\Mains\locked_10_28.png" />
     <Content Include="Content\Images\Mains\locked_10_32.png" />
     <Content Include="Content\Images\Mains\Navigate-right.png" />
+    <Content Include="Content\Images\Mains\new-64.png" />
     <Content Include="Content\Images\Mains\Next-right.png" />
     <Content Include="Content\Images\Mains\Next-view.png" />
     <Content Include="Content\Images\Mains\Oil-industry-24.png" />

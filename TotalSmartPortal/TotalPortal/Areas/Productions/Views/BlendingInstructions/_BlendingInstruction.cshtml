@@ -120,7 +120,7 @@
                     columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(10).Hidden(!@Model.Voidable && !@Model.UnVoidable)
                         .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' onclick='callVoidDetail(#= BlendingInstructionDetailID #)'><span class='k-icon sbt-void'></span></a>");
 
-                    columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(10).Hidden(Model.Editable)
+                    columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(6).Hidden(Model.Editable)
                         .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' onclick='callRemarkDetail(#= BlendingInstructionDetailID #)'><span class='k-icon sbt-remarks'></span></a>");
                 })
                     .Filterable(f => f.Enabled(false))
@@ -168,25 +168,25 @@
                         </text>);
                         events.Edit("kendoGridDetailsEdit");
                     }).DataSource(dataSource => dataSource
-                                                                    .Ajax()
-                                                                    .Batch(true)
-                                                                    .ServerOperation(false)
-                                                                    .Model(model =>
-                                                                    {
-                                                                        model.Id(x => x.BlendingInstructionDetailID);
-                                                                        model.Field(m => m.BlendingInstructionDetailID).DefaultValue(0);
-                                                                        model.Field(m => m.BlendingInstructionID).DefaultValue(@Model.BlendingInstructionID);
-                                                                    })
-                                                                    .Events(events =>
-                                                                    {
-                                                                        events.Change("dataSourceChange");
-                                                                        events.Error("kendGrid_ErrorHandler");
-                                                                    })
-                                                                    .Aggregates(a => a.Add(x => x.CommodityCode).Count())
-                                                                    .Aggregates(a => a.Add(x => x.Quantity).Sum())
-                                                                    .Aggregates(a => a.Add(x => x.QuantityIssued).Sum())
-                                                                    .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
-                                                                )
+                        .Ajax()
+                        .Batch(true)
+                        .ServerOperation(false)
+                        .Model(model =>
+                        {
+                            model.Id(x => x.BlendingInstructionDetailID);
+                            model.Field(m => m.BlendingInstructionDetailID).DefaultValue(0);
+                            model.Field(m => m.BlendingInstructionID).DefaultValue(@Model.BlendingInstructionID);
+                        })
+                        .Events(events =>
+                        {
+                            events.Change("dataSourceChange");
+                            events.Error("kendGrid_ErrorHandler");
+                        })
+                        .Aggregates(a => a.Add(x => x.CommodityCode).Count())
+                        .Aggregates(a => a.Add(x => x.Quantity).Sum())
+                        .Aggregates(a => a.Add(x => x.QuantityIssued).Sum())
+                        .Aggregates(a => a.Add(x => x.QuantityRemains).Sum())
+                    )
             )
         </div>
 
@@ -272,7 +272,7 @@
     function callRemarkDetail(blendingInstructionID) {
         require(["kpopupWindow"], function (kpopupWindow) {
             var voidDetailWindow = new kpopupWindow();
-            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("RemarkDetail", "BlendingInstructions")" + "/" + $("#BlendingInstructionID").val() + "/" + blendingInstructionID, "Nhập ghi chú", @Settings.PopupWidthLarge,  @Settings.PopupHeightVoid);
+            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("RemarkDetail", "BlendingInstructions")" + "/" + $("#BlendingInstructionID").val() + "/" + blendingInstructionID, "Nhập ghi chú", @Settings.PopupWidthSmall,  @Settings.GridPopupNoTabHeight);
         });
     }
 

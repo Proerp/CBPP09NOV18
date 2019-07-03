@@ -15,13 +15,13 @@
         @Html.Hidden("DetailId", @Model.ViewDetails[0].BlendingInstructionDetailID);
         
         <div class="left-panel">
-            <div style="padding: 16px;"> <img src="~/Content/Images/Mains/@(@Model.ViewDetails[0].InActivePartial ? "iSync-icon64.png" : "blue-cross-icon64.png")" />  </div>
+            <div style="padding: 16px;"> <img src="~/Content/Images/Mains/new-64.png" />  </div>
         </div>
         <div class="right-panel" style="padding-right:17px;">
             <div class=" form-group">
-                @Html.LabelFor(model => model.ViewDetails[0].CommodityName)
+                @Html.LabelFor(model => model.ViewDetails[0].CommodityCode)
                 <div class="div-input">
-                    @Html.Kendo().MaskedTextBoxFor(model => model.ViewDetails[0].CommodityName).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                    @Html.Kendo().MaskedTextBoxFor(model => model.ViewDetails[0].CommodityCode).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                 </div>
             </div>
 
@@ -31,6 +31,13 @@
                     @Html.Kendo().MaskedTextBoxFor(model => model.ViewDetails[0].Quantity).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
                 </div>
             </div>        
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.ViewDetails[0].QuantityIssued)
+                <div class="div-input">
+                    @Html.Kendo().MaskedTextBoxFor(model => model.ViewDetails[0].QuantityIssued).HtmlAttributes(new { @class = "left-panel-input", @readonly = "readonly" })
+                </div>
+            </div>
 
             <div class=" form-group">
                 @Html.LabelFor(model => model.ViewDetails[0].Remarks)
@@ -64,6 +71,14 @@
 </script>
 
 <style>
+    .left-panel {
+        width: 13%;
+    }
+
+    .right-panel {
+        width: 87%;
+    }
+
     .left-panel-input {
         width: 100%;
     }

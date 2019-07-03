@@ -6,7 +6,7 @@
 {
     @Html.HiddenFor(model => model.ID)
     @Html.HiddenFor(model => model.DetailID)
-    @Html.HiddenFor(model => model.Remarks)
+    @Html.Hidden("Remarks", (@Model.Remarks != null && @Model.Remarks.Length > 100 ? @Model.Remarks.Substring(0, 99) : @Model.Remarks))
 }
 
 <script type="text/javascript">
