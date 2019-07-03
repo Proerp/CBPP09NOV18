@@ -13,7 +13,7 @@ namespace TotalService.Productions
     {
         private IBlendingInstructionRepository blendingInstructionRepository;
         public BlendingInstructionService(IBlendingInstructionRepository blendingInstructionRepository)
-            : base(blendingInstructionRepository, "BlendingInstructionPostSaveValidate", "BlendingInstructionSaveRelative", "BlendingInstructionToggleApproved", "BlendingInstructionToggleVoid", "BlendingInstructionToggleVoidDetail", "GetBlendingInstructionViewDetails")
+            : base(blendingInstructionRepository, "BlendingInstructionPostSaveValidate", "BlendingInstructionSaveRelative", "BlendingInstructionToggleApproved", "BlendingInstructionToggleVoid", "BlendingInstructionToggleVoidDetail", "BlendingInstructionSaveRemarkDetail", "GetBlendingInstructionViewDetails")
         {
             this.blendingInstructionRepository = blendingInstructionRepository;
         }

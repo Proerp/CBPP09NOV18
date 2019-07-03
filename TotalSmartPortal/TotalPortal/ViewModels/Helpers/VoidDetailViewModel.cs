@@ -21,4 +21,13 @@ namespace TotalPortal.ViewModels.Helpers
         }
 
     }
+
+
+    public class RemarkDetailViewModel
+    {
+        public int ID { get; set; }
+        public int DetailID { get; set; }
+        [Display(Name = "Ghi chú")]
+        public string Remarks { get; set; }
+    }
 }

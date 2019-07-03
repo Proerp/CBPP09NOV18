@@ -5802,5 +5802,22 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<TransferOrderPendingBlendingInstructionCompact>("GetTransferOrderPendingBlendingInstructionCompacts", warehouseReceiptIDParameter);
         }
+    
+        public virtual int BlendingInstructionSaveRemarkDetail(Nullable<int> entityID, Nullable<int> entityDetailID, string remarks)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            var entityDetailIDParameter = entityDetailID.HasValue ?
+                new ObjectParameter("EntityDetailID", entityDetailID) :
+                new ObjectParameter("EntityDetailID", typeof(int));
+    
+            var remarksParameter = remarks != null ?
+                new ObjectParameter("Remarks", remarks) :
+                new ObjectParameter("Remarks", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BlendingInstructionSaveRemarkDetail", entityIDParameter, entityDetailIDParameter, remarksParameter);
+        }
     }
 }

@@ -284,6 +284,11 @@ namespace TotalService
             return false;
         }
 
+        public virtual bool SaveRemarkDetail(TDto dto, int detailID, string remarks)
+        {
+            return false;
+        }
+
         public virtual bool Delete(int id)
         {
             return this.Delete(id, false);

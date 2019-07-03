@@ -15,7 +15,7 @@ namespace TotalService.Inventories
     public class HandlingUnitService : GenericWithViewDetailService<HandlingUnit, HandlingUnitDetail, HandlingUnitViewDetail, HandlingUnitDTO, HandlingUnitPrimitiveDTO, HandlingUnitDetailDTO>, IHandlingUnitService
     {
         public HandlingUnitService(IHandlingUnitRepository handlingUnitRepository)
-            : base(handlingUnitRepository, "HandlingUnitPostSaveValidate", "HandlingUnitSaveRelative", null, null, null, "GetHandlingUnitViewDetails")
+            : base(handlingUnitRepository, "HandlingUnitPostSaveValidate", "HandlingUnitSaveRelative", null, null, null, null, "GetHandlingUnitViewDetails")
         {
         }
 

@@ -17,7 +17,7 @@ namespace TotalService.Productions
         where TDtoDetail : class, IPrimitiveEntity
     {
         public FinishedHandoverService(IFinishedHandoverRepository finishedHandoverRepository)
-            : base(finishedHandoverRepository, "FinishedHandoverPostSaveValidate", "FinishedHandoverSaveRelative", "FinishedHandoverToggleApproved", null, null, "GetFinishedHandoverViewDetails")
+            : base(finishedHandoverRepository, "FinishedHandoverPostSaveValidate", "FinishedHandoverSaveRelative", "FinishedHandoverToggleApproved", null, null, null, "GetFinishedHandoverViewDetails")
         {
         }
 

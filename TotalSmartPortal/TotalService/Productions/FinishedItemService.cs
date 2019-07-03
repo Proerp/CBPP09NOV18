@@ -17,7 +17,7 @@ namespace TotalService.Productions
     {
         private IFinishedItemRepository finishedItemRepository;
         public FinishedItemService(IFinishedItemRepository finishedItemRepository)
-            : base(finishedItemRepository, "FinishedItemPostSaveValidate", "FinishedItemSaveRelative", "FinishedItemToggleApproved", null, null, "GetFinishedItemViewDetails")
+            : base(finishedItemRepository, "FinishedItemPostSaveValidate", "FinishedItemSaveRelative", "FinishedItemToggleApproved", null, null, null, "GetFinishedItemViewDetails")
         {
             this.finishedItemRepository = finishedItemRepository;
         }

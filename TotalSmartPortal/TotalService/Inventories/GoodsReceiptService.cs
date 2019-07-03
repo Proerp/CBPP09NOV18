@@ -51,7 +51,7 @@ namespace TotalService.Inventories
         where TDtoDetail : class, IPrimitiveEntity
     {
         public GoodsReceiptBaseService(IGoodsReceiptRepository goodsReceiptRepository)
-            : base(goodsReceiptRepository, "GoodsReceiptPostSaveValidate", "GoodsReceiptSaveRelative", "GoodsReceiptToggleApproved", null, null, "GetGoodsReceiptViewDetails")
+            : base(goodsReceiptRepository, "GoodsReceiptPostSaveValidate", "GoodsReceiptSaveRelative", "GoodsReceiptToggleApproved", null, null, null, "GetGoodsReceiptViewDetails")
         {
         }
 

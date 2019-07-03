@@ -12,7 +12,7 @@ namespace TotalService.Purchases
     public class PurchaseRequisitionService : GenericWithViewDetailService<PurchaseRequisition, PurchaseRequisitionDetail, PurchaseRequisitionViewDetail, PurchaseRequisitionDTO, PurchaseRequisitionPrimitiveDTO, PurchaseRequisitionDetailDTO>, IPurchaseRequisitionService
     {
         public PurchaseRequisitionService(IPurchaseRequisitionRepository purchaseRequisitionRepository)
-            : base(purchaseRequisitionRepository, "PurchaseRequisitionPostSaveValidate", "PurchaseRequisitionSaveRelative", "PurchaseRequisitionToggleApproved", "PurchaseRequisitionToggleVoid", "PurchaseRequisitionToggleVoidDetail", "GetPurchaseRequisitionViewDetails")
+            : base(purchaseRequisitionRepository, "PurchaseRequisitionPostSaveValidate", "PurchaseRequisitionSaveRelative", "PurchaseRequisitionToggleApproved", "PurchaseRequisitionToggleVoid", "PurchaseRequisitionToggleVoidDetail", null, "GetPurchaseRequisitionViewDetails")
         {
         }
 

@@ -13,7 +13,7 @@ namespace TotalService.Productions
     {
         ISemifinishedItemRepository semifinishedItemRepository;
         public SemifinishedItemService(ISemifinishedItemRepository semifinishedItemRepository)
-            : base(semifinishedItemRepository, "SemifinishedItemPostSaveValidate", "SemifinishedItemSaveRelative", "SemifinishedItemToggleApproved", null, null, "GetSemifinishedItemViewDetails")
+            : base(semifinishedItemRepository, "SemifinishedItemPostSaveValidate", "SemifinishedItemSaveRelative", "SemifinishedItemToggleApproved", null, null, null, "GetSemifinishedItemViewDetails")
         {
             this.semifinishedItemRepository = semifinishedItemRepository;
         }

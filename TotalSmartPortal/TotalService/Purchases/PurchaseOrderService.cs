@@ -17,7 +17,7 @@ namespace TotalService.Purchases
         where TDtoDetail : class, IPrimitiveEntity
     {
         public PurchaseOrderService(IPurchaseOrderRepository purchaseOrderRepository)
-            : base(purchaseOrderRepository, "PurchaseOrderPostSaveValidate", "PurchaseOrderSaveRelative", "PurchaseOrderToggleApproved", "PurchaseOrderToggleVoid", "PurchaseOrderToggleVoidDetail", "GetPurchaseOrderViewDetails")
+            : base(purchaseOrderRepository, "PurchaseOrderPostSaveValidate", "PurchaseOrderSaveRelative", "PurchaseOrderToggleApproved", "PurchaseOrderToggleVoid", "PurchaseOrderToggleVoidDetail", null, "GetPurchaseOrderViewDetails")
         {
         }
 

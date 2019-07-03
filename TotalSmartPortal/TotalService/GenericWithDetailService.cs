@@ -25,6 +25,7 @@ namespace TotalService
         private readonly IGenericWithDetailRepository<TEntity, TEntityDetail> genericWithDetailRepository;
 
         private readonly string functionNameToggleVoidDetail;
+        private readonly string functionNameSaveRemarkDetail;
 
         public GenericWithDetailService(IGenericWithDetailRepository<TEntity, TEntityDetail> genericWithDetailRepository)
             : this(genericWithDetailRepository, null)
@@ -52,11 +53,17 @@ namespace TotalService
         }
 
         public GenericWithDetailService(IGenericWithDetailRepository<TEntity, TEntityDetail> genericWithDetailRepository, string functionNamePostSaveValidate, string functionNameSaveRelative, string functionNameToggleApproved, string functionNameToggleVoid, string functionNameToggleVoidDetail)
+            : this(genericWithDetailRepository, functionNamePostSaveValidate, functionNameSaveRelative, functionNameToggleApproved, functionNameToggleVoid, functionNameToggleVoidDetail, null)
+        {
+        }
+
+        public GenericWithDetailService(IGenericWithDetailRepository<TEntity, TEntityDetail> genericWithDetailRepository, string functionNamePostSaveValidate, string functionNameSaveRelative, string functionNameToggleApproved, string functionNameToggleVoid, string functionNameToggleVoidDetail, string functionNameSaveRemarkDetail)
             : base(genericWithDetailRepository, functionNamePostSaveValidate, functionNameSaveRelative, functionNameToggleApproved, functionNameToggleVoid)
         {
             this.genericWithDetailRepository = genericWithDetailRepository;
 
             this.functionNameToggleVoidDetail = functionNameToggleVoidDetail;
+            this.functionNameSaveRemarkDetail = functionNameSaveRemarkDetail;
         }
 
         protected IGenericWithDetailRepository<TEntity, TEntityDetail> GenericWithDetailRepository { get { return this.genericWithDetailRepository; } }
@@ -154,7 +161,7 @@ namespace TotalService
             if (this.functionNameToggleVoidDetail != null && this.functionNameToggleVoidDetail != "")
             {
                 ObjectParameter[] parameters = new ObjectParameter[] { new ObjectParameter("EntityID", dto.GetID()), new ObjectParameter("EntityDetailID", detailID), new ObjectParameter("InActivePartial", !inActivePartial), new ObjectParameter("VoidTypeID", voidTypeID) };
-                if (this.genericWithDetailRepository.ExecuteFunction(this.functionNameToggleVoidDetail, parameters) < 2) throw new System.ArgumentException("Lỗi", "Chứng từ không tồn tại hoặc đã " + (inActivePartial ? "phục hồi lệnh" : "") + "hủy"); 
+                if (this.genericWithDetailRepository.ExecuteFunction(this.functionNameToggleVoidDetail, parameters) < 2) throw new System.ArgumentException("Lỗi", "Chứng từ không tồn tại hoặc đã " + (inActivePartial ? "phục hồi lệnh" : "") + "hủy");
             }
             else
                 throw new System.ArgumentException("Lỗi", "Hệ thống không cho phép thực hiện tác vụ này.");
@@ -166,5 +173,44 @@ namespace TotalService
 
 
 
+
+
+
+
+        public override bool SaveRemarkDetail(TDto dto, int detailID, string remarks)
+        {
+            using (var dbContextTransaction = this.genericWithDetailRepository.BeginTransaction())
+            {
+                try
+                {
+                    //if ((!inActivePartial && !this.Voidable(dto)) || (inActivePartial && !this.UnVoidable(dto))) throw new System.ArgumentException("Lỗi " + (inActivePartial ? "hủy " : "") + "duyệt dữ liệu", "Bạn không có quyền hoặc dữ liệu này đã bị khóa.");
+
+                    this.SaveRemarkDetailMe(dto, detailID, remarks);
+
+                    this.genericWithDetailRepository.SaveChanges();
+
+                    dbContextTransaction.Commit();
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+                    throw ex;
+                }
+            }
+        }
+
+
+        protected virtual void SaveRemarkDetailMe(TDto dto, int detailID, string remarks)
+        {
+            if (this.functionNameSaveRemarkDetail != null && this.functionNameSaveRemarkDetail != "")
+            {
+                ObjectParameter[] parameters = new ObjectParameter[] { new ObjectParameter("EntityID", dto.GetID()), new ObjectParameter("EntityDetailID", detailID), new ObjectParameter("Remarks", remarks != null ? remarks : "") };
+                if (this.genericWithDetailRepository.ExecuteFunction(this.functionNameSaveRemarkDetail, parameters) != 1) throw new System.ArgumentException("Lỗi", "Chứng từ không tồn tại");
+            }
+            else
+                throw new System.ArgumentException("Lỗi", "Hệ thống không cho phép thực hiện tác vụ này.");
+        }
     }
 }

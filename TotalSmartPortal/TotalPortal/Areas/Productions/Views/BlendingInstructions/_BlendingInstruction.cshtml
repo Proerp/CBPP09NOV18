@@ -84,11 +84,11 @@
 
                     columns.Bound(p => p.CommodityID).DisplayNameTitle().Hidden()
                         .ClientTemplate("#= CommodityID #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].CommodityID' value='#= CommodityID #' />");
-                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(118)
+                    columns.Bound(p => p.CommodityCode).DisplayNameTitle().Width(98)
                         .ClientTemplate("<div> #= CommodityCode #</div>" +
                                 "<div> #= (VoidTypeName == null)? '' : VoidTypeName #</div>" +
                                 "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].CommodityCode' value='#= CommodityCode #' />");
-                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(260).HtmlAttributes(new { style = "" })
+                    columns.Bound(p => p.CommodityName).DisplayNameTitle().Width(180).HtmlAttributes(new { style = "" })
                         .ClientTemplate("#= CommodityName #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].CommodityName' value='#= CommodityName #' />");
 
                     columns.Bound(p => p.CommodityTypeID).DisplayNameTitle().Hidden()
@@ -109,7 +109,7 @@
                         .ClientFooterTemplate("#= kendo.format('" + Settings.kfmQuantity + "', sum) #")
                         .ClientTemplate("#= kendo.format('" + Settings.kfmQuantity + "', QuantityRemains) #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].QuantityRemains' value='#= QuantityRemains #' />");
 
-                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(227)
+                    columns.Bound(p => p.Remarks).DisplayNameTitle().Width(327)
                         .ClientTemplate("#= (Remarks == null)? '' : Remarks #" + "<input type='hidden' name='BlendingInstructionViewDetails[#= index(data) #].Remarks' value='#= (Remarks == null) ? '' : Remarks #' />");
 
                     columns.Bound(p => p.InActivePartial).DisplayNameTitle().Hidden()
@@ -119,6 +119,9 @@
 
                     columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(10).Hidden(!@Model.Voidable && !@Model.UnVoidable)
                         .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' onclick='callVoidDetail(#= BlendingInstructionDetailID #)'><span class='k-icon sbt-void'></span></a>");
+
+                    columns.Template(model => null).HtmlAttributes(new { @class = "grid-column-center" }).Width(10).Hidden(Model.Editable)
+                        .ClientTemplate("<a class='k-button' style='padding-left:0px; padding-right:0px' onclick='callRemarkDetail(#= BlendingInstructionDetailID #)'><span class='k-icon sbt-remarks'></span></a>");
                 })
                     .Filterable(f => f.Enabled(false))
                     .Navigatable()
@@ -259,10 +262,17 @@
 <script src="@Url.Content("~/Scripts/Helpers/KendoGrid/gridHelper.js")"></script>
 
 <script type="text/javascript">
-    function callVoidDetail(plannedOrderDetailID) {
+    function callVoidDetail(blendingInstructionID) {
         require(["kpopupWindow"], function (kpopupWindow) {
             var voidDetailWindow = new kpopupWindow();
-            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", "BlendingInstructions")" + "/" + $("#BlendingInstructionID").val() + "/" + plannedOrderDetailID, "Hủy/ phục hồi một phần đơn hàng", @Settings.PopupWidthVoid,  @Settings.PopupHeightSmall);
+            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", "BlendingInstructions")" + "/" + $("#BlendingInstructionID").val() + "/" + blendingInstructionID, "Hủy/ phục hồi một phần đơn hàng", @Settings.PopupWidthVoid,  @Settings.PopupHeightSmall);
+        });
+    }
+
+    function callRemarkDetail(blendingInstructionID) {
+        require(["kpopupWindow"], function (kpopupWindow) {
+            var voidDetailWindow = new kpopupWindow();
+            voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("RemarkDetail", "BlendingInstructions")" + "/" + $("#BlendingInstructionID").val() + "/" + blendingInstructionID, "Nhập ghi chú", @Settings.PopupWidthLarge,  @Settings.PopupHeightVoid);
         });
     }
 

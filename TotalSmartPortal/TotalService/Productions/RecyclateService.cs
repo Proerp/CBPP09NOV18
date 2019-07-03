@@ -22,7 +22,7 @@ namespace TotalService.Productions
     {
         private IRecyclateRepository recyclateRepository;
         public RecyclateService(IRecyclateRepository recyclateRepository)
-            : base(recyclateRepository, "RecyclatePostSaveValidate", "RecyclateSaveRelative", "RecyclateToggleApproved", null, null, "GetRecyclateViewDetails")
+            : base(recyclateRepository, "RecyclatePostSaveValidate", "RecyclateSaveRelative", "RecyclateToggleApproved", null, null, null, "GetRecyclateViewDetails")
         {
             this.recyclateRepository = recyclateRepository;
         }

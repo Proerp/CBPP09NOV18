@@ -14,7 +14,7 @@ namespace TotalService.Inventories
     {
         private IPackageIssueRepository packageIssueRepository;
         public PackageIssueService(IPackageIssueRepository packageIssueRepository)
-            : base(packageIssueRepository, "PackageIssuePostSaveValidate", "PackageIssueSaveRelative", "PackageIssueToggleApproved", null, null, "GetPackageIssueViewDetails")
+            : base(packageIssueRepository, "PackageIssuePostSaveValidate", "PackageIssueSaveRelative", "PackageIssueToggleApproved", null, null, null, "GetPackageIssueViewDetails")
         {
             this.packageIssueRepository = packageIssueRepository;
         }

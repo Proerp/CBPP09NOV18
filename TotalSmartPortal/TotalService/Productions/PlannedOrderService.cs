@@ -17,7 +17,7 @@ namespace TotalService.Productions
         where TDtoDetail : class, IPrimitiveEntity
     {
         public PlannedOrderService(IPlannedOrderRepository plannedOrderRepository)
-            : base(plannedOrderRepository, "PlannedOrderPostSaveValidate", "PlannedOrderSaveRelative", "PlannedOrderToggleApproved", "PlannedOrderToggleVoid", "PlannedOrderToggleVoidDetail", "GetPlannedOrderViewDetails")
+            : base(plannedOrderRepository, "PlannedOrderPostSaveValidate", "PlannedOrderSaveRelative", "PlannedOrderToggleApproved", "PlannedOrderToggleVoid", "PlannedOrderToggleVoidDetail", null, "GetPlannedOrderViewDetails")
         {
         }
 

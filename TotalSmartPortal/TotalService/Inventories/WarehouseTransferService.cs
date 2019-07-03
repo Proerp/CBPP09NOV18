@@ -19,7 +19,7 @@ namespace TotalService.Inventories
         where TDtoDetail : class, IPrimitiveEntity
     {
         public WarehouseTransferService(IWarehouseTransferRepository warehouseTransferRepository)
-            : base(warehouseTransferRepository, "WarehouseTransferPostSaveValidate", "WarehouseTransferSaveRelative", "WarehouseTransferToggleApproved", "WarehouseTransferToggleVoid", "WarehouseTransferToggleVoidDetail", "GetWarehouseTransferViewDetails")
+            : base(warehouseTransferRepository, "WarehouseTransferPostSaveValidate", "WarehouseTransferSaveRelative", "WarehouseTransferToggleApproved", "WarehouseTransferToggleVoid", "WarehouseTransferToggleVoidDetail", null, "GetWarehouseTransferViewDetails")
         {
         }
 

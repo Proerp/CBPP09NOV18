@@ -12,7 +12,7 @@ namespace TotalService.Accounts
     public class AccountInvoiceService: GenericWithViewDetailService<AccountInvoice, AccountInvoiceDetail, AccountInvoiceViewDetail, AccountInvoiceDTO, AccountInvoicePrimitiveDTO, AccountInvoiceDetailDTO>, IAccountInvoiceService
     {
         public AccountInvoiceService(IAccountInvoiceRepository accountInvoiceRepository)
-            : base(accountInvoiceRepository, "AccountInvoicePostSaveValidate", "AccountInvoiceSaveRelative", null, null, null, "GetAccountInvoiceViewDetails")
+            : base(accountInvoiceRepository, "AccountInvoicePostSaveValidate", "AccountInvoiceSaveRelative", null, null, null, null, "GetAccountInvoiceViewDetails")
         {
         }
 

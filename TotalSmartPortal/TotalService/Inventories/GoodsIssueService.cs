@@ -28,7 +28,7 @@ namespace TotalService.Inventories
         private readonly IGoodsIssueRepository goodsIssueRepository;
 
         public GoodsIssueService(IGoodsIssueRepository goodsIssueRepository, IInventoryRepository inventoryRepository, IGoodsIssueHelperService goodsIssueHelperService)
-            : base(goodsIssueRepository, "GoodsIssuePostSaveValidate", "GoodsIssueSaveRelative", "GoodsIssueToggleApproved", null, null, "GetGoodsIssueViewDetails")
+            : base(goodsIssueRepository, "GoodsIssuePostSaveValidate", "GoodsIssueSaveRelative", "GoodsIssueToggleApproved", null, null, null, "GetGoodsIssueViewDetails")
         {
             this.goodsIssueRepository = goodsIssueRepository;
 

@@ -17,7 +17,7 @@ namespace TotalService.Productions
         where TDtoDetail : class, IPrimitiveEntity
     {
         public SemifinishedHandoverService(ISemifinishedHandoverRepository semifinishedHandoverRepository)
-            : base(semifinishedHandoverRepository, "SemifinishedHandoverPostSaveValidate", "SemifinishedHandoverSaveRelative", "SemifinishedHandoverToggleApproved", null, null, "GetSemifinishedHandoverViewDetails")
+            : base(semifinishedHandoverRepository, "SemifinishedHandoverPostSaveValidate", "SemifinishedHandoverSaveRelative", "SemifinishedHandoverToggleApproved", null, null, null, "GetSemifinishedHandoverViewDetails")
         {
         }
 

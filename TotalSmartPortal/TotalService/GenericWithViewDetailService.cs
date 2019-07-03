@@ -49,8 +49,13 @@ namespace TotalService
         {
         }
 
-        public GenericWithViewDetailService(IGenericWithDetailRepository<TEntity, TEntityDetail> genericWithDetailRepository, string functionNamePostSaveValidate, string functionNameSaveRelative, string functionNameToggleApproved, string functionNameToggleVoid, string functionNameToggleVoidDetail, string functionNameGetViewDetails)
-            : base(genericWithDetailRepository, functionNamePostSaveValidate, functionNameSaveRelative, functionNameToggleApproved, functionNameToggleVoid, functionNameToggleVoidDetail)
+        public GenericWithViewDetailService(IGenericWithDetailRepository<TEntity, TEntityDetail> genericWithDetailRepository, string functionNamePostSaveValidate, string functionNameSaveRelative, string functionNameToggleApproved, string functionNameToggleVoid, string functionNameToggleVoidDetail, string functionNameSaveRemarkDetail)
+            : this(genericWithDetailRepository, functionNamePostSaveValidate, functionNameSaveRelative, functionNameToggleApproved, functionNameToggleVoid, functionNameToggleVoidDetail, functionNameSaveRemarkDetail, null)
+        {
+        }
+
+        public GenericWithViewDetailService(IGenericWithDetailRepository<TEntity, TEntityDetail> genericWithDetailRepository, string functionNamePostSaveValidate, string functionNameSaveRelative, string functionNameToggleApproved, string functionNameToggleVoid, string functionNameToggleVoidDetail, string functionNameSaveRemarkDetail, string functionNameGetViewDetails)
+            : base(genericWithDetailRepository, functionNamePostSaveValidate, functionNameSaveRelative, functionNameToggleApproved, functionNameToggleVoid, functionNameToggleVoidDetail, functionNameSaveRemarkDetail)
         {
             this.functionNameGetViewDetails = functionNameGetViewDetails;
         }

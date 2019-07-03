@@ -14,7 +14,7 @@ namespace TotalService.Sales
     public class SalesReturnService : GenericWithViewDetailService<SalesReturn, SalesReturnDetail, SalesReturnViewDetail, SalesReturnDTO, SalesReturnPrimitiveDTO, SalesReturnDetailDTO>, ISalesReturnService
     {
         public SalesReturnService(ISalesReturnRepository salesReturnRepository)
-            : base(salesReturnRepository, "SalesReturnPostSaveValidate", "SalesReturnSaveRelative", "SalesReturnToggleApproved", null, null, "GetSalesReturnViewDetails")
+            : base(salesReturnRepository, "SalesReturnPostSaveValidate", "SalesReturnSaveRelative", "SalesReturnToggleApproved", null, null, null, "GetSalesReturnViewDetails")
         {
         }
 

@@ -20,7 +20,7 @@ namespace TotalService.Purchases
     {
         private IGoodsArrivalRepository goodsArrivalRepository;
         public GoodsArrivalService(IGoodsArrivalRepository goodsArrivalRepository)
-            : base(goodsArrivalRepository, "GoodsArrivalPostSaveValidate", "GoodsArrivalSaveRelative", "GoodsArrivalToggleApproved", null, null, "GetGoodsArrivalViewDetails")
+            : base(goodsArrivalRepository, "GoodsArrivalPostSaveValidate", "GoodsArrivalSaveRelative", "GoodsArrivalToggleApproved", null, null, null, "GetGoodsArrivalViewDetails")
         {
             this.goodsArrivalRepository = goodsArrivalRepository;
         }

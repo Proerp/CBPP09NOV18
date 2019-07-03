@@ -458,6 +458,61 @@ namespace TotalPortal.Controllers
 
 
 
+        #region RemarkDetail/ UnRemarkDetail
+
+        [AccessLevelAuthorize(GlobalEnums.AccessLevel.Readable), ImportModelStateFromTempData]
+        [OnResultExecutingFilterAttribute]
+        public virtual ActionResult RemarkDetail(int? id, int? detailID)
+        {
+            TSimpleViewModel simpleViewModel = this.GetViewModel(id, GlobalEnums.AccessLevel.Readable, true);
+            if (simpleViewModel == null) return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            return View(this.PrepareRemarkDetail(simpleViewModel, detailID));
+        }
+
+        [HttpPost, ActionName("RemarkDetail")]
+        [ValidateAntiForgeryToken, ExportModelStateToTempData]
+        public virtual ActionResult RemarkDetailConfirmed(TotalPortal.ViewModels.Helpers.RemarkDetailViewModel voidDetailViewModel)
+        {
+            try
+            {
+                TEntity entity = this.GetEntityAndCheckAccessLevel(voidDetailViewModel.ID, GlobalEnums.AccessLevel.Readable);
+                if (entity == null) throw new System.ArgumentException("Lỗi hủy dữ liệu", "BadRequest.");
+
+                TDto dto = Mapper.Map<TDto>(entity);
+
+                if (this.GenericService.SaveRemarkDetail(dto, voidDetailViewModel.DetailID, voidDetailViewModel.Remarks))
+                {
+                    ModelState.Clear(); ////https://weblog.west-wind.com/posts/2012/apr/20/aspnet-mvc-postbacks-and-htmlhelper-controls-ignoring-model-changes
+                    //IMPORTANT NOTES: ASP.NET MVC Postbacks and HtmlHelper Controls ignoring Model Changes
+                    //HtmlHelpers controls (like .TextBoxFor() etc.) don't bind to model values on Postback, but rather get their value directly out of the POST buffer from ModelState. Effectively it looks like you can't change the display value of a control via model value updates on a Postback operation. 
+                    //When MVC binds controls like @Html.TextBoxFor() or @Html.TextBox(), it always binds values on a GET operation. On a POST operation however, it'll always used the AttemptedValue to display the control. MVC binds using the ModelState on a POST operation, not the model's value
+                    //So, if you want the behavior that I was expecting originally you can actually get it by clearing the ModelState in the controller code: ModelState.Clear();
+                    //voidDetailViewModel.Remarks = voidDetailViewModel.Remarks;
+                    return View("RemarkDetailSuccess", voidDetailViewModel);
+                }
+                else
+                    throw new System.ArgumentException("Lỗi hủy dữ liệu", "Dữ liệu này không thể hủy được.");
+            }
+            catch (Exception exception)
+            {
+                ModelState.AddValidationErrors(exception);
+                return RedirectToAction("RemarkDetail", new { @id = voidDetailViewModel.ID, @detailId = voidDetailViewModel.DetailID });
+            }
+        }
+
+        private TSimpleViewModel PrepareRemarkDetail(TSimpleViewModel simpleViewModel, int? detailId)
+        {
+            simpleViewModel.PrepareRemarkDetail(detailId);
+            return simpleViewModel;
+        }
+
+
+        #endregion RemarkDetail/ UnRemarkDetail
+
+
+
+
 
 
 

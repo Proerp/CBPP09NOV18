@@ -33,6 +33,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
             this.BlendingInstructionToggleApproved();
             this.BlendingInstructionToggleVoid();
             this.BlendingInstructionToggleVoidDetail();
+            this.BlendingInstructionSaveRemarkDetail();
 
             this.SetBlendingInstructionSymbologies();
             this.GetBlendingInstructionSymbologies();
@@ -335,6 +336,22 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         }
 
 
+        private void BlendingInstructionSaveRemarkDetail()
+        {
+            string queryString = " @EntityID int, @EntityDetailID int, @Remarks nvarchar(100) " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "       UPDATE      BlendingInstructionDetails     SET Remarks = @Remarks WHERE BlendingInstructionID = @EntityID AND BlendingInstructionDetailID = @EntityDetailID ; " + "\r\n";
+
+            queryString = queryString + "       IF @@ROWCOUNT <> 1 " + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n";
+            queryString = queryString + "               DECLARE     @msg NVARCHAR(300) = N'Dữ liệu không tồn tại' ; " + "\r\n";
+            queryString = queryString + "               THROW       61001,  @msg, 1; " + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
+            this.totalSmartPortalEntities.CreateStoredProcedure("BlendingInstructionSaveRemarkDetail", queryString);
+        }
+
         private void SetBlendingInstructionSymbologies()
         {
             string queryString = " @BlendingInstructionID int, @Code nvarchar(50), @Symbologies nvarchar(MAX) " + "\r\n";
@@ -414,7 +431,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
         private string BlendingInstructionJournalSQL(bool isBlendingInstructionID)
         {
             string queryString = "              SELECT          BlendingInstructions.BlendingInstructionID, BlendingInstructions.EntryDate, BlendingInstructions.Reference, BlendingInstructions.Code, BlendingInstructions.VoucherDate, BlendingInstructions.IssuedDate, CAST(" + "BlendingInstructions.IssuedDate" + " AS DATE) AS IssuedDateOnly, BlendingInstructions.Jobs, BlendingInstructions.Description, BlendingInstructions.CommodityID AS ProductID, Products.Code AS ProductCode, Products.Name AS ProductName, " + "\r\n";
-            queryString = queryString + "                       BlendingInstructionDetails.BlendingInstructionDetailID, BlendingInstructionDetails.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BlendingInstructionDetails.Quantity, BlendingInstructionDetails.QuantityIssued, BlendingInstructionDetails.Quantity - BlendingInstructionDetails.QuantityIssued AS QuantityRemains, BlendingInstructionDetails.InActive, BlendingInstructionDetails.InActivePartial, ISNULL(VoidTypes.Name, VoidTypeDetails.Name) AS VoidTypeName, " + "\r\n";
+            queryString = queryString + "                       BlendingInstructionDetails.BlendingInstructionDetailID, BlendingInstructionDetails.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, BlendingInstructionDetails.Quantity, BlendingInstructionDetails.QuantityIssued, BlendingInstructionDetails.Quantity - BlendingInstructionDetails.QuantityIssued AS QuantityRemains, BlendingInstructionDetails.Remarks, BlendingInstructionDetails.InActive, BlendingInstructionDetails.InActivePartial, ISNULL(VoidTypes.Name, VoidTypeDetails.Name) AS VoidTypeName, " + "\r\n";
             queryString = queryString + "                       PackageIssueDetails.PackageIssueID, PackageIssueDetails.PackageIssueDetailID, PackageIssueDetails.PackageIssueImage1ID, PackageIssueDetails.PackageIssueImage2ID, PackageIssueDetails.SealCode, PackageIssueDetails.BatchCode, PackageIssueDetails.LabCode, Barcodes.BarcodeID, PackageIssueDetails.Barcode, GoodsReceiptDetails.ProductionDate, GoodsReceiptDetails.ExpiryDate, PackageIssueDetails.Quantity AS PackageIssueQuantity " + "\r\n";
 
             queryString = queryString + "       FROM            BlendingInstructions " + "\r\n";

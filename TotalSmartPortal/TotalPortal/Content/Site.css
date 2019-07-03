@@ -659,6 +659,11 @@ tr:hover {
     background-position: center;
 }
 
+.sbt-remarks {
+    background-image: url('Images/Mains/Size12/add-12-ok.png');
+    background-position: center;
+}
+
 .sbt-photo {
     background-image: url('Images/Mains/Size16/Digit16.png');
     background-position: center;

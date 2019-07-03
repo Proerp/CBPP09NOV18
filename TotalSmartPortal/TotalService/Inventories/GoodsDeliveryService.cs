@@ -15,7 +15,7 @@ namespace TotalService.Inventories
     public class GoodsDeliveryService : GenericWithViewDetailService<GoodsDelivery, GoodsDeliveryDetail, GoodsDeliveryViewDetail, GoodsDeliveryDTO, GoodsDeliveryPrimitiveDTO, GoodsDeliveryDetailDTO>, IGoodsDeliveryService
     {
         public GoodsDeliveryService(IGoodsDeliveryRepository handlingUnitRepository)
-            : base(handlingUnitRepository, "GoodsDeliveryPostSaveValidate", "GoodsDeliverySaveRelative", null, null, null, "GetGoodsDeliveryViewDetails")
+            : base(handlingUnitRepository, "GoodsDeliveryPostSaveValidate", "GoodsDeliverySaveRelative", null, null, null, null, "GetGoodsDeliveryViewDetails")
         {
         }
 

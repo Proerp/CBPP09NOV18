@@ -17,7 +17,7 @@ namespace TotalService.Inventories
         where TDtoDetail : class, IPrimitiveEntity
     {
         public MaterialIssueService(IMaterialIssueRepository materialIssueRepository)
-            : base(materialIssueRepository, "MaterialIssuePostSaveValidate", "MaterialIssueSaveRelative", "MaterialIssueToggleApproved", null, null, "GetMaterialIssueViewDetails")
+            : base(materialIssueRepository, "MaterialIssuePostSaveValidate", "MaterialIssueSaveRelative", "MaterialIssueToggleApproved", null, null, null, "GetMaterialIssueViewDetails")
         {
         }
 

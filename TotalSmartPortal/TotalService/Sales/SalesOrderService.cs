@@ -27,7 +27,7 @@ namespace TotalService.Sales
 
 
         public SalesOrderService(ISalesOrderRepository salesOrderRepository, IInventoryRepository inventoryRepository, ISalesOrderHelperService salesOrderHelperService)
-            : base(salesOrderRepository, "SalesOrderPostSaveValidate", "SalesOrderSaveRelative", "SalesOrderToggleApproved", "SalesOrderToggleVoid", "SalesOrderToggleVoidDetail", "GetSalesOrderViewDetails")
+            : base(salesOrderRepository, "SalesOrderPostSaveValidate", "SalesOrderSaveRelative", "SalesOrderToggleApproved", "SalesOrderToggleVoid", "SalesOrderToggleVoidDetail", null, "GetSalesOrderViewDetails")
         {
             this.inventoryRepository = inventoryRepository;
             this.salesOrderHelperService = salesOrderHelperService;

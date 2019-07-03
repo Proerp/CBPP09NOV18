@@ -12,7 +12,7 @@ namespace TotalService.Productions
     public class FinishedProductService : GenericWithViewDetailService<FinishedProduct, FinishedProductDetail, FinishedProductViewDetail, FinishedProductDTO, FinishedProductPrimitiveDTO, FinishedProductDetailDTO>, IFinishedProductService
     {
         public FinishedProductService(IFinishedProductRepository finishedProductRepository)
-            : base(finishedProductRepository, "FinishedProductPostSaveValidate", "FinishedProductSaveRelative", "FinishedProductToggleApproved", null, null, "GetFinishedProductViewDetails")
+            : base(finishedProductRepository, "FinishedProductPostSaveValidate", "FinishedProductSaveRelative", "FinishedProductToggleApproved", null, null, null, "GetFinishedProductViewDetails")
         {
         }
 

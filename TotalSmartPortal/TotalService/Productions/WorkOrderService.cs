@@ -17,7 +17,7 @@ namespace TotalService.Productions
         where TDtoDetail : class, IPrimitiveEntity
     {
         public WorkOrderService(IWorkOrderRepository workOrderRepository)
-            : base(workOrderRepository, "WorkOrderPostSaveValidate", "WorkOrderSaveRelative", "WorkOrderToggleApproved", null, null, "GetWorkOrderViewDetails")
+            : base(workOrderRepository, "WorkOrderPostSaveValidate", "WorkOrderSaveRelative", "WorkOrderToggleApproved", null, null, null, "GetWorkOrderViewDetails")
         {
         }
 

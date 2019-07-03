@@ -8156,6 +8156,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Parameter Name="EntityID" Type="int" Mode="In" />
           <Parameter Name="SaveRelativeOption" Type="int" Mode="In" />
         </Function>
+        <Function Name="BlendingInstructionSaveRemarkDetail" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+          <Parameter Name="EntityDetailID" Type="int" Mode="In" />
+          <Parameter Name="Remarks" Type="nvarchar" Mode="In" />
+        </Function>
         <Function Name="BlendingInstructionToggleApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
           <Parameter Name="Approved" Type="bit" Mode="In" />
@@ -17512,6 +17517,11 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           </FunctionImport>
           <FunctionImport Name="GetTransferOrderPendingBlendingInstructionCompacts" ReturnType="Collection(TotalSmartPortalModel.TransferOrderPendingBlendingInstructionCompact)">
           <Parameter Name="WarehouseReceiptID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="BlendingInstructionSaveRemarkDetail">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+            <Parameter Name="EntityDetailID" Mode="In" Type="Int32" />
+            <Parameter Name="Remarks" Mode="In" Type="String" />
           </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
@@ -34464,6 +34474,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="BlendingInstructionSaveRemarkDetail" FunctionName="TotalSmartPortalModel.Store.BlendingInstructionSaveRemarkDetail" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

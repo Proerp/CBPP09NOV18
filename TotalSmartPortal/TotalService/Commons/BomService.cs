@@ -12,7 +12,7 @@ namespace TotalService.Commons
     public class BomService : GenericWithViewDetailService<Bom, BomDetail, BomViewDetail, BomDTO, BomPrimitiveDTO, BomDetailDTO>, IBomService
     {
         public BomService(IBomRepository bomRepository)
-            : base(bomRepository, "BomPostSaveValidate", "BomSaveRelative", null, null, null, "GetBomViewDetails")
+            : base(bomRepository, "BomPostSaveValidate", "BomSaveRelative", null, null, null, null, "GetBomViewDetails")
         {
         }
 

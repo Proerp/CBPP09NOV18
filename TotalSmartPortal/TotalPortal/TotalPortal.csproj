@@ -2009,6 +2009,8 @@
     </Content>
     <Content Include="Areas\Analysis\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Analysis\Views\Reports\Viewer.cshtml" />
+    <Content Include="Areas\Productions\Views\BlendingInstructions\RemarkDetail.cshtml" />
+    <Content Include="Areas\Productions\Views\BlendingInstructions\RemarkDetailSuccess.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">

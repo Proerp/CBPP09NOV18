@@ -81,6 +81,12 @@ namespace TotalDTO.Productions
                 this.VoidType = new VoidTypeBaseDTO() { VoidTypeID = this.ViewDetails[0].VoidTypeID, Code = this.ViewDetails[0].VoidTypeCode, Name = this.ViewDetails[0].VoidTypeName, VoidClassID = this.ViewDetails[0].VoidClassID };
             base.PrepareVoidDetail(detailID);
         }
+
+        public override void PrepareRemarkDetail(int? detailID)
+        {
+            this.ViewDetails.RemoveAll(w => w.BlendingInstructionDetailID != detailID);
+            base.PrepareRemarkDetail(detailID);
+        }
     }
 
 }

@@ -19,7 +19,7 @@ namespace TotalService.Inventories
         where TDtoDetail : class, IPrimitiveEntity
     {
         public TransferOrderService(ITransferOrderRepository transferOrderRepository)
-            : base(transferOrderRepository, null, null, "TransferOrderToggleApproved", "TransferOrderToggleVoid", "TransferOrderToggleVoidDetail", "GetTransferOrderViewDetails")
+            : base(transferOrderRepository, null, null, "TransferOrderToggleApproved", "TransferOrderToggleVoid", "TransferOrderToggleVoidDetail", null, "GetTransferOrderViewDetails")
         {
         }
 

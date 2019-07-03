@@ -20,7 +20,7 @@ namespace TotalService.Inventories
         where TDtoDetail : class, IPrimitiveEntity
     {
         public WarehouseAdjustmentService(IWarehouseAdjustmentRepository warehouseAdjustmentRepository)
-            : base(warehouseAdjustmentRepository, "WarehouseAdjustmentPostSaveValidate", "WarehouseAdjustmentSaveRelative", "WarehouseAdjustmentToggleApproved", null, null, "GetWarehouseAdjustmentViewDetails")
+            : base(warehouseAdjustmentRepository, "WarehouseAdjustmentPostSaveValidate", "WarehouseAdjustmentSaveRelative", "WarehouseAdjustmentToggleApproved", null, null, null, "GetWarehouseAdjustmentViewDetails")
         {
         }
 

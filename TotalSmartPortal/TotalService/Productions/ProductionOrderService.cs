@@ -17,7 +17,7 @@ namespace TotalService.Productions
         where TDtoDetail : class, IPrimitiveEntity
     {
         public ProductionOrderService(IProductionOrderRepository productionOrderRepository)
-            : base(productionOrderRepository, "ProductionOrderPostSaveValidate", "ProductionOrderSaveRelative", "ProductionOrderToggleApproved", "ProductionOrderToggleVoid", "ProductionOrderToggleVoidDetail", "GetProductionOrderViewDetails")
+            : base(productionOrderRepository, "ProductionOrderPostSaveValidate", "ProductionOrderSaveRelative", "ProductionOrderToggleApproved", "ProductionOrderToggleVoid", "ProductionOrderToggleVoidDetail", null, "GetProductionOrderViewDetails")
         {
         }
 
