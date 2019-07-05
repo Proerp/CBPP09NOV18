@@ -118,6 +118,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             string queryString;
 
             SqlProgrammability.Inventories.Inventories inventories = new Inventories(this.totalSmartPortalEntities);
+            SqlProgrammability.Reports.InventoryReports inventoryReports = new Reports.InventoryReports(this.totalSmartPortalEntities);
 
             queryString = " @GoodsIssueID Int, @LocationID Int, @DeliveryAdviceID Int, @CustomerID Int, @ReceiverID Int, @WarehouseID Int, @ShippingAddress nvarchar(200), @Addressee nvarchar(200), @TradePromotionID int, @VATPercent decimal(18, 2), @IsReadonly bit " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
@@ -149,7 +150,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "       SELECT      @WarehouseClassList = STUFF((SELECT ',' + CAST(WarehouseClassID AS varchar) FROM Warehouses WHERE WarehouseID IN (SELECT * FROM FNSplitUpIds(@WarehouseIDList))        FOR XML PATH('')) ,1,1,'') " + "\r\n";
 
-            queryString = queryString + "       " + inventories.GET_WarehouseJournal_BUILD_SQL("@CommoditiesBalance", "@EntryDate", "@EntryDate", "@WarehouseIDList", "@CommodityIDList", "0", "0", "@WarehouseClassList", null) + "\r\n";
+            if (GlobalEnums.SKUWarehouse)
+                queryString = queryString + "   " + inventories.GET_WarehouseJournal_BUILD_SQL("@CommoditiesBalance", "@EntryDate", "@EntryDate", "@WarehouseIDList", "@CommodityIDList", "0", "0", "@WarehouseClassList", null) + "\r\n";
+            else
+                queryString = queryString + "   " + inventoryReports.GET_WarehouseCard_BUILD_SQL("@CommoditiesBalance", "@WarehouseID", "@EntryDate", "@EntryDate") + "\r\n";
 
             queryString = queryString + "       IF (@DeliveryAdviceID > 0) ";
             queryString = queryString + "           " + this.BuildSQL(true);
