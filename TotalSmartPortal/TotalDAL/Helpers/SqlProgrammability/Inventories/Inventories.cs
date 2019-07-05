@@ -2518,5 +2518,158 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         }
 
 
+
+        #region Inventories.2019
+
+        private void InventoryUpdate()
+        {
+            //////****************************UPDATE BALANCEDATE        TO         23:59:59
+            ////--DECLARE @BalanceDate Datetime
+            ////--SET @BalanceDate = (SELECT MIN(SKUBalanceDate) FROM SKUBalanceDetail)
+            ////--IF DATEPART ( hour , @BalanceDate ) = 0 AND DATEPART ( minute , @BalanceDate )  = 0 AND DATEPART ( second , @BalanceDate )  = 0 	
+            ////--UPDATE SKUBalanceDetail SET SKUBalanceDate = DATEADD( second, 59, DATEADD( minute, 59, DATEADD( hour, 23, SKUBalanceDate)))
+
+
+            //lAddOrSubtraction: 1 ADD, -1-SUBTRACTION
+
+            string SQT = " AND CommodityTypeID <> " + (int)GlobalEnums.CommodityTypeID.Services + " AND CommodityTypeID <> " + (int)GlobalEnums.CommodityTypeID.CreditNote + " ";
+
+            string queryString = " DROP PROC InventoryUpdate " + "\r\n";
+            queryString = queryString + " CREATE PROC InventoryUpdate " + "\r\n";
+
+            queryString = queryString + " @lAddOrSubtraction Int, @lSKUInputID Int, @lSKUOutputID Int, @GoodsIssueID Int, @lSKUTransferID Int, @lSKUAdjustID Int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       SET NOCOUNT ON" + "\r\n";
+            //INIT DATA TO BE INPUT OR OUTPUT.BEGIN
+            queryString = queryString + "       DECLARE @lTableAction TABLE (" + "\r\n";
+            queryString = queryString + "           SKUInputID int NOT NULL ," + "\r\n";
+            queryString = queryString + "           CommodityID int NOT NULL ," + "\r\n";
+            queryString = queryString + "           WarehouseID int NOT NULL ," + "\r\n";
+            queryString = queryString + "           SKUInputDate datetime NOT NULL ," + "\r\n";
+            queryString = queryString + "           Quantity float NOT NULL ," + "\r\n";
+            queryString = queryString + "           AmountCostCUR float NOT NULL ," + "\r\n";
+            queryString = queryString + "           AmountCostUSD float NOT NULL ," + "\r\n";
+            queryString = queryString + "           AmountCostVND float NOT NULL ," + "\r\n";
+            queryString = queryString + "           Remarks nvarchar (100))" + "\r\n";
+
+            queryString = queryString + "       IF @lSKUInputID > 0 " + "\r\n";
+            queryString = queryString + "           INSERT      @lTableAction " + "\r\n";
+            queryString = queryString + "           SELECT      MIN(SKUInputID), CommodityID, WarehouseID, MIN(SKUInputDate), SUM(CASE @lAddOrSubtraction WHEN 1 THEN Quantity ELSE -Quantity END), SUM(AmountCostCUR), SUM(AmountCostUSD), SUM(AmountCostVND), '' AS Remarks " + "\r\n";
+            queryString = queryString + "           FROM        SKUInputDetail " + "\r\n";
+            queryString = queryString + "           WHERE       SKUInputID = @lSKUInputID " + "\r\n";
+            queryString = queryString + "           GROUP BY    WarehouseID, CommodityID" + "\r\n";
+
+            queryString = queryString + "       IF @lSKUOutputID > 0 " + "\r\n";
+            queryString = queryString + "           INSERT @lTableAction " + "\r\n";
+            queryString = queryString + "           SELECT MIN(SKUOutputID), CommodityID, WarehouseID, MIN(SKUOutputDate), SUM(CASE @lAddOrSubtraction WHEN 1 THEN Quantity ELSE -Quantity END), 0 AS AmountCostCUR, 0 AS AmountCostUSD, 0 AS AmountCostVND, '' AS Remarks " + "\r\n";
+            queryString = queryString + "           FROM SKUOutputDetail " + "\r\n";
+            queryString = queryString + "           WHERE SKUOutputID = @lSKUOutputID " + "\r\n";
+            queryString = queryString + "           GROUP BY    WarehouseID, CommodityID" + "\r\n";
+
+            queryString = queryString + "       IF @GoodsIssueID > 0 " + "\r\n";
+            queryString = queryString + "           INSERT @lTableAction " + "\r\n";
+            queryString = queryString + "           SELECT MIN(GoodsIssueID), CommodityID, WarehouseID, MIN(EntryDate), SUM(CASE @lAddOrSubtraction WHEN 1 THEN -(Quantity + FreeQuantity) ELSE (Quantity + FreeQuantity) END), 0 AS AmountCostCUR, 0 AS AmountCostUSD, 0 AS AmountCostVND, '' AS Remarks " + "\r\n"; //IF @lAddOrSubtraction = 1 THEN SAVE ELSE UNDO
+            queryString = queryString + "           FROM GoodsIssueDetails " + "\r\n";
+            queryString = queryString + "           WHERE GoodsIssueID = @GoodsIssueID " + SQT + "\r\n";
+            queryString = queryString + "           GROUP BY    WarehouseID, CommodityID" + "\r\n";
+
+            queryString = queryString + "       IF @lSKUTransferID > 0 " + "\r\n";
+            queryString = queryString + "           INSERT      @lTableAction " + "\r\n";
+            queryString = queryString + "           SELECT      MIN(SKUTransferID), CommodityID, WarehouseID, MIN(SKUTransferDate), SUM(CASE @lAddOrSubtraction WHEN 1 THEN Quantity ELSE -Quantity END), SUM(AmountCUR), SUM(AmountUSD), SUM(AmountVND), '' AS Remarks " + "\r\n";
+            queryString = queryString + "           FROM        SKUTransferDetail " + "\r\n";
+            queryString = queryString + "           WHERE       SKUTransferID = @lSKUTransferID " + "\r\n";
+            queryString = queryString + "           GROUP BY    WarehouseID, CommodityID " + "\r\n";
+
+            queryString = queryString + "       IF @lSKUAdjustID > 0 " + "\r\n";
+            queryString = queryString + "           INSERT      @lTableAction " + "\r\n";
+            queryString = queryString + "           SELECT      MIN(SKUAdjustID), CommodityID, WarehouseID, MIN(SKUAdjustDate), SUM(CASE @lAddOrSubtraction WHEN 1 THEN -Quantity ELSE Quantity END), SUM(AmountCUR), SUM(AmountUSD), SUM(AmountVND), '' AS Remarks " + "\r\n";
+            queryString = queryString + "           FROM        SKUAdjustDetail " + "\r\n";
+            queryString = queryString + "           WHERE       SKUAdjustID = @lSKUAdjustID AND Quantity < 0 " + "\r\n"; //OUTPUT ONLY: ADJUST: CO DAT BIET HON CAC T/H KHAC: QUANTITY < 0: NEN: SUM(CASE @lAddOrSubtraction WHEN 1 THEN -Quantity ELSE Quantity END): +/- NGUOC LAI VOI CAC T/H KHAC TI XIU
+            queryString = queryString + "           GROUP BY    WarehouseID, CommodityID " + "\r\n";
+
+            //INIT DATA TO BE INPUT OR OUTPUT.END
+
+
+            queryString = queryString + "       DECLARE         @lSKUActionDate DateTime " + "\r\n";
+            queryString = queryString + "       SET             @lSKUActionDate = (SELECT MAX(SKUInputDate) AS SKUInputDate FROM @lTableAction) " + "\r\n";
+            queryString = queryString + "       IF              @lSKUActionDate = NULL   RETURN " + "\r\n";//Nothing to update -> Exit immediately
+
+
+
+
+
+            queryString = queryString + "       DECLARE @lSKUBalanceID Int, @lSKUBalanceDate DateTime" + "\r\n";
+
+            queryString = queryString + "       DECLARE @lSKUBalanceOpening DateTime, @lSKUBalanceEveryWeek DateTime" + "\r\n";
+            queryString = queryString + "       SET @lSKUBalanceOpening = CONVERT(Datetime, '2009-05-16 23:59:59', 120)  " + "\r\n";//--SATURDAY: FIRT WEEK
+
+
+            queryString = queryString + "       DECLARE CursorSKUBalance CURSOR LOCAL FOR SELECT MAX(SKUBalanceID) AS SKUBalanceID, MAX(SKUBalanceDate) AS SKUBalanceDate FROM SKUBalanceDetail" + "\r\n";
+            queryString = queryString + "       OPEN CursorSKUBalance" + "\r\n";
+            queryString = queryString + "       FETCH NEXT FROM CursorSKUBalance INTO @lSKUBalanceID, @lSKUBalanceDate" + "\r\n";
+            queryString = queryString + "       CLOSE CursorSKUBalance DEALLOCATE CursorSKUBalance " + "\r\n";
+
+
+            queryString = queryString + "       IF @lSKUBalanceID IS NULL SET @lSKUBalanceID = 0" + "\r\n";
+            queryString = queryString + "       IF @lSKUBalanceDate IS NULL SET @lSKUBalanceDate = @lSKUBalanceOpening" + "\r\n";
+
+            queryString = queryString + "       SET @lSKUBalanceEveryWeek = @lSKUBalanceDate " + "\r\n"; //--GET THE MAXIMUM OF SKUBalanceDate
+
+            queryString = queryString + "       IF @lSKUActionDate > @lSKUBalanceDate" + "\r\n";
+            queryString = queryString + "           BEGIN " + "\r\n"; //--COPY THE SAME BALANCE FOR EVERY WEEKEND UP TO THE WEEKEND CONTAIN @lSKUActionDate
+            queryString = queryString + "               WHILE DATEADD(Day, 7, @lSKUActionDate) > DATEADD(Day, 7, @lSKUBalanceEveryWeek)" + "\r\n";
+            queryString = queryString + "                   BEGIN" + "\r\n";
+            queryString = queryString + "                       SET @lSKUBalanceEveryWeek = DATEADD(Day, 7, @lSKUBalanceEveryWeek)" + "\r\n";
+
+            queryString = queryString + "                       SET @lSKUBalanceID = @lSKUBalanceID + 1 " + "\r\n";//--INCREASE PRIMARYID
+            queryString = queryString + "                       INSERT INTO SKUBalanceDetail (SKUBalanceID, WarehouseID, CommodityID, SKUBalanceDate, Quantity, QuantityOutput, AmountCUR, AmountUSD, AmountVND, Remarks)" + "\r\n";
+            queryString = queryString + "                       SELECT @lSKUBalanceID, WarehouseID, CommodityID, @lSKUBalanceEveryWeek, Quantity, QuantityOutput, AmountCUR, AmountUSD, AmountVND, Remarks FROM SKUBalanceDetail WHERE SKUBalanceDate = @lSKUBalanceDate" + "\r\n";
+            queryString = queryString + "                   END " + "\r\n";
+            queryString = queryString + "               SET @lSKUBalanceDate = @lSKUBalanceEveryWeek " + "\r\n";//--SET THE MAXIMUM OF SKUBalanceDate
+            queryString = queryString + "           END " + "\r\n";
+
+
+            queryString = queryString + "       WHILE DATEADD(Day, -7, @lSKUBalanceEveryWeek) >= @lSKUActionDate " + "\r\n";//--FIND THE FIRST @lSKUBalanceEveryWeek WHICH IS GREATER THAN @lSKUActionDate
+            queryString = queryString + "           SET @lSKUBalanceEveryWeek = DATEADD(Day, -7, @lSKUBalanceEveryWeek)" + "\r\n";
+
+
+            queryString = queryString + "       UPDATE SKUBalanceDetail" + "\r\n";
+            queryString = queryString + "       SET SKUBalanceDetail.Quantity = SKUBalanceDetail.Quantity + TableAction.Quantity" + "\r\n";
+            queryString = queryString + "       FROM    @lTableAction TableAction INNER JOIN" + "\r\n";
+            queryString = queryString + "               SKUBalanceDetail ON TableAction.CommodityID = SKUBalanceDetail.CommodityID AND TableAction.WarehouseID = SKUBalanceDetail.WarehouseID AND SKUBalanceDetail.SKUBalanceDate >= @lSKUActionDate" + "\r\n";
+
+            queryString = queryString + "       WHILE @lSKUBalanceEveryWeek <= @lSKUBalanceDate" + "\r\n";
+            queryString = queryString + "           BEGIN" + "\r\n";
+            queryString = queryString + "               SET @lSKUBalanceID = @lSKUBalanceID + 1 " + "\r\n";//--INCREASE PRIMARYID
+
+            queryString = queryString + "               INSERT INTO     SKUBalanceDetail (SKUBalanceID, WarehouseID, CommodityID, SKUBalanceDate, Quantity, QuantityOutput, AmountCUR, AmountUSD, AmountVND, Remarks)" + "\r\n";
+            queryString = queryString + "               SELECT          @lSKUBalanceID, TableAction.WarehouseID, TableAction.CommodityID, @lSKUBalanceEveryWeek, TableAction.Quantity, 0 AS QuantityOutput, TableAction.AmountCostCUR, TableAction.AmountCostUSD, TableAction.AmountCostVND, TableAction.Remarks" + "\r\n";
+            queryString = queryString + "               FROM            @lTableAction TableAction LEFT JOIN" + "\r\n";
+            queryString = queryString + "                               SKUBalanceDetail ON TableAction.CommodityID = SKUBalanceDetail.CommodityID AND TableAction.WarehouseID = SKUBalanceDetail.WarehouseID AND SKUBalanceDetail.SKUBalanceDate = @lSKUBalanceEveryWeek" + "\r\n";
+            queryString = queryString + "               WHERE           SKUBalanceDetail.CommodityID IS NULL " + "\r\n";//--ADD NOT-IN-LIST ITEM"
+
+            queryString = queryString + "               SET @lSKUBalanceEveryWeek = DATEADD(Day, 7, @lSKUBalanceEveryWeek)" + "\r\n";
+            queryString = queryString + "           END " + "\r\n";
+
+            queryString = queryString + "       DELETE FROM SKUBalanceDetail WHERE Quantity = 0 " + "\r\n";
+
+            queryString = queryString + "       SET NOCOUNT OFF" + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            System.Diagnostics.Debug.WriteLine("---InventoryUpdate");
+            System.Diagnostics.Debug.WriteLine(queryString);
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("InventoryUpdate", queryString);
+
+
+
+        }
+
+        #endregion Inventories.2019
+
     }
 }
