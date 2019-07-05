@@ -23,7 +23,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Sales
 
 
             //this.GetCommoditiesInWarehouses("GetVehicleAvailables", true, false, false, false);
-            this.GetCommoditiesInWarehouses("GetCommodityAvailables", false, true, true, false, false, false); //GetPartAvailables
+
+
+            this.GetCommoditiesInWarehouses("GetCommodityAvailables", !GlobalEnums.SKUWarehouse, GlobalEnums.SKUWarehouse, true, false, false, false); //GetPartAvailables
+
+
+
             //this.GetCommoditiesInWarehouses("GetCommoditiesInWarehouses", false, true, true, false);
             //this.GetCommoditiesInWarehouses("GetCommoditiesAvailables", true, true, false, false);
 
@@ -295,12 +300,18 @@ namespace TotalDAL.Helpers.SqlProgrammability.Sales
 
             if (withCommoditiesInGoodsReceipts)
             {//GET QuantityAvailable IN GoodsReceiptDetails FOR GlobalEnums.CommodityTypeID.Vehicles
-                queryString = queryString + "               INSERT INTO     @CommoditiesAvailable (WarehouseID, CommodityID, QuantityAvailable) " + "\r\n";
-                queryString = queryString + "               SELECT          WarehouseID, CommodityID, ROUND(Quantity - QuantityIssue, 0) AS QuantityAvailable " + "\r\n";
-                queryString = queryString + "               FROM            GoodsReceiptDetails " + "\r\n";
-                queryString = queryString + "               WHERE           CommodityTypeID IN (" + (int)GlobalEnums.CommodityTypeID.Products + ") AND ROUND(Quantity - QuantityIssue, 0) > 0 AND WarehouseID IN (SELECT WarehouseID FROM Warehouses WHERE LocationID = @LocationID) AND CommodityID IN (SELECT CommodityID FROM @Commodities) " + "\r\n";
+                SqlProgrammability.Reports.InventoryReports inventoryReports = new Reports.InventoryReports(this.totalSmartPortalEntities);
+
+                queryString = queryString + "               " + inventoryReports.GET_WarehouseCard_BUILD_SQL("@CommoditiesAvailable", "@WarehouseID", "@EntryDate", "@EntryDate") + "\r\n";
 
                 queryString = queryString + "               SET             @HasCommoditiesAvailable = @HasCommoditiesAvailable + @@ROWCOUNT " + "\r\n";
+
+                //queryString = queryString + "               INSERT INTO     @CommoditiesAvailable (WarehouseID, CommodityID, QuantityAvailable) " + "\r\n";
+                //queryString = queryString + "               SELECT          WarehouseID, CommodityID, ROUND(Quantity - QuantityIssued, 0) AS QuantityAvailable " + "\r\n";
+                //queryString = queryString + "               FROM            GoodsReceiptDetails " + "\r\n";
+                //queryString = queryString + "               WHERE           CommodityTypeID IN (" + (int)GlobalEnums.CommodityTypeID.Products + ") AND ROUND(Quantity - QuantityIssued, 0) > 0 AND WarehouseID IN (SELECT WarehouseID FROM Warehouses WHERE LocationID = @LocationID) AND CommodityID IN (SELECT CommodityID FROM @Commodities) " + "\r\n";
+
+                //queryString = queryString + "               SET             @HasCommoditiesAvailable = @HasCommoditiesAvailable + @@ROWCOUNT " + "\r\n";
             }
 
             if (withCommoditiesInWarehouses)
@@ -401,7 +412,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Sales
             queryString = queryString + "                   SELECT          " + (!includeCommoditiesOutOfStock ? "" : "TOP 50") + "Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + (!isUsingWarehouseBalancePrice ? "Commodities.ListedPrice" : "ROUND(CAST(ISNULL(CurrentWarehouseBalancePrice.UnitPrice, 0) AS decimal(18, 2)), " + (int)GlobalEnums.rndAmount + ") AS ListedPrice") + ", " + (!isUsingWarehouseBalancePrice ? "Commodities.GrossPrice" : "ROUND(CAST(ISNULL(CurrentWarehouseBalancePrice.UnitPrice, 0) AS decimal(18, 2)) * (1 + CommodityCategories.VATPercent/100), " + (int)GlobalEnums.rndAmount + ") AS GrossPrice") + ", Commodities.DiscountPercent, 0.0 AS TradeDiscountRate, Commodities.ControlFreeQuantity, CommodityCategories.VATPercent, " + (!includeCommoditiesOutOfStock ? "" : "ISNULL(") + "Warehouses.WarehouseID" + (!includeCommoditiesOutOfStock ? "" : ", DEFAULTWarehouses.WarehouseID) AS WarehouseID") + ", " + (!includeCommoditiesOutOfStock ? "" : "ISNULL(") + "Warehouses.Code" + (!includeCommoditiesOutOfStock ? "" : ", DEFAULTWarehouses.Code)") + " AS WarehouseCode, " + (!includeCommoditiesOutOfStock ? "" : "ISNULL(") + "CommoditiesAvailable.QuantityAvailable" + (!includeCommoditiesOutOfStock ? "" : ", CAST(0 AS decimal(18, 2)) ) AS QuantityAvailable") + ", " + (!includeCommoditiesOutOfStock ? "CommoditiesAvailable.Bookable" : "CAST(1 AS bit) AS Bookable") + " \r\n";
             queryString = queryString + "                   FROM            @Commodities Commodities INNER JOIN " + "\r\n";
             queryString = queryString + "                                   CommodityCategories ON Commodities.CommodityCategoryID = CommodityCategories.CommodityCategoryID " + (!includeCommoditiesOutOfStock ? "INNER JOIN" : "LEFT JOIN") + "\r\n";
-            queryString = queryString + "                                  (SELECT WarehouseID, CommodityID, SUM(QuantityAvailable) AS QuantityAvailable, Bookable FROM @CommoditiesAvailable GROUP BY WarehouseID, CommodityID, Bookable) CommoditiesAvailable ON Commodities.CommodityID = CommoditiesAvailable.CommodityID " + (!includeCommoditiesOutOfStock ? "INNER JOIN" : "LEFT JOIN") + "\r\n";
+            queryString = queryString + "                                  (SELECT WarehouseID, CommodityID, SUM(QuantityAvailable) AS QuantityAvailable, Bookable FROM @CommoditiesAvailable WHERE CommodityID IN (SELECT CommodityID FROM @Commodities) GROUP BY WarehouseID, CommodityID, Bookable) CommoditiesAvailable ON Commodities.CommodityID = CommoditiesAvailable.CommodityID " + (!includeCommoditiesOutOfStock ? "INNER JOIN" : "LEFT JOIN") + "\r\n";
             queryString = queryString + "                                   Warehouses ON CommoditiesAvailable.WarehouseID = Warehouses.WarehouseID " + "\r\n";
 
 
@@ -438,7 +449,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Sales
 
             return queryString;
         }
-        
+
 
         private void GetCustomerBases()
         {
@@ -583,20 +594,25 @@ namespace TotalDAL.Helpers.SqlProgrammability.Sales
         {
             string queryString;
             SqlProgrammability.Inventories.Inventories inventories = new Inventories.Inventories(this.totalSmartPortalEntities);
+            SqlProgrammability.Reports.InventoryReports inventoryReports = new Reports.InventoryReports(this.totalSmartPortalEntities);
 
             queryString = " @DeliveryAdviceID Int " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
             queryString = queryString + " AS " + "\r\n";
             queryString = queryString + "    BEGIN " + "\r\n";
 
-            queryString = queryString + "       DECLARE     @EntryDate DateTime       DECLARE @LocationID varchar(35)       DECLARE @CustomerID int         DECLARE @WarehouseIDList varchar(555)         DECLARE @CommodityIDList varchar(3999)        DECLARE @WarehouseClassList varchar(555) " + "\r\n";
+            queryString = queryString + "       DECLARE     @EntryDate DateTime       DECLARE @LocationID varchar(35)       DECLARE @CustomerID int         DECLARE @WarehouseID int         DECLARE @WarehouseIDList varchar(555)         DECLARE @CommodityIDList varchar(3999)        DECLARE @WarehouseClassList varchar(555) " + "\r\n";
             queryString = queryString + "       SELECT      @EntryDate = EntryDate, @LocationID = LocationID, @CustomerID = CustomerID FROM DeliveryAdvices WHERE DeliveryAdviceID = @DeliveryAdviceID " + "\r\n";
             queryString = queryString + "       IF          @EntryDate IS NULL          SET @EntryDate = CONVERT(Datetime, '31/12/2000', 103)" + "\r\n";
+            queryString = queryString + "       SELECT      @WarehouseID = WarehouseID FROM DeliveryAdvices WHERE DeliveryAdviceID = @DeliveryAdviceID " + "\r\n";
             queryString = queryString + "       SELECT      @WarehouseIDList = STUFF((SELECT ',' + CAST(WarehouseID AS varchar)  FROM DeliveryAdviceDetails WHERE DeliveryAdviceID = @DeliveryAdviceID FOR XML PATH('')) ,1,1,'') " + "\r\n";
             queryString = queryString + "       SELECT      @CommodityIDList = STUFF((SELECT ',' + CAST(CommodityID AS varchar)  FROM DeliveryAdviceDetails WHERE DeliveryAdviceID = @DeliveryAdviceID FOR XML PATH('')) ,1,1,'') " + "\r\n";
             queryString = queryString + "       SELECT      @WarehouseClassList = STUFF((SELECT ',' + CAST(WarehouseClassID AS varchar) FROM Warehouses WHERE WarehouseID IN (SELECT * FROM FNSplitUpIds(@WarehouseIDList))        FOR XML PATH('')) ,1,1,'') " + "\r\n";
 
-            queryString = queryString + "       " + inventories.GET_WarehouseJournal_BUILD_SQL("@CommoditiesBalance", "@EntryDate", "@EntryDate", "@WarehouseIDList", "@CommodityIDList", "0", "0", "@WarehouseClassList", null) + "\r\n";
+            if (GlobalEnums.SKUWarehouse)
+                queryString = queryString + "               " + inventories.GET_WarehouseJournal_BUILD_SQL("@CommoditiesBalance", "@EntryDate", "@EntryDate", "@WarehouseIDList", "@CommodityIDList", "0", "0", "@WarehouseClassList", null) + "\r\n";
+            else
+                queryString = queryString + "               " + inventoryReports.GET_WarehouseCard_BUILD_SQL("@CommoditiesBalance", "@WarehouseID", "@EntryDate", "@EntryDate") + "\r\n";
 
             queryString = queryString + "       SELECT      DeliveryAdviceDetails.DeliveryAdviceDetailID, DeliveryAdviceDetails.DeliveryAdviceID, DeliveryAdviceDetails.SalesOrderID, DeliveryAdviceDetails.SalesOrderDetailID, SalesOrders.Reference AS SalesOrderReference, SalesOrders.Code AS SalesOrderCode, SalesOrders.EntryDate AS SalesOrderEntryDate, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, DeliveryAdviceDetails.CommodityTypeID, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, VoidTypes.VoidTypeID, VoidTypes.Code AS VoidTypeCode, VoidTypes.Name AS VoidTypeName, VoidTypes.VoidClassID, DeliveryAdviceDetails.CalculatingTypeID, " + "\r\n";
@@ -678,6 +694,8 @@ namespace TotalDAL.Helpers.SqlProgrammability.Sales
             string queryString;
 
             SqlProgrammability.Inventories.Inventories inventories = new SqlProgrammability.Inventories.Inventories(this.totalSmartPortalEntities);
+            SqlProgrammability.Reports.InventoryReports inventoryReports = new Reports.InventoryReports(this.totalSmartPortalEntities);
+
 
             queryString = " @LocationID Int, @DeliveryAdviceID Int, @SalesOrderID Int, @CustomerID Int, @ReceiverID Int, @PriceCategoryID Int, @WarehouseID Int, @ShippingAddress nvarchar(200), @Addressee nvarchar(200), @TradePromotionID int, @VATPercent decimal(18, 2), @EntryDate DateTime, @SalesOrderDetailIDs varchar(3999), @IsReadonly bit " + "\r\n";
             queryString = queryString + " WITH ENCRYPTION " + "\r\n";
@@ -704,7 +722,10 @@ namespace TotalDAL.Helpers.SqlProgrammability.Sales
 
             queryString = queryString + "       SELECT      @WarehouseClassList = STUFF((SELECT ',' + CAST(WarehouseClassID AS varchar) FROM Warehouses WHERE WarehouseID IN (SELECT * FROM FNSplitUpIds(@WarehouseIDList))        FOR XML PATH('')) ,1,1,'') " + "\r\n";
 
-            queryString = queryString + "       " + inventories.GET_WarehouseJournal_BUILD_SQL("@CommoditiesBalance", "@EntryDate", "@EntryDate", "@WarehouseIDList", "@CommodityIDList", "0", "0", "@WarehouseClassList", null) + "\r\n";
+            if (GlobalEnums.SKUWarehouse)
+                queryString = queryString + "   " + inventories.GET_WarehouseJournal_BUILD_SQL("@CommoditiesBalance", "@EntryDate", "@EntryDate", "@WarehouseIDList", "@CommodityIDList", "0", "0", "@WarehouseClassList", null) + "\r\n";                
+            else
+                queryString = queryString + "   " + inventoryReports.GET_WarehouseCard_BUILD_SQL("@CommoditiesBalance", "@WarehouseID", "@EntryDate", "@EntryDate") + "\r\n";
 
 
             queryString = queryString + "       IF  (@SalesOrderID <> 0) " + "\r\n";

@@ -9,7 +9,7 @@ namespace TotalBase.Enums
         public static bool CBPP = true;
 
         public static bool ERPConnected = false;
-
+        public static bool SKUWarehouse = false;
 
         public static int CalculatingTypeID = 1; //JUST CHANGE FROM [0] TO [1] AT 12.00PM ON 24.MAR.2O18 => TO SHOW THE ORIGINAL GROSS PRICE, GROSS AMOUNT ON PXK. 
         //THEO SỰ XEM XÉT NGÀY 24.MAR.2O18 THÌ THAY ĐỔI NÀY SẼ THAY ĐỔI 4 GIÁ TRỊ: ListedVATAmount, VATAmount, ListedGrossAmount, GrossAmount. 

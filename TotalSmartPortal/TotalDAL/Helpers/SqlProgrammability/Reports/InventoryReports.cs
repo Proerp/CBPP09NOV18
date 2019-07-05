@@ -19,7 +19,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Reports
         public void RestoreProcedure()
         {
             this.WarehouseJournals();
-            this.WarehouseCards();            
+            this.WarehouseCards();
         }
 
 
@@ -259,7 +259,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Reports
 
             queryString = queryString + "                   ) AS WarehouseJournalMaster INNER JOIN " + "\r\n";
 
-            
+
             queryString = queryString + "                   Commodities ON WarehouseJournalMaster.CommodityID = Commodities.CommodityID INNER JOIN " + "\r\n";
             queryString = queryString + "                   EntireCommodityCategories ON Commodities.CommodityCategoryID = EntireCommodityCategories.CommodityCategoryID LEFT JOIN " + "\r\n";
 
@@ -297,7 +297,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Reports
 
             queryString = queryString + "       SELECT      800000 + @LocalWarehouseID AS WarehouseCardID, WarehouseJournalMaster.JournalTypeID, WarehouseJournalMaster.CustomerID, WarehouseJournalMaster.CustomerCode, WarehouseJournalMaster.CustomerName, WarehouseJournalMaster.Specs, WarehouseJournalMaster.Specification, WarehouseJournalMaster.FirmOrderCode, WarehouseJournalMaster.ControllerName, WarehouseJournalMaster.EntityID, WarehouseJournalMaster.GroupName, WarehouseJournalMaster.SubGroupName, WarehouseJournalMaster.GoodsReceiptDetailID, WarehouseJournalMaster.EntryDate, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code, Commodities.CodePartA, Commodities.CodePartB, Commodities.CodePartC, Commodities.CodePartD, Commodities.CodePartE, Commodities.CodePartF, Commodities.Name, Commodities.SalesUnit, Commodities.LeadTime, WarehouseJournalMaster.Reference, WarehouseJournalMaster.Referral, WarehouseJournalMaster.ReceiptCode, WarehouseJournalMaster.Barcode, " + "\r\n";
-            queryString = queryString + "                   ISNULL(Warehouses.LocationID, 0) AS LocationID, ISNULL(Warehouses.WarehouseCategoryID, 0) AS WarehouseCategoryID, ISNULL(Warehouses.WarehouseID, 0) AS WarehouseID, ISNULL(Warehouses.Name, '') AS WarehouseName, " + "\r\n";
+            queryString = queryString + "                   ISNULL(Warehouses.LocationID, 0) AS LocationID, ISNULL(Warehouses.WarehouseCategoryID, 0) AS WarehouseCategoryID, ISNULL(Warehouses.WarehouseID, 0) AS WarehouseID, ISNULL(Warehouses.Name, '') AS WarehouseName, Warehouses.Bookable AS Bookable, " + "\r\n";
             queryString = queryString + "                   WarehouseJournalMaster.Description, WarehouseJournalMaster.QuantityDebit, WarehouseJournalMaster.QuantityCredit, " + "\r\n";
 
             queryString = queryString + "                   IIF(WarehouseJournalMaster.JournalTypeID = " + (int)GlobalEnums.WarehouseAdjustmentTypeID.ALL + ", WarehouseJournalMaster.QuantityDebit, 0) AS QuantityBEGIN, " + "\r\n";
@@ -512,7 +512,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Reports
             queryString = queryString + "                               Workshifts ON MaterialIssueDetails.WorkshiftID = Workshifts.WorkshiftID INNER JOIN " + "\r\n";
             queryString = queryString + "                               ProductionLines ON MaterialIssueDetails.ProductionLineID = ProductionLines.ProductionLineID " + "\r\n";
 
-            
+
             queryString = queryString + "                   UNION ALL " + "\r\n";
             //3.1.PackageIssueDetails + "\r\n";
             queryString = queryString + "                   SELECT      " + (int)GlobalEnums.WarehouseAdjustmentTypeID.IssuePRO + " AS JournalTypeID, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, BlendingInstructions.Jobs AS Specs, Commodities.Code + ' - ' + Commodities.OfficialCode AS Specification, BlendingInstructions.Code AS BlendingInstructionCode, 'Inventories/PackageIssues' AS ControllerName, PackageIssueDetails.PackageIssueID AS EntityID, N'HH TẠI KHO' AS GroupName, CONVERT(VARCHAR, @LocalFromDate, 103) + ' -> ' + CONVERT(VARCHAR, @LocalToDate, 103) AS SubGroupName, GoodsReceiptDetails.GoodsReceiptDetailID, PackageIssueDetails.EntryDate, GoodsReceiptDetails.CommodityID, PackageIssueDetails.Reference, GoodsReceiptDetails.Reference AS Referral, GoodsReceiptDetails.Code AS ReceiptCode, GoodsReceiptDetails.Barcode, GoodsReceiptDetails.WarehouseID, BlendingInstructions.Code + ', TP: ' + Commodities.Code AS Description, 0 AS QuantityDebit, PackageIssueDetails.Quantity AS QuantityCredit " + "\r\n";
@@ -644,6 +644,23 @@ namespace TotalDAL.Helpers.SqlProgrammability.Reports
 
 
 
+            //C.1.ON ISSUE.ON DeliveryAdvices
+            queryString = queryString + "                   UNION ALL " + "\r\n";
+
+            queryString = queryString + "                   SELECT      " + (int)GlobalEnums.WarehouseAdjustmentTypeID.IssuePENDING + " AS JournalTypeID, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, NULL AS Specs, NULL AS Specification, NULL AS FirmOrderCode, 'Sales/DeliveryAdvices' AS ControllerName, DeliveryAdviceDetails.DeliveryAdviceID AS EntityID, N'TỒN SX [DỞ DANG]' AS GroupName, 'X.' + CONVERT(VARCHAR, @LocalToDate, 103) AS SubGroupName, NULL AS GoodsReceiptDetailID, DeliveryAdviceDetails.EntryDate, DeliveryAdviceDetails.CommodityID, NULL AS Reference, NULL AS Referral, NULL AS ReceiptCode, NULL AS Barcode, DeliveryAdviceDetails.WarehouseID, Customers.Name AS Description, 0 AS QuantityDebit, DeliveryAdviceDetails.Quantity - DeliveryAdviceDetails.QuantityIssue AS QuantityCredit " + "\r\n";
+            queryString = queryString + "                   FROM        DeliveryAdviceDetails INNER JOIN " + "\r\n";
+            queryString = queryString + "                               Customers ON DeliveryAdviceDetails.LocationID = @LocationID AND DeliveryAdviceDetails.WarehouseID = @LocalWarehouseID AND DeliveryAdviceDetails.EntryDate <= @LocalToDate AND ROUND(DeliveryAdviceDetails.Quantity - DeliveryAdviceDetails.QuantityIssue, " + (int)GlobalEnums.rndQuantity + ") > 0 AND DeliveryAdviceDetails.CustomerID = Customers.CustomerID " + "\r\n";
+
+            queryString = queryString + "                   UNION ALL " + "\r\n";
+
+            queryString = queryString + "                   SELECT      " + (int)GlobalEnums.WarehouseAdjustmentTypeID.IssuePENDING + " AS JournalTypeID, Customers.CustomerID, Customers.Code AS CustomerCode, Customers.Name AS CustomerName, NULL AS Specs, NULL AS Specification, NULL AS FirmOrderCode, 'Sales/DeliveryAdvices' AS ControllerName, DeliveryAdvices.DeliveryAdviceID AS EntityID, N'TỒN SX [DỞ DANG]' AS GroupName, 'X.' + CONVERT(VARCHAR, @LocalToDate, 103) AS SubGroupName, NULL AS GoodsReceiptDetailID, DeliveryAdvices.EntryDate, GoodsIssueDetails.CommodityID, NULL AS Reference, NULL AS Referral, NULL AS ReceiptCode, NULL AS Barcode, GoodsIssueDetails.WarehouseID, Customers.Name AS Description, 0 AS QuantityDebit, GoodsIssueDetails.Quantity AS QuantityCredit " + "\r\n";
+            queryString = queryString + "                   FROM        DeliveryAdvices INNER JOIN " + "\r\n";
+            queryString = queryString + "                               GoodsIssueDetails ON DeliveryAdvices.LocationID = @LocationID AND GoodsIssueDetails.WarehouseID = @LocalWarehouseID AND DeliveryAdvices.DeliveryAdviceID = GoodsIssueDetails.DeliveryAdviceID AND DeliveryAdvices.EntryDate <= @LocalToDate AND GoodsIssueDetails.EntryDate > @LocalToDate INNER JOIN " + "\r\n";
+            queryString = queryString + "                               Customers ON DeliveryAdvices.CustomerID = Customers.CustomerID " + "\r\n";
+
+            //C.2.ON ISSUE.ON TransferOrders
+
+
             queryString = queryString + "                   ) AS WarehouseJournalMaster INNER JOIN " + "\r\n";
 
             queryString = queryString + "                   Commodities ON WarehouseJournalMaster.CommodityID = Commodities.CommodityID INNER JOIN " + "\r\n";
@@ -656,6 +673,29 @@ namespace TotalDAL.Helpers.SqlProgrammability.Reports
             this.totalSmartPortalEntities.CreateStoredProcedure("WarehouseCards", queryString);
 
         }
-        
+
+
+
+        public string GET_WarehouseCard_BUILD_SQL(string commoditiesBalanceTable, string warehouseID, string fromDate, string toDate)
+        {
+            string queryString = "";
+
+            if (commoditiesBalanceTable != null && commoditiesBalanceTable != "" && commoditiesBalanceTable != "@CommoditiesAvailable")
+                queryString = queryString + "       DECLARE " + commoditiesBalanceTable + " TABLE (WarehouseID int NULL, CommodityID int NULL, QuantityBalance decimal(18, 2) NULL, Bookable bit NULL) " + "\r\n";
+
+            queryString = queryString + "       DECLARE @WarehouseCardTable TABLE " + "\r\n";
+            queryString = queryString + "      (WarehouseCardID int NULL, JournalTypeID int NULL, CustomerID int NULL, CustomerCode nvarchar(50) NULL, CustomerName nvarchar(100) NULL, Specs nvarchar(800) NULL, Specification nvarchar(800) NULL, FirmOrderCode nvarchar(50) NULL, ControllerName nvarchar(50) NULL, EntityID int NULL, GroupName nvarchar(50) NULL, SubGroupName nvarchar(50) NULL, GoodsReceiptDetailID	int NULL, EntryDate	datetime NULL, " + "\r\n";
+            queryString = queryString + "       CommodityID int NULL, Code nvarchar(50) NULL, CodePartA nvarchar(20) NULL, CodePartB nvarchar(20) NULL, CodePartC nvarchar(20) NULL, CodePartD nvarchar(20) NULL, CodePartE nvarchar(20) NULL, CodePartF nvarchar(20) NULL, Name nvarchar(200) NULL, SalesUnit nvarchar(10) NULL, LeadTime int NULL, Reference nvarchar(10) NULL, Referral nvarchar(10) NULL, ReceiptCode nvarchar(50) NULL, Barcode nvarchar(60) NULL, LocationID int NULL, WarehouseCategoryID int NULL, WarehouseID int NULL, WarehouseName nvarchar(60) NULL, Bookable bit NULL, Description nvarchar(100) NULL, " + "\r\n";
+            queryString = queryString + "       QuantityDebit decimal(18, 2) NULL, QuantityCredit decimal(18, 2) NULL, QuantityBEGIN decimal(18, 2) NULL, QuantityRECEIPT decimal(18, 2) NULL, QuantityISSUE decimal(18, 2) NULL, QuantityEND decimal(18, 2) NULL, ReceiptPRO decimal(18, 2) NULL, ReceiptSAM decimal(18, 2) NULL, ReceiptRTN decimal(18, 2) NULL, ReceiptADJ decimal(18, 2) NULL, ReceiptPUR decimal(18, 2) NULL, ReceiptREG decimal(18, 2) NULL, ReceiptOSS decimal(18, 2) NULL, ReceiptBOR decimal(18, 2) NULL, ReceiptFOI decimal(18, 2) NULL, ReceiptTXF decimal(18, 2) NULL, ReceiptOTH decimal(18, 2) NULL, " + "\r\n";
+            queryString = queryString + "       IssueINV decimal(18, 2) NULL, IssueOFS decimal(18, 2) NULL, IssueADJ decimal(18, 2) NULL, IssueSAM decimal(18, 2) NULL, IssueDST decimal(18, 2) NULL, IssuePRO decimal(18, 2) NULL, IssueREG decimal(18, 2) NULL, IssueRTN decimal(18, 2) NULL, IssueOSS decimal(18, 2) NULL, IssueTXF decimal(18, 2) NULL, IssueOTH decimal(18, 2) NULL, ReceiptPENDING decimal(18, 2) NULL, IssuePENDING decimal(18, 2) NULL, CommodityCategoryID int NULL, CommodityCategory1 nvarchar(100) NULL, CommodityCategory2 nvarchar(100) NULL, CommodityCategory3 nvarchar(100) NULL) " + "\r\n";
+
+            queryString = queryString + "       INSERT INTO @WarehouseCardTable EXEC WarehouseCards " + warehouseID + ", " + fromDate + ", " + toDate + "\r\n";
+
+            if (commoditiesBalanceTable != null && commoditiesBalanceTable != "")
+                queryString = queryString + "   INSERT INTO " + commoditiesBalanceTable + " SELECT WarehouseID, CommodityID, SUM(QuantityEND + ReceiptPENDING - IssuePENDING) AS QuantityAvailable, CAST(MAX(IIF(Bookable = 1, 1, 0)) AS bit) AS Bookable FROM @WarehouseCardTable GROUP BY WarehouseID, CommodityID HAVING SUM(QuantityEND + ReceiptPENDING - IssuePENDING) > 0" + "\r\n";
+
+            return queryString;
+        }
+
     }
 }
