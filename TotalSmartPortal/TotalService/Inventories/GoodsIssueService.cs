@@ -47,6 +47,13 @@ namespace TotalService.Inventories
             return this.GetViewDetails(parameters);
         }
 
+
+        public List<GoodsIssueViewPackage> GetGoodsIssueViewPackages(int? goodsIssueID)
+        {
+            return this.goodsIssueRepository.GetGoodsIssueViewPackages(goodsIssueID);
+        }
+
+
         public List<PendingDeliveryAdviceDescription> GetDescriptions(int locationID, int customerID, int receiverID, int warehouseID, string shippingAddress, string addressee, int? tradePromotionID, decimal? vatPercent)
         {
             return this.goodsIssueRepository.GetDescriptions(locationID, customerID, receiverID, warehouseID, shippingAddress, addressee, tradePromotionID, vatPercent);

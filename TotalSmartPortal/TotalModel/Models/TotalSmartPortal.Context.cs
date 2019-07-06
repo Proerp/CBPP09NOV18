@@ -5819,5 +5819,47 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("BlendingInstructionSaveRemarkDetail", entityIDParameter, entityDetailIDParameter, remarksParameter);
         }
+    
+        public virtual ObjectResult<PendingDeliveryAdviceDetail> GetPendingDeliveryAdviceDetails(Nullable<bool> webAPI, Nullable<int> locationID, Nullable<int> goodsIssueID, Nullable<int> deliveryAdviceDetailID, Nullable<int> warehouseID, string barcode, string goodsReceiptDetailIDs)
+        {
+            var webAPIParameter = webAPI.HasValue ?
+                new ObjectParameter("WebAPI", webAPI) :
+                new ObjectParameter("WebAPI", typeof(bool));
+    
+            var locationIDParameter = locationID.HasValue ?
+                new ObjectParameter("LocationID", locationID) :
+                new ObjectParameter("LocationID", typeof(int));
+    
+            var goodsIssueIDParameter = goodsIssueID.HasValue ?
+                new ObjectParameter("GoodsIssueID", goodsIssueID) :
+                new ObjectParameter("GoodsIssueID", typeof(int));
+    
+            var deliveryAdviceDetailIDParameter = deliveryAdviceDetailID.HasValue ?
+                new ObjectParameter("DeliveryAdviceDetailID", deliveryAdviceDetailID) :
+                new ObjectParameter("DeliveryAdviceDetailID", typeof(int));
+    
+            var warehouseIDParameter = warehouseID.HasValue ?
+                new ObjectParameter("WarehouseID", warehouseID) :
+                new ObjectParameter("WarehouseID", typeof(int));
+    
+            var barcodeParameter = barcode != null ?
+                new ObjectParameter("Barcode", barcode) :
+                new ObjectParameter("Barcode", typeof(string));
+    
+            var goodsReceiptDetailIDsParameter = goodsReceiptDetailIDs != null ?
+                new ObjectParameter("GoodsReceiptDetailIDs", goodsReceiptDetailIDs) :
+                new ObjectParameter("GoodsReceiptDetailIDs", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PendingDeliveryAdviceDetail>("GetPendingDeliveryAdviceDetails", webAPIParameter, locationIDParameter, goodsIssueIDParameter, deliveryAdviceDetailIDParameter, warehouseIDParameter, barcodeParameter, goodsReceiptDetailIDsParameter);
+        }
+    
+        public virtual ObjectResult<GoodsIssueViewPackage> GetGoodsIssueViewPackages(Nullable<int> goodsIssueID)
+        {
+            var goodsIssueIDParameter = goodsIssueID.HasValue ?
+                new ObjectParameter("GoodsIssueID", goodsIssueID) :
+                new ObjectParameter("GoodsIssueID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsIssueViewPackage>("GetGoodsIssueViewPackages", goodsIssueIDParameter);
+        }
     }
 }

@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System.Web.Mvc;
+using System.Collections.Generic;
+
+using AutoMapper;
 
 using TotalModel.Models;
 
@@ -32,6 +35,12 @@ namespace TotalPortal.Areas.Inventories.Controllers
         protected override ICollection<GoodsIssueViewDetail> GetEntityViewDetails(GoodsIssueViewModel goodsIssueViewModel)
         {
             ICollection<GoodsIssueViewDetail> goodsIssueViewDetails = this.goodsIssueService.GetGoodsIssueViewDetails(goodsIssueViewModel.GoodsIssueID, this.goodsIssueService.LocationID, goodsIssueViewModel.DeliveryAdviceID == null ? 0 : (int)goodsIssueViewModel.DeliveryAdviceID, goodsIssueViewModel.CustomerID, goodsIssueViewModel.ReceiverID, goodsIssueViewModel.WarehouseID == null ? 0 : (int)goodsIssueViewModel.WarehouseID, goodsIssueViewModel.ShippingAddress, goodsIssueViewModel.Addressee == null ? "" : goodsIssueViewModel.Addressee, goodsIssueViewModel.TradePromotionID, goodsIssueViewModel.VATPercent, false);
+
+            if (goodsIssueViewModel.GoodsIssueID > 0) //EDIT
+            {
+                List<GoodsIssueViewPackage> goodsIssueViewPackages = this.goodsIssueService.GetGoodsIssueViewPackages(goodsIssueViewModel.GoodsIssueID);
+                Mapper.Map<List<GoodsIssueViewPackage>, List<GoodsIssuePackageDTO>>(goodsIssueViewPackages, goodsIssueViewModel.GoodsIssueViewPackages);
+            }
 
             return goodsIssueViewDetails;
         }
@@ -86,6 +95,12 @@ namespace TotalPortal.Areas.Inventories.Controllers
         {
             base.BackupViewModelToSession(simpleViewModel);
             GoodsIssueSession.SetStorekeeper(this.HttpContext, simpleViewModel.Storekeeper.EmployeeID, simpleViewModel.Storekeeper.Name);
+        }
+
+        public virtual ActionResult GetPendingDeliveryAdviceDetails(int? id)
+        {
+            this.AddRequireJsOptions();
+            return View(id);
         }
     }
 }

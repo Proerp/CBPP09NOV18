@@ -20,10 +20,12 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             this.GetPendingDeliveryAdvices();
             this.GetPendingDeliveryAdviceCustomers();
+            this.GetPendingDeliveryAdviceDetails();
 
             this.GetPendingDeliveryAdviceDescriptions();
 
             this.GetGoodsIssueViewDetails();
+            this.GetGoodsIssueViewPackages();
 
             this.GoodsIssueSaveRelative();
             this.GoodsIssuePostSaveValidate();
@@ -241,6 +243,137 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
         }
 
         #endregion GetGoodsIssueViewDetails
+
+        #region GetGoodsIssueViewPackages
+
+        private void GetGoodsIssueViewPackages()
+        {
+            string queryString;
+
+            queryString = " @GoodsIssueID Int " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+            queryString = queryString + "    BEGIN " + "\r\n";
+
+            queryString = queryString + "       SELECT      GoodsIssuePackages.GoodsIssuePackageID, GoodsIssuePackages.GoodsIssueID, DeliveryAdviceDetails.DeliveryAdviceID, DeliveryAdviceDetails.DeliveryAdviceDetailID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.CommodityTypeID, " + "\r\n";
+            queryString = queryString + "                   GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceiptDetails.Reference AS GoodsReceiptReference, GoodsReceiptDetails.Code AS GoodsReceiptCode, GoodsReceiptDetails.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.ExpiryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsIssuePackages.BinLocationID, BinLocations.Code AS BinLocationCode, GoodsIssuePackages.Barcode, GoodsIssuePackages.BatchCode, GoodsIssuePackages.SealCode, GoodsIssuePackages.LabCode, GoodsReceiptDetails.UnitWeight, GoodsReceiptDetails.TareWeight, " + "\r\n";
+            queryString = queryString + "                   ROUND(DeliveryAdviceDetails.Quantity - DeliveryAdviceDetails.QuantityIssue + Issued_DeliveryAdviceDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued + Issued_GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, GoodsIssuePackages.Quantity, GoodsIssuePackages.Remarks " + "\r\n";
+
+            queryString = queryString + "       FROM        GoodsIssuePackages " + "\r\n";
+            queryString = queryString + "                   INNER JOIN DeliveryAdviceDetails ON GoodsIssuePackages.GoodsIssueID = @GoodsIssueID AND GoodsIssuePackages.DeliveryAdviceDetailID = DeliveryAdviceDetails.DeliveryAdviceDetailID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN (SELECT DeliveryAdviceDetailID, SUM(Quantity) AS QuantityIssued FROM GoodsIssuePackages WHERE GoodsIssueID = @GoodsIssueID GROUP BY DeliveryAdviceDetailID) AS Issued_DeliveryAdviceDetails ON GoodsIssuePackages.DeliveryAdviceDetailID = Issued_DeliveryAdviceDetails.DeliveryAdviceDetailID " + "\r\n";
+
+            queryString = queryString + "                   INNER JOIN Commodities ON GoodsIssuePackages.CommodityID = Commodities.CommodityID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN BinLocations ON GoodsIssuePackages.BinLocationID = BinLocations.BinLocationID " + "\r\n";
+
+            queryString = queryString + "                   INNER JOIN GoodsReceiptDetails ON GoodsIssuePackages.GoodsReceiptDetailID = GoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN (SELECT GoodsReceiptDetailID, SUM(Quantity) AS QuantityIssued FROM GoodsIssuePackages WHERE GoodsIssueID = @GoodsIssueID GROUP BY GoodsReceiptDetailID) AS Issued_GoodsReceiptDetails ON GoodsIssuePackages.GoodsReceiptDetailID = Issued_GoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
+
+            queryString = queryString + "       ORDER BY    GoodsIssuePackages.GoodsIssueID, GoodsIssuePackages.GoodsIssuePackageID " + "\r\n";
+
+            queryString = queryString + "    END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsIssueViewPackages", queryString);
+        }
+
+
+        private void GetPendingDeliveryAdviceDetails()
+        {
+            string queryString;
+
+            queryString = " @WebAPI bit, @LocationID Int, @GoodsIssueID Int, @DeliveryAdviceDetailID Int, @WarehouseID Int, @Barcode nvarchar(60), @GoodsReceiptDetailIDs varchar(3999) " + "\r\n";
+            queryString = queryString + " WITH ENCRYPTION " + "\r\n";
+            queryString = queryString + " AS " + "\r\n";
+
+            queryString = queryString + "   BEGIN " + "\r\n";
+            queryString = queryString + "       IF  (NOT @Barcode IS NULL AND @Barcode <> '' AND @Barcode <> '0') " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(false) + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            this.totalSmartPortalEntities.CreateStoredProcedure("GetPendingDeliveryAdviceDetails", queryString);
+        }
+
+        private string BuildSQLPendingDetails(bool isBarcode)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       IF  (@GoodsReceiptDetailIDs <> '' AND @GoodsReceiptDetailIDs <> '0') " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(isBarcode, true) + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+            queryString = queryString + "           " + this.BuildSQLPendingDetails(isBarcode, false) + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string BuildSQLPendingDetails(bool isBarcode, bool isGoodsReceiptDetailIDs)
+        {
+            string queryString = "";
+            queryString = queryString + "   BEGIN " + "\r\n";
+
+            queryString = queryString + "       IF (@GoodsIssueID <= 0 OR @WebAPI = 1) " + "\r\n"; //@WebAPI = 1: SHOULD SAVE BEFORE CALL NEXT
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLNew(isBarcode, isGoodsReceiptDetailIDs) + "\r\n";
+            queryString = queryString + "                   ORDER BY DeliveryAdviceDetails.DeliveryAdviceDetailID " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
+            queryString = queryString + "       ELSE " + "\r\n";
+
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLNew(isBarcode, isGoodsReceiptDetailIDs) + " WHERE DeliveryAdviceDetails.DeliveryAdviceDetailID NOT IN (SELECT DeliveryAdviceDetailID FROM GoodsIssuePackages WHERE GoodsIssueID = @GoodsIssueID) " + "\r\n";
+            queryString = queryString + "                   UNION ALL " + "\r\n";
+            queryString = queryString + "                   " + this.BuildSQLEdit(isBarcode, isGoodsReceiptDetailIDs) + "\r\n";
+            queryString = queryString + "                   ORDER BY DeliveryAdviceDetails.DeliveryAdviceDetailID " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
+
+            queryString = queryString + "   END " + "\r\n";
+
+            return queryString;
+        }
+
+        private string BuildSQLNew(bool isBarcode, bool isGoodsReceiptDetailIDs)
+        {
+            string queryString = "";
+
+            queryString = queryString + "       SELECT      DeliveryAdviceDetails.DeliveryAdviceDetailID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.OfficialCode, Commodities.CommodityTypeID, Commodities.Weight, " + "\r\n";
+            queryString = queryString + "                   GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceipts.Reference AS GoodsReceiptReference, GoodsReceipts.Code AS GoodsReceiptCode, GoodsReceipts.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.ExpiryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsReceiptDetails.SealCode, GoodsReceiptDetails.BatchCode, GoodsReceiptDetails.LabCode, GoodsReceiptDetails.Barcode, GoodsReceiptDetails.BinLocationID, BinLocations.Code AS BinLocationCode, GoodsReceiptDetails.UnitWeight, GoodsReceiptDetails.TareWeight, " + "\r\n";
+            queryString = queryString + "                   ROUND(DeliveryAdviceDetails.Quantity - DeliveryAdviceDetails.QuantityIssue, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, 0 AS Quantity, CAST(0 AS bit) AS IsSelected " + "\r\n";
+
+            queryString = queryString + "       FROM        DeliveryAdviceDetails " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON DeliveryAdviceDetails.DeliveryAdviceDetailID = @DeliveryAdviceDetailID AND DeliveryAdviceDetails.Approved = 1 AND DeliveryAdviceDetails.InActive = 0 AND DeliveryAdviceDetails.InActivePartial = 0 AND ROUND(DeliveryAdviceDetails.Quantity - DeliveryAdviceDetails.QuantityIssue, " + (int)GlobalEnums.rndQuantity + ") > 0 AND DeliveryAdviceDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+
+            queryString = queryString + "                   INNER JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND DeliveryAdviceDetails.CommodityID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 " + (true ? " AND GoodsReceiptDetails.LabID IN (SELECT LabID FROM Labs WHERE Approved = 1 AND InActive = 0 AND Hold = 0)" : "") + (isBarcode ? " AND GoodsReceiptDetails.Barcode = @Barcode" : "") + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN GoodsReceipts ON GoodsReceiptDetails.GoodsReceiptID = GoodsReceipts.GoodsReceiptID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN BinLocations ON GoodsReceiptDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";
+
+            return queryString;
+        }
+
+        private string BuildSQLEdit(bool isBarcode, bool isGoodsReceiptDetailIDs)
+        {
+            string queryString = "";
+
+            queryString = queryString + "       SELECT      DeliveryAdviceDetails.DeliveryAdviceDetailID, Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.OfficialCode, Commodities.CommodityTypeID, Commodities.Weight, " + "\r\n";
+            queryString = queryString + "                   GoodsReceiptDetails.GoodsReceiptID, GoodsReceiptDetails.GoodsReceiptDetailID, GoodsReceipts.Reference AS GoodsReceiptReference, GoodsReceipts.Code AS GoodsReceiptCode, GoodsReceipts.EntryDate AS GoodsReceiptEntryDate, GoodsReceiptDetails.ExpiryDate, GoodsReceiptDetails.BatchID, GoodsReceiptDetails.BatchEntryDate, GoodsReceiptDetails.SealCode, GoodsReceiptDetails.BatchCode, GoodsReceiptDetails.LabCode, GoodsReceiptDetails.Barcode, GoodsReceiptDetails.BinLocationID, BinLocations.Code AS BinLocationCode, GoodsReceiptDetails.UnitWeight, GoodsReceiptDetails.TareWeight, " + "\r\n";
+            queryString = queryString + "                   ROUND(DeliveryAdviceDetails.Quantity - DeliveryAdviceDetails.QuantityIssue + GoodsIssuePackages.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued + ISNULL(IssuedGoodsReceiptDetails.Quantity, 0), " + (int)GlobalEnums.rndQuantity + ") AS QuantityAvailables, 0 AS Quantity, CAST(0 AS bit) AS IsSelected " + "\r\n";
+
+            queryString = queryString + "       FROM        DeliveryAdviceDetails " + "\r\n";
+            queryString = queryString + "                   INNER JOIN (SELECT DeliveryAdviceDetailID, SUM(Quantity) AS Quantity FROM GoodsIssuePackages WHERE GoodsIssueID = @GoodsIssueID AND DeliveryAdviceDetailID = @DeliveryAdviceDetailID GROUP BY DeliveryAdviceDetailID) AS GoodsIssuePackages ON DeliveryAdviceDetails.DeliveryAdviceDetailID = GoodsIssuePackages.DeliveryAdviceDetailID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN Commodities ON DeliveryAdviceDetails.CommodityID = Commodities.CommodityID " + "\r\n";
+
+            queryString = queryString + "                   INNER JOIN GoodsReceiptDetails ON GoodsReceiptDetails.WarehouseID = @WarehouseID AND DeliveryAdviceDetails.CommodityID = GoodsReceiptDetails.CommodityID AND GoodsReceiptDetails.Approved = 1 AND (ROUND(GoodsReceiptDetails.Quantity - GoodsReceiptDetails.QuantityIssued, " + (int)GlobalEnums.rndQuantity + ") > 0 OR GoodsReceiptDetails.GoodsReceiptDetailID IN (SELECT GoodsReceiptDetailID FROM GoodsIssuePackages WHERE GoodsIssueID = @GoodsIssueID)) " + (true ? " AND GoodsReceiptDetails.LabID IN (SELECT LabID FROM Labs WHERE Approved = 1 AND InActive = 0 AND Hold = 0)" : "") + (isBarcode ? " AND GoodsReceiptDetails.Barcode = @Barcode" : "") + (isGoodsReceiptDetailIDs ? " AND GoodsReceiptDetails.GoodsReceiptDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@GoodsReceiptDetailIDs))" : "") + "\r\n";
+            queryString = queryString + "                   INNER JOIN (SELECT GoodsReceiptDetailID, SUM(Quantity) AS Quantity FROM GoodsIssuePackages WHERE GoodsIssueID = @GoodsIssueID GROUP BY GoodsReceiptDetailID) AS IssuedGoodsReceiptDetails ON GoodsReceiptDetails.GoodsReceiptDetailID = IssuedGoodsReceiptDetails.GoodsReceiptDetailID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN GoodsReceipts ON GoodsReceiptDetails.GoodsReceiptID = GoodsReceipts.GoodsReceiptID " + "\r\n";
+            queryString = queryString + "                   INNER JOIN BinLocations ON GoodsReceiptDetails.BinLocationID = BinLocations.BinLocationID " + "\r\n";
+
+            return queryString;
+        }
+        #endregion GetGoodsIssueViewPackages
+
 
 
         private void GoodsIssueSaveRelative()

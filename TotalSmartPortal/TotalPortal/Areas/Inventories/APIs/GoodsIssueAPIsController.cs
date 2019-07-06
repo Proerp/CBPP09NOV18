@@ -50,6 +50,11 @@ namespace TotalPortal.Areas.Inventories.APIs
             return Json(pendingDeliveryAdviceCustomers.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetPendingDeliveryAdviceDetails([DataSourceRequest] DataSourceRequest dataSourceRequest, int? locationID, int? goodsIssueID, int? deliveryAdviceDetailID, int? warehouseID, string barcode, string goodsReceiptDetailIDs)
+        {
+            var result = this.goodsIssueAPIRepository.GetPendingDeliveryAdviceDetails(false, locationID, goodsIssueID, deliveryAdviceDetailID, warehouseID, barcode, goodsReceiptDetailIDs);
+            return Json(result.ToDataSourceResult(dataSourceRequest), JsonRequestBehavior.AllowGet);
+        }
     }
 
 

@@ -2013,6 +2013,7 @@
     <Content Include="Areas\Analysis\Views\Reports\Viewer.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\RemarkDetail.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\RemarkDetailSuccess.cshtml" />
+    <Content Include="Areas\Inventories\Views\GoodsIssues\GetPendingDeliveryAdviceDetails.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -2099,6 +2100,7 @@
     <Content Include="Scripts\Controllers\Inventories\GoodsDeliveries\Edit.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsDeliveries\Index.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsDeliveries\Open.js" />
+    <Content Include="Scripts\Controllers\Inventories\GoodsIssues\AddPendingDeliveryAdviceDetail.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsIssues\Alter.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsIssues\Approve.js" />
     <Content Include="Scripts\Controllers\Inventories\GoodsIssues\CreateWizard.js" />

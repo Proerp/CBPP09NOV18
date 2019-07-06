@@ -74,6 +74,8 @@ namespace TotalDTO.Inventories
         public GoodsIssueDTO()
         {
             this.GoodsIssueViewDetails = new List<GoodsIssueDetailDTO>();
+
+            this.GoodsIssueViewPackages = new List<GoodsIssuePackageDTO>();
         }
 
         public override int CustomerID { get { return (this.Customer != null ? this.Customer.CustomerID : 0); } }
@@ -106,6 +108,8 @@ namespace TotalDTO.Inventories
         public ICollection<GoodsIssueDetailDTO> GetDetails() { return this.GoodsIssueViewDetails; }
 
         protected override IEnumerable<GoodsIssueDetailDTO> DtoDetails() { return this.GoodsIssueViewDetails; }
+
+        public List<GoodsIssuePackageDTO> GoodsIssueViewPackages { get; set; }
     }
 
 
