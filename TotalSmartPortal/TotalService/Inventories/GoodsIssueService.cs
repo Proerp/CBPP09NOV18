@@ -1,15 +1,20 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
+using System.Linq;
 using System.Data.SqlClient;
 using System.Data.SqlTypes;
 
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 
+using AutoMapper;
+
+using TotalBase;
+using TotalBase.Enums;
 using TotalModel.Models;
 using TotalDTO.Inventories;
 using TotalCore.Repositories.Inventories;
 using TotalCore.Services.Inventories;
-using System;
 using TotalCore.Repositories.Commons;
 using TotalCore.Services.Sales;
 using TotalService.Helpers;
@@ -60,11 +65,31 @@ namespace TotalService.Inventories
         }
 
 
+        public override bool Save(GoodsIssueDTO dto)
+        {
+            dto.GoodsIssueViewPackages.RemoveAll(x => x.Quantity == 0);
+            return base.Save(dto);
+        }
+
         protected override void UpdateDetail(GoodsIssueDTO dto, GoodsIssue entity)
         {
             this.goodsIssueHelperService.GetWCParameters(dto, null, ref this.checkedDate, ref this.warehouseIDList, ref this.commodityIDList);
 
             base.UpdateDetail(dto, entity);
+
+            if (dto.GoodsIssueViewPackages != null && dto.GoodsIssueViewPackages.Count > 0)
+                dto.GoodsIssueViewPackages.Each(detailDTO =>
+                {
+                    GoodsIssuePackage goodsIssuePackage;
+
+                    if (detailDTO.GoodsIssuePackageID <= 0 || (goodsIssuePackage = entity.GoodsIssuePackages.First(detailModel => detailModel.GoodsIssuePackageID == detailDTO.GoodsIssuePackageID)) == null)
+                    {
+                        goodsIssuePackage = new GoodsIssuePackage();
+                        entity.GoodsIssuePackages.Add(goodsIssuePackage);
+                    }
+
+                    Mapper.Map<GoodsIssuePackageDTO, GoodsIssuePackage>(detailDTO, goodsIssuePackage);
+                });
         }
 
         protected override void UndoDetail(GoodsIssueDTO dto, GoodsIssue entity, bool isDelete)
@@ -72,11 +97,20 @@ namespace TotalService.Inventories
             this.goodsIssueHelperService.GetWCParameters(null, entity, ref this.checkedDate, ref this.warehouseIDList, ref this.commodityIDList);
 
             base.UndoDetail(dto, entity, isDelete);
+
+            if (entity.GetID() > 0 && entity.GoodsIssuePackages.Count > 0)
+                if (isDelete || dto.GoodsIssueViewPackages == null || dto.GoodsIssueViewPackages.Count == 0)
+                    this.goodsIssueRepository.TotalSmartPortalEntities.GoodsIssuePackages.RemoveRange(entity.GoodsIssuePackages);
+                else
+                    entity.GoodsIssuePackages.ToList()//Have to use .ToList(): to convert enumerable to List before do remove. To correct this error: Collection was modified; enumeration operation may not execute. 
+                            .Where(detailModel => !dto.GoodsIssueViewPackages.Any(detailDTO => detailDTO.GoodsIssuePackageID == detailModel.GoodsIssuePackageID))
+                            .Each(deleted => this.goodsIssueRepository.TotalSmartPortalEntities.GoodsIssuePackages.Remove(deleted)); //remove deleted details
+
         }
 
         protected override void PostSaveValidate(GoodsIssue entity)
         {
-            this.inventoryRepository.CheckOverStock(this.checkedDate, this.warehouseIDList, this.commodityIDList);
+            if (GlobalEnums.SKUWarehouse) this.inventoryRepository.CheckOverStock(this.checkedDate, this.warehouseIDList, this.commodityIDList);
             base.PostSaveValidate(entity);
         }
     }

@@ -110,6 +110,22 @@ namespace TotalDTO.Inventories
         protected override IEnumerable<GoodsIssueDetailDTO> DtoDetails() { return this.GoodsIssueViewDetails; }
 
         public List<GoodsIssuePackageDTO> GoodsIssueViewPackages { get; set; }
+
+        public decimal GoodsIssuePackageQuantity { get { return this.GoodsIssueViewPackages.Select(o => o.Quantity).Sum(); } }
+
+        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            foreach (var result in base.Validate(validationContext)) { yield return result; }
+
+            if (this.TotalQuantity + this.TotalFreeQuantity != this.GoodsIssuePackageQuantity) yield return new ValidationResult("Chi tiết xuất kho từng mặt hàng phải bằng tổng xuất kho của mặt hàng đó", new[] { "TotalQuantity" });
+        }
+
+        public override void PerformPresaveRule()
+        {
+            base.PerformPresaveRule();
+
+            this.GoodsIssueViewPackages.ForEach(e => { e.LocationID = this.LocationID; e.EntryDate = this.EntryDate; e.Approved = this.Approved; e.ApprovedDate = this.ApprovedDate; e.CustomerID = this.CustomerID; e.ReceiverID = this.ReceiverID; });
+        }
     }
 
 

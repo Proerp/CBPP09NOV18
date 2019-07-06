@@ -381,6 +381,9 @@ namespace TotalPortal.App_Start
                 cfg.CreateMap<GoodsIssueViewDetail, GoodsIssueDetailDTO>();
                 cfg.CreateMap<GoodsIssueDetailDTO, GoodsIssueDetail>();
 
+                cfg.CreateMap<GoodsIssuePackageDTO, GoodsIssuePackage>();
+                cfg.CreateMap<GoodsIssueViewPackage, GoodsIssuePackageDTO>();
+
                 cfg.CreateMap<GoodsIssue, GoodsIssueBoxDTO>();
 
                 cfg.CreateMap<HandlingUnit, HandlingUnitViewModel>();

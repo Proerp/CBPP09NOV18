@@ -50,6 +50,7 @@ namespace TotalModel.Models
             this.RecyclateDetails1 = new HashSet<RecyclateDetail>();
             this.Commodities1 = new HashSet<Commodity>();
             this.GoodsReceiptDetails = new HashSet<GoodsReceiptDetail>();
+            this.GoodsIssuePackages = new HashSet<GoodsIssuePackage>();
         }
     
         public int CommodityID { get; set; }
@@ -166,5 +167,7 @@ namespace TotalModel.Models
         public virtual Commodity Commodity1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<GoodsReceiptDetail> GoodsReceiptDetails { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<GoodsIssuePackage> GoodsIssuePackages { get; set; }
     }
 }

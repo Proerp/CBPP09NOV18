@@ -354,6 +354,9 @@
     <Compile Include="Models\GoodsIssueIndex.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GoodsIssuePackage.cs">
+      <DependentUpon>TotalSmartPortal.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GoodsIssueReceivable.cs">
       <DependentUpon>TotalSmartPortal.tt</DependentUpon>
     </Compile>

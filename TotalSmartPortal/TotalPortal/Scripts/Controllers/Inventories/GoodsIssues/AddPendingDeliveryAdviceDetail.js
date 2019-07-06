@@ -65,6 +65,8 @@ function handleOKEvent(goodsIssueGridDataSource, pendingDeliveryAdviceDetailGrid
         dataRow.GoodsReceiptEntryDate = productionOrderGridDataItem.GoodsReceiptEntryDate;
         dataRow.ExpiryDate = productionOrderGridDataItem.ExpiryDate;
 
+        dataRow.WarehouseID = productionOrderGridDataItem.WarehouseID;
+
         dataRow.Barcode = productionOrderGridDataItem.Barcode;
         dataRow.BatchCode = productionOrderGridDataItem.BatchCode;
         dataRow.SealCode = productionOrderGridDataItem.SealCode;

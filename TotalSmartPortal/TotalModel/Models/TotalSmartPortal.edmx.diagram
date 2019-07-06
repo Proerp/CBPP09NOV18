@@ -529,6 +529,14 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_SemifinishedProducts_GoodsReceiptDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseAdjustmentDetails_GoodsReceiptDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_WarehouseTransferDetails_GoodsReceiptDetails" />
+        <EntityTypeShape EntityType="TotalSmartPortalModel.GoodsIssuePackage" Width="1.5" PointX="75.375" PointY="35.75" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_Commodities" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_DeliveryAdviceDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_DeliveryAdvices" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_GoodsIssues" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_GoodsReceiptDetails" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_GoodsReceipts" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_Warehouses" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

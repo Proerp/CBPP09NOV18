@@ -40,5 +40,7 @@ namespace TotalModel.Models
         public Nullable<decimal> QuantityAvailables { get; set; }
         public int Quantity { get; set; }
         public Nullable<bool> IsSelected { get; set; }
+        public int DeliveryAdviceID { get; set; }
+        public int WarehouseID { get; set; }
     }
 }

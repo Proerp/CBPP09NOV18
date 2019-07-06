@@ -50,6 +50,9 @@ namespace TotalDTO.Inventories
         public int DeliveryAdviceID { get; set; }
         public int DeliveryAdviceDetailID { get; set; }
 
+        public int CustomerID { get; set; }
+        public int ReceiverID { get; set; }
+
         public Nullable<int> WarehouseID { get; set; }
 
         public int GoodsReceiptID { get; set; }
