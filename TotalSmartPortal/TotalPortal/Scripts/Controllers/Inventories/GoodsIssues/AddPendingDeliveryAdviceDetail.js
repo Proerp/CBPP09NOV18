@@ -4,6 +4,9 @@
 
 function handleOKEvent(goodsIssueGridDataSource, pendingDeliveryAdviceDetailGridDataSource) {
     if (goodsIssueGridDataSource != undefined && pendingDeliveryAdviceDetailGridDataSource != undefined) {
+
+        var totalQuantityRemains = $("#TotalQuantityRemains").data('kendoNumericTextBox').value();
+
         var pendingDeliveryAdviceDetailGridDataItems = pendingDeliveryAdviceDetailGridDataSource.view();
         var goodsIssueJSON = goodsIssueGridDataSource.data().toJSON();
         for (var i = 0; i < pendingDeliveryAdviceDetailGridDataItems.length; i++) {
@@ -18,6 +21,7 @@ function handleOKEvent(goodsIssueGridDataSource, pendingDeliveryAdviceDetailGrid
         var rawData = goodsIssueGridDataSource.data()
         goodsIssueGridDataSource.remove(rawData[rawData.length - 1]); //Remove the last row: this is the temporary empty row
 
+        window.parent.updateQuantities($("#DeliveryAdviceDetailID").val());
         cancelButton_Click();
     }
 
@@ -71,7 +75,8 @@ function handleOKEvent(goodsIssueGridDataSource, pendingDeliveryAdviceDetailGrid
 
         dataRow.QuantityAvailables = productionOrderGridDataItem.QuantityAvailables;
         dataRow.QuantityRemains = productionOrderGridDataItem.QuantityRemains;
-        dataRow.Quantity = productionOrderGridDataItem.QuantityAvailables;
+        dataRow.Quantity = DoRound(totalQuantityRemains > productionOrderGridDataItem.QuantityAvailables ? productionOrderGridDataItem.QuantityAvailables : (totalQuantityRemains > 0 ? totalQuantityRemains : 0), window.parent.requireConfig.websiteOptions.rndQuantity);
+        totalQuantityRemains = DoRound(totalQuantityRemains - dataRow.Quantity, window.parent.requireConfig.websiteOptions.rndQuantity);
 
         dataRow.BatchID = productionOrderGridDataItem.BatchID;
         dataRow.BatchEntryDate = productionOrderGridDataItem.BatchEntryDate;
