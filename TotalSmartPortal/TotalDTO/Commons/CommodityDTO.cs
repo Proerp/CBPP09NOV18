@@ -135,7 +135,7 @@ namespace TotalDTO.Commons
         public void SetID(int id) { this.CommodityID = id; }
 
         public int CommodityID { get; set; }
-        public override string Code { get { return GlobalEnums.CBPP ? this.CodePartA : ((this.CommodityTypeID != (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartB) ? this.CodePartB + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartC) ? this.CodePartC + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartD) ? this.CodePartD + " " : "") + (this.CommodityTypeID == (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartE) ? this.CodePartE + " x " : "") + (!String.IsNullOrWhiteSpace(this.CodePartF) ? this.CodePartF : "")).Trim(); } }
+        public override string Code { get { return (GlobalEnums.CBPP || GlobalEnums.DMC) ? this.CodePartA : ((this.CommodityTypeID != (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartB) ? this.CodePartB + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartC) ? this.CodePartC + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartD) ? this.CodePartD + " " : "") + (this.CommodityTypeID == (int)GlobalEnums.CommodityTypeID.Items && !String.IsNullOrWhiteSpace(this.CodePartA) ? this.CodePartA + " " : "") + (!String.IsNullOrWhiteSpace(this.CodePartE) ? this.CodePartE + " x " : "") + (!String.IsNullOrWhiteSpace(this.CodePartF) ? this.CodePartF : "")).Trim(); } }
         public string OfficialCode { get { return TotalBase.CommonExpressions.AlphaNumericString(this.Code); } }
         public string CodePartA { get; set; }
         public string CodePartB { get { return this.CommodityCategoryName.IndexOf("[") >= 0 ? this.CommodityCategoryName.Remove(this.CommodityCategoryName.IndexOf("[")).Trim() : this.CommodityCategoryName; } }
@@ -209,7 +209,7 @@ namespace TotalDTO.Commons
             if (this.NMVNTaskID != GlobalEnums.NmvnTaskID.Item && (String.IsNullOrWhiteSpace(this.CodePartA) || this.CodePartA != TotalBase.CommonExpressions.AlphaNumericString(this.CodePartA))) yield return new ValidationResult("Vui lòng kiểm tra mã", new[] { "CodePartA" });
             if (this.NMVNTaskID == GlobalEnums.NmvnTaskID.Item && !decimal.TryParse(this.CodePartE, out decimalValidate)) yield return new ValidationResult("Lỗi độ dày phải là số", new[] { "CodePartE" });
             if (this.NMVNTaskID == GlobalEnums.NmvnTaskID.Item && !decimal.TryParse(this.CodePartF, out decimalValidate)) yield return new ValidationResult("Lỗi chiều rộng phải là số", new[] { "CodePartF" });
-            if (this.NMVNTaskID == GlobalEnums.NmvnTaskID.Item && !GlobalEnums.CBPP && this.Weight == 0) yield return new ValidationResult("Vui lòng nhập hs trọng lượng", new[] { "Weight" });
+            if (this.NMVNTaskID == GlobalEnums.NmvnTaskID.Item && !GlobalEnums.CBPP && !GlobalEnums.DMC && this.Weight == 0) yield return new ValidationResult("Vui lòng nhập hs trọng lượng", new[] { "Weight" });
         }
 
         public override void PerformPresaveRule()

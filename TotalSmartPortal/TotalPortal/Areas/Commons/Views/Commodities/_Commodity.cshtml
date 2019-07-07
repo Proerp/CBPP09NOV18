@@ -39,11 +39,11 @@
         }
 
         @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityCategory.cshtml")
-        <div @{if (GlobalEnums.CBPP) { <text> div class="SBT-Hidden" </text>              } }>
+        <div @{if (GlobalEnums.CBPP || GlobalEnums.DMC) { <text> div class="SBT-Hidden" </text>              } }>
             @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityLine.cshtml")
         </div>
 
-        <div @{if (GlobalEnums.CBPP || Model.IsMaterial) { <text> style="display:none;" </text>            } }>
+        <div @{if (GlobalEnums.CBPP || GlobalEnums.DMC || Model.IsMaterial) { <text> style="display:none;" </text>            } }>
             @Html.Partial("~/Views/Shared/EditorTemplates/DropDowns/CommodityClass.cshtml")
         </div>
 
@@ -149,7 +149,7 @@
             </div>
         </div>
 
-        <div class="form-group" @{if (GlobalEnums.CBPP || !Model.IsProduct) { <text> style="display:none;" </text>            } }>
+        <div class="form-group" @{if (GlobalEnums.CBPP || GlobalEnums.DMC || !Model.IsProduct) { <text> style="display:none;" </text>            } }>
             @Html.LabelFor(model => (model as ICommodityPrimitiveDTO).PiecePerPack)
             <div class="div-input">
                 @Html.Kendo().NumericTextBoxFor(model => (model as ICommodityPrimitiveDTO).PiecePerPack).HtmlAttributes(new { @class = "left-panel-input" })
@@ -169,7 +169,7 @@
             </div>
         </div>
 
-        <div @{if (!((GlobalEnums.CBPP && Model.IsMaterial) || (!GlobalEnums.CBPP && Model.IsItem))) { <text> style="display:none;" </text> } }>
+        <div @{if (!((GlobalEnums.CBPP || GlobalEnums.DMC && Model.IsMaterial) || (!GlobalEnums.CBPP && Model.IsItem))) { <text> style="display:none;" </text> } }>
             <div class="form-group">
                 @{if (GlobalEnums.CBPP)
                 {@Html.LabelFor(model => (model as ICommodityPrimitiveDTO).Weight)}
@@ -287,7 +287,7 @@
             {
                 <button type="submit" id="btnSave" class="@(Model.CommodityID > 0 ? "k-button custom-button SubmitTypeOption-Closed" : "k-button custom-button SubmitTypeOption-Closed")" formaction="@Url.Action("Edit", Model.ControllerName)"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
             }
-            @if (!GlobalEnums.CBPP && Model.CommodityID > 0)
+            @if (!GlobalEnums.CBPP && !GlobalEnums.DMC && Model.CommodityID > 0)
             {
                 if (Model.IsProduct)
                 {<button type="button" class="k-button custom-button" onclick="ShowMolds()"> <img src="~/Content/Images/New/2017/mold-32.png" /> Danh mục khuôn sx khay </button>}

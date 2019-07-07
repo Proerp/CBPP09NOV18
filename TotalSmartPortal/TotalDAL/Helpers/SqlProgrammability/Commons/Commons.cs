@@ -66,6 +66,28 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
 
 
+
+        
+        //----DELETE FROM EntireCommodityBrands
+        //----INSERT INTO EntireCommodityBrands SELECT * FROM VWCommodityBrands
+
+
+        //----DELETE FROM EntireCommodityCategories
+        //----INSERT INTO EntireCommodityCategories SELECT * FROM VWCommodityCategories
+
+
+        //----DELETE FROM EntireCustomerCategories
+        //----INSERT INTO EntireCustomerCategories SELECT * FROM VWCustomerCategories
+
+
+        //----DELETE FROM EntireTerritories
+        //----INSERT INTO EntireTerritories SELECT * FROM VWTerritories
+
+
+
+
+
+
         private void SplitToIntList()
         {
             string queryString = " (@strString varchar(max)) " + "\r\n";
