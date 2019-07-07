@@ -223,7 +223,8 @@
                                 </text>);
                             else
                                 toolbar.Template(@<text>
-                                <button type="button" class="k-button" onclick="$('#kendoGridDetails').data('kendoGrid').addRow()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm mặt hàng </button>
+                                    <button type="button" class="k-button" onclick="$('#kendoGridDetails').data('kendoGrid').addRow()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Thêm mặt hàng </button>
+                                    <span style="float:right"> @Html.Partial("~/Views/Helpers/Commons/_Import.cshtml") </span>
                                 </text>);
                         }
                         else
@@ -334,12 +335,6 @@
         </div>
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
-
-        @if (Model.Editable && !Model.HasGoodsIssue)
-        {
-            <div><input style="font-size: 11px;" type="file" name="xlfile" id="xlf" /></div>
-        }
-
     </div>
 }
 
