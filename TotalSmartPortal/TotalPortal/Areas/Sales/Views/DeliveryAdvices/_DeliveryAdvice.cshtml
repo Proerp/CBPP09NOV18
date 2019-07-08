@@ -391,10 +391,15 @@
         <div class="right-botton-panel">
             @if (Model.Editable)
             {
-                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "DeliveryAdvices")"> <img src="~/Content/Images/New/save-32-m20.png" /> Lưu </button>
+                <button type="submit" class="k-button custom-button SubmitTypeOption-Closed" formaction="@Url.Action("Edit", "DeliveryAdvices")"> <img src="~/Content/Images/New/Save-Verify-32.png" /> Lưu và duyệt </button>
             }
             else
             {
+                if (Model.DeliveryAdviceID > 0 && !Model.Approvable && !Model.UnApprovable)
+                {
+                    <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Approve", "DeliveryAdvices", new {id = @Model.DeliveryAdviceID })'"> <img src="~/Content/Images/Mains/@(!@Model.Approved ? "Check-32-CHY.png" : "cloud-32-NoCheck.png")" /> @(!Model.Approved ? "Duyệt ĐNGH" : "Hủy duyệt ĐNGH này") </button>
+                }
+                
                 if (!Model.Voidable && !Model.UnVoidable)
                 {
                     <button type="button" class="k-button custom-button" onclick="location.href='@Url.Action("Print", "DeliveryAdvices", new { id = @Model.DeliveryAdviceID })'"> <img src="~/Content/Images/New/printer-cashier-32.png" /> In tổng hợp xuất kho </button>

@@ -2014,6 +2014,7 @@
     <Content Include="Areas\Productions\Views\BlendingInstructions\RemarkDetail.cshtml" />
     <Content Include="Areas\Productions\Views\BlendingInstructions\RemarkDetailSuccess.cshtml" />
     <Content Include="Areas\Inventories\Views\GoodsIssues\GetPendingDeliveryAdviceDetails.cshtml" />
+    <Content Include="Areas\Sales\Views\DeliveryAdvices\Approve.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">
@@ -2597,6 +2598,7 @@
     <Content Include="Scripts\Controllers\Root\Shared\Indexes\kindexGrid.js" />
     <Content Include="Scripts\Controllers\Root\Shared\Validations\kenGridValidator.js" />
     <Content Include="Scripts\Controllers\Sales\DeliveryAdvices\AddPendingSalesOrderDetail.js" />
+    <Content Include="Scripts\Controllers\Sales\DeliveryAdvices\Approve.js" />
     <Content Include="Scripts\Controllers\Sales\DeliveryAdvices\Create.js" />
     <Content Include="Scripts\Controllers\Sales\DeliveryAdvices\CreateWizard.js" />
     <Content Include="Scripts\Controllers\Sales\DeliveryAdvices\Delete.js" />
