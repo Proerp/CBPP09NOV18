@@ -12,11 +12,11 @@
         <div class="div-input">
             @if (ViewData["NullCustomer"] == null)
             {
-                @Html.Kendo().MaskedTextBoxFor(model => model.CodeAndName).HtmlAttributes(new { @class = "right-panel-input", @readonly = "readonly" })
+                @Html.Kendo().MaskedTextBoxFor(model => model.CodeAndName).HtmlAttributes(new { @class = "right-panel-input CustomerBase_TextBox", @readonly = "readonly" })
             }
             else
             {
-                @Html.Kendo().MaskedTextBox().Name("NullCustomer_CodeAndName").Value((string)ViewData["NullCustomer"]).HtmlAttributes(new { @class = "right-panel-input", @readonly = "readonly" })
+                @Html.Kendo().MaskedTextBox().Name("NullCustomer_CodeAndName").Value((string)ViewData["NullCustomer"]).HtmlAttributes(new { @class = "right-panel-input CustomerBase_TextBox", @readonly = "readonly" })
             }
         </div>
         <div class="div-validation-message">
@@ -27,3 +27,14 @@
 
 
 @Html.Partial("~/Views/Helpers/Commons/_CustomerDescription.cshtml")
+
+<script>
+    getCustomerModelID = function (modelID) {
+        return modelID.substring(0, modelID.length - 11); //At first: Pass: modelID = this.element.attr('id') = 'Customer_CodeAndName', Then: Return: ('Customer_CodeAndName').substring(0, modelID.length - 11) = 'Customer_'
+    }
+    $(".CustomerBase_TextBox").dblclick(function (e) {
+        var modelID = getCustomerModelID(this.id);
+        if ($("#" + modelID + "CustomerID").val() != undefined && $("#" + modelID + "CustomerID").val() != "")
+            window.open('@Url.Action("Edit", "Customers", new { area = "Commons" })' + '/' + $("#" + modelID + "CustomerID").val(), '_blank')
+    });
+</script>

@@ -8,7 +8,7 @@
 
 <div class="right-first-panel">
     <div class="form-group">
-        <div class="right-panel-label right-panel-label-icon-only" style="padding-top: 2px;"> <img src="~/Content/Images/Mains/@(ViewData["CustomerIcon"] != null ? ViewData["CustomerIcon"] : "Customer Blue 24.png")" title="@(ViewData["CustomerDisplayName"] != null ? ViewData["CustomerDisplayName"] : "Khách hàng")" />  </div>
+        <div class="right-panel-label right-panel-label-icon-only" style="padding-top: 2px;"> <a href="@Url.Action("Create", "Customers", new { area = "Commons" })" target="_blank"> <img src="~/Content/Images/Mains/@(ViewData["CustomerIcon"] != null ? ViewData["CustomerIcon"] : "Customer Blue 24.png")" title="@(ViewData["CustomerDisplayName"] != null ? ViewData["CustomerDisplayName"] : "Khách hàng")" /> </a> </div>
 
         <div class="default-display-none">
             @Html.Label((ViewData["CustomerDisplayName"] != null ? (ViewData["CustomerDisplayName"]).ToString() : "Khách hàng"))
@@ -114,6 +114,11 @@
         $(this).val($("#" + modelID + "TempCodeAndName").val());
     });
 
+    $(".CustomerBase_AutoComplete").dblclick(function (e) {
+        var modelID = getCustomerModelID(this.id);
+        if ($("#" + modelID + "CustomerID").val() != undefined && $("#" + modelID + "CustomerID").val() != "")
+            window.open('@Url.Action("Edit", "Customers", new { area = "Commons" })' + '/' + $("#" + modelID + "CustomerID").val(), '_blank')
+    });
 </script>
 
 
