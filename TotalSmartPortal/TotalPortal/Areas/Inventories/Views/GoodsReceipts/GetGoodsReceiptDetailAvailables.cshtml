@@ -11,13 +11,13 @@
     {
         columns.Bound(p => p.CodePartA).Title("Mã").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(20).Hidden(@Model.IsItem ? true : false);
         columns.Bound(p => p.CodePartB).Title("Phân loại").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(11);
-        columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(@GlobalEnums.CBPP);
-        columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsMaterial ? true : false);
+        columns.Bound(p => p.CodePartC).Title("Mã màu").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(@GlobalEnums.CBPP || @GlobalEnums.DMC);
+        columns.Bound(p => p.CodePartD).Title("A/C/G/F/T").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsMaterial || @GlobalEnums.CBPP || @GlobalEnums.DMC ? true : false);
         columns.Bound(p => p.CodePartA).Title("Công thức").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(@Model.IsItem ? false : true);
         columns.Bound(p => p.CodePartE).Title("Độ dầy").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(10).Hidden(!@Model.IsItem ? true : false);
         columns.Bound(p => p.CodePartF).Title("Chiều rộng").HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Width(12).Hidden(!@Model.IsItem ? true : false);
         columns.Bound(c => c.CommodityName).Title("Tên hàng").Width(30);
-        columns.Bound(c => c.GoodsReceiptReference).Title("Lô").Width(10).Hidden(@GlobalEnums.CBPP);
+        columns.Bound(c => c.GoodsReceiptReference).Title("Lô").Width(10).Hidden(@GlobalEnums.CBPP || @GlobalEnums.DMC);
         columns.Bound(c => c.BatchCode).Title("Lô").Width(15).Hidden(!@GlobalEnums.CBPP);
         columns.Bound(c => c.LabCode).Title("Lab").Width(15).Hidden(!@GlobalEnums.CBPP);
         columns.Bound(c => c.Barcode).Title("Mã vạch").Width(22).Hidden(!@GlobalEnums.CBPP);

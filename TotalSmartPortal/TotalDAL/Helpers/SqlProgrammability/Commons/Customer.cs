@@ -59,25 +59,32 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             queryString = queryString + "       IF (@SaveRelativeOption = 1) " + "\r\n";
             queryString = queryString + "           BEGIN " + "\r\n";
 
-            queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n";
-            queryString = queryString + "               SELECT      CustomerID, 1 AS WarehouseID, " + (int)GlobalEnums.WarehouseTaskID.MaterialAdjustment + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers WHERE CustomerID = @EntityID " + "\r\n";
+            if (GlobalEnums.DMC)
+            {
+                queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n";
+                queryString = queryString + "               SELECT      @EntityID AS CustomerID, Warehouses.WarehouseID, WarehouseTasks.WarehouseTaskID, GETDATE(), '', 0 FROM Warehouses CROSS JOIN (SELECT IDField AS WarehouseTaskID FROM FNSplitUpIds('" + (int)GlobalEnums.WarehouseTaskID.SalesOrder + "," + (int)GlobalEnums.WarehouseTaskID.DeliveryAdvice + "," + (int)GlobalEnums.WarehouseTaskID.SalesReturn + "," + (int)GlobalEnums.WarehouseTaskID.ProductAdjustment + "')) WarehouseTasks " + "\r\n";
+            }
+            else
+            {
+                queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n";
+                queryString = queryString + "               SELECT      CustomerID, 1 AS WarehouseID, " + (int)GlobalEnums.WarehouseTaskID.MaterialAdjustment + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers WHERE CustomerID = @EntityID " + "\r\n";
 
-            queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n";
-            queryString = queryString + "               SELECT      CustomerID, 2 AS WarehouseID, " + (int)GlobalEnums.WarehouseTaskID.ItemAdjustment + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers WHERE CustomerID = @EntityID " + "\r\n";
+                queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n";
+                queryString = queryString + "               SELECT      CustomerID, 2 AS WarehouseID, " + (int)GlobalEnums.WarehouseTaskID.ItemAdjustment + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers WHERE CustomerID = @EntityID " + "\r\n";
 
-            queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n";
-            queryString = queryString + "               SELECT      CustomerID, 3 AS WarehouseID, " + (int)GlobalEnums.WarehouseTaskID.ProductAdjustment + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers WHERE CustomerID = @EntityID " + "\r\n";
-            
-            
-            //queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n";
-            //queryString = queryString + "               SELECT      CustomerID, 46 AS WarehouseID, " + (int)GlobalEnums.NmvnTaskID.SalesOrder + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers WHERE CustomerID = @EntityID " + "\r\n";
+                queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n";
+                queryString = queryString + "               SELECT      CustomerID, 3 AS WarehouseID, " + (int)GlobalEnums.WarehouseTaskID.ProductAdjustment + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers WHERE CustomerID = @EntityID " + "\r\n";
 
-            //queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n"; //ALL CustomerCategoryID NOT IN (4, 5, 7, 9, 10, 11, 12, 15) DEFINED BY Warehouses.WarehouseCategoryID. HERE WE SET Warehouses.WarehouseCategoryID AND CustomerCategories.WarehouseCategoryID PARALLEL
-            //queryString = queryString + "               SELECT      Customers.CustomerID, Warehouses.WarehouseID, " + (int)GlobalEnums.NmvnTaskID.DeliveryAdvice + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers INNER JOIN CustomerCategories ON Customers.CustomerID = @EntityID AND CustomerCategories.WarehouseCategoryID NOT IN (4, 5, 7, 9, 10, 11, 12, 15) AND Customers.CustomerCategoryID = CustomerCategories.CustomerCategoryID INNER JOIN Warehouses ON CustomerCategories.WarehouseCategoryID = Warehouses.WarehouseCategoryID " + "\r\n";
 
-            //queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n"; //MAP ALL CustomerCategoryID IN (4, 5, 7, 9, 10, 11, 12, 15) TO WarehouseID 82: STPX
-            //queryString = queryString + "               SELECT      Customers.CustomerID, 82 AS WarehouseID, " + (int)GlobalEnums.NmvnTaskID.DeliveryAdvice + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers INNER JOIN CustomerCategories ON Customers.CustomerID = @EntityID AND CustomerCategories.WarehouseCategoryID IN (4, 5, 7, 9, 10, 11, 12, 15) AND Customers.CustomerCategoryID = CustomerCategories.CustomerCategoryID " + "\r\n";
+                //queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n";
+                //queryString = queryString + "               SELECT      CustomerID, 46 AS WarehouseID, " + (int)GlobalEnums.NmvnTaskID.SalesOrder + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers WHERE CustomerID = @EntityID " + "\r\n";
 
+                //queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n"; //ALL CustomerCategoryID NOT IN (4, 5, 7, 9, 10, 11, 12, 15) DEFINED BY Warehouses.WarehouseCategoryID. HERE WE SET Warehouses.WarehouseCategoryID AND CustomerCategories.WarehouseCategoryID PARALLEL
+                //queryString = queryString + "               SELECT      Customers.CustomerID, Warehouses.WarehouseID, " + (int)GlobalEnums.NmvnTaskID.DeliveryAdvice + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers INNER JOIN CustomerCategories ON Customers.CustomerID = @EntityID AND CustomerCategories.WarehouseCategoryID NOT IN (4, 5, 7, 9, 10, 11, 12, 15) AND Customers.CustomerCategoryID = CustomerCategories.CustomerCategoryID INNER JOIN Warehouses ON CustomerCategories.WarehouseCategoryID = Warehouses.WarehouseCategoryID " + "\r\n";
+
+                //queryString = queryString + "               INSERT INTO CustomerWarehouses (CustomerID, WarehouseID, WarehouseTaskID, EntryDate, Remarks, InActive) " + "\r\n"; //MAP ALL CustomerCategoryID IN (4, 5, 7, 9, 10, 11, 12, 15) TO WarehouseID 82: STPX
+                //queryString = queryString + "               SELECT      Customers.CustomerID, 82 AS WarehouseID, " + (int)GlobalEnums.NmvnTaskID.DeliveryAdvice + " AS WarehouseTaskID, GETDATE(), '', 0 FROM Customers INNER JOIN CustomerCategories ON Customers.CustomerID = @EntityID AND CustomerCategories.WarehouseCategoryID IN (4, 5, 7, 9, 10, 11, 12, 15) AND Customers.CustomerCategoryID = CustomerCategories.CustomerCategoryID " + "\r\n";
+            }
             queryString = queryString + "           END " + "\r\n";
             
             queryString = queryString + "       ELSE " + "\r\n"; //(@SaveRelativeOption = -1) 

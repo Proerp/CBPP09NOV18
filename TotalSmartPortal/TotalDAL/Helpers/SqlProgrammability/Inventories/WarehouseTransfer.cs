@@ -110,7 +110,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
             queryString = queryString + "       SELECT          CAST(0 AS bit) AS HasTransferOrder, NULL AS BlendingInstructionID, N'Chuyển kho' AS Categories, Warehouses.WarehouseID, Warehouses.Code AS WarehouseCode, Warehouses.Name AS WarehouseName, Warehouses.LocationID AS LocationIssuedID, WarehouseReceipts.WarehouseID AS WarehouseReceiptID, WarehouseReceipts.Code AS WarehouseReceiptCode, WarehouseReceipts.Name AS WarehouseReceiptName, WarehouseReceipts.LocationID AS LocationReceiptID " + "\r\n";
             queryString = queryString + "       FROM            Warehouses  " + "\r\n";
             queryString = queryString + "                       INNER JOIN Warehouses AS WarehouseReceipts ON Warehouses.WarehouseID <> WarehouseReceipts.WarehouseID " + "\r\n";
-            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (1, 6) AND WarehouseReceipts.WarehouseID IN (1, 6) " + "\r\n";
+            queryString = queryString + "       WHERE           Warehouses.WarehouseID IN (" + (GlobalEnums.DMC ? "1,2,3" : "1, 6") + ") AND WarehouseReceipts.WarehouseID IN (" + (GlobalEnums.DMC ? "1,2,3" : "1, 6") + ") " + "\r\n";
 
             queryString = queryString + "       UNION ALL       " + "\r\n";
 

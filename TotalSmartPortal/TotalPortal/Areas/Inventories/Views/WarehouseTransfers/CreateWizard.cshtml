@@ -38,8 +38,8 @@
         .Items(tabStrip =>
         {
             tabStrip.Add().Text("VCNB không có lệnh")
-                .Visible(!GlobalEnums.CBPP)
-                .Selected(!GlobalEnums.CBPP)
+                .Visible(!GlobalEnums.CBPP && !GlobalEnums.DMC)
+                .Selected(!GlobalEnums.CBPP && !GlobalEnums.DMC)
                 .Content(@<text>
                     <div style="margin-top: 39px; margin-right: 18px;">
                         @Html.EditorFor(d => (d as IWarehouseTransferDTO).Warehouse, new { WarehouseDisplayName = @Model.Warehouse.GetDisplayName(m => m.WarehouseID) })
@@ -52,8 +52,8 @@
         
         
             tabStrip.Add().Text("Xuất không có lệnh VCNB")
-                .Visible(GlobalEnums.CBPP)
-                .Selected(GlobalEnums.CBPP)
+                .Visible(GlobalEnums.CBPP || GlobalEnums.DMC)
+                .Selected(GlobalEnums.CBPP || GlobalEnums.DMC)
                 .Content(@<text>
                     @Html.Partial("~/Areas/Inventories/Views/WarehouseTransfers/_GetAvailableWarehouse.cshtml")
 
