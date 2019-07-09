@@ -384,6 +384,14 @@ namespace TotalDAL.Helpers.SqlProgrammability.Inventories
 
             queryString = queryString + "       DECLARE @msg NVARCHAR(300) ";
 
+            queryString = queryString + "           IF (@SaveRelativeOption = 1) " + "\r\n";
+            queryString = queryString + "               BEGIN " + "\r\n";
+            queryString = queryString + "                   UPDATE          GoodsIssuePackages " + "\r\n";
+            queryString = queryString + "                   SET             GoodsIssuePackages.Reference = GoodsIssues.Reference " + "\r\n";
+            queryString = queryString + "                   FROM            GoodsIssues INNER JOIN GoodsIssuePackages ON GoodsIssues.GoodsIssueID = @EntityID AND GoodsIssues.GoodsIssueID = GoodsIssuePackages.GoodsIssueID " + "\r\n";
+            queryString = queryString + "               END " + "\r\n";
+
+
             #region UPDATE GoodsReceiptDetails
             queryString = queryString + "       DECLARE         @GoodsIssuePackages TABLE (GoodsReceiptDetailID int NOT NULL PRIMARY KEY, Quantity decimal(18, 2) NOT NULL)" + "\r\n";
             queryString = queryString + "       INSERT INTO     @GoodsIssuePackages (GoodsReceiptDetailID, Quantity) SELECT GoodsReceiptDetailID, SUM(Quantity) AS Quantity FROM GoodsIssuePackages WHERE GoodsIssueID = @EntityID GROUP BY GoodsReceiptDetailID " + "\r\n";
