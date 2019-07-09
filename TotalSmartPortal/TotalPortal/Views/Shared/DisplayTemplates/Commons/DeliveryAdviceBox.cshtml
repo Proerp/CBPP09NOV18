@@ -9,7 +9,7 @@
 @if (@Model != null && @Model.DeliveryAdviceID != null && @Model.Reference != null && @Model.Reference != "")
 {
     <div id="show-DeliveryAdviceBox">
-        <div> @Html.DisplayFor(m => m.Reference) </div>
+        <div> <a style="color: #428bca; " href="@Url.Action("Edit", "DeliveryAdvices", new { area = "Sales", id = Model.DeliveryAdviceID })" target="_blank"> @Model.Reference </a> </div>
         <div> @Html.DisplayFor(m => m.EntryDate) </div>
     </div>
 }

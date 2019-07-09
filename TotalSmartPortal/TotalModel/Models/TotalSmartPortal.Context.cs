@@ -5862,5 +5862,23 @@ namespace TotalModel.Models
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GoodsIssueViewPackage>("GetGoodsIssueViewPackages", goodsIssueIDParameter);
         }
+    
+        public virtual ObjectResult<string> EmployeeDeletable(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("EmployeeDeletable", entityIDParameter);
+        }
+    
+        public virtual ObjectResult<string> EmployeeEditable(Nullable<int> entityID)
+        {
+            var entityIDParameter = entityID.HasValue ?
+                new ObjectParameter("EntityID", entityID) :
+                new ObjectParameter("EntityID", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<string>("EmployeeEditable", entityIDParameter);
+        }
     }
 }

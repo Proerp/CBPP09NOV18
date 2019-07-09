@@ -35,6 +35,9 @@ namespace TotalModel.Models
         public decimal Quantity { get; set; }
         public string Remarks { get; set; }
         public bool Approved { get; set; }
+        public string Reference { get; set; }
+        public int CustomerID { get; set; }
+        public int ReceiverID { get; set; }
     
         public virtual Commodity Commodity { get; set; }
         public virtual DeliveryAdviceDetail DeliveryAdviceDetail { get; set; }
@@ -43,5 +46,6 @@ namespace TotalModel.Models
         public virtual GoodsReceiptDetail GoodsReceiptDetail { get; set; }
         public virtual GoodsReceipt GoodsReceipt { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

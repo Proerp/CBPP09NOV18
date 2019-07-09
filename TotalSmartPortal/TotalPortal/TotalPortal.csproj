@@ -2015,6 +2015,7 @@
     <Content Include="Areas\Productions\Views\BlendingInstructions\RemarkDetailSuccess.cshtml" />
     <Content Include="Areas\Inventories\Views\GoodsIssues\GetPendingDeliveryAdviceDetails.cshtml" />
     <Content Include="Areas\Sales\Views\DeliveryAdvices\Approve.cshtml" />
+    <Content Include="Areas\Commons\Views\Employees\Delete.cshtml" />
     <None Include="Properties\PublishProfiles\CBPP.pubxml" />
     <None Include="Properties\PublishProfiles\TDV.pubxml" />
     <None Include="Properties\PublishProfiles\VCP.pubxml">

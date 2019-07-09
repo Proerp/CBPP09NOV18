@@ -1243,11 +1243,14 @@
           <Property Name="GoodsIssuePackageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="GoodsIssueID" Type="int" Nullable="false" />
           <Property Name="EntryDate" Type="datetime" Nullable="false" />
+          <Property Name="Reference" Type="nvarchar" MaxLength="10" />
           <Property Name="LocationID" Type="int" Nullable="false" />
           <Property Name="DeliveryAdviceID" Type="int" Nullable="false" />
           <Property Name="DeliveryAdviceDetailID" Type="int" Nullable="false" />
           <Property Name="GoodsReceiptID" Type="int" Nullable="false" />
           <Property Name="GoodsReceiptDetailID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="ReceiverID" Type="int" Nullable="false" />
           <Property Name="CommodityID" Type="int" Nullable="false" />
           <Property Name="CommodityTypeID" Type="int" Nullable="false" />
           <Property Name="BatchID" Type="int" Nullable="false" />
@@ -4775,6 +4778,18 @@ warning 6035: The relationship 'FK_GoodsDeliveries_AspNetUsers2' has columns tha
             </Principal>
             <Dependent Role="GoodsIssuePackages">
               <PropertyRef Name="CommodityID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsIssuePackages_Customers">
+          <End Role="Customers" Type="Self.Customers" Multiplicity="1" />
+          <End Role="GoodsIssuePackages" Type="Self.GoodsIssuePackages" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customers">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="GoodsIssuePackages">
+              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8370,6 +8385,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
         <Function Name="DeliveryAdviceVoidable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
+        <Function Name="EmployeeDeletable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
+        <Function Name="EmployeeEditable" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="EntityID" Type="int" Mode="In" />
+        </Function>
         <Function Name="FinishedHandoverApproved" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="EntityID" Type="int" Mode="In" />
         </Function>
@@ -10638,6 +10659,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Commodities" EntitySet="Commodities" />
             <End Role="GoodsIssuePackages" EntitySet="GoodsIssuePackages" />
           </AssociationSet>
+          <AssociationSet Name="FK_GoodsIssuePackages_Customers" Association="Self.FK_GoodsIssuePackages_Customers">
+            <End Role="Customers" EntitySet="Customers" />
+            <End Role="GoodsIssuePackages" EntitySet="GoodsIssuePackages" />
+          </AssociationSet>
           <AssociationSet Name="FK_GoodsIssuePackages_DeliveryAdviceDetails" Association="Self.FK_GoodsIssuePackages_DeliveryAdviceDetails">
             <End Role="DeliveryAdviceDetails" EntitySet="DeliveryAdviceDetails" />
             <End Role="GoodsIssuePackages" EntitySet="GoodsIssuePackages" />
@@ -12073,6 +12098,7 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="SemifinishedItems" Relationship="TotalSmartPortalModel.FK_SemifinishedItems_Customers" FromRole="Customer" ToRole="SemifinishedItem" />
           <NavigationProperty Name="WorkOrders" Relationship="TotalSmartPortalModel.FK_WorkOrders_Customers" FromRole="Customer" ToRole="WorkOrder" />
           <NavigationProperty Name="FinishedItems" Relationship="TotalSmartPortalModel.FK_FinishedItems_Customers" FromRole="Customer" ToRole="FinishedItem" />
+          <NavigationProperty Name="GoodsIssuePackages" Relationship="TotalSmartPortalModel.FK_GoodsIssuePackages_Customers" FromRole="Customer" ToRole="GoodsIssuePackage" />
         </EntityType>
         <EntityType Name="CustomerType">
           <Key>
@@ -17718,6 +17744,16 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             <End Role="Warehouse" EntitySet="Warehouses" />
             <End Role="GoodsIssuePackage" EntitySet="GoodsIssuePackages" />
           </AssociationSet>
+          <AssociationSet Name="FK_GoodsIssuePackages_Customers" Association="TotalSmartPortalModel.FK_GoodsIssuePackages_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="GoodsIssuePackage" EntitySet="GoodsIssuePackages" />
+          </AssociationSet>
+          <FunctionImport Name="EmployeeDeletable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="EmployeeEditable" ReturnType="Collection(String)">
+            <Parameter Name="EntityID" Mode="In" Type="Int32" />
+          </FunctionImport>
           </EntityContainer>
         <ComplexType Name="AccountInvoiceIndex">
           <Property Type="Int32" Name="AccountInvoiceID" Nullable="false" />
@@ -27452,6 +27488,10 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <NavigationProperty Name="GoodsReceiptDetail" Relationship="TotalSmartPortalModel.FK_GoodsIssuePackages_GoodsReceiptDetails" FromRole="GoodsIssuePackage" ToRole="GoodsReceiptDetail" />
           <NavigationProperty Name="GoodsReceipt" Relationship="TotalSmartPortalModel.FK_GoodsIssuePackages_GoodsReceipts" FromRole="GoodsIssuePackage" ToRole="GoodsReceipt" />
           <NavigationProperty Name="Warehouse" Relationship="TotalSmartPortalModel.FK_GoodsIssuePackages_Warehouses" FromRole="GoodsIssuePackage" ToRole="Warehouse" />
+          <Property Name="Reference" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="ReceiverID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Customer" Relationship="TotalSmartPortalModel.FK_GoodsIssuePackages_Customers" FromRole="GoodsIssuePackage" ToRole="Customer" />
         </EntityType>
         <Association Name="FK_GoodsIssuePackages_Commodities">
           <End Type="TotalSmartPortalModel.Commodity" Role="Commodity" Multiplicity="1" />
@@ -27534,6 +27574,18 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
             </Principal>
             <Dependent Role="GoodsIssuePackage">
               <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GoodsIssuePackages_Customers">
+          <End Type="TotalSmartPortalModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="TotalSmartPortalModel.GoodsIssuePackage" Role="GoodsIssuePackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="GoodsIssuePackage">
+              <PropertyRef Name="CustomerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -34926,6 +34978,9 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <EntitySetMapping Name="GoodsIssuePackages">
             <EntityTypeMapping TypeName="TotalSmartPortalModel.GoodsIssuePackage">
               <MappingFragment StoreEntitySet="GoodsIssuePackages">
+                <ScalarProperty Name="ReceiverID" ColumnName="ReceiverID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Reference" ColumnName="Reference" />
                 <ScalarProperty Name="Approved" ColumnName="Approved" />
                 <ScalarProperty Name="Remarks" ColumnName="Remarks" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
@@ -34950,6 +35005,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="EmployeeDeletable" FunctionName="TotalSmartPortalModel.Store.EmployeeDeletable" />
+          <FunctionImportMapping FunctionImportName="EmployeeEditable" FunctionName="TotalSmartPortalModel.Store.EmployeeEditable" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

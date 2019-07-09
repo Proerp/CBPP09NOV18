@@ -21,6 +21,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
             this.GetEmployeeIndexes();
 
             this.EmployeeEditable();
+            this.EmployeeDeletable();
         }
 
 
@@ -44,15 +45,20 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
         private void EmployeeEditable()
         {
-            string[] queryArray = new string[1];
+            string[] queryArray = new string[0];
 
-            queryArray[0] = " SELECT TOP 1 @FoundEntity = EmployeeID FROM Employees WHERE @EntityID = 1"; //AT TUE VIET ONLY: Don't allow edit default employee, because it is related to Customers
-
-            //queryArray[0] = " SELECT TOP 1 @FoundEntity = EmployeeID FROM Employees WHERE EmployeeID = @EntityID AND (InActive = 1 OR InActivePartial = 1)"; //Don't allow approve after void
-            //queryArray[1] = " SELECT TOP 1 @FoundEntity = EmployeeID FROM GoodsIssueDetails WHERE EmployeeID = @EntityID ";
-
+            //queryArray[0] = " SELECT TOP 1 @FoundEntity = EmployeeID FROM Employees WHERE @EntityID = 1"; //AT TUE VIET ONLY: Don't allow edit default employee, because it is related to Customers
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("EmployeeEditable", queryArray);
         }
 
+        private void EmployeeDeletable()
+        {
+            string[] queryArray = new string[1];
+            queryArray[0] = " SELECT TOP 1 @FoundEntity = EmployeeID FROM Employees WHERE EmployeeID = @EntityID "; //DON'T ALLOW TO DELETE 
+
+            //queryArray[0] = " SELECT TOP 1 @FoundEntity = EmployeeID FROM Employees WHERE EmployeeID = @EntityID AND (InActive = 1 OR InActivePartial = 1)"; //Don't allow approve after void
+            //queryArray[1] = " SELECT TOP 1 @FoundEntity = EmployeeID FROM GoodsIssueDetails WHERE EmployeeID = @EntityID ";
+            this.totalSmartPortalEntities.CreateProcedureToCheckExisting("EmployeeDeletable", queryArray);
+        }
     }
 }

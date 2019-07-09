@@ -537,6 +537,7 @@
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_GoodsReceiptDetails" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_GoodsReceipts" />
         <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_Warehouses" />
+        <AssociationConnector Association="TotalSmartPortalModel.FK_GoodsIssuePackages_Customers" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
