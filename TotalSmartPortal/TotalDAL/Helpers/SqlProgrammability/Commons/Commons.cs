@@ -68,20 +68,36 @@ namespace TotalDAL.Helpers.SqlProgrammability.Commons
 
 
         
-        //----DELETE FROM EntireCommodityBrands
-        //----INSERT INTO EntireCommodityBrands SELECT * FROM VWCommodityBrands
+        ////----DELETE FROM EntireCommodityBrands
+        ////----INSERT INTO EntireCommodityBrands SELECT * FROM VWCommodityBrands
 
 
-        //----DELETE FROM EntireCommodityCategories
-        //----INSERT INTO EntireCommodityCategories SELECT * FROM VWCommodityCategories
+        ////----DELETE FROM EntireCommodityCategories
+        ////----INSERT INTO EntireCommodityCategories SELECT * FROM VWCommodityCategories
 
 
-        //----DELETE FROM EntireCustomerCategories
-        //----INSERT INTO EntireCustomerCategories SELECT * FROM VWCustomerCategories
+        ////----DELETE FROM EntireCustomerCategories
+        ////----INSERT INTO EntireCustomerCategories SELECT * FROM VWCustomerCategories
 
 
-        //----DELETE FROM EntireTerritories
-        //----INSERT INTO EntireTerritories SELECT * FROM VWTerritories
+        ////----DELETE FROM EntireTerritories
+        ////----INSERT INTO EntireTerritories SELECT * FROM VWTerritories
+
+        
+        
+
+        //----INSERT INTO EntireCommodityBrands SELECT * FROM VWCommodityBrands WHERE CommodityBrandID NOT IN (SELECT CommodityBrandID FROM EntireCommodityBrands)
+
+
+
+        //----INSERT INTO EntireCommodityCategories SELECT * FROM VWCommodityCategories WHERE CommodityCategoryID NOT IN (SELECT CommodityCategoryID FROM EntireCommodityCategories)
+
+
+        //----INSERT INTO EntireCustomerCategories SELECT * FROM VWCustomerCategories WHERE CustomerCategoryID NOT IN (SELECT CustomerCategoryID FROM EntireCustomerCategories)
+
+
+        //----INSERT INTO EntireTerritories SELECT * FROM VWTerritories WHERE TerritoryID NOT IN (SELECT TerritoryID FROM EntireTerritories)
+
 
 
 
