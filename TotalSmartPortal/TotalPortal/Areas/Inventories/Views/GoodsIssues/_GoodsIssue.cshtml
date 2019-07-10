@@ -408,9 +408,9 @@
 
             columns.Bound(p => p.GoodsReceiptCode).DisplayNameTitle().Width(60).Hidden()
                 .ClientTemplate("#= (GoodsReceiptCode == null)? '' : GoodsReceiptCode #" + "<input type='hidden' name='GoodsIssueViewPackages[#= newIndex(data) #].GoodsReceiptCode' value='#= (GoodsReceiptCode == null) ? '' : GoodsReceiptCode #' />");
-            columns.Bound(p => p.GoodsReceiptReference).DisplayNameTitle().Width(60).Hidden()
+            columns.Bound(p => p.GoodsReceiptReference).DisplayNameTitle().Width(60).Hidden(!GlobalEnums.DMC)
                 .ClientTemplate("#= (GoodsReceiptReference == null)? '' : GoodsReceiptReference #" + "<input type='hidden' name='GoodsIssueViewPackages[#= newIndex(data) #].GoodsReceiptReference' value='#= (GoodsReceiptReference == null) ? '' : GoodsReceiptReference #' />");
-            columns.Bound(p => p.GoodsReceiptEntryDate).DisplayNameTitle().Width(80).Hidden()
+            columns.Bound(p => p.GoodsReceiptEntryDate).DisplayNameTitle().Width(80).Hidden(!GlobalEnums.DMC)
                 .Format("{0:" + @Settings.DateFormat + "}")
                 .ClientTemplate("#= (GoodsReceiptEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #" + "<input type='hidden' name='GoodsIssueViewPackages[#= newIndex(data) #].GoodsReceiptEntryDate' value='#= (GoodsReceiptEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', GoodsReceiptEntryDate) #' />");
 
@@ -424,20 +424,20 @@
 
             columns.Bound(p => p.BatchID).DisplayNameTitle().Hidden()
                 .ClientTemplate("#= BatchID #" + "<input type='hidden' name='GoodsIssueViewPackages[#= newIndex(data) #].BatchID' value='#= BatchID #' />");
-            columns.Bound(p => p.BatchEntryDate).DisplayNameTitle().Width(80).Hidden()
+            columns.Bound(p => p.BatchEntryDate).DisplayNameTitle().Width(80).Hidden(!GlobalEnums.DMC)
                 .Format("{0:" + @Settings.DateFormat + "}")
                 .ClientTemplate("#= (BatchEntryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #" + "<input type='hidden' name='GoodsIssueViewPackages[#= newIndex(data) #].BatchEntryDate' value='#= (BatchEntryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', BatchEntryDate) #' />");
 
-            columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(30)
+            columns.Bound(p => p.BatchCode).DisplayNameTitle().Width(30).Hidden(!GlobalEnums.CBPP)
                 .ClientTemplate("#= (BatchCode == null)? '' : BatchCode #" + "<input type='hidden' name='GoodsIssueViewPackages[#= newIndex(data) #].BatchCode' value='#= (BatchCode == null) ? '' : BatchCode #' />");
             columns.Bound(p => p.SealCode).DisplayNameTitle().Width(20).Hidden()
                 .ClientTemplate("#= (SealCode == null)? '' : SealCode #" + "<input type='hidden' name='GoodsIssueViewPackages[#= newIndex(data) #].SealCode' value='#= (SealCode == null) ? '' : SealCode #' />");
-            columns.Bound(p => p.LabCode).DisplayNameTitle().Width(30)
+            columns.Bound(p => p.LabCode).DisplayNameTitle().Width(30).Hidden(!GlobalEnums.CBPP)
                 .ClientTemplate("#= (LabCode == null)? '' : LabCode #" + "<input type='hidden' name='GoodsIssueViewPackages[#= newIndex(data) #].LabCode' value='#= (LabCode == null) ? '' : LabCode #' />");
-            columns.Bound(p => p.Barcode).DisplayNameTitle().Width(68)
+            columns.Bound(p => p.Barcode).DisplayNameTitle().Width(68).Hidden(!GlobalEnums.CBPP)
                 .ClientTemplate("#= (Barcode == null)? '' : Barcode #" + "<input type='hidden' name='GoodsIssueViewPackages[#= newIndex(data) #].Barcode' value='#= (Barcode == null) ? '' : Barcode #' />");
 
-            columns.Bound(p => p.ExpiryDate).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" })
+            columns.Bound(p => p.ExpiryDate).DisplayNameTitle().Width(60).HtmlAttributes(new { @class = "grid-column-center" }).HeaderHtmlAttributes(new { @style = "text-align: center" }).Hidden(!GlobalEnums.CBPP)
                 .Format("{0:" + @Settings.DateFormat + "}")
                 .ClientTemplate("#= (ExpiryDate == null)? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #" + "<input type='hidden' name='GoodsIssueViewPackages[#= newIndex(data) #].ExpiryDate' value='#= (ExpiryDate == null) ? '' : kendo.format('{0:" + @Settings.DateFormat + "}', ExpiryDate) #' />");
 
