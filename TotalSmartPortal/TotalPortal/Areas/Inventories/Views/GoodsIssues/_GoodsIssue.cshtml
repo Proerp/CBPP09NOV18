@@ -274,27 +274,6 @@
                 )
             )
         </div>
-
-        @if(!GlobalEnums.SKUWarehouse)
-        { 
-            <div class="div-k-panel">
-                @(Html.Kendo().PanelBar()
-                .Name("GoodsIssueViewPackagePanelBar")
-                    .Items(items =>
-                    {
-                        items.Add()
-                            .Text("Chi tiết xuất kho")
-                            .Selected(true)
-                            .Expanded(true)
-                            .Content(@<text>
-                                @divGoodsIssueViewPackages()
-                            </text>).HtmlAttributes(new { @class = "panel-class" });
-                    })
-                )
-            </div>
-
-            <div style="clear:both;"></div>
-        }
         
         <div class="div-k-panel">
             @(Html.Kendo().PanelBar()
@@ -366,6 +345,28 @@
 
         @Html.Partial("~/Views/Helpers/Bases/_BaseSubmit.cshtml")
 
+
+        @if (!GlobalEnums.SKUWarehouse)
+        {
+            <div style="height:68px;"></div>
+            <div style="clear:both;"></div>            
+            <div class="div-k-panel">
+                @(Html.Kendo().PanelBar()
+                .Name("GoodsIssueViewPackagePanelBar")
+                    .Items(items =>
+                    {
+                        items.Add()
+                            .Text("Chi tiết xuất kho")
+                            .Selected(true)
+                            .Expanded(true)
+                            .Content(@<text>
+                                @divGoodsIssueViewPackages()
+                            </text>).HtmlAttributes(new { @class = "panel-class" });
+                    })
+                )
+            </div>            
+        }
+        
     </div>
 
 
