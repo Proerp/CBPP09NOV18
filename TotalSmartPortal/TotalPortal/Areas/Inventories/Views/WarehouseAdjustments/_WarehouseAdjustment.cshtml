@@ -163,6 +163,7 @@
                                 @if (!Model.PositiveOnly)
                                 {
                                     <button type="button" class="k-button" onclick="GetGoodsReceiptDetailAvailables()"> <img src="~/Content/Images/Mains/Size24/Actions-bookmark-add-icon-24.png" /> Xuất hàng từ tồn kho </button>
+                                    <button type="button" class="k-button" onclick="copyAvailableToQuantityNegative()"> <img src="~/Content/Images/Mains/Size24/Borderlands-Select-icon-24.png" /> Xuất tất cả tồn kho </button>
                                 }
                                 @if (Model.PositiveOnly)
                                 {
@@ -310,6 +311,20 @@
             var voidDetailWindow = new kpopupWindow();
             voidDetailWindow.openWindow($("#popupWindow"), "@Url.Action("VoidDetail", Model.ControllerName)" + "/" + $("#WarehouseAdjustmentID").val() + "/" + warehouseAdjustmentDetailID, "Hủy/ phục hồi một phần đề nghị giao hàng", @Settings.PopupWidthVoid,  @Settings.PopupHeightVoid);
         });
+    }
+
+    function copyAvailableToQuantityNegative() { //Define function to be called by action some button        
+        var kenGrid = $("#kendoGridDetails").data("kendoGrid");
+        kenGrid.bind("dataBinding", function (e) { e.preventDefault(); }); //You can prevent the data bind action at the dataBinding event, when updating multiple model properties
+
+        var dataRows = kenGrid.dataSource.data();
+        for (var i = 0; i < dataRows.length; i++) {
+            var dataItem = dataRows[i];
+            if (dataItem.GoodsReceiptDetailID != null) dataItem.set("QuantityNegative", dataItem["QuantityAvailables"]);
+        }
+
+        kenGrid.unbind("dataBinding"); //When finish modifying the data, unbind dataBinding event
+        kenGrid.refresh(); //Then, finally, refresh grid
     }
 
     window.urlCommoditiesApi = '@Url.Action("GetCommodityBasesImport", "CommodityAPIs", new { area = "Commons" })';

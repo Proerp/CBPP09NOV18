@@ -103,7 +103,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Productions
 
             queryString = queryString + "       FROM           (SELECT WorkshiftID, ROUND(SUM(" + this.nmvnTaskFailures(nmvnTaskID) + " + " + this.nmvnTaskSwarfs(nmvnTaskID) + " - RecycleWeights), " + (int)GlobalEnums.rndQuantity + ") AS TotalQuantityRemains FROM " + this.nmvnTaskTable(nmvnTaskID) + " WHERE Approved = 1 AND EntryDate >= CONVERT(smalldatetime, '" + new DateTime(2019, 6, 1).ToString("dd/MM/yyyy") + "',103) AND ROUND(" + this.nmvnTaskFailures(nmvnTaskID) + " + " + this.nmvnTaskSwarfs(nmvnTaskID) + " - RecycleWeights - RecycleLoss, " + (int)GlobalEnums.rndQuantity + ") > 0 " + " GROUP BY WorkshiftID) AS NMVNTaskRemains " + "\r\n";
             queryString = queryString + "                       INNER JOIN Workshifts ON NMVNTaskRemains.WorkshiftID = Workshifts.WorkshiftID " + "\r\n";
-            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = 1 " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = 5 " + "\r\n";
 
             return queryString;
         }

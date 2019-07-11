@@ -14,10 +14,10 @@
             columns.Bound(p => p.EntryDate).Title("Ngày").Format("{0:dd/MM/yy}").Hidden();
 
             columns.Bound(p => p.Reference).Title("Số phiếu").Width(5).HtmlAttributes(new { @class = "index-nav-column" }).ClientTemplate("<a href='" + Url.RouteUrl("Default", new { controller = "Inventories/" + Model.ControllerName, action = "Edit" }) + "/#= WarehouseAdjustmentID #'>#=Reference#</a>");
-            columns.Bound(p => p.WarehouseAdjustmentTypeName).Title("Phân loại").Width(60).Filterable(false);
-            columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(196);
-            columns.Bound(p => p.AdjustmentJobs).Title("Mục đích").Width(120);
-            columns.Bound(p => p.Caption).Title("Mặt hàng").Width(390);                
+            columns.Bound(p => p.WarehouseAdjustmentTypeName).Title("Phân loại").Width(108).Filterable(false);
+            columns.Bound(p => p.CustomerName).Title("Khách hàng").Width(108);
+            columns.Bound(p => p.AdjustmentJobs).Title("Mục đích").Width(226);
+            columns.Bound(p => p.Caption).Title("Mặt hàng").Width(350);                
 
             columns.Bound(p => p.TotalQuantity).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(50).Hidden(!@Model.BothAdjustment);
             columns.Bound(p => p.TotalQuantityPositive).Title("SL").Format(Settings.kfmQuantity).HtmlAttributes(new { @class = "grid-number-column" }).HeaderHtmlAttributes(new { @style = "text-align: right" }).Filterable(false).Width(50).Hidden(!@Model.PositiveOnly);
