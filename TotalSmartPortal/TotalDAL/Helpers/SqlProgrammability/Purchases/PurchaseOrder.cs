@@ -136,10 +136,9 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
 
         private void PurchaseOrderVoidable()
         {
-            string[] queryArray = new string[2];
+            string[] queryArray = new string[1];
 
             queryArray[0] = " SELECT TOP 1 @FoundEntity = PurchaseOrderID FROM PurchaseOrders WHERE PurchaseOrderID = @EntityID AND Approved = 0"; //Must approve in order to allow void
-            queryArray[1] = " SELECT TOP 1 @FoundEntity = PurchaseOrderID FROM GoodsArrivalDetails WHERE PurchaseOrderID = @EntityID ";
 
             this.totalSmartPortalEntities.CreateProcedureToCheckExisting("PurchaseOrderVoidable", queryArray);
         }
