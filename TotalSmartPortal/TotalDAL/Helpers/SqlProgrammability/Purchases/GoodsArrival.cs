@@ -129,7 +129,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                       INNER JOIN Customers ON PurchaseOrders.PurchaseOrderID IN (SELECT PurchaseOrderID FROM PurchaseOrderDetails WHERE LocationID = @LocationID AND NMVNTaskID = @NMVNTaskID - 5 AND Approved = 1 AND InActive = 0 AND InActivePartial = 0  AND ROUND(Quantity - QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") > 0) AND PurchaseOrders.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers Transporters ON PurchaseOrders.TransporterID = Transporters.CustomerID " + "\r\n";
 
-            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = IIF(@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.MaterialArrival + ", 1, 2) " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = " + (GlobalEnums.DMC ? "1" : "IIF(@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.MaterialArrival + ", 1, 2) ") + "\r\n";
 
             queryString = queryString + "       ORDER BY        PurchaseOrders.PurchaseOrderID " + "\r\n";
 
@@ -149,7 +149,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "                       INNER JOIN Customers ON CustomerTransporterPENDING.CustomerID = Customers.CustomerID " + "\r\n";
             queryString = queryString + "                       INNER JOIN Customers Transporters ON CustomerTransporterPENDING.TransporterID = Transporters.CustomerID " + "\r\n";
 
-            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = IIF(@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.MaterialArrival + ", 1, 2) " + "\r\n";
+            queryString = queryString + "                       INNER JOIN Warehouses ON Warehouses.WarehouseID = " + (GlobalEnums.DMC ? "1" : "IIF(@NMVNTaskID = " + (int)GlobalEnums.NmvnTaskID.MaterialArrival + ", 1, 2) ") + "\r\n";
 
             this.totalSmartPortalEntities.CreateStoredProcedure("GetGoodsArrivalPendingCustomers", queryString);
         }
@@ -219,7 +219,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "       SELECT      PurchaseOrders.PurchaseOrderID, PurchaseOrderDetails.PurchaseOrderDetailID, PurchaseOrders.Reference AS PurchaseOrderReference, PurchaseOrders.Code AS PurchaseOrderCode, PurchaseOrders.EntryDate AS PurchaseOrderEntryDate, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.Shelflife, Commodities.CommodityTypeID, Commodities.Weight AS UnitWeight, Commodities.TareWeight, " + "\r\n";
             queryString = queryString + "                   ROUND(PurchaseOrderDetails.Quantity - PurchaseOrderDetails.QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
-            queryString = queryString + "                   0.0 AS Quantity, PurchaseOrderDetails.LabCode, PurchaseOrderDetails.ProductionDate, PurchaseOrderDetails.ExpiryDate, PurchaseOrders.Description, PurchaseOrderDetails.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
+            queryString = queryString + "                   0.0 AS Quantity, " + (GlobalEnums.CBPP ? "NULL" : "'#'") + " AS SealCode, " + (GlobalEnums.CBPP ? "NULL" : "'#'") + " AS BatchCode, " + (GlobalEnums.CBPP ? "NULL" : "'#'") + " AS LabCode, PurchaseOrderDetails.ProductionDate, PurchaseOrderDetails.ExpiryDate, PurchaseOrders.Description, PurchaseOrderDetails.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        PurchaseOrders " + "\r\n";
             queryString = queryString + "                   INNER JOIN PurchaseOrderDetails ON " + (isPurchaseOrderID ? " PurchaseOrders.PurchaseOrderID = @PurchaseOrderID " : "PurchaseOrders.LocationID = @LocationID AND PurchaseOrders.NMVNTaskID = @NMVNTaskID - 5 AND PurchaseOrders.CustomerID = @CustomerID AND PurchaseOrders.TransporterID = @TransporterID ") + " AND PurchaseOrderDetails.Approved = 1 AND PurchaseOrderDetails.InActive = 0 AND PurchaseOrderDetails.InActivePartial = 0 AND ROUND(PurchaseOrderDetails.Quantity - PurchaseOrderDetails.QuantityArrived, " + (int)GlobalEnums.rndQuantity + ") > 0 AND PurchaseOrders.PurchaseOrderID = PurchaseOrderDetails.PurchaseOrderID" + (isPurchaseOrderDetailIDs ? " AND PurchaseOrderDetails.PurchaseOrderDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@PurchaseOrderDetailIDs))" : "") + "\r\n";
@@ -235,7 +235,7 @@ namespace TotalDAL.Helpers.SqlProgrammability.Purchases
             queryString = queryString + "       SELECT      PurchaseOrders.PurchaseOrderID, PurchaseOrderDetails.PurchaseOrderDetailID, PurchaseOrders.Reference AS PurchaseOrderReference, PurchaseOrders.Code AS PurchaseOrderCode, PurchaseOrders.EntryDate AS PurchaseOrderEntryDate, " + "\r\n";
             queryString = queryString + "                   Commodities.CommodityID, Commodities.Code AS CommodityCode, Commodities.Name AS CommodityName, Commodities.Shelflife, Commodities.CommodityTypeID, GoodsArrivalDetails.UnitWeight, GoodsArrivalDetails.TareWeight, " + "\r\n";
             queryString = queryString + "                   ROUND(PurchaseOrderDetails.Quantity - PurchaseOrderDetails.QuantityArrived + GoodsArrivalDetails.Quantity, " + (int)GlobalEnums.rndQuantity + ") AS QuantityRemains, " + "\r\n";
-            queryString = queryString + "                   0.0 AS Quantity, GoodsArrivalDetails.LabCode, GoodsArrivalDetails.ProductionDate, GoodsArrivalDetails.ExpiryDate, PurchaseOrders.Description, PurchaseOrderDetails.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
+            queryString = queryString + "                   0.0 AS Quantity, " + (GlobalEnums.CBPP ? "NULL" : "'#'") + " AS SealCode, " + (GlobalEnums.CBPP ? "NULL" : "'#'") + " AS BatchCode, " + (GlobalEnums.CBPP ? "NULL" : "'#'") + " AS LabCode, GoodsArrivalDetails.ProductionDate, GoodsArrivalDetails.ExpiryDate, PurchaseOrders.Description, PurchaseOrderDetails.Remarks, CAST(1 AS bit) AS IsSelected " + "\r\n";
 
             queryString = queryString + "       FROM        PurchaseOrderDetails " + "\r\n";
             queryString = queryString + "                   INNER JOIN GoodsArrivalDetails ON GoodsArrivalDetails.GoodsArrivalID = @GoodsArrivalID AND PurchaseOrderDetails.PurchaseOrderDetailID = GoodsArrivalDetails.PurchaseOrderDetailID" + (isPurchaseOrderDetailIDs ? " AND PurchaseOrderDetails.PurchaseOrderDetailID NOT IN (SELECT Id FROM dbo.SplitToIntList (@PurchaseOrderDetailIDs))" : "") + "\r\n";

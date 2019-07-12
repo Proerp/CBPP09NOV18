@@ -7,7 +7,7 @@ namespace TotalBase.Enums
     public static class GlobalEnums
     {
         public static bool CBPP = false;
-        public static bool DMC = false;
+        public static bool DMC = true;
 
         public static bool ERPConnected = false;
         public static bool SKUWarehouse = false;

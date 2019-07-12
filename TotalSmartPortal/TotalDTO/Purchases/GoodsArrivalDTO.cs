@@ -106,7 +106,8 @@ namespace TotalDTO.Purchases
         public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             foreach (var result in base.Validate(validationContext)) { yield return result; }
-
+            
+            if (GlobalEnums.DMC) this.TotalPackages = this.GetTotalWeight();
             if (this.TotalPackages != this.GetTotalWeight()) yield return new ValidationResult("Lỗi tổng số kiện", new[] { "TotalPackages" });
         }
 

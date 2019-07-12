@@ -23270,10 +23270,12 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
           <Property Type="Boolean" Name="IsSelected" Nullable="true" />
           <Property Type="Int32" Name="Shelflife" Nullable="true" />
           <Property Type="Decimal" Name="UnitWeight" Nullable="true" Precision="18" Scale="3" />
-          <Property Type="String" Name="LabCode" Nullable="true" MaxLength="60" />
+          <Property Type="String" Name="LabCode" Nullable="false" MaxLength="1" />
           <Property Type="DateTime" Name="ProductionDate" Nullable="true" Precision="23" />
           <Property Type="DateTime" Name="ExpiryDate" Nullable="true" Precision="23" />
           <Property Type="Decimal" Name="TareWeight" Nullable="true" Precision="18" Scale="3" />
+          <Property Type="String" Name="SealCode" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="BatchCode" Nullable="false" MaxLength="1" />
         </ComplexType>
         <ComplexType Name="GoodsArrivalPendingPurchaseOrder">
           <Property Type="Int32" Name="PurchaseOrderID" Nullable="false" />
@@ -33011,6 +33013,8 @@ warning 6035: The relationship 'FK_SemifinishedProducts_AspNetUsers2' has column
                 <ScalarProperty Name="ProductionDate" ColumnName="ProductionDate" />
                 <ScalarProperty Name="ExpiryDate" ColumnName="ExpiryDate" />
                 <ScalarProperty Name="TareWeight" ColumnName="TareWeight" />
+                <ScalarProperty Name="SealCode" ColumnName="SealCode" />
+                <ScalarProperty Name="BatchCode" ColumnName="BatchCode" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

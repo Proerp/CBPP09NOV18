@@ -67,8 +67,8 @@ function handleOKEvent(goodsArrivalGridDataSource, pendingPurchaseOrderDetailGri
         dataRow.TareWeight = purchaseOrderGridDataItem.TareWeight != null ? purchaseOrderGridDataItem.TareWeight : 0;
         dataRow.Packages = 0;
 
-        dataRow.SealCode = null; //"#";//*****Temponly null;
-        dataRow.BatchCode = null; //purchaseOrderGridDataItem.PurchaseOrderCode; //*****Temponly null;
+        dataRow.SealCode = purchaseOrderGridDataItem.SealCode;
+        dataRow.BatchCode = purchaseOrderGridDataItem.BatchCode;
         dataRow.LabCode = purchaseOrderGridDataItem.LabCode;
 
         dataRow.ProductionDate = purchaseOrderGridDataItem.ProductionDate;

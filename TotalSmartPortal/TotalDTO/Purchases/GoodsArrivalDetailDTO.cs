@@ -94,6 +94,8 @@ namespace TotalDTO.Purchases
         {
             foreach (var result in base.Validate(validationContext)) { yield return result; }
 
+            if (GlobalEnums.DMC) { this.UnitWeight = this.Quantity; this.Packages = (this.Quantity > 0 ? 1 : 0); }
+
             if (GlobalEnums.CBPP && this.TareWeight <= 0) yield return new ValidationResult("Vui lòng nhập trọng lượng bao bì [" + this.CommodityName + "]", new[] { "TareWeight" });
             if (this.Quantity != 0 && (this.Quantity != this.Packages * this.UnitWeight || this.UnitWeight == 0 || this.Packages - Math.Truncate(this.Packages) != 0)) yield return new ValidationResult("Số kiện phải lớn hơn 0 và là số nguyên [" + this.CommodityName + "]", new[] { "UnitWeight" });
             if (this.PurchaseOrderID > 0 && (this.Quantity > this.QuantityRemains)) yield return new ValidationResult("Số lượng xuất không được lớn hơn số lượng còn lại [" + this.CommodityName + "]", new[] { "Quantity" });

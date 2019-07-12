@@ -104,8 +104,8 @@
                 </text>);
 
             tabStrip.Add().Text("Đơn hàng")
-            .Visible(Model.IsItem || Model.IsMaterial)
-            .Selected(Model.IsMaterial)
+            .Visible(Model.IsItem || Model.IsMaterial || (Model.IsProduct && GlobalEnums.DMC))
+            .Selected(Model.IsMaterial || GlobalEnums.DMC)
             .Content(@<text>
                     @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetGoodsArrival.cshtml")
             </text>);
@@ -138,13 +138,13 @@
         
         
             tabStrip.Add().Text("Số KHSX")
-                .Visible(Model.IsProduct)
-                .Selected(Model.IsProduct)
+                .Visible(Model.IsProduct && !GlobalEnums.DMC)
+                .Selected(Model.IsProduct && !GlobalEnums.DMC)
                 .Content(@<text>
                     @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetPlannedOrder.cshtml")
                 </text>);
             tabStrip.Add().Text("Tổng hợp theo KH")
-                .Visible(Model.IsProduct)
+                .Visible(Model.IsProduct && !GlobalEnums.DMC)
                 .Content(@<text>
                     @Html.Partial("~/Areas/Inventories/Views/GoodsReceipts/_GetPlannedOrderCustomer.cshtml")
                 </text>);
